@@ -1,0 +1,14 @@
+<use   name="FWCore/ParameterSet"/>
+<use   name="FWCore/Utilities"/>
+<use   name="CommonTools/Utils"/>
+<use   name="DataFormats/Math"/>
+<use   name="tthAnalysis/HiggsToTauTau"/>
+<use   name="tthAnalysis/TauTriggerSFs2017"/>
+<use   name="TauAnalysis/ClassicSVfit4tau"/>
+<use   name="root"/>
+<use   name="roottmva"/>
+<use   name="boost" />
+<Flags CXXFLAGS="-O3 -fPIC -Wswitch -Wswitch-enum -Werror -Wno-error=bool-compare" />
+<export>
+  <lib   name="1"/>
+</export>
