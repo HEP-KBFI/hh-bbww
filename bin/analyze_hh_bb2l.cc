@@ -60,6 +60,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
 #include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_3lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
+#include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
 #include "tthAnalysis/HiggsToTauTau/interface/hltPathReader.h" // hltPathReader
 #include "tthAnalysis/HiggsToTauTau/interface/Data_to_MC_CorrectionInterface_2016.h"
@@ -580,7 +581,7 @@ int main(int argc, char* argv[])
     lheInfoHistManager->bookHistograms(fs);
   }
 
-std::cout << "Book BDT filling" << std::endl;
+  std::cout << "Book BDT filling" << std::endl;
   NtupleFillerBDT<float, int>* bdt_filler = nullptr;
   typedef std::remove_pointer<decltype(bdt_filler)>::type::float_type float_type;
   typedef std::remove_pointer<decltype(bdt_filler)>::type::int_type int_type;
@@ -606,7 +607,7 @@ std::cout << "Book BDT filling" << std::endl;
       "logTopness", "logHiggsness",
       "hmeMass",
       "vbf_m_jj", "vbf_dEta_jj",
-      "genWeight", "evtWeight",
+      "genWeight", "evtWeight"
     );
     bdt_filler->register_variable<int_type>(
       "nJet", "nBJetLoose", "nBJetMedium", 
@@ -1502,11 +1503,11 @@ std::cout << "Book BDT filling" << std::endl;
           ("lep2_pt",                        selLepton_sublead->pt())
           ("lep2_conePt",                    comp_lep2_conePt(*selLepton_sublead))
 	  ("lep2_eta",                       selLepton_sublead->eta())
-	  ("bjet1_pt",                       selBJetP4_lead->pt())
-          ("bjet1_eta",                      selBJetP4_lead->eta())
-	  ("bjet2_pt",                       selBJetP4_sublead->pt())
-          ("bjet2_eta",                      selBJetP4_sublead->eta())
-	  ("met",                            metP4.p4())
+	  ("bjet1_pt",                       selBJet_lead->pt())
+          ("bjet1_eta",                      selBJet_lead->eta())
+	  ("bjet2_pt",                       selBJet_sublead->pt())
+          ("bjet2_eta",                      selBJet_sublead->eta())
+	  ("met",                            metP4.pt())
 	  ("mht",                            mhtP4.pt())
 	  ("met_LD",                         met_LD)
 	  ("HT",                             HT)
@@ -1539,7 +1540,7 @@ std::cout << "Book BDT filling" << std::endl;
           ("vbf_m_jj",                       vbf_m_jj)
           ("genWeight",                      eventInfo.genWeight)
           ("evtWeight",                      evtWeight)
-          ("nJet",                           selJets.size())
+  	  ("nJet",                           comp_n_jet25_recl(selJets))
           ("nBJetLoose",                     selBJetsFull_loose.size())
           ("nBJetMedium",                    selBJetsFull_medium.size())
 	  ("nJet_vbf",                       selJetsVBF.size())
