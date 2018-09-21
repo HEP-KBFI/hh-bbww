@@ -604,11 +604,13 @@ std::cout << "Book BDT filling" << std::endl;
       "m_bbllMEt", "pT_bbllMEt", "dPhi_bbllMEt", 
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle", 
       "logTopness", "logHiggsness",
-      "hmeMass"
+      "hmeMass",
+      "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight",
     );
     bdt_filler->register_variable<int_type>(
-      "nJet", "nBJetLoose", "nBJetMedium"
+      "nJet", "nBJetLoose", "nBJetMedium", 
+      "nJet_vbf", "isVBF"
     );
     bdt_filler->bookTree(fs);
   }
@@ -1415,6 +1417,8 @@ std::cout << "Book BDT filling" << std::endl;
     selHistManager->weights_->fillHistograms("data_to_MC_correction", weight_data_to_MC_correction);
     selHistManager->weights_->fillHistograms("fakeRate", weight_fakeRate);
 
+    double vbf_dEta_jj = -1.;
+    double vbf_m_jj = -1.;
     bool isVBF = false;
     for ( std::vector<const RecoJet*>::const_iterator selJetVBF1 = selJetsVBF.begin();
 	  selJetVBF1 != selJetsVBF.end(); ++selJetVBF1 ) {
@@ -1423,6 +1427,8 @@ std::cout << "Book BDT filling" << std::endl;
 	double dEta_jj = TMath::Abs((*selJetVBF1)->eta() - (*selJetVBF2)->eta());
 	double m_jj = ((*selJetVBF1)->p4() + (*selJetVBF2)->p4()).mass();
 	if ( dEta_jj > 4. && m_jj > 300. ) {
+	  if ( dEta_jj > vbf_dEta_jj ) vbf_dEta_jj = dEta_jj;
+	  if ( m_jj    > vbf_m_jj    ) vbf_m_jj    = m_jj;
 	  isVBF = true;
 	}
       }
@@ -1529,11 +1535,15 @@ std::cout << "Book BDT filling" << std::endl;
       	  ("logTopness",                     logTopness)
 	  ("logHiggsness",                   logHiggsness)
       	  ("hmeMass",                        hmeMass)
+	  ("vbf_dEta_jj",                    vbf_dEta_jj)
+          ("vbf_m_jj",                       vbf_m_jj)
           ("genWeight",                      eventInfo.genWeight)
           ("evtWeight",                      evtWeight)
           ("nJet",                           selJets.size())
           ("nBJetLoose",                     selBJetsFull_loose.size())
           ("nBJetMedium",                    selBJetsFull_medium.size())
+	  ("nJet_vbf",                       selJetsVBF.size())
+	  ("isVBF",                          isVBF)
         .fill()
       ;
     }
