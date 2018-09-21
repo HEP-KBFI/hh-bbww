@@ -261,6 +261,8 @@ int main(int argc, char* argv[])
   std::string branchName_genJets = cfg_analyze.getParameter<std::string>("branchName_genJets");
   bool redoGenMatching = cfg_analyze.getParameter<bool>("redoGenMatching");
 
+  bool selectBDT = ( cfg_analyze.exists("selectBDT") ) ? cfg_analyze.getParameter<bool>("selectBDT") : false;
+
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
   std::cout << "selEventsFileName_input = " << selEventsFileName_input << std::endl;
   RunLumiEventSelector* run_lumi_eventSelector = 0;
@@ -576,6 +578,39 @@ int main(int argc, char* argv[])
     lheInfoHistManager = new LHEInfoHistManager(makeHistManager_cfg(process_string,
       Form("%s/sel/lheInfo", histogramDir.data()), central_or_shift));
     lheInfoHistManager->bookHistograms(fs);
+  }
+
+std::cout << "Book BDT filling" << std::endl;
+  NtupleFillerBDT<float, int>* bdt_filler = nullptr;
+  typedef std::remove_pointer<decltype(bdt_filler)>::type::float_type float_type;
+  typedef std::remove_pointer<decltype(bdt_filler)>::type::int_type int_type;
+
+  if ( selectBDT ) {
+    bdt_filler = new std::remove_pointer<decltype(bdt_filler)>::type(
+      makeHistManager_cfg(process_string, Form("%s/sel/evtntuple", histogramDir.data()), central_or_shift)
+    );
+    bdt_filler->register_variable<float_type>(
+      "lep1_pt", "lep1_conePt", "lep1_eta", 
+      "lep2_pt", "lep2_conePt", "lep2_eta", 
+      "bjet1_pt", "bjet1_conePt", "bjet1_eta", 
+      "bjet2_pt", "bjet2_conePt", "bjet2_eta", 
+      "met", "mht", "met_LD", 
+      "HT", "STMET", 
+      "m_bb", "dR_bb", "pT_bb",
+      "m_ll", "dR_ll", "pT_ll",
+      "pT_llMEt", "mT_llMEt",
+      "dR_b1l1", "dR_b1l2", "dR_b2l1", "dR_b2l2", 
+      "m_bbll", "pT_bbll", "dPhi_bbll", 
+      "m_bbllMEt", "pT_bbllMEt", "dPhi_bbllMEt", 
+      "mT2_W", "mT2_top_2particle", "mT2_top_3particle", 
+      "logTopness", "logHiggsness",
+      "hmeMass"
+      "genWeight", "evtWeight",
+    );
+    bdt_filler->register_variable<int_type>(
+      "nJet", "nBJetLoose", "nBJetMedium"
+    );
+    bdt_filler->bookTree(fs);
   }
 
   int analyzedEntries = 0;
@@ -1282,7 +1317,7 @@ int main(int argc, char* argv[])
     double dR_b2l1 = deltaR(selBJetP4_sublead, selLeptonP4_lead);
     double dR_b2l2 = deltaR(selBJetP4_sublead, selLeptonP4_sublead);
     double m_bbll = (bbP4 + llP4).mass();
-    double pT_llbb = (bbP4 + llP4).pt();
+    double pT_bbll = (bbP4 + llP4).pt();
     double dPhi_bbll = deltaPhi(bbP4.phi(), llP4.phi());        
     double m_bbllMEt = (bbP4 + llP4 + metP4).mass();
     double pT_bbllMEt = (bbP4 + llP4 + metP4).pt();
@@ -1293,7 +1328,7 @@ int main(int argc, char* argv[])
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),	     
       metP4.px(), metP4.py(), 0.);
     double mT2_W = mT2Algo_2particle.get_min_mT2();
-    double mT2_W_step = mT2Algo_2particle.get_min_step();
+    int mT2_W_step = mT2Algo_2particle.get_min_step();
     double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
     double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
     mT2Algo_2particle(
@@ -1301,7 +1336,7 @@ int main(int argc, char* argv[])
       selBJetP4_sublead.px(), selBJetP4_sublead.py(), selBJetP4_sublead.mass(), 
       cSumPx, cSumPy, wBosonMass);
     double mT2_top_2particle = mT2Algo_2particle.get_min_mT2();
-    double mT2_top_2particle_step = mT2Algo_2particle.get_min_step();
+    int mT2_top_2particle_step = mT2Algo_2particle.get_min_step();
     mT2_3particle mT2Algo_3particle;
     mT2Algo_3particle(
       selBJetP4_lead.px(), selBJetP4_lead.py(), selBJetP4_lead.mass(), 
@@ -1310,7 +1345,7 @@ int main(int argc, char* argv[])
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
       metP4.px(), metP4.py(), 0.);
     double mT2_top_3particle_permutation1 = mT2Algo_3particle.get_min_mT2();
-    double mT2_top_3particle_permutation1_step = mT2Algo_3particle.get_min_step();
+    int mT2_top_3particle_permutation1_step = mT2Algo_3particle.get_min_step();
     mT2Algo_3particle(
       selBJetP4_lead.px(), selBJetP4_lead.py(), selBJetP4_lead.mass(), 
       selBJetP4_sublead.px(), selBJetP4_sublead.py(), selBJetP4_sublead.mass(), 
@@ -1451,6 +1486,56 @@ int main(int argc, char* argv[])
 
     if ( selEventsFile ) {
       (*selEventsFile) << eventInfo.run << ':' << eventInfo.lumi << ':' << eventInfo.event << '\n';
+    }
+
+    if ( bdt_filler ) {
+      bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
+          ("lep1_pt",                        selLepton_lead->pt())
+          ("lep1_conePt",                    comp_lep1_conePt(*selLepton_lead))
+	  ("lep1_eta",                       selLepton_lead->eta())
+          ("lep2_pt",                        selLepton_sublead->pt())
+          ("lep2_conePt",                    comp_lep2_conePt(*selLepton_sublead))
+	  ("lep2_eta",                       selLepton_sublead->eta())
+	  ("bjet1_pt",                       selBJetP4_lead->pt())
+          ("bjet1_eta",                      selBJetP4_lead->eta())
+	  ("bjet2_pt",                       selBJetP4_sublead->pt())
+          ("bjet2_eta",                      selBJetP4_sublead->eta())
+	  ("met",                            metP4.p4())
+	  ("mht",                            mhtP4.pt())
+	  ("met_LD",                         met_LD)
+	  ("HT",                             HT)
+	  ("STMET",                          STMET)
+      	  ("m_bb",                           m_bb)
+	  ("dR_bb",                          dR_bb)
+	  ("pT_bb",                          pT_bb)
+      	  ("m_ll",                           m_ll)
+	  ("dR_ll",                          dR_ll)
+ 	  ("pT_ll",                          pT_ll)
+      	  ("pT_llMEt",                       pT_llMEt)
+	  ("mT_llMEt",                       mT_llMEt)
+      	  ("dR_b1l1",                        dR_b1l1)
+	  ("dR_b1l2",                        dR_b1l2)
+ 	  ("dR_b2l1",                        dR_b2l1)
+	  ("dR_b2l2",                        dR_b2l2)
+      	  ("m_bbll",                         m_bbll)
+ 	  ("pT_bbll",                        pT_bbll)
+	  ("dPhi_bbll",                      dPhi_bbll)
+      	  ("m_bbllMEt",                      m_bbllMEt)
+	  ("pT_bbllMEt",                     pT_bbllMEt)
+	  ("dPhi_bbllMEt",                   dPhi_bbllMEt)
+      	  ("mT2_W",                          mT2_W)
+	  ("mT2_top_2particle",              mT2_top_2particle)
+ 	  ("mT2_top_3particle",              mT2_top_3particle)
+      	  ("logTopness",                     logTopness)
+	  ("logHiggsness",                   logHiggsness)
+      	  ("hmeMass",                        hmeMass)
+          ("genWeight",                      eventInfo.genWeight)
+          ("evtWeight",                      evtWeight)
+          ("nJet",                           selJets.size())
+          ("nBJetLoose",                     selBJetsFull_loose.size())
+          ("nBJetMedium",                    selBJetsFull_medium.size())
+        .fill()
+      ;
     }
 
     ++selectedEntries;
