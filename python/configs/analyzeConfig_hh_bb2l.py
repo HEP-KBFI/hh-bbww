@@ -252,7 +252,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
             continue
           lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-          print "processing lepton_and_frWeight = '%s'" % lepton_selection_and_frWeight
 
           for sample_name, sample_info in self.samples.items():
             if not sample_info["use_it"] or sample_info["sample_category"] in [ "additional_signal_overlap", "background_data_estimate" ]:
@@ -327,7 +326,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
 
                 # initialize input and output file names for hadd_stage1
                 key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-                print "adding key_hadd_stage1 = '%s'" % key_hadd_stage1
                 if not key_hadd_stage1 in self.inputFiles_hadd_stage1:
                   self.inputFiles_hadd_stage1[key_hadd_stage1] = []
                 self.inputFiles_hadd_stage1[key_hadd_stage1].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
@@ -344,7 +342,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
 
                 for genMatch_category in genMatch_categories:
                   key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-                  print "accessing key_hadd_stage1 = '%s'" % key_hadd_stage1
                   key_addBackgrounds_job = None
                   processes_input = None
                   process_output = None
@@ -405,7 +402,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
 
                     # initialize input and output file names for hadd_stage1_5
                     key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
-                    print "adding key_hadd_stage1_5 = '%s'" % key_hadd_stage1_5
                     if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
                       self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
                     self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.jobOptions_addBackgrounds[key_addBackgrounds_job]['outputFile'])
@@ -486,7 +482,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for lepton_charge_selection in self.lepton_charge_selections:
       key_addFakes_job = getKey(lepton_charge_selection, "fakes_data")
-      print "accessing key_hadd_stage1_5 = '%s'" % key_hadd_stage1_5
       key_hadd_stage1_5 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
       self.jobOptions_addFakes[key_addFakes_job] = {
         'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
