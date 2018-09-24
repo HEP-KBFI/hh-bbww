@@ -20,9 +20,9 @@ for sample_name, sample_info in samples_2017.items():
     sample_info["use_it"] = True
   #------------------------------------------------------------------------------
   # CV: ONLY FOR TESTING !!!
-  else:
-    sample_info["use_it"] = False
-    continue  
+  #else:
+  #  sample_info["use_it"] = False
+  #  continue  
   #------------------------------------------------------------------------------
 
   if sample_name.startswith('/ZZ'):
