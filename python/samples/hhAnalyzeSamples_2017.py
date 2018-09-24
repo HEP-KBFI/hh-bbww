@@ -1,5 +1,7 @@
 from tthAnalysis.HiggsToTauTau.samples.tthAnalyzeSamples_2017 import samples_2017 as samples_2017_general
-from hhAnalysis.multilepton.samples.hhAnalyzeSamples_2017_hh_private import samples_2017 as samples_2017_hh
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_hh import samples_2017 as samples_2017_hh
+
+#TODO: both sets of samples need to be reprocessed w/o jet eta cuts
 
 import collections
 import itertools
@@ -22,7 +24,7 @@ for sample_name, sample_info in samples_2017.items():
   # CV: ONLY FOR TESTING !!!
   else:
     sample_info["use_it"] = False
-    continue  
+    continue
   #------------------------------------------------------------------------------
 
   if sample_name.startswith('/ZZ'):
