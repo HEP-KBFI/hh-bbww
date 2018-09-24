@@ -38,7 +38,7 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_dPhi_bbllMEt_           = book1D(dir, "dPhi_bbllMEt",           "dPhi_bbllMEt",        36,  0., TMath::Pi());
 
   histogram_mT2_W_                  = book1D(dir, "mT2_W",                  "mT2_W",                   40,  0.,  200.); 
-  histogram_mT2_W_step_             = book1D(dir, "mT2_W",                  "mT2_W",                  103, -1.5, 101.5); 
+  histogram_mT2_W_step_             = book1D(dir, "mT2_W_step",             "mT2_W_step",             103, -1.5, 101.5); 
   histogram_mT2_top_2particle_      = book1D(dir, "mT2_top_2particle",      "mT2_top_2particle",      100,  0.,  500.);
   histogram_mT2_top_2particle_step_ = book1D(dir, "mT2_top_2particle_step", "mT2_top_2particle_step", 103, -1.5, 101.5); 
   histogram_mT2_top_3particle_      = book1D(dir, "mT2_top_3particle",      "mT2_top_3particle",      100,  0.,  500.);
