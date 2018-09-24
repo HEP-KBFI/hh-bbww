@@ -56,7 +56,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         running_method,
         num_parallel_jobs,
         executable_addBackgrounds,
-        executable_addFakes,       
+        executable_addFakes,
         histograms_to_fit,
         select_rle_output = False,
         verbose           = False,
@@ -154,7 +154,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
     self.lepton_frWeights = [ "disabled" ]
     self.lepton_charge_selections = [ "SS" ]
     self.isBDTtraining = True
-    
+
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
     """Create python configuration file for the analyze_hh_bb2l executable (analysis code)
 
@@ -275,8 +275,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
                   if not is_mc and not isFR_shape_shift:
                     continue
 
-                ##if central_or_shift in systematics.LHE().HH and not sample_category.startswith("signal"):
-                ##  continue
+                if central_or_shift in systematics.LHE().hh and not sample_category.startswith("signal"):
+                  continue
                 if central_or_shift in systematics.LHE().ttH and sample_category != "TTH":
                   continue
                 if central_or_shift in systematics.LHE().ttW and sample_category != "TTW":
@@ -411,7 +411,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
                 # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
                 if not is_mc:
                   key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-                  key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)                  
+                  key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
                   if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
                     self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
                   self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.outputFile_hadd_stage1[key_hadd_stage1])
@@ -474,7 +474,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           if lepton_selection == "Tight":
             self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions]['outputFile'])
-          key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)          
+          key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
           self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5])
           self.outputFile_hadd_stage2[key_hadd_stage2] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage2_%s_%s_%s.root" % \
             (self.channel, lepton_charge_selection, lepton_selection_and_frWeight))
