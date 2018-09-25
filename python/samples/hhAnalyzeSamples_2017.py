@@ -33,9 +33,9 @@ for sample_name, sample_info in samples_2017.items():
     sample_info["sample_category"] = "WZ"
   elif sample_name.startswith('/WW'):
     sample_info["sample_category"] = "WW"
-  elif sample_name.startswith('/DY') and sample_name.find('JetsToLL') < 10:
+  elif sample_name.startswith('/DY') and sample_name.find('JetsToLL') != -1 and sample_name.find('JetsToLL') < 10:
     sample_info["sample_category"] = "DY"
-  elif sample_name.startswith('/W') and sample_name.find('JetsToLNu') < 10:
+  elif sample_name.startswith('/W') and sample_name.find('JetsToLNu') != -1 and sample_name.find('JetsToLNu') < 10:
     sample_info["sample_category"] = "W"
   elif sample_name.startswith('/ttH'):
     sample_info["sample_category"] = "TTH"
