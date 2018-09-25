@@ -76,6 +76,8 @@
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle.h
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle.h
+#include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
+#include "tthAnalysis/HiggsToTauTau/interface/Topness.h" // Topness
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
@@ -1369,8 +1371,18 @@ int main(int argc, char* argv[])
       mT2_top_3particle = mT2_top_3particle_permutation2;
       mT2_top_3particle_step = mT2_top_3particle_permutation2_step;
     }
-    double logTopness = -1.; // CV: not implemented yet
-    double logHiggsness = -1.; // CV: not implemented yet
+    Higgsness algoHiggsness;
+    algoHiggsness.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    double logHiggsness = -1.;
+    if ( algoHiggsness.isValidSolution() ) {
+      logHiggsness = algoHiggsness.logHiggsness();
+    } 
+    Topness algoTopness;
+    algoTopness.fit(selLeptonP4_lead, selLeptonP4_sublead, selBJetP4_lead, selBJetP4_sublead, metP4.px(), metP4.py());
+    double logTopness = -1.;
+    if ( algoTopness.isValidSolution() ) {
+      logTopness = algoTopness.logTopness();
+    } 
     double hmeMass = -1.; // CV: not implemented yet
 
 //--- fill histograms with events passing final selection
