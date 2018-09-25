@@ -1,4 +1,4 @@
-from tthAnalysis.HiggsToTauTau.samples.tthAnalyzeSamples_2017 import samples_2017 as samples_2017_general
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_bkg import samples_2017 as samples_2017_bkg
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_hh import samples_2017 as samples_2017_hh
 
 #TODO: both sets of samples need to be reprocessed w/o jet eta cuts
@@ -8,7 +8,7 @@ import itertools
 
 del samples_2017_hh['sum_events']
 samples_2017 = collections.OrderedDict(itertools.chain(
-  samples_2017_general.items(), samples_2017_hh.items()
+  samples_2017_bkg.items(), samples_2017_hh.items()
 ))
 
 from collections import OrderedDict as OD
@@ -24,7 +24,7 @@ for sample_name, sample_info in samples_2017.items():
   # CV: ONLY FOR TESTING !!!
   #else:
   #  sample_info["use_it"] = False
-  #  continue  
+  #  continue
   #------------------------------------------------------------------------------
 
   if sample_name.startswith('/ZZ'):
