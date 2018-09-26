@@ -138,8 +138,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
     self.histogramDir_prep_dcard = "hh_bb2l_OS_Tight"
     self.histogramDir_prep_dcard_SS = "hh_bb2l_SS_Tight"
     self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "Other", "VH", "TTH", "TH" ] + [ "conversions", "fakes_data" ]
-    self.mass_point = 400
-    self.make_plots_signal = "signal_hh_%d" % self.mass_point
+    self.mass_point = 400.
+    self.make_plots_signal = "signal_ggf_spin0_%1.0f_hh_bbww" % self.mass_point
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
 
