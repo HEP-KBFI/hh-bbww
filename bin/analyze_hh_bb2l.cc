@@ -604,12 +604,12 @@ int main(int argc, char* argv[])
       "HT", "STMET", 
       "m_bb", "dR_bb", "pT_bb",
       "m_ll", "dR_ll", "pT_ll",
-      "pT_llMEt", "mT_llMEt",
+      "pT_llMEt", "Smin_llMEt",
       "dR_b1l1", "dR_b1l2", "dR_b2l1", "dR_b2l2", 
       "m_bbll", "pT_bbll", "dPhi_bbll", 
-      "m_bbllMEt", "pT_bbllMEt", "dPhi_bbllMEt", 
+      "m_bbllMEt", "pT_bbllMEt", "Smin_bbllMEt", "dPhi_bbllMEt", 
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle", 
-      "logTopness", "logHiggsness",
+      "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
       "hmeMass",
       "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight"
@@ -1008,13 +1008,13 @@ int main(int argc, char* argv[])
       HT, 
       STMET,
       -1., -1., -1., -1., 
-      -1., 
       -1., -1., 
+      -1., -1., -1., 
       -1., -1, -1., -1, -1., -1,
-      -1., -1., 
+      -1., -1.,  
       -1., -1., -1.,
       1.
-    );				    
+    );			
     preselHistManager->evtYield_->fillHistograms(eventInfo, 1.);
 
 //--- apply final event selection
@@ -1319,16 +1319,18 @@ int main(int argc, char* argv[])
     double dR_ll = deltaR(selLeptonP4_lead, selLeptonP4_sublead);
     double pT_ll = llP4.pt();
     double pT_llMEt = (llP4 + metP4).pt();
-    double mT_llMEt = TMath::Sqrt(2.*llP4.pt()*met.pt()*(1. - TMath::Cos(deltaPhi(llP4.phi(), met.phi()))));
+    double Smin_llMEt = comp_Smin(llP4, metP4.px(), metP4.py());
     double dR_b1l1 = deltaR(selBJetP4_lead, selLeptonP4_lead);
     double dR_b1l2 = deltaR(selBJetP4_lead, selLeptonP4_sublead);
     double dR_b2l1 = deltaR(selBJetP4_sublead, selLeptonP4_lead);
     double dR_b2l2 = deltaR(selBJetP4_sublead, selLeptonP4_sublead);
-    double m_bbll = (bbP4 + llP4).mass();
-    double pT_bbll = (bbP4 + llP4).pt();
+    Particle::LorentzVector bbllP4 = bbP4 + llP4;
+    double m_bbll = bbllP4.mass();
+    double pT_bbll = bbllP4.pt();
     double dPhi_bbll = deltaPhi(bbP4.phi(), llP4.phi());        
-    double m_bbllMEt = (bbP4 + llP4 + metP4).mass();
-    double pT_bbllMEt = (bbP4 + llP4 + metP4).pt();
+    double m_bbllMEt = (bbllP4 + metP4).mass();
+    double pT_bbllMEt = (bbllP4 + metP4).pt();
+    double Smin_bbllMEt = comp_Smin(bbllP4, metP4.px(), metP4.py());
     double dPhi_bbllMEt = deltaPhi(bbP4.phi(), (llP4 + metP4).phi());
     mT2_2particle mT2Algo_2particle;
     mT2Algo_2particle(
@@ -1371,17 +1373,29 @@ int main(int argc, char* argv[])
       mT2_top_3particle = mT2_top_3particle_permutation2;
       mT2_top_3particle_step = mT2_top_3particle_permutation2_step;
     }
-    Higgsness algoHiggsness;
-    algoHiggsness.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
-    double logHiggsness = -1.;
-    if ( algoHiggsness.isValidSolution() ) {
-      logHiggsness = algoHiggsness.logHiggsness();
+    Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
+    algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    double logHiggsness_publishedChi2 = -1.;
+    if ( algoHiggsness_publishedChi2.isValidSolution() ) {
+      logHiggsness_publishedChi2 = algoHiggsness_publishedChi2.logHiggsness();
     } 
-    Topness algoTopness;
-    algoTopness.fit(selLeptonP4_lead, selLeptonP4_sublead, selBJetP4_lead, selBJetP4_sublead, metP4.px(), metP4.py());
-    double logTopness = -1.;
-    if ( algoTopness.isValidSolution() ) {
-      logTopness = algoTopness.logTopness();
+    Topness algoTopness_publishedChi2(Topness::kPublishedChi2);
+    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selBJetP4_lead, selBJetP4_sublead, metP4.px(), metP4.py());
+    double logTopness_publishedChi2 = -1.;
+    if ( algoTopness_publishedChi2.isValidSolution() ) {
+      logTopness_publishedChi2 = algoTopness_publishedChi2.logTopness();
+    } 
+    Higgsness algoHiggsness_fixedChi2(Higgsness::kFixedChi2);
+    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    double logHiggsness_fixedChi2 = -1.;
+    if ( algoHiggsness_fixedChi2.isValidSolution() ) {
+      logHiggsness_fixedChi2 = algoHiggsness_fixedChi2.logHiggsness();
+    } 
+    Topness algoTopness_fixedChi2(Topness::kFixedChi2);
+    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selBJetP4_lead, selBJetP4_sublead, metP4.px(), metP4.py());
+    double logTopness_fixedChi2 = -1.;
+    if ( algoTopness_fixedChi2.isValidSolution() ) {
+      logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
     } 
     double hmeMass = -1.; // CV: not implemented yet
 
@@ -1419,11 +1433,11 @@ int main(int argc, char* argv[])
       selBJets_medium.size(),
       HT, 
       STMET,
-      m_bb, dR_bb, m_ll, dR_ll,
-      mT_llMEt,
-      pT_bbllMEt, dPhi_bbllMEt,
+      m_bb, dR_bb, m_ll, dR_ll, 
+      pT_llMEt, Smin_llMEt,
+      pT_bbllMEt, Smin_bbllMEt, dPhi_bbllMEt,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
-      logHiggsness, logTopness,
+      logHiggsness_publishedChi2, logTopness_publishedChi2,
       m_bbll, m_bbllMEt, hmeMass, 
       evtWeight);
     selHistManager->evtYield_->fillHistograms(eventInfo, evtWeight);
@@ -1493,10 +1507,10 @@ int main(int argc, char* argv[])
 	HT, 
 	STMET,
 	m_bb, dR_bb, m_ll, dR_ll,
-	mT_llMEt,
-	pT_bbllMEt, dPhi_bbllMEt,
+	pT_llMEt, Smin_llMEt,
+	pT_bbllMEt, Smin_bbllMEt, dPhi_bbllMEt,
 	mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
-	logHiggsness, logTopness,
+	logHiggsness_publishedChi2, logTopness_publishedChi2,
 	m_bbll, m_bbllMEt, hmeMass, 
 	evtWeight);
     }
@@ -1534,7 +1548,7 @@ int main(int argc, char* argv[])
 	  ("dR_ll",                          dR_ll)
  	  ("pT_ll",                          pT_ll)
       	  ("pT_llMEt",                       pT_llMEt)
-	  ("mT_llMEt",                       mT_llMEt)
+	  ("Smin_llMEt",                     Smin_llMEt)
       	  ("dR_b1l1",                        dR_b1l1)
 	  ("dR_b1l2",                        dR_b1l2)
  	  ("dR_b2l1",                        dR_b2l1)
@@ -1544,12 +1558,15 @@ int main(int argc, char* argv[])
 	  ("dPhi_bbll",                      dPhi_bbll)
       	  ("m_bbllMEt",                      m_bbllMEt)
 	  ("pT_bbllMEt",                     pT_bbllMEt)
+          ("Smin_bbllMEt",                   Smin_bbllMEt)
 	  ("dPhi_bbllMEt",                   dPhi_bbllMEt)
       	  ("mT2_W",                          mT2_W)
 	  ("mT2_top_2particle",              mT2_top_2particle)
  	  ("mT2_top_3particle",              mT2_top_3particle)
-      	  ("logTopness",                     logTopness)
-	  ("logHiggsness",                   logHiggsness)
+      	  ("logTopness_publishedChi2",       logTopness_publishedChi2)
+	  ("logHiggsness_publishedChi2",     logHiggsness_publishedChi2)
+          ("logTopness_fixedChi2",           logTopness_fixedChi2)
+	  ("logHiggsness_fixedChi2",         logHiggsness_fixedChi2)
       	  ("hmeMass",                        hmeMass)
 	  ("vbf_dEta_jj",                    vbf_dEta_jj)
           ("vbf_m_jj",                       vbf_m_jj)
