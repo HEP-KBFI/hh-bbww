@@ -27,15 +27,17 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_STMET_                  = book1D(dir, "STMET",                  "STMET",                  150,  0., 1500.);
 
   histogram_m_bb_                   = book1D(dir, "m_bb",                   "m_bb",                    40,  0.,  200.); 
-  histogram_dR_bb_                  = book1D(dir, "dR_bb",                  "dR_bb",              100,  0.,    5.);
+  histogram_dR_bb_                  = book1D(dir, "dR_bb",                  "dR_bb",                  100,  0.,    5.);
 
   histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    40,  0.,  200.); 
-  histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",              100,  0.,    5.);
+  histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,  0.,    5.);
 
-  histogram_mT_llMEt_               = book1D(dir, "mT_llMEt",               "mT_llMEt",               100,  0.,  500.);  
+  histogram_pT_llMEt_               = book1D(dir, "pT_llMEt",               "pT_llMEt",               100,  0.,  500.);  
+  histogram_Smin_llMEt_             = book1D(dir, "Smin_llMEt",             "Smin_llMEt",             100,  0.,  500.);  
 
   histogram_pT_bbllMEt_             = book1D(dir, "pT_bbllMEt",             "pT_bbllMEt",             100,  0.,  500.);  
-  histogram_dPhi_bbllMEt_           = book1D(dir, "dPhi_bbllMEt",           "dPhi_bbllMEt",        36,  0., TMath::Pi());
+  histogram_Smin_bbllMEt_           = book1D(dir, "Smin_bbllMEt",           "Smin_bbllMEt",           100,  0., 1000.); 
+  histogram_dPhi_bbllMEt_           = book1D(dir, "dPhi_bbllMEt",           "dPhi_bbllMEt",            36,  0., TMath::Pi());
 
   histogram_mT2_W_                  = book1D(dir, "mT2_W",                  "mT2_W",                   40,  0.,  200.); 
   histogram_mT2_W_step_             = book1D(dir, "mT2_W_step",             "mT2_W_step",             103, -1.5, 101.5); 
@@ -64,8 +66,8 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       double HT,
 				       double STMET,
 				       double m_bb, double dR_bb, double m_ll, double dR_ll,
-				       double mT_llMEt,
-				       double pT_bbllMEt, double dPhi_bbllMEt,
+				       double pT_llMEt, double Smin_llMEt, 
+				       double pT_bbllMEt, double Smin_bbllMEt, double dPhi_bbllMEt,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
 				       double m_bbll, double m_bbllMEt, double hmeMass, 
@@ -88,9 +90,11 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_m_ll_,                   m_ll,                   evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_ll_,                  dR_ll,                  evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_mT_llMEt_,               mT_llMEt,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_pT_llMEt_,               pT_llMEt,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Smin_llMEt_,             Smin_llMEt,             evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_pT_bbllMEt_,             pT_bbllMEt,             evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Smin_bbllMEt_,           Smin_bbllMEt,           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_bbllMEt_,           dPhi_bbllMEt,           evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_mT2_W_,                  mT2_W,                  evtWeight, evtWeightErr);
