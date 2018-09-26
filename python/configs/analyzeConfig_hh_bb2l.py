@@ -138,8 +138,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
     self.histogramDir_prep_dcard = "hh_bb2l_OS_Tight"
     self.histogramDir_prep_dcard_SS = "hh_bb2l_SS_Tight"
     self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "Other", "VH", "TTH", "TH" ] + [ "conversions", "fakes_data" ]
-    self.mass_point = 400.
-    self.make_plots_signal = "signal_ggf_spin0_%1.0f_hh_bbww" % self.mass_point
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
 
@@ -553,7 +551,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
         'histogramDir' : getHistogramDir("Tight", "disabled", lepton_charge_selection),
         'label' : '2l',
-        'massPoint' : self.mass_point,
         'skipChannel' : True,
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }
