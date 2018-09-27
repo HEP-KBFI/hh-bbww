@@ -406,13 +406,13 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
                     self.outputFile_hadd_stage1_5[key_hadd_stage1_5] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_5_%s_%s_%s.root" % \
                       (self.channel, lepton_charge_selection, lepton_selection_and_frWeight))
 
-                # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
-                if not is_mc:
-                  key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-                  key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
-                  if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
-                    self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
-                  self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.outputFile_hadd_stage1[key_hadd_stage1])
+            # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
+            if not is_mc:
+              key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
+              key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
+              if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
+                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
+              self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.outputFile_hadd_stage1[key_hadd_stage1])
 
           # sum fake background contributions for the total of all MC sample
           # input processes: TT1l0g1j,TT0l1g1j,TT0l0g2j; ...
