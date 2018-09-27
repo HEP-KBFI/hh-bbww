@@ -1,7 +1,7 @@
 import logging
 import re
 
-from tthAnalysis.HiggsToTauTau.configs.analyzeConfig import *
+from hhAnalysis.multilepton.configs.analyzeConfig_hh import *
 from tthAnalysis.HiggsToTauTau.jobTools import create_if_not_exists
 from tthAnalysis.HiggsToTauTau.analysisTools import initDict, getKey, create_cfg, createFile, generateInputFileList
 
@@ -26,7 +26,7 @@ def getHistogramDir(lepton_selection, lepton_frWeight, lepton_charge_selection):
       histogramDir += "_woFakeRateWeights"
   return histogramDir
 
-class analyzeConfig_hh_bb2l(analyzeConfig):
+class analyzeConfig_hh_bb2l(analyzeConfig_hh):
   """Configuration metadata needed to run analysis in a single go.
 
   Sets up a folder structure by defining full path names; no directory creation is delegated here.
@@ -66,7 +66,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         hlt_filter        = False,
         use_home          = True,
       ):
-    analyzeConfig.__init__(self,
+    analyzeConfig_hh.__init__(self,
       configDir          = configDir,
       outputDir          = outputDir,
       executable_analyze = executable_analyze,
@@ -421,8 +421,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
           sample_categories = []
           sample_categories.extend(self.nonfake_backgrounds)
-          if "signal_nonresonant" in self.prep_dcard_signals:
-            sample_categories.extend([ "signal_nonresonant" ])
           processes_input = []
           for sample_category in sample_categories:
             processes_input.append("%s_fake" % sample_category)
@@ -446,8 +444,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           key_addBackgrounds_job_conversions = getKey(lepton_charge_selection, lepton_selection, "conversions")
           sample_categories = []
           sample_categories.extend(self.nonfake_backgrounds)
-          if "signal_nonresonant" in self.prep_dcard_signals:
-            sample_categories.extend([ "signal_nonresonant" ])
           processes_input = []
           for sample_category in sample_categories:
             processes_input.append("%s_conversion" % sample_category)
@@ -530,7 +526,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           continue
         lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_mcClosure, "enabled")
         key_addBackgrounds_job_fakes = getKey(lepton_charge_selection, lepton_selection_and_frWeight, "fakes")
-        histogramDir_mcClosure = self.mcClosure_dir['%s_%s_%s' % (lepton_mcClosure, hadTau_charge_selection)]
+        histogramDir_mcClosure = self.mcClosure_dir[lepton_mcClosure]
         self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
           'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
           'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2],
@@ -551,7 +547,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
         'histogramDir' : getHistogramDir("Tight", "disabled", lepton_charge_selection),
         'label' : '2l',
-        'skipChannel' : True,
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }
       self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
