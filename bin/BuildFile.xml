@@ -11,5 +11,5 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
 </bin>
