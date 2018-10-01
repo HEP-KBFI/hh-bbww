@@ -65,6 +65,15 @@ if mode == "default":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018 as samples
   else:
     raise ValueError("Invalid era: %s" % era)
+elif mode == "forBDTtraining":
+  if era == "2016":
+    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
+  elif era == "2017":
+    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
+  elif era == "2018":
+    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
+  else:
+    raise ValueError("Invalid era: %s" % era)
 else:
   raise ValueError("Internal logic error")
 

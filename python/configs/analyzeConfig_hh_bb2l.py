@@ -299,7 +299,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 rleOutputFile_path = os.path.join(self.dirs[key_dir][DKEY_RLES], "rle_%s.txt" % cfg_key) \
                                      if self.select_rle_output else ""
                 applyFakeRateWeights = self.applyFakeRateWeights  \
-                  if not lepton_selection == "Tight" \
+                  if self.isBDTtraining or not lepton_selection == "Tight" \
                   else "disabled"
 
                 self.jobOptions_analyze[key_analyze_job] = {
@@ -329,6 +329,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 self.inputFiles_hadd_stage1[key_hadd_stage1].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
                 self.outputFile_hadd_stage1[key_hadd_stage1] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_%s_%s_%s_%s.root" % \
                   (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight))
+
+            if self.isBDTtraining:
+              continue
 
             if is_mc:
               logging.info("Creating configuration files to run 'addBackgrounds' for sample %s" % process_name)
@@ -406,6 +409,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     self.outputFile_hadd_stage1_5[key_hadd_stage1_5] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_5_%s_%s_%s.root" % \
                       (self.channel, lepton_charge_selection, lepton_selection_and_frWeight))
 
+            if self.isBDTtraining:
+              continue
+
             # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
             if not is_mc:
               key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
@@ -413,6 +419,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
                 self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
               self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.outputFile_hadd_stage1[key_hadd_stage1])
+
+          if self.isBDTtraining:
+            continue
 
           # sum fake background contributions for the total of all MC sample
           # input processes: TT1l0g1j,TT0l1g1j,TT0l0g2j; ...
@@ -472,6 +481,19 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5])
           self.outputFile_hadd_stage2[key_hadd_stage2] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage2_%s_%s_%s.root" % \
             (self.channel, lepton_charge_selection, lepton_selection_and_frWeight))
+
+    if self.isBDTtraining:
+      if self.is_sbatch:
+        logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
+        self.sbatchFile_analyze = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_analyze_%s.py" % self.channel)
+        self.createScript_sbatch_analyze(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
+      logging.info("Creating Makefile")
+      lines_makefile = []
+      self.addToMakefile_analyze(lines_makefile)
+      self.addToMakefile_hadd_stage1(lines_makefile)
+      self.createMakefile(lines_makefile)
+      logging.info("Done")
+      return self.num_jobs
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for lepton_charge_selection in self.lepton_charge_selections:
