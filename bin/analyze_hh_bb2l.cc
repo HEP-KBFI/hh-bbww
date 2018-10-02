@@ -475,7 +475,7 @@ int main(int argc, char* argv[])
       Form("%s/sel/subleadElectron", histogramDir.data()), central_or_shift, 1));
     selHistManager->subleadElectron_->bookHistograms(fs);
     vstring categories_e = {
-      "2l", "2e", "1e1mu"
+      "bb2e", "bb1e1mu"
     };
     for ( vstring::const_iterator category = categories_e.begin();
           category != categories_e.end(); ++category ) {
@@ -501,7 +501,7 @@ int main(int argc, char* argv[])
       Form("%s/sel/subleadMuon", histogramDir.data()), central_or_shift, 1));
     selHistManager->subleadMuon_->bookHistograms(fs);
     vstring categories_mu = {
-      "2l", "1e1mu", "2mu"
+      "bb1e1mu", "bb2mu"
     };
     for ( vstring::const_iterator category = categories_mu.begin();
 	  category != categories_mu.end(); ++category ) {
@@ -548,8 +548,9 @@ int main(int argc, char* argv[])
       Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift));
     selHistManager->evt_->bookHistograms(fs);
     vstring categories_evt = {
-      "2l", "2e", "1e1mu", "2mu", 
-      "2l_vbf", "2e_vbf", "1e1mu_vbf", "2mu_vbf"
+      "bb2e", "bb1e1mu", "bb2mu", 
+      "bb2l_nonvbf", "bb2e_nonvbf", "bb1e1mu_nonvbf", "bb2mu_nonvbf", 
+      "bb2l_vbf", "bb2e_vbf", "bb1e1mu_vbf", "bb2mu_vbf"
     };
     for ( vstring::const_iterator category = categories_evt.begin();
 	  category != categories_evt.end(); ++category ) {
@@ -790,8 +791,8 @@ int main(int argc, char* argv[])
 	continue;
       }
     }
-    cutFlowTable.update("trigger");
-    cutFlowHistManager->fillHistograms("trigger", lumiScale);
+    cutFlowTable.update("trigger", evtWeight_inclusive);
+    cutFlowHistManager->fillHistograms("trigger", evtWeight_inclusive);
 
     if ( (selTrigger_2e    && !apply_offline_e_trigger_cuts_2e)    ||
 	 (selTrigger_1e1mu && !apply_offline_e_trigger_cuts_1e1mu) ||
@@ -949,8 +950,8 @@ int main(int argc, char* argv[])
       }
       continue;
     }
-    cutFlowTable.update(">= 2 presel leptons");
-    cutFlowHistManager->fillHistograms(">= 2 presel leptons", lumiScale);
+    cutFlowTable.update(">= 2 presel leptons", evtWeight_inclusive);
+    cutFlowHistManager->fillHistograms(">= 2 presel leptons", evtWeight_inclusive);
     const RecoLepton* preselLepton_lead = preselLeptonsFull[0];
     const RecoLepton* preselLepton_sublead = preselLeptonsFull[1];
     const leptonGenMatchEntry& preselLepton_genMatch = getLeptonGenMatch(leptonGenMatch_definitions, preselLepton_lead, preselLepton_sublead);
@@ -973,12 +974,12 @@ int main(int argc, char* argv[])
       }
       continue;
     }
-    cutFlowTable.update("presel lepton trigger match");
-    cutFlowHistManager->fillHistograms("presel lepton trigger match", lumiScale);
+    cutFlowTable.update("presel lepton trigger match", evtWeight_inclusive);
+    cutFlowHistManager->fillHistograms("presel lepton trigger match", evtWeight_inclusive);
 
     if ( !(selBJets_loose.size() >= 2 && selBJets_medium.size() >= 1) ) continue;
-    cutFlowTable.update(">= 2 loose b-jets && >= 1 medium b-jet (1)");
-    cutFlowHistManager->fillHistograms(">= 2 loose b-jets && >= 1 medium b-jet (1)", lumiScale);
+    cutFlowTable.update(">= 2 loose b-jets && >= 1 medium b-jet (1)", evtWeight_inclusive);
+    cutFlowHistManager->fillHistograms(">= 2 loose b-jets && >= 1 medium b-jet (1)", evtWeight_inclusive);
 
 //--- compute MHT and linear MET discriminant (met_LD)
     RecoMEt met = metReader->read();
@@ -1013,7 +1014,7 @@ int main(int argc, char* argv[])
       -1., -1, -1., -1, -1., -1,
       -1., -1.,  
       -1., -1., -1.,
-      1.
+      evtWeight_inclusive
     );			
     preselHistManager->evtYield_->fillHistograms(eventInfo, 1.);
 
@@ -1026,8 +1027,8 @@ int main(int argc, char* argv[])
       }
       continue;
     }
-    cutFlowTable.update(">= 2 sel leptons", 1.);
-    cutFlowHistManager->fillHistograms(">= 2 sel leptons", 1.);
+    cutFlowTable.update(">= 2 sel leptons", evtWeight_inclusive);
+    cutFlowHistManager->fillHistograms(">= 2 sel leptons", evtWeight_inclusive);
     const RecoLepton* selLepton_lead = selLeptons[0];
     const Particle::LorentzVector& selLeptonP4_lead = selLepton_lead->p4();
     int selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
@@ -1456,7 +1457,7 @@ int main(int argc, char* argv[])
 	    selJetVBF2 != selJetsVBF.end(); ++selJetVBF2 ) {
 	double dEta_jj = TMath::Abs((*selJetVBF1)->eta() - (*selJetVBF2)->eta());
 	double m_jj = ((*selJetVBF1)->p4() + (*selJetVBF2)->p4()).mass();
-	if ( dEta_jj > 4. && m_jj > 300. ) {
+	if ( dEta_jj > 4. && m_jj > 500. ) {
 	  if ( dEta_jj > vbf_dEta_jj ) vbf_dEta_jj = dEta_jj;
 	  if ( m_jj    > vbf_m_jj    ) vbf_m_jj    = m_jj;
 	  isVBF = true;
@@ -1465,17 +1466,20 @@ int main(int argc, char* argv[])
     }
 
     std::vector<std::string> categories;
-    categories.push_back("2l");
     if ( isVBF ) categories.push_back("2l_vbf");
+    else categories.push_back("2l_nonvbf");
     if ( selMuons.size() >= 2 ) {
       categories.push_back("2mu");
       if ( isVBF ) categories.push_back("2mu_vbf");
+      else categories.push_back("2mu_nonvbf");
     } else if ( selMuons.size() >= 1 && selElectrons.size() >= 1 ) {
       categories.push_back("1e1mu");
       if ( isVBF ) categories.push_back("1e1mu_vbf");
+      else categories.push_back("1e1mu_nonvbf");
     } else if ( selElectrons.size() >= 2 ) {
       categories.push_back("2e");
       if ( isVBF ) categories.push_back("2e_vbf");
+      else categories.push_back("2e_nonvbf");
     } else assert(0);
 
     for ( std::vector<std::string>::const_iterator category = categories.begin();
