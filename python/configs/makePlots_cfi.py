@@ -148,8 +148,8 @@ process.makePlots = cms.PSet(
     showUncertainty = cms.bool(False),
 
     labelOnTop = cms.string(
-        ("CMS Preliminary; %dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow " % scaleSignal) +
-        "4W,2W2#tau,4#tau; %1.1f fb^{-1} at #sqrt{s} = 13 TeV"),
+        ("CMS Preliminary; %dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow bbWW; " % scaleSignal) +
+        "%1.1f fb^{-1} at #sqrt{s} = 13 TeV"),
     intLumiData = cms.double(0.), # in units of fb^-1
 
     outputFileName = cms.string("")

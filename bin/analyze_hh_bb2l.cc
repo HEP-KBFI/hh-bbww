@@ -426,7 +426,7 @@ int main(int argc, char* argv[])
   };
   std::map<int, selHistManagerType*> selHistManagers;
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
-	leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
+        leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
 
     std::string process_and_genMatch = process_string;
     if ( apply_leptonGenMatching ) process_and_genMatch += leptonGenMatch_definition->name_;
@@ -504,7 +504,7 @@ int main(int argc, char* argv[])
       "bb1e1mu", "bb2mu"
     };
     for ( vstring::const_iterator category = categories_mu.begin();
-	  category != categories_mu.end(); ++category ) {
+          category != categories_mu.end(); ++category ) {
       TString histogramDir_category = histogramDir.data();
       histogramDir_category.ReplaceAll("bb2l", category->data());
       selHistManager->muons_in_categories_[*category] = new MuonHistManager(makeHistManager_cfg(process_and_genMatch,
@@ -553,7 +553,7 @@ int main(int argc, char* argv[])
       "bb2l_vbf", "bb2e_vbf", "bb1e1mu_vbf", "bb2mu_vbf"
     };
     for ( vstring::const_iterator category = categories_evt.begin();
-	  category != categories_evt.end(); ++category ) {
+          category != categories_evt.end(); ++category ) {
       TString histogramDir_category = histogramDir.data();
       histogramDir_category.ReplaceAll("bb2l", category->data());
       selHistManager->evt_in_categories_[*category] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
@@ -599,8 +599,8 @@ int main(int argc, char* argv[])
     bdt_filler->register_variable<float_type>(
       "lep1_pt", "lep1_conePt", "lep1_eta", 
       "lep2_pt", "lep2_conePt", "lep2_eta", 
-      "bjet1_pt", "bjet1_conePt", "bjet1_eta", 
-      "bjet2_pt", "bjet2_conePt", "bjet2_eta", 
+      "bjet1_pt", "bjet1_eta",
+      "bjet2_pt", "bjet2_eta",
       "met", "mht", "met_LD", 
       "HT", "STMET", 
       "m_bb", "dR_bb", "pT_bb",
@@ -674,7 +674,7 @@ int main(int argc, char* argv[])
     if ( run_lumi_eventSelector ) {
       std::cout << "processing Entry #" << inputTree->getCumulativeMaxEventCount() << ": " << eventInfo << std::endl;
       if ( inputTree -> isOpen() ) {
-	std::cout << "input File = " << inputTree->getCurrentFileName() << std::endl;
+        std::cout << "input File = " << inputTree->getCurrentFileName() << std::endl;
       }
     }
 
@@ -687,22 +687,22 @@ int main(int argc, char* argv[])
     std::vector<GenJet> genJets;
     if ( isMC && fillGenEvtHistograms ) {
       if ( genLeptonReader ) {
-	genLeptons = genLeptonReader->read();
-	for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
-	      genLepton != genLeptons.end(); ++genLepton ) {
-	  int abs_pdgId = std::abs(genLepton->pdgId());
-	  if      ( abs_pdgId == 11 ) genElectrons.push_back(*genLepton);
-	  else if ( abs_pdgId == 13 ) genMuons.push_back(*genLepton);
-	}
+        genLeptons = genLeptonReader->read();
+        for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
+              genLepton != genLeptons.end(); ++genLepton ) {
+          int abs_pdgId = std::abs(genLepton->pdgId());
+          if      ( abs_pdgId == 11 ) genElectrons.push_back(*genLepton);
+          else if ( abs_pdgId == 13 ) genMuons.push_back(*genLepton);
+        }
       }
       if ( genHadTauReader ) {
-	genHadTaus = genHadTauReader->read();
+        genHadTaus = genHadTauReader->read();
       }
       if ( genPhotonReader ) {
         genPhotons = genPhotonReader->read();
       }
       if ( genJetReader ) {
-	genJets = genJetReader->read();
+        genJets = genJetReader->read();
       }
       if ( isDEBUG ) {
         printCollection("genLeptons", genLeptons);
@@ -739,11 +739,11 @@ int main(int argc, char* argv[])
     if ( !(selTrigger_1e || selTrigger_2e || selTrigger_1mu || selTrigger_2mu || selTrigger_1e1mu) ) {
       if ( run_lumi_eventSelector ) {
     std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
-	std::cout << " (selTrigger_1e = " << selTrigger_1e
-		  << ", selTrigger_2e = " << selTrigger_2e
-		  << ", selTrigger_1mu = " << selTrigger_1mu
-		  << ", selTrigger_2mu = " << selTrigger_2mu
-		  << ", selTrigger_1e1mu = " << selTrigger_1e1mu << ")" << std::endl;
+        std::cout << " (selTrigger_1e = " << selTrigger_1e
+                  << ", selTrigger_2e = " << selTrigger_2e
+                  << ", selTrigger_1mu = " << selTrigger_1mu
+                  << ", selTrigger_2mu = " << selTrigger_2mu
+                  << ", selTrigger_1e1mu = " << selTrigger_1e1mu << ")" << std::endl;
       }
       continue;
     }
@@ -753,52 +753,52 @@ int main(int argc, char* argv[])
 // CV: this logic is necessary to avoid that the same event is selected multiple times when processing different primary datasets
     if ( !isMC && !isDEBUG ) {
       if ( selTrigger_1e && (isTriggered_2e || isTriggered_1mu || isTriggered_2mu || isTriggered_1e1mu) ) {
-	if ( run_lumi_eventSelector ) {
+        if ( run_lumi_eventSelector ) {
       std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_1e = " << selTrigger_1e
-		    << ", isTriggered_2e = " << isTriggered_2e
-		    << ", isTriggered_1mu = " << isTriggered_1mu
-		    << ", isTriggered_2mu = " << isTriggered_2mu
-		    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
-	}
-	continue;
+          std::cout << " (selTrigger_1e = " << selTrigger_1e
+                    << ", isTriggered_2e = " << isTriggered_2e
+                    << ", isTriggered_1mu = " << isTriggered_1mu
+                    << ", isTriggered_2mu = " << isTriggered_2mu
+                    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
+        }
+        continue;
       }
       if ( selTrigger_2e && (isTriggered_2mu || isTriggered_1e1mu) ) {
-	if ( run_lumi_eventSelector ) {
+        if ( run_lumi_eventSelector ) {
       std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_2e = " << selTrigger_2e
-		    << ", isTriggered_2mu = " << isTriggered_2mu
-		    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
-	}
-	continue;
+          std::cout << " (selTrigger_2e = " << selTrigger_2e
+                    << ", isTriggered_2mu = " << isTriggered_2mu
+                    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
+        }
+        continue;
       }
       if ( selTrigger_1mu && (isTriggered_2e || isTriggered_2mu || isTriggered_1e1mu) ) {
-	if ( run_lumi_eventSelector ) {
+        if ( run_lumi_eventSelector ) {
       std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_1mu = " << selTrigger_1mu
-		    << ", isTriggered_2e = " << isTriggered_2e
-		    << ", isTriggered_2mu = " << isTriggered_2mu
-		    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
-	}
-	continue;
+          std::cout << " (selTrigger_1mu = " << selTrigger_1mu
+                    << ", isTriggered_2e = " << isTriggered_2e
+                    << ", isTriggered_2mu = " << isTriggered_2mu
+                    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
+        }
+        continue;
       }
       if ( selTrigger_1e1mu && isTriggered_2mu ) {
-	if ( run_lumi_eventSelector ) {
+        if ( run_lumi_eventSelector ) {
       std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_1e1mu = " << selTrigger_1e1mu
-		    << ", isTriggered_2mu = " << isTriggered_2mu << ")" << std::endl;
-	}
-	continue;
+          std::cout << " (selTrigger_1e1mu = " << selTrigger_1e1mu
+                    << ", isTriggered_2mu = " << isTriggered_2mu << ")" << std::endl;
+        }
+        continue;
       }
     }
     cutFlowTable.update("trigger", evtWeight_inclusive);
     cutFlowHistManager->fillHistograms("trigger", evtWeight_inclusive);
 
     if ( (selTrigger_2e    && !apply_offline_e_trigger_cuts_2e)    ||
-	 (selTrigger_1e1mu && !apply_offline_e_trigger_cuts_1e1mu) ||
-	 (selTrigger_1e    && !apply_offline_e_trigger_cuts_1e)    ||
-	 (selTrigger_1mu   && !apply_offline_e_trigger_cuts_1mu)   ||
-	 (selTrigger_2mu   && !apply_offline_e_trigger_cuts_2mu)  ) {
+         (selTrigger_1e1mu && !apply_offline_e_trigger_cuts_1e1mu) ||
+         (selTrigger_1e    && !apply_offline_e_trigger_cuts_1e)    ||
+         (selTrigger_1mu   && !apply_offline_e_trigger_cuts_1mu)   ||
+         (selTrigger_2mu   && !apply_offline_e_trigger_cuts_2mu)  ) {
       fakeableElectronSelector.disable_offline_e_trigger_cuts();
       tightElectronSelector.disable_offline_e_trigger_cuts();
     } else {
@@ -902,22 +902,22 @@ int main(int argc, char* argv[])
 //--- build collections of generator level particles (after some cuts are applied, to save computing time)
     if ( isMC && redoGenMatching && !fillGenEvtHistograms ) {
       if ( genLeptonReader ) {
-	genLeptons = genLeptonReader->read();
-	for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
-	      genLepton != genLeptons.end(); ++genLepton ) {
-	  int abs_pdgId = std::abs(genLepton->pdgId());
-	  if      ( abs_pdgId == 11 ) genElectrons.push_back(*genLepton);
-	  else if ( abs_pdgId == 13 ) genMuons.push_back(*genLepton);
-	}
+        genLeptons = genLeptonReader->read();
+        for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
+              genLepton != genLeptons.end(); ++genLepton ) {
+          int abs_pdgId = std::abs(genLepton->pdgId());
+          if      ( abs_pdgId == 11 ) genElectrons.push_back(*genLepton);
+          else if ( abs_pdgId == 13 ) genMuons.push_back(*genLepton);
+        }
       }
       if ( genHadTauReader ) {
-	genHadTaus = genHadTauReader->read();
+        genHadTaus = genHadTauReader->read();
       }
       if ( genPhotonReader ) {
         genPhotons = genPhotonReader->read();
       }
       if ( genJetReader ) {
-	genJets = genJetReader->read();
+        genJets = genJetReader->read();
       }
     }
 
@@ -945,8 +945,8 @@ int main(int argc, char* argv[])
     // require exactly two leptons passing loose preselection criteria
     if ( !(preselLeptonsFull.size() >= 2) ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS preselLeptons selection." << std::endl;
-	printCollection("preselLeptons", preselLeptonsFull);
+        std::cout << "event " << eventInfo.str() << " FAILS preselLeptons selection." << std::endl;
+        printCollection("preselLeptons", preselLeptonsFull);
       }
       continue;
     }
@@ -960,17 +960,17 @@ int main(int argc, char* argv[])
 
     // require that trigger paths match event category (with event category based on preselLeptons)
     if ( !((preselElectrons.size() >= 2 &&                            (selTrigger_2e    || selTrigger_1e                  )) ||
-	   (preselElectrons.size() >= 1 && preselMuons.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
-	   (                               preselMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
+           (preselElectrons.size() >= 1 && preselMuons.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
+           (                               preselMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
       if ( run_lumi_eventSelector ) {
     std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given preselLepton multiplicity." << std::endl;
-	std::cout << " (#preselElectrons = " << preselElectrons.size()
-		  << ", #preselMuons = " << preselMuons.size()
-		  << ", selTrigger_2mu = " << selTrigger_2mu
-		  << ", selTrigger_1e1mu = " << selTrigger_1e1mu
-		  << ", selTrigger_2e = " << selTrigger_2e
-		  << ", selTrigger_1mu = " << selTrigger_1mu
-		  << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
+        std::cout << " (#preselElectrons = " << preselElectrons.size()
+                  << ", #preselMuons = " << preselMuons.size()
+                  << ", selTrigger_2mu = " << selTrigger_2mu
+                  << ", selTrigger_1e1mu = " << selTrigger_1e1mu
+                  << ", selTrigger_2e = " << selTrigger_2e
+                  << ", selTrigger_1mu = " << selTrigger_1mu
+                  << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
       }
       continue;
     }
@@ -1022,8 +1022,8 @@ int main(int argc, char* argv[])
     // require exactly two leptons passing tight selection criteria of final event selection
     if ( !(selLeptons.size() >= 2) ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS selLeptons selection." << std::endl;
-	printCollection("selLeptons", selLeptons);
+        std::cout << "event " << eventInfo.str() << " FAILS selLeptons selection." << std::endl;
+        printCollection("selLeptons", selLeptons);
       }
       continue;
     }
@@ -1053,10 +1053,10 @@ int main(int argc, char* argv[])
       btagWeight = get_BtagWeight(selJets);
       evtWeight *= btagWeight;
       if ( isDEBUG ) {
-	std::cout << "lumiScale = " << lumiScale << std::endl;
-	if ( apply_genWeight ) std::cout << "genWeight = " << boost::math::sign(eventInfo.genWeight) << std::endl;
-	std::cout << "pileupWeight = " << eventInfo.pileupWeight << std::endl;
-	std::cout << "btagWeight = " << btagWeight << std::endl;
+        std::cout << "lumiScale = " << lumiScale << std::endl;
+        if ( apply_genWeight ) std::cout << "genWeight = " << boost::math::sign(eventInfo.genWeight) << std::endl;
+        std::cout << "pileupWeight = " << eventInfo.pileupWeight << std::endl;
+        std::cout << "btagWeight = " << btagWeight << std::endl;
       }
     }
 
@@ -1073,17 +1073,17 @@ int main(int argc, char* argv[])
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
     if ( !((fakeableElectrons.size() >= 2 &&                              (selTrigger_2e    || selTrigger_1e                  )) ||
-	   (fakeableElectrons.size() >= 1 && fakeableMuons.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
-	   (                                 fakeableMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
+           (fakeableElectrons.size() >= 1 && fakeableMuons.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
+           (                                 fakeableMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
       if ( run_lumi_eventSelector ) {
     std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
-	std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
-		  << ", #fakeableMuons = " << fakeableMuons.size()
-		  << ", selTrigger_2mu = " << selTrigger_2mu
-		  << ", selTrigger_1e1mu = " << selTrigger_1e1mu
-		  << ", selTrigger_2e = " << selTrigger_2e
-		  << ", selTrigger_1mu = " << selTrigger_1mu
-		  << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
+        std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
+                  << ", #fakeableMuons = " << fakeableMuons.size()
+                  << ", selTrigger_2mu = " << selTrigger_2mu
+                  << ", selTrigger_1e1mu = " << selTrigger_1e1mu
+                  << ", selTrigger_2e = " << selTrigger_2e
+                  << ", selTrigger_1mu = " << selTrigger_1mu
+                  << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
       }
       continue;
     }
@@ -1118,12 +1118,12 @@ int main(int argc, char* argv[])
     if ( isMC ) {
       dataToMCcorrectionInterface->setLeptons(
         selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->eta(),
-	selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->eta());
+        selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->eta());
 
 //--- apply data/MC corrections for trigger efficiency
       double sf_triggerEff = dataToMCcorrectionInterface->getSF_leptonTriggerEff();
       if ( isDEBUG ) {
-	std::cout << "sf_triggerEff = " << sf_triggerEff << std::endl;
+        std::cout << "sf_triggerEff = " << sf_triggerEff << std::endl;
       }
       triggerWeight *= sf_triggerEff;
       weight_data_to_MC_correction *= sf_triggerEff;
@@ -1145,7 +1145,7 @@ int main(int argc, char* argv[])
       }
       weight_data_to_MC_correction *= leptonSF_weight;
       if ( isDEBUG ) {
-	std::cout << "weight_data_to_MC_correction = " << weight_data_to_MC_correction << std::endl;
+        std::cout << "weight_data_to_MC_correction = " << weight_data_to_MC_correction << std::endl;
       }
 
       evtWeight *= weight_data_to_MC_correction;
@@ -1203,15 +1203,15 @@ int main(int argc, char* argv[])
     lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
       for ( std::vector<const RecoLepton*>::const_iterator lepton2 = lepton1 + 1;
       lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
-	double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
-	if ( mass < 12. ) {
-	  failsLowMassVeto = true;
-	}
+        double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
+        if ( mass < 12. ) {
+          failsLowMassVeto = true;
+        }
       }
     }
     if ( failsLowMassVeto ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS low mass lepton pair veto." << std::endl;
+        std::cout << "event " << eventInfo.str() << " FAILS low mass lepton pair veto." << std::endl;
       }
       continue;
     }
@@ -1225,9 +1225,9 @@ int main(int argc, char* argv[])
     double minPt_sublead = 15.;
     if ( !(selLepton_lead->cone_pt() > minPt_lead && selLepton_sublead->cone_pt() > minPt_sublead) ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS lepton pT selection." << std::endl;
-	std::cout << " (leading selLepton pT = " << selLepton_lead->pt() << ", minPt_lead = " << minPt_lead
-		  << ", subleading selLepton pT = " << selLepton_sublead->pt() << ", minPt_sublead = " << minPt_sublead << ")" << std::endl;
+        std::cout << "event " << eventInfo.str() << " FAILS lepton pT selection." << std::endl;
+        std::cout << " (leading selLepton pT = " << selLepton_lead->pt() << ", minPt_lead = " << minPt_lead
+                  << ", subleading selLepton pT = " << selLepton_sublead->pt() << ", minPt_sublead = " << minPt_sublead << ")" << std::endl;
       }
       continue;
     }
@@ -1239,16 +1239,16 @@ int main(int argc, char* argv[])
     if ( leptonChargeSelection == kOS && isLeptonCharge_SS ) {
       if ( run_lumi_eventSelector ) {
     std::cout << "event " << eventInfo.str() << " FAILS lepton charge selection." << std::endl;
-	std::cout << " (leading selLepton charge = " << selLepton_lead->charge()
-		  << ", subleading selLepton charge = " << selLepton_sublead->charge() << ", leptonChargeSelection = OS)" << std::endl;
+        std::cout << " (leading selLepton charge = " << selLepton_lead->charge()
+                  << ", subleading selLepton charge = " << selLepton_sublead->charge() << ", leptonChargeSelection = OS)" << std::endl;
       }
       continue;
     }
     if ( leptonChargeSelection == kSS && isLeptonCharge_OS ) {
       if ( run_lumi_eventSelector ) {
     std::cout << "event " << eventInfo.str() << " FAILS lepton charge selection." << std::endl;
-	std::cout << " (leading selLepton charge = " << selLepton_lead->charge()
-		  << ", subleading selLepton charge = " << selLepton_sublead->charge() << ", leptonChargeSelection = SS)" << std::endl;
+        std::cout << " (leading selLepton charge = " << selLepton_lead->charge()
+                  << ", subleading selLepton charge = " << selLepton_sublead->charge() << ", leptonChargeSelection = SS)" << std::endl;
       }
       continue;
     }
@@ -1263,17 +1263,17 @@ int main(int argc, char* argv[])
     lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
       for ( std::vector<const RecoLepton*>::const_iterator lepton2 = lepton1 + 1;
       lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
-	if ( (*lepton1)->pdgId() == -(*lepton2)->pdgId() ) { // pair of same flavor leptons of opposite charge
-	  isSameFlavor_OS = true;
-	  double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
-	  if ( std::fabs(mass - z_mass) < std::fabs(massSameFlavor_OS - z_mass) ) massSameFlavor_OS = mass;
-	}
+        if ( (*lepton1)->pdgId() == -(*lepton2)->pdgId() ) { // pair of same flavor leptons of opposite charge
+          isSameFlavor_OS = true;
+          double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
+          if ( std::fabs(mass - z_mass) < std::fabs(massSameFlavor_OS - z_mass) ) massSameFlavor_OS = mass;
+        }
       }
     }
     bool failsZbosonMassVeto = isSameFlavor_OS && std::fabs(massSameFlavor_OS - z_mass) < z_window;
     if ( failsZbosonMassVeto ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
+        std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
       }
       continue;
     }
@@ -1282,10 +1282,10 @@ int main(int argc, char* argv[])
 
     if ( apply_met_filters ) {
       if ( !metFilterSelector(metFilters) ) {
-	if ( run_lumi_eventSelector ) {
+        if ( run_lumi_eventSelector ) {
       std::cout << "event " << eventInfo.str() << " FAILS MEt filters." << std::endl;
-	}
-	continue;
+        }
+        continue;
       }
     }
     cutFlowTable.update("MEt filters", evtWeight);
@@ -1300,10 +1300,10 @@ int main(int argc, char* argv[])
     }
     if ( failsSignalRegionVeto ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS overlap w/ the SR: "
-	             "# tight leptons = " << tightLeptons.size() << " >= 2\n"
+        std::cout << "event " << eventInfo.str() << " FAILS overlap w/ the SR: "
+                     "# tight leptons = " << tightLeptons.size() << " >= 2\n"
         ;
-	printCollection("tightLeptons", tightLeptons);
+        printCollection("tightLeptons", tightLeptons);
       }
       continue; // CV: avoid overlap with signal region
     }
@@ -1336,7 +1336,7 @@ int main(int argc, char* argv[])
     mT2_2particle mT2Algo_2particle;
     mT2Algo_2particle(
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),  
-      selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),	     
+      selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
       metP4.px(), metP4.py(), 0.);
     double mT2_W = mT2Algo_2particle.get_min_mT2();
     int mT2_W_step = mT2Algo_2particle.get_min_step();
@@ -1452,7 +1452,7 @@ int main(int argc, char* argv[])
     double vbf_m_jj = -1.;
     bool isVBF = false;
     for ( std::vector<const RecoJet*>::const_iterator selJetVBF1 = selJetsVBF.begin();
-	  selJetVBF1 != selJetsVBF.end(); ++selJetVBF1 ) {
+          selJetVBF1 != selJetsVBF.end(); ++selJetVBF1 ) {
       for ( std::vector<const RecoJet*>::const_iterator selJetVBF2 = selJetVBF1 + 1;
 	    selJetVBF2 != selJetsVBF.end(); ++selJetVBF2 ) {
 	double dEta_jj = TMath::Abs((*selJetVBF1)->eta() - (*selJetVBF2)->eta());
@@ -1483,40 +1483,40 @@ int main(int argc, char* argv[])
     } else assert(0);
 
     for ( std::vector<std::string>::const_iterator category = categories.begin();
-	  category != categories.end(); ++category ) {
+          category != categories.end(); ++category ) {
       if ( selHistManager->electrons_in_categories_.find(*category) != selHistManager->electrons_in_categories_.end() ) {
-	selHistManager->electrons_in_categories_[*category]->fillHistograms(selElectrons, evtWeight);
-	if ( selElectrons.size() >= 1 ) {
-	  selHistManager->leadElectron_in_categories_[*category]->fillHistograms({ selElectrons[0] }, evtWeight);
-	}
-	if ( selElectrons.size() >= 2 ) {
-	  selHistManager->subleadElectron_in_categories_[*category]->fillHistograms({ selElectrons[1] }, evtWeight);
-	}
+        selHistManager->electrons_in_categories_[*category]->fillHistograms(selElectrons, evtWeight);
+        if ( selElectrons.size() >= 1 ) {
+          selHistManager->leadElectron_in_categories_[*category]->fillHistograms({ selElectrons[0] }, evtWeight);
+        }
+        if ( selElectrons.size() >= 2 ) {
+          selHistManager->subleadElectron_in_categories_[*category]->fillHistograms({ selElectrons[1] }, evtWeight);
+        }
       }
       if ( selHistManager->muons_in_categories_.find(*category) != selHistManager->muons_in_categories_.end() ) {
-	selHistManager->muons_in_categories_[*category]->fillHistograms(selMuons, evtWeight);
-	if ( selMuons.size() >= 1 ) {
-	  selHistManager->leadMuon_in_categories_[*category]->fillHistograms({ selMuons[0] }, evtWeight);
-	}
-	if ( selMuons.size() >= 2 ) {
-	  selHistManager->subleadMuon_in_categories_[*category]->fillHistograms({ selMuons[1] }, evtWeight);
-	}
+        selHistManager->muons_in_categories_[*category]->fillHistograms(selMuons, evtWeight);
+        if ( selMuons.size() >= 1 ) {
+          selHistManager->leadMuon_in_categories_[*category]->fillHistograms({ selMuons[0] }, evtWeight);
+        }
+        if ( selMuons.size() >= 2 ) {
+          selHistManager->subleadMuon_in_categories_[*category]->fillHistograms({ selMuons[1] }, evtWeight);
+        }
       }
       selHistManager->evt_in_categories_[*category]->fillHistograms(
         selElectrons.size(),
-	selMuons.size(),
-	selJets.size(),
-	selBJets_loose.size(),
-	selBJets_medium.size(),
-	HT, 
-	STMET,
-	m_bb, dR_bb, m_ll, dR_ll,
-	pT_llMEt, Smin_llMEt,
-	pT_bbllMEt, Smin_bbllMEt, dPhi_bbllMEt,
-	mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
-	logHiggsness_publishedChi2, logTopness_publishedChi2,
-	m_bbll, m_bbllMEt, hmeMass, 
-	evtWeight);
+        selMuons.size(),
+        selJets.size(),
+        selBJets_loose.size(),
+        selBJets_medium.size(),
+        HT,
+        STMET,
+        m_bb, dR_bb, m_ll, dR_ll,
+        pT_llMEt, Smin_llMEt,
+        pT_bbllMEt, Smin_bbllMEt, dPhi_bbllMEt,
+        mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step,
+        logHiggsness_publishedChi2, logTopness_publishedChi2,
+        m_bbll, m_bbllMEt, hmeMass,
+        evtWeight);
     }
 
     if ( isMC ) {
@@ -1532,55 +1532,55 @@ int main(int argc, char* argv[])
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep1_pt",                        selLepton_lead->pt())
           ("lep1_conePt",                    comp_lep1_conePt(*selLepton_lead))
-	  ("lep1_eta",                       selLepton_lead->eta())
+          ("lep1_eta",                       selLepton_lead->eta())
           ("lep2_pt",                        selLepton_sublead->pt())
           ("lep2_conePt",                    comp_lep2_conePt(*selLepton_sublead))
-	  ("lep2_eta",                       selLepton_sublead->eta())
-	  ("bjet1_pt",                       selBJet_lead->pt())
+          ("lep2_eta",                       selLepton_sublead->eta())
+          ("bjet1_pt",                       selBJet_lead->pt())
           ("bjet1_eta",                      selBJet_lead->eta())
-	  ("bjet2_pt",                       selBJet_sublead->pt())
+          ("bjet2_pt",                       selBJet_sublead->pt())
           ("bjet2_eta",                      selBJet_sublead->eta())
-	  ("met",                            metP4.pt())
-	  ("mht",                            mhtP4.pt())
-	  ("met_LD",                         met_LD)
-	  ("HT",                             HT)
-	  ("STMET",                          STMET)
-      	  ("m_bb",                           m_bb)
-	  ("dR_bb",                          dR_bb)
-	  ("pT_bb",                          pT_bb)
-      	  ("m_ll",                           m_ll)
-	  ("dR_ll",                          dR_ll)
- 	  ("pT_ll",                          pT_ll)
-      	  ("pT_llMEt",                       pT_llMEt)
-	  ("Smin_llMEt",                     Smin_llMEt)
-      	  ("dR_b1l1",                        dR_b1l1)
-	  ("dR_b1l2",                        dR_b1l2)
- 	  ("dR_b2l1",                        dR_b2l1)
-	  ("dR_b2l2",                        dR_b2l2)
-      	  ("m_bbll",                         m_bbll)
- 	  ("pT_bbll",                        pT_bbll)
-	  ("dPhi_bbll",                      dPhi_bbll)
-      	  ("m_bbllMEt",                      m_bbllMEt)
-	  ("pT_bbllMEt",                     pT_bbllMEt)
+          ("met",                            metP4.pt())
+          ("mht",                            mhtP4.pt())
+          ("met_LD",                         met_LD)
+          ("HT",                             HT)
+          ("STMET",                          STMET)
+          ("m_bb",                           m_bb)
+          ("dR_bb",                          dR_bb)
+          ("pT_bb",                          pT_bb)
+          ("m_ll",                           m_ll)
+          ("dR_ll",                          dR_ll)
+          ("pT_ll",                          pT_ll)
+          ("pT_llMEt",                       pT_llMEt)
+          ("Smin_llMEt",                     Smin_llMEt)
+          ("dR_b1l1",                        dR_b1l1)
+          ("dR_b1l2",                        dR_b1l2)
+          ("dR_b2l1",                        dR_b2l1)
+          ("dR_b2l2",                        dR_b2l2)
+          ("m_bbll",                         m_bbll)
+          ("pT_bbll",                        pT_bbll)
+          ("dPhi_bbll",                      dPhi_bbll)
+          ("m_bbllMEt",                      m_bbllMEt)
+          ("pT_bbllMEt",                     pT_bbllMEt)
           ("Smin_bbllMEt",                   Smin_bbllMEt)
-	  ("dPhi_bbllMEt",                   dPhi_bbllMEt)
-      	  ("mT2_W",                          mT2_W)
-	  ("mT2_top_2particle",              mT2_top_2particle)
- 	  ("mT2_top_3particle",              mT2_top_3particle)
-      	  ("logTopness_publishedChi2",       logTopness_publishedChi2)
-	  ("logHiggsness_publishedChi2",     logHiggsness_publishedChi2)
+          ("dPhi_bbllMEt",                   dPhi_bbllMEt)
+          ("mT2_W",                          mT2_W)
+          ("mT2_top_2particle",              mT2_top_2particle)
+          ("mT2_top_3particle",              mT2_top_3particle)
+          ("logTopness_publishedChi2",       logTopness_publishedChi2)
+          ("logHiggsness_publishedChi2",     logHiggsness_publishedChi2)
           ("logTopness_fixedChi2",           logTopness_fixedChi2)
-	  ("logHiggsness_fixedChi2",         logHiggsness_fixedChi2)
-      	  ("hmeMass",                        hmeMass)
-	  ("vbf_dEta_jj",                    vbf_dEta_jj)
+          ("logHiggsness_fixedChi2",         logHiggsness_fixedChi2)
+          ("hmeMass",                        hmeMass)
+          ("vbf_dEta_jj",                    vbf_dEta_jj)
           ("vbf_m_jj",                       vbf_m_jj)
           ("genWeight",                      eventInfo.genWeight)
           ("evtWeight",                      evtWeight)
-  	  ("nJet",                           comp_n_jet25_recl(selJets))
+          ("nJet",                           comp_n_jet25_recl(selJets))
           ("nBJetLoose",                     selBJetsFull_loose.size())
           ("nBJetMedium",                    selBJetsFull_medium.size())
-	  ("nJet_vbf",                       selJetsVBF.size())
-	  ("isVBF",                          isVBF)
+          ("nJet_vbf",                       selJetsVBF.size())
+          ("isVBF",                          isVBF)
         .fill()
       ;
     }
@@ -1602,7 +1602,7 @@ int main(int argc, char* argv[])
 
   std::cout << "sel. Entries by gen. matching:" << std::endl;
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
-	leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
+        leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
 
     std::string process_and_genMatch = process_string;
     if ( apply_leptonGenMatching ) process_and_genMatch += leptonGenMatch_definition->name_;

@@ -1,7 +1,7 @@
 import logging
 import re
 
-from tthAnalysis.HiggsToTauTau.configs.analyzeConfig import *
+from hhAnalysis.multilepton.configs.analyzeConfig_hh import *
 from tthAnalysis.HiggsToTauTau.jobTools import create_if_not_exists
 from tthAnalysis.HiggsToTauTau.analysisTools import initDict, getKey, create_cfg, createFile, generateInputFileList
 
@@ -26,7 +26,7 @@ def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_s
       histogramDir += "_woFakeRateWeights"
   return histogramDir
 
-class analyzeConfig_hh_bb2l(analyzeConfig):
+class analyzeConfig_hh_bb2l(analyzeConfig_hh):
   """Configuration metadata needed to run analysis in a single go.
 
   Sets up a folder structure by defining full path names; no directory creation is delegated here.
@@ -66,7 +66,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         hlt_filter        = False,
         use_home          = True,
       ):
-    analyzeConfig.__init__(self,
+    analyzeConfig_hh.__init__(self,
       configDir          = configDir,
       outputDir          = outputDir,
       executable_analyze = executable_analyze,
@@ -301,7 +301,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
                 rleOutputFile_path = os.path.join(self.dirs[key_dir][DKEY_RLES], "rle_%s.txt" % cfg_key) \
                                      if self.select_rle_output else ""
                 applyFakeRateWeights = self.applyFakeRateWeights  \
-                  if not lepton_selection == "Tight" \
+                  if self.isBDTtraining or not lepton_selection == "Tight" \
                   else "disabled"
 
                 self.jobOptions_analyze[key_analyze_job] = {
@@ -432,8 +432,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
           sample_categories = []
           sample_categories.extend(self.nonfake_backgrounds)
-          if "signal_nonresonant" in self.prep_dcard_signals:
-            sample_categories.extend([ "signal_nonresonant" ])
           processes_input = []
           for sample_category in sample_categories:
             processes_input.append("%s_fake" % sample_category)
@@ -457,8 +455,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
           key_addBackgrounds_job_conversions = getKey(lepton_charge_selection, lepton_selection, "conversions")
           sample_categories = []
           sample_categories.extend(self.nonfake_backgrounds)
-          if "signal_nonresonant" in self.prep_dcard_signals:
-            sample_categories.extend([ "signal_nonresonant" ])
           processes_input = []
           for sample_category in sample_categories:
             processes_input.append("%s_conversion" % sample_category)
@@ -495,11 +491,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         self.createScript_sbatch_analyze(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
       logging.info("Creating Makefile")
       lines_makefile = []
-      if self.isBDTtraining:
-        self.addToMakefile_analyze(lines_makefile)
-        self.addToMakefile_hadd_stage1(lines_makefile)
-      else:
-        raise ValueError("Internal logic error")
+      self.addToMakefile_analyze(lines_makefile)
+      self.addToMakefile_hadd_stage1(lines_makefile)
       self.createMakefile(lines_makefile)
       logging.info("Done")
       return self.num_jobs
@@ -582,7 +575,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig):
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
         'histogramDir' : getHistogramDir(self.category_inclusive, "Tight", "disabled", lepton_charge_selection),
         'label' : '2l',
-        'skipChannel' : True,
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }
       self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
