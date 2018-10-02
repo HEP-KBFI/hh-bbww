@@ -75,18 +75,30 @@ void dumpEventYields()
   vstring channels;
   channels.push_back("hh_bb2l");
 
-  std::string inputFilePath = "/hdfs/local/veelken/hhAnalysis/2017/2018Sep24/histograms/hh_bb2l/";
+  std::string inputFilePath = "/hdfs/local/veelken/hhAnalysis/2017/2018Sep26/histograms/hh_bb2l/";
 
   std::map<std::string, std::string> inputFileNames; // key = channel
   inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
 
+  std::map<std::string, vstring> categories; // key = channel
+  categories["hh_bb2l"].push_back("hh_bb2l_OS");
+  categories["hh_bb2l"].push_back("hh_2l_OS");
+  categories["hh_bb2l"].push_back("hh_2l_vbf_OS");
+  categories["hh_bb2l"].push_back("hh_2e_OS");
+  categories["hh_bb2l"].push_back("hh_2e_vbf_OS");
+  categories["hh_bb2l"].push_back("hh_2mu_OS");
+  categories["hh_bb2l"].push_back("hh_2mu_vbf_OS");
+  categories["hh_bb2l"].push_back("hh_1e1mu_OS");
+  categories["hh_bb2l"].push_back("hh_1e1mu_vbf_OS");
+
   std::map<std::string, std::string> directories; // key = channel
-  directories["hh_bb2l"] = "hh_bb2l_OS/sel/evt";
+  directories["hh_bb2l"] = "sel/evt";
 
   std::map<std::string, vstring> signal_processes; // key = channel
-  //signal_processes.push_back("signal_ggf_spin0_400_hh_wwww");
-  //signal_processes.push_back("signal_ggf_spin0_400_hh_wwtt");
-  //signal_processes.push_back("signal_ggf_spin0_400_hh_tttt");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_wwww");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_wwtt");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_tttt");
+  signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_400_hh_bbvv");
 
   std::vector<std::string> signal_process_parts;
   signal_process_parts.push_back("");
@@ -121,7 +133,6 @@ void dumpEventYields()
 
   for ( vstring::const_iterator channel = channels.begin();
 	channel != channels.end(); ++channel ) {
-    std::cout << "channel = " << (*channel) << std::endl;
 
     TString inputFileName_full = inputFilePath.data();
     if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
@@ -132,75 +143,80 @@ void dumpEventYields()
       std::cerr << "Failed to open input file = " << inputFileName_full.Data() << " !!" << std::endl;
       assert(0);
     }
+    
+    for ( vstring::const_iterator category = categories[*channel].begin();
+	  category != categories[*channel].end(); ++category ) {
+      std::cout << "channel = " << (*channel) << ": category = " << (*category) << std::endl;
 
-    for ( vstring::const_iterator signal_process = signal_processes[*channel].begin();
-	  signal_process != signal_processes[*channel].end(); ++signal_process ) {
-      std::map<std::string, double> integral_parts;
-      std::map<std::string, double> integralErr_parts;
-      double integral_sum = 0.;
-      double integralErr2_sum = 0.;
-      for ( std::vector<std::string>::const_iterator signal_process_part = signal_process_parts.begin();
-	    signal_process_part != signal_process_parts.end(); ++signal_process_part ) {
-	std::string histogramName = Form("%s/%s%s/EventCounter", 
-          directories[*channel].data(), signal_process->data(), signal_process_part->data());
-	TH1* histogram = loadHistogram(inputFile, histogramName);
-	if ( histogram ) {
-	  histogram->Scale(lumi_SF);
-	  double integral = compIntegral(histogram);
-	  integral_parts[*signal_process_part] = integral;
-	  integral_sum += integral;
-	  double integralErr = compIntegralErr(histogram);
-	  integralErr_parts[*signal_process_part] = integralErr;
-	  integralErr2_sum += square(integralErr); 
+      for ( vstring::const_iterator signal_process = signal_processes[*channel].begin();
+	    signal_process != signal_processes[*channel].end(); ++signal_process ) {
+	std::map<std::string, double> integral_parts;
+	std::map<std::string, double> integralErr_parts;
+	double integral_sum = 0.;
+	double integralErr2_sum = 0.;
+	for ( std::vector<std::string>::const_iterator signal_process_part = signal_process_parts.begin();
+	      signal_process_part != signal_process_parts.end(); ++signal_process_part ) {
+	  std::string histogramName = Form("%s/%s/%s%s/EventCounter", 
+	    category->data(), directories[*channel].data(), signal_process->data(), signal_process_part->data());
+	  TH1* histogram = loadHistogram(inputFile, histogramName);
+	  if ( histogram ) {
+	    histogram->Scale(lumi_SF);
+	    double integral = compIntegral(histogram);
+	    integral_parts[*signal_process_part] = integral;
+	    integral_sum += integral;
+	    double integralErr = compIntegralErr(histogram);
+	    integralErr_parts[*signal_process_part] = integralErr;
+	    integralErr2_sum += square(integralErr); 
+	  }
+	}
+	double integralErr_sum = TMath::Sqrt(integralErr2_sum);
+	std::cout << (*signal_process) << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
+	if ( integral_parts.size() > 1 ) {
+	  std::cout << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
+		    << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
+		    << " conversion = " << integral_parts["_conversion"] << " +/- " << integralErr_parts["_conversion"] << ")" << std::endl;
 	}
       }
-      double integralErr_sum = TMath::Sqrt(integralErr2_sum);
-      std::cout << (*signal_process) << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
-      if ( integral_parts.size() > 1 ) {
-	std::cout << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
-		  << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
-		  << " conversion = " << integral_parts["_conversion"] << " +/- " << integralErr_parts["_conversion"] << ")" << std::endl;
-      }
-    }
-    for ( vstring::const_iterator background_process = background_processes[*channel].begin();
-	  background_process != background_processes[*channel].end(); ++background_process ) {
-      std::map<std::string, double> integral_parts;
-      std::map<std::string, double> integralErr_parts;
-      double integral_sum = 0.;
-      double integralErr2_sum = 0.;
-      for ( std::vector<std::string>::const_iterator background_process_part = background_process_parts.begin();
-	    background_process_part != background_process_parts.end(); ++background_process_part ) {
-	std::string histogramName = Form("%s/%s%s/EventCounter", 
-          directories[*channel].data(), background_process->data(), background_process_part->data());
-	TH1* histogram = loadHistogram(inputFile, histogramName);
-	if ( histogram ) {
-	  histogram->Scale(lumi_SF);
-	  double integral = compIntegral(histogram);
-	  integral_parts[*background_process_part] = integral;
-	  integral_sum += integral;
-	  double integralErr = compIntegralErr(histogram);
-	  integralErr_parts[*background_process_part] = integralErr;
-	  integralErr2_sum += square(integralErr); 
+      for ( vstring::const_iterator background_process = background_processes[*channel].begin();
+	    background_process != background_processes[*channel].end(); ++background_process ) {
+	std::map<std::string, double> integral_parts;
+	std::map<std::string, double> integralErr_parts;
+	double integral_sum = 0.;
+	double integralErr2_sum = 0.;
+	for ( std::vector<std::string>::const_iterator background_process_part = background_process_parts.begin();
+	      background_process_part != background_process_parts.end(); ++background_process_part ) {
+	  std::string histogramName = Form("%s/%s/%s%s/EventCounter", 
+	    category->data(), directories[*channel].data(), background_process->data(), background_process_part->data());
+	  TH1* histogram = loadHistogram(inputFile, histogramName);
+	  if ( histogram ) {
+	    histogram->Scale(lumi_SF);
+	    double integral = compIntegral(histogram);
+	    integral_parts[*background_process_part] = integral;
+	    integral_sum += integral;
+	    double integralErr = compIntegralErr(histogram);
+	    integralErr_parts[*background_process_part] = integralErr;
+	    integralErr2_sum += square(integralErr); 
+	  }
+	}
+	double integralErr_sum = TMath::Sqrt(integralErr2_sum);
+	std::cout << (*background_process) << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
+	if ( integral_parts.size() > 1 ) {
+	  std::cout << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
+		    << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
+		    << " conversion = " << integral_parts["_conversion"] << " +/- " << integralErr_parts["_conversion"] << ")" << std::endl;
 	}
       }
-      double integralErr_sum = TMath::Sqrt(integralErr2_sum);
-      std::cout << (*background_process) << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
-      if ( integral_parts.size() > 1 ) {
-	std::cout << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
-		  << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
-		  << " conversion = " << integral_parts["_conversion"] << " +/- " << integralErr_parts["_conversion"] << ")" << std::endl;
-      }
-    }
 
-    std::string histogramName = Form("%s/%s/EventCounter", 
-      directories[*channel].data(), "data_obs");
-    TH1* histogram = loadHistogram(inputFile, histogramName);
-    if ( histogram ) {
-      histogram->Scale(lumi_SF);
-      double integral = compIntegral(histogram);
-      std::cout << "data_obs: " << integral << std::endl;
+      std::string histogramName = Form("%s/%s/%s/EventCounter", 
+        category->data(), directories[*channel].data(), "data_obs");
+      TH1* histogram = loadHistogram(inputFile, histogramName);
+      if ( histogram ) {
+	histogram->Scale(lumi_SF);
+	double integral = compIntegral(histogram);
+	std::cout << "data_obs: " << integral << std::endl;
+      }
+      std::cout << std::endl;
     }
-    std::cout << std::endl;
 
     delete inputFile;
   }
