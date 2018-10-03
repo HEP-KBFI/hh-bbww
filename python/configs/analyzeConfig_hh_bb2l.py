@@ -155,7 +155,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     """
     self.lepton_selections = [ "Tight" ]
     self.lepton_frWeights = [ "disabled" ]
-    self.lepton_charge_selections = [ "SS" ]
+    self.lepton_charge_selections = [ "OS" ]
     self.isBDTtraining = True
 
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
@@ -269,8 +269,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               for jobId in inputFileList.keys():
                 if central_or_shift != "central":
                   isFR_shape_shift = (central_or_shift in systematics.FR_all)
-                  if not ((lepton_selection == "Fakeable" and chargeSumSelection == "OS" and isFR_shape_shift) or
-                          (lepton_selection == "Tight"    and chargeSumSelection == "OS")):
+                  if not ((lepton_selection == "Fakeable" and lepton_charge_selection == "OS" and isFR_shape_shift) or
+                          (lepton_selection == "Tight"    and lepton_charge_selection == "OS")):
                     continue
                   if not is_mc and not isFR_shape_shift:
                     continue
