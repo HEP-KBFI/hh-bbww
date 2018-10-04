@@ -1,4 +1,4 @@
-from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_bkg import samples_2017 as samples_2017_bkg
+from hhAnalysis.multilepton.samples.hhAnalyzeSamples_2017_bkg import samples_2017 as samples_2017_bkg
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_hh import samples_2017 as samples_2017_hh
 
 #TODO: both sets of samples need to be reprocessed w/o jet eta cuts
