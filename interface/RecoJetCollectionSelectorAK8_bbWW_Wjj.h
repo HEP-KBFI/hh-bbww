@@ -22,10 +22,10 @@ public:
   void set_max_tau2_div_tau1(double max_tau2_div_tau1);
   void set_max_mD(double max_mD);
   void set_max_dR_lepton(double max_dR_lepton);
-  void set_min_subjet1_pt(double min_pt);
-  void set_max_subjet1_absEta(double max_absEta);
-  void set_min_subjet2_pt(double min_pt);
-  void set_max_subjet2_absEta(double max_absEta);
+  void set_min_subJet1_pt(double min_pt);
+  void set_max_subJet1_absEta(double max_absEta);
+  void set_min_subJet2_pt(double min_pt);
+  void set_max_subJet2_absEta(double max_absEta);
   void set_min_jetId(int min_jetId);
 
   void set_lepton(const RecoLepton* lepton);
@@ -41,10 +41,10 @@ public:
   double get_max_tau2_div_tau1() const;
   double get_max_mD() const;
   double get_max_dR_lepton() const;
-  double get_min_subjet1_pt() const;
-  double get_max_subjet1_absEta() const;
-  double get_min_subjet2_pt() const;
-  double get_max_subjet2_absEta() const;
+  double get_min_subJet1_pt() const;
+  double get_max_subJet1_absEta() const;
+  double get_min_subJet2_pt() const;
+  double get_max_subJet2_absEta() const;
   int get_min_jetId() const;
 
   /**
@@ -63,10 +63,10 @@ protected:
   Double_t max_tau2_div_tau1_;         ///< upper cut threshold on value of N-subjettiness ratio tau2/tau1
   Double_t max_mD_;                    ///< upper cut threshold on value of mD variable, defined by Eq.(3) in AN-2018/058 (v4)
   Double_t max_dR_lepton_;             ///< upper cut threshold on distance between "fat" (AK8) jet and electron or muon
-  Double_t min_subjet1_pt_;            ///< lower cut threshold on pT of first subjet
-  Double_t max_subjet1_absEta_;        ///< upper cut threshold on absolute value of eta of first subjet
-  Double_t min_subjet2_pt_;            ///< lower cut threshold on pT of second subjet
-  Double_t max_subjet2_absEta_;        ///< upper cut threshold on absolute value of eta of second subjet
+  Double_t min_subJet1_pt_;            ///< lower cut threshold on pT of first subjet
+  Double_t max_subJet1_absEta_;        ///< upper cut threshold on absolute value of eta of first subjet
+  Double_t min_subJet2_pt_;            ///< lower cut threshold on pT of second subjet
+  Double_t max_subJet2_absEta_;        ///< upper cut threshold on absolute value of eta of second subjet
 
   const RecoLepton* lepton_;	       ///< pointer to electron or muon produced in H->WW*->jj lnu decay
   Particle::LorentzVector neutrinoP4_; ///< four-vector of neutrino produced in H->WW*->jj lnu decay, reconstructed as described in Section 3.4.2 of AN-2018/058 (v4)

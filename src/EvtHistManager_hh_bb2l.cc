@@ -31,6 +31,7 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
 
   histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    40,  0.,  200.); 
   histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,  0.,    5.);
+  histogram_dPhi_ll_                = book1D(dir, "dPhi_ll",                "dPhi_ll",                 36, -TMath::Pi(), +TMath::Pi());
 
   histogram_pT_llMEt_               = book1D(dir, "pT_llMEt",               "pT_llMEt",               100,  0.,  500.);  
   histogram_Smin_llMEt_             = book1D(dir, "Smin_llMEt",             "Smin_llMEt",             100,  0.,  500.);  
@@ -65,7 +66,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       int numBJets_medium,
 				       double HT,
 				       double STMET,
-				       double m_bb, double dR_bb, double m_ll, double dR_ll,
+				       double m_bb, double dR_bb, double m_ll, double dR_ll, double dPhi_ll,
 				       double pT_llMEt, double Smin_llMEt, 
 				       double pT_bbllMEt, double Smin_bbllMEt, double dPhi_bbllMEt,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
@@ -89,6 +90,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 
   fillWithOverFlow(histogram_m_ll_,                   m_ll,                   evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_ll_,                  dR_ll,                  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dPhi_ll_,                dPhi_ll,                evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_pT_llMEt_,               pT_llMEt,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_Smin_llMEt_,             Smin_llMEt,             evtWeight, evtWeightErr);

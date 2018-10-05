@@ -56,7 +56,9 @@ process.analyze_hh_bb1l = cms.PSet(
 
     branchName_electrons = cms.string('Electron'),
     branchName_muons = cms.string('Muon'),
-    branchName_jets = cms.string('Jet'),
+    branchName_jets_ak4 = cms.string('Jet'),
+    branchName_jets_ak8 = cms.string('FatJet'),
+    branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
 
     branchName_genLeptons = cms.string('GenLep'),

@@ -20,12 +20,14 @@ public:
   void set_min_msoftdrop(double min_msoftdrop);
   void set_max_msoftdrop(double max_msoftdrop);
   void set_max_tau2_div_tau1(double max_tau2_div_tau1);
-  void set_min_subjet1_pt(double min_pt);
-  void set_max_subjet1_absEta(double max_absEta);
-  void set_min_subjet1_BtagCSV(double min_BtagCSV);
-  void set_min_subjet2_pt(double min_pt);
-  void set_max_subjet2_absEta(double max_absEta);
-  void set_min_subjet2_BtagCSV(double min_BtagCSV);
+  void set_min_subJet1_pt(double min_pt);
+  void set_max_subJet1_absEta(double max_absEta);
+  void set_min_subJet2_pt(double min_pt);
+  void set_max_subJet2_absEta(double max_absEta);
+  void set_min_BtagCSV_loose(double min_BtagCSV_loose);
+  void set_min_BtagCSV_medium(double min_BtagCSV_medium);
+  void set_min_numSubJetsBtag_loose(int min_numSubJetsBtag_loose);
+  void set_min_numSubJetsBtag_medium(int min_numSubJetsBtag_medium);
   void set_min_jetId(int min_jetId);
 
   /**
@@ -36,12 +38,14 @@ public:
   double get_min_msoftdrop() const;
   double get_max_msoftdrop() const;
   double get_max_tau2_div_tau1() const;
-  double get_min_subjet1_pt() const;
-  double get_max_subjet1_absEta() const;
-  double get_min_subjet1_BtagCSV() const;
-  double get_min_subjet2_pt() const;
-  double get_max_subjet2_absEta() const;
-  double get_min_subjet2_BtagCSV() const;
+  double get_min_subJet1_pt() const;
+  double get_max_subJet1_absEta() const;
+  double get_min_subJet2_pt() const;
+  double get_max_subJet2_absEta() const;
+  double get_min_BtagCSV_loose() const;
+  double get_min_BtagCSV_medium() const;
+  int get_min_numSubJetsBtag_loose() const;
+  int get_min_numSubJetsBtag_medium() const;
   int get_min_jetId() const;
 
   /**
@@ -52,18 +56,20 @@ public:
   operator()(const RecoJetAK8 & jet) const;
 
 protected:
-  Double_t min_pt_;              ///< lower cut threshold on pT of "fat" (AK8) jet
-  Double_t max_absEta_;          ///< upper cut threshold on absolute value of eta of "fat" (AK8) jet
-  Int_t min_jetId_;              ///< lower cut threshold on jet ID value 
-  Double_t min_msoftdrop_;       ///< lower cut threshold on mass of the two subjets
-  Double_t max_msoftdrop_;       ///< upper cut threshold on mass of the two subjets
-  Double_t max_tau2_div_tau1_;   ///< upper cut threshold on value of N-subjettiness ratio tau2/tau1
-  Double_t min_subjet1_pt_;      ///< lower cut threshold on pT of first subjet
-  Double_t max_subjet1_absEta_;  ///< upper cut threshold on absolute value of eta of first subjet
-  Double_t min_subjet1_BtagCSV_; ///< lower cut threshold on CSV b-tagging discriminator value of first subjet
-  Double_t min_subjet2_pt_;      ///< lower cut threshold on pT of second subjet
-  Double_t max_subjet2_absEta_;  ///< upper cut threshold on absolute value of eta of second subjet
-  Double_t min_subjet2_BtagCSV_; ///< lower cut threshold on CSV b-tagging discriminator value of second subjet
+  Double_t min_pt_;                 ///< lower cut threshold on pT of "fat" (AK8) jet
+  Double_t max_absEta_;             ///< upper cut threshold on absolute value of eta of "fat" (AK8) jet
+  Int_t min_jetId_;                 ///< lower cut threshold on jet ID value 
+  Double_t min_msoftdrop_;          ///< lower cut threshold on mass of the two subjets
+  Double_t max_msoftdrop_;          ///< upper cut threshold on mass of the two subjets
+  Double_t max_tau2_div_tau1_;      ///< upper cut threshold on value of N-subjettiness ratio tau2/tau1
+  Double_t min_subJet1_pt_;         ///< lower cut threshold on pT of first subjet
+  Double_t max_subJet1_absEta_;     ///< upper cut threshold on absolute value of eta of first subjet
+  Double_t min_subJet2_pt_;         ///< lower cut threshold on pT of second subjet
+  Double_t max_subJet2_absEta_;     ///< upper cut threshold on absolute value of eta of second subjet
+  Double_t min_BtagCSV_loose_;      ///< lower cut threshold on CSV b-tagging discriminator value (loose WP)
+  Double_t min_BtagCSV_medium_;     ///< lower cut threshold on CSV b-tagging discriminator value (medium WP)
+  Int_t min_numSubJetsBtag_loose_;  ///< lower cut threshold on number of subjets passing loose WP of CSV b-tagging discriminator
+  Int_t min_numSubJetsBtag_medium_; ///< lower cut threshold on number of subjets passing medium WP of CSV b-tagging discriminator
   bool debug_;
 };
 

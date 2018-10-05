@@ -12,10 +12,10 @@ RecoJetSelectorAK8_bbWW_Wjj::RecoJetSelectorAK8_bbWW_Wjj(int era, int index, boo
   , max_tau2_div_tau1_(0.75)
   , max_mD_(125.)
   , max_dR_lepton_(1.2)
-  , min_subjet1_pt_(20.)
-  , max_subjet1_absEta_(2.4)
-  , min_subjet2_pt_(20.)
-  , max_subjet2_absEta_(2.4)
+  , min_subJet1_pt_(20.)
+  , max_subJet1_absEta_(2.4)
+  , min_subJet2_pt_(20.)
+  , max_subJet2_absEta_(2.4)
   , lepton_(nullptr)
   , debug_(debug)
 {}
@@ -63,27 +63,27 @@ RecoJetSelectorAK8_bbWW_Wjj::set_max_dR_lepton(double max_dR_lepton)
 }
 
 void
-RecoJetSelectorAK8_bbWW_Wjj::set_min_subjet1_pt(double min_pt)
+RecoJetSelectorAK8_bbWW_Wjj::set_min_subJet1_pt(double min_pt)
 {
-  min_subjet1_pt_ = min_pt;
+  min_subJet1_pt_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Wjj::set_max_subjet1_absEta(double max_absEta)
+RecoJetSelectorAK8_bbWW_Wjj::set_max_subJet1_absEta(double max_absEta)
 {
-  max_subjet1_absEta_ = max_absEta;
+  max_subJet1_absEta_ = max_absEta;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Wjj::set_min_subjet2_pt(double min_pt)
+RecoJetSelectorAK8_bbWW_Wjj::set_min_subJet2_pt(double min_pt)
 {
-  min_subjet2_pt_ = min_pt;
+  min_subJet2_pt_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Wjj::set_max_subjet2_absEta(double max_absEta)
+RecoJetSelectorAK8_bbWW_Wjj::set_max_subJet2_absEta(double max_absEta)
 {
-  max_subjet2_absEta_ = max_absEta;
+  max_subJet2_absEta_ = max_absEta;
 }
 
 void 
@@ -147,27 +147,27 @@ RecoJetSelectorAK8_bbWW_Wjj::get_max_dR_lepton() const
 }
 
 double
-RecoJetSelectorAK8_bbWW_Wjj::get_min_subjet1_pt() const
+RecoJetSelectorAK8_bbWW_Wjj::get_min_subJet1_pt() const
 {
-  return min_subjet1_pt_;
+  return min_subJet1_pt_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Wjj::get_max_subjet1_absEta() const
+RecoJetSelectorAK8_bbWW_Wjj::get_max_subJet1_absEta() const
 {
-  return max_subjet1_absEta_;
+  return max_subJet1_absEta_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Wjj::get_min_subjet2_pt() const
+RecoJetSelectorAK8_bbWW_Wjj::get_min_subJet2_pt() const
 {
-  return min_subjet2_pt_;
+  return min_subJet2_pt_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Wjj::get_max_subjet2_absEta() const
+RecoJetSelectorAK8_bbWW_Wjj::get_max_subJet2_absEta() const
 {
-  return max_subjet2_absEta_;
+  return max_subJet2_absEta_;
 }
 
 int 
@@ -190,21 +190,24 @@ RecoJetSelectorAK8_bbWW_Wjj::operator()(const RecoJetAK8 & jet) const
   double mD = deltaR(WjjP4, WlnuP4)*0.5*(WjjP4 + WlnuP4).pt();
   double dR_lepton = deltaR(WjjP4, lepton_->p4());
   const bool passes =
-    jet.pt()                 >= min_pt_              &&
-    jet.absEta()             <= max_absEta_          &&
-    (jet.jetId() % 4)        >= min_jetId_           && // CV: loose (tight) jetId is stored in bit 0 (1), 
-                                                        //     with value of 1 (2) in case the jet passes the loose (tight) jetId
-    jet.msoftdrop()          >= min_msoftdrop_       &&
-    jet.msoftdrop()          >= max_msoftdrop_       &&
-    (jet.tau2()/jet.tau1())  <= max_tau2_div_tau1_   && // cut on N-subjettiness ratio tau2/tau1
-    mD                       <= max_mD_              && // cut on mD variable, defined by Eq.(3) in AN-2018/058 (v4)
-    dR_lepton                <= max_dR_lepton_       &&
-    jet.subJet1()                                    && 
-    jet.subJet1()->pt()      >= min_subjet1_pt_      && 
-    jet.subJet1()->absEta()  <= max_subjet1_absEta_  && 
-    jet.subJet2()                                    && 
-    jet.subJet2()->pt()      >= min_subjet2_pt_      && 
-    jet.subJet2()->absEta()  <= max_subjet2_absEta_
+    jet.pt()                 >= min_pt_               &&
+    jet.absEta()             <= max_absEta_           &&
+    (jet.jetId() % 4)        >= min_jetId_            && // CV: loose (tight) jetId is stored in bit 0 (1), 
+                                                         //     with value of 1 (2) in case the jet passes the loose (tight) jetId
+    jet.msoftdrop()          >= min_msoftdrop_        &&
+    jet.msoftdrop()          >= max_msoftdrop_        &&
+    (jet.tau2()/jet.tau1())  <= max_tau2_div_tau1_    && // cut on N-subjettiness ratio tau2/tau1
+    mD                       <= max_mD_               && // cut on mD variable, defined by Eq.(3) in AN-2018/058 (v4)
+    dR_lepton                <= max_dR_lepton_        &&
+    jet.subJet1() && jet.subJet2() &&
+    ((jet.subJet1()->pt()      >= min_subJet1_pt_     && 
+      jet.subJet1()->absEta()  <= max_subJet1_absEta_ && 
+      jet.subJet2()->pt()      >= min_subJet2_pt_     && 
+      jet.subJet2()->absEta()  <= max_subJet2_absEta_) ||
+     (jet.subJet1()->pt()      >= min_subJet2_pt_     && 
+      jet.subJet1()->absEta()  <= max_subJet2_absEta_ && 
+      jet.subJet2()->pt()      >= min_subJet1_pt_     && 
+      jet.subJet2()->absEta()  <= max_subJet1_absEta_))
   ;
   if(debug_)
   {

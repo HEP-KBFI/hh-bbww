@@ -31,7 +31,7 @@ public:
                  int numBJets_medium,
 		 double HT,
 		 double STMET,
-		 double m_bb, double dR_bb, double m_ll, double dR_ll,
+		 double m_bb, double dR_bb, double m_ll, double dR_ll, double dPhi_ll,
 		 double pT_llMEt, double Smin_llMEt, 
 		 double pT_bbllMEt, double Smin_bbllMEt, double dPhi_bbllMEt,
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
@@ -58,6 +58,7 @@ public:
 
   TH1 * histogram_m_ll_;
   TH1 * histogram_dR_ll_;
+  TH1 * histogram_dPhi_ll_;
 
   TH1 * histogram_pT_llMEt_;
   TH1 * histogram_Smin_llMEt_;
