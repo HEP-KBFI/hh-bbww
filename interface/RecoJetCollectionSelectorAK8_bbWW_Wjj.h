@@ -20,7 +20,6 @@ public:
   void set_min_msoftdrop(double min_msoftdrop);
   void set_max_msoftdrop(double max_msoftdrop);
   void set_max_tau2_div_tau1(double max_tau2_div_tau1);
-  void set_max_mD(double max_mD);
   void set_max_dR_lepton(double max_dR_lepton);
   void set_min_subJet1_pt(double min_pt);
   void set_max_subJet1_absEta(double max_absEta);
@@ -29,7 +28,6 @@ public:
   void set_min_jetId(int min_jetId);
 
   void set_lepton(const RecoLepton* lepton);
-  void set_neutrinoP4(const Particle::LorentzVector& neutrinoP4);
 
   /**
    * @brief Get cut thresholds
@@ -61,7 +59,6 @@ protected:
   Double_t min_msoftdrop_;             ///< lower cut threshold on mass of the two subjets
   Double_t max_msoftdrop_;             ///< upper cut threshold on mass of the two subjets
   Double_t max_tau2_div_tau1_;         ///< upper cut threshold on value of N-subjettiness ratio tau2/tau1
-  Double_t max_mD_;                    ///< upper cut threshold on value of mD variable, defined by Eq.(3) in AN-2018/058 (v4)
   Double_t max_dR_lepton_;             ///< upper cut threshold on distance between "fat" (AK8) jet and electron or muon
   Double_t min_subJet1_pt_;            ///< lower cut threshold on pT of first subjet
   Double_t max_subJet1_absEta_;        ///< upper cut threshold on absolute value of eta of first subjet
@@ -69,7 +66,6 @@ protected:
   Double_t max_subJet2_absEta_;        ///< upper cut threshold on absolute value of eta of second subjet
 
   const RecoLepton* lepton_;	       ///< pointer to electron or muon produced in H->WW*->jj lnu decay
-  Particle::LorentzVector neutrinoP4_; ///< four-vector of neutrino produced in H->WW*->jj lnu decay, reconstructed as described in Section 3.4.2 of AN-2018/058 (v4)
   
   bool debug_;
 };

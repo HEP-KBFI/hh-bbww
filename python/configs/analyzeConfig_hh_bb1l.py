@@ -319,7 +319,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               if not key_hadd_stage1 in self.inputFiles_hadd_stage1:
                 self.inputFiles_hadd_stage1[key_hadd_stage1] = []
               self.inputFiles_hadd_stage1[key_hadd_stage1].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
-              self.outputFile_hadd_stage1[key_hadd_stage1] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_%s_%s_%s_%s.root" % \
+              self.outputFile_hadd_stage1[key_hadd_stage1] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_%s_%s_%s.root" % \
                 (self.channel, process_name, lepton_selection_and_frWeight))
 
           if self.isBDTtraining:
@@ -450,11 +450,11 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           processes_input.append("%s_conversion" % sample_category)
         self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions] = {
           'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
-          'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_conversions_%s_%s_cfg.py" % \
+          'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_conversions_%s_cfg.py" % \
             (self.channel, lepton_selection_and_frWeight)),
-          'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s_conversions_%s_%s.root" % \
+          'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s_conversions_%s.root" % \
             (self.channel, lepton_selection_and_frWeight)),
-          'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_conversions_%s_%s.log" % \
+          'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_conversions_%s.log" % \
             (self.channel, lepton_selection_and_frWeight)),
           'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
           'processes_input' : processes_input,

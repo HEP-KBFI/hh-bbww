@@ -201,9 +201,9 @@ RecoJetSelectorAK8_bbWW_Hbb::operator()(const RecoJetAK8 & jet) const
     (jet.jetId() % 4)         >= min_jetId_                && // CV: loose (tight) jetId is stored in bit 0 (1), 
                                                               //     with value of 1 (2) in case the jet passes the loose (tight) jetId
     jet.msoftdrop()           >= min_msoftdrop_            &&
-    jet.msoftdrop()           >= max_msoftdrop_            &&
+    jet.msoftdrop()           <= max_msoftdrop_            &&
     (jet.tau2()/jet.tau1())   <= max_tau2_div_tau1_        && // cut on N-subJettiness ratio tau2/tau1
-    jet.subJet1() && jet.subJet2() &&
+    jet.subJet1() && jet.subJet2()                         &&
     ((jet.subJet1()->pt()     >= min_subJet1_pt_           && 
       jet.subJet1()->absEta() <= max_subJet1_absEta_       && 
       jet.subJet2()->pt()     >= min_subJet2_pt_           && 

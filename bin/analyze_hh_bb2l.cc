@@ -24,6 +24,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h" // RecoJetReader
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetReaderAK8.h" // RecoJetReaderAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtReader.h" // RecoMEtReader
 #include "tthAnalysis/HiggsToTauTau/interface/MEtFilterReader.h" // MEtFilterReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenLeptonReader.h" // GenLeptonReader
@@ -74,6 +75,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_bbWW_Hbb.h" // RecoJetSelectorAK8_bbWW_Hbb
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle
 #include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
@@ -96,6 +98,42 @@ typedef std::vector<double> vdouble;
 enum { kFR_disabled, kFR_enabled };
 
 const double wBosonMass = 80.379; // GeV
+
+enum { kHbb_undefined, kHbb_resolved, kHbb_boosted };
+enum { kVBF_undefined, kVBF_nottagged, kVBF_tagged };
+
+struct categoryEntryType
+{
+  categoryEntryType(int numElectrons, int numMuons, int numBJets_medium, int numBJets_loose, int type_Hbb, int type_vbf)
+    : numElectrons_(numElectrons)
+    , numMuons_(numMuons)
+    , numBJets_medium_(numBJets_medium)
+    , numBJets_loose_(numBJets_loose)
+    , type_Hbb_(type_Hbb)
+    , type_vbf_(type_vbf)
+  {
+    name_ = "";
+    if      ( numBJets_medium_ >= 2                         ) name_ += "2bM";
+    else if ( numBJets_medium_ >= 1 && numBJets_loose_ >= 2 ) name_ += "1bM1bL";
+    else if ( numBJets_medium_ >= 1                         ) name_ += "1bM";
+    else name_ += "bb";
+    if      ( numElectrons_ >= 1 ) name_ += "1e";
+    else if ( numMuons_     >= 1 ) name_ += "1mu";
+    else name_ += "1l";
+    if      ( type_Hbb_ == kHbb_resolved           ) name_ += "_resolvedHbb";
+    else if ( type_Hbb_ == kHbb_boosted            ) name_ += "_boostedHbb";
+    if      ( type_vbf_ == kVBF_tagged             ) name_ += "_vbf";
+    else if ( type_vbf_ == kVBF_nottagged          ) name_ += "_nonvbf";
+  }
+  ~categoryEntryType() {}
+  std::string name_;
+  int numElectrons_;
+  int numMuons_;
+  int numBJets_medium_;
+  int numBJets_loose_;
+  int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
+  int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
+};
 
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
