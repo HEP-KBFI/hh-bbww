@@ -460,6 +460,7 @@ int main(int argc, char* argv[])
   std::ostream* selEventsFile = ( selEventsFileName_output != "" ) ? new std::ofstream(selEventsFileName_output.data(), std::ios::out) : 0;
   std::cout << "selEventsFileName_output = " << selEventsFileName_output << std::endl;
 
+//--- declare histograms
   struct selHistManagerType
   {
     ElectronHistManager* electrons_;
@@ -500,7 +501,7 @@ int main(int argc, char* argv[])
 	categories_evt.push_back(categoryEntryType(-1,  1, -1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_bb1mu
 	categories_evt.push_back(categoryEntryType(-1,  1,  2, -1, type_Hbb, type_Wjj, type_vbf)); // hh_2bM1mu
 	categories_evt.push_back(categoryEntryType(-1,  1,  1,  2, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1bL1mu
-	categories_evt.push_back(categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1um      
+	categories_evt.push_back(categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1mu     
       }
     }
   }
@@ -953,7 +954,7 @@ int main(int argc, char* argv[])
     cutFlowTable.update("lepton pT > 25 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("lepton pT > 25 GeV", evtWeight);
 
- // require that trigger paths match event category (with event category based on fakeableLeptons)
+    // require that trigger paths match event category (with event category based on fakeableLeptons)
     if ( !((fakeableElectrons.size() >= 1 && selTrigger_1e) ||
            (fakeableMuons.size()     >= 1 && selTrigger_1mu)) ) {
       if ( run_lumi_eventSelector ) {
@@ -1033,7 +1034,7 @@ int main(int argc, char* argv[])
       } else assert(0);
     }
 
-    if ( applyFakeRateWeights == kFR_enabled )  {
+    if ( applyFakeRateWeights == kFR_enabled ) {
       weight_fakeRate = getWeight_1L(prob_fake_lepton, passesTight_lepton);
       evtWeight *= weight_fakeRate;
     }
@@ -1162,9 +1163,9 @@ int main(int argc, char* argv[])
 
     bool failsLowMassVeto = false;
     for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();
-    lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
+	  lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
       for ( std::vector<const RecoLepton*>::const_iterator lepton2 = lepton1 + 1;
-      lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
+	    lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
         double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
         if ( mass < 12. ) {
           failsLowMassVeto = true;

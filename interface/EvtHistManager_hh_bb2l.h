@@ -31,13 +31,14 @@ public:
                  int numBJets_medium,
 		 double HT,
 		 double STMET,
-		 double m_bb, double dR_bb, double m_ll, double dR_ll, double dPhi_ll,
-		 double pT_llMEt, double Smin_llMEt, 
-		 double pT_bbllMEt, double Smin_bbllMEt, double dPhi_bbllMEt,
+		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
+		 double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
+		 double m_Hww, double pT_Hww, double Smin_Hww,
+		 double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
-		 double m_bbll, double m_bbllMEt, double hmeMass, 
-                 double evtWeight);
+                 double vbf_m_jj, double vbf_dEta_jj,
+		 double evtWeight);
 
   const TH1 *
   getHistogram_EventCounter() const;
@@ -53,19 +54,27 @@ public:
   TH1 * histogram_HT_;
   TH1 * histogram_STMET_;
 
-  TH1 * histogram_m_bb_;
-  TH1 * histogram_dR_bb_;
+  TH1 * histogram_m_Hbb_;
+  TH1 * histogram_dR_Hbb_;
+  TH1 * histogram_dPhi_Hbb_;
+  TH1 * histogram_pT_Hbb_;
 
   TH1 * histogram_m_ll_;
   TH1 * histogram_dR_ll_;
   TH1 * histogram_dPhi_ll_;
+  TH1 * histogram_pT_ll_;
 
-  TH1 * histogram_pT_llMEt_;
-  TH1 * histogram_Smin_llMEt_;
+  TH1 * histogram_m_Hww_;
+  TH1 * histogram_pT_Hww_;
+  TH1 * histogram_Smin_Hww_;
 
-  TH1 * histogram_pT_bbllMEt_;
-  TH1 * histogram_Smin_bbllMEt_;
-  TH1 * histogram_dPhi_bbllMEt_;
+  TH1 * histogram_m_HHvis_;
+  TH1 * histogram_m_HH_;
+  TH1 * histogram_m_HH_hme_;
+  TH1 * histogram_dR_HH_;
+  TH1 * histogram_dPhi_HH_;
+  TH1 * histogram_pT_HH_;
+  TH1 * histogram_Smin_HH_;
 
   TH1 * histogram_mT2_W_;
   TH1 * histogram_mT2_W_step_;
@@ -78,10 +87,9 @@ public:
   TH1 * histogram_logTopness_;
   TH2 * histogram_logTopness_vs_logHiggsness_;
 
-  TH1 * histogram_m_bbll_;
-  TH1 * histogram_m_bbllMEt_;
-  TH1 * histogram_hmeMass_;
-      
+  TH1 * histogram_vbf_m_jj_;
+  TH1 * histogram_vbf_dEta_jj_;
+
   TH1 * histogram_EventCounter_;
 };
 

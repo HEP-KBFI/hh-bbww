@@ -33,7 +33,7 @@ public:
 		 double STMET,
 		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
-		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH,double dPhi_HH, double pT_HH, double Smin_HH,
+		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
 		 double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
 		 double vbf_m_jj, double vbf_dEta_jj,

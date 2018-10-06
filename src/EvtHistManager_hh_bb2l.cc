@@ -26,19 +26,27 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_HT_                     = book1D(dir, "HT",                     "HT",                     150,  0., 1500.);
   histogram_STMET_                  = book1D(dir, "STMET",                  "STMET",                  150,  0., 1500.);
 
-  histogram_m_bb_                   = book1D(dir, "m_bb",                   "m_bb",                    40,  0.,  200.); 
-  histogram_dR_bb_                  = book1D(dir, "dR_bb",                  "dR_bb",                  100,  0.,    5.);
+  histogram_m_Hbb_                  = book1D(dir, "m_Hbb",                  "m_Hbb",                   40,  0.,  200.); 
+  histogram_dR_Hbb_                 = book1D(dir, "dR_Hbb",                 "dR_Hbb",                 100,  0.,    5.);
+  histogram_dPhi_Hbb_               = book1D(dir, "dPhi_Hbb",               "dPhi_Hbb",                36, -TMath::Pi(), +TMath::Pi());
+  histogram_pT_Hbb_                 = book1D(dir, "pT_Hbb",                 "pT_Hbb",                 100,  0.,  500.); 
 
   histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    40,  0.,  200.); 
   histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,  0.,    5.);
   histogram_dPhi_ll_                = book1D(dir, "dPhi_ll",                "dPhi_ll",                 36, -TMath::Pi(), +TMath::Pi());
+  histogram_pT_ll_                  = book1D(dir, "pT_ll",                  "pT_ll",                  100,  0.,  500.); 
 
-  histogram_pT_llMEt_               = book1D(dir, "pT_llMEt",               "pT_llMEt",               100,  0.,  500.);  
-  histogram_Smin_llMEt_             = book1D(dir, "Smin_llMEt",             "Smin_llMEt",             100,  0.,  500.);  
+  histogram_m_Hww_                  = book1D(dir, "m_Hww",                  "m_Hww",                   40,  0.,  200.); 
+  histogram_pT_Hww_                 = book1D(dir, "pT_Hwww",                "pT_Hww",                 100,  0.,  500.);  
+  histogram_Smin_Hww_               = book1D(dir, "Smin_Hww",               "Smin_Hww",               100,  0.,  500.);  
 
-  histogram_pT_bbllMEt_             = book1D(dir, "pT_bbllMEt",             "pT_bbllMEt",             100,  0.,  500.);  
-  histogram_Smin_bbllMEt_           = book1D(dir, "Smin_bbllMEt",           "Smin_bbllMEt",           100,  0., 1000.); 
-  histogram_dPhi_bbllMEt_           = book1D(dir, "dPhi_bbllMEt",           "dPhi_bbllMEt",            36,  0., TMath::Pi());
+  histogram_m_HHvis_                = book1D(dir, "m_HHvis",                "m_HHvis",                100,  0., 1000.);  
+  histogram_m_HH_                   = book1D(dir, "m_HH",                   "m_HH",                   150,  0., 1500.);
+  histogram_m_HH_hme_               = book1D(dir, "m_HH_hme",               "m_HH_hme",               150,  0., 1500.);
+  histogram_dR_HH_                  = book1D(dir, "dR_HH",                  "dR_HH",                  100,  0.,    5.);
+  histogram_dPhi_HH_                = book1D(dir, "dPhi_HH",                "dPhi_HH",                 36, -TMath::Pi(), +TMath::Pi());
+  histogram_pT_HH_                  = book1D(dir, "pT_HH",                  "pT_HH",                  100,  0.,  500.);  
+  histogram_Smin_HH_                = book1D(dir, "Smin_HH",                "Smin_HH",                100,  0., 1000.); 
 
   histogram_mT2_W_                  = book1D(dir, "mT2_W",                  "mT2_W",                   40,  0.,  200.); 
   histogram_mT2_W_step_             = book1D(dir, "mT2_W_step",             "mT2_W_step",             103, -1.5, 101.5); 
@@ -46,14 +54,13 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_mT2_top_2particle_step_ = book1D(dir, "mT2_top_2particle_step", "mT2_top_2particle_step", 103, -1.5, 101.5); 
   histogram_mT2_top_3particle_      = book1D(dir, "mT2_top_3particle",      "mT2_top_3particle",      100,  0.,  500.);
   histogram_mT2_top_3particle_step_ = book1D(dir, "mT2_top_3particle_step", "mT2_top_3particle_step", 103, -1.5, 101.5); 
- 
+
   histogram_logHiggsness_           = book1D(dir, "logHiggsness",           "logHiggsness",            60, -15., +15.);  
   histogram_logTopness_             = book1D(dir, "logTopness",             "logTopness",              60, -15., +15.);  
   histogram_logTopness_vs_logHiggsness_ = book2D(dir, "logTopness_vs_logHiggsness", "logTopness_vs_logHiggsness", 60, -15., +15., 60, -15., +15.);
 
-  histogram_m_bbll_                 = book1D(dir, "m_bbll",                 "m_bbll",                 100,  0., 1000.);  
-  histogram_m_bbllMEt_              = book1D(dir, "m_bbllMEt",              "m_bbllMEt",              100,  0., 1000.);
-  histogram_hmeMass_                = book1D(dir, "hmeMass",                "hmeMass",                150,  0., 1500.);
+  histogram_vbf_m_jj_               = book1D(dir, "vbf_m_jj",               "vbf_m_jj",               150,  0., 1500.);
+  histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,  0.,   10.);
 
   histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
 }
@@ -66,12 +73,13 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       int numBJets_medium,
 				       double HT,
 				       double STMET,
-				       double m_bb, double dR_bb, double m_ll, double dR_ll, double dPhi_ll,
-				       double pT_llMEt, double Smin_llMEt, 
-				       double pT_bbllMEt, double Smin_bbllMEt, double dPhi_bbllMEt,
+				       double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
+				       double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
+				       double m_Hww, double pT_Hww, double Smin_Hww,
+				       double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
-				       double m_bbll, double m_bbllMEt, double hmeMass, 
+				       double vbf_m_jj, double vbf_dEta_jj,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -85,19 +93,29 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_HT_,                     HT,                     evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_STMET_,                  STMET,                  evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_m_bb_,                   m_bb,                   evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_dR_bb_,                  dR_bb,                  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_Hbb_,                  m_Hbb,                  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dR_Hbb_,                 dR_Hbb,                 evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dPhi_Hbb_,               dPhi_Hbb,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_pT_Hbb_,                 pT_Hbb,                 evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_m_ll_,                   m_ll,                   evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_ll_,                  dR_ll,                  evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_ll_,                dPhi_ll,                evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_pT_ll_,                  pT_ll,                  evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_pT_llMEt_,               pT_llMEt,               evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Smin_llMEt_,             Smin_llMEt,             evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_Hww_,                  m_Hww,                  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_pT_Hww_,                 pT_Hww,                 evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Smin_Hww_,               Smin_Hww,               evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_pT_bbllMEt_,             pT_bbllMEt,             evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Smin_bbllMEt_,           Smin_bbllMEt,           evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_dPhi_bbllMEt_,           dPhi_bbllMEt,           evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HHvis_,                m_HHvis,                evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HH_,                   m_HH,                   evtWeight, evtWeightErr);
+  if ( m_HH_hme > 0. ) {
+    fillWithOverFlow(histogram_m_HH_hme_,             m_HH_hme,               evtWeight, evtWeightErr);    
+  }
+  fillWithOverFlow(histogram_dR_HH_,                  dR_HH,                  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dPhi_HH_,                dPhi_HH,                evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_pT_HH_,                  pT_HH,                  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Smin_HH_,                Smin_HH,                evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_mT2_W_,                  mT2_W,                  evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_mT2_W_step_,             mT2_W_step,             evtWeight, evtWeightErr);
@@ -111,12 +129,8 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 
   fillWithOverFlow2d(histogram_logTopness_vs_logHiggsness_, logHiggsness, logTopness, evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_m_bbll_,                 m_bbll,                 evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_m_bbllMEt_,              m_bbllMEt,              evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_vbf_m_jj_,               vbf_m_jj,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_vbf_dEta_jj_,            vbf_dEta_jj,            evtWeight, evtWeightErr);
 
-  if ( hmeMass > 0. ) {
-    fillWithOverFlow(histogram_hmeMass_,              hmeMass,                evtWeight, evtWeightErr);    
-  }
-  
   fillWithOverFlow(histogram_EventCounter_,           0.,                     evtWeight, evtWeightErr);
 }
