@@ -1125,8 +1125,24 @@ int main(int argc, char* argv[])
       selJet2_Wjj = selJetAK8_Wjj->subJet2();
       assert(selJet1_Wjj && selJet2_Wjj);
     } else {
-      if ( selJetsAK4_Wjj.size() >= 1 ) selJet1_Wjj = selJetsAK4_Wjj[0];
-      if ( selJetsAK4_Wjj.size() >= 2 ) selJet2_Wjj = selJetsAK4_Wjj[1];
+      double minRank = 1.e+3;
+      for ( std::vector<const RecoJet*>::const_iterator selJet1 = selJetsAK4_Wjj.begin();
+	    selJet1 != selJetsAK4_Wjj.end(); ++selJet1 ) {
+	for ( std::vector<const RecoJet*>::const_iterator selJet2 = selJet1 + 1;
+	      selJet2 != selJetsAK4_Wjj.end(); ++selJet2 ) {
+	  Particle::LorentzVector jjP4 = (*selJet1)->p4() + (*selJet2)->p4();
+	  double m_jj = jjP4.mass();
+	  double pT_jj = jjP4.pt();
+	  double rank = TMath::Abs(m_jj - wBosonMass)/TMath::Sqrt(TMath::Max(10., pT_jj));
+	  if ( rank < minRank ) {
+	    selJet1_Wjj = (*selJet1);
+	    selJet2_Wjj = (*selJet2);
+	    minRank = rank;
+	  }
+	} 
+      }    
+      if ( !selJet1_Wjj && selJetsAK4_Wjj.size() >= 1 ) selJet1_Wjj = selJetsAK4_Wjj[0];
+      if ( !selJet2_Wjj && selJetsAK4_Wjj.size() >= 2 ) selJet2_Wjj = selJetsAK4_Wjj[1];
     }
     if ( !(selJet1_Wjj || selJet2_Wjj) ) {
       if ( run_lumi_eventSelector ) {
@@ -1285,6 +1301,15 @@ int main(int argc, char* argv[])
     cutFlowTable.update("signal region veto", evtWeight);
     cutFlowHistManager->fillHistograms("signal region veto", evtWeight);
 
+    //std::cout << "selJet_Hbb_lead:" << (*selJet_Hbb_lead) << std::endl;
+    //std::cout << "selJet_Hbb_sublead:" << (*selJet_Hbb_sublead) << std::endl;
+    //std::cout << "(m_Hbb = " << (selJetP4_Hbb_lead + selJetP4_Hbb_sublead).mass() << ")" << std::endl;    
+    //std::cout << "selJet_Wjj_lead:" << (*selJet_Wjj_lead) << std::endl;
+    //if ( selJet_Wjj_sublead ) {
+    //  std::cout << "selJet_Wjj_sublead:" << (*selJet_Wjj_sublead) << std::endl;
+    //  std::cout << "(m_Wjj = " << (selJetP4_Wjj_lead + selJetP4_Wjj_sublead).mass() << ")" << std::endl;
+    //}
+
     // compute signal extraction observables    
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1413,6 +1438,7 @@ int main(int argc, char* argv[])
       HT, 
       STMET,
       m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
+      m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj, 
       dR_Hww, dPhi_Hww, pT_Hww, Smin_Hww,
       m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT_W, mT_top_2particle, mT_top_3particle,
@@ -1454,6 +1480,7 @@ int main(int argc, char* argv[])
 	    HT, 
 	    STMET,
 	    m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
+	    m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj, 
 	    dR_Hww, dPhi_Hww, pT_Hww, Smin_Hww,
 	    m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT_W, mT_top_2particle, mT_top_3particle,

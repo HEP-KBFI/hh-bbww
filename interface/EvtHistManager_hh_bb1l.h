@@ -32,6 +32,7 @@ public:
 		 double HT,
 		 double STMET,
 		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
+		 double m_Wjj, double dR_Wjj, double dPhi_Wjj, double pT_Wjj, 
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
@@ -57,6 +58,11 @@ public:
   TH1 * histogram_dR_Hbb_;
   TH1 * histogram_dPhi_Hbb_;
   TH1 * histogram_pT_Hbb_;
+
+  TH1 * histogram_m_Wjj_;
+  TH1 * histogram_dR_Wjj_;
+  TH1 * histogram_dPhi_Wjj_;
+  TH1 * histogram_pT_Wjj_;
 
   TH1 * histogram_dR_Hww_;
   TH1 * histogram_dPhi_Hww_;
