@@ -74,8 +74,11 @@ void dumpEventYields()
   typedef std::vector<std::string> vstring;
   vstring channels;
   channels.push_back("hh_bb2l");
+  channels.push_back("hh_bb1l");
 
-  std::string inputFilePath = "/hdfs/local/veelken/hhAnalysis/2017/2018Sep26/histograms/hh_bb2l/";
+  std::map<std::string, std::string> inputFilePaths; // key = channel
+  inputFilePaths["hh_bb1l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct08/histograms/hh_bb1l/";
+  inputFilePaths["hh_bb2l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct06/histograms/hh_bb2l/";
 
   std::map<std::string, std::string> inputFileNames; // key = channel
   inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
@@ -99,6 +102,7 @@ void dumpEventYields()
   //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_wwtt");
   //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_tttt");
   signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_400_hh_bbvv");
+  signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_700_hh_bbvv");
 
   std::vector<std::string> signal_process_parts;
   signal_process_parts.push_back("");

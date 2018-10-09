@@ -135,7 +135,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
-    self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "Other", "VH", "TTH", "TH" ] + [ "conversions", "fakes_data" ]
+    self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ] + [ "conversions", "fakes_data" ]
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
 
@@ -143,11 +143,15 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
-    self.categories = [
-      "hh_bb2l",    "hh_bb2l_vbf",    "hh_bb2l_nonvbf",
-      "hh_bb2e",    "hh_bb2e_vbf",    "hh_bb2e_nonvbf",
-      "hh_bb2mu",   "hh_bb2mu_vbf",   "hh_bb2mu_nonvbf",
-      "hh_bb1e1mu", "hh_bb1e1mu_vbf", "hh_bb1e1mu_nonvbf" ]
+    self.categories = []
+    for type_bb_and_leptons in [
+      "bb2l",    "2bM2l",    "1bM1bL2l",  "1bM2l",
+      "bb2e",    "2bM2e",    "1bM1bL2e",  "1bM2e",
+      "bb2mu",   "2bM2mu",   "1bM1bL2mu", "1bM2mu",
+      "bb1e1mu", "2bM1e1mu", "1bM1bL2l",  "1bM2l" ]:
+      for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
+        for type_vbf in [ "", "_vbf", "_nonvbf" ]:
+          self.categories.append("hh_%s%s%s" % (type_bb_and_leptons, type_Hbb, type_vbf))
     self.category_inclusive = "hh_bb2l"
 
   def set_BDT_training(self):

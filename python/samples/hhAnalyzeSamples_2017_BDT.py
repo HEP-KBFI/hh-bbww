@@ -1,8 +1,8 @@
-from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017 as samples
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017
 
 from collections import OrderedDict as OD
 
-for sample_name, sample_info in samples.items():
+for sample_name, sample_info in samples_2017.items():
 
   if not isinstance(sample_info, OD):
     continue

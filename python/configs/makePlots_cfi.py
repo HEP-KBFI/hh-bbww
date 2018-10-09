@@ -16,10 +16,10 @@ process.makePlots = cms.PSet(
     apply_automatic_rebinning = cms.bool(True),
     minEvents_automatic_rebinning = cms.double(0.5),
     applyAutoBlinding = cms.bool(True),
-    divideByBinWidth = cms.bool(False),
+    divideByBinWidth = cms.bool(True),
     processData = cms.string("data_obs"),
     processesBackground = cms.vstring(),
-    processSignal = cms.string("signal_ggf_spin0_400_hh_bbww"),
+    processSignal = cms.string("signal_spin0_400_hh"),
     scaleSignal = cms.double(scaleSignal),
     legendEntrySignal = cms.string("%dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow bbWW" % scaleSignal),
     categories = cms.VPSet(),
@@ -30,26 +30,21 @@ process.makePlots = cms.PSet(
             yAxisTitle = cms.string("Events")
         ),
         cms.PSet(
-            histogramName = cms.string("sel/evt/$PROCESS/numJetsPtGt40"),
-            xAxisTitle = cms.string("jet w/ pT > 40 GeV Multiplicity"),
+            histogramName = cms.string("sel/evt/$PROCESS/numBJets_loose"),
+            xAxisTitle = cms.string("loose b-jet Multiplicity"),
             yAxisTitle = cms.string("Events")
         ),
-       cms.PSet(
-           histogramName = cms.string("sel/evt/$PROCESS/numBJets_loose"),
-           xAxisTitle = cms.string("loose b-jet Multiplicity"),
-           yAxisTitle = cms.string("Events")
-       ),
-       cms.PSet(
-           histogramName = cms.string("sel/evt/$PROCESS/numBJets_medium"),
-           xAxisTitle = cms.string("medium b-jet Multiplicity"),
-           yAxisTitle = cms.string("Events")
-       ),
+        cms.PSet(
+            histogramName = cms.string("sel/evt/$PROCESS/numBJets_medium"),
+            xAxisTitle = cms.string("medium b-jet Multiplicity"),
+            yAxisTitle = cms.string("Events")
+        ),
         cms.PSet(
             histogramName = cms.string("sel/evt/$PROCESS/numElectrons"),
             xAxisTitle = cms.string("electron Multiplicity"),
             yAxisTitle = cms.string("Events")
         ),
-        cms.PSet(
+       cms.PSet(
             histogramName = cms.string("sel/evt/$PROCESS/numMuons"),
             xAxisTitle = cms.string("muon Multiplicity"),
             yAxisTitle = cms.string("Events")
@@ -69,51 +64,6 @@ process.makePlots = cms.PSet(
             xAxisTitle = cms.string('S_{T}^{MET} [GeV]'),
             yAxisTitle = cms.string('dN/dS_{T}^{MET} [1/GeV]')
         ),
-       cms.PSet(
-           histogramName = cms.string('sel/evt/$PROCESS/dihiggsMass'),
-           xAxisTitle = cms.string('m_{HH} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{HH} [1/GeV]')
-       ),
-        cms.PSet(
-            histogramName = cms.string('sel/evt/$PROCESS/dihiggsVisMass'),
-            xAxisTitle = cms.string('m_{HH} [GeV]'),
-            yAxisTitle = cms.string('dN/dm_{HH} [1/GeV]')
-        ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_wMassConstraint/$PROCESS/dihiggsVisMass2'),
-           xAxisTitle = cms.string('m_{HH}^{vis} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{HH}^{vis} [1/GeV]')
-       ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_wMassConstraint/$PROCESS/dihiggsMass1'),
-           xAxisTitle = cms.string('m_{HH} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{HH} [1/GeV]')
-       ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_woMassConstraint/$PROCESS/ditau1Mass1'),
-           xAxisTitle = cms.string('m_{H}^{(1)} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{H}^{(1)} [1/GeV]')
-       ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_woMassConstraint/$PROCESS/ditau1Mass2'),
-           xAxisTitle = cms.string('m_{H}^{(1)} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{H}^{(1)} [1/GeV]')
-       ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_wMassConstraint/$PROCESS/dihiggsMass2'),
-           xAxisTitle = cms.string('m_{HH} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{HH} [1/GeV]')
-       ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_woMassConstraint/$PROCESS/ditau2Mass1'),
-           xAxisTitle = cms.string('m_{H}^{(2)} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{H}^{(2)} [1/GeV]')
-       ),
-       cms.PSet(
-           histogramName = cms.string('sel/svFit4tau_woMassConstraint/$PROCESS/ditau2Mass2'),
-           xAxisTitle = cms.string('m_{H}^{(2)} [GeV]'),
-           yAxisTitle = cms.string('dN/dm_{H}^{(2)} [1/GeV]')
-       ),
     ),
 
     nuisanceParameters = cms.PSet(
@@ -129,9 +79,12 @@ process.makePlots = cms.PSet(
             WW = cms.string("1.0 +/- 0.20"),
             ZZ = cms.string("1.0 +/- 0.20"),
             WZ = cms.string("1.0 +/- 0.20"),
+            DY = cms.string("1.0 +/- 0.20"),
+            W = cms.string("1.0 +/- 0.20"),
             fakes_data = cms.string("1.0 +/- 0.20"),
+            flips_data = cms.string("1.0 +/- 0.20"),
             conversions = cms.string("1.0 +/- 0.20"),
-            signal_ggf_spin0_400_hh_bbww = cms.string("1.0 +/- 0.20"),
+            signal_spin0_400_hh = cms.string("1.0 +/- 0.20"),
         ),
         shape = cms.PSet(
             CMS_ttHl_btag_HF = cms.string("0.00 +/- 1.00"),
@@ -148,8 +101,8 @@ process.makePlots = cms.PSet(
     showUncertainty = cms.bool(False),
 
     labelOnTop = cms.string(
-        ("CMS Preliminary; %dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow bbWW; " % scaleSignal) +
-        "%1.1f fb^{-1} at #sqrt{s} = 13 TeV"),
+        ("CMS Preliminary; %dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow " % scaleSignal) +
+        "bbWW; %1.1f fb^{-1} at #sqrt{s} = 13 TeV"),
     intLumiData = cms.double(0.), # in units of fb^-1
 
     outputFileName = cms.string("")

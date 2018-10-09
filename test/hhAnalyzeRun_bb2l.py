@@ -53,9 +53,6 @@ for systematic_label in systematics_label:
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 
-chargeSumSelections      = [ "OS", "SS" ]
-hadTau_selection_relaxed = ""
-
 if mode == "default":
   if era == "2016":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016 import samples_2016 as samples
