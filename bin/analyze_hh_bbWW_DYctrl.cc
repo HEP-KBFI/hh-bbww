@@ -639,10 +639,10 @@ int main(int argc, char* argv[])
     "trigger",
     ">= 2 presel leptons",
     ">= 2 sel leptons",
-    "<= 2 tight leptons",
     "sel SF lepton pair",
     "lead lepton pT > 25 GeV && sublead lepton pT > 15 GeV",
     "sel lepton-pair OS/SS charge",
+    "<= 2 tight leptons",
     "fakeable lepton trigger match",
     "HLT filter matching",
     ">= 2 b-jet candidates",
@@ -961,17 +961,6 @@ int main(int argc, char* argv[])
       }
     }
 
-    // require exactly two leptons passing tight selection criteria, to avoid overlap with other channels
-    if ( !(tightLeptonsFull.size() <= 2) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS tightLeptons selection." << std::endl;
-        printCollection("tightLeptonsFull", tightLeptonsFull);
-      }
-      continue;
-    }
-    cutFlowTable.update("<= 2 tight leptons", evtWeight);
-    cutFlowHistManager->fillHistograms("<= 2 tight leptons", evtWeight);
-
     if ( !(selElectrons.size() >= 2 || selMuons.size() >= 2) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS sel SF lepton pair selection." << std::endl;
@@ -1021,6 +1010,17 @@ int main(int argc, char* argv[])
       cutFlowTable.update(Form("sel lepton-pair %s charge", leptonChargeSelection_string.data()), evtWeight);
     }
     cutFlowHistManager->fillHistograms("sel lepton-pair OS/SS charge", evtWeight);
+
+    // require exactly two leptons passing tight selection criteria
+    if ( !(tightLeptonsFull.size() <= 2) ) {
+      if ( run_lumi_eventSelector ) {
+        std::cout << "event " << eventInfo.str() << " FAILS tightLeptons selection." << std::endl;
+        printCollection("tightLeptonsFull", tightLeptonsFull);
+      }
+      continue;
+    }
+    cutFlowTable.update("<= 2 tight leptons", evtWeight);
+    cutFlowHistManager->fillHistograms("<= 2 tight leptons", evtWeight);
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
     if ( !((fakeableElectrons.size() >= 2 &&                              (selTrigger_2e    || selTrigger_1e  )) ||

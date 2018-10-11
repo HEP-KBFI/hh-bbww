@@ -668,8 +668,8 @@ int main(int argc, char* argv[])
     "trigger",
     ">= 1 presel leptons",
     ">= 1 sel leptons",
-    "<= 1 tight leptons",
     "lepton pT > 25 GeV",
+    "<= 1 tight leptons",
     "fakeable lepton trigger match",
     "HLT filter matching",
     ">= 2 jets from H->bb",
@@ -963,17 +963,6 @@ int main(int argc, char* argv[])
       }
     }
 
-    // require exactly one lepton passing tight selection criteria, to avoid overlap with other channels
-    if ( !(tightLeptonsFull.size() <= 1) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS tightLeptons selection." << std::endl;
-        printCollection("tightLeptonsFull", tightLeptonsFull);
-      }
-      continue;
-    }
-    cutFlowTable.update("<= 1 tight leptons", evtWeight);
-    cutFlowHistManager->fillHistograms("<= 1 tight leptons", evtWeight);
-
     double minPt_lead = -1.;
     if      ( era == kEra_2016 ) minPt_lead = 25.;
     else if ( era == kEra_2017 ) minPt_lead = 25.;
@@ -987,6 +976,17 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update("lepton pT > 25 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("lepton pT > 25 GeV", evtWeight);
+
+    // require exactly one lepton passing tight selection criteria, to avoid overlap with other channels
+    if ( !(tightLeptonsFull.size() <= 1) ) {
+      if ( run_lumi_eventSelector ) {
+        std::cout << "event " << eventInfo.str() << " FAILS tightLeptons selection." << std::endl;
+        printCollection("tightLeptonsFull", tightLeptonsFull);
+      }
+      continue;
+    }
+    cutFlowTable.update("<= 1 tight leptons", evtWeight);
+    cutFlowHistManager->fillHistograms("<= 1 tight leptons", evtWeight);
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
     if ( !((fakeableElectrons.size() >= 1 && selTrigger_1e) ||
