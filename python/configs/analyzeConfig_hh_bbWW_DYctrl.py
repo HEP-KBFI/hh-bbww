@@ -144,14 +144,23 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     self.hlt_filter = hlt_filter
 
     self.categories = []
-    for type_bb_and_leptons in [
-      "2l",    "2bM2l",    "1bM1bL2l",  "1bM2l",
-      "2e",    "2bM2e",    "1bM1bL2e",  "1bM2e",
-      "2mu",   "2bM2mu",   "1bM1bL2mu", "1bM2mu",
-      "1e1mu", "2bM1e1mu", "1bM1bL2l",  "1bM2l" ]:
-      for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
-        for type_vbf in [ "", "_vbf", "_nonvbf" ]:
-          categories.append("hh_bbWW_%s_DYctrl%s%s" % (type_bb_and_leptons, type_Hbb, type_vbf))
+    # CV: add categories for "resolved" b-jets without VBF jet selection
+    for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
+      for type_jet in [ "2j", "3j", "ge4j" ]:
+        for type_lepton in [ "2e", "2mu" ]:
+          category = "hh_bbWW_%s%s%s_DYctrl_resolvedHbb" % (type_bjet, type_jet, type_lepton)
+          self.categories.append(category)
+    # CV: add categories for "resolved" b-jets with VBF jet selection
+    for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
+      for type_lepton in [ "2e", "2mu" ]:
+        category = "hh_bbWW_%s%s_DYctrl_resolvedHbb_vbf" % (type_bjet, type_lepton)
+        self.categories.append(category)
+    # CV: add categories for "boosted" b-jets (no VBF jet selection)
+    for type_bjet in [ "2bM", "1bM1bL", "1bM" ]:
+      for type_lepton in [ "2e", "2mu" ]:
+        category = "hh_bbWW_%s%s_DYctrl_boostedHbb" % (type_bjet, type_lepton)
+        self.categories.append(category)
+    print("Processing %i categories: %s" % (len(self.categories), self.categories))
     self.category_inclusive = "hh_bbWW_2l_DYctrl"
 
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
@@ -278,6 +287,8 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                 if central_or_shift in systematics.LHE().ttW and sample_category != "TTW":
                   continue
                 if central_or_shift in systematics.LHE().ttZ and sample_category != "TTZ":
+                  continue
+                if central_or_shift in systematics.DYMCReweighting and not ('DYMCReweighting' in sample_info.keys() and sample_info["DYMCReweighting"]):
                   continue
 
                 logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))

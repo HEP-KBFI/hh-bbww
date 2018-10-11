@@ -141,10 +141,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
     self.categories = []
     for type_bb_and_leptons in [
-      "bb2l",    "2bM2l",    "1bM1bL2l",  "1bM2l",
-      "bb2e",    "2bM2e",    "1bM1bL2e",  "1bM2e",
-      "bb2mu",   "2bM2mu",   "1bM1bL2mu", "1bM2mu",
-      "bb1e1mu", "2bM1e1mu", "1bM1bL2l",  "1bM2l" ]:
+      "bb1l",    "2bM1l",    "1bM1bL1l",  "1bM1l",
+      "bb1e",    "2bM1e",    "1bM1bL1e",  "1bM1e",
+      "bb1mu",   "2bM1mu",   "1bM1bL1mu", "1bM1mu" ]:
       for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
         for type_Wjj in [ "", "_resolvedWjj", "_boostedWjj_lowPurity", "_boostedWjj_highPurity" ]:
           for type_vbf in [ "", "_vbf", "_nonvbf" ]:
@@ -279,6 +278,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               if central_or_shift in systematics.LHE().ttW and sample_category != "TTW":
                 continue
               if central_or_shift in systematics.LHE().ttZ and sample_category != "TTZ":
+                continue
+              if central_or_shift in systematics.DYMCReweighting and not ('DYMCReweighting' in sample_info.keys() and sample_info["DYMCReweighting"]):
                 continue
 
               logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))

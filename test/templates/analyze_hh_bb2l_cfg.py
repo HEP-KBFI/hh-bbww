@@ -57,6 +57,7 @@ process.analyze_hh_bb2l = cms.PSet(
     central_or_shift = cms.string(''),
     lumiScale = cms.double(1.),
     apply_genWeight = cms.bool(True),
+    apply_DYMCReweighting = cms.bool(False),
     apply_hlt_filter = cms.bool(False),
     apply_met_filters = cms.bool(True),
     cfgMEtFilter = cms.PSet(),
@@ -76,6 +77,8 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_genPhotons = cms.string('GenPhoton'),
     branchName_genJets = cms.string('GenJet'),
     redoGenMatching = cms.bool(True),
+
+    branchName_genTauLeptons = cms.string('GenTau'),
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
