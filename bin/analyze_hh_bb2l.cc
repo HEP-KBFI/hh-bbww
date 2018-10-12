@@ -1404,7 +1404,7 @@ int main(int argc, char* argv[])
 
     double vbf_dEta_jj = -1.;
     double vbf_m_jj = -1.;
-    bool isVBF = false;
+    bool isVBF = false;   
     for ( std::vector<const RecoJet*>::const_iterator selJet1_vbf = selJetsAK4_vbf.begin();
           selJet1_vbf != selJetsAK4_vbf.end(); ++selJet1_vbf ) {
       for ( std::vector<const RecoJet*>::const_iterator selJet2_vbf = selJet1_vbf + 1;
@@ -1412,8 +1412,10 @@ int main(int argc, char* argv[])
 	double dEta_jj = TMath::Abs((*selJet1_vbf)->eta() - (*selJet2_vbf)->eta());
 	double m_jj = ((*selJet1_vbf)->p4() + (*selJet2_vbf)->p4()).mass();
 	if ( dEta_jj > 4. && m_jj > 500. ) {
-	  if ( dEta_jj > vbf_dEta_jj ) vbf_dEta_jj = dEta_jj;
-	  if ( m_jj    > vbf_m_jj    ) vbf_m_jj    = m_jj;
+	  if ( m_jj > vbf_m_jj ) { // CV: in case of ambiguity, take the jet pair of highest mass
+	    vbf_dEta_jj = dEta_jj;
+	    vbf_m_jj = m_jj;
+	  }
 	  isVBF = true;
 	}
       }

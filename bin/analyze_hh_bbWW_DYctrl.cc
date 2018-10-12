@@ -1314,10 +1314,11 @@ int main(int argc, char* argv[])
     double Smin_bbllMEt = comp_Smin(bbllP4, metP4.px(), metP4.py());
     double dPhi_bbllMEt = deltaPhi(bbP4.phi(), (llP4 + metP4).phi());
     double m_HH_hme = -1.; // CV: not implemented yet
-
+    
     double vbf_dEta_jj = -1.;
     double vbf_m_jj = -1.;
-    bool isVBF = false;
+    const RecoJet* selJet_vbf_lead = nullptr;
+    const RecoJet* selJet_vbf_sublead = nullptr;
     for ( std::vector<const RecoJet*>::const_iterator selJet1_vbf = selJetsAK4_vbf.begin();
           selJet1_vbf != selJetsAK4_vbf.end(); ++selJet1_vbf ) {
       for ( std::vector<const RecoJet*>::const_iterator selJet2_vbf = selJet1_vbf + 1;
@@ -1325,12 +1326,26 @@ int main(int argc, char* argv[])
 	double dEta_jj = TMath::Abs((*selJet1_vbf)->eta() - (*selJet2_vbf)->eta());
 	double m_jj = ((*selJet1_vbf)->p4() + (*selJet2_vbf)->p4()).mass();
 	if ( dEta_jj > 4. && m_jj > 500. ) {
-	  if ( dEta_jj > vbf_dEta_jj ) vbf_dEta_jj = dEta_jj;
-	  if ( m_jj    > vbf_m_jj    ) vbf_m_jj    = m_jj;
-	  isVBF = true;
+	  if ( m_jj > vbf_m_jj ) { // CV: in case of ambiguity, take the jet pair of highest mass
+	    vbf_dEta_jj = dEta_jj;
+	    vbf_m_jj = m_jj;
+	    selJet_vbf_lead = (*selJet1_vbf);
+	    selJet_vbf_sublead = (*selJet1_vbf);
+	  }
 	}
       }
     }
+    bool isVBF = false;    
+    std::vector<const RecoJet*> selJetsAK4_nonVBF;
+    if ( selJet_vbf_lead && selJet_vbf_sublead ) {
+      std::vector<const RecoJet*> overlaps = { selJet_vbf_lead, selJet_vbf_sublead };
+      std::vector<const RecoJet*> cleanedJetsAK4_wrtVBF = jetCleanerAK4_dR08(cleanedJetsAK4_wrtHbb, overlaps);
+      selJetsAK4_nonVBF = jetSelectorAK4(cleanedJetsAK4_wrtVBF, isHigherPt);
+      if ( selJetsAK4_nonVBF.size() >= 1 ) {
+	isVBF = true;
+      }
+    }
+    int numSelJetsAK4_nonVBF = ( isVBF ) ? selJetsAK4_nonVBF.size() : selJetsAK4_nonHbb.size();
 
 //--- fill histograms with events passing final selection
     selHistManagerType* selHistManager = selHistManagers[idxSelLepton_genMatch];
@@ -1364,7 +1379,7 @@ int main(int argc, char* argv[])
     selHistManager->evt_->fillHistograms(
       selElectrons.size(),
       selMuons.size(),
-      selJetsAK4.size(),
+      numSelJetsAK4_nonVBF,
       selBJetsAK4_loose.size(),
       selBJetsAK4_medium.size(),
       HT, 
@@ -1400,6 +1415,8 @@ int main(int argc, char* argv[])
 	   (category->numMuons_        ==             -1 || numMuons             == category->numMuons_)        &&
 	   (category->numBJets_medium_ ==             -1 || numBJets_medium      == category->numBJets_medium_) &&
 	   (category->numBJets_loose_  ==             -1 || numBJets_loose       == category->numBJets_loose_)  &&
+	   //(category->minNumJets_      ==             -1 || numSelJetsAK4_nonVBF >= category->minNumJets_)      && 
+	   //(category->maxNumJets_      ==             -1 || numSelJetsAK4_nonVBF <= category->maxNumJets_)      && 
 	   (category->minNumJets_      ==             -1 || (numJets_nonHbb + 2) >= category->minNumJets_)      && // CV: add b-jet candidates when computing jet multiplicity
 	   (category->maxNumJets_      ==             -1 || (numJets_nonHbb + 2) <= category->maxNumJets_)      && // CV: add b-jet candidates when computing jet multiplicity
 	   (category->type_Hbb_        == kHbb_undefined || type_Hbb             == category->type_Hbb_)        &&
@@ -1408,7 +1425,7 @@ int main(int argc, char* argv[])
 	  selHistManager->evt_in_categories_[category->name_]->fillHistograms(
             selElectrons.size(),
 	    selMuons.size(),
-	    selJetsAK4_nonHbb.size(),
+	    numSelJetsAK4_nonVBF,
 	    selBJetsAK4_loose.size(),
 	    selBJetsAK4_medium.size(),
 	    HT, 
