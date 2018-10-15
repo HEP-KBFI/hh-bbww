@@ -19,6 +19,7 @@ def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_s
   histogramDir = category
   if lepton_charge_selection != "disabled":
     histogramDir += "_%s" % lepton_charge_selection
+  histogramDir += "_%s" % lepton_selection
   if lepton_selection.find("Fakeable") != -1:
     if lepton_frWeight == "enabled":
       histogramDir += "_wFakeRateWeights"
@@ -162,6 +163,8 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
         self.categories.append(category)
     print("Processing %i categories: %s" % (len(self.categories), self.categories))
     self.category_inclusive = "hh_bbWW_2l_DYctrl"
+    if not self.category_inclusive in self.categories:
+      self.categories.append(self.category_inclusive)
 
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
     """Create python configuration file for the analyze_hh_bbWW_DYctrl executable (analysis code)

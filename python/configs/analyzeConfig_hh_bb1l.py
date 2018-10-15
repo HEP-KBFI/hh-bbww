@@ -17,6 +17,7 @@ def get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight):
 
 def getHistogramDir(category, lepton_selection, lepton_frWeight):
   histogramDir = category
+  histogramDir += "_%s" % lepton_selection
   if lepton_selection.find("Fakeable") != -1:
     if lepton_frWeight == "enabled":
       histogramDir += "_wFakeRateWeights"
@@ -101,7 +102,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       #self.lepton_selections.extend([ "Fakeable_mcClosure_all" ]) #TODO
       pass
 
-    self.lepton_genMatches = [ "2l0g0j", "1l1g0j", "1l0g1j", "0l2g0j", "0l1g1j", "0l0g2j" ]
+    self.lepton_genMatches = [ "1l0g0j", "0l1g0j", "0l0g1j" ]
 
     self.apply_leptonGenMatching = True
     self.lepton_genMatches_nonfakes = []
@@ -146,9 +147,13 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       "bb1mu",   "2bM1mu",   "1bM1bL1mu", "1bM1mu" ]:
       for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
         for type_Wjj in [ "", "_resolvedWjj", "_boostedWjj_lowPurity", "_boostedWjj_highPurity" ]:
+          if (type_Hbb == "" and type_Wjj != "") or (type_Hbb != "" and type_Wjj == ""):
+            continue
           for type_vbf in [ "", "_vbf", "_nonvbf" ]:
             self.categories.append("hh_%s%s%s%s" % (type_bb_and_leptons, type_Hbb, type_Wjj, type_vbf))
     self.category_inclusive = "hh_bb1l"
+    if not self.category_inclusive in self.categories:
+      self.categories.append(self.category_inclusive)
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
