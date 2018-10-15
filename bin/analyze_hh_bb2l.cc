@@ -1342,6 +1342,7 @@ int main(int argc, char* argv[])
       metP4.px(), metP4.py(), 0.);
     double mT2_W = mT2Algo_2particle.get_min_mT2();
     int mT2_W_step = mT2Algo_2particle.get_min_step();
+    //std::cout << "mT2_W = " << mT2_W << " (found @ step #" << mT2_W_step << ")" << std::endl;
     double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
     double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
     mT2Algo_2particle(
@@ -1350,6 +1351,7 @@ int main(int argc, char* argv[])
       cSumPx, cSumPy, wBosonMass);
     double mT2_top_2particle = mT2Algo_2particle.get_min_mT2();
     int mT2_top_2particle_step = mT2Algo_2particle.get_min_step();
+    //std::cout << "mT2_top_2particle = " << mT2_top_2particle << " (found @ step #" << mT2_top_2particle_step << ")" << std::endl;
     mT2_3particle mT2Algo_3particle;
     mT2Algo_3particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(), 
@@ -1376,6 +1378,10 @@ int main(int argc, char* argv[])
       mT2_top_3particle = mT2_top_3particle_permutation2;
       mT2_top_3particle_step = mT2_top_3particle_permutation2_step;
     }
+    //std::cout << "mT2_top_3particle:" 
+    //	        << " permutation1 = " << mT2_top_3particle_permutation1 << " (found @ step #" << mT2_top_3particle_permutation1_step << ")," 
+    //	        << " permutation2 = " << mT2_top_3particle_permutation2 << " (found @ step #" << mT2_top_3particle_permutation2_step << ")," 
+    //	        << " min = " << mT2_top_3particle << " (found @ step #" << mT2_top_3particle_step << ")" << std::endl;
     Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
     algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
     double logHiggsness_publishedChi2 = -99.;
