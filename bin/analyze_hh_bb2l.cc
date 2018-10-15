@@ -625,7 +625,7 @@ int main(int argc, char* argv[])
       "dR_b1lep1", "dR_b1lep2", "dR_b2lep1", "dR_b2lep2", 
       "m_HHvis", "pT_HHvis", "dPhi_HHvis", 
       "m_HH", "pT_HH", "dPhi_HH", "Smin_HH",
-      "mT_W", "mT_top_2particle", "mT_top_3particle", 
+      "mT2_W", "mT2_top_2particle", "mT2_top_3particle", 
       "m_HH_hme",
       "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
       "vbf_m_jj", "vbf_dEta_jj",
