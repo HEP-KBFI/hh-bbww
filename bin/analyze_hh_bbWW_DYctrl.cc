@@ -108,7 +108,7 @@ enum { kDilepton, kDielectron, kDimuon };
 
 struct categoryEntryType
 {
-  categoryEntryType(int numElectrons, int numMuons, int minNumJets, int maxNumJets, int numBJets_medium, int numBJets_loose, int type_Hbb, int type_vbf)
+  categoryEntryType(int numElectrons, int numMuons, int numBJets_medium, int numBJets_loose, int minNumJets, int maxNumJets, int type_Hbb, int type_vbf)
     : numElectrons_(numElectrons)
     , numMuons_(numMuons)
     , minNumJets_(minNumJets)
@@ -120,7 +120,7 @@ struct categoryEntryType
   {
     name_ = "bbWW_";
     if      ( numBJets_medium_ >= 2                         ) name_ += "2bM";
-    else if ( numBJets_medium_ >= 1 && numBJets_loose_ >= 2 ) name_ += "1bM1bL";
+    else if ( numBJets_medium_ >= 1 && numBJets_loose_ >= 1 ) name_ += "1bM1bL";
     else if ( numBJets_medium_ >= 1                         ) name_ += "1bM";
     else if (                          numBJets_loose_ >= 2 ) name_ += "2bL";
     else if (                          numBJets_loose_ >= 1 ) name_ += "1bL";    
@@ -496,36 +496,34 @@ int main(int argc, char* argv[])
   std::map<int, selHistManagerType*> selHistManagers;
   std::vector<categoryEntryType> categories_evt;
   for ( int type_lepton = kDielectron; type_lepton <= kDimuon; ++type_lepton ) {
-    for ( int type_vbf = kVBF_undefined; type_vbf <= kVBF_tagged; ++type_vbf ) {
-      int numElectrons = ( type_lepton == kDielectron ) ? 2 : -1;
-      int numMuons     = ( type_lepton == kDimuon     ) ? 2 : -1;
-      // CV: add categories for "resolved" b-jets without VBF jet selection
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2j2e_DYctrl,      hh_bbWW_2bM2j2mu_DYctrl 
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM3j2e_DYctrl,      hh_bbWW_2bM3j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bMge4j2e_DYctrl,    hh_bbWW_2bMge4j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bL2e_DYctrl,     hh_bbWW_1bM1bL2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bL2j2e_DYctrl,   hh_bbWW_1bM1bL2j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bL3j2e_DYctrl,   hh_bbWW_1bM1bL3j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bLge4j2e_DYctrl, hh_bbWW_1bM1bLge4j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2j2e_DYctrl,      hh_bbWW_1bM2j2mu_DYctrl 
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM3j2e_DYctrl,      hh_bbWW_1bM3j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bMge4j2e_DYctrl,    hh_bbWW_1bMge4j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2e_DYctrl,        hh_bbWW_2bL2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2j2e_DYctrl,      hh_bbWW_2bL2j2mu_DYctrl 
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL3j2e_DYctrl,      hh_bbWW_2bL3j2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bLge4j2e_DYctrl,    hh_bbWW_2bLge4j2mu_DYctrl
-      // CV: add categories for "resolved" b-jets with VBF jet selection
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_1bM1bL2e_DYctrl,     hh_bbWW_1bM1bL2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_2bL2e_DYctrl,        hh_bbWW_2bL2mu_DYctrl
-      // CV: add categories for "boosted" b-jets (no VBF jet selection)
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_boosted,  kVBF_undefined)); // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_boosted,  kVBF_undefined)); // hh_bbWW_1bM1bL2e_DYctrl,     hh_bbWW_1bM1bL2mu_DYctrl
-      categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_boosted,  kVBF_undefined)); // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
-    }
+    int numElectrons = ( type_lepton == kDielectron ) ? 2 : -1;
+    int numMuons     = ( type_lepton == kDimuon     ) ? 2 : -1;
+    // CV: add categories for "resolved" b-jets without VBF jet selection
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2j2e_DYctrl,      hh_bbWW_2bM2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM3j2e_DYctrl,      hh_bbWW_2bM3j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bMge4j2e_DYctrl,    hh_bbWW_2bMge4j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bL2e_DYctrl,     hh_bbWW_1bM1bL2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bL2j2e_DYctrl,   hh_bbWW_1bM1bL2j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bL3j2e_DYctrl,   hh_bbWW_1bM1bL3j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1bLge4j2e_DYctrl, hh_bbWW_1bM1bLge4j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2j2e_DYctrl,      hh_bbWW_1bM2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM3j2e_DYctrl,      hh_bbWW_1bM3j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bMge4j2e_DYctrl,    hh_bbWW_1bMge4j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2e_DYctrl,        hh_bbWW_2bL2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2j2e_DYctrl,      hh_bbWW_2bL2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL3j2e_DYctrl,      hh_bbWW_2bL3j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bLge4j2e_DYctrl,    hh_bbWW_2bLge4j2mu_DYctrl
+    // CV: add categories for "resolved" b-jets with VBF jet selection
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_1bM1bL2e_DYctrl,     hh_bbWW_1bM1bL2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_2bL2e_DYctrl,        hh_bbWW_2bL2mu_DYctrl
+    // CV: add categories for "boosted" b-jets (no VBF jet selection)
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_boosted,  kVBF_undefined)); // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_boosted,  kVBF_undefined)); // hh_bbWW_1bM1bL2e_DYctrl,     hh_bbWW_1bM1bL2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_boosted,  kVBF_undefined)); // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
   }
   vstring categoryNames_evt;
   for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
