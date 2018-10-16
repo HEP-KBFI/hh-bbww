@@ -14,17 +14,17 @@ process.makePlots.distributions.extend([
         yAxisTitle = cms.string("dN/p_{T}^{ll} [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/m_Hbb"),
+        histogramName = cms.string("sel/evt/$PROCESS/m_bb"),
         xAxisTitle = cms.string("m_{bb} [GeV]"),
         yAxisTitle = cms.string("dN/dm_{bb} [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/pT_Hbb"),
+        histogramName = cms.string("sel/evt/$PROCESS/pT_bb"),
         xAxisTitle = cms.string("p_{T}^{bb} [GeV]"),
         yAxisTitle = cms.string("dN/p_{T}^{bb} [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/dR_Hbb"),
+        histogramName = cms.string("sel/evt/$PROCESS/dR_bb"),
         xAxisTitle = cms.string("#Delta R^{bb} [GeV]"),
         yAxisTitle = cms.string("dN/#Delta R^{bb} [1/GeV]")
     ),
