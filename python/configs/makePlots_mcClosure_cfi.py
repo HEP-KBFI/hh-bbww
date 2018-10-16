@@ -68,6 +68,12 @@ process.makePlots = cms.PSet(
     ),
     showUncertainty = cms.bool(True),
 
+    legendTextSize = cms.double(0.050),
+    legendPosX = cms.double(0.760),
+    legendPosY = cms.double(0.510),
+    legendSizeX = cms.double(0.170),
+    legendSizeY = cms.double(0.420),
+    
     labelOnTop = cms.string("CMS Simulation; X(masspoint)#rightarrow HH, HH#rightarrow bbWW; %1.1f fb^{-1} at #sqrt{s} = 13 TeV"),
     intLumiData = cms.double(0.), # in units of fb^-1
 

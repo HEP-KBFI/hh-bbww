@@ -191,6 +191,37 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     lines = super(analyzeConfig_hh_bbWW_DYctrl, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
+  def createCfg_makePlots(self, jobOptions):
+    """Fills the template of python configuration file for making control plots
+
+       Args:
+         histogram_file: name of the input ROOT file
+    """
+    lines = []
+    lines.append("process.fwliteInput.fileNames = cms.vstring('%s')" % jobOptions['inputFile'])
+    lines.append("process.makePlots.outputFileName = cms.string('%s')" % jobOptions['outputFile'])
+    lines.append("process.makePlots.processesBackground = cms.vstring(%s)" % jobOptions['make_plots_backgrounds'])
+    lines.append("process.makePlots.categories = cms.VPSet(")
+    for category in jobOptions['categories']:
+      lines.append("  cms.PSet(")
+      lines.append("    name = cms.string('%s')," % getHistogramDir(category, "Tight", "disabled", jobOptions['lepton_charge_selection']))
+      label = ""
+      for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
+        if category.find(type_bjet)!= -1:
+          label += type_bjet
+          break
+      for type_jet in [ "2j", "3j", "ge4j" ]:
+        if category.find(type_jet)!= -1:
+          if len(label) >= 1:
+            label += ","
+          label += type_jet
+          break
+      lines.append("    label = cms.string('DY CR (%s)')" % label)
+      lines.append("  ),")
+    lines.append(")")
+    lines.append("process.makePlots.intLumiData = cms.double(%.1f)" % (self.lumi / 1000))
+    create_cfg(self.cfgFile_make_plots, jobOptions['cfgFile_modified'], lines)
+
   def addToMakefile_backgrounds_from_data(self, lines_makefile):
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds", self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds_sum", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
@@ -560,8 +591,8 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
         'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
         'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_%s%s_cfg.py" % (self.channel, lepton_charge_selection)),
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
-        'histogramDir' : getHistogramDir(self.category_inclusive, "Tight", "disabled", lepton_charge_selection),
-        'label' : '2l',
+        'categories' : self.categories,
+        'lepton_charge_selection' : lepton_charge_selection,
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }
       self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])

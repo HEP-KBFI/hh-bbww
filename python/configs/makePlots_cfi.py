@@ -100,6 +100,12 @@ process.makePlots = cms.PSet(
     ),
     showUncertainty = cms.bool(False),
 
+    legendTextSize = cms.double(0.050),
+    legendPosX = cms.double(0.570),
+    legendPosY = cms.double(0.510),
+    legendSizeX = cms.double(0.360),
+    legendSizeY = cms.double(0.420),
+
     labelOnTop = cms.string(
         ("CMS Preliminary; %dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow " % scaleSignal) +
         "bbWW; %1.1f fb^{-1} at #sqrt{s} = 13 TeV"),

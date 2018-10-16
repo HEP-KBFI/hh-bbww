@@ -29,3 +29,5 @@ process.makePlots.distributions.extend([
         yAxisTitle = cms.string("dN/#Delta R^{bb} [1/GeV]")
     ),
 ])
+
+process.makePlots.labelOnTop = cms.string("CMS Simulation")
