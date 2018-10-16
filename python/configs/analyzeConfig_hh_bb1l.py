@@ -474,6 +474,37 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         }
         self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions])
 
+        # sum signal contributions from gluon fusion and VBF HH production,
+        # separately for "nonfake" and "fake" contributions
+        genMatch_categories = [ "nonfake", "fake" ]
+        for genMatch_category in genMatch_categories:
+          for signal_base, signal_input in self.signal_io.items():
+            key_addBackgrounds_job_signal = getKey(lepton_selection, signal_base)
+            processes_input = signal_input
+            process_output = signal_base
+            if genMatch_category == "fake":
+              key_addBackgrounds_job_signal = key_addBackgrounds_job_signal + "_fake"
+              processes_input = [ process_input + "_fake" for process_input in processes_input ]
+              process_output += "_fake"
+            if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
+              continue
+            cfg_key = getKey(self.channel, signal_base, genMatch_category, lepton_selection)
+            self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
+              'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
+              'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_cfg.py" % cfg_key),
+              'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s.root" % cfg_key),
+              'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s.log" % cfg_key),
+              'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
+              'processes_input' : processes_input,
+              'process_output' : process_output
+            }
+            self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal])
+            key_hadd_stage2 = getKey(lepton_selection_and_frWeight)
+            if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
+              self.inputFiles_hadd_stage2[key_hadd_stage2] = []
+            if lepton_selection == "Tight":
+              self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
+
         # initialize input and output file names for hadd_stage2
         key_hadd_stage2 = getKey(lepton_selection_and_frWeight)
         if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
