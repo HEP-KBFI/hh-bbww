@@ -4,7 +4,7 @@ from hhAnalysis.bbww.configs.makePlots_cfi import process
 
 process.makePlots.processSignal = cms.string("")
 
-process.makePlots.distributions = cms.VPSet(
+process.makePlots.distributions.extend([
     cms.PSet(
         histogramName = cms.string("sel/evt/$PROCESS/m_ll"),
         xAxisTitle = cms.string("m_{ll} [GeV]"),
@@ -30,6 +30,6 @@ process.makePlots.distributions = cms.VPSet(
         xAxisTitle = cms.string("#Delta R^{bb} [GeV]"),
         yAxisTitle = cms.string("dN/#Delta R^{bb} [1/GeV]")
     ),
-)
+])
 
 process.makePlots.labelOnTop = cms.string("CMS Simulation")

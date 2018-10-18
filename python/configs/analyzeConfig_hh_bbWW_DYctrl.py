@@ -137,7 +137,8 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
     self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ] + [ "conversions", "fakes_data" ]
-    self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bbWW_DYctrl_cfg.py")
+    self.cfgFile_make_plots_inclusive = os.path.join(self.template_dir, "makePlots_hh_bbWW_DYctrl_inclusive_cfg.py")
+    self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_DYctrl_in_categories_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_DYctrl_cfg.py")
 
     self.select_rle_output = select_rle_output
@@ -145,20 +146,20 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     self.hlt_filter = hlt_filter
 
     self.categories = []
-    # CV: add categories for "resolved" b-jets without VBF jet selection
-    for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
-      for type_jet in [ "2j", "3j", "ge4j" ]:
-        for type_lepton in [ "2e", "2mu" ]:
-          category = "hh_bbWW_%s%s%s_DYctrl_resolvedHbb" % (type_bjet, type_jet, type_lepton)
-          self.categories.append(category)
-    # CV: add categories for "resolved" b-jets with VBF jet selection
-    for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
-      for type_lepton in [ "2e", "2mu" ]:
+    for type_lepton in [ "2e", "2mu" ]:
+      # CV: add categories for "resolved" b-jets without VBF jet selection
+      for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL", "1bL", "nobL" ]:
+        for type_jet in [ "0j", "1j", "2j", "3j", "ge4j" ]:
+          if (type_jet == "0j" and type_bjet != "nobL") or (type_jet == "1j" and type_bjet not in [ "1bM", "1bL", "nobL" ]):
+            continue   
+          self.categories.append("hh_bbWW_%s%s%s_DYctrl_resolvedHbb" % (type_bjet, type_jet, type_lepton))
+        self.categories.append("hh_bbWW_%s%s_DYctrl_resolvedHbb" % (type_bjet, type_lepton))                                                         
+      # CV: add categories for "resolved" b-jets with VBF jet selection
+      for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
         category = "hh_bbWW_%s%s_DYctrl_resolvedHbb_vbf" % (type_bjet, type_lepton)
         self.categories.append(category)
-    # CV: add categories for "boosted" b-jets (no VBF jet selection)
-    for type_bjet in [ "2bM", "1bM1bL", "1bM" ]:
-      for type_lepton in [ "2e", "2mu" ]:
+      # CV: add categories for "boosted" b-jets (no VBF jet selection)
+      for type_bjet in [ "2bM", "1bM1bL", "1bM" ]:
         category = "hh_bbWW_%s%s_DYctrl_boostedHbb" % (type_bjet, type_lepton)
         self.categories.append(category)
     print("Processing %i categories: %s" % (len(self.categories), self.categories))
@@ -206,11 +207,11 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       lines.append("  cms.PSet(")
       lines.append("    name = cms.string('%s')," % getHistogramDir(category, "Tight", "disabled", jobOptions['lepton_charge_selection']))
       label = ""
-      for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
+      for type_bjet in [ "2bM", "1bM2bL", "1bM", "2bL", "1bL", "nobL" ]:
         if category.find(type_bjet)!= -1:
           label += type_bjet
           break
-      for type_jet in [ "2j", "3j", "ge4j" ]:
+      for type_jet in [ "0j", "1j", "2j", "3j", "ge4j" ]:
         if category.find(type_jet)!= -1:
           if len(label) >= 1:
             label += ","
@@ -220,7 +221,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       lines.append("  ),")
     lines.append(")")
     lines.append("process.makePlots.intLumiData = cms.double(%.1f)" % (self.lumi / 1000))
-    create_cfg(self.cfgFile_make_plots, jobOptions['cfgFile_modified'], lines)
+    create_cfg(jobOptions['cfgFile_original'], jobOptions['cfgFile_modified'], lines)
 
   def addToMakefile_backgrounds_from_data(self, lines_makefile):
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds", self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
@@ -584,28 +585,42 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
 
     logging.info("Creating configuration files to run 'makePlots'")
     for lepton_charge_selection in self.lepton_charge_selections:
-      key_makePlots_job = getKey(lepton_charge_selection)
+      key_makePlots_job_inclusive = getKey(lepton_charge_selection)
       key_hadd_stage2 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-      self.jobOptions_make_plots[key_makePlots_job] = {
+      self.jobOptions_make_plots[key_makePlots_job_inclusive] = {
         'executable' : self.executable_make_plots,
         'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
+        'cfgFile_original' : self.cfgFile_make_plots_inclusive,
+        'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_%s%s_cfg.py" % (self.channel, lepton_charge_selection)),
+        'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
+        'categories' : [ self.category_inclusive ],
+        'lepton_charge_selection' : lepton_charge_selection,
+        'make_plots_backgrounds' : self.make_plots_backgrounds
+      }
+      self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job_inclusive])
+      key_makePlots_job_in_categories = getKey(lepton_charge_selection)
+      key_hadd_stage2 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+      self.jobOptions_make_plots[key_makePlots_job_in_categories] = {
+        'executable' : self.executable_make_plots,
+        'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
+        'cfgFile_original' : self.cfgFile_make_plots_in_categories,
         'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_%s%s_cfg.py" % (self.channel, lepton_charge_selection)),
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
         'categories' : self.categories,
         'lepton_charge_selection' : lepton_charge_selection,
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }
-      self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
+      self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job_in_categories])
       if "Fakeable_mcClosure" in self.lepton_selections: #TODO
-        key_makePlots_job = getKey(lepton_charge_selection)
+        key_makePlots_job_mcClosure = getKey(lepton_charge_selection)
         key_hadd_stage2 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-        self.jobOptions_make_plots[key_makePlots_job] = {
+        self.jobOptions_make_plots[key_makePlots_job_mcClosure] = {
           'executable' : self.executable_make_plots_mcClosure,
           'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
           'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_mcClosure_%s_%s_cfg.py" % (self.channel, lepton_charge_selection)),
           'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_mcClosure_%s_%s.png" % (self.channel, lepton_charge_selection))
         }
-        self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job])
+        self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job_mcClosure])
 
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
