@@ -37,7 +37,7 @@ public:
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
 		 double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
-		 double vbf_m_jj, double vbf_dEta_jj,
+		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
                  double evtWeight);
 
   const TH1 *
@@ -84,7 +84,11 @@ public:
 
   TH1 * histogram_mvaOutput_Hj_tagger_;
   TH1 * histogram_mvaOutput_Hjj_tagger_;
-
+  
+  TH1 * histogram_vbf_jet1_pt_;
+  TH1 * histogram_vbf_jet1_eta_;
+  TH1 * histogram_vbf_jet2_pt_;
+  TH1 * histogram_vbf_jet2_eta_;
   TH1 * histogram_vbf_m_jj_;
   TH1 * histogram_vbf_dEta_jj_;
       

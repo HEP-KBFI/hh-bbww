@@ -37,7 +37,7 @@ public:
 		 double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
-                 double vbf_m_jj, double vbf_dEta_jj,
+                 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 double evtWeight);
 
   const TH1 *
@@ -87,6 +87,10 @@ public:
   TH1 * histogram_logTopness_;
   TH2 * histogram_logTopness_vs_logHiggsness_;
 
+  TH1 * histogram_vbf_jet1_pt_;
+  TH1 * histogram_vbf_jet1_eta_;
+  TH1 * histogram_vbf_jet2_pt_;
+  TH1 * histogram_vbf_jet2_eta_;
   TH1 * histogram_vbf_m_jj_;
   TH1 * histogram_vbf_dEta_jj_;
 

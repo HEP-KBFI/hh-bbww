@@ -73,18 +73,46 @@ void dumpEventYields()
 
   typedef std::vector<std::string> vstring;
   vstring channels;
-  channels.push_back("hh_bb2l");
   channels.push_back("hh_bb1l");
+  //channels.push_back("hh_bb2l");
 
   std::map<std::string, std::string> inputFilePaths; // key = channel
-  inputFilePaths["hh_bb1l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct08/histograms/hh_bb1l/";
-  inputFilePaths["hh_bb2l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct06/histograms/hh_bb2l/";
+  inputFilePaths["hh_bb1l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct12/histograms/hh_bb1l/";
+  inputFilePaths["hh_bb2l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct12/histograms/hh_bb2l/";
 
   std::map<std::string, std::string> inputFileNames; // key = channel
+  inputFileNames["hh_bb1l"] = "histograms_harvested_stage2_hh_bb1l_Tight.root";
   inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
 
   std::map<std::string, vstring> categories; // key = channel
-  categories["hh_bb2l"].push_back("hh_bb2l_OS");
+  categories["hh_bb1l"].push_back("hh_bb1l_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1e_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1mu_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_vbf_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_nonvbf_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_highPurity_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_lowPurity_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_boostedHbb_resolvedWjj_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_boostedHbb_boostedWjj_highPurity_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_boostedHbb_boostedWjj_lowPurity_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1l_vbf");
+  categories["hh_bb2l"].push_back("hh_bb2l_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_vbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_nonvbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2l_boostedHbb_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2e_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2e_resolvedHbb_vbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2e_resolvedHbb_nonvbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2e_boostedHbb_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb1e1mu_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb1e1mu_resolvedHbb_vbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb1e1mu_resolvedHbb_nonvbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb1e1mu_boostedHbb_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2mu_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2mu_resolvedHbb_vbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2mu_resolvedHbb_nonvbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2mu_boostedHbb_OS_Tight");
+/*  
   categories["hh_bb2l"].push_back("hh_2l_OS");
   categories["hh_bb2l"].push_back("hh_2l_vbf_OS");
   categories["hh_bb2l"].push_back("hh_2e_OS");
@@ -93,16 +121,30 @@ void dumpEventYields()
   categories["hh_bb2l"].push_back("hh_2mu_vbf_OS");
   categories["hh_bb2l"].push_back("hh_1e1mu_OS");
   categories["hh_bb2l"].push_back("hh_1e1mu_vbf_OS");
-
+ */
   std::map<std::string, std::string> directories; // key = channel
+  directories["hh_bb1l"] = "sel/evt";
   directories["hh_bb2l"] = "sel/evt";
 
   std::map<std::string, vstring> signal_processes; // key = channel
-  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_wwww");
-  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_wwtt");
-  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_tttt");
+  //signal_processes["hh_bb1l"].push_back("signal_ggf_spin0_400_hh_bbvv");
+  //signal_processes["hh_bb1l"].push_back("signal_ggf_spin0_700_hh_bbvv");
+  //signal_processes["hh_bb1l"].push_back("signal_ggf_spin0_400_hh_bbtt");
+  //signal_processes["hh_bb1l"].push_back("signal_ggf_spin0_700_hh_bbtt");
+  signal_processes["hh_bb1l"].push_back("signal_vbf_spin0_300_hh_bbvv");
+  signal_processes["hh_bb1l"].push_back("signal_vbf_spin0_400_hh_bbvv");
+  signal_processes["hh_bb1l"].push_back("signal_vbf_spin0_750_hh_bbvv");
+  //signal_processes["hh_bb1l"].push_back("signal_vbf_spin0_400_hh_bbtt");
+  //signal_processes["hh_bb1l"].push_back("signal_vbf_spin0_700_hh_bbtt");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_bbvv");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_700_hh_bbvv");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_400_hh_bbtt");
+  //signal_processes["hh_bb2l"].push_back("signal_ggf_spin0_700_hh_bbtt");
+  signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_300_hh_bbvv");
   signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_400_hh_bbvv");
-  signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_700_hh_bbvv");
+  signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_750_hh_bbvv");
+  //signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_400_hh_bbtt");
+  //signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_700_hh_bbtt");
 
   std::vector<std::string> signal_process_parts;
   signal_process_parts.push_back("");
@@ -110,6 +152,20 @@ void dumpEventYields()
   signal_process_parts.push_back("_fake");
   
   std::map<std::string, vstring> background_processes; // key = channel
+  background_processes["hh_bb1l"].push_back("TT");
+  background_processes["hh_bb1l"].push_back("TTW");
+  background_processes["hh_bb1l"].push_back("TTWW");
+  background_processes["hh_bb1l"].push_back("TTZ");
+  background_processes["hh_bb1l"].push_back("TH");
+  background_processes["hh_bb1l"].push_back("TTH");
+  background_processes["hh_bb1l"].push_back("WZ");
+  background_processes["hh_bb1l"].push_back("ZZ");
+  background_processes["hh_bb1l"].push_back("DY");
+  background_processes["hh_bb1l"].push_back("W");
+  background_processes["hh_bb1l"].push_back("conversions");
+  background_processes["hh_bb1l"].push_back("fakes_data");
+  background_processes["hh_bb1l"].push_back("fakes_mc");
+  background_processes["hh_bb1l"].push_back("VH");
   background_processes["hh_bb2l"].push_back("TT");
   background_processes["hh_bb2l"].push_back("TTW");
   background_processes["hh_bb2l"].push_back("TTWW");
@@ -138,7 +194,7 @@ void dumpEventYields()
   for ( vstring::const_iterator channel = channels.begin();
 	channel != channels.end(); ++channel ) {
 
-    TString inputFileName_full = inputFilePath.data();
+    TString inputFileName_full = inputFilePaths[*channel].data();
     if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
     inputFileName_full.Append(inputFileNames[*channel].data());
     std::cout << "channel = " << inputFileName_full.Data() << std::endl;

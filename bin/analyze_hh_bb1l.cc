@@ -642,7 +642,7 @@ int main(int argc, char* argv[])
       "mT_W", "mT_top_2particle", "mT_top_3particle", 
       "m_HH_hme",
       "mvaOutput_Hj_tagger", "mvaOutput_Hjj_tagger",
-      "vbf_m_jj", "vbf_dEta_jj",
+      "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight"
     );
     bdt_filler->register_variable<int_type>(
@@ -1348,7 +1348,7 @@ int main(int argc, char* argv[])
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
     double dR_Hbb   = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
-    double dPhi_Hbb = deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi());
+    double dPhi_Hbb = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
     double pT_Hbb   = HbbP4.pt();
     Particle::LorentzVector WjjP4 = selJetP4_Wjj_lead + selJetP4_Wjj_sublead;
     double m_Wjj    = -1.;
@@ -1358,13 +1358,13 @@ int main(int argc, char* argv[])
     if ( selJet_Wjj_lead && selJet_Wjj_sublead ) {
       m_Wjj    = WjjP4.mass();
       dR_Wjj   = deltaR(selJetP4_Wjj_lead, selJetP4_Wjj_sublead);
-      dPhi_Wjj = deltaPhi(selJetP4_Wjj_lead.phi(), selJetP4_Wjj_sublead.phi());
+      dPhi_Wjj = TMath::Abs(deltaPhi(selJetP4_Wjj_lead.phi(), selJetP4_Wjj_sublead.phi()));
       pT_Wjj   = WjjP4.pt();
     }
     double tau21_Wjj = ( selJetAK8_Wjj ) ? selJetAK8_Wjj->tau2()/selJetAK8_Wjj->tau1() : -1.;
     Particle::LorentzVector WlnuP4 = selLeptonP4 + neutrinoP4_B2G_18_008;
     double dR_Hww = deltaR(WjjP4, WlnuP4);
-    double dPhi_Hww = deltaPhi(WjjP4.phi(), WlnuP4.phi());
+    double dPhi_Hww = TMath::Abs(deltaPhi(WjjP4.phi(), WlnuP4.phi()));
     Particle::LorentzVector HwwP4 = WjjP4 + WlnuP4;
     double pT_Hww = HwwP4.pt();
     double Smin_Hww = comp_Smin(WjjP4 + selLeptonP4, metP4.px(), metP4.py());
@@ -1373,7 +1373,7 @@ int main(int argc, char* argv[])
     Particle::LorentzVector HHvisP4 = HbbP4 + WjjP4 + selLeptonP4;    
     double m_HHvis = HHvisP4.mass();
     double pT_HHvis = HHvisP4.pt();
-    double dPhi_HHvis = deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4).phi());        
+    double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4).phi()));        
     Particle::LorentzVector HHP4_B2G_18_008 = HbbP4 + WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008;
     Particle::LorentzVector HHP4 = HbbP4 + WjjP4 + selLeptonP4 + metP4;
     double m_HH = HHP4.mass();
@@ -1381,7 +1381,7 @@ int main(int argc, char* argv[])
     double pT_HH = HHP4.pt();
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
     double dR_HH = deltaR(HbbP4, WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008);
-    double dPhi_HH = deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4 + metP4).phi());
+    double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4 + metP4).phi()));
     double mT_W = mT2_2particle::comp_mT(selLeptonP4.px(), selLeptonP4.py(), selLeptonP4.mass(), metP4.px(), metP4.py(), 0.);
     double mT_top_2particle_permutation1 = mT2_2particle::comp_mT(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(), 
@@ -1426,6 +1426,8 @@ int main(int argc, char* argv[])
       }
     }
 
+    const RecoJet* selJet_vbf_lead = nullptr;
+    const RecoJet* selJet_vbf_sublead = nullptr;
     double vbf_dEta_jj = -1.;
     double vbf_m_jj = -1.;
     bool isVBF = false;   
@@ -1437,12 +1439,26 @@ int main(int argc, char* argv[])
 	double m_jj = ((*selJet1_vbf)->p4() + (*selJet2_vbf)->p4()).mass();
 	if ( dEta_jj > 4. && m_jj > 500. ) {
 	  if ( m_jj > vbf_m_jj ) { // CV: in case of ambiguity, take the jet pair of highest mass
+	    selJet_vbf_lead = (*selJet1_vbf);
+	    selJet_vbf_sublead = (*selJet2_vbf);
 	    vbf_dEta_jj = dEta_jj;
 	    vbf_m_jj = m_jj;
 	  }
 	  isVBF = true;
 	}
       }
+    }
+    double vbf_jet1_pt = -1.;
+    double vbf_jet1_eta = 0.;
+    if ( selJet_vbf_lead ) {
+      vbf_jet1_pt = selJet_vbf_lead->pt();
+      vbf_jet1_eta = selJet_vbf_lead->eta();
+    }
+    double vbf_jet2_pt = -1.;
+    double vbf_jet2_eta = 0.;
+    if ( selJet_vbf_sublead ) {
+      vbf_jet2_pt = selJet_vbf_sublead->pt();
+      vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
 
 //--- fill histograms with events passing final selection
@@ -1479,7 +1495,7 @@ int main(int argc, char* argv[])
       m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT_W, mT_top_2particle, mT_top_3particle,
       mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-      vbf_m_jj, vbf_dEta_jj,
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
       evtWeight);
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
@@ -1525,7 +1541,7 @@ int main(int argc, char* argv[])
 	    m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT_W, mT_top_2particle, mT_top_3particle,
 	    mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-	    vbf_m_jj, vbf_dEta_jj,
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
 	    evtWeight);
 	}
 	if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
@@ -1582,6 +1598,10 @@ int main(int argc, char* argv[])
           ("m_HH_hme",                      m_HH_hme)
 	  ("mvaOutput_Hj_tagger",           mvaOutput_Hj_tagger)
 	  ("mvaOutput_Hjj_tagger",          mvaOutput_Hjj_tagger)
+	  ("vbf_jet1_pt",                   vbf_jet1_pt) 
+          ("vbf_jet1_eta",                  vbf_jet1_eta)
+          ("vbf_jet2_pt",                   vbf_jet2_pt)
+	  ("vbf_jet2_eta",                  vbf_jet2_eta)
           ("vbf_dEta_jj",                   vbf_dEta_jj)
           ("vbf_m_jj",                      vbf_m_jj)
           ("genWeight",                     eventInfo.genWeight)

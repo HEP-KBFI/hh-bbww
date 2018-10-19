@@ -628,7 +628,7 @@ int main(int argc, char* argv[])
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle", 
       "m_HH_hme",
       "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
-      "vbf_m_jj", "vbf_dEta_jj",
+      "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight"
     );
     bdt_filler->register_variable<int_type>(
@@ -660,6 +660,7 @@ int main(int argc, char* argv[])
     "HLT filter matching",
     ">= 2 jets from H->bb",
     ">= 1 medium b-jet",
+    "m(ll) < 76 GeV",
     "m(ll) > 12 GeV",
     "Z-boson mass veto",
     "MEt filters",
@@ -1216,6 +1217,15 @@ int main(int argc, char* argv[])
     }
     std::vector<const RecoJet*> selJetsAK4_vbf = jetSelectorAK4_vbf(cleanedJetsAK4_vbf, isHigherPt);
 
+    if ( !((selLeptonP4_lead + selLeptonP4_sublead).mass() < 76.) ) {
+      if ( run_lumi_eventSelector ) {
+        std::cout << "event " << eventInfo.str() << " FAILS m_ll < 76 GeV cut." << std::endl;
+      }
+      continue;
+    }
+    cutFlowTable.update("m(ll) < 76 GeV", evtWeight);
+    cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeight);
+
     bool failsLowMassVeto = false;
     for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();
 	  lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
@@ -1306,15 +1316,15 @@ int main(int argc, char* argv[])
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
     double dR_Hbb   = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
-    double dPhi_Hbb = deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi());
+    double dPhi_Hbb = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
     double pT_Hbb   = HbbP4.pt();
     Particle::LorentzVector llP4 = selLeptonP4_lead + selLeptonP4_sublead;
     double m_ll  = llP4.mass();
     double dR_ll = deltaR(selLeptonP4_lead, selLeptonP4_sublead);
-    double dPhi_ll = deltaPhi(selLeptonP4_lead.phi(), selLeptonP4_sublead.phi());
+    double dPhi_ll = TMath::Abs(deltaPhi(selLeptonP4_lead.phi(), selLeptonP4_sublead.phi())); 
     double pT_ll = llP4.pt();
-    double dPhi_lep1MEt = deltaPhi(selLeptonP4_lead.phi(), metP4.phi());
-    double dPhi_lep2MEt = deltaPhi(selLeptonP4_sublead.phi(), metP4.phi());
+    double dPhi_lep1MEt = TMath::Abs(deltaPhi(selLeptonP4_lead.phi(), metP4.phi()));
+    double dPhi_lep2MEt = TMath::Abs(deltaPhi(selLeptonP4_sublead.phi(), metP4.phi()));
     double min_dPhi_lepMEt = TMath::Min(dPhi_lep1MEt, dPhi_lep2MEt);
     double max_dPhi_lepMEt = TMath::Max(dPhi_lep1MEt, dPhi_lep2MEt);
     Particle::LorentzVector HwwP4 = selLeptonP4_lead + selLeptonP4_sublead + metP4;
@@ -1328,13 +1338,13 @@ int main(int argc, char* argv[])
     Particle::LorentzVector HHvisP4 = HbbP4 + selLeptonP4_lead + selLeptonP4_sublead;
     double m_HHvis = HHvisP4.mass();
     double pT_HHvis = HHvisP4.pt();
-    double dPhi_HHvis = deltaPhi(HbbP4.phi(), (selLeptonP4_lead + selLeptonP4_sublead).phi()); 
+    double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (selLeptonP4_lead + selLeptonP4_sublead).phi())); 
     Particle::LorentzVector HHP4 = HbbP4 + HwwP4;
     double m_HH = HHP4.mass();
     double pT_HH = HHP4.pt();
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
     double dR_HH = deltaR(HbbP4, HwwP4);
-    double dPhi_HH = deltaPhi(HbbP4.phi(), HwwP4.phi());
+    double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), HwwP4.phi()));
     mT2_2particle mT2Algo_2particle;
     mT2Algo_2particle(
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),  
@@ -1408,6 +1418,8 @@ int main(int argc, char* argv[])
     } 
     double m_HH_hme = -1.; // CV: not implemented yet
 
+    const RecoJet* selJet_vbf_lead = nullptr;
+    const RecoJet* selJet_vbf_sublead = nullptr;
     double vbf_dEta_jj = -1.;
     double vbf_m_jj = -1.;
     bool isVBF = false;   
@@ -1419,6 +1431,8 @@ int main(int argc, char* argv[])
 	double m_jj = ((*selJet1_vbf)->p4() + (*selJet2_vbf)->p4()).mass();
 	if ( dEta_jj > 4. && m_jj > 500. ) {
 	  if ( m_jj > vbf_m_jj ) { // CV: in case of ambiguity, take the jet pair of highest mass
+	    selJet_vbf_lead = (*selJet1_vbf);
+	    selJet_vbf_sublead = (*selJet2_vbf);
 	    vbf_dEta_jj = dEta_jj;
 	    vbf_m_jj = m_jj;
 	  }
@@ -1426,6 +1440,19 @@ int main(int argc, char* argv[])
 	}
       }
     }
+    double vbf_jet1_pt = -1.;
+    double vbf_jet1_eta = 0.;
+    if ( selJet_vbf_lead ) {
+      vbf_jet1_pt = selJet_vbf_lead->pt();
+      vbf_jet1_eta = selJet_vbf_lead->eta();
+    }
+    double vbf_jet2_pt = -1.;
+    double vbf_jet2_eta = 0.;
+    if ( selJet_vbf_sublead ) {
+      vbf_jet2_pt = selJet_vbf_sublead->pt();
+      vbf_jet2_eta = selJet_vbf_sublead->eta();
+    }
+    
 
 //--- fill histograms with events passing final selection
     selHistManagerType* selHistManager = selHistManagers[idxSelLepton_genMatch];
@@ -1470,7 +1497,7 @@ int main(int argc, char* argv[])
       m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
-      vbf_m_jj, vbf_dEta_jj,
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
       evtWeight);
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
@@ -1514,7 +1541,7 @@ int main(int argc, char* argv[])
 	    m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
 	    logHiggsness_publishedChi2, logTopness_publishedChi2,
-	    vbf_m_jj, vbf_dEta_jj,
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
 	    evtWeight);
 	}
 	if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
@@ -1576,6 +1603,10 @@ int main(int argc, char* argv[])
           ("logHiggsness_publishedChi2",    logHiggsness_publishedChi2)
           ("logTopness_fixedChi2",          logTopness_fixedChi2)
           ("logHiggsness_fixedChi2",        logHiggsness_fixedChi2)
+          ("vbf_jet1_pt",                   vbf_jet1_pt) 
+          ("vbf_jet1_eta",                  vbf_jet1_eta)
+          ("vbf_jet2_pt",                   vbf_jet2_pt)
+	  ("vbf_jet2_eta",                  vbf_jet2_eta)
           ("vbf_dEta_jj",                   vbf_dEta_jj)
           ("vbf_m_jj",                      vbf_m_jj)
           ("genWeight",                     eventInfo.genWeight)

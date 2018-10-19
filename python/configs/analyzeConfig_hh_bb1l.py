@@ -479,11 +479,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         genMatch_categories = [ "nonfake", "fake" ]
         for genMatch_category in genMatch_categories:
           for signal_base, signal_input in self.signal_io.items():
-            key_addBackgrounds_job_signal = getKey(lepton_selection, signal_base)
+            key_addBackgrounds_job_signal = getKey(lepton_selection, signal_base, genMatch_category)
             processes_input = signal_input
             process_output = signal_base
             if genMatch_category == "fake":
-              key_addBackgrounds_job_signal = key_addBackgrounds_job_signal + "_fake"
               processes_input = [ process_input + "_fake" for process_input in processes_input ]
               process_output += "_fake"
             if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
