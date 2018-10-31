@@ -88,8 +88,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       template_dir       = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
     )
 
-    self.samples = samples
-
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
