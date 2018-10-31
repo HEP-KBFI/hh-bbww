@@ -18,14 +18,8 @@ for sample_name, sample_info in samples_2017.items():
   if not isinstance(sample_info, OD):
     continue
 
-  if sample_name.startswith('/VBFTo'):
-    sample_info["use_it"] = True
-  #------------------------------------------------------------------------------
-  # CV: ONLY FOR TESTING !!!
-  #else:
-  #  sample_info["use_it"] = False
-  #  continue
-  #------------------------------------------------------------------------------
+  if sample_info["process_name_specific"].startswith('signal') and 'hh' in sample_info["process_name_specific"]:
+    sample_info["use_it"] = 'nonresonant' not in sample_info["process_name_specific"] # temp: enable resonant samples only
 
   if sample_name.startswith('/ZZ'):
     sample_info["sample_category"] = "ZZ"
