@@ -1131,7 +1131,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correct
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           "NanoProduction_v2_2018Nov01_GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_reali"),
+  ("crab_string",           ""),
   ("sample_category",       "signal_ggf_spin0_1000_hh_bbtt"),
   ("process_name_specific", "signal_ggf_spin0_1000_hh_2b2t"),
   ("nof_db_events",         100000),
