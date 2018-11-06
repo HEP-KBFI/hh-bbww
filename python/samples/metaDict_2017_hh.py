@@ -741,7 +741,7 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/RunIIFall
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           "NanoProduction_v2_2018Sep26_VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1"),
+  ("crab_string",           ""),
   ("sample_category",       "signal_vbf_spin0_3000_hh_bbtt"),
   ("process_name_specific", "signal_vbf_spin0_3000_hh_2b2t"),
   ("nof_db_events",         100000),
