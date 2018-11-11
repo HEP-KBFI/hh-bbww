@@ -60,7 +60,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoHistManager.h" // LHEInfoHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
-#include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_3lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
+#include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_2lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
@@ -350,7 +350,7 @@ int main(int argc, char* argv[])
   inputTree->registerReader(&eventInfoReader);
 
   hltPathReader hltPathReader_instance({ triggers_1e, triggers_2e, triggers_1mu, triggers_2mu, triggers_1e1mu });
-  inputTree -> registerReader(&hltPathReader_instance);
+  inputTree->registerReader(&hltPathReader_instance);
 
   if ( eventWeightManager ) {
     inputTree->registerReader(eventWeightManager);
@@ -654,7 +654,7 @@ int main(int argc, char* argv[])
     ">= 2 presel leptons",
     ">= 2 sel leptons",
     "lead lepton pT > 25 GeV && sublead lepton pT > 15 GeV",
-    "sel lepton-pair OS/SS charge",
+    Form("sel lepton-pair %s charge", leptonChargeSelection_string.data()),
     "<= 2 tight leptons",
     "fakeable lepton trigger match",
     "HLT filter matching",
