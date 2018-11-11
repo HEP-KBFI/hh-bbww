@@ -37,7 +37,6 @@ public:
   double get_min_msoftdrop() const;
   double get_max_msoftdrop() const;
   double get_max_tau2_div_tau1() const;
-  double get_max_mD() const;
   double get_max_dR_lepton() const;
   double get_min_subJet1_pt() const;
   double get_max_subJet1_absEta() const;
