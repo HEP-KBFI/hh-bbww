@@ -46,7 +46,6 @@ public:
  private:
   TH1 * histogram_numElectrons_;
   TH1 * histogram_numMuons_;
-  TH1 * histogram_numHadTaus_;
   TH1 * histogram_numJets_;
   TH1 * histogram_numBJets_loose_;
   TH1 * histogram_numBJets_medium_;
