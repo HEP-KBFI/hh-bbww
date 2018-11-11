@@ -144,10 +144,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.categories = []
     for type_bb_and_leptons in [
-      "bb2l",    "2bM2l",    "1bM1bL2l",  "1bM2l",
-      "bb2e",    "2bM2e",    "1bM1bL2e",  "1bM2e",
-      "bb2mu",   "2bM2mu",   "1bM1bL2mu", "1bM2mu",
-      "bb1e1mu", "2bM1e1mu", "1bM1bL2l",  "1bM2l" ]:
+      "bb2l",    "2bM2l",    "1bM1bL2l",    "1bM2l",
+      "bb2e",    "2bM2e",    "1bM1bL2e",    "1bM2e",
+      "bb2mu",   "2bM2mu",   "1bM1bL2mu",   "1bM2mu",
+      "bb1e1mu", "2bM1e1mu", "1bM1bL1e1mu", "1bM1e1mu" ]:
       for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
         for type_vbf in [ "", "_vbf", "_nonvbf" ]:
           self.categories.append("hh_%s%s%s" % (type_bb_and_leptons, type_Hbb, type_vbf))
