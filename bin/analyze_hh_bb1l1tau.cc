@@ -1398,6 +1398,13 @@ int main(int argc, char* argv[])
     cutFlowTable.update("m(ltau) < 76 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("m(ltau) < 76 GeV", evtWeight);
 
+//--- compute MHT and linear MET discriminant (met_LD)
+    RecoMEt met = metReader->read();
+    const Particle::LorentzVector& metP4 = met.p4();
+    std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4(cleanedJetsAK4_wrtLeptons_and_hadTaus, isHigherPt);
+    Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, fakeableHadTaus, selJetsAK4_mht);
+    double met_LD = compMEt_LD(metP4, mhtP4);
+
     //---------------------------------------------------------------------------
     // CV: Veto events with 81 < mTauTau < 151 GeV
     //     to avoid overlap with etau and mutau channels of HH->bbtautau analysis (HIG-17-002).
@@ -1480,13 +1487,6 @@ int main(int argc, char* argv[])
     cutFlowTable.update("Z-boson mass veto", evtWeight);
     cutFlowHistManager->fillHistograms("Z-boson mass veto", evtWeight);
     
-//--- compute MHT and linear MET discriminant (met_LD)
-    RecoMEt met = metReader->read();
-    const Particle::LorentzVector& metP4 = met.p4();
-    std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4(cleanedJetsAK4_wrtLeptons_and_hadTaus, isHigherPt);
-    Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, fakeableHadTaus, selJetsAK4_mht);
-    double met_LD = compMEt_LD(metP4, mhtP4);
-
     // compute HT and STMET variables used for signal extraction in EXO analyses
     std::vector<const RecoJetBase*> selJets_HT_and_STMET;
     selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
