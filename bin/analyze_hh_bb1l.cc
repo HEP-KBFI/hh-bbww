@@ -26,6 +26,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/LeptonFakeRateInterface.h" // LeptonFakeRateInterface
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
+#include "tthAnalysis/HiggsToTauTau/interface/RecoHadTauReader.h" // RecoHadTauReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h" // RecoJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReaderAK8.h" // RecoJetReaderAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtReader.h" // RecoMEtReader
@@ -46,6 +47,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorLoose.h" // RecoMuonCollectionSelectorLoose
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorFakeable.h" // RecoMuonCollectionSelectorFakeable
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorTight.h" // RecoMuonCollectionSelectorTight
+#include "tthAnalysis/HiggsToTauTau/interface/RecoHadTauCollectionSelectorTight.h" // RecoHadTauCollectionSelectorTight
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
@@ -100,6 +102,9 @@ typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
 
 enum { kFR_disabled, kFR_enabled };
+
+const int hadTauSelection_veto_antiElectron = -1; // not applied
+const int hadTauSelection_veto_antiMuon = -1; // not applied
 
 const double wBosonMass = 80.379; // GeV
 const double higgsBosonMass = 125.;
@@ -328,6 +333,9 @@ int main(int argc, char* argv[])
   std::cout << "leptonGenMatch_definitions:" << std::endl;
   std::cout << leptonGenMatch_definitions;
 
+  bool apply_hadTauVeto = cfg_analyze.getParameter<bool>("apply_hadTauVeto");
+  const std::string hadTauSelection_veto = cfg_analyze.getParameter<std::string>("hadTauSelection_veto");
+
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
@@ -355,6 +363,7 @@ int main(int argc, char* argv[])
 
   checkOptionValidity(central_or_shift, isMC);
   const int jetToLeptonFakeRate_option = getJetToLeptonFR_option  (central_or_shift);
+  const int hadTauPt_option            = getHadTauPt_option       (central_or_shift);
   const int lheScale_option            = getLHEscale_option       (central_or_shift);
   const int jetBtagSF_option           = getBTagWeight_option     (central_or_shift);
   const int dyMCReweighting_option     = getDYMCReweighting_option(central_or_shift);
@@ -365,6 +374,7 @@ int main(int argc, char* argv[])
   std::cout
     << "central_or_shift = "               << central_or_shift           << "\n"
        " -> jetToLeptonFakeRate_option = " << jetToLeptonFakeRate_option << "\n"
+       " -> hadTauPt_option            = " << hadTauPt_option            << "\n"
        " -> lheScale_option            = " << lheScale_option            << "\n"
        " -> jetBtagSF_option           = " << jetBtagSF_option           << "\n"
        " -> met_option                 = " << met_option                 << "\n"
@@ -410,6 +420,7 @@ int main(int argc, char* argv[])
 
   std::string branchName_electrons = cfg_analyze.getParameter<std::string>("branchName_electrons");
   std::string branchName_muons = cfg_analyze.getParameter<std::string>("branchName_muons");
+  std::string branchName_hadTaus = cfg_analyze.getParameter<std::string>("branchName_hadTaus");
   std::string branchName_jets_ak4 = cfg_analyze.getParameter<std::string>("branchName_jets_ak4");
   std::string branchName_jets_ak8_Hbb = cfg_analyze.getParameter<std::string>("branchName_jets_ak8_Hbb");
   std::string branchName_subjets_ak8_Hbb = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8_Hbb");
@@ -487,6 +498,17 @@ int main(int argc, char* argv[])
   RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
   RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
   tightElectronSelector.getSelector().set_min_mvaTTH(lep_mva_cut);
+
+  RecoHadTauReader* hadTauReader = new RecoHadTauReader(era, branchName_hadTaus, readGenObjects);
+  hadTauReader->setHadTauPt_central_or_shift(hadTauPt_option);
+  inputTree->registerReader(hadTauReader);
+  RecoHadTauCollectionGenMatcher hadTauGenMatcher;
+  RecoHadTauCollectionCleaner hadTauCleaner(0.3, isDEBUG);
+  // CV: veto events containing one or more taus, to avoid overlap with HH->bbWW single lepton channel
+  RecoHadTauCollectionSelectorTight vetoHadTauSelector(era, -1, isDEBUG);
+  vetoHadTauSelector.set(hadTauSelection_veto);
+  vetoHadTauSelector.set_min_antiElectron(hadTauSelection_veto_antiElectron);
+  vetoHadTauSelector.set_min_antiMuon(hadTauSelection_veto_antiMuon);
 
   RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, readGenObjects);
   jetReaderAK4->setPtMass_central_or_shift(jetPt_option);
@@ -793,6 +815,7 @@ int main(int argc, char* argv[])
     ">= 2 jets from H->bb",
     ">= 1 medium b-jet",
     ">= 1 jets from W->jj",    
+    "tau veto", 
     "m(ll) > 12 GeV",
     "Z-boson mass veto",
     "boosted W->jj: mD < 125 GeV", 
@@ -992,6 +1015,12 @@ int main(int argc, char* argv[])
       printCollection("selElectrons", selElectrons);
       printCollection("selLeptons", selLeptons);
     }
+
+    std::vector<RecoHadTau> hadTaus = hadTauReader->read();
+    std::vector<const RecoHadTau*> hadTau_ptrs = convert_to_ptrs(hadTaus);
+    std::vector<const RecoHadTau*> cleanedHadTaus = hadTauCleaner(hadTau_ptrs, preselMuons, preselElectrons);     
+    // CV: veto events containing one or more taus, to avoid overlap with HH->bbWW single lepton channel
+    std::vector<const RecoHadTau*> vetoHadTaus = vetoHadTauSelector(cleanedHadTaus, isHigherPt);
 
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     std::vector<RecoJet> jets_ak4 = jetReaderAK4->read();
@@ -1380,6 +1409,19 @@ int main(int argc, char* argv[])
       cleanedJetsAK4_vbf = jetCleanerAK4_dR08(cleanedJetsAK4_wrtHbb, selJets_Wjj);
     }
     std::vector<const RecoJet*> selJetsAK4_vbf = jetSelectorAK4_vbf(cleanedJetsAK4_vbf, isHigherPt);
+
+    // CV: veto events containing one or more taus, to avoid overlap with HH->bbWW single lepton channel
+    if ( apply_hadTauVeto ) {
+      if ( vetoHadTaus.size() > 0 ) {
+	if ( run_lumi_eventSelector ) {
+	  std::cout << "event " << eventInfo.str() << " FAILS vetoHadTaus selection." << std::endl;
+	  printCollection("vetoHadTaus", vetoHadTaus);
+	}
+	continue;
+      }
+    }
+    cutFlowTable.update("tau veto", evtWeight);
+    cutFlowHistManager->fillHistograms("tau veto", evtWeight);
 
     bool failsLowMassVeto = false;
     for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();

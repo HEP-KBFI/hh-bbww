@@ -36,6 +36,9 @@ process.analyze_hh_bb1l = cms.PSet(
     lep_mva_cut = cms.double(1.),
     apply_leptonGenMatching = cms.bool(True),
 
+    apply_hadTau_veto = cms.bool(False),
+    hadTau_mva_wp_veto = cms.string(''),
+
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
@@ -57,6 +60,7 @@ process.analyze_hh_bb1l = cms.PSet(
 
     branchName_electrons = cms.string('Electron'),
     branchName_muons = cms.string('Muon'),
+    branchName_hadTaus = cms.string('Tau'),
     branchName_jets_ak4 = cms.string('Jet'),
     branchName_jets_ak8_Hbb = cms.string('FatJet'),
     branchName_subjets_ak8_Hbb = cms.string('SubJet'),

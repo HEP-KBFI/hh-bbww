@@ -44,6 +44,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         cfgFile_analyze,
         samples,
         lep_mva_wp,
+        apply_hadTauVeto,
+        hadTau_mva_wp_veto,
         applyFakeRateWeights,
         central_or_shifts,
         max_files_per_job,
@@ -90,6 +92,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
+    self.apply_hadTauVeto = apply_hadTauVeto
+    self.hadTau_mva_wp_veto = hadTau_mva_wp_veto
     self.applyFakeRateWeights = applyFakeRateWeights
     run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
     if self.era != '2017':
@@ -315,6 +319,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'muonSelection'            : muon_selection,
                 'lep_mva_cut'              : self.lep_mva_cut,
                 'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
+                'apply_hadTauVeto'         : self.apply_hadTauVeto,
+                'hadTauSelection_veto'     : self.hadTau_mva_wp_veto,
                 'applyFakeRateWeights'     : applyFakeRateWeights,
                 'central_or_shift'         : central_or_shift,
                 'selectBDT'                : self.isBDTtraining,
