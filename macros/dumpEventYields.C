@@ -73,21 +73,25 @@ void dumpEventYields()
 
   typedef std::vector<std::string> vstring;
   vstring channels;
-  channels.push_back("hh_bb1l");
+  //channels.push_back("hh_bb1l");
   //channels.push_back("hh_bb2l");
+  channels.push_back("hh_bb1l1tau");
 
   std::map<std::string, std::string> inputFilePaths; // key = channel
-  inputFilePaths["hh_bb1l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct12/histograms/hh_bb1l/";
-  inputFilePaths["hh_bb2l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct12/histograms/hh_bb2l/";
+  inputFilePaths["hh_bb1l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Nov01/histograms/hh_bb1l/";
+  inputFilePaths["hh_bb2l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Oct18/histograms/hh_bb2l/";
+  inputFilePaths["hh_bb1l1tau"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Nov12/histograms/hh_bb1l1tau/";
 
   std::map<std::string, std::string> inputFileNames; // key = channel
-  inputFileNames["hh_bb1l"] = "histograms_harvested_stage2_hh_bb1l_Tight.root";
-  inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
+  //inputFileNames["hh_bb1l"] = "histograms_harvested_stage2_hh_bb1l_Tight.root";
+  //inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
+  inputFileNames["hh_bb1l1tau"] = "histograms_harvested_stage2_hh_bb1l1tau_OS_Tight.root";
 
   std::map<std::string, vstring> categories; // key = channel
   categories["hh_bb1l"].push_back("hh_bb1l_Tight");
   categories["hh_bb1l"].push_back("hh_bb1e_Tight");
   categories["hh_bb1l"].push_back("hh_bb1mu_Tight");
+  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_vbf_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_nonvbf_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_highPurity_Tight");
@@ -122,9 +126,23 @@ void dumpEventYields()
   categories["hh_bb2l"].push_back("hh_1e1mu_OS");
   categories["hh_bb2l"].push_back("hh_1e1mu_vbf_OS");
  */
+  categories["hh_bb1l1tau"].push_back("hh_bb1l1tau_OS_Tight");
+  categories["hh_bb1l1tau"].push_back("hh_bb1l1tau_resolvedHbb_vbf_OS_Tight");
+  categories["hh_bb1l1tau"].push_back("hh_bb1l1tau_resolvedHbb_nonvbf_OS_Tight");
+  categories["hh_bb1l1tau"].push_back("hh_bb1l1tau_boostedHbb_OS_Tight");
+  categories["hh_bb1l1tau"].push_back("hh_bb1e1tau_OS_Tight");
+  //categories["hh_bb1l1tau"].push_back("hh_bb1e1tau_resolvedHbb_vbf_OS_Tight");
+  //categories["hh_bb1l1tau"].push_back("hh_bb1e1tau_resolvedHbb_nonvbf_OS_Tight");
+  //categories["hh_bb1l1tau"].push_back("hh_bb1e1tau_boostedHbb_OS_Tight");
+  categories["hh_bb1l1tau"].push_back("hh_bb1mu1tau_OS_Tight");
+  //categories["hh_bb1l1tau"].push_back("hh_bb1mu1tau_resolvedHbb_vbf_OS_Tight");
+  //categories["hh_bb1l1tau"].push_back("hh_bb1mu1tau_resolvedHbb_nonvbf_OS_Tight");
+  //categories["hh_bb1l1tau"].push_back("hh_bb1mu1tau_boostedHbb_OS_Tight");
+
   std::map<std::string, std::string> directories; // key = channel
   directories["hh_bb1l"] = "sel/evt";
   directories["hh_bb2l"] = "sel/evt";
+  directories["hh_bb1l1tau"] = "sel/evt";
 
   std::map<std::string, vstring> signal_processes; // key = channel
   //signal_processes["hh_bb1l"].push_back("signal_ggf_spin0_400_hh_bbvv");
@@ -145,6 +163,9 @@ void dumpEventYields()
   signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_750_hh_bbvv");
   //signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_400_hh_bbtt");
   //signal_processes["hh_bb2l"].push_back("signal_vbf_spin0_700_hh_bbtt");
+  signal_processes["hh_bb1l1tau"].push_back("signal_vbf_spin0_300_hh_bbvv");
+  signal_processes["hh_bb1l1tau"].push_back("signal_vbf_spin0_400_hh_bbvv");
+  signal_processes["hh_bb1l1tau"].push_back("signal_vbf_spin0_750_hh_bbvv");
 
   std::vector<std::string> signal_process_parts;
   signal_process_parts.push_back("");
@@ -180,6 +201,20 @@ void dumpEventYields()
   background_processes["hh_bb2l"].push_back("fakes_data");
   background_processes["hh_bb2l"].push_back("fakes_mc");
   background_processes["hh_bb2l"].push_back("VH");
+  background_processes["hh_bb1l1tau"].push_back("TT");
+  background_processes["hh_bb1l1tau"].push_back("TTW");
+  background_processes["hh_bb1l1tau"].push_back("TTWW");
+  background_processes["hh_bb1l1tau"].push_back("TTZ");
+  background_processes["hh_bb1l1tau"].push_back("TH");
+  background_processes["hh_bb1l1tau"].push_back("TTH");
+  background_processes["hh_bb1l1tau"].push_back("WZ");
+  background_processes["hh_bb1l1tau"].push_back("ZZ");
+  background_processes["hh_bb1l1tau"].push_back("DY");
+  background_processes["hh_bb1l1tau"].push_back("W");
+  background_processes["hh_bb1l1tau"].push_back("conversions");
+  background_processes["hh_bb1l1tau"].push_back("fakes_data");
+  background_processes["hh_bb1l1tau"].push_back("fakes_mc");
+  background_processes["hh_bb1l1tau"].push_back("VH");
   
   std::vector<std::string> background_process_parts;
   background_process_parts.push_back("");
