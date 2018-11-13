@@ -1,11 +1,25 @@
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017
 
-from collections import OrderedDict as OD
+import re
 
 for sample_name, sample_info in samples_2017.items():
-
-  if not isinstance(sample_info, OD):
+  if sample_name == 'sum_events':
     continue
-
-  if sample_info["type"] == "data":
+  if sample_info["process_name_specific"] in [
+        "ttHToNonbb_M125_powheg",
+        "TTZJets_LO",
+        "TTWJets_LO",
+        "TTTo2L2Nu",
+        "TTTo2L2Nu_PSweights",
+        "TTToSemiLeptonic",
+        "TTToSemiLeptonic_PSweights",
+        "TTToHadronic",
+        "TTToHadronic_PSweights",
+      ]:
+    sample_info["use_it"] = True
+  elif sample_info["process_name_specific"].startswith("signal") and 'hh' in sample_info["process_name_specific"]:
+    sample_info["use_it"] = 'nonresonant' not in sample_info["process_name_specific"] # temp: enable resonant samples only
+  elif re.match("WZTo3LNu_(0|1|2|3)Jets.*", sample_info["process_name_specific"]):
+    sample_info["use_it"] = True
+  else:
     sample_info["use_it"] = False
