@@ -63,6 +63,9 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,  0.,   10.);
 
   histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
+  histogram_MVAOutput300_           = book1D(dir, "MVAOutput_300",           "MVAOutput_300",             100, 0.,  1.);
+  histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",           "MVAOutput_400",             100, 0.,  1.);
+  histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",           "MVAOutput_750",             100, 0.,  1.);
 }
 
 void
@@ -79,7 +82,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
-				       double vbf_m_jj, double vbf_dEta_jj,
+				       double vbf_m_jj, double vbf_dEta_jj, double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -131,6 +134,8 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 
   fillWithOverFlow(histogram_vbf_m_jj_,               vbf_m_jj,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_vbf_dEta_jj_,            vbf_dEta_jj,            evtWeight, evtWeightErr);
-
+  fillWithOverFlow(histogram_MVAOutput300_,           mvaoutput_bb2l300,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput400_,           mvaoutput_bb2l400,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput750_,           mvaoutput_bb2l750,                     evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_EventCounter_,           0.,                     evtWeight, evtWeightErr);
 }

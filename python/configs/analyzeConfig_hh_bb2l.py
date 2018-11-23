@@ -89,9 +89,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       use_home           = use_home,
       template_dir       = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
     )
-
     self.samples = samples
-
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
@@ -161,7 +159,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.lepton_frWeights = [ "disabled" ]
     self.lepton_charge_selections = [ "OS" ]
     self.isBDTtraining = True
-
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
     """Create python configuration file for the analyze_hh_bb2l executable (analysis code)
 
@@ -196,7 +193,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
   def create(self):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
     """
-
     for sample_name, sample_info in self.samples.items():
       if not sample_info["use_it"] or sample_info["sample_category"] in [ "additional_signal_overlap", "background_data_estimate" ]:
         continue
@@ -222,7 +218,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         self.dirs[dir_type] = os.path.join(self.configDir, dir_type, self.channel)
       else:
         self.dirs[dir_type] = os.path.join(self.outputDir, dir_type, self.channel)
-
     for key in self.dirs.keys():
       if type(self.dirs[key]) == dict:
         for dir_type in self.dirs[key].keys():
@@ -256,17 +251,14 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
             continue
           lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-
           for sample_name, sample_info in self.samples.items():
             if not sample_info["use_it"] or sample_info["sample_category"] in [ "additional_signal_overlap", "background_data_estimate" ]:
               continue
             process_name = sample_info["process_name_specific"]
             logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
-
             sample_category = sample_info["sample_category"]
             is_mc = (sample_info["type"] == "mc")
             is_signal = (sample_category.startswith("signal"))
-
             for central_or_shift in self.central_or_shifts:
 
               inputFileList = inputFileLists[sample_name]
@@ -291,7 +283,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   continue
 
                 logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
-
                 # build config files for executing analysis code
                 key_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
                 key_analyze_job = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift, jobId)
@@ -309,7 +300,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 applyFakeRateWeights = self.applyFakeRateWeights  \
                   if self.isBDTtraining or not lepton_selection == "Tight" \
                   else "disabled"
-
                 self.jobOptions_analyze[key_analyze_job] = {
                   'ntupleFiles'              : ntupleFiles,
                   'cfgFile_modified'         : cfgFile_modified_path,
@@ -329,7 +319,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'fillGenEvtHistograms'     : True,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
-
                 # initialize input and output file names for hadd_stage1
                 key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
                 if not key_hadd_stage1 in self.inputFiles_hadd_stage1:
@@ -337,21 +326,16 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 self.inputFiles_hadd_stage1[key_hadd_stage1].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
                 self.outputFile_hadd_stage1[key_hadd_stage1] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_%s_%s_%s_%s.root" % \
                   (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight))
-
                 if self.isBDTtraining:
                   self.targets.append(self.outputFile_hadd_stage1[key_hadd_stage1])
-
             if self.isBDTtraining:
               continue
-
             if is_mc:
               logging.info("Creating configuration files to run 'addBackgrounds' for sample %s" % process_name)
-
               sample_categories = [ sample_category ]
               for sample_category in sample_categories:
                 # sum non-fake and fake contributions for each MC sample separately
                 genMatch_categories = [ "nonfake", "conversions", "fake" ]
-
                 for genMatch_category in genMatch_categories:
                   key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
                   key_addBackgrounds_job = None
@@ -411,7 +395,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                       'process_output' : process_output
                     }
                     self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds[key_addBackgrounds_job])
-
                     # initialize input and output file names for hadd_stage1_5
                     key_hadd_stage1_5 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
                     if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
@@ -419,7 +402,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.jobOptions_addBackgrounds[key_addBackgrounds_job]['outputFile'])
                     self.outputFile_hadd_stage1_5[key_hadd_stage1_5] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_5_%s_%s_%s.root" % \
                       (self.channel, lepton_charge_selection, lepton_selection_and_frWeight))
-
             if self.isBDTtraining:
               continue
 
@@ -430,10 +412,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
                 self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
               self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.outputFile_hadd_stage1[key_hadd_stage1])
-
           if self.isBDTtraining:
             continue
-
           # sum fake background contributions for the total of all MC sample
           # input processes: TT1l0g1j,TT0l1g1j,TT0l0g2j; ...
           # output process: fakes_mc
@@ -457,7 +437,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'process_output' : "fakes_mc"
           }
           self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes])
-
           # sum conversion background contributions for the total of all MC sample
           # input processes: TT1l1g0j, TT0l2g0j; ...
           # output process: conversions
@@ -480,7 +459,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'process_output' : "conversions"
           }
           self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions])
-
           # initialize input and output file names for hadd_stage2
           key_hadd_stage2 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
           if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
@@ -537,7 +515,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'histogramToFit' : histogramToFit
           }
           self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
-
           # add shape templates for the following systematic uncertainties:
           #  - 'CMS_ttHl_Clos_norm_e'
           #  - 'CMS_ttHl_Clos_shape_e'

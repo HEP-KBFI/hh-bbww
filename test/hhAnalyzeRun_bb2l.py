@@ -122,7 +122,10 @@ if __name__ == '__main__':
     histograms_to_fit                     = {
       "EventCounter"                      : {},
       "HT"                                : {},
-      "STMET"                             : {}
+      "STMET"                             : {},
+      "MVAOutput_300"                     : {},
+      "MVAOutput_400"                     : {},
+      "MVAOutput_750"                     : {}
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
