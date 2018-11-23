@@ -31,7 +31,7 @@ EvtHistManager_hh_bbWW_DYctrl::bookHistograms(TFileDirectory & dir)
   histogram_dPhi_bb_                = book1D(dir, "dPhi_bb",                "dPhi_bb",                 36, -TMath::Pi(), +TMath::Pi());
   histogram_pT_bb_                  = book1D(dir, "pT_bb",                  "pT_bb",                  100,  0.,  500.); 
 
-  histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    40,  0.,  200.); 
+  histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    30,  60., 120.); 
   histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,  0.,    5.);
   histogram_dPhi_ll_                = book1D(dir, "dPhi_ll",                "dPhi_ll",                 36, -TMath::Pi(), +TMath::Pi());
   histogram_pT_ll_                  = book1D(dir, "pT_ll",                  "pT_ll",                  100,  0.,  500.); 

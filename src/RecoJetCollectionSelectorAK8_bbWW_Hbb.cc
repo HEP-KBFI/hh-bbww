@@ -8,8 +8,10 @@ RecoJetSelectorAK8_bbWW_Hbb::RecoJetSelectorAK8_bbWW_Hbb(int era, int index, boo
   , max_msoftdrop_(210.)
   , max_tau2_div_tau1_(+1.e+3)
   , min_subJet1_pt_(20.)
+  , min_subJet1_pt_forBtag_(30.)
   , max_subJet1_absEta_(2.4)
   , min_subJet2_pt_(20.)
+  , min_subJet2_pt_forBtag_(30.)
   , max_subJet2_absEta_(2.4)
   , min_BtagCSV_loose_(0.5426)  // CV: cuts on CSV b-tagging discriminator values taken from 
   , min_BtagCSV_medium_(0.8484) //     https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco#Boosted_event_topologies
@@ -55,6 +57,12 @@ RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet1_pt(double min_pt)
 }
 
 void
+RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet1_pt_forBtag(double min_pt)
+{
+  min_subJet1_pt_forBtag_ = min_pt;
+}
+
+void
 RecoJetSelectorAK8_bbWW_Hbb::set_max_subJet1_absEta(double max_absEta)
 {
   max_subJet1_absEta_ = max_absEta;
@@ -64,6 +72,12 @@ void
 RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet2_pt(double min_pt)
 {
   min_subJet2_pt_ = min_pt;
+}
+
+void
+RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet2_pt_forBtag(double min_pt)
+{
+  min_subJet2_pt_forBtag_ = min_pt;
 }
 
 void
@@ -139,6 +153,12 @@ RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet1_pt() const
 }
 
 double
+RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet1_pt_forBtag() const
+{
+  return min_subJet1_pt_forBtag_;
+}
+
+double
 RecoJetSelectorAK8_bbWW_Hbb::get_max_subJet1_absEta() const
 {
   return max_subJet1_absEta_;
@@ -148,6 +168,12 @@ double
 RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet2_pt() const
 {
   return min_subJet2_pt_;
+}
+
+double
+RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet2_pt_forBtag() const
+{
+  return min_subJet2_pt_forBtag_;
 }
 
 double
@@ -185,12 +211,12 @@ RecoJetSelectorAK8_bbWW_Hbb::operator()(const RecoJetAK8 & jet) const
 {
   int numSubJetsBtag_loose  = 0;
   int numSubJetsBtag_medium = 0;
-  if ( jet.subJet1() ) {
+  if ( jet.subJet1() && jet.subJet1()->pt() >= min_subJet1_pt_forBtag_ ) {
     double subJet1BtagCSV = jet.subJet1()->BtagCSV();
     if ( subJet1BtagCSV >= min_BtagCSV_loose_  ) ++numSubJetsBtag_loose;
     if ( subJet1BtagCSV >= min_BtagCSV_medium_ ) ++numSubJetsBtag_medium;
   }
-  if ( jet.subJet2() ) {
+  if ( jet.subJet2() && jet.subJet2()->pt() >= min_subJet2_pt_forBtag_ ) {
     double subJet2BtagCSV = jet.subJet2()->BtagCSV();
     if ( subJet2BtagCSV >= min_BtagCSV_loose_  ) ++numSubJetsBtag_loose;
     if ( subJet2BtagCSV >= min_BtagCSV_medium_ ) ++numSubJetsBtag_medium;

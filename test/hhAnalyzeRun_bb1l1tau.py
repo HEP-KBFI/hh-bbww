@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import os, logging, sys, getpass
 from collections import OrderedDict as OD
-from hhAnalysis.bbww.configs.analyzeConfig_hh_bb1l import analyzeConfig_hh_bb1l
+from hhAnalysis.bbww.configs.analyzeConfig_hh_bb1l1tau import analyzeConfig_hh_bb1l1tau
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 
-# E.g.: ./tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
+# E.g.: ./tthAnalyzeRun_hh_bb1l1tau.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default', 'forBDTtraining' ]
 sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
@@ -84,9 +84,9 @@ else:
   raise ValueError("Invalid era: %s" % era)
 
 if era == "2016":
-  hadTau_mva_wp_veto  = "dR03mvaTight"
+  hadTau_mva_wp  = "dR03mvaTight"
 elif era == "2017":
-  hadTau_mva_wp_veto  = "dR03mvaMedium"
+  hadTau_mva_wp  = "dR03mvaMedium"
 elif era == "2018":
   raise ValueError("Implement me!")
 else:
@@ -111,17 +111,17 @@ if __name__ == '__main__':
 
   if args.tau_id_wp:
     logging.info("Changing tau ID working point: %s -> %s" % (hadTau_mva_wp , args.tau_id_wp))
-    hadTau_mva_wp_veto = args.tau_id_wp
+    hadTau_mva_wp = args.tau_id_wp
 
-  analysis = analyzeConfig_hh_bb1l(
+  analysis = analyzeConfig_hh_bb1l1tau(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
-    executable_analyze                    = "analyze_hh_bb1l",
-    cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
+    executable_analyze                    = "analyze_hh_bb1l1tau",
+    cfgFile_analyze                       = "analyze_hh_bb1l1tau_cfg.py",
     samples                               = samples,
     lep_mva_wp                            = lep_mva_wp,
-    apply_hadTauVeto                      = False,
-    hadTau_mva_wp_veto                    = hadTau_mva_wp,
+    hadTau_mva_wp                         = hadTau_mva_wp,
+    chargeSumSelections                   = [ "OS", "SS" ],
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     max_files_per_job                     = files_per_job,

@@ -164,7 +164,6 @@ RecoJetSelectorAK8_bbWW_Wjj::operator()(const RecoJetAK8 & jet) const
     throw cms::Exception("RecoJetSelectorAK8_bbWW_Wjj::operator()")
       << "Value of 'lepton' has not been set. Did you call the 'set_lepton' function prior to calling operator() ?\n";
   double dR_lepton = deltaR(jet.p4(), lepton_->p4());
-
   if ( !(jet.pt() >= min_pt_) ) {
     if ( debug_ ) {
       std::cout << "FAILS pT >= " << min_pt_ << " cut\n";

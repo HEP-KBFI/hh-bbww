@@ -17,6 +17,7 @@ def get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight):
 
 def getHistogramDir(category, lepton_selection, lepton_frWeight):
   histogramDir = category
+  histogramDir += "_%s" % lepton_selection
   if lepton_selection.find("Fakeable") != -1:
     if lepton_frWeight == "enabled":
       histogramDir += "_wFakeRateWeights"
@@ -43,6 +44,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         cfgFile_analyze,
         samples,
         lep_mva_wp,
+        apply_hadTauVeto,
+        hadTau_mva_wp_veto,
         applyFakeRateWeights,
         central_or_shifts,
         max_files_per_job,
@@ -87,10 +90,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       template_dir       = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
     )
 
-    self.samples = samples
-
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
+    self.apply_hadTauVeto = apply_hadTauVeto
+    self.hadTau_mva_wp_veto = hadTau_mva_wp_veto
     self.applyFakeRateWeights = applyFakeRateWeights
     run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
     if self.era != '2017':
@@ -101,7 +104,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       #self.lepton_selections.extend([ "Fakeable_mcClosure_all" ]) #TODO
       pass
 
-    self.lepton_genMatches = [ "2l0g0j", "1l1g0j", "1l0g1j", "0l2g0j", "0l1g1j", "0l0g2j" ]
+    self.lepton_genMatches = [ "1l0g0j", "0l1g0j", "0l0g1j" ]
 
     self.apply_leptonGenMatching = True
     self.lepton_genMatches_nonfakes = []
@@ -146,9 +149,13 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       "bb1mu",   "2bM1mu",   "1bM1bL1mu", "1bM1mu" ]:
       for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
         for type_Wjj in [ "", "_resolvedWjj", "_boostedWjj_lowPurity", "_boostedWjj_highPurity" ]:
+          if (type_Hbb == "" and type_Wjj != "") or (type_Hbb != "" and type_Wjj == ""):
+            continue
           for type_vbf in [ "", "_vbf", "_nonvbf" ]:
             self.categories.append("hh_%s%s%s%s" % (type_bb_and_leptons, type_Hbb, type_Wjj, type_vbf))
     self.category_inclusive = "hh_bb1l"
+    if not self.category_inclusive in self.categories:
+      self.categories.append(self.category_inclusive)
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
@@ -312,6 +319,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'muonSelection'            : muon_selection,
                 'lep_mva_cut'              : self.lep_mva_cut,
                 'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
+                'apply_hadTauVeto'         : self.apply_hadTauVeto,
+                'hadTauSelection_veto'     : self.hadTau_mva_wp_veto,
                 'applyFakeRateWeights'     : applyFakeRateWeights,
                 'central_or_shift'         : central_or_shift,
                 'selectBDT'                : self.isBDTtraining,
@@ -469,6 +478,36 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         }
         self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions])
 
+        # sum signal contributions from gluon fusion and VBF HH production,
+        # separately for "nonfake" and "fake" contributions
+        genMatch_categories = [ "nonfake", "fake" ]
+        for genMatch_category in genMatch_categories:
+          for signal_base, signal_input in self.signal_io.items():
+            key_addBackgrounds_job_signal = getKey(lepton_selection, signal_base, genMatch_category)
+            processes_input = signal_input
+            process_output = signal_base
+            if genMatch_category == "fake":
+              processes_input = [ process_input + "_fake" for process_input in processes_input ]
+              process_output += "_fake"
+            if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
+              continue
+            cfg_key = getKey(self.channel, signal_base, genMatch_category, lepton_selection)
+            self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
+              'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
+              'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_cfg.py" % cfg_key),
+              'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s.root" % cfg_key),
+              'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s.log" % cfg_key),
+              'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
+              'processes_input' : processes_input,
+              'process_output' : process_output
+            }
+            self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal])
+            key_hadd_stage2 = getKey(lepton_selection_and_frWeight)
+            if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
+              self.inputFiles_hadd_stage2[key_hadd_stage2] = []
+            if lepton_selection == "Tight":
+              self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
+
         # initialize input and output file names for hadd_stage2
         key_hadd_stage2 = getKey(lepton_selection_and_frWeight)
         if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
@@ -601,7 +640,17 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.addToMakefile_analyze(lines_makefile)
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_backgrounds_from_data(lines_makefile)
+    #----------------------------------------------------------------------------
+    # CV: run hadd_stage2 jobs on quasar,
+    #     as the memory consumption of hadd_stage2 jobs exceeds the memory limit (1.8 Gb) for batch jobs
+    is_sbatch_bak = self.is_sbatch
+    self.is_sbatch = False
+    is_makefile_bak = self.is_makefile
+    self.is_makefile = True
     self.addToMakefile_hadd_stage2(lines_makefile)
+    self.is_sbatch = is_sbatch_bak
+    self.is_makefile = is_makefile_bak
+    #----------------------------------------------------------------------------
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)

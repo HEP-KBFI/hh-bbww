@@ -19,6 +19,7 @@ def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_s
   histogramDir = category
   if lepton_charge_selection != "disabled":
     histogramDir += "_%s" % lepton_charge_selection
+  histogramDir += "_%s" % lepton_selection
   if lepton_selection.find("Fakeable") != -1:
     if lepton_frWeight == "enabled":
       histogramDir += "_wFakeRateWeights"
@@ -89,7 +90,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       use_home           = use_home,
       template_dir       = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
     )
-    self.samples = samples
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
@@ -143,14 +143,16 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.categories = []
     for type_bb_and_leptons in [
-      "bb2l",    "2bM2l",    "1bM1bL2l",  "1bM2l",
-      "bb2e",    "2bM2e",    "1bM1bL2e",  "1bM2e",
-      "bb2mu",   "2bM2mu",   "1bM1bL2mu", "1bM2mu",
-      "bb1e1mu", "2bM1e1mu", "1bM1bL2l",  "1bM2l" ]:
+      "bb2l",    "2bM2l",    "1bM1bL2l",    "1bM2l",
+      "bb2e",    "2bM2e",    "1bM1bL2e",    "1bM2e",
+      "bb2mu",   "2bM2mu",   "1bM1bL2mu",   "1bM2mu",
+      "bb1e1mu", "2bM1e1mu", "1bM1bL1e1mu", "1bM1e1mu" ]:
       for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
         for type_vbf in [ "", "_vbf", "_nonvbf" ]:
           self.categories.append("hh_%s%s%s" % (type_bb_and_leptons, type_Hbb, type_vbf))
     self.category_inclusive = "hh_bb2l"
+    if not self.category_inclusive in self.categories:
+      self.categories.append(self.category_inclusive)
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
@@ -459,6 +461,37 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'process_output' : "conversions"
           }
           self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions])
+
+          # sum signal contributions from gluon fusion and VBF HH production,
+          # separately for "nonfake" and "fake" contributions
+          genMatch_categories = [ "nonfake", "fake" ]
+          for genMatch_category in genMatch_categories:
+            for signal_base, signal_input in self.signal_io.items():
+              key_addBackgrounds_job_signal = getKey(lepton_charge_selection, lepton_selection, signal_base, genMatch_category)
+              processes_input = signal_input
+              process_output = signal_base
+              if genMatch_category == "fake":
+                processes_input = [ process_input + "_fake" for process_input in processes_input ]
+                process_output += "_fake"
+              if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
+                continue
+              cfg_key = getKey(self.channel, signal_base, genMatch_category, lepton_charge_selection, lepton_selection)
+              self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
+                'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
+                'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_cfg.py" % cfg_key),
+                'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s.root" % cfg_key),
+                'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s.log" % cfg_key),
+                'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.categories ],
+                'processes_input' : processes_input,
+                'process_output' : process_output
+              }
+              self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal])
+              key_hadd_stage2 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
+              if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
+                self.inputFiles_hadd_stage2[key_hadd_stage2] = []
+              if lepton_selection == "Tight":
+                self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
+
           # initialize input and output file names for hadd_stage2
           key_hadd_stage2 = getKey(lepton_charge_selection, lepton_selection_and_frWeight)
           if not key_hadd_stage2 in self.inputFiles_hadd_stage2:

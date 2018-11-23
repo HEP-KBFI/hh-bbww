@@ -16,7 +16,7 @@ process.fwliteOutput = cms.PSet(
     fileName = cms.string('')
 )
 
-process.analyze_hh_bb1l = cms.PSet(
+process.analyze_hh_bb1l1tau = cms.PSet(
     treeName = cms.string('Events'),
 
     process = cms.string(''),
@@ -25,25 +25,44 @@ process.analyze_hh_bb1l = cms.PSet(
 
     triggers_1e = cms.vstring(),
     use_triggers_1e = cms.bool(True),
+    triggers_1e1tau = cms.vstring(),
+    use_triggers_1e1tau = cms.bool(False),
     triggers_1mu = cms.vstring(),
     use_triggers_1mu = cms.bool(True),
+    triggers_1mu1tau = cms.vstring(),
+    use_triggers_1mu1tau = cms.bool(False),
 
     apply_offline_e_trigger_cuts_1e = cms.bool(True),
+    apply_offline_e_trigger_cuts_1e1tau = cms.bool(True),
     apply_offline_e_trigger_cuts_1mu = cms.bool(True),
-
+    apply_offline_e_trigger_cuts_1mu1tau = cms.bool(True),
+    
     electronSelection = cms.string(''),
     muonSelection = cms.string(''),
     lep_mva_cut = cms.double(1.),
     apply_leptonGenMatching = cms.bool(True),
 
-    apply_hadTau_veto = cms.bool(False),
-    hadTau_mva_wp_veto = cms.string(''),
+    hadTauSelection = cms.string(''),
+    hadTauChargeSelection = cms.string(''),
+    apply_hadTauGenMatching = cms.bool(False),
+
+    chargeSumSelection = cms.string(''),
 
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
         histogramName_e = cms.string(""),
         histogramName_mu = cms.string("")
+    ),
+    hadTauFakeRateWeight = cms.PSet(
+        inputFileName = cms.string(""),
+        lead = cms.PSet(
+            absEtaBins = cms.vdouble(-1., 1.479, 9.9),
+            graphName = cms.string("jetToTauFakeRate/$hadTauSelection/$etaBin/jetToTauFakeRate_mc_hadTaus_pt"),
+            applyGraph = cms.bool(True),
+            fitFunctionName = cms.string("jetToTauFakeRate/$hadTauSelection/$etaBin/fitFunction_data_div_mc_hadTaus_pt"),
+            applyFitFunction = cms.bool(True),
+        )
     ),
 
     isMC = cms.bool(True),
@@ -62,12 +81,8 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_muons = cms.string('Muon'),
     branchName_hadTaus = cms.string('Tau'),
     branchName_jets_ak4 = cms.string('Jet'),
-    branchName_jets_ak8_Hbb = cms.string('FatJet'),
-    branchName_subjets_ak8_Hbb = cms.string('SubJet'),
-    #branchName_jets_ak8_Wjj = cms.string('FatJetAK8LS'),
-    #branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LS'),
-    branchName_jets_ak8_Wjj = cms.string('FatJet'),
-    branchName_subjets_ak8_Wjj = cms.string('SubJet'),
+    branchName_jets_ak8 = cms.string('FatJet'),
+    branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
 
     branchName_genLeptons = cms.string('GenLep'),
@@ -77,10 +92,6 @@ process.analyze_hh_bb1l = cms.PSet(
     redoGenMatching = cms.bool(True),
 
     branchName_genTauLeptons = cms.string('GenTau'),
-
-    branchName_genBJets = cms.string('GenBQuarkFromTop'),
-    branchName_genWBosons = cms.string('GenVbosons'),
-    branchName_genWJets = cms.string('GenWZQuark'),
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),

@@ -1,0 +1,8 @@
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Sep14_take2
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Sep26
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Oct26
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Oct28
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov01
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov05
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov13
+/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov14
