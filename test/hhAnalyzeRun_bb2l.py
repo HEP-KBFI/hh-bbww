@@ -111,7 +111,8 @@ elif mode == "forBDTtraining":
       else:
         for sample_binned_value in sample_value:
           dy_binned_samples = list(
-            filter(lambda sample_name: sample_name.startswith('DY'), sample_binned_value['samples']))
+            filter(lambda sample_name: sample_name.startswith('DY'), sample_binned_value['samples'])
+          )
           dy_samples_binned.extend(dy_binned_samples)
 
   for sample_name, sample_info in samples.items():
