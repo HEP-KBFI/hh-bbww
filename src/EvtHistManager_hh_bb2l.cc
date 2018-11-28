@@ -67,9 +67,9 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,  0.,   10.);
   
   histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
-  histogram_MVAOutput300_           = book1D(dir, "MVAOutput_300",           "MVAOutput_300",             100, 0.,  1.);
-  histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",           "MVAOutput_400",             100, 0.,  1.);
-  histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",           "MVAOutput_750",             100, 0.,  1.);
+  histogram_MVAOutput300_           = book1D(dir, "MVAOutput_300",           "MVAOutput_300",             360, 0.,  1.);
+  histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",           "MVAOutput_400",             360, 0.,  1.);
+  histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",           "MVAOutput_750",             360, 0.,  1.);
 }
 
 void

@@ -461,7 +461,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'process_output' : "conversions"
           }
           self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions])
-
           # sum signal contributions from gluon fusion and VBF HH production,
           # separately for "nonfake" and "fake" contributions
           genMatch_categories = [ "nonfake", "fake" ]
@@ -516,7 +515,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       self.createMakefile(lines_makefile)
       logging.info("Done")
       return self.num_jobs
-
+    
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for category in self.categories:
       for lepton_charge_selection in self.lepton_charge_selections:
@@ -529,6 +528,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgroundLeptonFakes_%s_%s_%s.log" % (self.channel, category, lepton_charge_selection)),
           'category_signal' : getHistogramDir(category, "Tight", "disabled", lepton_charge_selection),
           'category_sideband' : getHistogramDir(category, "Fakeable", "enabled", lepton_charge_selection)
+
         }
         self.createCfg_addFakes(self.jobOptions_addFakes[key_addFakes_job])
         key_hadd_stage2 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
