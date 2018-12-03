@@ -70,6 +70,10 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_MVAOutput300_           = book1D(dir, "MVAOutput_300",           "MVAOutput_300",             360, 0.,  1.);
   histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",           "MVAOutput_400",             360, 0.,  1.);
   histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",           "MVAOutput_750",             360, 0.,  1.);
+  histogram_MVAOutputnohiggnessnotopness300_           = book1D(dir, "MVAOutputnohiggnessnotopness_300",           "MVAOutputnohiggnessnotopness_300",             360, 0.,  1.);
+  histogram_MVAOutputnohiggnessnotopness400_           = book1D(dir, "MVAOutputnohiggnessnotopness_400",           "MVAOutputnohiggnessnotopness_400",             360, 0.,  1.);
+  histogram_MVAOutputnohiggnessnotopness750_           = book1D(dir, "MVAOutputnohiggnessnotopness_750",           "MVAOutputnohiggnessnotopness_750",             360, 0.,  1.);
+
 }
 
 void
@@ -86,7 +90,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
-				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,
+				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,double mvaoutputnohiggnessnotopness_bb2l300, double mvaoutputnohiggnessnotopness_bb2l400, double mvaoutputnohiggnessnotopness_bb2l750,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -149,5 +153,9 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_MVAOutput300_,           mvaoutput_bb2l300,                     evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_MVAOutput400_,           mvaoutput_bb2l400,                     evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_MVAOutput750_,           mvaoutput_bb2l750,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness300_,           mvaoutputnohiggnessnotopness_bb2l300,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness400_,           mvaoutputnohiggnessnotopness_bb2l400,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness750_,           mvaoutputnohiggnessnotopness_bb2l750,                     evtWeight, evtWeightErr);
+
   fillWithOverFlow(histogram_EventCounter_,           0.,                     evtWeight, evtWeightErr);
 }

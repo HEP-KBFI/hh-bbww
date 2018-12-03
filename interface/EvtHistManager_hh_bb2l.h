@@ -38,6 +38,7 @@ public:
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,double mvaoutput300, double mvaoutput400, double mvaoutput750,
+		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750,
 		 double evtWeight);
 
   const TH1 *
@@ -97,6 +98,10 @@ public:
   TH1 * histogram_MVAOutput300_;
   TH1 * histogram_MVAOutput400_;
   TH1 * histogram_MVAOutput750_;
+  TH1 * histogram_MVAOutputnohiggnessnotopness300_;
+  TH1 * histogram_MVAOutputnohiggnessnotopness400_;
+  TH1 * histogram_MVAOutputnohiggnessnotopness750_;
+
 };
 
 #endif

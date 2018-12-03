@@ -181,7 +181,11 @@ if __name__ == '__main__':
       "STMET"                             : {},
       "MVAOutput_300"                     : {},
       "MVAOutput_400"                     : {},
-      "MVAOutput_750"                     : {}
+      "MVAOutput_750"                     : {},
+      "MVAOutputnohiggnessnotopness_300"  : {},
+      "MVAOutputnohiggnessnotopness_400"  : {},
+      "MVAOutputnohiggnessnotopness_750"  : {}
+
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
