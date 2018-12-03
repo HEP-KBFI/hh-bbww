@@ -18,6 +18,10 @@ for sample_name, sample_info in samples_2017.items():
   if not isinstance(sample_info, OD):
     continue
 
+  if 'CountWeightedLHEWeightScale' in sample_info["nof_events"] and \
+      sample_info["nof_events"]['CountWeightedLHEWeightScale'] == [ 0 ]:
+    sample_info["has_LHE"] = False
+
   if sample_info["process_name_specific"].startswith('signal') and 'hh' in sample_info["process_name_specific"]:
     sample_info["use_it"] = 'nonresonant' not in sample_info["process_name_specific"] # temp: enable resonant samples only
 

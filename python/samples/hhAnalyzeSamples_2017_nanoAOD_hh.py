@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2018-11-06 01:09:44 with the following command:
+# file generated at 2018-11-13 22:16:21 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2017_hh.py -p python/samples/sampleLocations_hh_2017.txt -Z zeroes.txt -z zombies.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_hh.py -M
 
 samples_2017 = OD()
@@ -173,6 +173,44 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_corre
     [
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov01/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg/NanoProduction_v2_2018Nov01_GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_r/181101_082539"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_from_superset",           [
+    # not computed
+  ]),
+  ("missing_hlt_paths",               [
+
+  ]),
+  ("hlt_paths",               [
+    # not computed
+  ]),
+])
+
+
+samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_260_hh_bbvv"),
+  ("process_name_specific",           "signal_ggf_spin0_260_hh_2b2v"),
+  ("nof_files",                       8),
+  ("nof_db_files",                    17),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 400000),
+  ("nof_db_events",                   400000),
+  ("fsize_local",                     642059002), # 642.06MB, avg file size 80.26MB
+  ("fsize_db",                        20086379241), # 20.09GB, avg file size 1.18GB
+  ("use_it",                          True),
+  ("xsection",                        0.026422),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov13/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg/NanoProduction_v2_2018Nov13_GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_r/181113_191203"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2039,6 +2077,43 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/RunIIFall17M
   ]),
 ])
 
+samples_2017["/VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_3000_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_3000_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    8),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     330979161), # 330.98MB, avg file size 165.49MB
+  ("fsize_db",                        7943092984), # 7.94GB, avg file size 992.89MB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov14/VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph/NanoProduction_v2_2018Nov14_VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181114_092640"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_from_superset",           [
+    # not computed
+  ]),
+  ("missing_hlt_paths",               [
+
+  ]),
+  ("hlt_paths",               [
+    # not computed
+  ]),
+])
+
 samples_2017["/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_260_hh_bbtt_noncorr"),
@@ -3001,6 +3076,43 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedc
   ]),
 ])
 
+samples_2017["/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_800_hh_bbtt"),
+  ("process_name_specific",           "signal_ggf_spin0_800_hh_2b2t"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    10),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 200000),
+  ("nof_db_events",                   200000),
+  ("fsize_local",                     437935732), # 437.94MB, avg file size 109.48MB
+  ("fsize_db",                        11819983411), # 11.82GB, avg file size 1.18GB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov05/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg/NanoProduction_v2_2018Nov05_GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/181105_204009"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_from_superset",           [
+    # not computed
+  ]),
+  ("missing_hlt_paths",               [
+
+  ]),
+  ("hlt_paths",               [
+    # not computed
+  ]),
+])
+
 samples_2017["/GluGluToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_850_hh_bbtt"),
@@ -3075,6 +3187,43 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correctedc
   ]),
 ])
 
+samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_1000_hh_bbtt"),
+  ("process_name_specific",           "signal_ggf_spin0_1000_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    9),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     234769701), # 234.77MB, avg file size 117.38MB
+  ("fsize_db",                        5887358169), # 5.89GB, avg file size 654.15MB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov01/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg/NanoProduction_v2_2018Nov01_GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_reali/181101_095948"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_from_superset",           [
+    # not computed
+  ]),
+  ("missing_hlt_paths",               [
+
+  ]),
+  ("hlt_paths",               [
+    # not computed
+  ]),
+])
+
 samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_1250_hh_bbtt"),
@@ -3133,6 +3282,43 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_corrected
     [
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov01/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_correctedcfg/NanoProduction_v2_2018Nov01_GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_reali/181101_100418"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_from_superset",           [
+    # not computed
+  ]),
+  ("missing_hlt_paths",               [
+
+  ]),
+  ("hlt_paths",               [
+    # not computed
+  ]),
+])
+
+samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_1750_hh_bbtt"),
+  ("process_name_specific",           "signal_ggf_spin0_1750_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    11),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     236078075), # 236.08MB, avg file size 118.04MB
+  ("fsize_db",                        6303523737), # 6.30GB, avg file size 573.05MB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/NanoProduction_v2_2018Nov05/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg/NanoProduction_v2_2018Nov05_GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_reali/181105_204232"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
