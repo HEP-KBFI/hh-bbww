@@ -191,7 +191,17 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
   def addToMakefile_backgrounds_from_data(self, lines_makefile):
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds", self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds_sum", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
+    #----------------------------------------------------------------------------
+    # CV: run hadd_stage1_5 jobs on quasar,
+    #     as the memory consumption of hadd_stage1_5 jobs exceeds the memory limit (1.8 Gb) for batch jobs
+    is_sbatch_bak = self.is_sbatch
+    self.is_sbatch = False
+    is_makefile_bak = self.is_makefile
+    self.is_makefile = True
     self.addToMakefile_hadd_stage1_5(lines_makefile)
+    self.is_sbatch = is_sbatch_bak
+    self.is_makefile = is_makefile_bak
+    #----------------------------------------------------------------------------
     self.addToMakefile_addFakes(lines_makefile)
 
   def create(self):
@@ -647,7 +657,17 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.addToMakefile_analyze(lines_makefile)
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_backgrounds_from_data(lines_makefile)
+    #----------------------------------------------------------------------------
+    # CV: run hadd_stage2 jobs on quasar,
+    #     as the memory consumption of hadd_stage2 jobs exceeds the memory limit (1.8 Gb) for batch jobs
+    is_sbatch_bak = self.is_sbatch
+    self.is_sbatch = False
+    is_makefile_bak = self.is_makefile
+    self.is_makefile = True
     self.addToMakefile_hadd_stage2(lines_makefile)
+    self.is_sbatch = is_sbatch_bak
+    self.is_makefile = is_makefile_bak
+    #----------------------------------------------------------------------------
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)
