@@ -307,7 +307,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
                   if not is_mc and not isFR_shape_shift:
                     continue
 
-                if central_or_shift in systematics.LHE().hh and not sample_category.startswith("signal"):
+                if central_or_shift in systematics.LHE().hh and not (sample_category.startswith("signal") and sample_info['has_LHE']):
                   continue
                 if central_or_shift in systematics.LHE().ttH and sample_category != "TTH":
                   continue
