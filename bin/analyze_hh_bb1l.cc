@@ -784,7 +784,7 @@ int main(int argc, char* argv[])
       "met", "mht", "met_LD", 
       "HT", "STMET", 
       "m_Hbb", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
-      "m_Wjj", "dR_Wjj", "dPhi_Wjj", "tau21_Wjj",
+      "m_Wjj", "dR_Wjj", "dPhi_Wjj", "pT_Wjj", "tau21_Wjj",
       "dR_Hww", "dPhi_Hww", "pT_Hww", "Smin_Hww",
       "dR_b1lep", "dR_b2lep",
       "m_HHvis", "pT_HHvis", "dPhi_HHvis", 
