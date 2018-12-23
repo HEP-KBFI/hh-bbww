@@ -1,4 +1,4 @@
-from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_nanoAOD import samples_2017
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_nanoAOD_hh import samples_2017
 
 sync_key = "/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"
 
