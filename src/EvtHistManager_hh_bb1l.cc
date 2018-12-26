@@ -63,6 +63,9 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_jet2_eta_           = book1D(dir, "vbf_jet2_eta",           "vbf_jet2_eta",           100, -5.0,  +5.0);
   histogram_vbf_m_jj_               = book1D(dir, "vbf_m_jj",               "vbf_m_jj",               150,  0., 1500.);
   histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,  0.,   10.);
+  histogram_MVAOutput350_           = book1D(dir, "MVAOutput_350",           "MVAOutput_350",             360, 0.,  1.);
+  histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",           "MVAOutput_400",             360, 0.,  1.);
+  histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",           "MVAOutput_750",             360, 0.,  1.);
 
   histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
 }
@@ -81,8 +84,8 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
 				       double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
-				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
-				       double evtWeight)
+				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj, double mvaoutput_bb1l350, 
+				       double mvaoutput_bb1l400, double mvaoutput_bb1l750, double evtWeight)
 {
   const double evtWeightErr = 0.;
 
@@ -138,6 +141,9 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
   }
   fillWithOverFlow(histogram_vbf_m_jj_,               vbf_m_jj,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_vbf_dEta_jj_,            vbf_dEta_jj,            evtWeight, evtWeightErr);
-  
+  fillWithOverFlow(histogram_MVAOutput350_,           mvaoutput_bb1l350,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput400_,           mvaoutput_bb1l400,                     evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput750_,           mvaoutput_bb1l750,                     evtWeight, evtWeightErr);
+
   fillWithOverFlow(histogram_EventCounter_,           0.,                     evtWeight, evtWeightErr);
 }
