@@ -196,9 +196,8 @@ if __name__ == '__main__':
     samples = filter_samples(samples, sample_filter)
 
   if args.tau_id_wp:
-    logging.info("Changing tau ID working point: %s -> %s" % (hadTau_mva_wp , args.tau_id_wp))
-    #hadTau_mva_wp_veto = args.tau_id_wp
-    hadTau_mva_wp = args.tau_id_wp
+    logging.info("Changing tau ID working point: %s -> %s" % (hadTau_mva_wp_veto, args.tau_id_wp))
+    hadTau_mva_wp_veto = args.tau_id_wp
 
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
@@ -208,7 +207,7 @@ if __name__ == '__main__':
     samples                               = samples,
     lep_mva_wp                            = lep_mva_wp,
     apply_hadTauVeto                      = False,
-    hadTau_mva_wp_veto                    = hadTau_mva_wp,
+    hadTau_mva_wp_veto                    = hadTau_mva_wp_veto,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     max_files_per_job                     = files_per_job,
