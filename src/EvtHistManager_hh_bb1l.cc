@@ -6,7 +6,47 @@
 
 EvtHistManager_hh_bb1l::EvtHistManager_hh_bb1l(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
-{}
+{
+  central_or_shiftOptions_["numElectrons"] = { "central" };
+  central_or_shiftOptions_["numMuons"] = { "central" };
+  central_or_shiftOptions_["numJets"] = { "central" };
+  central_or_shiftOptions_["numBJets_loose"] = { "central" };
+  central_or_shiftOptions_["numBJets_medium"] = { "central" };
+  central_or_shiftOptions_["HT"] = { "central" };
+  central_or_shiftOptions_["STMET"] = { "central" };
+  central_or_shiftOptions_["m_Hbb"] = { "central" };
+  central_or_shiftOptions_["dR_Hbb"] = { "central" };
+  central_or_shiftOptions_["dPhi_Hbb"] = { "central" };
+  central_or_shiftOptions_["pT_Hbb"] = { "central" };
+  central_or_shiftOptions_["m_Wjj"] = { "central" };
+  central_or_shiftOptions_["dR_Wjj"] = { "central" };
+  central_or_shiftOptions_["dPhi_Wjj"] = { "central" };
+  central_or_shiftOptions_["pT_Wjj"] = { "central" };
+  central_or_shiftOptions_["dR_Hww"] = { "central" };
+  central_or_shiftOptions_["dPhi_Hww"] = { "central" };
+  central_or_shiftOptions_["pT_Hww"] = { "central" };
+  central_or_shiftOptions_["Smin_Hww"] = { "central" };
+  central_or_shiftOptions_["m_HHvis"] = { "*" };
+  central_or_shiftOptions_["m_HH"] = { "central" };
+  central_or_shiftOptions_["m_HH_B2G_18_008"] = { "*" };
+  central_or_shiftOptions_["m_HH_hme"] = { "central" }; // CV: to be replaced by "*" once HME is implemented !!
+  central_or_shiftOptions_["dR_HH"] = { "central" };
+  central_or_shiftOptions_["dPhi_HH"] = { "central" };
+  central_or_shiftOptions_["pT_HH"] = { "central" };
+  central_or_shiftOptions_["Smin_HH"] = { "central" };
+  central_or_shiftOptions_["mT_W"] = { "central" };
+  central_or_shiftOptions_["mT_top_2particle"] = { "central" };
+  central_or_shiftOptions_["mT_top_3particle"] = { "central" };
+  central_or_shiftOptions_["mvaOutput_Hj_tagger"] = { "central" };
+  central_or_shiftOptions_["mvaOutput_Hjj_tagger"] = { "central" };
+  central_or_shiftOptions_["vbf_jet1_pt"] = { "central" };
+  central_or_shiftOptions_["vbf_jet1_eta"] = { "central" };
+  central_or_shiftOptions_["vbf_jet2_pt"] = { "central" };
+  central_or_shiftOptions_["vbf_jet2_eta"] = { "central" };
+  central_or_shiftOptions_["vbf_m_jj"] = { "central" };
+  central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
+  central_or_shiftOptions_["EventCounter"] = { "*" };
+}
 
 const TH1 *
 EvtHistManager_hh_bb1l::getHistogram_EventCounter() const

@@ -6,7 +6,43 @@
 
 EvtHistManager_hh_bb1l1tau::EvtHistManager_hh_bb1l1tau(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
-{}
+{
+  central_or_shiftOptions_["numElectrons"] = { "central" };
+  central_or_shiftOptions_["numMuons"] = { "central" };
+  central_or_shiftOptions_["numHadTaus"] = { "central" };
+  central_or_shiftOptions_["numJets"] = { "central" };
+  central_or_shiftOptions_["numBJets_loose"] = { "central" };
+  central_or_shiftOptions_["numBJets_medium"] = { "central" };
+  central_or_shiftOptions_["HT"] = { "central" };
+  central_or_shiftOptions_["STMET"] = { "central" };
+  central_or_shiftOptions_["m_Hbb"] = { "central" };
+  central_or_shiftOptions_["dR_Hbb"] = { "central" };
+  central_or_shiftOptions_["dPhi_Hbb"] = { "central" };
+  central_or_shiftOptions_["pT_Hbb"] = { "central" };
+  central_or_shiftOptions_["m_ltau"] = { "central" };
+  central_or_shiftOptions_["dR_ltau"] = { "central" };
+  central_or_shiftOptions_["dPhi_ltau"] = { "central" };
+  central_or_shiftOptions_["pT_ltau"] = { "central" };
+  central_or_shiftOptions_["m_Hww"] = { "central" };
+  central_or_shiftOptions_["pT_Hww"] = { "central" };
+  central_or_shiftOptions_["m_HHvis"] = { "*" };
+  central_or_shiftOptions_["m_HH"] = { "central" };
+  central_or_shiftOptions_["dPhi_HH"] = { "central" };
+  central_or_shiftOptions_["pT_HH"] = { "central" };
+  central_or_shiftOptions_["mT2_W"] = { "central" };
+  central_or_shiftOptions_["mT2_W_step"] = { "central" };
+  central_or_shiftOptions_["mT2_top_2particle"] = { "central" };
+  central_or_shiftOptions_["mT2_top_2particle_step"] = { "central" };
+  central_or_shiftOptions_["mT2_top_3particle"] = { "central" };
+  central_or_shiftOptions_["mT2_top_3particle_step"] = { "central" };
+  central_or_shiftOptions_["vbf_jet1_pt"] = { "central" };
+  central_or_shiftOptions_["vbf_jet1_eta"] = { "central" };
+  central_or_shiftOptions_["vbf_jet2_pt"] = { "central" };
+  central_or_shiftOptions_["vbf_jet2_eta"] = { "central" };
+  central_or_shiftOptions_["vbf_m_jj"] = { "central" };
+  central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
+  central_or_shiftOptions_["EventCounter"] = { "*" };
+}
 
 const TH1 *
 EvtHistManager_hh_bb1l1tau::getHistogram_EventCounter() const

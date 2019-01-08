@@ -6,7 +6,34 @@
 
 EvtHistManager_hh_bbWW_DYctrl::EvtHistManager_hh_bbWW_DYctrl(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
-{}
+{
+  central_or_shiftOptions_["numElectrons"] = { "central" };
+  central_or_shiftOptions_["numMuons"] = { "central" };
+  central_or_shiftOptions_["numJets"] = { "central" };
+  central_or_shiftOptions_["numBJets_loose"] = { "central" };
+  central_or_shiftOptions_["numBJets_medium"] = { "central" };
+  central_or_shiftOptions_["HT"] = { "central" };
+  central_or_shiftOptions_["STMET"] = { "central" };
+  central_or_shiftOptions_["m_bb"] = { "central" };
+  central_or_shiftOptions_["dR_bb"] = { "central" };
+  central_or_shiftOptions_["dPhi_bb"] = { "central" };
+  central_or_shiftOptions_["pT_bb"] = { "central" };
+  central_or_shiftOptions_["m_ll"] = { "central" };
+  central_or_shiftOptions_["dR_ll"] = { "central" };
+  central_or_shiftOptions_["dPhi_ll"] = { "central" };
+  central_or_shiftOptions_["pT_ll"] = { "central" };
+  central_or_shiftOptions_["m_bbll"] = { "central" };
+  central_or_shiftOptions_["dPhi_bbll"] = { "central" };
+  central_or_shiftOptions_["pT_bbll"] = { "central" };
+  central_or_shiftOptions_["m_bbllMEt"] = { "central" };
+  central_or_shiftOptions_["m_HH_hme"] = { "central" };
+  central_or_shiftOptions_["dPhi_bbllMEt"] = { "central" };
+  central_or_shiftOptions_["pT_bbllMEt"] = { "central" };
+  central_or_shiftOptions_["Smin_bbllMEt"] = { "central" };
+  central_or_shiftOptions_["vbf_m_jj"] = { "central" };
+  central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
+  central_or_shiftOptions_["EventCounter"] = { "*" };
+}
 
 const TH1 *
 EvtHistManager_hh_bbWW_DYctrl::getHistogram_EventCounter() const
