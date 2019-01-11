@@ -12,6 +12,7 @@
 #include <TString.h> // TString, Form
 #include <TError.h> // gErrorAbortLevel, kError
 #include <TRandom3.h> // TRandom3
+#include <TLorentzVector.h> // TLorentzVector 
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
@@ -59,9 +60,10 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenEvtHistManager.h" // GenEvtHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoHistManager.h" // LHEInfoHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched, contains
 #include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_2lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
+#include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
 #include "tthAnalysis/HiggsToTauTau/interface/hltPathReader.h" // hltPathReader
@@ -82,6 +84,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle
 #include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
 #include "tthAnalysis/HiggsToTauTau/interface/Topness.h" // Topness
+#include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
@@ -114,7 +117,7 @@ struct categoryEntryType
     , type_Hbb_(type_Hbb)
     , type_vbf_(type_vbf)
   {
-    name_ = "";
+    name_ = "hh_";
     if      ( numBJets_medium_ >= 2                         ) name_ += "2bM";
     else if ( numBJets_medium_ >= 1 && numBJets_loose_ >= 2 ) name_ += "1bM1bL";
     else if ( numBJets_medium_ >= 1                         ) name_ += "1bM";
@@ -137,6 +140,13 @@ struct categoryEntryType
   int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
 };
+
+void addCategory_conditionally(std::vector<categoryEntryType>& categories_evt, const categoryEntryType& category, const std::vector<std::string>& evtCategories)
+{
+  if ( contains(evtCategories, category.name_) ) {
+    categories_evt.push_back(category);
+  }
+}
 
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
@@ -223,6 +233,9 @@ int main(int argc, char* argv[])
   std::vector<leptonGenMatchEntry> leptonGenMatch_definitions = getLeptonGenMatch_definitions_2lepton(apply_leptonGenMatching);
   std::cout << "leptonGenMatch_definitions:" << std::endl;
   std::cout << leptonGenMatch_definitions;
+
+  vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
+  std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
@@ -496,24 +509,45 @@ int main(int argc, char* argv[])
   for ( int type_Hbb = kHbb_undefined; type_Hbb <= kHbb_boosted; ++type_Hbb ) {
     for ( int type_vbf = kVBF_undefined; type_vbf <= kVBF_tagged; ++type_vbf ) {
       if ( !(type_Hbb == kHbb_undefined && type_vbf == kVBF_undefined) ) {
-	categories_evt.push_back(categoryEntryType(-1, -1, -1, -1, type_Hbb, type_vbf)); // hh_bb2l
+	addCategory_conditionally(categories_evt, categoryEntryType(-1, -1, -1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_bb2l
       }
-      categories_evt.push_back(categoryEntryType(-1, -1,  2, -1, type_Hbb, type_vbf)); // hh_2bM2l
-      categories_evt.push_back(categoryEntryType(-1, -1,  1,  2, type_Hbb, type_vbf)); // hh_1bM1bL2l
-      categories_evt.push_back(categoryEntryType(-1, -1,  1, -1, type_Hbb, type_vbf)); // hh_1bM2l
-      categories_evt.push_back(categoryEntryType( 2, -1, -1, -1, type_Hbb, type_vbf)); // hh_bb2e
-      categories_evt.push_back(categoryEntryType( 2, -1,  2, -1, type_Hbb, type_vbf)); // hh_2bM2e
-      categories_evt.push_back(categoryEntryType( 2, -1,  1,  2, type_Hbb, type_vbf)); // hh_1bM1bL2e
-      categories_evt.push_back(categoryEntryType( 2, -1,  1, -1, type_Hbb, type_vbf)); // hh_1bM2e
-      categories_evt.push_back(categoryEntryType(-1,  2, -1, -1, type_Hbb, type_vbf)); // hh_bb2mu
-      categories_evt.push_back(categoryEntryType(-1,  2,  2, -1, type_Hbb, type_vbf)); // hh_2bM2mu
-      categories_evt.push_back(categoryEntryType(-1,  2,  1,  2, type_Hbb, type_vbf)); // hh_1bM1bL2mu
-      categories_evt.push_back(categoryEntryType(-1,  2,  1, -1, type_Hbb, type_vbf)); // hh_1bM2mu   
-      categories_evt.push_back(categoryEntryType( 1,  1, -1, -1, type_Hbb, type_vbf)); // hh_bb1e1mu
-      categories_evt.push_back(categoryEntryType( 1,  1,  2, -1, type_Hbb, type_vbf)); // hh_2bM1e1mu
-      categories_evt.push_back(categoryEntryType( 1,  1,  1,  2, type_Hbb, type_vbf)); // hh_1bM1bL1e1mu
-      categories_evt.push_back(categoryEntryType( 1,  1,  1, -1, type_Hbb, type_vbf)); // hh_1bM1e1mu   
+      addCategory_conditionally(categories_evt, categoryEntryType(-1, -1,  2, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_2bM2l
+      addCategory_conditionally(categories_evt, categoryEntryType(-1, -1,  1,  2, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1bL2l
+      addCategory_conditionally(categories_evt, categoryEntryType(-1, -1,  1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM2l
+      addCategory_conditionally(categories_evt, categoryEntryType( 2, -1, -1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_bb2e
+      addCategory_conditionally(categories_evt, categoryEntryType( 2, -1,  2, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_2bM2e
+      addCategory_conditionally(categories_evt, categoryEntryType( 2, -1,  1,  2, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1bL2e
+      addCategory_conditionally(categories_evt, categoryEntryType( 2, -1,  1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM2e
+      addCategory_conditionally(categories_evt, categoryEntryType(-1,  2, -1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_bb2mu
+      addCategory_conditionally(categories_evt, categoryEntryType(-1,  2,  2, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_2bM2mu
+      addCategory_conditionally(categories_evt, categoryEntryType(-1,  2,  1,  2, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1bL2mu
+      addCategory_conditionally(categories_evt, categoryEntryType(-1,  2,  1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM2mu   
+      addCategory_conditionally(categories_evt, categoryEntryType( 1,  1, -1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_bb1e1mu
+      addCategory_conditionally(categories_evt, categoryEntryType( 1,  1,  2, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_2bM1e1mu
+      addCategory_conditionally(categories_evt, categoryEntryType( 1,  1,  1,  2, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1bL1e1mu
+      addCategory_conditionally(categories_evt, categoryEntryType( 1,  1,  1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1e1mu   
     }
+  }
+  // check that all categories specified in python configuration (by evtCategories) have been added
+  vstring undefinedEvtCategories;
+  for ( vstring::const_iterator evtCategoryName = evtCategoryNames.begin();
+	evtCategoryName != evtCategoryNames.end(); ++evtCategoryName ) {
+    if ( (*evtCategoryName) == "hh_bb2l" ) continue; // CV: skip "inclusive" event category, as it is added automatically
+    bool isUndefined = true;
+    for ( std::vector<categoryEntryType>::const_iterator category_evt = categories_evt.begin();
+	  category_evt != categories_evt.end(); ++category_evt ) {
+      if ( category_evt->name_ == (*evtCategoryName) ) {
+	isUndefined = false;
+	break;
+      }
+    }
+    if ( isUndefined ) {
+      undefinedEvtCategories.push_back(*evtCategoryName);
+    }
+  }
+  if ( undefinedEvtCategories.size() >= 1 ) {
+    throw cms::Exception("analyze_hh_bb2l")
+      << "Invalid Configuration parameter 'evtCategories'. The following event categories are undefined: " << format_vstring(undefinedEvtCategories) << " !!\n";
   }
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
         leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
@@ -590,7 +624,7 @@ int main(int argc, char* argv[])
     for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
 	  category != categories_evt.end(); ++category ) {
       TString histogramDir_category = histogramDir.data();
-      histogramDir_category.ReplaceAll("bb2l", category->name_.data());
+      histogramDir_category.ReplaceAll("hh_bb2l", category->name_.data());
       selHistManager->evt_in_categories_[category->name_] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
         Form("%s/sel/evt", histogramDir_category.Data()), era_string, central_or_shift));
       selHistManager->evt_in_categories_[category->name_]->bookHistograms(fs);
@@ -1430,7 +1464,40 @@ int main(int argc, char* argv[])
     if ( algoTopness_fixedChi2.isValidSolution() ) {
       logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
     } 
-    double m_HH_hme = -1.; // CV: not implemented yet
+    //---------------------------------------------------------------------------
+    // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
+    TLorentzVector hmeLepton1P4(selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.pz(), selLeptonP4_lead.energy());
+    TLorentzVector hmeLepton2P4(selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.pz(), selLeptonP4_sublead.energy());
+    TLorentzVector hmeBJet1P4(selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.energy());
+    TLorentzVector hmeBJet2P4(selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.energy());
+    TLorentzVector hmeMEtP4(metP4.px(), metP4.py(), 0., metP4.pt());
+    double hmeSumJetsPx = -(selLeptonP4_lead.px() + selLeptonP4_sublead.px() + selJetP4_Hbb_lead.px() + selJetP4_Hbb_sublead.px() + metP4.px());
+    double hmeSumJetsPy = -(selLeptonP4_lead.py() + selLeptonP4_sublead.py() + selJetP4_Hbb_lead.py() + selJetP4_Hbb_sublead.py() + metP4.py());
+    double hmeSumJetsPz = 0.;
+    double hmeSumJetsEn = TMath::Sqrt(hmeSumJetsPx*hmeSumJetsPx + hmeSumJetsPy*hmeSumJetsPy);
+    TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
+    const bool PUSample = true;
+    const int ievent = eventInfo.event;
+    const int iterations = 100000;
+    const int bjetrescaleAlgo = 2;
+    const int metcorrection = 5;
+    const bool weightfromonshellnupt_func = false;
+    const bool weightfromonshellnupt_hist = true;
+    const bool weightfromonoffshellWmass_hist = true;
+    const bool useMET = true;
+    const std::string RefPDFfile = "REFPDFPU40.root";
+    heavyMassEstimator hmeAlgo(
+      &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
+      PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
+      iterations, RefPDFfile, useMET, bjetrescaleAlgo, metcorrection);
+    double m_HH_hme = -1.; 
+    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    if ( hme_isValidSolution ) {
+      TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
+      m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
+    }
+    std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
+    //---------------------------------------------------------------------------
 
     const RecoJet* selJet_vbf_lead = nullptr;
     const RecoJet* selJet_vbf_sublead = nullptr;

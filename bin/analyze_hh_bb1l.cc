@@ -67,6 +67,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
 #include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_1lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
+#include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
 #include "tthAnalysis/HiggsToTauTau/interface/hltPathReader.h" // hltPathReader
@@ -124,7 +125,7 @@ struct categoryEntryType
     , type_Wjj_(type_Wjj)
     , type_vbf_(type_vbf)
   {
-    name_ = "";
+    name_ = "hh_";
     if      ( numBJets_medium_ >= 2                         ) name_ += "2bM";
     else if ( numBJets_medium_ >= 1 && numBJets_loose_ >= 2 ) name_ += "1bM1bL";
     else if ( numBJets_medium_ >= 1                         ) name_ += "1bM";
@@ -150,6 +151,13 @@ struct categoryEntryType
   int type_Wjj_; // 0 = either resolved or boosted (any purity); 1 = resolved; 2 = boosted, low purity; 3 = boosted, high purity
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
 };
+
+void addCategory_conditionally(std::vector<categoryEntryType>& categories_evt, const categoryEntryType& category, const std::vector<std::string>& evtCategories)
+{
+  if ( contains(evtCategories, category.name_) ) {
+    categories_evt.push_back(category);
+  }
+}
 
 Particle::LorentzVector comp_metP4_B2G_18_008(const Particle::LorentzVector& visP4, double metPx, double metPy, double mH)
 {
@@ -335,6 +343,9 @@ int main(int argc, char* argv[])
 
   bool apply_hadTauVeto = cfg_analyze.getParameter<bool>("apply_hadTauVeto");
   const std::string hadTauSelection_veto = cfg_analyze.getParameter<std::string>("hadTauSelection_veto");
+
+  vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
+  std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
@@ -664,21 +675,42 @@ int main(int argc, char* argv[])
       if ( type_Hbb != kHbb_undefined && type_Wjj == kWjj_undefined ) continue;
       for ( int type_vbf = kVBF_undefined; type_vbf <= kVBF_tagged; ++type_vbf ) {
 	if ( !(type_Hbb == kHbb_undefined && type_Wjj == kWjj_undefined && type_vbf == kVBF_undefined) ) {
-	  categories_evt.push_back(categoryEntryType(-1, -1, -1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_bb1l
+	  addCategory_conditionally(categories_evt, categoryEntryType(-1, -1, -1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_bb1l
 	}
-	categories_evt.push_back(categoryEntryType(-1, -1,  2, -1, type_Hbb, type_Wjj, type_vbf)); // hh_2bM1l
-	categories_evt.push_back(categoryEntryType(-1, -1,  1,  2, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1bL1l
-	categories_evt.push_back(categoryEntryType(-1, -1,  1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1l
-	categories_evt.push_back(categoryEntryType( 1, -1, -1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_bb1e
-	categories_evt.push_back(categoryEntryType( 1, -1,  2, -1, type_Hbb, type_Wjj, type_vbf)); // hh_2bM1e
-	categories_evt.push_back(categoryEntryType( 1, -1,  1,  2, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1bL1e
-	categories_evt.push_back(categoryEntryType( 1, -1,  1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1e
-	categories_evt.push_back(categoryEntryType(-1,  1, -1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_bb1mu
-	categories_evt.push_back(categoryEntryType(-1,  1,  2, -1, type_Hbb, type_Wjj, type_vbf)); // hh_2bM1mu
-	categories_evt.push_back(categoryEntryType(-1,  1,  1,  2, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1bL1mu
-	categories_evt.push_back(categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1mu     
+	addCategory_conditionally(categories_evt, categoryEntryType(-1, -1,  2, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_2bM1l
+	addCategory_conditionally(categories_evt, categoryEntryType(-1, -1,  1,  2, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1bL1l
+	addCategory_conditionally(categories_evt, categoryEntryType(-1, -1,  1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1l
+	addCategory_conditionally(categories_evt, categoryEntryType( 1, -1, -1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_bb1e
+	addCategory_conditionally(categories_evt, categoryEntryType( 1, -1,  2, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_2bM1e
+	addCategory_conditionally(categories_evt, categoryEntryType( 1, -1,  1,  2, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1bL1e
+	addCategory_conditionally(categories_evt, categoryEntryType( 1, -1,  1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1e
+	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1, -1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_bb1mu
+	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  2, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_2bM1mu
+	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  1,  2, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1bL1mu
+	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1mu     
       }
     }
+  }
+  // check that all categories specified in python configuration (by evtCategories) have been added
+  vstring undefinedEvtCategories;
+  for ( vstring::const_iterator evtCategoryName = evtCategoryNames.begin();
+	evtCategoryName != evtCategoryNames.end(); ++evtCategoryName ) {
+    if ( (*evtCategoryName) == "hh_bb1l" ) continue; // CV: skip "inclusive" event category, as it is added automatically
+    bool isUndefined = true;
+    for ( std::vector<categoryEntryType>::const_iterator category_evt = categories_evt.begin();
+	  category_evt != categories_evt.end(); ++category_evt ) {
+      if ( category_evt->name_ == (*evtCategoryName) ) {
+	isUndefined = false;
+	break;
+      }
+    }
+    if ( isUndefined ) {
+      undefinedEvtCategories.push_back(*evtCategoryName);
+    }
+  }
+  if ( undefinedEvtCategories.size() >= 1 ) {
+    throw cms::Exception("analyze_hh_bb1l")
+      << "Invalid Configuration parameter 'evtCategories'. The following event categories are undefined: " << format_vstring(undefinedEvtCategories) << " !!\n";
   }
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
         leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
@@ -746,7 +778,7 @@ int main(int argc, char* argv[])
     for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
 	  category != categories_evt.end(); ++category ) {
       TString histogramDir_category = histogramDir.data();
-      histogramDir_category.ReplaceAll("bb1l", category->name_.data());
+      histogramDir_category.ReplaceAll("hh_bb1l", category->name_.data());
       selHistManager->evt_in_categories_[category->name_] = new EvtHistManager_hh_bb1l(makeHistManager_cfg(process_and_genMatch,
         Form("%s/sel/evt", histogramDir_category.Data()), era_string, central_or_shift));
       selHistManager->evt_in_categories_[category->name_]->bookHistograms(fs);

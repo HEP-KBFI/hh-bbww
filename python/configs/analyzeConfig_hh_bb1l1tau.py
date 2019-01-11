@@ -48,6 +48,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
         chargeSumSelections,
         applyFakeRateWeights,
         central_or_shifts,
+        evtCategories,              
         max_files_per_job,
         era,
         use_lumi,
@@ -146,17 +147,10 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
-    self.categories = []
-    for type_bb_and_leptons_and_taus in [
-      "bb1l1tau",  "2bM1l1tau",  "1bM1bL1l1tau",  "1bM1l1tau",
-      "bb1e1tau",  "2bM1e1tau",  "1bM1bL1e1tau",  "1bM1e1tau",
-      "bb1mu1tau", "2bM1mu1tau", "1bM1bL1mu1tau", "1bM1mu1tau" ]:
-      for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
-        for type_vbf in [ "", "_vbf", "_nonvbf" ]:
-          self.categories.append("hh_%s%s%s" % (type_bb_and_leptons_and_taus, type_Hbb, type_vbf))
-    self.category_inclusive = "hh_bb1l1tau"
-    if not self.category_inclusive in self.categories:
-      self.categories.append(self.category_inclusive)
+    self.evtCategories = evtCategories
+    self.evtCategory_inclusive = "hh_bb1l1tau"
+    if not self.evtCategory_inclusive in self.evtCategories:
+      self.evtCategories.append(self.evtCategory_inclusive)
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
@@ -180,7 +174,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
     lepton_and_hadTau_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
     
     jobOptions['histogramDir'] = getHistogramDir(
-      self.category_inclusive, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, jobOptions['chargeSumSelection']
+      self.evtCategory_inclusive, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, jobOptions['chargeSumSelection']
     )
     if 'mcClosure' in lepton_and_hadTau_selection:
       self.mcClosure_dir['%s_%s' % (lepton_and_hadTau_selection, jobOptions['chargeSumSelection'])] = jobOptions['histogramDir']
@@ -436,7 +430,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
                       'cfgFile_modified' : cfgFile_modified,
                       'outputFile' : outputFile,
                       'logFile' : os.path.join(self.dirs[DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                      'categories' :[ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.categories ],
+                      'categories' :[ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.evtCategories ],
                       'processes_input' : processes_input,
                       'process_output' : process_output
                     }
@@ -482,7 +476,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
               (self.channel, chargeSumSelection, lepton_and_hadTau_selection_and_frWeight)),
             'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_fakes_mc_%s_%s.log" % \
               (self.channel, chargeSumSelection, lepton_and_hadTau_selection_and_frWeight)),
-            'categories' : [ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.categories ],
+            'categories' : [ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.evtCategories ],
             'processes_input' : processes_input,
             'process_output' : "fakes_mc"
           }
@@ -505,7 +499,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
               (self.channel, chargeSumSelection, lepton_and_hadTau_selection_and_frWeight)),
             'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_conversions_%s_%s.log" % \
               (self.channel, chargeSumSelection, lepton_and_hadTau_selection_and_frWeight)),
-            'categories' : [ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.categories ],
+            'categories' : [ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.evtCategories ],
             'processes_input' : processes_input,
             'process_output' : "conversions"
           }
@@ -530,7 +524,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
                 'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_cfg.py" % cfg_key),
                 'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s.root" % cfg_key),
                 'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s.log" % cfg_key),
-                'categories' : [ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.categories ],
+                'categories' : [ getHistogramDir(category, lepton_and_hadTau_selection, lepton_and_hadTau_frWeight, chargeSumSelection) for category in self.evtCategories ],
                 'processes_input' : processes_input,
                 'process_output' : process_output
               }
@@ -567,7 +561,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
       return self.num_jobs
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
-    for category in self.categories:
+    for category in self.evtCategories:
       for chargeSumSelection in self.chargeSumSelections:
         key_addFakes_job = getKey(category, chargeSumSelection, "fakes_data")
         key_hadd_stage1_5 = getKey(chargeSumSelection, get_lepton_and_hadTau_selection_and_frWeight("Fakeable", "enabled"))
@@ -584,7 +578,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
         self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
 
     logging.info("Creating configuration files to run 'prepareDatacards'")
-    for category in self.categories:
+    for category in self.evtCategories:
       for chargeSumSelection in self.chargeSumSelections:
         for histogramToFit in self.histograms_to_fit:
           key_prep_dcard_job = getKey(category, chargeSumSelection, histogramToFit)
@@ -644,7 +638,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
         'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
         'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_%s%s_cfg.py" % (self.channel, chargeSumSelection)),
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, chargeSumSelection)),
-        'histogramDir' : getHistogramDir(self.category_inclusive, "Tight", "disabled", chargeSumSelection),
+        'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", chargeSumSelection),
         'label' : '1l1tau',
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }

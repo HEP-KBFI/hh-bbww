@@ -92,6 +92,25 @@ elif era == "2018":
 else:
   raise ValueError("Invalid era: %s" % era)
 
+evtCategories = None
+if mode == "default" and len(central_or_shifts) <= 1:
+  evtCategories = [
+    "hh_bb1l1tau", "hh_bb1l1tau_resolvedHbb", "hh_bb1l1tau_resolvedHbb_vbf", "hh_bb1l1tau_resolvedHbb_nonvbf", "hh_bb1l1tau_boostedHbb", "hh_bb1l1tau_vbf", "hh_bb1l1tau_nonvbf",
+    "hh_2bM1l1tau", "hh_2bM1l1tau_resolvedHbb", "hh_2bM1l1tau_resolvedHbb_nonvbf", "hh_2bM1l1tau_nonvbf",
+    "hh_1bM1bL1l1tau", "hh_1bM1bL1l1tau_resolvedHbb", "hh_1bM1bL1l1tau_resolvedHbb_nonvbf", "hh_1bM1bL1l1tau_nonvbf",
+    "hh_1bM1l1tau", "hh_1bM1l1tau_resolvedHbb", "hh_1bM1l1tau_resolvedHbb_nonvbf", "hh_1bM1l1tau_nonvbf",
+    "hh_bb1e1tau", "hh_bb1e1tau_resolvedHbb", "hh_bb1e1tau_resolvedHbb_vbf", "hh_bb1e1tau_resolvedHbb_nonvbf", "hh_bb1e1tau_boostedHbb", "hh_bb1e1tau_vbf", "hh_bb1e1tau_nonvbf",
+    "hh_2bM1e1tau", "hh_2bM1e1tau_resolvedHbb", "hh_2bM1e1tau_resolvedHbb_nonvbf", "hh_2bM1e1tau_nonvbf",
+    "hh_1bM1bL1e1tau", "hh_1bM1bL1e1tau_resolvedHbb", "hh_1bM1bL1e1tau_resolvedHbb_nonvbf", "hh_1bM1bL1e1tau_nonvbf",
+    "hh_1bM1e1tau", "hh_1bM1e1tau_resolvedHbb", "hh_1bM1e1tau_resolvedHbb_nonvbf", "hh_1bM1e1tau_nonvbf",
+    "hh_bb1mu1tau", "hh_bb1mu1tau_resolvedHbb", "hh_bb1mu1tau_resolvedHbb_vbf", "hh_bb1mu1tau_resolvedHbb_nonvbf", "hh_bb1mu1tau_boostedHbb", "hh_bb1mu1tau_vbf", "hh_bb1mu1tau_nonvbf",
+    "hh_2bM1mu1tau", "hh_2bM1mu1tau_resolvedHbb", "hh_2bM1mu1tau_resolvedHbb_nonvbf", "hh_2bM1mu1tau_nonvbf",
+    "hh_1bM1bL1mu1tau", "hh_1bM1bL1mu1tau_resolvedHbb", "hh_1bM1bL1mu1tau_resolvedHbb_nonvbf", "hh_1bM1bL1mu1tau_nonvbf",
+    "hh_1bM1mu1tau", "hh_1bM1mu1tau_resolvedHbb", "hh_1bM1mu1tau_resolvedHbb_nonvbf", "hh_1bM1mu1tau_nonvbf"
+  ]
+else:
+  evtCategories = []
+
 if __name__ == '__main__':
   logging.basicConfig(
     stream = sys.stdout,
@@ -124,6 +143,7 @@ if __name__ == '__main__':
     chargeSumSelections                   = [ "OS", "SS" ],
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    evtCategories                         = evtCategories,
     max_files_per_job                     = files_per_job,
     era                                   = era,
     use_lumi                              = True,

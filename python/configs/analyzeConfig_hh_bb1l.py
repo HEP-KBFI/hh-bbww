@@ -48,6 +48,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         hadTau_mva_wp_veto,
         applyFakeRateWeights,
         central_or_shifts,
+        evtCategories,              
         max_files_per_job,
         era,
         use_lumi,
@@ -142,20 +143,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
-    self.categories = []
-    for type_bb_and_leptons in [
-      "bb1l",    "2bM1l",    "1bM1bL1l",  "1bM1l",
-      "bb1e",    "2bM1e",    "1bM1bL1e",  "1bM1e",
-      "bb1mu",   "2bM1mu",   "1bM1bL1mu", "1bM1mu" ]:
-      for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
-        for type_Wjj in [ "", "_resolvedWjj", "_boostedWjj_lowPurity", "_boostedWjj_highPurity" ]:
-          if (type_Hbb == "" and type_Wjj != "") or (type_Hbb != "" and type_Wjj == ""):
-            continue
-          for type_vbf in [ "", "_vbf", "_nonvbf" ]:
-            self.categories.append("hh_%s%s%s%s" % (type_bb_and_leptons, type_Hbb, type_Wjj, type_vbf))
-    self.category_inclusive = "hh_bb1l"
-    if not self.category_inclusive in self.categories:
-      self.categories.append(self.category_inclusive)
+    self.evtCategories = evtCategories
+    self.evtCategory_inclusive = "hh_bb1l"
+    if not self.evtCategory_inclusive in self.evtCategories:
+      self.evtCategories.append(self.evtCategory_inclusive)
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
@@ -177,7 +168,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     """
     lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
-    jobOptions['histogramDir'] = getHistogramDir(self.category_inclusive, lepton_selection, lepton_frWeight)
+    jobOptions['histogramDir'] = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight)
     if 'mcClosure' in lepton_selection:
       self.mcClosure_dir[lepton_selection] = jobOptions['histogramDir']
 
@@ -413,7 +404,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                     'cfgFile_modified' : cfgFile_modified,
                     'outputFile' : outputFile,
                     'logFile' : os.path.join(self.dirs[DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                    'categories' :[ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
+                    'categories' :[ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.evtCategories ],
                     'processes_input' : processes_input,
                     'process_output' : process_output
                   }
@@ -459,7 +450,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             (self.channel, lepton_selection_and_frWeight)),
           'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_fakes_mc_%s.log" % \
             (self.channel, lepton_selection_and_frWeight)),
-          'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
+          'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.evtCategories ],
           'processes_input' : processes_input,
           'process_output' : "fakes_mc"
         }
@@ -482,7 +473,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             (self.channel, lepton_selection_and_frWeight)),
           'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_conversions_%s.log" % \
             (self.channel, lepton_selection_and_frWeight)),
-          'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
+          'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.evtCategories ],
           'processes_input' : processes_input,
           'process_output' : "conversions"
         }
@@ -507,7 +498,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_cfg.py" % cfg_key),
               'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s.root" % cfg_key),
               'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s.log" % cfg_key),
-              'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.categories ],
+              'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.evtCategories ],
               'processes_input' : processes_input,
               'process_output' : process_output
             }
@@ -544,7 +535,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       return self.num_jobs
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
-    for category in self.categories:
+    for category in self.evtCategories:
       key_addFakes_job = getKey(category, "fakes_data")
       key_hadd_stage1_5 = getKey(get_lepton_selection_and_frWeight("Fakeable", "enabled"))
       self.jobOptions_addFakes[key_addFakes_job] = {
@@ -560,7 +551,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
 
     logging.info("Creating configuration files to run 'prepareDatacards'")
-    for category in self.categories:
+    for category in self.evtCategories:
       for histogramToFit in self.histograms_to_fit:
         key_prep_dcard_job = getKey(category, histogramToFit)
         key_hadd_stage2 = getKey(get_lepton_selection_and_frWeight("Tight", "disabled"))
@@ -616,8 +607,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
       'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_%s_cfg.py" % self.channel),
       'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s.png" % self.channel),
-      'histogramDir' : getHistogramDir(self.category_inclusive, "Tight", "disabled"),
-      'label' : '2l',
+      'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled"),
+      'label' : '1l',
       'make_plots_backgrounds' : self.make_plots_backgrounds
     }
     self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])

@@ -49,6 +49,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         lepton_charge_selections,
         applyFakeRateWeights,
         central_or_shifts,
+        evtCategories,       
         max_files_per_job,
         era,
         use_lumi,
@@ -142,18 +143,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
-    self.categories = []
-    for type_bb_and_leptons in [
-      "bb2l",    "2bM2l",    "1bM1bL2l",    "1bM2l",
-      "bb2e",    "2bM2e",    "1bM1bL2e",    "1bM2e",
-      "bb2mu",   "2bM2mu",   "1bM1bL2mu",   "1bM2mu",
-      "bb1e1mu", "2bM1e1mu", "1bM1bL1e1mu", "1bM1e1mu" ]:
-      for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
-        for type_vbf in [ "", "_vbf", "_nonvbf" ]:
-          self.categories.append("hh_%s%s%s" % (type_bb_and_leptons, type_Hbb, type_vbf))
-    self.category_inclusive = "hh_bb2l"
-    if not self.category_inclusive in self.categories:
-      self.categories.append(self.category_inclusive)
+    self.evtCategories = evtCategories
+    self.evtCategory_inclusive = "hh_bb2l"
+    if not self.evtCategory_inclusive in self.evtCategories:
+      self.evtCategories.append(self.evtCategory_inclusive)
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
@@ -176,7 +169,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     """
     lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
-    jobOptions['histogramDir'] = getHistogramDir(self.category_inclusive, lepton_selection, lepton_frWeight, jobOptions['leptonChargeSelection'])
+    jobOptions['histogramDir'] = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, jobOptions['leptonChargeSelection'])
     if 'mcClosure' in lepton_selection:
       self.mcClosure_dir[lepton_selection] = jobOptions['histogramDir']
 
@@ -417,7 +410,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                       'cfgFile_modified' : cfgFile_modified,
                       'outputFile' : outputFile,
                       'logFile' : os.path.join(self.dirs[DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                      'categories' :[ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.categories ],
+                      'categories' :[ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.evtCategories ],
                       'processes_input' : processes_input,
                       'process_output' : process_output
                     }
@@ -463,7 +456,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               (self.channel, lepton_charge_selection, lepton_selection_and_frWeight)),
             'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_fakes_mc_%s_%s.log" % \
               (self.channel, lepton_charge_selection, lepton_selection_and_frWeight)),
-            'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.categories ],
+            'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.evtCategories ],
             'processes_input' : processes_input,
             'process_output' : "fakes_mc"
           }
@@ -486,7 +479,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               (self.channel, lepton_charge_selection, lepton_selection_and_frWeight)),
             'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_conversions_%s_%s.log" % \
               (self.channel, lepton_charge_selection, lepton_selection_and_frWeight)),
-            'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.categories ],
+            'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.evtCategories ],
             'processes_input' : processes_input,
             'process_output' : "conversions"
           }
@@ -511,7 +504,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "addBackgrounds_%s_cfg.py" % cfg_key),
                 'outputFile' : os.path.join(self.dirs[DKEY_HIST], "addBackgrounds_%s.root" % cfg_key),
                 'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s.log" % cfg_key),
-                'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.categories ],
+                'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) for category in self.evtCategories ],
                 'processes_input' : processes_input,
                 'process_output' : process_output
               }
@@ -548,7 +541,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       return self.num_jobs
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
-    for category in self.categories:
+    for category in self.evtCategories:
       for lepton_charge_selection in self.lepton_charge_selections:
         key_addFakes_job = getKey(category, lepton_charge_selection, "fakes_data")
         key_hadd_stage1_5 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
@@ -565,7 +558,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
 
     logging.info("Creating configuration files to run 'prepareDatacards'")
-    for category in self.categories:
+    for category in self.evtCategories:
       for lepton_charge_selection in self.lepton_charge_selections:
         for histogramToFit in self.histograms_to_fit:
           key_prep_dcard_job = getKey(category, lepton_charge_selection, histogramToFit)
@@ -623,7 +616,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2],
         'cfgFile_modified' : os.path.join(self.dirs[DKEY_CFGS], "makePlots_%s%s_cfg.py" % (self.channel, lepton_charge_selection)),
         'outputFile' : os.path.join(self.dirs[DKEY_PLOT], "makePlots_%s%s.png" % (self.channel, lepton_charge_selection)),
-        'histogramDir' : getHistogramDir(self.category_inclusive, "Tight", "disabled", lepton_charge_selection),
+        'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection),
         'label' : '2l',
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }

@@ -53,6 +53,8 @@ process.analyze_hh_bb2l = cms.PSet(
         histogramName_mu = cms.string("")
     ),
 
+    evtCategories = cms.vstring(), # CV: "inclusive" event category is added automatically
+
     isMC = cms.bool(True),
     central_or_shift = cms.string(''),
     lumiScale = cms.double(1.),

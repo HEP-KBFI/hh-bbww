@@ -39,6 +39,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/Heavymassestimator"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
