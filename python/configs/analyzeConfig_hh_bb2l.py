@@ -327,6 +327,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
                   'applyFakeRateWeights'     : applyFakeRateWeights,
                   'central_or_shift'         : central_or_shift,
+                  'evtCategories'            : self.evtCategories,
                   'selectBDT'                : self.isBDTtraining,
                   'apply_hlt_filter'         : self.hlt_filter,
                   'useNonNominal'            : self.use_nonnominal,
@@ -354,17 +355,17 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               key_hadd_stage1 = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
               key_copyHistograms = getKey(category, process_name, lepton_charge_selection, lepton_selection_and_frWeight)
               cfgFile_modified = os.path.join(self.dirs[DKEY_CFGS], "copyHistograms_%s_%s_%s_%s_%s_cfg.py" % \
-                (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight, evtCategory))
+                (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight, category))
               outputFile = os.path.join(self.dirs[DKEY_HIST], "copyHistograms_%s_%s_%s_%s_%s.root" % \
-                (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight, evtCategory))
-              self.jobOptions_analyze[key_copyHistograms] = {
+                (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight, category))
+              self.jobOptions_copyHistograms[key_copyHistograms] = {
                 'inputFile' : self.outputFile_hadd_stage1[key_hadd_stage1],
                 'cfgFile_modified' : cfgFile_modified,
                 'outputFile' : outputFile,
                 'logFile' : os.path.join(self.dirs[DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
                 'categories' :[ category ],
               }
-              self.createCfg_analyze(self.jobOptions_analyze[key_copyHistograms])
+              self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms])
             #----------------------------------------------------------------------------
             
             if is_mc:
@@ -426,7 +427,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     if processes_input:
                       logging.info(" ...for genMatch option = '%s'" % genMatch_category)
                       self.jobOptions_addBackgrounds[key_addBackgrounds_job] = {
-                        'inputFile' : self.jobOptions_analyze[key_copyHistograms]['inputFile'],
+                        'inputFile' : self.jobOptions_copyHistograms[key_copyHistograms]['inputFile'],
                         'cfgFile_modified' : cfgFile_modified,
                         'outputFile' : outputFile,
                         'logFile' : os.path.join(self.dirs[DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
@@ -454,7 +455,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 key_hadd_stage1_5 = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
                 if not key_hadd_stage1_5 in self.inputFiles_hadd_stage1_5:
                   self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
-                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.jobOptions_analyze[key_copyHistograms]['inputFile'])
+                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.jobOptions_copyHistograms[key_copyHistograms]['inputFile'])
 
           if self.isBDTtraining:
             continue
@@ -576,7 +577,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           'category_sideband' : getHistogramDir(category, "Fakeable", "enabled", lepton_charge_selection)
         }
         self.createCfg_addFakes(self.jobOptions_addFakes[key_addFakes_job])
-        key_hadd_stage2 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+        key_hadd_stage2 = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
         self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
 
     logging.info("Creating configuration files to run 'prepareDatacards'")
