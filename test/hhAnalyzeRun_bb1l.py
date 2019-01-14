@@ -84,27 +84,13 @@ else:
   raise ValueError("Invalid era: %s" % era)
 
 if era == "2016":
-  hadTau_mva_wp_veto  = "dR03mvaTight"
+  hadTau_mva_wp_veto = "dR03mvaTight"
 elif era == "2017":
-  hadTau_mva_wp_veto  = "dR03mvaMedium"
+  hadTau_mva_wp_veto = "dR03mvaMedium"
 elif era == "2018":
   raise ValueError("Implement me!")
 else:
   raise ValueError("Invalid era: %s" % era)
-
-
-self.categories = []
-    for type_bb_and_leptons in [
-      "bb1l",    "2bM1l",    "1bM1bL1l",  "1bM1l",
-      "bb1e",    "2bM1e",    "1bM1bL1e",  "1bM1e",
-      "bb1mu",   "2bM1mu",   "1bM1bL1mu", "1bM1mu" ]:
-      for type_Hbb in [ "", "_resolvedHbb", "_boostedHbb" ]:
-        for type_Wjj in [ "", "_resolvedWjj", "_boostedWjj_lowPurity", "_boostedWjj_highPurity" ]:
-          if (type_Hbb == "" and type_Wjj != "") or (type_Hbb != "" and type_Wjj == ""):
-            continue
-          for type_vbf in [ "", "_vbf", "_nonvbf" ]:
-            self.categories.append("hh_%s%s%s%s" % (type_bb_and_leptons, type_Hbb, type_Wjj, type_vbf))
-    self.category_inclusive = "hh_bb1l"
 
 evtCategories = None
 if mode == "default" and len(central_or_shifts) <= 1:
