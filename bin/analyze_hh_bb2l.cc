@@ -85,6 +85,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
 #include "tthAnalysis/HiggsToTauTau/interface/Topness.h" // Topness
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
+#include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
@@ -1485,18 +1486,21 @@ int main(int argc, char* argv[])
     const bool weightfromonshellnupt_hist = true;
     const bool weightfromonoffshellWmass_hist = true;
     const bool useMET = true;
-    const std::string RefPDFfile = "REFPDFPU40.root";
+    LocalFileInPath RefPDFfile = LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root");
+    if( RefPDFfile.fullPath().empty() )
+      throw cms::Exception("analyze_hh_bb2l")
+	<< "Failed to find file = 'REFPDFPU40.root' !!\n";
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile, useMET, bjetrescaleAlgo, metcorrection);
+      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);
     double m_HH_hme = -1.; 
     bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
     if ( hme_isValidSolution ) {
       TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
       m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
     }
-    std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
+    //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
     const RecoJet* selJet_vbf_lead = nullptr;
