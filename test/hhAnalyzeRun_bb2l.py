@@ -140,7 +140,8 @@ else:
   raise ValueError("Invalid era: %s" % era)
 
 evtCategories = None
-if mode == "default" and len(central_or_shifts) <= 1:
+##if mode == "default" and len(central_or_shifts) <= 1:
+if True != False:
   evtCategories = [
     "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_resolvedHbb_vbf", "hh_bb2l_resolvedHbb_nonvbf", "hh_bb2l_boostedHbb", "hh_bb2l_vbf", "hh_bb2l_nonvbf",
     "hh_2bM2l", "hh_2bM2l_resolvedHbb", "hh_2bM2l_resolvedHbb_nonvbf", "hh_2bM2l_nonvbf",
@@ -159,8 +160,8 @@ if mode == "default" and len(central_or_shifts) <= 1:
     "hh_1bM1bL1e1mu", "hh_1bM1bL1e1mu_resolvedHbb", "hh_1bM1bL1e1mu_resolvedHbb_nonvbf", "hh_1bM1bL1e1mu_nonvbf",
     "hh_1bM1e1mu", "hh_1bM1e1mu_resolvedHbb", "hh_1bM1e1mu_resolvedHbb_nonvbf", "hh_1bM1e1mu_nonvbf"
   ]
-else:
-  evtCategories = []
+##else:
+##  evtCategories = []
 
 if __name__ == '__main__':
   logging.basicConfig(
