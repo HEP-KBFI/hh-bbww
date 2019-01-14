@@ -191,7 +191,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.is_sbatch = False
     is_makefile_bak = self.is_makefile
     self.is_makefile = True
-    self.addToMakefile_hadd_stage1_5(lines_makefile)
+    self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
     self.is_sbatch = is_sbatch_bak
     self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
@@ -685,7 +685,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     ##self.is_sbatch = False
     ##is_makefile_bak = self.is_makefile
     ##self.is_makefile = True
-    self.addToMakefile_hadd_stage2(lines_makefile)
+    self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
     ##self.is_sbatch = is_sbatch_bak
     ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
