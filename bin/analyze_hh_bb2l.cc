@@ -1479,7 +1479,8 @@ int main(int argc, char* argv[])
     TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
     const bool PUSample = true;
     const int ievent = eventInfo.event;
-    const int iterations = 100000;
+    //const int iterations = 100000;
+    const int iterations = 20000;
     const int bjetrescaleAlgo = 2;
     const int metcorrection = 5;
     const bool weightfromonshellnupt_func = false;
