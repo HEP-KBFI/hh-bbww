@@ -48,8 +48,10 @@ lep_mva_wp        = args.lep_mva_wp
 
 # Use the arguments
 central_or_shifts = []
+
 for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
+    print 'central_or_shift = ', central_or_shift
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 
@@ -168,11 +170,11 @@ else:
   raise ValueError("Invalid era: %s" % era)
 
 if era == "2016":
-  #hadTau_mva_wp_veto  = "dR03mvaTight"
-  hadTau_mva_wp  = "dR03mvaTight"
+  hadTau_mva_wp_veto  = "dR03mvaTight"
+  #hadTau_mva_wp  = "dR03mvaTight"
 elif era == "2017":
-  #hadTau_mva_wp_veto  = "dR03mvaMedium"
-  hadTau_mva_wp  = "dR03mvaMedium"
+  hadTau_mva_wp_veto  = "dR03mvaMedium"
+  #hadTau_mva_wp  = "dR03mvaMedium"
 elif era == "2018":
   raise ValueError("Implement me!")
 else:

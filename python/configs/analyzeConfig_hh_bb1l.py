@@ -143,7 +143,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.hlt_filter = hlt_filter
 
     self.categories = []
-    for type_bb_and_leptons in [
+    '''for type_bb_and_leptons in [
       "bb1l",    "2bM1l",    "1bM1bL1l",  "1bM1l",
       "bb1e",    "2bM1e",    "1bM1bL1e",  "1bM1e",
       "bb1mu",   "2bM1mu",   "1bM1bL1mu", "1bM1mu" ]:
@@ -152,7 +152,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           if (type_Hbb == "" and type_Wjj != "") or (type_Hbb != "" and type_Wjj == ""):
             continue
           for type_vbf in [ "", "_vbf", "_nonvbf" ]:
-            self.categories.append("hh_%s%s%s%s" % (type_bb_and_leptons, type_Hbb, type_Wjj, type_vbf))
+            self.categories.append("hh_%s%s%s%s" % (type_bb_and_leptons, type_Hbb, type_Wjj, type_vbf))'''
     self.category_inclusive = "hh_bb1l"
     if not self.category_inclusive in self.categories:
       self.categories.append(self.category_inclusive)
@@ -429,7 +429,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
           if self.isBDTtraining:
             continue
-
           # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
           if not is_mc:
             key_hadd_stage1 = getKey(process_name, lepton_selection_and_frWeight)
@@ -572,7 +571,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           'histogramToFit' : histogramToFit
         }
         self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
-
         # add shape templates for the following systematic uncertainties:
         #  - 'CMS_ttHl_Clos_norm_e'
         #  - 'CMS_ttHl_Clos_shape_e'
