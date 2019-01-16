@@ -114,7 +114,7 @@ const double higgsBosonMass = 125.;
 enum { kHbb_undefined, kHbb_resolved, kHbb_boosted };
 enum { kWjj_undefined, kWjj_resolved, kWjj_boosted_lowPurity, kWjj_boosted_highPurity };
 enum { kVBF_undefined, kVBF_nottagged, kVBF_tagged };
-/*
+
 struct categoryEntryType
 {
   categoryEntryType(int numElectrons, int numMuons, int numBJets_medium, int numBJets_loose, int type_Hbb, int type_Wjj, int type_vbf)
@@ -151,7 +151,7 @@ struct categoryEntryType
   int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
   int type_Wjj_; // 0 = either resolved or boosted (any purity); 1 = resolved; 2 = boosted, low purity; 3 = boosted, high purity
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
-  };*/
+  };
 
 Particle::LorentzVector comp_metP4_B2G_18_008(const Particle::LorentzVector& visP4, double metPx, double metPy, double mH)
 {
@@ -667,7 +667,7 @@ int main(int argc, char* argv[])
     WeightHistManager* weights_;
   };
   std::map<int, selHistManagerType*> selHistManagers;
-  /*std::vector<categoryEntryType> categories_evt;
+  std::vector<categoryEntryType> categories_evt;
   for ( int type_Hbb = kHbb_undefined; type_Hbb <= kHbb_boosted; ++type_Hbb ) {
     for ( int type_Wjj = kWjj_undefined; type_Wjj <= kWjj_boosted_highPurity; ++type_Wjj ) {
       if ( type_Hbb == kHbb_undefined && type_Wjj != kWjj_undefined ) continue;
@@ -689,7 +689,7 @@ int main(int argc, char* argv[])
 	categories_evt.push_back(categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf)); // hh_1bM1mu     
       }
     }
-    }*/
+  }
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
         leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
 
@@ -752,7 +752,7 @@ int main(int argc, char* argv[])
         selHistManager->genEvtHistManager_afterCuts_->bookHistograms(fs, eventWeightManager);
       }
     }
-    /*    for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
+    for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
 	  category != categories_evt.end(); ++category ) {
       TString histogramDir_category = histogramDir.data();
       histogramDir_category.ReplaceAll("bb1l", category->name_.data());
@@ -764,7 +764,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/lheInfo", histogramDir_category.Data()), central_or_shift));
 	selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->bookHistograms(fs);
       }
-      }*/
+    }
     edm::ParameterSet cfg_EvtYieldHistManager_sel = makeHistManager_cfg(process_and_genMatch, 
       Form("%s/sel/evtYield", histogramDir.data()), central_or_shift);
     cfg_EvtYieldHistManager_sel.addParameter<edm::ParameterSet>("runPeriods", cfg_EvtYieldHistManager);
@@ -1790,7 +1790,7 @@ int main(int argc, char* argv[])
       }
     }
     int type_vbf     = ( isVBF                       ) ?  kVBF_tagged : kVBF_nottagged;
-    /*    for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
+    for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
 	  category != categories_evt.end(); ++category ) {
       //std::cout << "checking category = '" << category->name_ << "':" << std::endl;
       if ( (category->numElectrons_    ==             -1 || numElectrons    == category->numElectrons_)    &&
@@ -1823,7 +1823,7 @@ int main(int argc, char* argv[])
 	  selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->fillHistograms(*lheInfoReader, evtWeight);
 	}
       }
-      }*/
+      }
 
     if ( selEventsFile ) {
       (*selEventsFile) << eventInfo.run << ':' << eventInfo.lumi << ':' << eventInfo.event << '\n';
