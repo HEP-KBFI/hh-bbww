@@ -36,15 +36,17 @@ process.analyze_hh_bb1l = cms.PSet(
     lep_mva_cut = cms.double(1.),
     apply_leptonGenMatching = cms.bool(True),
 
-    apply_hadTau_veto = cms.bool(False),
-    hadTau_mva_wp_veto = cms.string(''),
-
+    apply_hadTauVeto = cms.bool(False),
+    hadTauSelection_veto = cms.string(''),
+    
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
         histogramName_e = cms.string(""),
         histogramName_mu = cms.string("")
     ),
+
+    evtCategories = cms.vstring(), # CV: "inclusive" event category is added automatically
 
     isMC = cms.bool(True),
     central_or_shift = cms.string(''),

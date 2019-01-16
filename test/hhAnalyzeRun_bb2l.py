@@ -139,6 +139,30 @@ elif era == "2018":
 else:
   raise ValueError("Invalid era: %s" % era)
 
+evtCategories = None
+##if mode == "default" and len(central_or_shifts) <= 1:
+if True != False:
+  evtCategories = [
+    "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_resolvedHbb_vbf", "hh_bb2l_resolvedHbb_nonvbf", "hh_bb2l_boostedHbb", "hh_bb2l_vbf", "hh_bb2l_nonvbf",
+    "hh_2bM2l", "hh_2bM2l_resolvedHbb", "hh_2bM2l_resolvedHbb_nonvbf", "hh_2bM2l_nonvbf",
+    "hh_1bM1bL2l", "hh_1bM1bL2l_resolvedHbb", "hh_1bM1bL2l_resolvedHbb_nonvbf", "hh_1bM1bL2l_nonvbf",
+    "hh_1bM2l", "hh_1bM2l_resolvedHbb", "hh_1bM2l_resolvedHbb_nonvbf", "hh_1bM2l_nonvbf",
+    "hh_bb2e", "hh_bb2e_resolvedHbb", "hh_bb2e_resolvedHbb_vbf", "hh_bb2e_resolvedHbb_nonvbf", "hh_bb2e_boostedHbb", "hh_bb2e_vbf", "hh_bb2e_nonvbf",
+    "hh_2bM2e", "hh_2bM2e_resolvedHbb", "hh_2bM2e_resolvedHbb_nonvbf", "hh_2bM2e_nonvbf",
+    "hh_1bM1bL2e", "hh_1bM1bL2e_resolvedHbb", "hh_1bM1bL2e_resolvedHbb_nonvbf", "hh_1bM1bL2e_nonvbf",
+    "hh_1bM2e", "hh_1bM2e_resolvedHbb", "hh_1bM2e_resolvedHbb_nonvbf", "hh_1bM2e_nonvbf",
+    "hh_bb2mu", "hh_bb2mu_resolvedHbb", "hh_bb2mu_resolvedHbb_vbf", "hh_bb2mu_resolvedHbb_nonvbf", "hh_bb2mu_boostedHbb", "hh_bb2mu_vbf", "hh_bb2mu_nonvbf",
+    "hh_2bM2mu", "hh_2bM2mu_resolvedHbb", "hh_2bM2mu_resolvedHbb_nonvbf", "hh_2bM2mu_nonvbf",
+    "hh_1bM1bL2mu", "hh_1bM1bL2mu_resolvedHbb", "hh_1bM1bL2mu_resolvedHbb_nonvbf", "hh_1bM1bL2mu_nonvbf",
+    "hh_1bM2mu", "hh_1bM2mu_resolvedHbb", "hh_1bM2mu_resolvedHbb_nonvbf", "hh_1bM2mu_nonvbf",
+    "hh_bb1e1mu", "hh_bb1e1mu_resolvedHbb", "hh_bb1e1mu_resolvedHbb_vbf", "hh_bb1e1mu_resolvedHbb_nonvbf", "hh_bb1e1mu_boostedHbb", "hh_bb1e1mu_vbf", "hh_bb1e1mu_nonvbf",
+    "hh_2bM1e1mu", "hh_2bM1e1mu_resolvedHbb", "hh_2bM1e1mu_resolvedHbb_nonvbf", "hh_2bM1e1mu_nonvbf",
+    "hh_1bM1bL1e1mu", "hh_1bM1bL1e1mu_resolvedHbb", "hh_1bM1bL1e1mu_resolvedHbb_nonvbf", "hh_1bM1bL1e1mu_nonvbf",
+    "hh_1bM1e1mu", "hh_1bM1e1mu_resolvedHbb", "hh_1bM1e1mu_resolvedHbb_nonvbf", "hh_1bM1e1mu_nonvbf"
+  ]
+##else:
+##  evtCategories = []
+
 if __name__ == '__main__':
   logging.basicConfig(
     stream = sys.stdout,
@@ -166,6 +190,7 @@ if __name__ == '__main__':
     lepton_charge_selections              = [ "OS", "SS" ],
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    evtCategories                         = evtCategories,
     max_files_per_job                     = files_per_job,
     era                                   = era,
     use_lumi                              = True,

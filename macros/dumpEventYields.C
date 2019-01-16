@@ -73,9 +73,9 @@ void dumpEventYields()
 
   typedef std::vector<std::string> vstring;
   vstring channels;
-  //channels.push_back("hh_bb1l");
+  channels.push_back("hh_bb1l");
   //channels.push_back("hh_bb2l");
-  channels.push_back("hh_bb1l1tau");
+  //channels.push_back("hh_bb1l1tau");
 
   std::map<std::string, std::string> inputFilePaths; // key = channel
   inputFilePaths["hh_bb1l"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Nov01/histograms/hh_bb1l/";
@@ -83,27 +83,29 @@ void dumpEventYields()
   inputFilePaths["hh_bb1l1tau"] = "/hdfs/local/veelken/hhAnalysis/2017/2018Nov12/histograms/hh_bb1l1tau/";
 
   std::map<std::string, std::string> inputFileNames; // key = channel
-  //inputFileNames["hh_bb1l"] = "histograms_harvested_stage2_hh_bb1l_Tight.root";
-  //inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
+  inputFileNames["hh_bb1l"] = "histograms_harvested_stage2_hh_bb1l_Tight.root";
+  inputFileNames["hh_bb2l"] = "histograms_harvested_stage2_hh_bb2l_OS_Tight.root";
   inputFileNames["hh_bb1l1tau"] = "histograms_harvested_stage2_hh_bb1l1tau_OS_Tight.root";
 
   std::map<std::string, vstring> categories; // key = channel
   categories["hh_bb1l"].push_back("hh_bb1l_Tight");
-  categories["hh_bb1l"].push_back("hh_bb1e_Tight");
-  categories["hh_bb1l"].push_back("hh_bb1mu_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1e_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1mu_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_Tight");
-  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_vbf_Tight");
-  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_nonvbf_Tight");
-  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_highPurity_Tight");
-  categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_lowPurity_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_vbf_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_resolvedWjj_nonvbf_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_highPurity_Tight");
+  //categories["hh_bb1l"].push_back("hh_bb1l_resolvedHbb_boostedWjj_lowPurity_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_boostedHbb_resolvedWjj_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_boostedHbb_boostedWjj_highPurity_Tight");
   categories["hh_bb1l"].push_back("hh_bb1l_boostedHbb_boostedWjj_lowPurity_Tight");
   //categories["hh_bb1l"].push_back("hh_bb1l_vbf");
   categories["hh_bb2l"].push_back("hh_bb2l_OS_Tight");
-  categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_vbf_OS_Tight");
-  categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_nonvbf_OS_Tight");
+  //categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_vbf_OS_Tight");
+  //categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_nonvbf_OS_Tight");
+  categories["hh_bb2l"].push_back("hh_bb2l_resolvedHbb_OS_Tight");
   categories["hh_bb2l"].push_back("hh_bb2l_boostedHbb_OS_Tight");
+/*
   categories["hh_bb2l"].push_back("hh_bb2e_OS_Tight");
   categories["hh_bb2l"].push_back("hh_bb2e_resolvedHbb_vbf_OS_Tight");
   categories["hh_bb2l"].push_back("hh_bb2e_resolvedHbb_nonvbf_OS_Tight");
@@ -116,6 +118,7 @@ void dumpEventYields()
   categories["hh_bb2l"].push_back("hh_bb2mu_resolvedHbb_vbf_OS_Tight");
   categories["hh_bb2l"].push_back("hh_bb2mu_resolvedHbb_nonvbf_OS_Tight");
   categories["hh_bb2l"].push_back("hh_bb2mu_boostedHbb_OS_Tight");
+ */
 /*  
   categories["hh_bb2l"].push_back("hh_2l_OS");
   categories["hh_bb2l"].push_back("hh_2l_vbf_OS");

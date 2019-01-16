@@ -6,7 +6,49 @@
 
 EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
-{}
+{
+  central_or_shiftOptions_["numElectrons"] = { "central" };
+  central_or_shiftOptions_["numMuons"] = { "central" };
+  central_or_shiftOptions_["numJets"] = { "central" };
+  central_or_shiftOptions_["numBJets_loose"] = { "central" };
+  central_or_shiftOptions_["numBJets_medium"] = { "central" };
+  central_or_shiftOptions_["HT"] = { "central" };
+  central_or_shiftOptions_["STMET"] = { "central" };
+  central_or_shiftOptions_["m_Hbb"] = { "central" };
+  central_or_shiftOptions_["dR_Hbb"] = { "central" };
+  central_or_shiftOptions_["dPhi_Hbb"] = { "central" };
+  central_or_shiftOptions_["pT_Hbb"] = { "central" };
+  central_or_shiftOptions_["m_ll"] = { "central" };
+  central_or_shiftOptions_["dR_ll"] = { "central" };
+  central_or_shiftOptions_["dPhi_ll"] = { "central" };
+  central_or_shiftOptions_["pT_ll"] = { "central" };
+  central_or_shiftOptions_["m_Hww"] = { "central" };
+  central_or_shiftOptions_["pT_Hww"] = { "central" };
+  central_or_shiftOptions_["Smin_Hww"] = { "central" };
+  central_or_shiftOptions_["m_HHvis"] = { "*" };
+  central_or_shiftOptions_["m_HH"] = { "central" };
+  central_or_shiftOptions_["m_HH_hme"] = { "central" }; // CV: to be replaced by "*" once HME is implemented !!
+  central_or_shiftOptions_["dR_HH"] = { "central" };
+  central_or_shiftOptions_["dPhi_HH"] = { "central" };
+  central_or_shiftOptions_["pT_HH"] = { "central" };
+  central_or_shiftOptions_["Smin_HH"] = { "central" };
+  central_or_shiftOptions_["mT2_W"] = { "central" };
+  central_or_shiftOptions_["mT2_W_step"] = { "central" };
+  central_or_shiftOptions_["mT2_top_2particle"] = { "central" };
+  central_or_shiftOptions_["mT2_top_2particle_step"] = { "central" };
+  central_or_shiftOptions_["mT2_top_3particle"] = { "central" };
+  central_or_shiftOptions_["mT2_top_3particle_step"] = { "central" };
+  central_or_shiftOptions_["logHiggsness"] = { "central" };
+  central_or_shiftOptions_["logTopness"] = { "central" };
+  central_or_shiftOptions_["logTopness_vs_logHiggsness"] = { "central" };
+  central_or_shiftOptions_["vbf_jet1_pt"] = { "central" };
+  central_or_shiftOptions_["vbf_jet1_eta"] = { "central" };
+  central_or_shiftOptions_["vbf_jet2_pt"] = { "central" };
+  central_or_shiftOptions_["vbf_jet2_eta"] = { "central" };
+  central_or_shiftOptions_["vbf_m_jj"] = { "central" };
+  central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
+  central_or_shiftOptions_["EventCounter"] = { "*" };
+}
 
 const TH1 *
 EvtHistManager_hh_bb2l::getHistogram_EventCounter() const
@@ -57,7 +99,7 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
 
   histogram_logHiggsness_           = book1D(dir, "logHiggsness",           "logHiggsness",            60, -15., +15.);  
   histogram_logTopness_             = book1D(dir, "logTopness",             "logTopness",              60, -15., +15.);  
-  histogram_logTopness_vs_logHiggsness_ = book2D(dir, "logTopness_vs_logHiggsness", "logTopness_vs_logHiggsness", 60, -15., +15., 60, -15., +15.);
+  //histogram_logTopness_vs_logHiggsness_ = book2D(dir, "logTopness_vs_logHiggsness", "logTopness_vs_logHiggsness", 60, -15., +15., 60, -15., +15.);
 
   histogram_vbf_jet1_pt_            = book1D(dir, "vbf_jet1_pt",            "vbf_jet1_pt",             40,  0.,  200.);  
   histogram_vbf_jet1_eta_           = book1D(dir, "vbf_jet1_eta",           "vbf_jet1_eta",           100, -5.0,  +5.0);
@@ -138,7 +180,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_logHiggsness_,           logHiggsness,           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_logTopness_,             logTopness,             evtWeight, evtWeightErr);
 
-  fillWithOverFlow2d(histogram_logTopness_vs_logHiggsness_, logHiggsness, logTopness, evtWeight, evtWeightErr);
+  //fillWithOverFlow2d(histogram_logTopness_vs_logHiggsness_, logHiggsness, logTopness, evtWeight, evtWeightErr);
 
   if ( vbf_jet1_pt > 0. ) {
     fillWithOverFlow(histogram_vbf_jet1_pt_,          vbf_jet1_pt,            evtWeight, evtWeightErr);
