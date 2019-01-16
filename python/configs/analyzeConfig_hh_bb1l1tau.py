@@ -199,7 +199,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
   def addToMakefile_backgrounds_from_data(self, lines_makefile):
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds", self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
     self.addToMakefile_addBackgrounds(lines_makefile, "sbatch_addBackgrounds_sum", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
-    self.addToMakefile_hadd_stage1_5(lines_makefile)
+    self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
     self.addToMakefile_addFakes(lines_makefile)
 
   def create(self):
@@ -672,7 +672,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
     self.addToMakefile_analyze(lines_makefile)
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_backgrounds_from_data(lines_makefile)
-    self.addToMakefile_hadd_stage2(lines_makefile)
+    self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)

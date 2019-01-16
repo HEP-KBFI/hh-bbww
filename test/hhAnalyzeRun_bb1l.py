@@ -48,8 +48,10 @@ lep_mva_wp        = args.lep_mva_wp
 
 # Use the arguments
 central_or_shifts = []
+
 for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
+    print 'central_or_shift = ', central_or_shift
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 
@@ -58,21 +60,105 @@ if mode == "default":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016 import samples_2016 as samples
   elif era == "2017":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017 as samples
+    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
   elif era == "2018":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018 as samples
   else:
     raise ValueError("Invalid era: %s" % era)
+
+  # [*] use binned DY samples in BDT training                                                                                                                                                               
+  dy_samples_inclusive = []
+  dy_samples_binned = []
+  for sample_set in samples_to_stitch:
+    for sample_key, sample_value in sample_set.items():
+      if sample_key == 'inclusive':
+        dy_inclusive_samples = list(filter(lambda sample_name: sample_name.startswith('DY'), sample_value['samples']))
+        dy_samples_inclusive.extend(dy_inclusive_samples)
+      else:
+        for sample_binned_value in sample_value:
+          dy_binned_samples = list(
+            filter(lambda sample_name: sample_name.startswith('DY'), sample_binned_value['samples']))
+          dy_samples_binned.extend(dy_binned_samples)
+  wjets_samples_inclusive = []
+  wjets_samples_binned = []
+  for sample_set in samples_to_stitch:
+    for sample_key, sample_value in sample_set.items():
+      if sample_key == 'inclusive':
+        wjets_inclusive_samples = list(filter(lambda sample_name: sample_name.startswith('W'), sample_value['samples']))
+        wjets_samples_inclusive.extend(wjets_inclusive_samples)
+      else:
+        for sample_binned_value in sample_value:
+          wjets_binned_samples = list(
+            filter(lambda sample_name: sample_name.startswith('W'), sample_binned_value['samples']))
+          wjets_samples_binned.extend(wjets_binned_samples)
+
+  for sample_name, sample_info in samples.items():
+    if sample_name == 'sum_events': continue
+    if sample_info["process_name_specific"] in [
+      "TTTo2L2Nu_PSweights", "TTToSemiLeptonic_PSweights", "TTToHadronic_PSweights",
+    ]:
+      # Use non-PSweights samples for the analysis to estimate the irreducible ttbar background                                                                                                             
+      sample_info["use_it"] = False
+    elif sample_info["process_name_specific"] in dy_samples_binned or sample_info["process_name_specific"] in wjets_samples_binned:
+      sample_info["use_it"] = False  # [*]                                                                                                                                                                  
+    elif sample_info["process_name_specific"] in dy_samples_inclusive or sample_info["process_name_specific"] in wjets_samples_inclusive:
+      sample_info["use_it"] = True  # [*]                  
+
 elif mode == "forBDTtraining":
   if era == "2016":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
   elif era == "2017":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
+    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
   elif era == "2018":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
   else:
     raise ValueError("Invalid era: %s" % era)
+
+   # [*] use binned DY samples in BDT training                                                                                                                                                               
+  dy_samples_inclusive = []
+  dy_samples_binned = []
+  for sample_set in samples_to_stitch:
+    for sample_key, sample_value in sample_set.items():
+      if sample_key == 'inclusive':
+        dy_inclusive_samples = list(filter(lambda sample_name: sample_name.startswith('DY'), sample_value['samples']))
+        dy_samples_inclusive.extend(dy_inclusive_samples)
+      else:
+        for sample_binned_value in sample_value:
+          dy_binned_samples = list(
+            filter(lambda sample_name: sample_name.startswith('DY'), sample_binned_value['samples'])
+          )
+          dy_samples_binned.extend(dy_binned_samples)
+
+  wjets_samples_inclusive = []
+  wjets_samples_binned = []
+  for sample_set in samples_to_stitch:
+    for sample_key, sample_value in sample_set.items():
+      if sample_key == 'inclusive':
+        wjets_inclusive_samples = list(filter(lambda sample_name: sample_name.startswith('W'), sample_value['samples']))
+        wjets_samples_inclusive.extend(wjets_inclusive_samples)
+      else:
+        for sample_binned_value in sample_value:
+          wjets_binned_samples = list(
+            filter(lambda sample_name: sample_name.startswith('W'), sample_binned_value['samples'])
+          )
+          wjets_samples_binned.extend(wjets_binned_samples)
+
+  for sample_name, sample_info in samples.items():
+    if sample_name == 'sum_events': continue
+    if sample_info["process_name_specific"] in [
+      "TTTo2L2Nu", "TTToSemiLeptonic", "TTToHadronic",
+    ]:
+        # Use PSweights samples only for BDT training                                                                                                                                                         
+      sample_info["use_it"] = False
+    elif sample_info["process_name_specific"] in dy_samples_binned or sample_info["process_name_specific"] in wjets_samples_binned:
+      sample_info["use_it"] = True  # [*]
+    elif sample_info["process_name_specific"] in dy_samples_inclusive or sample_info["process_name_specific"] in wjets_samples_inclusive:
+      sample_info["use_it"] = False  # [*]        
 else:
   raise ValueError("Internal logic error")
+
+
 
 if era == "2016":
   from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2016 as lumi
@@ -84,9 +170,11 @@ else:
   raise ValueError("Invalid era: %s" % era)
 
 if era == "2016":
-  hadTau_mva_wp_veto = "dR03mvaTight"
+  hadTau_mva_wp_veto  = "dR03mvaTight"
+  #hadTau_mva_wp  = "dR03mvaTight"
 elif era == "2017":
-  hadTau_mva_wp_veto = "dR03mvaMedium"
+  hadTau_mva_wp_veto  = "dR03mvaMedium"
+  #hadTau_mva_wp  = "dR03mvaMedium"
 elif era == "2018":
   raise ValueError("Implement me!")
 else:
@@ -168,7 +256,10 @@ if __name__ == '__main__':
     histograms_to_fit                     = {
       "EventCounter"                      : {},
       "HT"                                : {},
-      "STMET"                             : {}
+      "STMET"                             : {},
+      "MVAOutput_350"                     : {},
+      "MVAOutput_400"                     : {},
+      "MVAOutput_750"                     : {}
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,

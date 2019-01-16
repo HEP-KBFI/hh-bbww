@@ -190,7 +190,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.is_sbatch = False
     is_makefile_bak = self.is_makefile
     self.is_makefile = True
-    self.addToMakefile_hadd_stage1_5(lines_makefile)
+    self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
     self.is_sbatch = is_sbatch_bak
     self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
@@ -441,7 +441,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
           if self.isBDTtraining:
             continue
-
           # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
           if not is_mc:
             for category in self.evtCategories:
@@ -586,7 +585,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           'histogramToFit' : histogramToFit
         }
         self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
-
         # add shape templates for the following systematic uncertainties:
         #  - 'CMS_ttHl_Clos_norm_e'
         #  - 'CMS_ttHl_Clos_shape_e'
@@ -676,7 +674,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     ##self.is_sbatch = False
     ##is_makefile_bak = self.is_makefile
     ##self.is_makefile = True
-    self.addToMakefile_hadd_stage2(lines_makefile)
+    self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
     ##self.is_sbatch = is_sbatch_bak
     ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------

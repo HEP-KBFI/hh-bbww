@@ -87,6 +87,8 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_bbWW_Wjj.h" // RecoJetSelectorAK8_bbWW_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle::comp_mT
+#include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
+#include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager 
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
@@ -150,7 +152,7 @@ struct categoryEntryType
   int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
   int type_Wjj_; // 0 = either resolved or boosted (any purity); 1 = resolved; 2 = boosted, low purity; 3 = boosted, high purity
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
-};
+  };
 
 void addCategory_conditionally(std::vector<categoryEntryType>& categories_evt, const categoryEntryType& category, const std::vector<std::string>& evtCategories)
 {
@@ -644,6 +646,14 @@ int main(int argc, char* argv[])
     }
   }
 
+  std::string xgbFileName_bb1l = "tthAnalysis/HiggsToTauTau/data/bb1l_HH_XGB_noTopness_evtLevelSUM_HH_bb1l_res_12Var.pkl";
+  std::vector<std::string> xgbInputVariables_bb1l =
+    {"met", "HT", "m_Hbb", "dR_Hbb", "dR_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_2particle", "mvaOutput_Hj_tagger", "gen_mHH"
+    };
+
+  XGBInterface mva_xgb_bb1l(xgbFileName_bb1l, xgbInputVariables_bb1l);
+  std::map<std::string, double> mvaInputs_XGB;
+
   struct selHistManagerType
   {
     ElectronHistManager* electrons_;
@@ -718,7 +728,6 @@ int main(int argc, char* argv[])
     std::string process_and_genMatch = process_string;
     if ( apply_leptonGenMatching ) process_and_genMatch += leptonGenMatch_definition->name_;
     int idxLepton = leptonGenMatch_definition->idx_;
-
     selHistManagerType* selHistManager = new selHistManagerType();
     selHistManager->electrons_ = new ElectronHistManager(makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/electrons", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
@@ -814,7 +823,7 @@ int main(int argc, char* argv[])
       "bjet1_pt", "bjet1_eta",
       "bjet2_pt", "bjet2_eta",
       "met", "mht", "met_LD", 
-      "HT", "STMET", 
+      "HT", "STMET",
       "m_Hbb", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
       "m_Wjj", "dR_Wjj", "dPhi_Wjj", "pT_Wjj", "tau21_Wjj",
       "dR_Hww", "dPhi_Hww", "pT_Hww", "Smin_Hww",
@@ -1410,7 +1419,7 @@ int main(int argc, char* argv[])
 	    minRank = rank;
 	  }
 	} 
-      }    
+      }
       if ( !selJet1_Wjj && selJetsAK4_Wjj.size() >= 1 ) selJet1_Wjj = selJetsAK4_Wjj[0];
       if ( !selJet2_Wjj && selJetsAK4_Wjj.size() >= 2 ) selJet2_Wjj = selJetsAK4_Wjj[1];
       if ( isDEBUG ) {
@@ -1723,6 +1732,24 @@ int main(int argc, char* argv[])
       vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
 
+    mvaInputs_XGB["met"] = metP4.pt();
+    mvaInputs_XGB["HT"] = HT;
+    mvaInputs_XGB["m_Hbb"] = m_Hbb;
+    mvaInputs_XGB["dR_Hbb"] = dR_Hbb;
+    mvaInputs_XGB["dR_Hww"] = dR_Hww;
+    mvaInputs_XGB["dR_b1lep"] = dR_b1lep;
+    mvaInputs_XGB["dR_b2lep"] = dR_b2lep;
+    mvaInputs_XGB["pT_HH"] = pT_HH;
+    mvaInputs_XGB["mT_W"] = mT_W;
+    mvaInputs_XGB["mT_top_2particle"] = mT_top_2particle;
+    mvaInputs_XGB["mvaOutput_Hj_tagger"] = mvaOutput_Hj_tagger;
+    mvaInputs_XGB["gen_mHH"] = 350;
+    double mvaoutput_bb1l350 = mva_xgb_bb1l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 400;
+    double mvaoutput_bb1l400 = mva_xgb_bb1l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 750;
+    double mvaoutput_bb1l750 = mva_xgb_bb1l(mvaInputs_XGB);
+
 //--- fill histograms with events passing final selection
     selHistManagerType* selHistManager = selHistManagers[idxSelLepton_genMatch];
     assert(selHistManager != 0);
@@ -1757,7 +1784,7 @@ int main(int argc, char* argv[])
       m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT_W, mT_top_2particle, mT_top_3particle,
       mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
       evtWeight);
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
@@ -1821,14 +1848,14 @@ int main(int argc, char* argv[])
 	    m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT_W, mT_top_2particle, mT_top_3particle,
 	    mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
 	    evtWeight);
 	}
 	if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
 	  selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->fillHistograms(*lheInfoReader, evtWeight);
 	}
       }
-    }
+      }
 
     if ( selEventsFile ) {
       (*selEventsFile) << eventInfo.run << ':' << eventInfo.lumi << ':' << eventInfo.event << '\n';

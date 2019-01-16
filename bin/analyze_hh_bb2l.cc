@@ -88,6 +88,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
+#include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
+#include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 
 #include <iostream> // std::cerr, std::fixed
 #include <iomanip> // std::setprecision(), std::setw()
@@ -96,6 +98,7 @@
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
 #include <fstream> // std::ofstream
 #include <assert.h> // assert
+#include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
@@ -478,6 +481,28 @@ int main(int argc, char* argv[])
       genEvtHistManager_beforeCuts->bookHistograms(fs, eventWeightManager);
     }
   }
+
+  std::string xmlFileName_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
+  std::string xgbFileName_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var.pkl";
+  std::string xgbFileNamenohiggnessnotopness_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var_nohiggnessnotopness.pkl";
+
+  std::vector<std::string> xgbInputVariables_bb2l = 
+    {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met", 
+     "max_lep_pt", "max_bjet_pt", "gen_mHH"
+  };
+
+  std::vector<std::string> xgbInputVariablesnohiggnessnotopness_bb2l =
+    {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met",
+     "max_lep_pt", "max_bjet_pt", "gen_mHH"
+    };
+
+  XGBInterface mva_xgb_bb2l(xgbFileName_bb2l, xgbInputVariables_bb2l);
+  XGBInterface mva_xgbnohiggnessnotopness_bb2l(xgbFileNamenohiggnessnotopness_bb2l, xgbInputVariablesnohiggnessnotopness_bb2l);
+  std::map<std::string, double> mvaInputs_XGB;
+  std::map<std::string, double> mvaInputsnohiggnessnotopness_XGB;
+  TMVAInterface * mva_xml_bb2l;
+  mva_xml_bb2l = new TMVAInterface(xmlFileName_bb2l, xgbInputVariables_bb2l);
+  mva_xml_bb2l->enableBDTTransform();
 
   struct selHistManagerType
   {
@@ -1540,6 +1565,67 @@ int main(int argc, char* argv[])
     }
     
 
+
+    mvaInputs_XGB["m_ll"] = m_ll;
+    mvaInputs_XGB["m_Hbb"] = m_Hbb;
+    mvaInputs_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
+    mvaInputs_XGB["m_Hww"] = m_Hww;
+    mvaInputs_XGB["logTopness_fixedChi2"] = logTopness_fixedChi2;
+    mvaInputs_XGB["logHiggsness_fixedChi2"] = logHiggsness_fixedChi2;
+    mvaInputs_XGB["mT2_top_3particle"] = mT2_top_3particle;
+    mvaInputs_XGB["pT_HH"] = pT_HH;
+    mvaInputs_XGB["dPhi_HH"] = dPhi_HH;
+    mvaInputs_XGB["min_dPhi_lepMEt"] = min_dPhi_lepMEt;
+    mvaInputs_XGB["max_dR_b_lep"] = std::max(dR_b1lep1,std::max(dR_b1lep2,std::max(dR_b2lep1,dR_b2lep2)));
+    mvaInputs_XGB["met"] =  metP4.pt();
+    mvaInputs_XGB["max_lep_pt"] = std::max(selLepton_lead->pt(),selLepton_sublead->pt());
+    mvaInputs_XGB["max_bjet_pt"] = std::max(selJetP4_Hbb_lead.pt(),selJetP4_Hbb_sublead.pt());
+    mvaInputs_XGB["gen_mHH"] = 300;
+    double mvaoutput_bb2l300 = mva_xgb_bb2l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 400;
+    double mvaoutput_bb2l400 = mva_xgb_bb2l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 750;
+    double mvaoutput_bb2l750 = mva_xgb_bb2l(mvaInputs_XGB);
+    /*    mvaInputs_XGB["m_ll"] = 117.5084;
+    mvaInputs_XGB["m_Hbb"] = 111.439705;
+    mvaInputs_XGB["nBJetMedium"] = 1;
+    mvaInputs_XGB["m_Hww"] = 172.971237;
+    mvaInputs_XGB["logTopness_fixedChi2"] = 0.128858;
+    mvaInputs_XGB["logHiggsness_fixedChi2"] = 2.700845;
+    mvaInputs_XGB["mT2_top_3particle"]= 93.844116;
+    mvaInputs_XGB["pT_HH"] = 61.046185;
+    mvaInputs_XGB["dPhi_HH"] = 2.411219;
+    mvaInputs_XGB["min_dPhi_lepMEt"] = 1.493288;
+    mvaInputs_XGB["max_dR_b_lep"] = 2.863791;
+    mvaInputs_XGB["met"] =  43.858006;
+    mvaInputs_XGB["max_lep_pt"] = 56.038994;
+    mvaInputs_XGB["max_bjet_pt"] = 82.440727;
+    mvaInputs_XGB["gen_mHH"] = 400;
+    double mvaoutput_bb2l300 = mva_xgb_bb2l(mvaInputs_XGB);
+    std::cout << "mva    ============== " << mvaoutput_bb2l300 << std::endl;
+    mvaoutput_bb2l300 = (*mva_xml_bb2l)(mvaInputs_XGB); //mva 0.813011(test),0.14326528(true)
+    std::cout << "mva    ============== " << mvaoutput_bb2l300 << std::endl;*/
+
+    mvaInputsnohiggnessnotopness_XGB["m_ll"] = m_ll;
+    mvaInputsnohiggnessnotopness_XGB["m_Hbb"] = m_Hbb;
+    mvaInputsnohiggnessnotopness_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
+    mvaInputsnohiggnessnotopness_XGB["m_Hww"] = m_Hww;
+    mvaInputsnohiggnessnotopness_XGB["mT2_top_3particle"] = mT2_top_3particle;
+    mvaInputsnohiggnessnotopness_XGB["pT_HH"] = pT_HH;
+    mvaInputsnohiggnessnotopness_XGB["dPhi_HH"] = dPhi_HH;
+    mvaInputsnohiggnessnotopness_XGB["min_dPhi_lepMEt"] = min_dPhi_lepMEt;
+    mvaInputsnohiggnessnotopness_XGB["max_dR_b_lep"] = std::max(dR_b1lep1,std::max(dR_b1lep2,std::max(dR_b2lep1,dR_b2lep2)));
+    mvaInputsnohiggnessnotopness_XGB["met"] =  metP4.pt();
+    mvaInputsnohiggnessnotopness_XGB["max_lep_pt"] = std::max(selLepton_lead->pt(),selLepton_sublead->pt());
+    mvaInputsnohiggnessnotopness_XGB["max_bjet_pt"] = std::max(selJetP4_Hbb_lead.pt(),selJetP4_Hbb_sublead.pt());
+    mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 300;
+    double mvaoutputnohiggnessnotopness_bb2l300 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);
+    mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 400;
+    double mvaoutputnohiggnessnotopness_bb2l400 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);
+    mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 750;
+    double mvaoutputnohiggnessnotopness_bb2l750 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);
+
+
 //--- fill histograms with events passing final selection
     selHistManagerType* selHistManager = selHistManagers[idxSelLepton_genMatch];
     assert(selHistManager != 0);
@@ -1583,7 +1669,8 @@ int main(int argc, char* argv[])
       m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
-      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
+      mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750,
       evtWeight);
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
@@ -1632,7 +1719,8 @@ int main(int argc, char* argv[])
 	    m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
 	    logHiggsness_publishedChi2, logTopness_publishedChi2,
-	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
+	    mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750,
 	    evtWeight);
 	}
 	if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
