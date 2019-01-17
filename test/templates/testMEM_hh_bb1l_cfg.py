@@ -23,23 +23,25 @@ process.testMEM_hh_bb1l = cms.PSet(
     histogramDir = cms.string(''),
     era = cms.string('2017'),
 
+    triggers_1e = cms.vstring(
+        'HLT_Ele32_WPTight_Gsf',
+        'HLT_Ele35_WPTight_Gsf'
+    ),
+    use_triggers_1e = cms.bool(True),
+    triggers_1mu = cms.vstring(
+        'HLT_IsoMu24',
+        'HLT_IsoMu27'
+    ),
+    use_triggers_1mu = cms.bool(True),
+
     triggers_1e = cms.vstring(),
     use_triggers_1e = cms.bool(True),
-    triggers_2e = cms.vstring(),
-    use_triggers_2e = cms.bool(True),
     triggers_1mu = cms.vstring(),
     use_triggers_1mu = cms.bool(True),
-    triggers_2mu = cms.vstring(),
-    use_triggers_2mu = cms.bool(True),
-    triggers_1e1mu = cms.vstring(),
-    use_triggers_1e1mu = cms.bool(True),
-
+    
     apply_offline_e_trigger_cuts_1e = cms.bool(True),
-    apply_offline_e_trigger_cuts_2e = cms.bool(True),
     apply_offline_e_trigger_cuts_1mu = cms.bool(True),
-    apply_offline_e_trigger_cuts_2mu = cms.bool(True),
-    apply_offline_e_trigger_cuts_1e1mu = cms.bool(True),
-
+    
     electronSelection = cms.string('Tight'),
     muonSelection = cms.string('Tight'),
     lep_mva_cut = cms.double(0.90),

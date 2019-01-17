@@ -9,7 +9,7 @@ process = cms.PSet()
 process.fwliteInput = cms.PSet(
     fileNames = cms.vstring(),
     maxEvents = cms.int32(-1),
-    outputEvery = cms.uint32(100000)
+    outputEvery = cms.uint32(1)
 )
 
 process.fwliteOutput = cms.PSet(
@@ -25,17 +25,33 @@ process.testMEM_hh_bb2l = cms.PSet(
     histogramDir = cms.string(''),
     era = cms.string('2017'),
 
-    triggers_1e = cms.vstring(),
+    triggers_1e = cms.vstring(
+        'HLT_Ele32_WPTight_Gsf',
+        'HLT_Ele35_WPTight_Gsf'
+    ),
     use_triggers_1e = cms.bool(True),
-    triggers_2e = cms.vstring(),
+    triggers_2e = cms.vstring(
+        'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL',
+        'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ'
+    ),
     use_triggers_2e = cms.bool(True),
-    triggers_1mu = cms.vstring(),
+    triggers_1mu = cms.vstring(
+        'HLT_IsoMu24',
+        'HLT_IsoMu27'
+    ),
     use_triggers_1mu = cms.bool(True),
-    triggers_2mu = cms.vstring(),
+    triggers_2mu = cms.vstring(
+        'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ',
+        'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8'
+    ),
     use_triggers_2mu = cms.bool(True),
-    triggers_1e1mu = cms.vstring(),
+    triggers_1e1mu = cms.vstring(
+        'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL',
+        'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ',
+        'HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ'
+    ),
     use_triggers_1e1mu = cms.bool(True),
-
+    
     apply_offline_e_trigger_cuts_1e = cms.bool(True),
     apply_offline_e_trigger_cuts_2e = cms.bool(True),
     apply_offline_e_trigger_cuts_1mu = cms.bool(True),
