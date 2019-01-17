@@ -219,7 +219,7 @@ int main(int argc, char* argv[])
   bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
   bool hasLHE = cfg_testMEM.getParameter<bool>("hasLHE");
   std::string central_or_shift = cfg_testMEM.getParameter<std::string>("central_or_shift");
-  double lumiScale = ( process_string != "data_obs" ) ? cfg_testMEM.getParameter<double>("lumiScale") : 1.;
+  double lumiScale = 1.;
   bool apply_genWeight = cfg_testMEM.getParameter<bool>("apply_genWeight");
   bool apply_hlt_filter = cfg_testMEM.getParameter<bool>("apply_hlt_filter");
   bool apply_met_filters = cfg_testMEM.getParameter<bool>("apply_met_filters");
@@ -406,9 +406,9 @@ int main(int argc, char* argv[])
     lheInfoHistManager_beforeCuts->bookHistograms(fs);
   }
 
-  std::string xmlFileName_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
-  std::string xgbFileName_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var.pkl";
-  std::string xgbFileNamenohiggnessnotopness_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var_nohiggnessnotopness.pkl";
+  std::string xmlFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
+  std::string xgbFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var.pkl";
+  std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var_nohiggnessnotopness.pkl";
 
   std::vector<std::string> xgbInputVariables_bb2l = 
     {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met", 

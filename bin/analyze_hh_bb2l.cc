@@ -482,9 +482,9 @@ int main(int argc, char* argv[])
     }
   }
 
-  std::string xmlFileName_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
-  std::string xgbFileName_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var.pkl";
-  std::string xgbFileNamenohiggnessnotopness_bb2l = "tthAnalysis/HiggsToTauTau/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var_nohiggnessnotopness.pkl";
+  std::string xmlFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
+  std::string xgbFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var.pkl";
+  std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var_nohiggnessnotopness.pkl";
 
   std::vector<std::string> xgbInputVariables_bb2l = 
     {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met", 

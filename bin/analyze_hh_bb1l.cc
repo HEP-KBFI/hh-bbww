@@ -646,7 +646,7 @@ int main(int argc, char* argv[])
     }
   }
 
-  std::string xgbFileName_bb1l = "tthAnalysis/HiggsToTauTau/data/bb1l_HH_XGB_noTopness_evtLevelSUM_HH_bb1l_res_12Var.pkl";
+  std::string xgbFileName_bb1l = "hhAnalysis/bbww/data/bb1l_HH_XGB_noTopness_evtLevelSUM_HH_bb1l_res_12Var.pkl";
   std::vector<std::string> xgbInputVariables_bb1l =
     {"met", "HT", "m_Hbb", "dR_Hbb", "dR_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_2particle", "mvaOutput_Hj_tagger", "gen_mHH"
     };
