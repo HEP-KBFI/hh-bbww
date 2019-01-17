@@ -1356,7 +1356,7 @@ int main(int argc, char* argv[])
     const bool applyOnshellWmassConstraint_signal = false;
 
     clock.Start("memAlgo");
-    const int verbosity = 0;
+    const int verbosity = 1;
     MEMbbwwAlgoDilepton memAlgo(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), verbosity);
     memAlgo.applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
     memAlgo.setIntMode(MEMbbwwAlgoDilepton::kVAMP);
