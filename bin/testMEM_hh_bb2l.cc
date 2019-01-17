@@ -509,6 +509,9 @@ int main(int argc, char* argv[])
   selHistManager->lheInfoHistManager_afterCuts_ = new LHEInfoHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/lheInfo", histogramDir.data()), era_string, central_or_shift));
   selHistManager->lheInfoHistManager_afterCuts_->bookHistograms(fs);
+  selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_string,
+    Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
+  selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "data_to_MC_correction" });
 
   int analyzedEntries = 0;
   int selectedEntries = 0;
@@ -550,7 +553,9 @@ int main(int argc, char* argv[])
     ++analyzedEntries;
     histogram_analyzedEntries->Fill(0.);
 
-    std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
+    if ( isDEBUG ) {
+      std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
+    }
     
     if ( run_lumi_eventSelector && !(*run_lumi_eventSelector)(eventInfo) ) continue;
     cutFlowTable.update("run:ls:event selection");
@@ -593,17 +598,25 @@ int main(int argc, char* argv[])
     std::vector<GenParticle> genParticlesFromHiggs;
     if ( isSignal ) {
       genParticlesFromHiggs = genParticleFromHiggsReader->read();
+      if ( isDEBUG ) {
+	printCollection("genParticlesFromHiggs", genParticlesFromHiggs);
+      }
       if ( !(genParticlesFromHiggs.size() == 4) ) {
 	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
 	std::cout << "#genParticlesFromHiggs = " << genParticlesFromHiggs.size() << std::endl;
 	continue;
       }
     } 
-    
+
     std::vector<GenLepton> genLeptonsFromTop;
     std::vector<GenParticle> genNeutrinosFromTop;
     std::vector<GenParticle> genBQuarksFromTop;
     if ( !isSignal ) {
+      if ( isDEBUG ) {
+	printCollection("genLeptonsFromTop", genLeptonsFromTop);
+	printCollection("genNeutrinosFromTop", genNeutrinosFromTop);
+	printCollection("genBQuarksFromTop", genBQuarksFromTop);	
+      }
       if ( !(genLeptonsFromTop.size() == 2 && genNeutrinosFromTop.size() == 2 && genBQuarksFromTop.size() == 2) ) {
 	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
 	std::cout << "#genLeptonsFromTop = " << genLeptonsFromTop.size() << std::endl;
@@ -612,7 +625,7 @@ int main(int argc, char* argv[])
 	continue;
       }
     }
-    
+
     double evtWeight_inclusive = 1.;
     if ( isMC ) {
       if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
@@ -652,7 +665,7 @@ int main(int argc, char* argv[])
     if ( !isMC && !isDEBUG ) {
       if ( selTrigger_1e && (isTriggered_2e || isTriggered_1mu || isTriggered_2mu || isTriggered_1e1mu) ) {
         if ( run_lumi_eventSelector ) {
-      std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
+	  std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
           std::cout << " (selTrigger_1e = " << selTrigger_1e
                     << ", isTriggered_2e = " << isTriggered_2e
                     << ", isTriggered_1mu = " << isTriggered_1mu
@@ -663,7 +676,7 @@ int main(int argc, char* argv[])
       }
       if ( selTrigger_2e && (isTriggered_2mu || isTriggered_1e1mu) ) {
         if ( run_lumi_eventSelector ) {
-      std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
+	  std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
           std::cout << " (selTrigger_2e = " << selTrigger_2e
                     << ", isTriggered_2mu = " << isTriggered_2mu
                     << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
@@ -672,7 +685,7 @@ int main(int argc, char* argv[])
       }
       if ( selTrigger_1mu && (isTriggered_2e || isTriggered_2mu || isTriggered_1e1mu) ) {
         if ( run_lumi_eventSelector ) {
-      std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
+	  std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
           std::cout << " (selTrigger_1mu = " << selTrigger_1mu
                     << ", isTriggered_2e = " << isTriggered_2e
                     << ", isTriggered_2mu = " << isTriggered_2mu
@@ -682,7 +695,7 @@ int main(int argc, char* argv[])
       }
       if ( selTrigger_1e1mu && isTriggered_2mu ) {
         if ( run_lumi_eventSelector ) {
-      std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
+	  std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
           std::cout << " (selTrigger_1e1mu = " << selTrigger_1e1mu
                     << ", isTriggered_2mu = " << isTriggered_2mu << ")" << std::endl;
         }
@@ -827,9 +840,11 @@ int main(int argc, char* argv[])
       }
     }
     if ( !(genLeptonsForMatching.size() == 2 && genBJetsForMatching.size() == 2) ) {
-      std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
-      std::cout << "#genLeptonsForMatching = " << genLeptonsForMatching.size() << std::endl;
-      std::cout << "#genBJetsForMatching = " << genBJetsForMatching.size() << std::endl;
+      if ( run_lumi_eventSelector ) {
+	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
+	std::cout << "#genLeptonsForMatching = " << genLeptonsForMatching.size() << std::endl;
+	std::cout << "#genBJetsForMatching = " << genBJetsForMatching.size() << std::endl;
+      }
       continue;
     }
     muonGenMatcher.addGenLeptonMatch(preselMuons, genLeptonsForMatching, 0.2);
@@ -1285,11 +1300,13 @@ int main(int argc, char* argv[])
     // check that reconstructed leptons and b-jets are generator-level matched
     if ( genMatchingOption == 1 || genMatchingOption == 2 ) {
       if ( !(selLepton_lead->genLepton() && selLepton_sublead->genLepton() && selJet_Hbb_lead->genJet() && selJet_Hbb_sublead->genJet()) ) {
-	std::cout << "event " << eventInfo.str() << " FAILS generator-level matching." << std::endl;
-	std::cout << "selLepton_lead->genLepton = " << selLepton_lead->genLepton() << std::endl;
-	std::cout << "selLepton_sublead->genLepton = " << selLepton_sublead->genLepton() << std::endl;
-	std::cout << "selJet_Hbb_lead->genJet = " << selJet_Hbb_lead->genJet() << std::endl;
-	std::cout << "selJet_Hbb_sublead->genJet = " << selJet_Hbb_sublead->genJet() << std::endl;
+	if ( run_lumi_eventSelector ) {
+	  std::cout << "event " << eventInfo.str() << " FAILS generator-level matching." << std::endl;
+	  std::cout << "selLepton_lead->genLepton = " << selLepton_lead->genLepton() << std::endl;
+	  std::cout << "selLepton_sublead->genLepton = " << selLepton_sublead->genLepton() << std::endl;
+	  std::cout << "selJet_Hbb_lead->genJet = " << selJet_Hbb_lead->genJet() << std::endl;
+	  std::cout << "selJet_Hbb_sublead->genJet = " << selJet_Hbb_sublead->genJet() << std::endl;
+	}
 	continue;
       }
     }
@@ -1341,7 +1358,7 @@ int main(int argc, char* argv[])
       memLeptonMass_lead, selLepton_lead->charge()));
     memMeasuredParticles.push_back(mem::MeasuredParticle(memLeptonType_sublead, 
       memLeptonP4_sublead.pt(), memLeptonP4_sublead.eta(), memLeptonP4_sublead.phi(), 
-      memLeptonMass_sublead, selLepton_lead->charge()));
+      memLeptonMass_sublead, selLepton_sublead->charge()));
     memMeasuredParticles.push_back(mem::MeasuredParticle(mem::MeasuredParticle::kBJet,
       memBJetP4_lead.pt(), memBJetP4_lead.eta(), memBJetP4_lead.phi(), 
       mem::bottomQuarkMass));
@@ -1370,7 +1387,7 @@ int main(int argc, char* argv[])
     double memCpuTime = clock.GetCpuTime("memAlgo");
     std::cout << "MEM: likelihood ratio = " << memLikelihoodRatio << " +/- " << memLikelihoodRatioErr << " (CPU time = " << memCpuTime << ")" << std::endl;
     //---------------------------------------------------------------------------
-    
+
     mvaInputs_XGB["m_ll"] = m_ll;
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
