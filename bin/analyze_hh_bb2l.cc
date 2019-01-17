@@ -1669,7 +1669,9 @@ int main(int argc, char* argv[])
       m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
-      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+      -1., -1., -1., 
+      mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
       mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750,
       evtWeight);
     if ( isMC ) {
@@ -1719,7 +1721,9 @@ int main(int argc, char* argv[])
 	    m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
 	    logHiggsness_publishedChi2, logTopness_publishedChi2,
-	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+	    -1., -1., -1., 
+	    mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
 	    mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750,
 	    evtWeight);
 	}
