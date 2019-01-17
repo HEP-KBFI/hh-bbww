@@ -79,3 +79,29 @@ process.testMEM_hh_bb2l = cms.PSet(
 
     hasLHE = cms.bool(True)
 )
+
+process_value = "$PROCESS"
+genMatchingOption_value = $GENMATCHINGOPTION
+if process_value == "signal":
+    inputFiles = [
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov06_hh_bbww_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v/0000/tree_1.root"
+    ]
+elif process_value == "background":
+    inputFiles = [
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_1.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_2.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_3.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_4.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_5.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_6.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_7.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_8.root",
+        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_9.root"
+    ]
+else:
+    raise ValueError("Invalid Configuration parameter 'process' = %s !!" % process_value)
+process.fwliteInput.fileNames = cms.vstring(inputFiles)
+process.fwliteOutput.fileName = cms.string("testMEM_hh_bb2l_%s_genMatchOpt%i.root" % (process_value, genMatchingOption_value))
+process.testMEM_hh_bb2l.process = cms.string(process_value)
+process.testMEM_hh_bb2l.histogramDir = cms.string('%s_genMatchOpt%i' % (process_value, genMatchingOption_value))
+process.testMEM_hh_bb2l.genMatchingOption = cms.int32(genMatchingOption_value)
