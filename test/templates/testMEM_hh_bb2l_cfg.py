@@ -23,7 +23,7 @@ process.testMEM_hh_bb2l = cms.PSet(
 
     process = cms.string(''),
     histogramDir = cms.string(''),
-    era = cms.string(''),
+    era = cms.string('2017'),
 
     triggers_1e = cms.vstring(),
     use_triggers_1e = cms.bool(True),
@@ -77,7 +77,8 @@ process.testMEM_hh_bb2l = cms.PSet(
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
 
-    hasLHE = cms.bool(True)
+    hasLHE = cms.bool(True),
+    isDEBUG = cms.bool(False)
 )
 
 process_value = "$PROCESS"
@@ -89,14 +90,10 @@ if process_value == "signal":
 elif process_value == "background":
     inputFiles = [
         "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_1.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_2.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_3.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_4.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_5.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_6.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_7.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_8.root",
-        "/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_9.root"
+        #"/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_2.root",
+        #"/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_3.root",
+        #"/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_4.root",
+        #"/hdfs/local/karl/ttHNtupleProduction/2017/2018Nov24_woPresel_nom_all/ntuples/TTJets_DiLept/0000/tree_5.root",
     ]
 else:
     raise ValueError("Invalid Configuration parameter 'process' = %s !!" % process_value)
