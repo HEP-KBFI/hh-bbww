@@ -2,11 +2,21 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow(), fillWithOverFlow2d()
 
-#include <TMath.h> // TMath::Pi() 
+#include <TMath.h> // TMath::Pi(), TMath::Log, TMath::Max
 
 EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
+  , option_(kOption_undefined)
 {
+  std::string option_string = cfg.getParameter<std::string>("option");
+  if ( option_string == "memDisabled" ) {
+    option_ = kOption_allHistogramsmemDisabled;
+  } else if ( option_string == "memEnabled" ) {
+    option_ = kOption_minimalHistogramsmemEnabled;
+  } else {
+    throw cmsException(__func__) << "Invalid Configuration parameter 'option' = " << option_string << " !!";
+  }
+
   central_or_shiftOptions_["numElectrons"] = { "central" };
   central_or_shiftOptions_["numMuons"] = { "central" };
   central_or_shiftOptions_["numJets"] = { "central" };
@@ -47,6 +57,15 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["vbf_jet2_eta"] = { "central" };
   central_or_shiftOptions_["vbf_m_jj"] = { "central" };
   central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
+  central_or_shiftOptions_["memLR"] = { "*" };
+  central_or_shiftOptions_["log_memLR_div_Err"] = { "central" };
+  central_or_shiftOptions_["memCpuTime"] = { "central" };
+  central_or_shiftOptions_["MVAOutput_300"] = { "*" };
+  central_or_shiftOptions_["MVAOutput_400"] = { "*" };
+  central_or_shiftOptions_["MVAOutput_750"] = { "*" };
+  central_or_shiftOptions_["MVAOutputnohiggnessnotopness_300"] = { "*" };
+  central_or_shiftOptions_["MVAOutputnohiggnessnotopness_400"] = { "*" };
+  central_or_shiftOptions_["MVAOutputnohiggnessnotopness_750"] = { "*" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -59,63 +78,69 @@ EvtHistManager_hh_bb2l::getHistogram_EventCounter() const
 void
 EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
 {
-  histogram_numElectrons_           = book1D(dir, "numElectrons",           "numElectrons",             5, -0.5,  +4.5);
-  histogram_numMuons_               = book1D(dir, "numMuons",               "numMuons",                 5, -0.5,  +4.5);
-  histogram_numJets_                = book1D(dir, "numJets",                "numJets",                 20, -0.5, +19.5);
-  histogram_numBJets_loose_         = book1D(dir, "numBJets_loose",         "numBJets_loose",          10, -0.5,  +9.5);
-  histogram_numBJets_medium_        = book1D(dir, "numBJets_medium",        "numBJets_medium",         10, -0.5,  +9.5);
+  histogram_numElectrons_           = book1D(dir, "numElectrons",           "numElectrons",             5,  -0.5,  +4.5);
+  histogram_numMuons_               = book1D(dir, "numMuons",               "numMuons",                 5,  -0.5,  +4.5);
+  histogram_numJets_                = book1D(dir, "numJets",                "numJets",                 20,  -0.5, +19.5);
+  histogram_numBJets_loose_         = book1D(dir, "numBJets_loose",         "numBJets_loose",          10,  -0.5,  +9.5);
+  histogram_numBJets_medium_        = book1D(dir, "numBJets_medium",        "numBJets_medium",         10,  -0.5,  +9.5);
 
-  histogram_HT_                     = book1D(dir, "HT",                     "HT",                     150,  0., 1500.);
-  histogram_STMET_                  = book1D(dir, "STMET",                  "STMET",                  150,  0., 1500.);
+  histogram_HT_                     = book1D(dir, "HT",                     "HT",                     150,   0., 1500.);
+  histogram_STMET_                  = book1D(dir, "STMET",                  "STMET",                  150,   0., 1500.);
 
-  histogram_m_Hbb_                  = book1D(dir, "m_Hbb",                  "m_Hbb",                   40,  0.,  200.); 
-  histogram_dR_Hbb_                 = book1D(dir, "dR_Hbb",                 "dR_Hbb",                 100,  0.,    5.);
-  histogram_dPhi_Hbb_               = book1D(dir, "dPhi_Hbb",               "dPhi_Hbb",                36,  0, TMath::Pi());
-  histogram_pT_Hbb_                 = book1D(dir, "pT_Hbb",                 "pT_Hbb",                 100,  0.,  500.); 
+  histogram_m_Hbb_                  = book1D(dir, "m_Hbb",                  "m_Hbb",                   40,   0.,  200.); 
+  histogram_dR_Hbb_                 = book1D(dir, "dR_Hbb",                 "dR_Hbb",                 100,   0.,    5.);
+  histogram_dPhi_Hbb_               = book1D(dir, "dPhi_Hbb",               "dPhi_Hbb",                36,   0, TMath::Pi());
+  histogram_pT_Hbb_                 = book1D(dir, "pT_Hbb",                 "pT_Hbb",                 100,   0.,  500.); 
 
-  histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    40,  0.,  200.); 
-  histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,  0.,    5.);
-  histogram_dPhi_ll_                = book1D(dir, "dPhi_ll",                "dPhi_ll",                 36,  0, TMath::Pi());
-  histogram_pT_ll_                  = book1D(dir, "pT_ll",                  "pT_ll",                  100,  0.,  500.); 
+  histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    40,   0.,  200.); 
+  histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,   0.,    5.);
+  histogram_dPhi_ll_                = book1D(dir, "dPhi_ll",                "dPhi_ll",                 36,   0, TMath::Pi());
+  histogram_pT_ll_                  = book1D(dir, "pT_ll",                  "pT_ll",                  100,   0.,  500.); 
 
-  histogram_m_Hww_                  = book1D(dir, "m_Hww",                  "m_Hww",                   40,  0.,  200.); 
-  histogram_pT_Hww_                 = book1D(dir, "pT_Hww",                 "pT_Hww",                 100,  0.,  500.);  
-  histogram_Smin_Hww_               = book1D(dir, "Smin_Hww",               "Smin_Hww",               100,  0.,  500.);  
+  histogram_m_Hww_                  = book1D(dir, "m_Hww",                  "m_Hww",                   40,   0.,  200.); 
+  histogram_pT_Hww_                 = book1D(dir, "pT_Hww",                 "pT_Hww",                 100,   0.,  500.);  
+  histogram_Smin_Hww_               = book1D(dir, "Smin_Hww",               "Smin_Hww",               100,   0.,  500.);  
 
-  histogram_m_HHvis_                = book1D(dir, "m_HHvis",                "m_HHvis",                100,  0., 1000.);  
-  histogram_m_HH_                   = book1D(dir, "m_HH",                   "m_HH",                   150,  0., 1500.);
-  histogram_m_HH_hme_               = book1D(dir, "m_HH_hme",               "m_HH_hme",               150,  0., 1500.);
-  histogram_dR_HH_                  = book1D(dir, "dR_HH",                  "dR_HH",                  100,  0.,    5.);
-  histogram_dPhi_HH_                = book1D(dir, "dPhi_HH",                "dPhi_HH",                 36,  0., TMath::Pi());
-  histogram_pT_HH_                  = book1D(dir, "pT_HH",                  "pT_HH",                  100,  0.,  500.);  
-  histogram_Smin_HH_                = book1D(dir, "Smin_HH",                "Smin_HH",                100,  0., 1000.); 
+  histogram_m_HHvis_                = book1D(dir, "m_HHvis",                "m_HHvis",                100,   0., 1000.);  
+  histogram_m_HH_                   = book1D(dir, "m_HH",                   "m_HH",                   150,   0., 1500.);
+  histogram_m_HH_hme_               = book1D(dir, "m_HH_hme",               "m_HH_hme",               150,   0., 1500.);
+  histogram_dR_HH_                  = book1D(dir, "dR_HH",                  "dR_HH",                  100,   0.,    5.);
+  histogram_dPhi_HH_                = book1D(dir, "dPhi_HH",                "dPhi_HH",                 36,   0., TMath::Pi());
+  histogram_pT_HH_                  = book1D(dir, "pT_HH",                  "pT_HH",                  100,   0.,  500.);  
+  histogram_Smin_HH_                = book1D(dir, "Smin_HH",                "Smin_HH",                100,   0., 1000.); 
 
-  histogram_mT2_W_                  = book1D(dir, "mT2_W",                  "mT2_W",                   40,  0.,  200.); 
-  histogram_mT2_W_step_             = book1D(dir, "mT2_W_step",             "mT2_W_step",             103, -1.5, 101.5); 
-  histogram_mT2_top_2particle_      = book1D(dir, "mT2_top_2particle",      "mT2_top_2particle",      100,  0.,  500.);
-  histogram_mT2_top_2particle_step_ = book1D(dir, "mT2_top_2particle_step", "mT2_top_2particle_step", 103, -1.5, 101.5); 
-  histogram_mT2_top_3particle_      = book1D(dir, "mT2_top_3particle",      "mT2_top_3particle",      100,  0.,  500.);
-  histogram_mT2_top_3particle_step_ = book1D(dir, "mT2_top_3particle_step", "mT2_top_3particle_step", 103, -1.5, 101.5); 
+  histogram_mT2_W_                  = book1D(dir, "mT2_W",                  "mT2_W",                   40,   0.,  200.); 
+  histogram_mT2_W_step_             = book1D(dir, "mT2_W_step",             "mT2_W_step",             103,  -1.5, 101.5); 
+  histogram_mT2_top_2particle_      = book1D(dir, "mT2_top_2particle",      "mT2_top_2particle",      100,   0.,  500.);
+  histogram_mT2_top_2particle_step_ = book1D(dir, "mT2_top_2particle_step", "mT2_top_2particle_step", 103,  -1.5, 101.5); 
+  histogram_mT2_top_3particle_      = book1D(dir, "mT2_top_3particle",      "mT2_top_3particle",      100,   0.,  500.);
+  histogram_mT2_top_3particle_step_ = book1D(dir, "mT2_top_3particle_step", "mT2_top_3particle_step", 103,  -1.5, 101.5); 
 
-  histogram_logHiggsness_           = book1D(dir, "logHiggsness",           "logHiggsness",            60, -15., +15.);  
-  histogram_logTopness_             = book1D(dir, "logTopness",             "logTopness",              60, -15., +15.);  
+  histogram_logHiggsness_           = book1D(dir, "logHiggsness",           "logHiggsness",            60,  -15., +15.);  
+  histogram_logTopness_             = book1D(dir, "logTopness",             "logTopness",              60,  -15., +15.);  
   //histogram_logTopness_vs_logHiggsness_ = book2D(dir, "logTopness_vs_logHiggsness", "logTopness_vs_logHiggsness", 60, -15., +15., 60, -15., +15.);
 
-  histogram_vbf_jet1_pt_            = book1D(dir, "vbf_jet1_pt",            "vbf_jet1_pt",             40,  0.,  200.);  
-  histogram_vbf_jet1_eta_           = book1D(dir, "vbf_jet1_eta",           "vbf_jet1_eta",           100, -5.0,  +5.0);
-  histogram_vbf_jet2_pt_            = book1D(dir, "vbf_jet2_pt",            "vbf_jet2_pt",             40,  0.,  200.);  
-  histogram_vbf_jet2_eta_           = book1D(dir, "vbf_jet2_eta",           "vbf_jet2_eta",           100, -5.0,  +5.0);
-  histogram_vbf_m_jj_               = book1D(dir, "vbf_m_jj",               "vbf_m_jj",               150,  0., 1500.);
-  histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,  0.,   10.);
+  histogram_vbf_jet1_pt_            = book1D(dir, "vbf_jet1_pt",            "vbf_jet1_pt",             40,   0.,  200.);  
+  histogram_vbf_jet1_eta_           = book1D(dir, "vbf_jet1_eta",           "vbf_jet1_eta",           100,  -5.0,  +5.0);
+  histogram_vbf_jet2_pt_            = book1D(dir, "vbf_jet2_pt",            "vbf_jet2_pt",             40,   0.,  200.);  
+  histogram_vbf_jet2_eta_           = book1D(dir, "vbf_jet2_eta",           "vbf_jet2_eta",           100,  -5.0,  +5.0);
+  histogram_vbf_m_jj_               = book1D(dir, "vbf_m_jj",               "vbf_m_jj",               150,   0., 1500.);
+  histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,   0.,   10.);
   
-  histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
-  histogram_MVAOutput300_           = book1D(dir, "MVAOutput_300",           "MVAOutput_300",             360, 0.,  1.);
-  histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",           "MVAOutput_400",             360, 0.,  1.);
-  histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",           "MVAOutput_750",             360, 0.,  1.);
-  histogram_MVAOutputnohiggnessnotopness300_           = book1D(dir, "MVAOutputnohiggnessnotopness_300",           "MVAOutputnohiggnessnotopness_300",             360, 0.,  1.);
-  histogram_MVAOutputnohiggnessnotopness400_           = book1D(dir, "MVAOutputnohiggnessnotopness_400",           "MVAOutputnohiggnessnotopness_400",             360, 0.,  1.);
-  histogram_MVAOutputnohiggnessnotopness750_           = book1D(dir, "MVAOutputnohiggnessnotopness_750",           "MVAOutputnohiggnessnotopness_750",             360, 0.,  1.);
+  if ( option_ == kOption_memEnabled ) {
+    histogram_memLR_                = book1D(dir, "memLR",                  "memLR",                 1000,   0.,    1.);
+    histogram_log_memLR_div_Err_    = book1D(dir, "log_memLR_div_Err",      "log_memLR_div_Err",      200, -10.,  +10.);
+    histogram_memCpuTime_           = book1D(dir, "memCpuTime",             "memCpuTime",             100,   0., 1000.);
+  }
 
+  histogram_MVAOutput300_           = book1D(dir, "MVAOutput_300",          "MVAOutput_300",          360,   0.,    1.);
+  histogram_MVAOutput400_           = book1D(dir, "MVAOutput_400",          "MVAOutput_400",          360,   0.,    1.);
+  histogram_MVAOutput750_           = book1D(dir, "MVAOutput_750",          "MVAOutput_750",          360,   0.,    1.);
+  histogram_MVAOutputnohiggnessnotopness300_ = book1D(dir, "MVAOutputnohiggnessnotopness_300", "MVAOutputnohiggnessnotopness_300", 360, 0., 1.);
+  histogram_MVAOutputnohiggnessnotopness400_ = book1D(dir, "MVAOutputnohiggnessnotopness_400", "MVAOutputnohiggnessnotopness_400", 360, 0., 1.);
+  histogram_MVAOutputnohiggnessnotopness750_ = book1D(dir, "MVAOutputnohiggnessnotopness_750", "MVAOutputnohiggnessnotopness_750", 360, 0., 1.);
+
+  histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
 }
 
 void
@@ -132,7 +157,10 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
-				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,double mvaoutputnohiggnessnotopness_bb2l300, double mvaoutputnohiggnessnotopness_bb2l400, double mvaoutputnohiggnessnotopness_bb2l750,
+				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
+				       double memLikelihoodRatio, double memLikelihoodRatioErr, double memCpuTime, 
+				       double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,
+				       double mvaoutputnohiggnessnotopness_bb2l300, double mvaoutputnohiggnessnotopness_bb2l400, double mvaoutputnohiggnessnotopness_bb2l750,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -192,12 +220,22 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   }
   fillWithOverFlow(histogram_vbf_m_jj_,               vbf_m_jj,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_vbf_dEta_jj_,            vbf_dEta_jj,            evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput300_,           mvaoutput_bb2l300,                     evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput400_,           mvaoutput_bb2l400,                     evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput750_,           mvaoutput_bb2l750,                     evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness300_,           mvaoutputnohiggnessnotopness_bb2l300,                     evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness400_,           mvaoutputnohiggnessnotopness_bb2l400,                     evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness750_,           mvaoutputnohiggnessnotopness_bb2l750,                     evtWeight, evtWeightErr);
+
+  if ( option_ == kOption_memEnabled ) {
+    fillWithOverFlow(histogram_memLR_,                memLikelihoodRatio,     evtWeight, evtWeightErr);           
+    if ( memLikelihoodRatioErr > 0. ) {
+      double log_memLR_div_Err = TMath::Log(TMath::Max(1.e-15, memLikelihoodRatio/memLikelihoodRatioErr));
+      fillWithOverFlow(histogram_log_memLR_div_Err_,  log_memLR_div_Err,      evtWeight, evtWeightErr);  
+    }
+    fillWithOverFlow(histogram_memCpuTime_,           memCpuTime,             evtWeight, evtWeightErr);        
+  }
+
+  fillWithOverFlow(histogram_MVAOutput300_,           mvaoutput_bb2l300,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput400_,           mvaoutput_bb2l400,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput750_,           mvaoutput_bb2l750,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness300_, mvaoutputnohiggnessnotopness_bb2l300, evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness400_, mvaoutputnohiggnessnotopness_bb2l400, evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness750_, mvaoutputnohiggnessnotopness_bb2l750, evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_EventCounter_,           0.,                     evtWeight, evtWeightErr);
 }
