@@ -1,5 +1,6 @@
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h"
 
+#include "tthAnalysis/HiggsToTauTau/interface/cmsException.h" // cmsException()
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow(), fillWithOverFlow2d()
 
 #include <TMath.h> // TMath::Pi(), TMath::Log, TMath::Max
@@ -10,9 +11,9 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
 {
   std::string option_string = cfg.getParameter<std::string>("option");
   if ( option_string == "memDisabled" ) {
-    option_ = kOption_allHistogramsmemDisabled;
+    option_ = kOption_memDisabled;
   } else if ( option_string == "memEnabled" ) {
-    option_ = kOption_minimalHistogramsmemEnabled;
+    option_ = kOption_memEnabled;
   } else {
     throw cmsException(__func__) << "Invalid Configuration parameter 'option' = " << option_string << " !!";
   }
