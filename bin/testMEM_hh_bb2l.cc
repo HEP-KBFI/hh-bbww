@@ -595,37 +595,6 @@ int main(int argc, char* argv[])
       printCollection("genJets", genJets);
     }
 
-    std::vector<GenParticle> genParticlesFromHiggs;
-    if ( isSignal ) {
-      genParticlesFromHiggs = genParticleFromHiggsReader->read();
-      if ( isDEBUG ) {
-	printCollection("genParticlesFromHiggs", genParticlesFromHiggs);
-      }
-      if ( !(genParticlesFromHiggs.size() == 4) ) {
-	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
-	std::cout << "#genParticlesFromHiggs = " << genParticlesFromHiggs.size() << std::endl;
-	continue;
-      }
-    } 
-
-    std::vector<GenLepton> genLeptonsFromTop;
-    std::vector<GenParticle> genNeutrinosFromTop;
-    std::vector<GenParticle> genBQuarksFromTop;
-    if ( !isSignal ) {
-      if ( isDEBUG ) {
-	printCollection("genLeptonsFromTop", genLeptonsFromTop);
-	printCollection("genNeutrinosFromTop", genNeutrinosFromTop);
-	printCollection("genBQuarksFromTop", genBQuarksFromTop);	
-      }
-      if ( !(genLeptonsFromTop.size() == 2 && genNeutrinosFromTop.size() == 2 && genBQuarksFromTop.size() == 2) ) {
-	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
-	std::cout << "#genLeptonsFromTop = " << genLeptonsFromTop.size() << std::endl;
-	std::cout << "#genNeutrinosFromTop = " << genNeutrinosFromTop.size() << std::endl;
-	std::cout << "#genBQuarksFromTop = " << genBQuarksFromTop.size() << std::endl;
-	continue;
-      }
-    }
-
     double evtWeight_inclusive = 1.;
     if ( isMC ) {
       if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
@@ -635,6 +604,44 @@ int main(int argc, char* argv[])
       evtWeight_inclusive *= eventInfo.pileupWeight;
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, {}, {}, genJets, evtWeight_inclusive);
     }
+
+    std::vector<GenParticle> genParticlesFromHiggs;
+    if ( isSignal ) {
+      genParticlesFromHiggs = genParticleFromHiggsReader->read();
+      if ( isDEBUG ) {
+	printCollection("genParticlesFromHiggs", genParticlesFromHiggs);
+      }
+      if ( !(genParticlesFromHiggs.size() == 4) ) {
+	if ( run_lumi_eventSelector ) {
+	  std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
+	  std::cout << "#genParticlesFromHiggs = " << genParticlesFromHiggs.size() << std::endl;
+	}
+	continue;
+      }
+    } 
+    std::vector<GenLepton> genLeptonsFromTop;
+    std::vector<GenParticle> genNeutrinosFromTop;
+    std::vector<GenParticle> genBQuarksFromTop;
+    if ( !isSignal ) {
+      genLeptonsFromTop = genLeptonFromTopReader->read();
+      genNeutrinosFromTop = genNeutrinoFromTopReader->read();
+      genBQuarksFromTop = genBQuarksFromTopReader->read();
+      if ( isDEBUG ) {
+	printCollection("genLeptonsFromTop", genLeptonsFromTop);
+	printCollection("genNeutrinosFromTop", genNeutrinosFromTop);
+	printCollection("genBQuarksFromTop", genBQuarksFromTop);	
+      }
+      if ( !(genLeptonsFromTop.size() == 2 && genNeutrinosFromTop.size() == 2 && genBQuarksFromTop.size() == 2) ) {
+	if ( run_lumi_eventSelector ) {
+	  std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
+	  std::cout << "#genLeptonsFromTop = " << genLeptonsFromTop.size() << std::endl;
+	  std::cout << "#genNeutrinosFromTop = " << genNeutrinosFromTop.size() << std::endl;
+	  std::cout << "#genBQuarksFromTop = " << genBQuarksFromTop.size() << std::endl;
+	}
+	continue;
+      }
+    }
+    cutFlowTable.update("generator-level selection (1)", evtWeight_inclusive);
 
     bool isTriggered_1e = hltPaths_isTriggered(triggers_1e);
     bool isTriggered_2e = hltPaths_isTriggered(triggers_2e);
@@ -847,6 +854,7 @@ int main(int argc, char* argv[])
       }
       continue;
     }
+    cutFlowTable.update("generator-level selection (2)", evtWeight_inclusive);
     muonGenMatcher.addGenLeptonMatch(preselMuons, genLeptonsForMatching, 0.2);
     electronGenMatcher.addGenLeptonMatch(preselElectrons, genLeptonsForMatching, 0.2);
     jetGenMatcherAK4.addGenJetMatch(cleanedJetsAK4_wrtLeptons, genBJetsForMatching, 0.2);
@@ -1310,6 +1318,7 @@ int main(int argc, char* argv[])
 	continue;
       }
     }
+    cutFlowTable.update("generator-level matching", evtWeight_inclusive);
 
     // use either generator-level or reconstructed momenta as input for MEM computation
     Particle::LorentzVector memLeptonP4_lead;    
@@ -1381,11 +1390,9 @@ int main(int argc, char* argv[])
     memAlgo.integrate(memMeasuredParticles, memMEtPx, memMEtPy, met.cov());
     const MEMbbwwResultDilepton& memResult = memAlgo.getResult();
     clock.Stop("memAlgo");
-    
-    double memLikelihoodRatio = memResult.getLikelihoodRatio();
-    double memLikelihoodRatioErr = memResult.getLikelihoodRatioErr();
+
     double memCpuTime = clock.GetCpuTime("memAlgo");
-    std::cout << "MEM: likelihood ratio = " << memLikelihoodRatio << " +/- " << memLikelihoodRatioErr << " (CPU time = " << memCpuTime << ")" << std::endl;
+    std::cout << "MEM: likelihood ratio = " << memResult.getLikelihoodRatio() << " +/- " << memResult.getLikelihoodRatioErr() << " (CPU time = " << memCpuTime << ")" << std::endl;
     //---------------------------------------------------------------------------
 
     mvaInputs_XGB["m_ll"] = m_ll;
@@ -1489,7 +1496,7 @@ int main(int argc, char* argv[])
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
       -1., -1., -1., -1., -1., -1., 
-      memLikelihoodRatio, memLikelihoodRatioErr, memCpuTime, 
+      &memResult, memCpuTime, 
       mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
       mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750,
       evtWeight);
