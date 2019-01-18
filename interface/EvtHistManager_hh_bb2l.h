@@ -40,7 +40,7 @@ public:
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
-		 MEMbbwwResultDilepton* memResult,
+		 const MEMbbwwResultDilepton* memResult, double memCpuTime,
 		 double mvaoutput300, double mvaoutput400, double mvaoutput750,
 		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750,
 		 double evtWeight);

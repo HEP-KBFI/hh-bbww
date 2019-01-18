@@ -167,7 +167,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
-				       MEMbbwwResultDilepton* memResult, double memCpuTime,
+				       const MEMbbwwResultDilepton* memResult, double memCpuTime,
 				       double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,
 				       double mvaoutputnohiggnessnotopness_bb2l300, double mvaoutputnohiggnessnotopness_bb2l400, double mvaoutputnohiggnessnotopness_bb2l750,
 				       double evtWeight)
@@ -237,7 +237,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_memProb_background_,    memResult->getProb_background(),    evtWeight, evtWeightErr);    
     fillWithOverFlow(histogram_memProbErr_background_, memResult->getProbErr_background(), evtWeight, evtWeightErr);    
     fillWithOverFlow(histogram_memLR_,                 memResult->getLikelihoodRatio(),    evtWeight, evtWeightErr);           
-    if ( memLikelihoodRatioErr > 0. ) {
+    if ( memResult->getLikelihoodRatioErr() > 0. ) {
       double log_memLR_div_Err = TMath::Log(TMath::Max(1.e-15, memResult->getLikelihoodRatio()/memResult->getLikelihoodRatioErr()));
       fillWithOverFlow(histogram_log_memLR_div_Err_,   log_memLR_div_Err,                  evtWeight, evtWeightErr);  
     }
