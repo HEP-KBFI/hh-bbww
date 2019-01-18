@@ -48,8 +48,10 @@ TGraph* compGraphEfficiency(const std::string& graphName, const TH1* histogram)
   return graphEfficiency;
 } 
 
-TGraph* compGraphROC(const std::string& graphName, const TGraph* graphEfficiency_signal, const TGraph* graphEfficiency_background)
+TGraph* compGraphROC(const std::string& graphName, const TGraph* graphEfficiency_signal, const TGraph* graphEfficiency_background, bool useLogScale)
 {
+  std::cout << "<compGraphROC>:" << std::endl;
+  std::cout << " graphName = " << graphName << std::endl;
   assert(graphEfficiency_signal->GetN() == graphEfficiency_background->GetN());
   int numPoints = graphEfficiency_signal->GetN();
   TGraph* graphROC = new TGraph(numPoints);
@@ -59,7 +61,10 @@ TGraph* compGraphROC(const std::string& graphName, const TGraph* graphEfficiency
     graphEfficiency_signal->GetPoint(idxPoint, x, efficiency_signal);
     double efficiency_background = graphEfficiency_background->Eval(x);
     double xROC = efficiency_signal;
-    double yROC = 1.0 - efficiency_background;
+    double yROC;
+    if ( useLogScale ) yROC = efficiency_background;
+    else yROC = 1.0 - efficiency_background;
+    std::cout << "point #" << idxPoint << ": x = " << xROC << ", y = " << yROC << std::endl;
     graphROC->SetPoint(idxPoint, xROC, yROC);
   }
   return graphROC;
@@ -206,7 +211,7 @@ void makeROCforMEM_hh_bb2l()
 
   TH1::AddDirectory(false);
   
-  std::string inputFilePath = "/afs/cern.ch/user/v/veelken/scratch0/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
+  std::string inputFilePath = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
   std::string inputFileName = "testMEM_hh_bb2l_all.root";
   TString inputFileName_full = inputFilePath.data();
   if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
@@ -225,18 +230,18 @@ void makeROCforMEM_hh_bb2l()
   plotNames.push_back("mHHvis");
 
   std::map<std::string, std::string> histogramNames_signal; // key = plotName
-  histogramNames_signal["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/memLR";
-  histogramNames_signal["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/memLR";
-  histogramNames_signal["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/memLR";
-  histogramNames_signal["BDT"] = "signal_genMatchOpt3/sel/evt/MVAOutput_400";
-  histogramNames_signal["mHHvis"] = "signal_genMatchOpt3/sel/evt/m_HHvis";
+  histogramNames_signal["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memLR";
+  histogramNames_signal["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memLR";
+  histogramNames_signal["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memLR";
+  histogramNames_signal["BDT"] = "signal_genMatchOpt3/sel/evt/signal/MVAOutput_400";
+  histogramNames_signal["mHHvis"] = "signal_genMatchOpt3/sel/evt/signal/m_HHvis";
 
   std::map<std::string, std::string> histogramNames_background; // key = plotName
-  histogramNames_background["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/memLR";
-  histogramNames_background["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/memLR";
-  histogramNames_background["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/memLR";
-  histogramNames_background["BDT"] = "background_genMatchOpt3/sel/evt/MVAOutput_400";
-  histogramNames_background["mHHvis"] = "background_genMatchOpt3/sel/evt/m_HHvis";
+  histogramNames_background["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memLR";
+  histogramNames_background["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memLR";
+  histogramNames_background["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memLR";
+  histogramNames_background["BDT"] = "background_genMatchOpt3/sel/evt/background/MVAOutput_400";
+  histogramNames_background["mHHvis"] = "background_genMatchOpt3/sel/evt/background/m_HHvis";
 
   std::map<std::string, std::string> legendEntries; // key = plotName
   legendEntries["MEM_genMatchOpt1"] = "MEM opt1";
@@ -247,34 +252,66 @@ void makeROCforMEM_hh_bb2l()
 
   std::map<std::string, TGraph*> graphsROC; // key = plotName
 
-  for ( std::vector<std::string>::const_iterator plotName = plotNames.begin();
-	plotName != plotNames.end(); ++plotName ) {
-    TH1* histogram_signal = loadHistogram(inputFile, histogramNames_signal[*plotName]);
-    TGraph* graphEfficiency_signal = compGraphEfficiency(Form("graphEfficiency_signal_%s", plotName->data()), histogram_signal);
-    TH1* histogram_background = loadHistogram(inputFile, histogramNames_background[*plotName]);
-    TGraph* graphEfficiency_background = compGraphEfficiency(Form("graphEfficiency_background_%s", plotName->data()), histogram_background);
-    graphsROC[*plotName] = compGraphROC(Form("graphROC_%s", plotName->data()), graphEfficiency_signal, graphEfficiency_background);
-  }
+  enum { kStyle_linear, kStyle_log };
+  for ( int iStyle = kStyle_linear; iStyle <= kStyle_log; ++iStyle ) {
+    bool useLogScale;
+    if      ( iStyle == kStyle_linear ) useLogScale = false;
+    else if ( iStyle == kStyle_log    ) useLogScale = true;
+    else assert(0);
 
-  int colors[6] = { 1, 2, 8, 4, 6, 7 };
-  int lineStyles[6] = { 1, 1, 1, 1, 1, 1 };
-  int markerStyles[6] = { 22, 32, 20, 24, 21, 25 };
-  std::vector<std::string> labelTextLines;
-  std::string outputFileName = "makeROCforMEM_hh_bb2l.pdf";
-  showGraphs(800, 600,
-	     graphsROC["MEM_genMatchOpt1"], legendEntries["MEM_genMatchOpt1"],
-	     graphsROC["MEM_genMatchOpt2"], legendEntries["MEM_genMatchOpt2"],
-	     graphsROC["MEM_genMatchOpt3"], legendEntries["MEM_genMatchOpt3"],
-	     graphsROC["BDT"], legendEntries["BDT"],
-	     graphsROC["mHHvis"], legendEntries["mHHvis"],
-	     0, "",
-	     colors, markerStyles,
-	     0.045, 0.43, 0.71, 0.46, 0.18,
-	     labelTextLines, 0.045, 
-	     0.18, 0.64, 0.31, 0.05, 
-	     0., 1., "Signal Efficiency", 1.2,
-	     false, 0., 1., "Background Suppression", 1.2,
-	     outputFileName);
+    for ( std::vector<std::string>::const_iterator plotName = plotNames.begin();
+	  plotName != plotNames.end(); ++plotName ) {
+      TH1* histogram_signal = loadHistogram(inputFile, histogramNames_signal[*plotName]);
+      TGraph* graphEfficiency_signal = compGraphEfficiency(Form("graphEfficiency_signal_%s", plotName->data()), histogram_signal);
+      TH1* histogram_background = loadHistogram(inputFile, histogramNames_background[*plotName]);
+      TGraph* graphEfficiency_background = compGraphEfficiency(Form("graphEfficiency_background_%s", plotName->data()), histogram_background);
+      graphsROC[*plotName] = compGraphROC(Form("graphROC_%s", plotName->data()), graphEfficiency_signal, graphEfficiency_background, useLogScale);
+      delete graphEfficiency_signal;
+      delete graphEfficiency_background;
+    }
+
+    int colors[6] = { 1, 2, 8, 4, 6, 7 };
+    int markerStyles[6] = { 22, 32, 20, 24, 21, 25 };
+    double legendPosX, legendPosY;
+    std::vector<std::string> labelTextLines;
+    double yMin, yMax;
+    std::string yAxisTitle;
+    std::string outputFileName;
+    if ( useLogScale ) {
+      legendPosX = 0.63;
+      legendPosY = 0.17;
+      yMin = 1.e-3;
+      yMax = 1.e+1;
+      yAxisTitle = "Background Rate";
+      outputFileName = "makeROCforMEM_hh_bb2l_log.pdf";
+    } else {
+      legendPosX = 0.18;
+      legendPosY = 0.17;
+      yMin = 0.;
+      yMax = 1.01;
+      yAxisTitle = "Background Suppression";
+      outputFileName = "makeROCforMEM_hh_bb2l_linear.pdf";
+    }
+    showGraphs(800, 600,
+	       graphsROC["MEM_genMatchOpt1"], legendEntries["MEM_genMatchOpt1"],
+	       graphsROC["MEM_genMatchOpt2"], legendEntries["MEM_genMatchOpt2"],
+	       graphsROC["MEM_genMatchOpt3"], legendEntries["MEM_genMatchOpt3"],
+	       graphsROC["BDT"], legendEntries["BDT"],
+	       graphsROC["mHHvis"], legendEntries["mHHvis"],
+	       0, "",
+	       colors, markerStyles,
+	       0.045, legendPosX, legendPosY, 0.26, 0.23,
+	       labelTextLines, 0.045, 
+	       0.18, 0.64, 0.31, 0.05, 
+	       0., 1.01, "Signal Efficiency", 1.2,
+	       useLogScale, yMin, yMax, yAxisTitle, 1.2,
+	       outputFileName);
+    
+    for ( std::map<std::string, TGraph*>::iterator it = graphsROC.begin();
+	  it != graphsROC.end(); ++it ) {
+      delete it->second;
+    }
+  }
 
   delete inputFile;
 }

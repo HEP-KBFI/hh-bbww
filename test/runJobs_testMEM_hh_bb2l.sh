@@ -28,6 +28,6 @@ testMEM_hh_bb2l testMEM_hh_bb2l_background_genMatchOp2_cfg.py &> testMEM_hh_bb2l
 rm -rf testMEM_hh_bb2l_background_genMatchOp3.log
 testMEM_hh_bb2l testMEM_hh_bb2l_background_genMatchOp3_cfg.py &> testMEM_hh_bb2l_background_genMatchOp3.log &
 
-rm -rf testMEM_hh_bb2l_all.root
+#rm -rf testMEM_hh_bb2l_all.root
 #hadd testMEM_hh_bb2l_all.root testMEM_hh_bb2l_signal_genMatchOpt1.root testMEM_hh_bb2l_signal_genMatchOpt2.root testMEM_hh_bb2l_signal_genMatchOpt3.root testMEM_hh_bb2l_background_genMatchOpt1.root testMEM_hh_bb2l_background_genMatchOpt2.root testMEM_hh_bb2l_background_genMatchOpt3.root
 
