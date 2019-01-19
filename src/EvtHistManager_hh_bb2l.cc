@@ -64,6 +64,7 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["memProbErr_background"] = { "central" };
   central_or_shiftOptions_["memLR"] = { "*" };
   central_or_shiftOptions_["log_memLR_div_Err"] = { "central" };
+  central_or_shiftOptions_["memScore"] = { "*" };
   central_or_shiftOptions_["memCpuTime"] = { "central" };
   central_or_shiftOptions_["MVAOutput_300"] = { "*" };
   central_or_shiftOptions_["MVAOutput_400"] = { "*" };
@@ -139,6 +140,7 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
     histogram_memProbErr_background_ = book1D(dir, "memProbErr_background",  "memProbErr_background",  200, -50.,  +50.);
     histogram_memLR_                 = book1D(dir, "memLR",                  "memLR",                  360,   0.,    1.);
     histogram_log_memLR_div_Err_     = book1D(dir, "log_memLR_div_Err",      "log_memLR_div_Err",      200, -10.,  +10.);
+    histogram_memScore_              = book1D(dir, "memScore",               "memScore",               360, -18.,  +18.);
     histogram_memCpuTime_            = book1D(dir, "memCpuTime",             "memCpuTime",             100,   0., 1000.);
   }
 
@@ -241,6 +243,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
       double log_memLR_div_Err = TMath::Log(TMath::Max(1.e-15, memResult->getLikelihoodRatio()/memResult->getLikelihoodRatioErr()));
       fillWithOverFlow(histogram_log_memLR_div_Err_,   log_memLR_div_Err,                  evtWeight, evtWeightErr);  
     }
+    fillWithOverFlow(histogram_memScore_,              memResult->getScore(),              evtWeight, evtWeightErr);  
     fillWithOverFlow(histogram_memCpuTime_,            memCpuTime,                         evtWeight, evtWeightErr);        
   }
 

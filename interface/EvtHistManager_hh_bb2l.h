@@ -12,7 +12,7 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/HistManagerBase.h" // HistManagerBase
 
-#include "hhAnalysis/bbwwMEM/interface/MEMResult.h"
+#include "hhAnalysis/bbwwMEM/interface/MEMResult.h" // MEMbbwwResultDilepton
 
 class EvtHistManager_hh_bb2l
   : public HistManagerBase
@@ -107,6 +107,7 @@ public:
   TH1 * histogram_memProbErr_background_;
   TH1 * histogram_memLR_;
   TH1 * histogram_log_memLR_div_Err_;
+  TH1 * histogram_memScore_;
   TH1 * histogram_memCpuTime_;
 
   TH1 * histogram_MVAOutput300_;

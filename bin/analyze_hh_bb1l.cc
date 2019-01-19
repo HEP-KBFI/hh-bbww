@@ -769,7 +769,7 @@ int main(int argc, char* argv[])
       Form("%s/sel/metFilters", histogramDir.data()), era_string, central_or_shift));
     selHistManager->metFilters_->bookHistograms(fs);
     selHistManager->evt_ = new EvtHistManager_hh_bb1l(makeHistManager_cfg(process_and_genMatch,
-      Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift));
+      Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
     selHistManager->evt_->bookHistograms(fs);
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_ = new GenEvtHistManager(makeHistManager_cfg(process_and_genMatch,
@@ -789,7 +789,7 @@ int main(int argc, char* argv[])
       TString histogramDir_category = histogramDir.data();
       histogramDir_category.ReplaceAll("hh_bb1l", category->name_.data());
       selHistManager->evt_in_categories_[category->name_] = new EvtHistManager_hh_bb1l(makeHistManager_cfg(process_and_genMatch,
-        Form("%s/sel/evt", histogramDir_category.Data()), era_string, central_or_shift));
+        Form("%s/sel/evt", histogramDir_category.Data()), era_string, central_or_shift, "memDisabled"));
       selHistManager->evt_in_categories_[category->name_]->bookHistograms(fs);
       if ( isMC ) {
 	selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_] = new LHEInfoHistManager(makeHistManager_cfg(process_and_genMatch,
@@ -1784,7 +1784,9 @@ int main(int argc, char* argv[])
       m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT_W, mT_top_2particle, mT_top_3particle,
       mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, 
+      nullptr, -1., 
+      mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
       evtWeight);
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
@@ -1848,7 +1850,9 @@ int main(int argc, char* argv[])
 	    m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT_W, mT_top_2particle, mT_top_3particle,
 	    mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, 
+	    nullptr, -1., 
+	    mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
 	    evtWeight);
 	}
 	if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {

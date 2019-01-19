@@ -19,6 +19,8 @@ process.fwliteOutput = cms.PSet(
 process.testMEM_hh_bb1l = cms.PSet(
     treeName = cms.string('Events'),
 
+    maxSelEvents = cms.int32(1000),
+
     process = cms.string(''),
     histogramDir = cms.string(''),
     era = cms.string('2017'),
@@ -72,6 +74,8 @@ process.testMEM_hh_bb1l = cms.PSet(
     branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
     branchName_genBQuarksFromTop = cms.string('GenBQuarkFromTop'),
     branchName_genLightQuarksFromTop = cms.string('GenQuarkFromTop'), # used for generator-level matching of jets from W->jj decays
+
+    genMatchingOption = cms.int32(1),
     
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
