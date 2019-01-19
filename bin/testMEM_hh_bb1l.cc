@@ -663,7 +663,7 @@ int main(int argc, char* argv[])
     "HLT filter matching",
     ">= 2 jets from H->bb",
     ">= 1 medium b-jet",
-    ">= 1 jets from W->jj",    
+    ">= 2 jets from W->jj",    
     "tau veto", 
     "m(ll) > 12 GeV",
     "Z-boson mass veto",
@@ -1260,14 +1260,23 @@ int main(int argc, char* argv[])
 	else std::cout << " N/A" << std::endl;
       }
     }
-    if ( !(selJet1_Wjj || selJet2_Wjj) ) {
+    //if ( !(selJet1_Wjj || selJet2_Wjj) ) {
+    //  if ( run_lumi_eventSelector ) {
+    //    std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+    //  }
+    //  continue;
+    //}
+    //cutFlowTable.update(">= 1 jets from W->jj", evtWeight_inclusive);
+    //cutFlowHistManager->fillHistograms(">= 1 jets from W->jj", evtWeight_inclusive);
+    // CV: need two jets from W->jj in order to compute matrix element method likelihood ratio of HH signal and ttbar background hypotheses
+    if ( !(selJet1_Wjj && selJet2_Wjj) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
       }
       continue;
     }
-    cutFlowTable.update(">= 1 jets from W->jj", evtWeight_inclusive);
-    cutFlowHistManager->fillHistograms(">= 1 jets from W->jj", evtWeight_inclusive);
+    cutFlowTable.update(">= 2 jets from W->jj", evtWeight_inclusive);
+    cutFlowHistManager->fillHistograms(">= 2 jets from W->jj", evtWeight_inclusive);
 
     std::vector<const RecoJetBase*> selJets_Wjj;
     if ( selJet1_Wjj ) selJets_Wjj.push_back(selJet1_Wjj);
