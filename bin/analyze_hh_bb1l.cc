@@ -648,7 +648,8 @@ int main(int argc, char* argv[])
 
   std::string xgbFileName_bb1l = "hhAnalysis/bbww/data/bb1l_HH_XGB_noTopness_evtLevelSUM_HH_bb1l_res_12Var.pkl";
   std::vector<std::string> xgbInputVariables_bb1l =
-    {"met", "HT", "m_Hbb", "dR_Hbb", "dR_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_2particle", "mvaOutput_Hj_tagger", "gen_mHH"
+    //{"met", "HT", "m_Hbb", "dR_Hbb", "dR_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_2particle", "mvaOutput_Hj_tagger", "gen_mHH"
+    {"lep_pt", "met_LD", "m_Hbb", "m_Wjj", "dR_b1lep", "dR_b2lep","Smin_HH", "mT_W", "mT_top_2particle", "mvaOutput_Hj_tagger", "max_bjet_pt","gen_mHH"
     };
 
   XGBInterface mva_xgb_bb1l(xgbFileName_bb1l, xgbInputVariables_bb1l);
@@ -1732,7 +1733,7 @@ int main(int argc, char* argv[])
       vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
 
-    mvaInputs_XGB["met"] = metP4.pt();
+    /*mvaInputs_XGB["met"] = metP4.pt();
     mvaInputs_XGB["HT"] = HT;
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["dR_Hbb"] = dR_Hbb;
@@ -1743,6 +1744,24 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["mT_W"] = mT_W;
     mvaInputs_XGB["mT_top_2particle"] = mT_top_2particle;
     mvaInputs_XGB["mvaOutput_Hj_tagger"] = mvaOutput_Hj_tagger;
+    mvaInputs_XGB["gen_mHH"] = 350;
+    double mvaoutput_bb1l350 = mva_xgb_bb1l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 400;
+    double mvaoutput_bb1l400 = mva_xgb_bb1l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 750;
+    double mvaoutput_bb1l750 = mva_xgb_bb1l(mvaInputs_XGB);*/
+
+    mvaInputs_XGB["lep_pt"] = selLepton->pt();
+    mvaInputs_XGB["met_LD"] = met_LD;
+    mvaInputs_XGB["m_Hbb"] = m_Hbb;
+    mvaInputs_XGB["m_Wjj"] = m_Wjj;
+    mvaInputs_XGB["dR_b1lep"] = dR_b1lep;
+    mvaInputs_XGB["dR_b2lep"] = dR_b2lep;
+    mvaInputs_XGB["Smin_HH"] = Smin_HH;
+    mvaInputs_XGB["mT_W"] = mT_W;
+    mvaInputs_XGB["mT_top_2particle"] = mT_top_2particle;
+    mvaInputs_XGB["mvaOutput_Hj_tagger"] = mvaOutput_Hj_tagger;
+    mvaInputs_XGB["max_bjet_pt"] = selJetP4_Hbb_lead.pt();
     mvaInputs_XGB["gen_mHH"] = 350;
     double mvaoutput_bb1l350 = mva_xgb_bb1l(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 400;

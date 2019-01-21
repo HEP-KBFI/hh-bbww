@@ -483,17 +483,19 @@ int main(int argc, char* argv[])
   }
 
   std::string xmlFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
-  std::string xgbFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var.pkl";
-  std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var_nohiggnessnotopness.pkl";
+  std::string xgbFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_10Var.pkl";
+  std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_8Var_nohiggnessnotopness.pkl";
 
   std::vector<std::string> xgbInputVariables_bb2l = 
-    {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met", 
-     "max_lep_pt", "max_bjet_pt", "gen_mHH"
+    // {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met", 
+    //"max_lep_pt", "max_bjet_pt", "gen_mHH"
+    {"mht", "HT", "m_Hbb", "m_ll", "Smin_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nJet", "nBJetLoose", "gen_mHH"
   };
 
   std::vector<std::string> xgbInputVariablesnohiggnessnotopness_bb2l =
-    {"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met",
-     "max_lep_pt", "max_bjet_pt", "gen_mHH"
+    {//"m_ll", "m_Hbb", "nBJetMedium", "m_Hww", "mT2_top_3particle", "pT_HH", "dPhi_HH", "min_dPhi_lepMEt", "max_dR_b_lep", "met",
+      // "max_lep_pt", "max_bjet_pt", "gen_mHH"
+      "mht", "HT", "m_Hbb", "m_ll", "Smin_Hww", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nJet", "nBJetLoose", "gen_mHH"
     };
 
   XGBInterface mva_xgb_bb2l(xgbFileName_bb2l, xgbInputVariables_bb2l);
@@ -1566,7 +1568,7 @@ int main(int argc, char* argv[])
     
 
 
-    mvaInputs_XGB["m_ll"] = m_ll;
+    /*mvaInputs_XGB["m_ll"] = m_ll;
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
     mvaInputs_XGB["m_Hww"] = m_Hww;
@@ -1585,7 +1587,7 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["gen_mHH"] = 400;
     double mvaoutput_bb2l400 = mva_xgb_bb2l(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 750;
-    double mvaoutput_bb2l750 = mva_xgb_bb2l(mvaInputs_XGB);
+    double mvaoutput_bb2l750 = mva_xgb_bb2l(mvaInputs_XGB);*/
     /*    mvaInputs_XGB["m_ll"] = 117.5084;
     mvaInputs_XGB["m_Hbb"] = 111.439705;
     mvaInputs_XGB["nBJetMedium"] = 1;
@@ -1606,7 +1608,23 @@ int main(int argc, char* argv[])
     mvaoutput_bb2l300 = (*mva_xml_bb2l)(mvaInputs_XGB); //mva 0.813011(test),0.14326528(true)
     std::cout << "mva    ============== " << mvaoutput_bb2l300 << std::endl;*/
 
-    mvaInputsnohiggnessnotopness_XGB["m_ll"] = m_ll;
+    mvaInputs_XGB["mht"] = mhtP4.pt();  
+    mvaInputs_XGB["HT"] = HT;
+    mvaInputs_XGB["m_Hbb"] = m_Hbb;
+    mvaInputs_XGB["m_ll"] = m_ll;
+    mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
+    mvaInputs_XGB["logTopness_fixedChi2"] = logTopness_fixedChi2;
+    mvaInputs_XGB["logHiggsness_fixedChi2"] = logHiggsness_fixedChi2;
+    mvaInputs_XGB["nJet"] = comp_n_jet25_recl(selJetsAK4);
+    mvaInputs_XGB["nBJetLoose"] = selBJetsAK4_loose.size();
+    mvaInputs_XGB["gen_mHH"] = 300;
+    double mvaoutput_bb2l300 = mva_xgb_bb2l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 400;
+    double mvaoutput_bb2l400 = mva_xgb_bb2l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 750;
+    double mvaoutput_bb2l750 = mva_xgb_bb2l(mvaInputs_XGB);
+
+    /*mvaInputsnohiggnessnotopness_XGB["m_ll"] = m_ll;
     mvaInputsnohiggnessnotopness_XGB["m_Hbb"] = m_Hbb;
     mvaInputsnohiggnessnotopness_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
     mvaInputsnohiggnessnotopness_XGB["m_Hww"] = m_Hww;
@@ -1618,6 +1636,20 @@ int main(int argc, char* argv[])
     mvaInputsnohiggnessnotopness_XGB["met"] =  metP4.pt();
     mvaInputsnohiggnessnotopness_XGB["max_lep_pt"] = std::max(selLepton_lead->pt(),selLepton_sublead->pt());
     mvaInputsnohiggnessnotopness_XGB["max_bjet_pt"] = std::max(selJetP4_Hbb_lead.pt(),selJetP4_Hbb_sublead.pt());
+    mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 300;
+    double mvaoutputnohiggnessnotopness_bb2l300 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);
+    mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 400;
+    double mvaoutputnohiggnessnotopness_bb2l400 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);
+    mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 750;
+    double mvaoutputnohiggnessnotopness_bb2l750 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);*/
+
+    mvaInputsnohiggnessnotopness_XGB["mht"] = mhtP4.pt();
+    mvaInputsnohiggnessnotopness_XGB["HT"] = HT;
+    mvaInputsnohiggnessnotopness_XGB["m_Hbb"] = m_Hbb;
+    mvaInputsnohiggnessnotopness_XGB["m_ll"] = m_ll;
+    mvaInputsnohiggnessnotopness_XGB["Smin_Hww"] = Smin_Hww;
+    mvaInputsnohiggnessnotopness_XGB["nJet"] = comp_n_jet25_recl(selJetsAK4);
+    mvaInputsnohiggnessnotopness_XGB["nBJetLoose"] = selBJetsAK4_loose.size();
     mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 300;
     double mvaoutputnohiggnessnotopness_bb2l300 = mva_xgbnohiggnessnotopness_bb2l(mvaInputsnohiggnessnotopness_XGB);
     mvaInputsnohiggnessnotopness_XGB["gen_mHH"] = 400;
