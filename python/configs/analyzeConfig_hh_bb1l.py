@@ -186,13 +186,14 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     #----------------------------------------------------------------------------
     # CV: run hadd_stage1_5 jobs on quasar,
     #     as the memory consumption of hadd_stage1_5 jobs exceeds the memory limit (1.8 Gb) for batch jobs
-    is_sbatch_bak = self.is_sbatch
-    self.is_sbatch = False
-    is_makefile_bak = self.is_makefile
-    self.is_makefile = True
-    self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
-    self.is_sbatch = is_sbatch_bak
-    self.is_makefile = is_makefile_bak
+    ##is_sbatch_bak = self.is_sbatch
+    ##self.is_sbatch = False
+    ##is_makefile_bak = self.is_makefile
+    ##self.is_makefile = True
+    ##self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
+    self.addToMakefile_hadd_stage1_5(lines_makefile)
+    ##self.is_sbatch = is_sbatch_bak
+    ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
     self.addToMakefile_addFakes(lines_makefile)
 
@@ -495,7 +496,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               (self.channel, lepton_selection_and_frWeight, category)),
             'logFile' : os.path.join(self.dirs[DKEY_LOGS], "addBackgrounds_%s_conversions_%s_%s.log" % \
               (self.channel, lepton_selection_and_frWeight, category)),
-            'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) for category in self.evtCategories ],
+            'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight) ],
             'processes_input' : processes_input,
             'process_output' : "conversions"
           }
@@ -531,17 +532,17 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               if lepton_selection == "Tight":
                 self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
 
-        # initialize input and output file names for hadd_stage2
-        key_hadd_stage2 = getKey(category, lepton_selection_and_frWeight)
-        if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
-          self.inputFiles_hadd_stage2[key_hadd_stage2] = []
-        if lepton_selection == "Tight":
-          self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
-          self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions]['outputFile'])
-        key_hadd_stage1_5 = getKey(category, lepton_selection_and_frWeight)
-        self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5])
-        self.outputFile_hadd_stage2[key_hadd_stage2] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage2_%s_%s_%s.root" % \
-          (self.channel, lepton_selection_and_frWeight, category))
+          # initialize input and output file names for hadd_stage2
+          key_hadd_stage2 = getKey(category, lepton_selection_and_frWeight)
+          if not key_hadd_stage2 in self.inputFiles_hadd_stage2:
+            self.inputFiles_hadd_stage2[key_hadd_stage2] = []
+          if lepton_selection == "Tight":
+            self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
+            self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_conversions]['outputFile'])
+          key_hadd_stage1_5 = getKey(category, lepton_selection_and_frWeight)
+          self.inputFiles_hadd_stage2[key_hadd_stage2].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5])
+          self.outputFile_hadd_stage2[key_hadd_stage2] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage2_%s_%s_%s.root" % \
+            (self.channel, lepton_selection_and_frWeight, category))
 
     if self.isBDTtraining:
       if self.is_sbatch:
@@ -674,7 +675,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     ##self.is_sbatch = False
     ##is_makefile_bak = self.is_makefile
     ##self.is_makefile = True
-    self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
+    ##self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
+    self.addToMakefile_hadd_stage2(lines_makefile)
     ##self.is_sbatch = is_sbatch_bak
     ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
