@@ -185,13 +185,14 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     #----------------------------------------------------------------------------
     # CV: run hadd_stage1_5 jobs on quasar,
     #     as the memory consumption of hadd_stage1_5 jobs exceeds the memory limit (1.8 Gb) for batch jobs
-    is_sbatch_bak = self.is_sbatch
-    self.is_sbatch = False
-    is_makefile_bak = self.is_makefile
-    self.is_makefile = True
-    self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
-    self.is_sbatch = is_sbatch_bak
-    self.is_makefile = is_makefile_bak
+    ##is_sbatch_bak = self.is_sbatch
+    ##self.is_sbatch = False
+    ##is_makefile_bak = self.is_makefile
+    ##self.is_makefile = True
+    ##self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
+    self.addToMakefile_hadd_stage1_5(lines_makefile)
+    ##self.is_sbatch = is_sbatch_bak
+    ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
     self.addToMakefile_addFakes(lines_makefile)
 
@@ -672,7 +673,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     ##self.is_sbatch = False
     ##is_makefile_bak = self.is_makefile
     ##self.is_makefile = True
-    self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
+    ##self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
+    self.addToMakefile_hadd_stage2(lines_makefile)
     ##self.is_sbatch = is_sbatch_bak
     ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------

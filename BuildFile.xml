@@ -5,6 +5,7 @@
 <use   name="tthAnalysis/HiggsToTauTau"/>
 <use   name="tthAnalysis/TauTriggerSFs2017"/>
 <use   name="TauAnalysis/ClassicSVfit4tau"/>
+<use   name="hhAnalysis/bbwwMEM"/>
 <use   name="root"/>
 <use   name="roottmva"/>
 <use   name="boost" />

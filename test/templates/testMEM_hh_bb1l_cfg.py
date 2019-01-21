@@ -19,6 +19,8 @@ process.fwliteOutput = cms.PSet(
 process.testMEM_hh_bb1l = cms.PSet(
     treeName = cms.string('Events'),
 
+    maxSelEvents = cms.int32(1000),
+
     process = cms.string(''),
     histogramDir = cms.string(''),
     era = cms.string('2017'),
@@ -32,11 +34,6 @@ process.testMEM_hh_bb1l = cms.PSet(
         'HLT_IsoMu24',
         'HLT_IsoMu27'
     ),
-    use_triggers_1mu = cms.bool(True),
-
-    triggers_1e = cms.vstring(),
-    use_triggers_1e = cms.bool(True),
-    triggers_1mu = cms.vstring(),
     use_triggers_1mu = cms.bool(True),
     
     apply_offline_e_trigger_cuts_1e = cms.bool(True),
@@ -55,15 +52,24 @@ process.testMEM_hh_bb1l = cms.PSet(
 
     branchName_electrons = cms.string('Electron'),
     branchName_muons = cms.string('Muon'),
+    branchName_hadTaus = cms.string('Tau'),
     branchName_jets_ak4 = cms.string('Jet'),
-    branchName_jets_ak8 = cms.string('FatJet'),
-    branchName_subjets_ak8 = cms.string('SubJet'),
+    branchName_jets_ak8_Hbb = cms.string('FatJet'),
+    branchName_subjets_ak8_Hbb = cms.string('SubJet'),
+    #branchName_jets_ak8_Wjj = cms.string('FatJetAK8LS'),
+    #branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LS'),
+    branchName_jets_ak8_Wjj = cms.string('FatJet'),
+    branchName_subjets_ak8_Wjj = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
-
+    
     branchName_genLeptons = cms.string('GenLep'),
+    branchName_genNeutrinos = cms.string('GenNu'),
     branchName_genJets = cms.string('GenJet'),
-    redoGenMatching = cms.bool(True),
 
+    branchName_genBJets = cms.string('GenBQuarkFromTop'),
+    branchName_genWBosons = cms.string('GenVbosons'),
+    branchName_genWJets = cms.string('GenWZQuark'),
+    
     # branches specific to HH signal
     branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
 
@@ -72,6 +78,8 @@ process.testMEM_hh_bb1l = cms.PSet(
     branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
     branchName_genBQuarksFromTop = cms.string('GenBQuarkFromTop'),
     branchName_genLightQuarksFromTop = cms.string('GenQuarkFromTop'), # used for generator-level matching of jets from W->jj decays
+
+    genMatchingOption = cms.int32(1),
     
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),

@@ -12,6 +12,8 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/HistManagerBase.h" // HistManagerBase
 
+#include "hhAnalysis/bbwwMEM/interface/MEMResult.h" // MEMbbwwResultDilepton
+
 class EvtHistManager_hh_bb2l
   : public HistManagerBase
 {
@@ -38,7 +40,7 @@ public:
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
-		 double memLikelihoodRatio, double memLikelihoodRatioErr, double memCpuTime, 
+		 const MEMbbwwResultDilepton* memResult, double memCpuTime,
 		 double mvaoutput300, double mvaoutput400, double mvaoutput750,
 		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750,
 		 double evtWeight);
@@ -99,8 +101,13 @@ public:
   TH1 * histogram_vbf_m_jj_;
   TH1 * histogram_vbf_dEta_jj_;
 
+  TH1 * histogram_log_memProb_signal_;
+  TH1 * histogram_log_memProbErr_signal_;
+  TH1 * histogram_log_memProb_background_;
+  TH1 * histogram_log_memProbErr_background_;
   TH1 * histogram_memLR_;
   TH1 * histogram_log_memLR_div_Err_;
+  TH1 * histogram_memScore_;
   TH1 * histogram_memCpuTime_;
 
   TH1 * histogram_MVAOutput300_;
