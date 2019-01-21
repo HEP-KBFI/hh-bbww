@@ -98,10 +98,10 @@ public:
   TH1 * histogram_vbf_m_jj_;
   TH1 * histogram_vbf_dEta_jj_;
 
-  TH1 * histogram_memProb_signal_;
-  TH1 * histogram_memProbErr_signal_;
-  TH1 * histogram_memProb_background_;
-  TH1 * histogram_memProbErr_background_;
+  TH1 * histogram_log_memProb_signal_;
+  TH1 * histogram_log_memProbErr_signal_;
+  TH1 * histogram_log_memProb_background_;
+  TH1 * histogram_log_memProbErr_background_;
   TH1 * histogram_memLR_;
   TH1 * histogram_log_memLR_div_Err_;
   TH1 * histogram_memScore_;
