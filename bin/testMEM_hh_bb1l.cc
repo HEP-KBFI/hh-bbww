@@ -1233,20 +1233,27 @@ int main(int argc, char* argv[])
       }
     } else {
       double minRank = 1.e+3;
+      int idxSelJet1 = 0;
       for ( std::vector<const RecoJet*>::const_iterator selJet1 = selJetsAK4_Wjj.begin();
 	    selJet1 != selJetsAK4_Wjj.end(); ++selJet1 ) {
+	int idxSelJet2 = idxSelJet2 + 1;
 	for ( std::vector<const RecoJet*>::const_iterator selJet2 = selJet1 + 1;
 	      selJet2 != selJetsAK4_Wjj.end(); ++selJet2 ) {
 	  Particle::LorentzVector jjP4 = (*selJet1)->p4() + (*selJet2)->p4();
 	  double m_jj = jjP4.mass();
 	  double pT_jj = jjP4.pt();
 	  double rank = TMath::Abs(m_jj - mem::wBosonMass)/TMath::Sqrt(TMath::Max(10., pT_jj));
+	  std::cout << "selJet1: pT = " << (*selJet1)->pt() << ", eta = " << (*selJet1)->eta() << ", phi = " << (*selJet1)->phi() << std::endl;
+	  std::cout << "selJet2: pT = " << (*selJet2)->pt() << ", eta = " << (*selJet2)->eta() << ", phi = " << (*selJet2)->phi() << std::endl;
+	  std::cout << "abs(m_jj - mW) = " << TMath::Abs(m_jj - mem::wBosonMass) << ", pT_jj = " << pT_jj << ": rank  = " << rank << std::endl;
 	  if ( rank < minRank ) {
 	    selJet1_Wjj = (*selJet1);
 	    selJet2_Wjj = (*selJet2);
 	    minRank = rank;
 	  }
+	  ++idxSelJet2;	 
 	} 
+	++idxSelJet1;
       }
       if ( !selJet1_Wjj && selJetsAK4_Wjj.size() >= 1 ) selJet1_Wjj = selJetsAK4_Wjj[0];
       if ( !selJet2_Wjj && selJetsAK4_Wjj.size() >= 2 ) selJet2_Wjj = selJetsAK4_Wjj[1];
@@ -1278,20 +1285,13 @@ int main(int argc, char* argv[])
     cutFlowTable.update(">= 2 jets from W->jj", evtWeight_inclusive);
     cutFlowHistManager->fillHistograms(">= 2 jets from W->jj", evtWeight_inclusive);
 
-    std::vector<const RecoJetBase*> selJets_Wjj;
-    if ( selJet1_Wjj ) selJets_Wjj.push_back(selJet1_Wjj);
-    if ( selJet2_Wjj ) selJets_Wjj.push_back(selJet2_Wjj);    
+    std::vector<const RecoJetBase*> selJets_Wjj = { selJet1_Wjj, selJet2_Wjj };
     std::sort(selJets_Wjj.begin(), selJets_Wjj.end(), isHigherPt);
     subjetGenMatcherAK8.addGenJetMatch(selJets_Wjj, genJetsFromWBosonForMatching, 0.2);
-    assert(selJets_Wjj.size() >= 1);
     const RecoJetBase* selJet_Wjj_lead = selJets_Wjj[0];
     const Particle::LorentzVector& selJetP4_Wjj_lead = selJet_Wjj_lead->p4();
-    const RecoJetBase* selJet_Wjj_sublead = nullptr;
-    Particle::LorentzVector selJetP4_Wjj_sublead;
-    if ( selJets_Wjj.size() >= 2 ) {
-      selJet_Wjj_sublead = selJets_Wjj[1];
-      selJetP4_Wjj_sublead = selJet_Wjj_sublead->p4();
-    }
+    const RecoJetBase* selJet_Wjj_sublead = selJets_Wjj[1];
+    Particle::LorentzVector selJetP4_Wjj_sublead = selJet_Wjj_sublead->p4();
 
     bool failsLowMassVeto = false;
     for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();
@@ -1490,14 +1490,28 @@ int main(int argc, char* argv[])
     // check that reconstructed leptons and b-jets are generator-level matched
     if ( genMatchingOption == 1 || genMatchingOption == 2 ) {
       if ( !(selLepton->genLepton() && selJet_Wjj_lead->genJet() && selJet_Wjj_sublead->genJet() && selJet_Hbb_lead->genJet() && selJet_Hbb_sublead->genJet()) ) {
-	if ( run_lumi_eventSelector ) {
+	//if ( run_lumi_eventSelector ) {
 	  std::cout << "event " << eventInfo.str() << " FAILS generator-level matching." << std::endl;
 	  std::cout << "selLepton->genLepton = " << selLepton->genLepton() << std::endl;
+	  std::cout << "selLepton: pT = " << selLepton->pt() << ", eta = " << selLepton->eta() << ", phi = " << selLepton->phi() << std::endl;
+	  const GenJet* genJetFromWBoson1 = &genJetsFromWBosonForMatching[0];
+	  std::cout << "genJetFromWBoson #0: pT = " << genJetFromWBoson1->pt() << ", eta = " << genJetFromWBoson1->eta() << ", phi = " << genJetFromWBoson1->phi() << std::endl;
+	  const GenJet* genJetFromWBoson2 = &genJetsFromWBosonForMatching[1];
+	  std::cout << "genJetFromWBoson #1: pT = " << genJetFromWBoson2->pt() << ", eta = " << genJetFromWBoson2->eta() << ", phi = " << genJetFromWBoson2->phi() << std::endl;
+	  const GenJet* genBJet1 = &genBJetsForMatching[0];
+	  std::cout << "genBJet #0: pT = " << genBJet1->pt() << ", eta = " << genBJet1->eta() << ", phi = " << genBJet1->phi() << std::endl;
+	  const GenJet* genBJet2 = &genBJetsForMatching[1];
+	  std::cout << "genBJet #1: pT = " << genBJet2->pt() << ", eta = " << genBJet2->eta() << ", phi = " << genBJet2->phi() << std::endl;
+	  printCollection("uncleaned AK4 jets", jet_ptrs_ak4);
 	  std::cout << "selJet_Wjj_lead->genJet = " << selJet_Wjj_lead->genJet() << std::endl;
+          std::cout << "selJet_Wjj_lead: pT = " << selJet_Wjj_lead->pt() << ", eta = " << selJet_Wjj_lead->eta() << ", phi = " << selJet_Wjj_lead->phi() << std::endl;
 	  std::cout << "selJet_Wjj_sublead->genJet = " << selJet_Wjj_sublead->genJet() << std::endl;
+	  std::cout << "selJet_Wjj_sublead: pT = " << selJet_Wjj_sublead->pt() << ", eta = " << selJet_Wjj_sublead->eta() << ", phi = " << selJet_Wjj_sublead->phi() << std::endl;
 	  std::cout << "selJet_Hbb_lead->genJet = " << selJet_Hbb_lead->genJet() << std::endl;
+	  std::cout << "selJet_Hbb_lead: pT = " << selJet_Hbb_lead->pt() << ", eta = " << selJet_Hbb_lead->eta() << ", phi = " << selJet_Hbb_lead->phi() << std::endl;
 	  std::cout << "selJet_Hbb_sublead->genJet = " << selJet_Hbb_sublead->genJet() << std::endl;
-	}
+	  std::cout << "selJet_Hbb_sublead: pT = " << selJet_Hbb_sublead->pt() << ", eta = " << selJet_Hbb_sublead->eta() << ", phi = " << selJet_Hbb_sublead->phi() << std::endl;
+	//}
 	continue;
       }
     }
@@ -1566,7 +1580,8 @@ int main(int argc, char* argv[])
     MEMbbwwAlgoSingleLepton memAlgo(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), verbosity);
     memAlgo.applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
     memAlgo.setIntMode(MEMbbwwAlgoSingleLepton::kVAMP);
-    memAlgo.setMaxObjFunctionCalls(1000);
+    memAlgo.setMaxObjFunctionCalls_signal(2500);
+    memAlgo.setMaxObjFunctionCalls_background(25000);
     memAlgo.integrate(memMeasuredParticles, memMEtPx, memMEtPy, met.cov());
     const MEMbbwwResultSingleLepton& memResult = memAlgo.getResult();
     clock.Stop("memAlgo");
