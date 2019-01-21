@@ -120,15 +120,16 @@ findGenLepton_and_NeutrinoFromWBoson(const GenParticle* genWBoson, const std::ve
   return std::pair<const GenLepton*, const GenParticle*>(genLeptonFromWBoson, genNeutrinoFromWBoson);
 }
 
-std::pair<const GenJet*, const GenJet*> 
-findGenJetsFromWBoson(const GenParticle* genWBoson, const std::vector<GenJet>& genJets)
+template<typename T>
+std::pair<const T*, const T*> 
+findGenJetsFromWBoson(const GenParticle* genWBoson, const std::vector<T>& genJets)
 {
-  const GenJet* genJet1FromWBoson = nullptr;
-  const GenJet* genJet2FromWBoson = nullptr;
+  const T* genJet1FromWBoson = nullptr;
+  const T* genJet2FromWBoson = nullptr;
   double minDeltaMass = 1.e+3;
-  for ( std::vector<GenJet>::const_iterator genJet1 = genJets.begin();
+  for ( typename std::vector<T>::const_iterator genJet1 = genJets.begin();
 	genJet1 != genJets.end(); ++genJet1 ) {
-    for ( std::vector<GenJet>::const_iterator genJet2 = genJet1 + 1;
+    for ( typename std::vector<T>::const_iterator genJet2 = genJet1 + 1;
 	  genJet2 != genJets.end(); ++genJet2 ) {
       Particle::LorentzVector genDijetP4 = genJet1->p4() + genJet2->p4();
       double deltaMass = TMath::Abs(genDijetP4.mass() - genWBoson->mass());
@@ -140,7 +141,7 @@ findGenJetsFromWBoson(const GenParticle* genWBoson, const std::vector<GenJet>& g
       }
     }
   }
-  return std::pair<const GenJet*, const GenJet*>(genJet1FromWBoson, genJet2FromWBoson);
+  return std::pair<const T*, const T*>(genJet1FromWBoson, genJet2FromWBoson);
 }
 
 std::string
@@ -931,29 +932,39 @@ int main(int argc, char* argv[])
           findGenLepton_and_NeutrinoFromWBoson(genWBosonMinus, genLeptons, genNeutrinos);
 	const GenLepton* genLepton = nullptr;
 	const GenParticle* genNeutrino = nullptr;
-	const GenJet* genJet1_Wjj = nullptr;
-	const GenJet* genJet2_Wjj = nullptr;
+	//const GenJet* genJet1_Wjj = nullptr;
+	//const GenJet* genJet2_Wjj = nullptr;
+	const GenParticle* genJet1_Wjj = nullptr;
+	const GenParticle* genJet2_Wjj = nullptr;
 	if (  (genLepton_and_NeutrinoFromWBosonPlus.first  && genLepton_and_NeutrinoFromWBosonPlus.second ) &&
 	     !(genLepton_and_NeutrinoFromWBosonMinus.first && genLepton_and_NeutrinoFromWBosonMinus.second) ) {
 	  genLepton = genLepton_and_NeutrinoFromWBosonPlus.first;
 	  genNeutrino = genLepton_and_NeutrinoFromWBosonPlus.second;
-	  std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
-            findGenJetsFromWBoson(genWBosonMinus, genJets);
+	  //std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
+          //  findGenJetsFromWBoson(genWBosonMinus, genJets);
+	  std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson = 
+            findGenJetsFromWBoson(genWBosonMinus, genWJets);
 	  genJet1_Wjj = genJetsFromWBoson.first;
 	  genJet2_Wjj = genJetsFromWBoson.second;
 	} else if (  (genLepton_and_NeutrinoFromWBosonMinus.first && genLepton_and_NeutrinoFromWBosonMinus.second) &&
 		    !(genLepton_and_NeutrinoFromWBosonPlus.first  && genLepton_and_NeutrinoFromWBosonPlus.second ) ) {
 	  genLepton = genLepton_and_NeutrinoFromWBosonMinus.first;
 	  genNeutrino = genLepton_and_NeutrinoFromWBosonMinus.second;
-	  std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
-            findGenJetsFromWBoson(genWBosonPlus, genJets);
+	  //std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
+          //  findGenJetsFromWBoson(genWBosonPlus, genJets);
+	  std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson = 
+            findGenJetsFromWBoson(genWBosonMinus, genWJets);
 	  genJet1_Wjj = genJetsFromWBoson.first;
 	  genJet2_Wjj = genJetsFromWBoson.second;
 	} 
 	if ( !(genLepton && genNeutrino && genJet1_Wjj && genJet2_Wjj) ) continue;
 	genLeptonsForMatching.push_back(*genLepton);
-	genJetsFromWBosonForMatching.push_back(*genJet1_Wjj);
-	genJetsFromWBosonForMatching.push_back(*genJet2_Wjj);
+	//genJetsFromWBosonForMatching.push_back(*genJet1_Wjj);
+	//genJetsFromWBosonForMatching.push_back(*genJet2_Wjj);
+	genJetsFromWBosonForMatching.push_back(GenJet(
+          genJet1_Wjj->pt(), genJet1_Wjj->eta(), genJet1_Wjj->phi(), genJet1_Wjj->mass(), genJet1_Wjj->pdgId()));
+	genJetsFromWBosonForMatching.push_back(GenJet(
+          genJet2_Wjj->pt(), genJet2_Wjj->eta(), genJet2_Wjj->phi(), genJet2_Wjj->mass(), genJet2_Wjj->pdgId()));
 	genMEtPx = genNeutrino->p4().px();
 	genMEtPy = genNeutrino->p4().py();
       }
@@ -1243,9 +1254,9 @@ int main(int argc, char* argv[])
 	  double m_jj = jjP4.mass();
 	  double pT_jj = jjP4.pt();
 	  double rank = TMath::Abs(m_jj - mem::wBosonMass)/TMath::Sqrt(TMath::Max(10., pT_jj));
-	  std::cout << "selJet1: pT = " << (*selJet1)->pt() << ", eta = " << (*selJet1)->eta() << ", phi = " << (*selJet1)->phi() << std::endl;
-	  std::cout << "selJet2: pT = " << (*selJet2)->pt() << ", eta = " << (*selJet2)->eta() << ", phi = " << (*selJet2)->phi() << std::endl;
-	  std::cout << "abs(m_jj - mW) = " << TMath::Abs(m_jj - mem::wBosonMass) << ", pT_jj = " << pT_jj << ": rank  = " << rank << std::endl;
+	  //std::cout << "selJet1: pT = " << (*selJet1)->pt() << ", eta = " << (*selJet1)->eta() << ", phi = " << (*selJet1)->phi() << std::endl;
+	  //std::cout << "selJet2: pT = " << (*selJet2)->pt() << ", eta = " << (*selJet2)->eta() << ", phi = " << (*selJet2)->phi() << std::endl;
+	  //std::cout << "abs(m_jj - mW) = " << TMath::Abs(m_jj - mem::wBosonMass) << ", pT_jj = " << pT_jj << ": rank  = " << rank << std::endl;
 	  if ( rank < minRank ) {
 	    selJet1_Wjj = (*selJet1);
 	    selJet2_Wjj = (*selJet2);
