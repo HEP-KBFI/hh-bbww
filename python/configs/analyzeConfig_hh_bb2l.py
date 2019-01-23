@@ -63,7 +63,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         select_rle_output = False,
         verbose           = False,
         dry_run           = False,
+        do_sync           = False,
         isDebug           = False,
+        rle_select        = '',
         use_nonnominal    = False,
         hlt_filter        = False,
         use_home          = True,
@@ -87,6 +89,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       lep_mva_wp         = lep_mva_wp,
       verbose            = verbose,
       dry_run            = dry_run,
+      do_sync            = do_sync,
       isDebug            = isDebug,
       use_home           = use_home,
       template_dir       = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
@@ -139,6 +142,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
 
     self.select_rle_output = select_rle_output
+    self.rle_select = rle_select
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
@@ -264,7 +268,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
             sample_category = sample_info["sample_category"]
             is_mc = (sample_info["type"] == "mc")
-            is_signal = (sample_category.startswith("signal"))
             for central_or_shift in self.central_or_shifts:
 
               inputFileList = inputFileLists[sample_name]
@@ -297,6 +300,40 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   logging.warning("No input ntuples for %s --> skipping job !!" % (key_analyze_job))
                   continue
 
+                syncOutput = ''
+                syncTree = ''
+                syncRequireGenMatching = True
+                if self.do_sync:
+                  if lepton_charge_selection != 'OS':
+                    continue
+                  mcClosure_match = mcClosure_regex.match(lepton_selection_and_frWeight)
+                  if lepton_selection_and_frWeight == 'Tight':
+                    syncOutput = os.path.join(self.dirs[key_dir][DKEY_SYNC], '%s_%s_SR.root' % (self.channel, central_or_shift))
+                    syncTree = 'syncTree_%s_SR' % self.channel.replace('_', '')
+                    syncRequireGenMatching = True and is_mc
+                  elif lepton_selection_and_frWeight == 'Fakeable_wFakeRateWeights':
+                    syncOutput = os.path.join(self.dirs[key_dir][DKEY_SYNC], '%s_%s_Fake.root' % (self.channel, central_or_shift))
+                    syncTree = 'syncTree_%s_Fake' % self.channel.replace('_', '')
+                  elif mcClosure_match:
+                    mcClosure_type = mcClosure_match.group('type')
+                    syncOutput = os.path.join(self.dirs[key_dir][DKEY_SYNC], '%s_%s_mcClosure_%s.root' % (self.channel, central_or_shift, mcClosure_type))
+                    syncTree = 'syncTree_%s_mcClosure_%s' % (self.channel.replace('_', ''), mcClosure_type)
+                  else:
+                    continue
+
+                if syncTree and central_or_shift != "central":
+                  syncTree = os.path.join(central_or_shift, syncTree)
+
+                syncRLE = ''
+                if self.do_sync and self.rle_select:
+                  syncRLE = self.rle_select % syncTree
+                  if not os.path.isfile(syncRLE):
+                    logging.warning("Input RLE file for the sync is missing: %s; skipping the job" % syncRLE)
+                    continue
+
+                if syncOutput:
+                  self.inputFiles_sync['sync'].append(syncOutput)
+
                 cfg_key = getKey(self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift, jobId)
                 cfgFile_modified_path = os.path.join(self.dirs[key_dir][DKEY_CFGS], "analyze_%s_cfg.py" % cfg_key)
                 histogramFile_path = os.path.join(self.dirs[key_dir][DKEY_HIST], "%s.root" % key_analyze_job)
@@ -321,6 +358,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'central_or_shift'         : central_or_shift,
                   'evtCategories'            : self.evtCategories,
                   'selectBDT'                : self.isBDTtraining,
+                  'syncOutput'               : syncOutput,
+                  'syncTree'                 : syncTree,
+                  'syncRLE'                  : syncRLE,
+                  'syncRequireGenMatching'   : syncRequireGenMatching,
                   'apply_hlt_filter'         : self.hlt_filter,
                   'useNonNominal'            : self.use_nonnominal,
                   'fillGenEvtHistograms'     : True,
@@ -335,7 +376,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   (self.channel, process_name, lepton_charge_selection, lepton_selection_and_frWeight))
                 if self.isBDTtraining:
                   self.targets.append(self.outputFile_hadd_stage1[key_hadd_stage1])
-            if self.isBDTtraining:
+            if self.isBDTtraining or self.do_sync:
               continue
 
             #----------------------------------------------------------------------------
@@ -433,7 +474,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                       self.outputFile_hadd_stage1_5[key_hadd_stage1_5] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage1_5_%s_%s_%s_%s.root" % \
                         (self.channel, lepton_charge_selection, lepton_selection_and_frWeight, category))
 
-            if self.isBDTtraining:
+            if self.isBDTtraining or self.do_sync:
               continue
 
             # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
@@ -445,7 +486,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   self.inputFiles_hadd_stage1_5[key_hadd_stage1_5] = []
                 self.inputFiles_hadd_stage1_5[key_hadd_stage1_5].append(self.jobOptions_copyHistograms[key_copyHistograms]['inputFile'])
 
-          if self.isBDTtraining:
+          if self.isBDTtraining or self.do_sync:
             continue
 
           for category in self.evtCategories:
@@ -538,15 +579,27 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             self.outputFile_hadd_stage2[key_hadd_stage2] = os.path.join(self.dirs[DKEY_HIST], "histograms_harvested_stage2_%s_%s_%s_%s.root" % \
               (self.channel, lepton_charge_selection, lepton_selection_and_frWeight, category))
 
-    if self.isBDTtraining:
+    if self.isBDTtraining or self.do_sync:
       if self.is_sbatch:
         logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
         self.sbatchFile_analyze = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_analyze_%s.py" % self.channel)
-        self.createScript_sbatch_analyze(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
+        if self.isBDTtraining:
+          self.createScript_sbatch_analyze(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
+        elif self.do_sync:
+          self.createScript_sbatch_syncNtuple(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
       logging.info("Creating Makefile")
       lines_makefile = []
-      self.addToMakefile_analyze(lines_makefile)
-      self.addToMakefile_hadd_stage1(lines_makefile)
+      if self.isBDTtraining:
+        self.addToMakefile_analyze(lines_makefile)
+        self.addToMakefile_hadd_stage1(lines_makefile)
+      elif self.do_sync:
+        self.addToMakefile_syncNtuple(lines_makefile)
+        outputFile_sync_path = os.path.join(self.outputDir, DKEY_SYNC, '%s.root' % self.channel)
+        self.outputFile_sync['sync'] = outputFile_sync_path
+        self.targets.append(outputFile_sync_path)
+        self.addToMakefile_hadd_sync(lines_makefile)
+      else:
+        raise ValueError("Internal logic error")
       self.createMakefile(lines_makefile)
       logging.info("Done")
       return self.num_jobs
