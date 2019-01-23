@@ -51,9 +51,9 @@ SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileNam
   {
     outputTree->SetDirectory(outputDir);
   }
-  for(int var = as_integer(FloatVariableType::PFMET); var <= as_integer(FloatVariableType::MC_weight); ++var)
+  for(int var = as_integer(FloatVariableType_bbww::PFMET); var <= as_integer(FloatVariableType_bbww::MC_weight); ++var)
   {
-    floatMap[static_cast<FloatVariableType>(var)] = placeholder_value;
+    floatMap[static_cast<FloatVariableType_bbww>(var)] = placeholder_value;
   }
 }
 
@@ -90,10 +90,10 @@ SyncNtupleManager_bbww::initializeBranches()
     n_presel_jet,      n_presel_jet_str,
 
 //--- MET/MHT
-    floatMap[FloatVariableType::PFMET],                    "PFMET",
-    floatMap[FloatVariableType::PFMETphi],                 "PFMETphi",
-    floatMap[FloatVariableType::PU_weight],                "PU_weight",
-    floatMap[FloatVariableType::MC_weight],                "MC_weight"
+    floatMap[FloatVariableType_bbww::PFMET],                    "PFMET",
+    floatMap[FloatVariableType_bbww::PFMETphi],                 "PFMETphi",
+    floatMap[FloatVariableType_bbww::PU_weight],                "PU_weight",
+    floatMap[FloatVariableType_bbww::MC_weight],                "MC_weight"
   );
 
   setBranches(
@@ -333,7 +333,7 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoJetAK8 *> & jets,
 
 void
 SyncNtupleManager_bbww::read(Float_t value,
-                        FloatVariableType type)
+                             FloatVariableType_bbww type)
 {
   floatMap[type] = value;
 }
