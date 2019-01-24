@@ -68,7 +68,7 @@ main(int argc,
   }
 
   const edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
-  const edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_inclusive");
+  const edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbww_inclusive");
 
   const std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
   const std::string process_string = cfg_analyze.getParameter<std::string>("process");

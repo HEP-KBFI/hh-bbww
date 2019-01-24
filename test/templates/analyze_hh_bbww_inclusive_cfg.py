@@ -1,6 +1,9 @@
 import FWCore.ParameterSet.Config as cms
 import os
 
+from tthAnalysis.HiggsToTauTau.configs.recommendedMEtFilters_cfi import *
+from tthAnalysis.HiggsToTauTau.configs.EvtYieldHistManager_cfi import *
+
 process = cms.PSet()
 
 process.fwliteInput = cms.PSet(
@@ -13,7 +16,7 @@ process.fwliteOutput = cms.PSet(
     fileName = cms.string('')
 )
 
-process.analyze_inclusive = cms.PSet(
+process.analyze_hh_bbww_inclusive = cms.PSet(
     treeName = cms.string('Events'),
     process = cms.string('signal'),
     era = cms.string('2017'),
