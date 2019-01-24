@@ -78,69 +78,69 @@ EvtHistManager_hh_bb1l::getHistogram_EventCounter() const
 void
 EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
 {
-  histogram_numElectrons_                = book1D(dir, "numElectrons",              "numElectrons",                5,  -0.5,  +4.5);
-  histogram_numMuons_                    = book1D(dir, "numMuons",                  "numMuons",                    5,  -0.5,  +4.5);
-  histogram_numJets_                     = book1D(dir, "numJets",                   "numJets",                    20,  -0.5, +19.5);
-  histogram_numBJets_loose_              = book1D(dir, "numBJets_loose",            "numBJets_loose",             10,  -0.5,  +9.5);
-  histogram_numBJets_medium_             = book1D(dir, "numBJets_medium",           "numBJets_medium",            10,  -0.5,  +9.5);
+  histogram_numElectrons_                = book1D(dir, "numElectrons",              "numElectrons",                5,   -0.5,  +4.5);
+  histogram_numMuons_                    = book1D(dir, "numMuons",                  "numMuons",                    5,   -0.5,  +4.5);
+  histogram_numJets_                     = book1D(dir, "numJets",                   "numJets",                    20,   -0.5, +19.5);
+  histogram_numBJets_loose_              = book1D(dir, "numBJets_loose",            "numBJets_loose",             10,   -0.5,  +9.5);
+  histogram_numBJets_medium_             = book1D(dir, "numBJets_medium",           "numBJets_medium",            10,   -0.5,  +9.5);
 
-  histogram_HT_                          = book1D(dir, "HT",                        "HT",                        150,   0., 1500.);
-  histogram_STMET_                       = book1D(dir, "STMET",                     "STMET",                     150,   0., 1500.);
+  histogram_HT_                          = book1D(dir, "HT",                        "HT",                        150,    0., 1500.);
+  histogram_STMET_                       = book1D(dir, "STMET",                     "STMET",                     150,    0., 1500.);
 
-  histogram_m_Hbb_                       = book1D(dir, "m_Hbb",                     "m_Hbb",                      40,   0.,  200.); 
-  histogram_dR_Hbb_                      = book1D(dir, "dR_Hbb",                    "dR_Hbb",                    100,   0.,    5.);
-  histogram_dPhi_Hbb_                    = book1D(dir, "dPhi_Hbb",                  "dPhi_Hbb",                   36,   0., TMath::Pi());
-  histogram_pT_Hbb_                      = book1D(dir, "pT_Hbb",                    "pT_Hbb",                    100,   0.,  500.); 
+  histogram_m_Hbb_                       = book1D(dir, "m_Hbb",                     "m_Hbb",                      40,    0.,  200.); 
+  histogram_dR_Hbb_                      = book1D(dir, "dR_Hbb",                    "dR_Hbb",                    100,    0.,    5.);
+  histogram_dPhi_Hbb_                    = book1D(dir, "dPhi_Hbb",                  "dPhi_Hbb",                   36,    0., TMath::Pi());
+  histogram_pT_Hbb_                      = book1D(dir, "pT_Hbb",                    "pT_Hbb",                    100,    0.,  500.); 
 
-  histogram_m_Wjj_                       = book1D(dir, "m_Wjj",                     "m_Wjj",                      40,   0.,  200.); 
-  histogram_dR_Wjj_                      = book1D(dir, "dR_Wjj",                    "dR_Wjj",                    100,   0.,    5.);
-  histogram_dPhi_Wjj_                    = book1D(dir, "dPhi_Wjj",                  "dPhi_Wjj",                   36,   0., TMath::Pi());
-  histogram_pT_Wjj_                      = book1D(dir, "pT_Wjj",                    "pT_Wjj",                    100,   0.,  500.); 
+  histogram_m_Wjj_                       = book1D(dir, "m_Wjj",                     "m_Wjj",                      40,    0.,  200.); 
+  histogram_dR_Wjj_                      = book1D(dir, "dR_Wjj",                    "dR_Wjj",                    100,    0.,    5.);
+  histogram_dPhi_Wjj_                    = book1D(dir, "dPhi_Wjj",                  "dPhi_Wjj",                   36,    0., TMath::Pi());
+  histogram_pT_Wjj_                      = book1D(dir, "pT_Wjj",                    "pT_Wjj",                    100,    0.,  500.); 
 
-  histogram_dR_Hww_                      = book1D(dir, "dR_Hww",                    "dR_Hww",                    100,   0.,    5.);
-  histogram_dPhi_Hww_                    = book1D(dir, "dPhi_Hww",                  "dPhi_Hww",                   36,   0., TMath::Pi());
-  histogram_pT_Hww_                      = book1D(dir, "pT_Hww",                    "pT_Hww",                    100,   0.,  500.);  
-  histogram_Smin_Hww_                    = book1D(dir, "Smin_Hww",                  "Smin_Hww",                  100,   0.,  500.);  
+  histogram_dR_Hww_                      = book1D(dir, "dR_Hww",                    "dR_Hww",                    100,    0.,    5.);
+  histogram_dPhi_Hww_                    = book1D(dir, "dPhi_Hww",                  "dPhi_Hww",                   36,    0., TMath::Pi());
+  histogram_pT_Hww_                      = book1D(dir, "pT_Hww",                    "pT_Hww",                    100,    0.,  500.);  
+  histogram_Smin_Hww_                    = book1D(dir, "Smin_Hww",                  "Smin_Hww",                  100,    0.,  500.);  
 
-  histogram_m_HHvis_                     = book1D(dir, "m_HHvis",                   "m_HHvis",                   100,   0., 1000.);  
-  histogram_m_HH_                        = book1D(dir, "m_HH",                      "m_HH",                      150,   0., 1500.);
-  histogram_m_HH_B2G_18_008_             = book1D(dir, "m_HH_B2G_18_008",           "m_HH_B2G_18_008",           150,   0., 1500.);
-  histogram_m_HH_hme_                    = book1D(dir, "m_HH_hme",                  "m_HH_hme",                  150,   0., 1500.);
-  histogram_dR_HH_                       = book1D(dir, "dR_HH",                     "dR_HH",                     100,   0.,    5.);
-  histogram_dPhi_HH_                     = book1D(dir, "dPhi_HH",                   "dPhi_HH",                    36,   0., TMath::Pi());
-  histogram_pT_HH_                       = book1D(dir, "pT_HH",                     "pT_HH",                     100,   0.,  500.);  
-  histogram_Smin_HH_                     = book1D(dir, "Smin_HH",                   "Smin_HH",                   100,   0., 1000.); 
+  histogram_m_HHvis_                     = book1D(dir, "m_HHvis",                   "m_HHvis",                   100,    0., 1000.);  
+  histogram_m_HH_                        = book1D(dir, "m_HH",                      "m_HH",                      150,    0., 1500.);
+  histogram_m_HH_B2G_18_008_             = book1D(dir, "m_HH_B2G_18_008",           "m_HH_B2G_18_008",           150,    0., 1500.);
+  histogram_m_HH_hme_                    = book1D(dir, "m_HH_hme",                  "m_HH_hme",                  150,    0., 1500.);
+  histogram_dR_HH_                       = book1D(dir, "dR_HH",                     "dR_HH",                     100,    0.,    5.);
+  histogram_dPhi_HH_                     = book1D(dir, "dPhi_HH",                   "dPhi_HH",                    36,    0., TMath::Pi());
+  histogram_pT_HH_                       = book1D(dir, "pT_HH",                     "pT_HH",                     100,    0.,  500.);  
+  histogram_Smin_HH_                     = book1D(dir, "Smin_HH",                   "Smin_HH",                   100,    0., 1000.); 
   
-  histogram_mT_W_                        = book1D(dir, "mT_W",                      "mT_W",                       40,   0.,  200.); 
-  histogram_mT_top_2particle_            = book1D(dir, "mT_top_2particle",          "mT_top_2particle",          100,   0.,  500.);
-  histogram_mT_top_3particle_            = book1D(dir, "mT_top_3particle",          "mT_top_3particle",          100,   0.,  500.);
+  histogram_mT_W_                        = book1D(dir, "mT_W",                      "mT_W",                       40,    0.,  200.); 
+  histogram_mT_top_2particle_            = book1D(dir, "mT_top_2particle",          "mT_top_2particle",          100,    0.,  500.);
+  histogram_mT_top_3particle_            = book1D(dir, "mT_top_3particle",          "mT_top_3particle",          100,    0.,  500.);
   
-  histogram_mvaOutput_Hj_tagger_         = book1D(dir, "mvaOutput_Hj_tagger",       "mvaOutput_Hj_tagger",        40,  -1.,   +1.);
-  histogram_mvaOutput_Hjj_tagger_        = book1D(dir, "mvaOutput_Hjj_tagger",      "mvaOutput_Hjj_tagger",       40,  -1.,   +1.);
+  histogram_mvaOutput_Hj_tagger_         = book1D(dir, "mvaOutput_Hj_tagger",       "mvaOutput_Hj_tagger",        40,   -1.,   +1.);
+  histogram_mvaOutput_Hjj_tagger_        = book1D(dir, "mvaOutput_Hjj_tagger",      "mvaOutput_Hjj_tagger",       40,   -1.,   +1.);
 
-  histogram_vbf_jet1_pt_                 = book1D(dir, "vbf_jet1_pt",               "vbf_jet1_pt",                40,   0.,  200.);  
-  histogram_vbf_jet1_eta_                = book1D(dir, "vbf_jet1_eta",              "vbf_jet1_eta",              100,  -5.0,  +5.0);
-  histogram_vbf_jet2_pt_                 = book1D(dir, "vbf_jet2_pt",               "vbf_jet2_pt",                40,   0.,  200.);  
-  histogram_vbf_jet2_eta_                = book1D(dir, "vbf_jet2_eta",              "vbf_jet2_eta",              100,  -5.0,  +5.0);
-  histogram_vbf_m_jj_                    = book1D(dir, "vbf_m_jj",                  "vbf_m_jj",                  150,   0., 1500.);
-  histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               "vbf_dEta_jj",               100,   0.,   10.);
+  histogram_vbf_jet1_pt_                 = book1D(dir, "vbf_jet1_pt",               "vbf_jet1_pt",                40,    0.,  200.);  
+  histogram_vbf_jet1_eta_                = book1D(dir, "vbf_jet1_eta",              "vbf_jet1_eta",              100,   -5.0,  +5.0);
+  histogram_vbf_jet2_pt_                 = book1D(dir, "vbf_jet2_pt",               "vbf_jet2_pt",                40,    0.,  200.);  
+  histogram_vbf_jet2_eta_                = book1D(dir, "vbf_jet2_eta",              "vbf_jet2_eta",              100,   -5.0,  +5.0);
+  histogram_vbf_m_jj_                    = book1D(dir, "vbf_m_jj",                  "vbf_m_jj",                  150,    0., 1500.);
+  histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               "vbf_dEta_jj",               100,    0.,   10.);
 
   if ( option_ == kOption_memEnabled ) {
-    histogram_log_memProb_signal_        = book1D(dir, "log_memProb_signal",        "log_memProb_signal",        200, -50.,  +50.);
-    histogram_log_memProbErr_signal_     = book1D(dir, "log_memProbErr_signal",     "log_memProbErr_signal",     200, -50.,  +50.);
-    histogram_log_memProb_background_    = book1D(dir, "log_memProb_background",    "log_memProb_background",    200, -50.,  +50.);
-    histogram_log_memProbErr_background_ = book1D(dir, "log_memProbErr_background", "log_memProbErr_background", 200, -50.,  +50.);
-    histogram_memLR_                     = book1D(dir, "memLR",                     "memLR",                     360,   0.,    1.);
-    histogram_log_memLR_div_Err_         = book1D(dir, "log_memLR_div_Err",         "log_memLR_div_Err",         200, -10.,  +10.);
-    histogram_memScore_                  = book1D(dir, "memScore",                  "memScore",                  360, -18.,  +18.);
-    histogram_memCpuTime_                = book1D(dir, "memCpuTime",                "memCpuTime",                100,   0., 1000.);
+    histogram_log_memProb_signal_        = book1D(dir, "log_memProb_signal",        "log_memProb_signal",        200, -200.,   0.);
+    histogram_log_memProbErr_signal_     = book1D(dir, "log_memProbErr_signal",     "log_memProbErr_signal",     200, -200.,    0.);
+    histogram_log_memProb_background_    = book1D(dir, "log_memProb_background",    "log_memProb_background",    200, -200.,    0.);
+    histogram_log_memProbErr_background_ = book1D(dir, "log_memProbErr_background", "log_memProbErr_background", 200, -200.,    0.);
+    histogram_memLR_                     = book1D(dir, "memLR",                     "memLR",                     360,    0.,    1.);
+    histogram_log_memLR_div_Err_         = book1D(dir, "log_memLR_div_Err",         "log_memLR_div_Err",         200,  -10.,  +10.);
+    histogram_memScore_                  = book1D(dir, "memScore",                  "memScore",                  360,  -18.,  +18.);
+    histogram_memCpuTime_                = book1D(dir, "memCpuTime",                "memCpuTime",                100,    0., 1000.);
   }
 
-  histogram_MVAOutput350_                = book1D(dir, "MVAOutput_350",             "MVAOutput_350",             360,   0.,    1.);
-  histogram_MVAOutput400_                = book1D(dir, "MVAOutput_400",             "MVAOutput_400",             360,   0.,    1.);
-  histogram_MVAOutput750_                = book1D(dir, "MVAOutput_750",             "MVAOutput_750",             360,   0.,    1.);
+  histogram_MVAOutput350_                = book1D(dir, "MVAOutput_350",             "MVAOutput_350",             360,    0.,    1.);
+  histogram_MVAOutput400_                = book1D(dir, "MVAOutput_400",             "MVAOutput_400",             360,    0.,    1.);
+  histogram_MVAOutput750_                = book1D(dir, "MVAOutput_750",             "MVAOutput_750",             360,    0.,    1.);
 
-  histogram_EventCounter_                = book1D(dir, "EventCounter",              "EventCounter",                1,  -0.5,  +0.5);
+  histogram_EventCounter_                = book1D(dir, "EventCounter",              "EventCounter",                1,   -0.5,  +0.5);
 }
 
 void

@@ -310,8 +310,8 @@ void makeROCforMEM()
       std::string yAxisTitle;
       std::string outputFileName;
       if ( useLogScale ) {
-	legendPosX = 0.63;
-	legendPosY = 0.17;
+	legendPosX = 0.17;
+	legendPosY = 0.64;
 	yMin = 4.e-4;
 	yMax = 1.5e0;
 	yAxisTitle = "Background Rate";
@@ -332,7 +332,7 @@ void makeROCforMEM()
 		 graphsROC["mHHvis"], legendEntries[*channel]["mHHvis"],
 		 0, "",
 		 colors, markerStyles,
-		 0.045, legendPosX, legendPosY, 0.26, 0.23,
+		 0.045, legendPosX, legendPosY, 0.23, 0.23,
 		 labelTextLines, 0.045, 
 		 0.18, 0.64, 0.31, 0.05, 
 		 0., 1.01, "Signal Efficiency", 1.2,
