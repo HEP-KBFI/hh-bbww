@@ -3,12 +3,12 @@ import os, logging, sys, getpass
 from collections import OrderedDict as OD
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bb2l import analyzeConfig_hh_bb2l
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
-from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
+from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 
 # E.g.: ./tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
-mode_choices     = [ 'default', 'forBDTtraining' ]
+mode_choices     = [ 'default', 'forBDTtraining', 'sync' ]
 sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
 systematics.full = systematics.an_extended_hh
 
@@ -16,6 +16,7 @@ parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_preselect()
+parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_hlt_filter()
 parser.add_files_per_job()
@@ -39,6 +40,7 @@ running_method     = args.running_method
 mode              = args.mode
 systematics_label = args.systematics
 use_preselected   = args.use_preselected
+rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
@@ -51,6 +53,9 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
+
+do_sync = mode.startswith('sync')
+lumi = get_lumi(era)
 
 if mode == "default":
   if era == "2016":
@@ -127,21 +132,19 @@ elif mode == "forBDTtraining":
     elif sample_info["process_name_specific"] in dy_samples_inclusive:
       sample_info["use_it"] = False  # [*]
 
+elif mode == "sync":
+  if era == "2016":
+    raise ValueError("Implement me: %s!" % era)
+  elif era == "2017":
+    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_sync import samples_2017 as samples
+  elif era == "2018":
+    raise ValueError("Implement me: %s!" % era)
+  else:
+    raise ValueError("Invalid era: %s" % era)
 else:
   raise ValueError("Internal logic error")
 
-if era == "2016":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2016 as lumi
-elif era == "2017":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2017 as lumi
-elif era == "2018":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2018 as lumi
-else:
-  raise ValueError("Invalid era: %s" % era)
-
-evtCategories = None
-##if mode == "default" and len(central_or_shifts) <= 1:
-if True != False:
+if mode != "sync":
   evtCategories = [
     "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_resolvedHbb_vbf", "hh_bb2l_resolvedHbb_nonvbf", "hh_bb2l_boostedHbb", "hh_bb2l_vbf", "hh_bb2l_nonvbf",
     "hh_2bM2l", "hh_2bM2l_resolvedHbb", "hh_2bM2l_resolvedHbb_nonvbf", "hh_2bM2l_nonvbf",
@@ -160,8 +163,8 @@ if True != False:
     "hh_1bM1bL1e1mu", "hh_1bM1bL1e1mu_resolvedHbb", "hh_1bM1bL1e1mu_resolvedHbb_nonvbf", "hh_1bM1bL1e1mu_nonvbf",
     "hh_1bM1e1mu", "hh_1bM1e1mu_resolvedHbb", "hh_1bM1e1mu_resolvedHbb_nonvbf", "hh_1bM1e1mu_nonvbf"
   ]
-##else:
-##  evtCategories = []
+else:
+  evtCategories = []
 
 if __name__ == '__main__':
   logging.basicConfig(
@@ -214,7 +217,9 @@ if __name__ == '__main__':
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
+    do_sync                               = do_sync,
     isDebug                               = debug,
+    rle_select                            = rle_select,
     use_nonnominal                        = use_nonnominal,
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,

@@ -226,8 +226,8 @@ main(int argc,
     }
 
     snm->read(eventInfo);
-    snm->read(eventInfo.pileupWeight,                 FloatVariableType::PU_weight);
-    snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType::MC_weight);
+    snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
+    snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
 
     snm->read({
       triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
@@ -270,8 +270,8 @@ main(int argc,
 //--- compute MHT and linear MET discriminant (met_LD)
     RecoMEt met = metReader->read();
 
-    snm->read(met.pt(),    FloatVariableType::PFMET);
-    snm->read(met.phi(),   FloatVariableType::PFMETphi);
+    snm->read(met.pt(),    FloatVariableType_bbww::PFMET);
+    snm->read(met.phi(),   FloatVariableType_bbww::PFMETphi);
 
     snm->fill();
 

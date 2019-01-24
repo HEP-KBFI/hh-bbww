@@ -17,7 +17,7 @@ class RecoJet;
 class RecoJetAK8;
 class hltPath;
 
-enum class FloatVariableType
+enum class FloatVariableType_bbww
 {
 //--- MET/MHT
   PFMET,
@@ -42,7 +42,7 @@ public:
   void read(const std::vector<const RecoJetAK8 *> & jetsAk8,
             bool isLS);
   void read(Float_t value,
-            FloatVariableType type);
+            FloatVariableType_bbww type);
   void read(const std::vector<std::vector<hltPath *>> & hltPaths);
   void fill();
   void write();
@@ -248,7 +248,7 @@ private:
 
   std::map<std::string, Int_t> hltMap;
 
-  std::map<FloatVariableType, Float_t> floatMap;
+  std::map<FloatVariableType_bbww, Float_t> floatMap;
 };
 
 #endif // SYNCNTUPLEMANAGER_H
