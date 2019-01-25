@@ -9,7 +9,7 @@ from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
 
 sys_choices     = systematics.an_inclusive_opts
 channel_choices = [
-  'bbww_inclusive', 'bb2l',
+  'hh_bbww_inclusive', 'hh_bb2l',
 ]
 
 parser = tthAnalyzeParser()
