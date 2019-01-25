@@ -3,6 +3,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h" // RecoJetReader
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetReaderAK8.h" // RecoJetReaderAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtReader.h" // RecoMEtReader
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs()
@@ -10,6 +11,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronCollectionSelectorLoose.h" // RecoElectronCollectionSelectorLoose
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorLoose.h" // RecoMuonCollectionSelectorLoose
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetCollectionSelectorAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // isHigherConePt(), mergeLeptonCollections()
@@ -66,7 +68,7 @@ main(int argc,
   }
 
   const edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
-  const edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_inclusive");
+  const edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbww_inclusive");
 
   const std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
   const std::string process_string = cfg_analyze.getParameter<std::string>("process");
@@ -85,23 +87,8 @@ main(int argc,
   std::vector<hltPath*> triggers_2mu = create_hltPaths(triggerNames_2mu);
   vstring triggerNames_1e1mu = cfg_analyze.getParameter<vstring>("triggers_1e1mu");
   std::vector<hltPath*> triggers_1e1mu = create_hltPaths(triggerNames_1e1mu);
-  vstring triggerNames_3e = cfg_analyze.getParameter<vstring>("triggers_3e");
-  std::vector<hltPath*> triggers_3e = create_hltPaths(triggerNames_3e);
-  vstring triggerNames_2e1mu = cfg_analyze.getParameter<vstring>("triggers_2e1mu");
-  std::vector<hltPath*> triggers_2e1mu = create_hltPaths(triggerNames_2e1mu);
-  vstring triggerNames_1e2mu = cfg_analyze.getParameter<vstring>("triggers_1e2mu");
-  std::vector<hltPath*> triggers_1e2mu = create_hltPaths(triggerNames_1e2mu);
-  vstring triggerNames_3mu = cfg_analyze.getParameter<vstring>("triggers_3mu");
-  std::vector<hltPath*> triggers_3mu = create_hltPaths(triggerNames_3mu);
-  vstring triggerNames_1mu1tau = cfg_analyze.getParameter<vstring>("triggers_1mu1tau");
-  std::vector<hltPath*> triggers_1mu1tau = create_hltPaths(triggerNames_1mu1tau);
-  vstring triggerNames_1e1tau = cfg_analyze.getParameter<vstring>("triggers_1e1tau");
-  std::vector<hltPath*> triggers_1e1tau = create_hltPaths(triggerNames_1e1tau);
-  vstring triggerNames_2tau = cfg_analyze.getParameter<vstring>("triggers_2tau");
-  std::vector<hltPath*> triggers_2tau = create_hltPaths(triggerNames_2tau);
 
-  const std::string hadTauSelection_tauIdWP = cfg_analyze.getParameter<std::string>("hadTauSelection_tauIdWP");
-  const std::string central_or_shift        = cfg_analyze.getParameter<std::string>("central_or_shift");
+  const std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
 
   const bool isMC               = cfg_analyze.getParameter<bool>("isMC");
   const bool isMC_tH            = process_string == "tHq" || process_string == "tHW";
@@ -118,8 +105,11 @@ main(int argc,
 
   const std::string branchName_electrons = cfg_analyze.getParameter<std::string>("branchName_electrons");
   const std::string branchName_muons     = cfg_analyze.getParameter<std::string>("branchName_muons");
-  const std::string branchName_hadTaus   = cfg_analyze.getParameter<std::string>("branchName_hadTaus");
   const std::string branchName_jets      = cfg_analyze.getParameter<std::string>("branchName_jets");
+  const std::string branchName_fatJets   = cfg_analyze.getParameter<std::string>("branchName_fatJets");
+  const std::string branchName_subJets   = cfg_analyze.getParameter<std::string>("branchName_subJets");
+  const std::string branchName_fatJetsLS = cfg_analyze.getParameter<std::string>("branchName_fatJetsLS");
+  const std::string branchName_subJetsLS = cfg_analyze.getParameter<std::string>("branchName_subJetsLS");
   const std::string branchName_met       = cfg_analyze.getParameter<std::string>("branchName_met");
 
   const std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
@@ -155,8 +145,6 @@ main(int argc,
   snm->initializeBranches();
   snm->initializeHLTBranches({
     triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
-    triggers_3e, triggers_2e1mu, triggers_1e2mu, triggers_3mu,
-    triggers_1mu1tau, triggers_1e1tau, triggers_2tau
   });
 
 //--- declare event-level variables
@@ -166,8 +154,6 @@ main(int argc,
 
   hltPathReader hltPathReader_instance({
     triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
-    triggers_3e, triggers_2e1mu, triggers_1e2mu, triggers_3mu,
-    triggers_1mu1tau, triggers_1e1tau, triggers_2tau
   });
   inputTree -> registerReader(&hltPathReader_instance);
 
@@ -188,6 +174,16 @@ main(int argc,
   inputTree->registerReader(jetReader);
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
+
+  RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, branchName_fatJets, branchName_subJets, true);
+  inputTree->registerReader(jetReaderAK8);
+  const RecoJetCollectionSelectorAK8 jetSelectorAK8(era, -1, isDEBUG);
+  const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
+
+  RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_fatJetsLS, branchName_subJetsLS, false);
+  inputTree->registerReader(jetReaderAK8LS);
+  const RecoJetCollectionSelectorAK8 jetSelectorAK8LS(era, -1, isDEBUG);
+  const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
 
 //--- declare missing transverse energy
   RecoMEtReader * const metReader = new RecoMEtReader(era, isMC, branchName_met);
@@ -231,18 +227,16 @@ main(int argc,
 
     snm->read({
       triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
-      triggers_3e, triggers_2e1mu, triggers_1e2mu, triggers_3mu,
-      triggers_1mu1tau, triggers_1e1tau, triggers_2tau
     });
 
-//--- build collections of electrons, muons and hadronic taus;
+//--- build collections of electrons, muons and jets
 //    resolve overlaps in order of priority: muon, electron,
     const std::vector<RecoMuon> muons = muonReader->read();
     const std::vector<const RecoMuon *> muon_ptrs = convert_to_ptrs(muons);
     // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
     const std::vector<const RecoMuon *> cleanedMuons = muon_ptrs;
-    const std::vector<const RecoMuon *> preselMuons   = preselMuonSelector  (cleanedMuons, isHigherConePt);
-    const std::vector<const RecoMuon *> selMuons = preselMuons;
+    const std::vector<const RecoMuon *> preselMuons  = preselMuonSelector(cleanedMuons, isHigherConePt);
+    const std::vector<const RecoMuon *> selMuons     = preselMuons;
     printCollection("preselMuons", preselMuons);
 
     snm->read(preselMuons);
@@ -250,28 +244,51 @@ main(int argc,
     const std::vector<RecoElectron> electrons = electronReader->read();
     const std::vector<const RecoElectron *> electron_ptrs = convert_to_ptrs(electrons);
     const std::vector<const RecoElectron *> cleanedElectrons = electronCleaner(electron_ptrs, selMuons);
-    const std::vector<const RecoElectron *> preselElectrons   = preselElectronSelector  (cleanedElectrons, isHigherConePt);
-    const std::vector<const RecoElectron *> selElectrons = preselElectrons;
+    const std::vector<const RecoElectron *> preselElectrons  = preselElectronSelector(cleanedElectrons, isHigherConePt);
+    const std::vector<const RecoElectron *> selElectrons     = preselElectrons;
 
     snm->read(preselElectrons);
 
-    const std::vector<const RecoLepton *> preselLeptons   = mergeLeptonCollections(preselElectrons,   preselMuons,   isHigherConePt);
+    const std::vector<const RecoLepton *> preselLeptons = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
 
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     const std::vector<RecoJet> jets = jetReader->read();
     const std::vector<const RecoJet *> jet_ptrs = convert_to_ptrs(jets);
-    const std::vector<const RecoJet *> cleanedJets = jetCleaner(jet_ptrs, preselLeptons);
-    const std::vector<const RecoJet *> selJets         = jetSelector          (cleanedJets, isHigherPt);
+    const std::vector<const RecoJet *> cleanedJets = jetCleaner (jet_ptrs, preselLeptons);
+    const std::vector<const RecoJet *> selJets     = jetSelector(cleanedJets, isHigherPt);
     printCollection("cleanedJets", cleanedJets);
     printCollection("selJets", selJets);
 
     snm->read(selJets);
 
+    const std::vector<RecoJetAK8> fatJets = jetReaderAK8->read();
+    const std::vector<const RecoJetAK8 *> fatJet_ptrs = convert_to_ptrs(fatJets);
+    const std::vector<const RecoJetAK8 *> cleanedFatJets = jetCleanerAK8_dR08(fatJet_ptrs, preselLeptons);
+    const std::vector<const RecoJetAK8 *> selFatJets     = jetSelectorAK8(cleanedFatJets, isHigherPt);
+    printCollection("cleanedFatJets", cleanedFatJets);
+    printCollection("selFatJets", selFatJets);
+
+    snm->read(selFatJets, false);
+
+    const std::vector<RecoJetAK8> fatJetsLS = jetReaderAK8LS->read();
+    const std::vector<const RecoJetAK8 *> fatJetLS_ptrs = convert_to_ptrs(fatJetsLS);
+    // Since we want to keep only the jets that overlap with the preselected leptons within a cone of size 1.2,
+    // we need to subtract the "cleaned" jets from the "un-cleaned" jet collection to obtain the jets that overlap
+    // with the preselected leptons
+    // However, since we check the fatjets against *all* preselected leptons, we may loose too many fatjets and thus
+    // hinder the synchronization procedure. For this reason we'll just skip the cleaning part.
+//    const std::vector<const RecoJetAK8 *> cleanedFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, preselLeptons);
+//    const std::vector<const RecoJetAK8 *> fatJetsLS_inCone = subtractCollections(fatJetLS_ptrs, cleanedFatJetsLS);
+//    const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetsLS_inCone, isHigherPt);
+    const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetLS_ptrs, isHigherPt);
+
+    snm->read(selFatJetsLS, true);
+
 //--- compute MHT and linear MET discriminant (met_LD)
     RecoMEt met = metReader->read();
 
-    snm->read(met.pt(),    FloatVariableType_bbww::PFMET);
-    snm->read(met.phi(),   FloatVariableType_bbww::PFMETphi);
+    snm->read(met.pt(),  FloatVariableType_bbww::PFMET);
+    snm->read(met.phi(), FloatVariableType_bbww::PFMETphi);
 
     snm->fill();
 

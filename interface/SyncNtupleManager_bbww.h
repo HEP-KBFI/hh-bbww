@@ -180,6 +180,8 @@ private:
   Int_t n_presel_mu;
   Int_t n_presel_ele;
   Int_t n_presel_jet;
+  Int_t n_presel_jetAK8;
+  Int_t n_presel_jetAK8LS;
 
   Float_t * mu_pt;
   Float_t * mu_eta;
