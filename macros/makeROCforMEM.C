@@ -213,14 +213,17 @@ void makeROCforMEM()
   
   std::vector<std::string> channels;
   channels.push_back("hh_bb2l");
+  channels.push_back("hh_bb2l_missingBJet");
   //channels.push_back("hh_bb1l");
 
   std::map<std::string, std::string> inputFilePaths; // key = channel
   inputFilePaths["hh_bb2l"] = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
+  inputFilePaths["hh_bb2l_missingBJet"] = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
   inputFilePaths["hh_bb1l"] = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
 
   std::map<std::string, std::string> inputFileNames; // key = channel
-  inputFileNames["hh_bb2l"] = "testMEM_hh_bb2l_all.root";
+  inputFileNames["hh_bb2l"] = "testMEM_hh_bb2l_sig1k_bgr10kCalls_newCode_all.root";
+  inputFileNames["hh_bb2l_missingBJet"] = "testMEM_hh_bb2l_sig1k_bgr10kCalls_newCode_all.root";
   inputFileNames["hh_bb1l"] = "testMEM_hh_bb1l_all.root";
 
   std::map<std::string, std::vector<std::string>> plotNames; // key = channel
@@ -229,6 +232,12 @@ void makeROCforMEM()
   plotNames["hh_bb2l"].push_back("MEM_genMatchOpt3");
   plotNames["hh_bb2l"].push_back("BDT");
   plotNames["hh_bb2l"].push_back("mHHvis");
+  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt1");
+  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt2");
+  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt3");
+  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt1_missingBJet");
+  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt2_missingBJet");
+  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt3_missingBJet");
   plotNames["hh_bb1l"].push_back("MEM_genMatchOpt1");
   plotNames["hh_bb1l"].push_back("MEM_genMatchOpt2");
   plotNames["hh_bb1l"].push_back("MEM_genMatchOpt3");
@@ -236,26 +245,38 @@ void makeROCforMEM()
   plotNames["hh_bb1l"].push_back("mHHvis");
 
   std::map<std::string, std::map<std::string, std::string>> histogramNames_signal; // key = channel, plotName
-  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memLR";
-  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memLR";
-  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memLR";
+  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memScore";
   histogramNames_signal["hh_bb2l"]["BDT"] = "signal_genMatchOpt3/sel/evt/signal/MVAOutput_400";
   histogramNames_signal["hh_bb2l"]["mHHvis"] = "signal_genMatchOpt3/sel/evt/signal/m_HHvis";
-  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memLR";
-  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memLR";
-  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memLR";
+  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt1_missingBJet"] = "signal_genMatchOpt1/sel/evt/signal/memScore_missingBJet";
+  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt2_missingBJet"] = "signal_genMatchOpt2/sel/evt/signal/memScore_missingBJet";
+  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt3_missingBJet"] = "signal_genMatchOpt3/sel/evt/signal/memScore_missingBJet";
+  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memScore";
+  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memScore";
   histogramNames_signal["hh_bb1l"]["BDT"] = "signal_genMatchOpt3/sel/evt/signal/MVAOutput_400";
   histogramNames_signal["hh_bb1l"]["mHHvis"] = "signal_genMatchOpt3/sel/evt/signal/m_HHvis";
 
   std::map<std::string, std::map<std::string, std::string>> histogramNames_background; // key = channel, plotName
-  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memLR";
-  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memLR";
-  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memLR";
+  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memScore";
+  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memScore";
+  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memScore";
   histogramNames_background["hh_bb2l"]["BDT"] = "background_genMatchOpt3/sel/evt/background/MVAOutput_400";
   histogramNames_background["hh_bb2l"]["mHHvis"] = "background_genMatchOpt3/sel/evt/background/m_HHvis";
-  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memLR";
-  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memLR";
-  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memLR";
+  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memScore";
+  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memScore";
+  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memScore";
+  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt1_missingBJet"] = "background_genMatchOpt1/sel/evt/background/memScore_missingBJet";
+  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt2_missingBJet"] = "background_genMatchOpt2/sel/evt/background/memScore_missingBJet";
+  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt3_missingBJet"] = "background_genMatchOpt3/sel/evt/background/memScore_missingBJet";
+  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memScore";
+  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memScore";
+  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memScore";
   histogramNames_background["hh_bb1l"]["BDT"] = "background_genMatchOpt3/sel/evt/background/MVAOutput_400";
   histogramNames_background["hh_bb1l"]["mHHvis"] = "background_genMatchOpt3/sel/evt/background/m_HHvis";
 
@@ -265,6 +286,12 @@ void makeROCforMEM()
   legendEntries["hh_bb2l"]["MEM_genMatchOpt3"] = "MEM opt3";
   legendEntries["hh_bb2l"]["BDT"] = "BDT";
   legendEntries["hh_bb2l"]["mHHvis"] = "m_{HH}^{vis}";
+  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt1"] = "MEM opt1";
+  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt2"] = "MEM opt2";
+  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt3"] = "MEM opt3";
+  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt1_missingBJet"] = "MEM (missing b-jet) opt1";
+  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt2_missingBJet"] = "MEM (missing b-jet) opt2";
+  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt3_missingBJet"] = "MEM (missing b-jet) opt3";
   legendEntries["hh_bb1l"]["MEM_genMatchOpt1"] = "MEM opt1";
   legendEntries["hh_bb1l"]["MEM_genMatchOpt2"] = "MEM opt2";
   legendEntries["hh_bb1l"]["MEM_genMatchOpt3"] = "MEM opt3";
@@ -310,34 +337,78 @@ void makeROCforMEM()
       std::string yAxisTitle;
       std::string outputFileName;
       if ( useLogScale ) {
-	legendPosX = 0.17;
+	legendPosX = 0.16;
 	legendPosY = 0.64;
 	yMin = 4.e-4;
 	yMax = 1.5e0;
 	yAxisTitle = "Background Rate";
 	outputFileName = Form("makeROCforMEM_%s_log.pdf", channel->data());
       } else {
-	legendPosX = 0.18;
+	legendPosX = 0.16;
 	legendPosY = 0.17;
 	yMin = 0.;
 	yMax = 1.01;
 	yAxisTitle = "Background Suppression";
 	outputFileName = Form("makeROCforMEM_%s_linear.pdf", channel->data());
       }
-      showGraphs(800, 600,
-		 graphsROC["MEM_genMatchOpt1"], legendEntries[*channel]["MEM_genMatchOpt1"],
-		 graphsROC["MEM_genMatchOpt2"], legendEntries[*channel]["MEM_genMatchOpt2"],
-		 graphsROC["MEM_genMatchOpt3"], legendEntries[*channel]["MEM_genMatchOpt3"],
-		 graphsROC["BDT"], legendEntries[*channel]["BDT"],
-		 graphsROC["mHHvis"], legendEntries[*channel]["mHHvis"],
-		 0, "",
-		 colors, markerStyles,
-		 0.045, legendPosX, legendPosY, 0.23, 0.23,
-		 labelTextLines, 0.045, 
-		 0.18, 0.64, 0.31, 0.05, 
-		 0., 1.01, "Signal Efficiency", 1.2,
-		 useLogScale, yMin, yMax, yAxisTitle, 1.2,
-		 outputFileName);
+      TGraph* graphROC1 = nullptr;
+      std::string legendEntry1;
+      TGraph* graphROC2 = nullptr;
+      std::string legendEntry2;
+      TGraph* graphROC3 = nullptr;
+      std::string legendEntry3;
+      TGraph* graphROC4 = nullptr;
+      std::string legendEntry4;
+      TGraph* graphROC5 = nullptr;
+      std::string legendEntry5;
+      TGraph* graphROC6 = nullptr;
+      std::string legendEntry6;
+      double legendSizeX, legendSizeY;
+      if ( (*channel) == "hh_bb2l_missingBJet" ) {
+	graphROC1 = graphsROC["MEM_genMatchOpt1"];
+	legendEntry1 = legendEntries[*channel]["MEM_genMatchOpt1"];
+	graphROC2 = graphsROC["MEM_genMatchOpt2"];
+	legendEntry2 = legendEntries[*channel]["MEM_genMatchOpt2"];
+	graphROC3 = graphsROC["MEM_genMatchOpt3"];
+	legendEntry3 = legendEntries[*channel]["MEM_genMatchOpt3"];
+	graphROC4 = graphsROC["MEM_genMatchOpt1_missingBJet"];
+	legendEntry4 = legendEntries[*channel]["MEM_genMatchOpt1_missingBJet"];
+	graphROC5 = graphsROC["MEM_genMatchOpt2_missingBJet"];
+	legendEntry5 = legendEntries[*channel]["MEM_genMatchOpt2_missingBJet"];
+	graphROC6 = graphsROC["MEM_genMatchOpt3_missingBJet"];
+	legendEntry6 = legendEntries[*channel]["MEM_genMatchOpt3_missingBJet"];
+	if ( legendPosY > 0.60 ) legendPosY = 0.60;
+	legendSizeX = 0.33;
+	legendSizeY = 0.27;	
+      } else {
+	graphROC1 = graphsROC["MEM_genMatchOpt1"];
+	legendEntry1 = legendEntries[*channel]["MEM_genMatchOpt1"];
+	graphROC2 = graphsROC["MEM_genMatchOpt2"];
+	legendEntry2 = legendEntries[*channel]["MEM_genMatchOpt2"];
+	graphROC3 = graphsROC["MEM_genMatchOpt3"];
+	legendEntry3 = legendEntries[*channel]["MEM_genMatchOpt3"];
+	graphROC4 = graphsROC["BDT"];
+	legendEntry4 = legendEntries[*channel]["BDT"];
+	graphROC5 = graphsROC["mHHvis"];
+	legendEntry5 = legendEntries[*channel]["mHHvis"];
+	legendSizeX = 0.23;
+	legendSizeY = 0.23;
+      }
+      showGraphs(
+        800, 600,
+	graphROC1, legendEntry1,
+	graphROC2, legendEntry2,
+	graphROC3, legendEntry3,
+	graphROC4, legendEntry4,
+	graphROC5, legendEntry5,
+	graphROC6, legendEntry6,
+	colors, markerStyles,
+	0.045, legendPosX, legendPosY, legendSizeX, legendSizeY,
+	labelTextLines, 0.045, 
+	0.18, 0.64, 0.31, 0.05, 
+	0., 1.01, "Signal Efficiency", 1.2,
+	useLogScale, yMin, yMax, yAxisTitle, 1.2,
+	outputFileName);
     
       for ( std::map<std::string, TGraph*>::iterator it = graphsROC.begin();
 	    it != graphsROC.end(); ++it ) {

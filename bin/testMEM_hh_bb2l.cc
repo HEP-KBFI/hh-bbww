@@ -1258,8 +1258,7 @@ int main(int argc, char* argv[])
     TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
     const bool PUSample = true;
     const int ievent = eventInfo.event;
-    //const int iterations = 100000;
-    const int iterations = 20000;
+    const int iterations = 10000;
     const int bjetrescaleAlgo = 2;
     const int metcorrection = 5;
     const bool weightfromonshellnupt_func = false;
@@ -1379,10 +1378,10 @@ int main(int argc, char* argv[])
     const bool applyOnshellWmassConstraint_signal = false;
     const int memAlgo_verbosity = 1;
     //const int memAlgo_verbosity = 3;
-    const int maxObjFunctionCalls_signal = 2500;
-    const int maxObjFunctionCalls_background = 25000;
-    //const int maxObjFunctionCalls_signal = 1000;
-    //const int maxObjFunctionCalls_background = 10000;
+    //const int maxObjFunctionCalls_signal = 2500;
+    //const int maxObjFunctionCalls_background = 25000;
+    const int maxObjFunctionCalls_signal = 1000;
+    const int maxObjFunctionCalls_background = 10000;
     //const int maxObjFunctionCalls_background = 1000;
 
     clock.Reset();
@@ -1393,7 +1392,7 @@ int main(int argc, char* argv[])
     memAlgo.setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
     memAlgo.setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
     memAlgo.integrate(memMeasuredParticles, memMEtPx, memMEtPy, met.cov());
-    const MEMbbwwResultDilepton& memResult = memAlgo.getResult();
+    MEMbbwwResultDilepton memResult = memAlgo.getResult();
     clock.Stop("memAlgo");
 
     double memCpuTime = clock.GetCpuTime("memAlgo");
@@ -1411,7 +1410,7 @@ int main(int argc, char* argv[])
     memAlgo_missingBJet.setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
     memAlgo_missingBJet.setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
     memAlgo_missingBJet.integrate(memMeasuredParticles_missingBJet, memMEtPx, memMEtPy, met.cov());
-    const MEMbbwwResultDilepton& memResult_missingBJet = memAlgo_missingBJet.getResult();
+    MEMbbwwResultDilepton memResult_missingBJet = memAlgo_missingBJet.getResult();
     clock.Stop("memAlgo_missingBJet");
     
     double memCpuTime_missingBJet = clock.GetCpuTime("memAlgo_missingBJet");
@@ -1437,8 +1436,8 @@ int main(int argc, char* argv[])
     printBJet("selJet_Hbb_sublead", selJet_Hbb_sublead);
     std::cout << "numBJets: loose = " << numBJets_loose << ", medium = " << numBJets_medium << std::endl;
 
-    if ( (memResult.getLikelihoodRatio() < 0.01 &&  isSignal) || 
-	 (memResult.getLikelihoodRatio() > 0.99 && !isSignal) ) {
+    if ( (memResult.getLikelihoodRatio() < 0.02 &&  isSignal) || 
+	 (memResult.getLikelihoodRatio() > 0.98 && !isSignal) ) {
       const GenLepton* genLepton_lead = &genLeptonsForMatching[0];
       int genLepton_lead_matchType = compGenMatchType(genLepton_lead, std::vector<const RecoLepton*>({ selLepton_lead, selLepton_sublead }), preselLeptonsFull, tightLeptonsFull);
       fillWithOverFlow(histogram_badMEM_genLepton_lead_matchType, genLepton_lead_matchType, evtWeight);
@@ -1565,6 +1564,7 @@ int main(int argc, char* argv[])
       logHiggsness_publishedChi2, logTopness_publishedChi2,
       -1., -1., -1., -1., -1., -1., 
       &memResult, memCpuTime, 
+      &memResult_missingBJet, memCpuTime_missingBJet, 
       mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
       mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750,
       evtWeight);

@@ -41,6 +41,7 @@ public:
 		 double logHiggsness, double logTopness,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultDilepton* memResult, double memCpuTime,
+		 const MEMbbwwResultDilepton* memResult_missingBJet, double memCpuTime_missingBJet,
 		 double mvaoutput300, double mvaoutput400, double mvaoutput750,
 		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750,
 		 double evtWeight);
@@ -109,6 +110,15 @@ public:
   TH1 * histogram_log_memLR_div_Err_;
   TH1 * histogram_memScore_;
   TH1 * histogram_memCpuTime_;
+
+  TH1 * histogram_log_memProb_signal_missingBJet_;
+  TH1 * histogram_log_memProbErr_signal_missingBJet_;
+  TH1 * histogram_log_memProb_background_missingBJet_;
+  TH1 * histogram_log_memProbErr_background_missingBJet_;
+  TH1 * histogram_memLR_missingBJet_;
+  TH1 * histogram_log_memLR_div_Err_missingBJet_;
+  TH1 * histogram_memScore_missingBJet_;
+  TH1 * histogram_memCpuTime_missingBJet_;
 
   TH1 * histogram_MVAOutput300_;
   TH1 * histogram_MVAOutput400_;
