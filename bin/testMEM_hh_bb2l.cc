@@ -78,6 +78,7 @@
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 #include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoDilepton.h"
+#include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/memAuxFunctions.h"
 #include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()

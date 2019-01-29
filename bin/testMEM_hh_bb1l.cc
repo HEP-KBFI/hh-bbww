@@ -81,6 +81,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager 
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoSingleLepton.h"
+#include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/memAuxFunctions.h"
 #include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson, findGenJetsFromWBoson
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()
