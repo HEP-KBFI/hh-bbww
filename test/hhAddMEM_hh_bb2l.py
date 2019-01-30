@@ -9,10 +9,6 @@ from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 sys_choices               = [ 'full' ] + systematics.an_addMEM_opts
 max_mem_integrations      = 10000000
 systematics.full          = systematics.an_addMEM
-integration_point_choices = {
-  'small' : True,
-  'full'  : False,
-}
 mode_choices = {
   'default' : 'full',
   'bdt'     : 'small',
@@ -23,14 +19,7 @@ parser = tthAnalyzeParser(isAddMEM = True)
 parser.add_modes(mode_choices.keys())
 parser.add_sys(sys_choices)
 parser.add_nonnominal()
-parser.add_tau_id_wp()
 parser.add_use_home(False)
-parser.add_argument('-i', '--integration-points',
-  type = str, dest = 'integration_points', metavar = 'choice',
-  choices = integration_point_choices.keys(), default = None, required = False,
-  help = 'R|Number of integration points to use, default depends on mode (choices: %s)' % \
-         tthAnalyzeParser(integration_point_choices.keys()),
-)
 parser.add_argument('-n', '--max-mem-integrations',
   type = int, dest = 'max_mem_integrations', metavar = 'integer', default = max_mem_integrations,
   required = False,
@@ -57,7 +46,6 @@ use_nonnominal    = args.original_central
 use_home          = args.use_home
 
 # Custom arguments
-integration_points   = args.integration_points
 max_mem_integrations = args.max_mem_integrations
 
 # Use the arguments
@@ -66,10 +54,8 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
-integration_choice = integration_point_choices[integration_points] if integration_points \
-                       else integration_point_choices[mode_choices[mode]]
-version            = "%s_%s_%s_%s" % (
-  version, mode, 'nonNom' if use_nonnominal else 'nom', 'small' if integration_choice else 'full'
+version = "%s_%s_%s" % (
+  version, mode, 'nonNom' if use_nonnominal else 'nom'
 )
 
 if mode == 'default':
@@ -89,7 +75,7 @@ elif mode == 'bdt':
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
   elif era == "2017":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
+    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_DYJets_2017 as samples_to_stitch
   elif era == "2018":
     from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
   else:
@@ -139,7 +125,6 @@ if __name__ == '__main__':
     max_mem_integrations     = max_mem_integrations, # use -1 if you don't want to limit the nof MEM integrations
     num_parallel_jobs        = num_parallel_jobs,
     leptonSelection          = leptonSelection,
-    lowIntegrationPoints     = integration_choice, # if False, use full integration points
     isDebug                  = debug,
     central_or_shift         = central_or_shifts,
     dry_run                  = dry_run,

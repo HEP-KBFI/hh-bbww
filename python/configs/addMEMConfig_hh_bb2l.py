@@ -14,13 +14,11 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
         era,
         check_output_files,
         leptonSelection,
-        hadTauSelection,
         running_method,
         max_files_per_job,
         mem_integrations_per_job,
         max_mem_integrations,
         num_parallel_jobs,
-        lowIntegrationPoints,
         isDebug,
         central_or_shift,
         dry_run,
@@ -42,19 +40,26 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
       max_mem_integrations     = max_mem_integrations,
       num_parallel_jobs        = num_parallel_jobs,
       leptonSelection          = leptonSelection,
-      hadTauSelection          = hadTauSelection,
-      lowIntegrationPoints     = lowIntegrationPoints,
+      hadTauSelection          = "undefined|undefined",
+      lowIntegrationPoints     = -1,
       dry_run                  = dry_run,
       use_nonnominal           = use_nonnominal,
       use_home                 = use_home,
-      channel                  = "2lss_1tau",
+      channel                  = "hh_bb2l",
       pool_id                  = pool_id,
     )
 
-    self.maxPermutations_branchName = "maxPermutations_addMEM_%s_lep%s" % (
-      self.channel, self.leptonSelection
+    self.template_dir = os.path.join(
+      os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'
     )
+    logging.info("Templates directory is: {templateDir}".format(templateDir = self.template_dir))
     self.cfgFile_addMEM_original = os.path.join(self.template_dir, "addMEM_hh_bb2l_cfg.py")
+    ## CV: temporarily disable maxPermutations_branchName, because it requires a new Ntuple production
+    ##self.maxPermutations_branchName = "maxPermutations_addMEM_%s_lep%s" % ( 
+    ##  self.channel, self.leptonSelection
+    ##)
+    self.maxPermutations_branchName = "maxPermutations_addMEM_2lss_1tau_lepFakeable_tauLoose_dR03mvaVVLoose"
+    print("WARNING: Temporarily using maxPermutations_branchName = '%s' for DEBUGging purposes. This is not the correct branch !!" % self.maxPermutations_branchName)
     self.isDebug = isDebug
     self.central_or_shift = central_or_shift
 
@@ -89,7 +94,6 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
       lines.append("process.addMEM_hh_bb2l.copy_histograms = cms.vstring()")
     lines.append("process.addMEM_hh_bb2l.leptonSelection = cms.string('%s')" % self.leptonSelection)
     lines.append("process.addMEM_hh_bb2l.isMC = cms.bool(%s)" % isMC)
-    lines.append("process.addMEM_hh_bb2l.lowIntegrationPoints = cms.bool(%s)" % self.lowIntegrationPoints)
     lines.append("process.addMEM_hh_bb2l.isDEBUG = cms.bool(%s)" % self.isDebug)
     lines.append("process.addMEM_hh_bb2l.central_or_shift = cms.vstring(%s)" % self.central_or_shift)
     lines.append("process.addMEM_hh_bb2l.dryRun = cms.bool(%s)" % self.dry_run)
