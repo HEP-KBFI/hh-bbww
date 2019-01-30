@@ -2,6 +2,7 @@
 #define hhAnalysis_bbww_MEMInterface_hh_bb2l_h
 
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
+#include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoDilepton.h"
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEt.h" // RecoMEt
 
 // forward declarations
@@ -30,6 +31,8 @@ public:
              const RecoMEt & met) const;
 
  private:
+  MEMbbwwAlgoDilepton * memAlgo_;
+
   TBenchmark * clock_;
 };
 

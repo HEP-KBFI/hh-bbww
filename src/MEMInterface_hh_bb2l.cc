@@ -4,7 +4,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetBase.h" // RecoJetBase
 
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // findFile
-#include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoDilepton.h"
 #include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/memAuxFunctions.h"
 
@@ -12,15 +11,33 @@
 #include <TMath.h> // TMath::Cos, TMath::Sin
 
 MEMInterface_hh_bb2l::MEMInterface_hh_bb2l()
-  : clock_(nullptr)
+  : memAlgo_(nullptr)
+  , clock_(nullptr)
 {
   std::cout << "<MEMInterface_hh_bb2l>:\n";
   
+  const double sqrtS = 13.e+3;
+  const std::string pdfName = "MSTW2008lo68cl";
+  const std::string madgraphFileName_signal     = "hhAnalysis/bbwwMEM/data/param_hh.dat";
+  const std::string madgraphFileName_background = "hhAnalysis/bbwwMEM/data/param_ttbar.dat";
+  const bool applyOnshellWmassConstraint_signal = false;
+  const int memAlgo_verbosity = 0;
+  const int maxObjFunctionCalls_signal = 1000;
+  const int maxObjFunctionCalls_background = 10000;
+
+  memAlgo_ = new MEMbbwwAlgoDilepton(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), memAlgo_verbosity);
+  memAlgo_->applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
+  memAlgo_->setIntMode(MEMbbwwAlgoDilepton::kVAMP);
+  memAlgo_->setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
+  memAlgo_->setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
+
   clock_ = new TBenchmark();
 }
 
 MEMInterface_hh_bb2l::~MEMInterface_hh_bb2l()
 {
+  delete memAlgo_;
+
   delete clock_;
 }
 
@@ -88,32 +105,18 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
   double metPx = met.pt()*TMath::Cos(met.phi());
   double metPy = met.pt()*TMath::Sin(met.phi());
 
-  const double sqrtS = 13.e+3;
-  const std::string pdfName = "MSTW2008lo68cl";
-  const std::string madgraphFileName_signal     = "hhAnalysis/bbwwMEM/data/param_hh.dat";
-  const std::string madgraphFileName_background = "hhAnalysis/bbwwMEM/data/param_ttbar.dat";
-  const bool applyOnshellWmassConstraint_signal = false;
-  const int memAlgo_verbosity = 1;
-  const int maxObjFunctionCalls_signal = 1000;
-  const int maxObjFunctionCalls_background = 10000;
-
   clock_->Reset();
   clock_->Start("<MEMInterface_hh_bb2l::operator()>");
-  MEMbbwwAlgoDilepton memAlgo(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), memAlgo_verbosity);
-  memAlgo.applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
-  memAlgo.setIntMode(MEMbbwwAlgoDilepton::kVAMP);
-  memAlgo.setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
-  memAlgo.setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
-  memAlgo.integrate(measuredParticles, metPx, metPy, met.cov());
-  MEMbbwwResultDilepton memResult = memAlgo.getResult();
+  memAlgo_->integrate(measuredParticles, metPx, metPy, met.cov());
+  MEMbbwwResultDilepton memResult = memAlgo_->getResult();
   clock_->Stop("<MEMInterface_hh_bb2l::operator()>");
 
   result.fillInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead);
   result.weight_signal_ = memResult.getProb_signal(); 
   result.weight_background_ = memResult.getProb_background();
   result.LR_ = memResult.getLikelihoodRatio();
-  result.cpuTime_ = clock_->GetCpuTime("<MEMInterface_2lss_1tau::operator()>");
-  result.realTime_ = clock_->GetRealTime("<MEMInterface_2lss_1tau::operator()>");
+  result.cpuTime_ = clock_->GetCpuTime("<MEMInterface_hh_bb2l::operator()>");
+  result.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
   result.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;
 
   return result;
