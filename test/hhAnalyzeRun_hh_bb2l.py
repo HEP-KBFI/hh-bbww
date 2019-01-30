@@ -19,7 +19,7 @@ parser.add_preselect()
 parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_hlt_filter()
-parser.add_files_per_job()
+parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processed per job, as computation of HH mass with HME algorithm takes considerable time
 parser.add_use_home()
 parser.add_lep_mva_wp()
 args = parser.parse_args()
@@ -144,7 +144,8 @@ elif mode == "sync":
 else:
   raise ValueError("Internal logic error")
 
-if mode != "sync":
+evtCategories = None
+if mode == "default" and len(central_or_shifts) <= 1:
   evtCategories = [
     "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_resolvedHbb_vbf", "hh_bb2l_resolvedHbb_nonvbf", "hh_bb2l_boostedHbb", "hh_bb2l_vbf", "hh_bb2l_nonvbf",
     "hh_2bM2l", "hh_2bM2l_resolvedHbb", "hh_2bM2l_resolvedHbb_nonvbf", "hh_2bM2l_nonvbf",
@@ -164,7 +165,9 @@ if mode != "sync":
     "hh_1bM1e1mu", "hh_1bM1e1mu_resolvedHbb", "hh_1bM1e1mu_resolvedHbb_nonvbf", "hh_1bM1e1mu_nonvbf"
   ]
 else:
-  evtCategories = []
+  evtCategories = [
+    "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_boostedHbb"
+  ]
 
 if __name__ == '__main__':
   logging.basicConfig(

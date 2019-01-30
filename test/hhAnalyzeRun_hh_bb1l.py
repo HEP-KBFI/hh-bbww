@@ -19,7 +19,7 @@ parser.add_preselect()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
-parser.add_files_per_job()
+parser.add_files_per_job() 
 parser.add_use_home()
 parser.add_lep_mva_wp()
 args = parser.parse_args()
@@ -209,7 +209,9 @@ if mode == "default" and len(central_or_shifts) <= 1:
     "hh_1bM1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1mu_vbf", "hh_1bM1mu_nonvbf"
   ]
 else:
-  evtCategories = []
+  evtCategories = [
+    "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity"
+  ]
 
 if __name__ == '__main__':
   logging.basicConfig(
