@@ -57,7 +57,7 @@
 typedef std::vector<std::string> vstring;
 
 /**
- * @brief Compute MEM for events passing preselection in 2lss_1tau channel of ttH, H->tautau analysis
+ * @brief Compute MEM for events passing preselection in dilepton channel of HH->bbWW analysis
  */
 int main(int argc,
          char ** argv)
@@ -66,7 +66,7 @@ int main(int argc,
   gErrorAbortLevel = kError;
 
 //--- parse command-line arguments
-  if(argc < 2)
+  if ( argc < 2 )
   {
     std::cout << "Usage: " << argv[0] << " [parameters.py]\n";
     return EXIT_FAILURE;
@@ -79,12 +79,12 @@ int main(int argc,
   clock.Start(argv[0]);
 
 //--- read python configuration parameters
-  if(!edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process"))
+  if ( !edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process") )
     throw cms::Exception(argv[0])
       << "No ParameterSet 'process' found in configuration file = " << argv[1] << " !!\n";
 
   const edm::ParameterSet cfg        = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
-  const edm::ParameterSet cfg_addMEM = cfg.getParameter<edm::ParameterSet>("addMEM_2lss_1tau");
+  const edm::ParameterSet cfg_addMEM = cfg.getParameter<edm::ParameterSet>("addMEM_hh_bb2l");
   const vstring central_or_shifts           = cfg_addMEM.getParameter<vstring>("central_or_shift");
   const std::string treeName                = cfg_addMEM.getParameter<std::string>("treeName");
   const std::string selEventsFileName_input = cfg_addMEM.getParameter<std::string>("selEventsFileName_input");
@@ -107,7 +107,7 @@ int main(int argc,
   const std::string era_string = cfg_addMEM.getParameter<std::string>("era");
   const int era = get_era(era_string);
 
-  if(central_or_shifts.empty())
+  if ( central_or_shifts.empty() )
   {
     throw cms::Exception(argv[0]) << "central_or_shift cannot be empty! provide at least 'central'!";
   }
@@ -119,7 +119,7 @@ int main(int argc,
 
   std::cout << "selEventsFileName_input = " << selEventsFileName_input << '\n';
   RunLumiEventSelector* run_lumi_eventSelector = nullptr;
-  if( selEventsFileName_input != "")
+  if ( selEventsFileName_input != "" )
   {
     edm::ParameterSet cfgRunLumiEventSelector;
     cfgRunLumiEventSelector.addParameter<std::string>("inputFileName", selEventsFileName_input);
@@ -137,12 +137,12 @@ int main(int argc,
   fwlite::TFileService fs = fwlite::TFileService(outputFile.file().data());
 
   TChain* inputTree = new TChain(treeName.data());
-  for(const std::string & inputFileName: inputFiles.files())
+  for ( const std::string & inputFileName: inputFiles.files() )
   {
     std::cout << "input Tree: adding file = " << inputFileName << '\n';
     inputTree->AddFile(inputFileName.data());
   }
-  if(inputTree->GetListOfFiles()->GetEntries() < 1)
+  if ( inputTree->GetListOfFiles()->GetEntries() < 1 )
   {
     throw cms::Exception(argv[0]) << "Failed to identify input Tree !!\n";
   }
@@ -159,8 +159,12 @@ int main(int argc,
   EventInfoReader eventInfoReader(&eventInfo);
   eventInfoReader.setBranchAddresses(inputTree);
 
+  // CV: temporarily disable maxPermutations_branchName, because it requires a new Ntuple production
+  //const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName(
+  //  "hh_bb2l", leptonSelection_string, "", ""
+  //);
   const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName(
-    "hh_bb2l", leptonSelection_string, "", ""
+    "2lss_1tau", "Fakeable", "Loose", "dR03mvaVVLoose"
   );
 
 //--- declare particle collections
@@ -206,13 +210,13 @@ int main(int argc,
 
   std::string outputTreeName = treeName;
   std::string outputDirName = "";
-  if(outputTreeName.find_last_of("/") != std::string::npos)
+  if ( outputTreeName.find_last_of("/") != std::string::npos )
   {
     std::size_t pos = outputTreeName.find_last_of("/");
     outputTreeName = std::string(outputTreeName, pos + 1);
     outputDirName  = std::string(outputTreeName, 0, pos);
   }
-  if(! outputDirName.empty())
+  if ( !outputDirName.empty() )
   {
     TDirectory* dir = createSubdirectory_recursively(fs, outputDirName.data());
     dir->cd();
@@ -231,7 +235,7 @@ int main(int argc,
   EventInfoWriter *    eventInfoWriter = nullptr;
 
   std::map<std::string, branchEntryBaseType*> branchesToKeep;
-  if(copy_all_branches)
+  if ( copy_all_branches )
   {
     eventInfoWriter = new EventInfoWriter(eventInfo.is_signal(), eventInfo.is_mc(), eventInfo.is_mc_th());
     eventInfoWriter->setBranches(outputTree);
@@ -263,17 +267,20 @@ int main(int argc,
       Form("drop %s", eventInfoWriter->getBranchName_run().data()),
       Form("drop %s", eventInfoWriter->getBranchName_lumi().data()),
       Form("drop %s", eventInfoWriter->getBranchName_event().data()),
-      Form("drop n%s*", branchName_muons.data()),
+      Form("drop n%s", branchName_muons.data()),
+      Form("drop n%s_*", branchName_muons.data()),
       Form("drop %s_*", branchName_muons.data()),
-      Form("drop n%s*", branchName_electrons.data()),
+      Form("drop n%s", branchName_electrons.data()),
+      Form("drop n%s_*", branchName_electrons.data()),
       Form("drop %s_*", branchName_electrons.data()),
-      Form("drop n%s*", branchName_jets_ak4.data()),
+      Form("drop n%s", branchName_jets_ak4.data()),
+      Form("drop n%s_*", branchName_jets_ak4.data()),
       Form("drop %s_*", branchName_jets_ak4.data()),
-      Form("drop n%s*", branchName_jets_ak8.data()),
+      Form("drop n%s", branchName_jets_ak8.data()),
       Form("drop %s_*", branchName_jets_ak8.data()),
-      Form("drop n%s*", branchName_subjets_ak8.data()),
+      Form("drop n%s", branchName_subjets_ak8.data()),
       Form("drop %s_*", branchName_subjets_ak8.data()),
-      Form("drop *%s*", branchName_met.data()),
+      Form("drop %s_*", branchName_met.data())
     };
     std::vector<outputCommandEntry> outputCommands = getOutputCommands(outputCommands_string);
     std::map<std::string, bool> isBranchToKeep = getBranchesToKeep(inputTree, outputCommands);
@@ -281,7 +288,7 @@ int main(int argc,
     copyBranches_vectorType(inputTree, outputTree, isBranchToKeep, branchesToKeep);
   }
 
-  if(! branchesToKeep.count(branchName_maxPermutations_addMEM))
+  if ( !branchesToKeep.count(branchName_maxPermutations_addMEM) )
   {
     throw cmsException(__func__, __LINE__)
       << "No such branch: " << branchName_maxPermutations_addMEM;
@@ -293,7 +300,7 @@ int main(int argc,
   const std::string branchName_memOutput_missingBJet = Form("%s_missingBJet", branchName_memOutput.data());
   std::map<std::string, MEMOutputWriter_hh_bb2l *> memWriter;
   std::map<std::string, MEMOutputWriter_hh_bb2l *> memWriter_missingBJet;
-  for(const std::string & central_or_shift: central_or_shifts)
+  for ( const std::string & central_or_shift: central_or_shifts )
   {
     const std::string branchName_memOutput_cos(Form("%s_%s", branchName_memOutput.data(), central_or_shift.data()));
     memWriter[central_or_shift] = new MEMOutputWriter_hh_bb2l(
@@ -313,22 +320,22 @@ int main(int argc,
   int analyzedEntries = 0;
   int selectedEntries = 0;
   cutFlowTableType cutFlowTable;
-  for(int idxEntry = skipEvents; idxEntry < numEntries && (maxEvents == -1 || idxEntry < (skipEvents + maxEvents)); ++idxEntry)
+  for ( int idxEntry = skipEvents; idxEntry < numEntries && (maxEvents == -1 || idxEntry < (skipEvents + maxEvents)); ++idxEntry )
   {
 
-    if(isDEBUG)
+    if ( isDEBUG )
     {
       std::cout << std::string(80, '-') << '\n';
     }
 
-    if(run_lumi_eventSelector && run_lumi_eventSelector -> areWeDone())
+    if ( run_lumi_eventSelector && run_lumi_eventSelector->areWeDone() )
     {
       break;
     }
 
     inputTree->GetEntry(idxEntry);
 
-    if((idxEntry >= 0 && (idxEntry % reportEvery) == 0) || isDEBUG)
+    if ( (idxEntry >= 0 && (idxEntry % reportEvery) == 0) || isDEBUG )
     {
       std::cout << "processing Entry " << idxEntry << ": " << eventInfo
                 << " (" << selectedEntries << " Entries selected)\n";
@@ -337,7 +344,7 @@ int main(int argc,
     
     cutFlowTable.update("read from file");
 
-    if(run_lumi_eventSelector && !(*run_lumi_eventSelector)(eventInfo))
+    if ( run_lumi_eventSelector && !(*run_lumi_eventSelector)(eventInfo) )
     {
       continue;
     }
@@ -355,7 +362,7 @@ int main(int argc,
     const std::vector<const RecoMuon *> selMuons      = selectObjects(
       leptonSelection, preselMuons, fakeableMuons, tightMuons
     );
-    if(isDEBUG)
+    if ( isDEBUG )
     {
       printCollection("selMuons", selMuons);
     }
@@ -369,7 +376,7 @@ int main(int argc,
     const std::vector<const RecoElectron *> selElectrons      = selectObjects(
       leptonSelection, preselElectrons, fakeableElectrons, tightElectrons
     );
-    if(isDEBUG)
+    if ( isDEBUG )
     {
       printCollection("selElectrons", selElectrons);
     }
@@ -392,7 +399,7 @@ int main(int argc,
 
     std::map<std::string, std::vector<MEMOutput_hh_bb2l>> memOutputs_hh_bb2l;
     std::map<std::string, std::vector<MEMOutput_hh_bb2l>> memOutputs_hh_bb2l_missingBJet;
-    for(const std::string & central_or_shift: central_or_shifts)
+    for ( const std::string & central_or_shift: central_or_shifts )
     {
       memOutputs_hh_bb2l[central_or_shift] = {};
       memOutputs_hh_bb2l_missingBJet[central_or_shift] = {};
@@ -402,7 +409,7 @@ int main(int argc,
 //--- however, the readers obtain pointers to gen level objects and pass them to the reco objects
 //--- thus, if we try to re-read the objects, these pointers will be overwritten and become invalid
 //--- therefore, we have to write the reco objects before re-reading new stuff
-    if(copy_all_branches)
+    if ( copy_all_branches )
     {
       eventInfoWriter->write(eventInfo);
       muonWriter->write(preselMuons);
@@ -411,36 +418,36 @@ int main(int argc,
       jetWriterAK8->write(jet_ptrs_ak8); // save central
       metWriter->write(met); // save central
 
-      for(const auto & branchEntry: branchesToKeep)
+      for ( const auto & branchEntry: branchesToKeep )
       {
         branchEntry.second->copyBranch();
       }
     }
 
     const Int_t maxPermutations_addMEM_hh_bb2l = branchesToKeep.at(branchName_maxPermutations_addMEM)->getValue_int();
-    if(isDEBUG)
+    if ( isDEBUG )
     {
       std::cout << "Found " << maxPermutations_addMEM_hh_bb2l << " possible combination(s) to compute MEM\n";
     }
-    if(maxPermutations_addMEM_hh_bb2l >= 1)
+    if ( maxPermutations_addMEM_hh_bb2l >= 1 )
     {
       int idxPermutation = -1;
       const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons);
-      for(std::size_t selLepton_lead_idx = 0; selLepton_lead_idx < selLeptons.size(); ++selLepton_lead_idx)
+      for ( std::size_t selLepton_lead_idx = 0; selLepton_lead_idx < selLeptons.size(); ++selLepton_lead_idx )
       {
         const RecoLepton * selLepton_lead = selLeptons[selLepton_lead_idx];
-        for(std::size_t selLepton_sublead_idx = selLepton_lead_idx + 1; selLepton_sublead_idx < selLeptons.size(); ++selLepton_sublead_idx)
+        for ( std::size_t selLepton_sublead_idx = selLepton_lead_idx + 1; selLepton_sublead_idx < selLeptons.size(); ++selLepton_sublead_idx )
         {
           const RecoLepton * selLepton_sublead = selLeptons[selLepton_sublead_idx];
-          for(const std::string central_or_shift: central_or_shifts)
+          for ( const std::string central_or_shift: central_or_shifts )
           {
             checkOptionValidity(central_or_shift, isMC);
-            const int jetPt_option    = getJet_option     (central_or_shift, isMC);
-            const int met_option      = getMET_option     (central_or_shift, isMC);
+            const int jetPt_option = getJet_option(central_or_shift, isMC);
+            const int met_option   = getMET_option(central_or_shift, isMC);
 
-            if(jetPt_option    == kJet_central      &&
-               met_option      == kMEt_central      &&
-               central_or_shift != "central")
+            if ( jetPt_option == kJet_central &&
+		 met_option   == kMEt_central &&
+		 central_or_shift != "central")
             {
               std::cout << "Skipping systematics: " << central_or_shift << '\n';
               continue;
@@ -493,55 +500,58 @@ int main(int argc,
 
 	    const RecoMEt met_mem = metReader->read();
 	    
-	    ++idxPermutation;
-	    if(idxPermutation < maxPermutations_addMEM_hh_bb2l)
+	    if ( selJet1_Hbb && selJet2_Hbb ) 
 	    {
-	      std::cout << "computing MEM for " << eventInfo
-			<< " (idxPermutation = " << idxPermutation << "):\n"
-                           "inputs:\n"
-			<< " leading lepton:     " << *(static_cast<const GenLepton *>(selLepton_lead))
-			<< " subleading lepton:  " << *(static_cast<const GenLepton *>(selLepton_sublead))
-		        << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb))
-                        << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb))
-			<< " MET:                " << met << '\n';
-
-	      MEMOutput_hh_bb2l memOutput_hh_bb2l;
-              MEMOutput_hh_bb2l memOutput_hh_bb2l_missingBJet;
-	      if(dryRun)
+	      ++idxPermutation;
+	      if ( idxPermutation < maxPermutations_addMEM_hh_bb2l )
 	      {
-		memOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
-		memOutput_hh_bb2l_missingBJet.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr);
-	      }
-	      else
-	      {
-		memOutput_hh_bb2l = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met_mem);
-		memOutput_hh_bb2l_missingBJet = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr, met);
-	      }
-	      memOutput_hh_bb2l.eventInfo_ = eventInfo;
-	      memOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
-	      std::cout << "output (" << central_or_shift << "): " << memOutput_hh_bb2l;
-	      std::cout << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet;
-	      memOutputs_hh_bb2l[central_or_shift].push_back(memOutput_hh_bb2l);
-	      memOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(memOutput_hh_bb2l_missingBJet);
-	    } // idxPermutation < maxPermutations_addMEM_hh_bb2l
-	    else if(idxPermutation == maxPermutations_addMEM_hh_bb2l) // CV: print warning only once per event
-	    {
-	      std::cout << "Warning in " << eventInfo << ":\n"
-		           "Number of permutations exceeds 'maxPermutations_addMEM_hh_bb2l' = "
-			<< maxPermutations_addMEM_hh_bb2l << " --> skipping MEM computation after "
-			<< maxPermutations_addMEM_hh_bb2l << " permutations !!\n";
-	    }
+	        std::cout << "computing MEM for " << eventInfo
+		  	  << " (idxPermutation = " << idxPermutation << "):\n"
+                             "inputs:\n"
+			  << " leading lepton:     " << *(static_cast<const GenLepton *>(selLepton_lead)) << "\n"
+			  << " subleading lepton:  " << *(static_cast<const GenLepton *>(selLepton_sublead)) << "\n"
+		          << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
+                          << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
+			  << " MET:                " << met << "\n";
 
-	    if(isDEBUG)
-	    {
-	      std::cout << "#memOutputs_hh_bb2l = " << memOutputs_hh_bb2l[central_or_shift].size() << '\n';	      
-	    }
+  	        MEMOutput_hh_bb2l memOutput_hh_bb2l;
+                MEMOutput_hh_bb2l memOutput_hh_bb2l_missingBJet;
+	        if ( dryRun )
+	        {
+	  	  memOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
+		  memOutput_hh_bb2l_missingBJet.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr);
+	        }
+	        else
+	        {
+	  	  memOutput_hh_bb2l = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met_mem);
+		  memOutput_hh_bb2l_missingBJet = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr, met);
+	        }
+	        memOutput_hh_bb2l.eventInfo_ = eventInfo;
+	        memOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
+	        std::cout << "output (" << central_or_shift << "): " << memOutput_hh_bb2l;
+	        std::cout << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet;
+	        memOutputs_hh_bb2l[central_or_shift].push_back(memOutput_hh_bb2l);
+	        memOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(memOutput_hh_bb2l_missingBJet);
+	      } // idxPermutation < maxPermutations_addMEM_hh_bb2l
+	      else if ( idxPermutation == maxPermutations_addMEM_hh_bb2l ) // CV: print warning only once per event
+	      {
+	        std::cout << "Warning in " << eventInfo << ":\n"
+		             "Number of permutations exceeds 'maxPermutations_addMEM_hh_bb2l' = "
+			  << maxPermutations_addMEM_hh_bb2l << " --> skipping MEM computation after "
+			  << maxPermutations_addMEM_hh_bb2l << " permutations !!\n";
+	      }
+
+	      if ( isDEBUG )
+	      {
+	        std::cout << "#memOutputs_hh_bb2l = " << memOutputs_hh_bb2l[central_or_shift].size() << '\n';	      
+	      }
+	    } // selJet1_Hbb && selJet2_Hbb
 	  } // central_or_shift
 	} // selLepton_sublead_idx
       } // selLepton_lead_idx
     } // maxPermutations_addMEM_hh_bb2l >= 1
     
-    for(const std::string & central_or_shift: central_or_shifts)
+    for ( const std::string & central_or_shift: central_or_shifts )
     {
       memWriter[central_or_shift]->write(memOutputs_hh_bb2l[central_or_shift]);
       memWriter_missingBJet[central_or_shift]->write(memOutputs_hh_bb2l_missingBJet[central_or_shift]);
@@ -568,17 +578,17 @@ int main(int argc,
   delete jetReaderAK8;
   delete metReader;
 
-  for(auto & kv: memWriter)
+  for ( auto & kv: memWriter )
   {
-    if(kv.second)
+    if ( kv.second )
     {
       delete kv.second;
       kv.second = nullptr;
     }
   }
-  for(auto & kv: memWriter_missingBJet)
+  for ( auto & kv: memWriter_missingBJet )
   {
-    if(kv.second)
+    if ( kv.second )
     {
       delete kv.second;
       kv.second = nullptr;
@@ -590,17 +600,17 @@ int main(int argc,
 //--- copy histograms keeping track of number of processed events from input files to output file
   std::cout << "copying histograms:\n";
   std::map<std::string, TH1*> histograms;
-  for(const std::string & inputFileName: inputFiles.files())
+  for ( const std::string & inputFileName: inputFiles.files() )
   {
     TFile* inputFile = new TFile(inputFileName.data());
-    if(!inputFile || inputFile -> IsZombie())
+    if ( !inputFile || inputFile -> IsZombie() )
     {
       throw cms::Exception(argv[0]) << "Failed to open input File = '" << inputFileName << "' !!\n";
     }
 
-    for(const std::string & histogramName: copy_histograms)
+    for ( const std::string & histogramName: copy_histograms )
     {
-      if(inputFiles.files().size() > 1)
+      if ( inputFiles.files().size() > 1 )
       {
         std::cout << ' ' << histogramName << " from input File = '" << inputFileName << "'\n";
       }
@@ -609,22 +619,22 @@ int main(int argc,
         std::cout << ' ' << histogramName << '\n';
       }
       TH1* histogram_input = dynamic_cast<TH1*>(inputFile->Get(histogramName.data()));
-      if(! histogram_input)
+      if ( !histogram_input )
       {
         continue;
       }
       TH1* histogram_output = histograms[histogramName];
-      if(histogram_output)
+      if ( histogram_output )
       {
         histogram_output->Add(histogram_input);
       }
       else
       {
-        if     (dynamic_cast<TH1F*>(histogram_input))
+        if     ( dynamic_cast<TH1F*>(histogram_input) )
         {
           histogram_output = fs.make<TH1F>(*(dynamic_cast<TH1F*>(histogram_input)));
         }
-        else if(dynamic_cast<TH1D*>(histogram_input))
+        else if( dynamic_cast<TH1D*>(histogram_input) )
         {
           histogram_output = fs.make<TH1D>(*(dynamic_cast<TH1D*>(histogram_input)));
         }
