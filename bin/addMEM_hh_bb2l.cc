@@ -319,6 +319,7 @@ int main(int argc,
   const int numEntries = inputTree->GetEntries();
   int analyzedEntries = 0;
   int selectedEntries = 0;
+  int memComputations = 0;
   cutFlowTableType cutFlowTable;
   for ( int idxEntry = skipEvents; idxEntry < numEntries && (maxEvents == -1 || idxEntry < (skipEvents + maxEvents)); ++idxEntry )
   {
@@ -532,6 +533,8 @@ int main(int argc,
 	        std::cout << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet;
 	        memOutputs_hh_bb2l[central_or_shift].push_back(memOutput_hh_bb2l);
 	        memOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(memOutput_hh_bb2l_missingBJet);
+
+		++memComputations;
 	      } // idxPermutation < maxPermutations_addMEM_hh_bb2l
 	      else if ( idxPermutation == maxPermutations_addMEM_hh_bb2l ) // CV: print warning only once per event
 	      {
@@ -564,6 +567,7 @@ int main(int argc,
   std::cout << "num. Entries = "  << numEntries << "\n"
                " analyzed = "     << analyzedEntries << "\n"
                " selected = "     << selectedEntries << "\n"
+               "#MEM computations = " << memComputations << "\n"
                "cut-flow table\n" << cutFlowTable << "\n"
                "output Tree:\n";
   if(isDEBUG)
