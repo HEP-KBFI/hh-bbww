@@ -69,10 +69,16 @@ compGenMatchType(const GenParticle* genParticle,
 }
 
 bool 
-isHigherPt_GenLepton(const GenLepton* lepton1, const GenLepton* lepton2);
+isHigherPt_GenLepton(const GenLepton& lepton1, const GenLepton& lepton2);
 
 bool 
-isHigherPt_GenJet(const GenJet* jet1, const GenJet* jet2);
+isHigherPt_GenLepton_ptr(const GenLepton* lepton1, const GenLepton* lepton2);
+
+bool 
+isHigherPt_GenJet(const GenJet& jet1, const GenJet& jet2);
+
+bool 
+isHigherPt_GenJet_ptr(const GenJet* jet1, const GenJet* jet2);
 
 TH1* 
 bookHistogram1d(fwlite::TFileService& fs, const std::string& histogramName, int numBinsX, double xMin, double xMax);

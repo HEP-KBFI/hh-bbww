@@ -31,13 +31,25 @@ findGenLepton_and_NeutrinoFromWBoson(const GenParticle* genWBoson, const std::ve
 }
 
 bool
-isHigherPt_GenLepton(const GenLepton* lepton1, const GenLepton* lepton2)
+isHigherPt_GenLepton(const GenLepton& lepton1, const GenLepton& lepton2)
+{
+  return lepton1.pt() > lepton2.pt();
+}
+
+bool
+isHigherPt_GenLepton_ptr(const GenLepton* lepton1, const GenLepton* lepton2)
 {
   return lepton1->pt() > lepton2->pt();
 }
 
 bool
-isHigherPt_GenJet(const GenJet* jet1, const GenJet* jet2)
+isHigherPt_GenJet(const GenJet& jet1, const GenJet& jet2)
+{
+  return jet1.pt() > jet2.pt();
+}
+
+bool
+isHigherPt_GenJet_ptr(const GenJet* jet1, const GenJet* jet2)
 {
   return jet1->pt() > jet2->pt();
 }
