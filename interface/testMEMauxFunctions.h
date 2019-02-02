@@ -8,6 +8,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h" // GenLepton
 #include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetBase.h" // RecoJetBase
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 
 #include <TMath.h> // TMath
 #include <TH1.h> // TH1
@@ -66,11 +68,24 @@ compGenMatchType(const GenParticle* genParticle,
   else                                                         return 4;
 }
 
-bool isHigherPt_GenLepton(const GenLepton& lepton1, const GenLepton& lepton2);
-bool isHigherPt_GenJet(const GenJet& jet1, const GenJet& jet2);
+bool 
+isHigherPt_GenLepton(const GenLepton* lepton1, const GenLepton* lepton2);
 
-TH1* bookHistogram1d(fwlite::TFileService& fs, const std::string& histogramName, int numBinsX, double xMin, double xMax);
+bool 
+isHigherPt_GenJet(const GenJet* jet1, const GenJet* jet2);
 
-void printBJet(const std::string& label, const RecoJetBase* jet);
+TH1* 
+bookHistogram1d(fwlite::TFileService& fs, const std::string& histogramName, int numBinsX, double xMin, double xMax);
+
+void 
+printBJet(const std::string& label, const RecoJetBase* jet);
+
+std::pair<const RecoJet*, const RecoJet*> 
+selectBJetsFromHbb(const std::vector<const RecoJet*>& selJetsAK4, 
+		   const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose, int minNumBJets_loose, 
+		   const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium, int minNumBJets_medium);
+
+int
+countGenMatchedBJets(const std::pair<const RecoJet*, const RecoJet*>& selBJets, const std::vector<GenJet>& genBJetsForMatching, double dRmax);
 
 #endif
