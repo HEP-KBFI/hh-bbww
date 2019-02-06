@@ -1531,6 +1531,8 @@ int main(int argc, char* argv[])
     if( RefPDFfile.fullPath().empty() )
       throw cms::Exception("analyze_hh_bb2l")
 	<< "Failed to find file = 'REFPDFPU40.root' !!\n";
+    clock.Reset();
+    clock.Start("hmeAlgo");
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
@@ -1541,6 +1543,8 @@ int main(int argc, char* argv[])
       TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
       m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
     }
+    clock.Stop("hmeAlgo");
+    double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
@@ -1681,7 +1685,7 @@ int main(int argc, char* argv[])
       m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
       m_ll, dR_ll, dPhi_ll, pT_ll,
       m_Hww, pT_Hww, Smin_Hww,
-      m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
+      m_HHvis, m_HH, m_HH_hme, hmeCpuTime, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
       vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
@@ -1734,7 +1738,7 @@ int main(int argc, char* argv[])
 	    m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
 	    m_ll, dR_ll, dPhi_ll, pT_ll,
 	    m_Hww, pT_Hww, Smin_Hww,
-	    m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
+	    m_HHvis, m_HH, m_HH_hme, hmeCpuTime, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
 	    logHiggsness_publishedChi2, logTopness_publishedChi2,
 	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,

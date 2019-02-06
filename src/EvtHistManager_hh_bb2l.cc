@@ -39,6 +39,7 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["m_HHvis"] = { "*" };
   central_or_shiftOptions_["m_HH"] = { "central" };
   central_or_shiftOptions_["m_HH_hme"] = { "central" }; // CV: to be replaced by "*" once HME is implemented !!
+  central_or_shiftOptions_["hmeCpuTime"] = { "central" }; 
   central_or_shiftOptions_["dR_HH"] = { "central" };
   central_or_shiftOptions_["dPhi_HH"] = { "central" };
   central_or_shiftOptions_["pT_HH"] = { "central" };
@@ -118,6 +119,7 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_m_HHvis_                                 = book1D(dir, "m_HHvis",                               100,    0., 1000.);  
   histogram_m_HH_                                    = book1D(dir, "m_HH",                                  150,    0., 1500.);
   histogram_m_HH_hme_                                = book1D(dir, "m_HH_hme",                              150,    0., 1500.);
+  histogram_hmeCpuTime_                              = book1D(dir, "hmeCpuTime",                            200,    0.,   20.);
   histogram_dR_HH_                                   = book1D(dir, "dR_HH",                                 100,    0.,    5.);
   histogram_dPhi_HH_                                 = book1D(dir, "dPhi_HH",                                36,    0., TMath::Pi());
   histogram_pT_HH_                                   = book1D(dir, "pT_HH",                                 100,    0.,  500.);  
@@ -191,7 +193,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
 				       double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
 				       double m_Hww, double pT_Hww, double Smin_Hww,
-				       double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
+				       double m_HHvis, double m_HH, double m_HH_hme, double hmeCpuTime, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step,
 				       double logHiggsness, double logTopness,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
@@ -230,6 +232,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_m_HH_,                                         m_HH,                                           evtWeight, evtWeightErr);
   if ( m_HH_hme > 0. ) {
     fillWithOverFlow(histogram_m_HH_hme_,                                   m_HH_hme,                                       evtWeight, evtWeightErr);    
+    fillWithOverFlow(histogram_hmeCpuTime_,                                 hmeCpuTime,                                     evtWeight, evtWeightErr);    
   }
   fillWithOverFlow(histogram_dR_HH_,                                        dR_HH,                                          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_HH_,                                      dPhi_HH,                                        evtWeight, evtWeightErr);
