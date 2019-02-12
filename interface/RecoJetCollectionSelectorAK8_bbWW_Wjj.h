@@ -6,6 +6,9 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/Particle.h" // Particle::LorentzVector
 
+#include <TString.h> // TString, Form
+#include <string> // std::string
+
 class RecoJetSelectorAK8_bbWW_Wjj
 {
 public:
@@ -50,7 +53,9 @@ public:
    */
   bool
   operator()(const RecoJetAK8 & jet) const;
-
+  bool
+    operator()(const RecoJetAK8 & jet, TString & returnType) const;
+ 
 protected:
   Double_t min_pt_;                    ///< lower cut threshold on pT of "fat" (AK8) jet
   Double_t max_absEta_;                ///< upper cut threshold on absolute value of eta of "fat" (AK8) jet

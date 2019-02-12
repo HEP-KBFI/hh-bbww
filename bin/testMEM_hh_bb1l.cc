@@ -60,7 +60,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenEvtHistManager.h" // GenEvtHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoHistManager.h" // LHEInfoHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched, findFile
 #include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
@@ -81,7 +81,10 @@
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager 
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoSingleLepton.h"
+#include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/memAuxFunctions.h"
+#include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson, findGenJetsFromWBoson
+#include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
@@ -96,63 +99,6 @@
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
-
-std::pair<const GenLepton*, const GenParticle*> 
-findGenLepton_and_NeutrinoFromWBoson(const GenParticle* genWBoson, const std::vector<GenLepton>& genLeptons, const std::vector<GenParticle>& genNeutrinos)
-{
-  const GenLepton* genLeptonFromWBoson = nullptr;
-  const GenParticle* genNeutrinoFromWBoson = nullptr;
-  double minDeltaMass = 1.e+3;
-  for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
-	genLepton != genLeptons.end(); ++genLepton ) {
-    for ( std::vector<GenParticle>::const_iterator genNeutrino = genNeutrinos.begin();
-	  genNeutrino != genNeutrinos.end(); ++genNeutrino ) {
-      Particle::LorentzVector genLepton_and_NeutrinoP4 = genLepton->p4() + genNeutrino->p4();
-      double deltaMass = TMath::Abs(genLepton_and_NeutrinoP4.mass() - genWBoson->mass());
-      double dR = deltaR(genLepton_and_NeutrinoP4, genWBoson->p4());
-      if ( deltaMass < 5. && deltaMass < minDeltaMass && dR < 1. ) {
-	genLeptonFromWBoson = &(*genLepton);
-	genNeutrinoFromWBoson = &(*genNeutrino);
-	minDeltaMass = deltaMass;
-      }
-    }
-  }
-  return std::pair<const GenLepton*, const GenParticle*>(genLeptonFromWBoson, genNeutrinoFromWBoson);
-}
-
-std::pair<const GenJet*, const GenJet*> 
-findGenJetsFromWBoson(const GenParticle* genWBoson, const std::vector<GenJet>& genJets)
-{
-  const GenJet* genJet1FromWBoson = nullptr;
-  const GenJet* genJet2FromWBoson = nullptr;
-  double minDeltaMass = 1.e+3;
-  for ( std::vector<GenJet>::const_iterator genJet1 = genJets.begin();
-	genJet1 != genJets.end(); ++genJet1 ) {
-    for ( std::vector<GenJet>::const_iterator genJet2 = genJet1 + 1;
-	  genJet2 != genJets.end(); ++genJet2 ) {
-      Particle::LorentzVector genDijetP4 = genJet1->p4() + genJet2->p4();
-      double deltaMass = TMath::Abs(genDijetP4.mass() - genWBoson->mass());
-      double dR = deltaR(genDijetP4, genWBoson->p4());
-      if ( deltaMass < 5. && deltaMass < minDeltaMass && dR < 1. ) {
-	genJet1FromWBoson = &(*genJet1);
-	genJet2FromWBoson = &(*genJet2);
-	minDeltaMass = deltaMass;
-      }
-    }
-  }
-  return std::pair<const GenJet*, const GenJet*>(genJet1FromWBoson, genJet2FromWBoson);
-}
-
-std::string
-findFile(const std::string & fileName)
-{
-  const edm::FileInPath inputFile(fileName);
-  if ( inputFile.fullPath().empty() ) {
-    std::cerr << "Error: Cannot find file = " << fileName;
-    assert(0);
-  }
-  return inputFile.fullPath();
-}
 
 Particle::LorentzVector comp_metP4_B2G_18_008(const Particle::LorentzVector& visP4, double metPx, double metPy, double mH)
 {
@@ -643,6 +589,14 @@ int main(int argc, char* argv[])
     Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
   selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "data_to_MC_correction" });
 
+  TH1* histogram_badMEM_genLepton_matchType          = bookHistogram1d(fs, "badMEM_genLepton_matchType",           6, -0.5, +5.5);
+  TH1* histogram_badMEM_genJet_Hbb_lead_matchType    = bookHistogram1d(fs, "badMEM_genJet_Hbb_lead_matchType",     6, -0.5, +5.5);
+  TH1* histogram_badMEM_genJet_Hbb_sublead_matchType = bookHistogram1d(fs, "badMEM_genJet_Hbb_sublead_matchType",  6, -0.5, +5.5);
+  TH1* histogram_badMEM_genJet_Wjj_lead_matchType    = bookHistogram1d(fs, "badMEM_genJet_Wjj_lead_matchType",     6, -0.5, +5.5);
+  TH1* histogram_badMEM_genJet_Wjj_sublead_matchType = bookHistogram1d(fs, "badMEM_genJet_Wjj_sublead_matchType",  6, -0.5, +5.5);
+  TH1* histogram_badMEM_numBJets_loose               = bookHistogram1d(fs, "badMEM_numBJets_loose",               10, -0.5, +9.5);
+  TH1* histogram_badMEM_numBJets_medium              = bookHistogram1d(fs, "badMEM_numBJets_medium",              10, -0.5, +9.5);
+
   int analyzedEntries = 0;
   int selectedEntries = 0;
   double selectedEntries_weighted = 0.;
@@ -931,29 +885,39 @@ int main(int argc, char* argv[])
           findGenLepton_and_NeutrinoFromWBoson(genWBosonMinus, genLeptons, genNeutrinos);
 	const GenLepton* genLepton = nullptr;
 	const GenParticle* genNeutrino = nullptr;
-	const GenJet* genJet1_Wjj = nullptr;
-	const GenJet* genJet2_Wjj = nullptr;
+	//const GenJet* genJet1_Wjj = nullptr;
+	//const GenJet* genJet2_Wjj = nullptr;
+	const GenParticle* genJet1_Wjj = nullptr;
+	const GenParticle* genJet2_Wjj = nullptr;
 	if (  (genLepton_and_NeutrinoFromWBosonPlus.first  && genLepton_and_NeutrinoFromWBosonPlus.second ) &&
 	     !(genLepton_and_NeutrinoFromWBosonMinus.first && genLepton_and_NeutrinoFromWBosonMinus.second) ) {
 	  genLepton = genLepton_and_NeutrinoFromWBosonPlus.first;
 	  genNeutrino = genLepton_and_NeutrinoFromWBosonPlus.second;
-	  std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
-            findGenJetsFromWBoson(genWBosonMinus, genJets);
+	  //std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
+          //  findGenJetsFromWBoson(genWBosonMinus, genJets);
+	  std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson = 
+            findGenJetsFromWBoson(genWBosonMinus, genWJets);
 	  genJet1_Wjj = genJetsFromWBoson.first;
 	  genJet2_Wjj = genJetsFromWBoson.second;
 	} else if (  (genLepton_and_NeutrinoFromWBosonMinus.first && genLepton_and_NeutrinoFromWBosonMinus.second) &&
 		    !(genLepton_and_NeutrinoFromWBosonPlus.first  && genLepton_and_NeutrinoFromWBosonPlus.second ) ) {
 	  genLepton = genLepton_and_NeutrinoFromWBosonMinus.first;
 	  genNeutrino = genLepton_and_NeutrinoFromWBosonMinus.second;
-	  std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
-            findGenJetsFromWBoson(genWBosonPlus, genJets);
+	  //std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
+          //  findGenJetsFromWBoson(genWBosonPlus, genJets);
+	  std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson = 
+            findGenJetsFromWBoson(genWBosonMinus, genWJets);
 	  genJet1_Wjj = genJetsFromWBoson.first;
 	  genJet2_Wjj = genJetsFromWBoson.second;
 	} 
 	if ( !(genLepton && genNeutrino && genJet1_Wjj && genJet2_Wjj) ) continue;
 	genLeptonsForMatching.push_back(*genLepton);
-	genJetsFromWBosonForMatching.push_back(*genJet1_Wjj);
-	genJetsFromWBosonForMatching.push_back(*genJet2_Wjj);
+	//genJetsFromWBosonForMatching.push_back(*genJet1_Wjj);
+	//genJetsFromWBosonForMatching.push_back(*genJet2_Wjj);
+	genJetsFromWBosonForMatching.push_back(GenJet(
+          genJet1_Wjj->pt(), genJet1_Wjj->eta(), genJet1_Wjj->phi(), genJet1_Wjj->mass(), genJet1_Wjj->pdgId()));
+	genJetsFromWBosonForMatching.push_back(GenJet(
+          genJet2_Wjj->pt(), genJet2_Wjj->eta(), genJet2_Wjj->phi(), genJet2_Wjj->mass(), genJet2_Wjj->pdgId()));
 	genMEtPx = genNeutrino->p4().px();
 	genMEtPy = genNeutrino->p4().py();
       }
@@ -973,6 +937,9 @@ int main(int argc, char* argv[])
           genBQuark->pt(), genBQuark->eta(), genBQuark->phi(), mem::bottomQuarkMass, genBQuark->pdgId()));
       }
     }
+    //std::sort(genLeptonsForMatching.begin(), genLeptonsForMatching.end(), isHigherPt_GenLepton);
+    std::sort(genJetsFromWBosonForMatching.begin(), genJetsFromWBosonForMatching.end(), isHigherPt_GenJet);
+    std::sort(genBJetsForMatching.begin(), genBJetsForMatching.end(), isHigherPt_GenJet);
     if ( !(genLeptonsForMatching.size() == 1 && genJetsFromWBosonForMatching.size() == 2 && genBJetsForMatching.size() == 2) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
@@ -1243,9 +1210,9 @@ int main(int argc, char* argv[])
 	  double m_jj = jjP4.mass();
 	  double pT_jj = jjP4.pt();
 	  double rank = TMath::Abs(m_jj - mem::wBosonMass)/TMath::Sqrt(TMath::Max(10., pT_jj));
-	  std::cout << "selJet1: pT = " << (*selJet1)->pt() << ", eta = " << (*selJet1)->eta() << ", phi = " << (*selJet1)->phi() << std::endl;
-	  std::cout << "selJet2: pT = " << (*selJet2)->pt() << ", eta = " << (*selJet2)->eta() << ", phi = " << (*selJet2)->phi() << std::endl;
-	  std::cout << "abs(m_jj - mW) = " << TMath::Abs(m_jj - mem::wBosonMass) << ", pT_jj = " << pT_jj << ": rank  = " << rank << std::endl;
+	  //std::cout << "selJet1: pT = " << (*selJet1)->pt() << ", eta = " << (*selJet1)->eta() << ", phi = " << (*selJet1)->phi() << std::endl;
+	  //std::cout << "selJet2: pT = " << (*selJet2)->pt() << ", eta = " << (*selJet2)->eta() << ", phi = " << (*selJet2)->phi() << std::endl;
+	  //std::cout << "abs(m_jj - mW) = " << TMath::Abs(m_jj - mem::wBosonMass) << ", pT_jj = " << pT_jj << ": rank  = " << rank << std::endl;
 	  if ( rank < minRank ) {
 	    selJet1_Wjj = (*selJet1);
 	    selJet2_Wjj = (*selJet2);
@@ -1503,14 +1470,17 @@ int main(int argc, char* argv[])
 	  const GenJet* genBJet2 = &genBJetsForMatching[1];
 	  std::cout << "genBJet #1: pT = " << genBJet2->pt() << ", eta = " << genBJet2->eta() << ", phi = " << genBJet2->phi() << std::endl;
 	  printCollection("uncleaned AK4 jets", jet_ptrs_ak4);
+	  printCollection("selJetsAK4_Hbb", selJetsAK4_Hbb);
+	  printCollection("selJetsAK4_Wjj", selJetsAK4_Wjj);
 	  std::cout << "selJet_Wjj_lead->genJet = " << selJet_Wjj_lead->genJet() << std::endl;
           std::cout << "selJet_Wjj_lead: pT = " << selJet_Wjj_lead->pt() << ", eta = " << selJet_Wjj_lead->eta() << ", phi = " << selJet_Wjj_lead->phi() << std::endl;
 	  std::cout << "selJet_Wjj_sublead->genJet = " << selJet_Wjj_sublead->genJet() << std::endl;
 	  std::cout << "selJet_Wjj_sublead: pT = " << selJet_Wjj_sublead->pt() << ", eta = " << selJet_Wjj_sublead->eta() << ", phi = " << selJet_Wjj_sublead->phi() << std::endl;
 	  std::cout << "selJet_Hbb_lead->genJet = " << selJet_Hbb_lead->genJet() << std::endl;
-	  std::cout << "selJet_Hbb_lead: pT = " << selJet_Hbb_lead->pt() << ", eta = " << selJet_Hbb_lead->eta() << ", phi = " << selJet_Hbb_lead->phi() << std::endl;
+	  printBJet("selJet_Hbb_lead", selJet_Hbb_lead);
 	  std::cout << "selJet_Hbb_sublead->genJet = " << selJet_Hbb_sublead->genJet() << std::endl;
-	  std::cout << "selJet_Hbb_sublead: pT = " << selJet_Hbb_sublead->pt() << ", eta = " << selJet_Hbb_sublead->eta() << ", phi = " << selJet_Hbb_sublead->phi() << std::endl;
+	  printBJet("selJet_Hbb_sublead", selJet_Hbb_sublead);
+	  std::cout << "--> CHECK !!" << std::endl;
 	//}
 	continue;
       }
@@ -1588,6 +1558,27 @@ int main(int argc, char* argv[])
 
     double memCpuTime = clock.GetCpuTime("memAlgo");
     std::cout << "MEM: likelihood ratio = " << memResult.getLikelihoodRatio() << " +/- " << memResult.getLikelihoodRatioErr() << " (CPU time = " << memCpuTime << ")" << std::endl;
+
+    if ( (memResult.getLikelihoodRatio() < 0.01 &&  isSignal) || 
+	 (memResult.getLikelihoodRatio() > 0.99 && !isSignal) ) {
+      const GenLepton* genLepton = &genLeptonsForMatching[0];
+      int genLepton_matchType = compGenMatchType(genLepton, std::vector<const RecoLepton*>({ selLepton }), preselLeptonsFull, tightLeptonsFull);
+      fillWithOverFlow(histogram_badMEM_genLepton_matchType, genLepton_matchType, evtWeight);
+      const GenJet* genJet_Hbb_lead = &genBJetsForMatching[0];
+      int genJet_Hbb_lead_matchType = compGenMatchType(genJet_Hbb_lead, std::vector<const RecoJetBase*>({ selJet_Hbb_lead, selJet_Hbb_sublead }), jet_ptrs_ak4, selJetsAK4);
+      fillWithOverFlow(histogram_badMEM_genJet_Hbb_lead_matchType, genJet_Hbb_lead_matchType, evtWeight);
+      const GenJet* genJet_Hbb_sublead = &genBJetsForMatching[1];
+      int genJet_Hbb_sublead_matchType = compGenMatchType(genJet_Hbb_sublead, std::vector<const RecoJetBase*>({ selJet_Hbb_lead, selJet_Hbb_sublead }), jet_ptrs_ak4, selJetsAK4);
+      fillWithOverFlow(histogram_badMEM_genJet_Hbb_sublead_matchType, genJet_Hbb_sublead_matchType, evtWeight);
+      const GenJet* genJet_Wjj_lead = &genJetsFromWBosonForMatching[0];
+      int genJet_Wjj_lead_matchType = compGenMatchType(genJet_Wjj_lead, std::vector<const RecoJetBase*>({ selJet_Wjj_lead, selJet_Wjj_sublead }), jet_ptrs_ak4, selJetsAK4);
+      fillWithOverFlow(histogram_badMEM_genJet_Wjj_lead_matchType, genJet_Wjj_lead_matchType, evtWeight);
+      const GenJet* genJet_Wjj_sublead = &genJetsFromWBosonForMatching[1];
+      int genJet_Wjj_sublead_matchType = compGenMatchType(genJet_Wjj_sublead, std::vector<const RecoJetBase*>({ selJet_Wjj_lead, selJet_Wjj_sublead }), jet_ptrs_ak4, selJetsAK4);
+      fillWithOverFlow(histogram_badMEM_genJet_Wjj_sublead_matchType, genJet_Wjj_sublead_matchType, evtWeight);
+      fillWithOverFlow(histogram_badMEM_numBJets_loose, numBJets_loose, evtWeight);
+      fillWithOverFlow(histogram_badMEM_numBJets_medium, numBJets_medium, evtWeight);
+    }
     //---------------------------------------------------------------------------
 
     mvaInputs_XGB["met"] = metP4.pt();

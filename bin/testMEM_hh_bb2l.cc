@@ -56,7 +56,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenEvtHistManager.h" // GenEvtHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoHistManager.h" // LHEInfoHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched, contains
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched, contains, findFile
 #include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
@@ -78,7 +78,10 @@
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 #include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoDilepton.h"
+#include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/memAuxFunctions.h"
+#include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson
+#include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
@@ -96,40 +99,6 @@
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
-
-std::pair<const GenLepton*, const GenParticle*> 
-findGenLepton_and_NeutrinoFromWBoson(const GenParticle* genWBoson, const std::vector<GenLepton>& genLeptons, const std::vector<GenParticle>& genNeutrinos)
-{
-  const GenLepton* genLeptonFromWBoson = nullptr;
-  const GenParticle* genNeutrinoFromWBoson = nullptr;
-  double minDeltaMass = 1.e+3;
-  for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
-	genLepton != genLeptons.end(); ++genLepton ) {
-    for ( std::vector<GenParticle>::const_iterator genNeutrino = genNeutrinos.begin();
-	  genNeutrino != genNeutrinos.end(); ++genNeutrino ) {
-      Particle::LorentzVector genLepton_and_NeutrinoP4 = genLepton->p4() + genNeutrino->p4();
-      double deltaMass = TMath::Abs(genLepton_and_NeutrinoP4.mass() - genWBoson->mass());
-      double dR = deltaR(genLepton_and_NeutrinoP4, genWBoson->p4());
-      if ( deltaMass < 5. && deltaMass < minDeltaMass && dR < 1. ) {
-	genLeptonFromWBoson = &(*genLepton);
-	genNeutrinoFromWBoson = &(*genNeutrino);
-	minDeltaMass = deltaMass;
-      }
-    }
-  }
-  return std::pair<const GenLepton*, const GenParticle*>(genLeptonFromWBoson, genNeutrinoFromWBoson);
-}
-
-std::string
-findFile(const std::string & fileName)
-{
-  const edm::FileInPath inputFile(fileName);
-  if ( inputFile.fullPath().empty() ) {
-    std::cerr << "Error: Cannot find file = " << fileName;
-    assert(0);
-  }
-  return inputFile.fullPath();
-}
 
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
@@ -514,6 +483,25 @@ int main(int argc, char* argv[])
     Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
   selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "data_to_MC_correction" });
 
+  TH1* histogram_badMEM_genLepton_lead_matchType           = bookHistogram1d(fs, "badMEM_genLepton_lead_matchType",             6,   -0.5,  +5.5);
+  TH1* histogram_badMEM_genLepton_sublead_matchType        = bookHistogram1d(fs, "badMEM_genLepton_sublead_matchType",          6,   -0.5,  +5.5);
+  TH1* histogram_badMEM_genJet_Hbb_lead_matchType          = bookHistogram1d(fs, "badMEM_genJet_Hbb_lead_matchType",            6,   -0.5,  +5.5);
+  TH1* histogram_badMEM_genJet_Hbb_sublead_matchType       = bookHistogram1d(fs, "badMEM_genJet_Hbb_sublead_matchType",         6,   -0.5,  +5.5);
+  TH1* histogram_badMEM_numBJets_loose                     = bookHistogram1d(fs, "badMEM_numBJets_loose",                      10,   -0.5,  +9.5);
+  TH1* histogram_badMEM_numBJets_medium                    = bookHistogram1d(fs, "badMEM_numBJets_medium",                     10,   -0.5,  +9.5);
+  TH1* histogram_badMEM_log_memProb_signal                 = bookHistogram1d(fs, "badMEM_log_memProb_signal",                 200, -200.,    0.);
+  TH1* histogram_badMEM_log_memProb_signal_missingBJet     = bookHistogram1d(fs, "badMEM_log_memProb_signal_missingBJet",     200, -200.,    0.);
+  TH1* histogram_badMEM_log_memProb_background             = bookHistogram1d(fs, "badMEM_log_memProb_background",             200, -200.,    0.);
+  TH1* histogram_badMEM_log_memProb_background_missingBJet = bookHistogram1d(fs, "badMEM_log_memProb_background_missingBJet", 200, -200.,    0.);
+  TH1* histogram_badMEM_memLR_missingBJet                  = bookHistogram1d(fs, "badMEM_memLR_missingBJet",                  360,    0.,    1.);
+
+  TH1* histogram_numGenMatchedBJets_higherCSV              = bookHistogram1d(fs, "numGenMatchedBJets_higherCSV",               10,   -0.5,  +9.5);
+  TH1* histogram_numGenMatchedBJets_minDeltaMass1Lor1M     = bookHistogram1d(fs, "numGenMatchedBJets_minDeltaMass1Lor1M",      10,   -0.5,  +9.5);
+  TH1* histogram_numGenMatchedBJets_minDeltaMass2Lor1M     = bookHistogram1d(fs, "numGenMatchedBJets_minDeltaMass2Lor1M",      10,   -0.5,  +9.5);
+
+  TH1* histogram_deltaMEtPx                                = bookHistogram1d(fs, "deltaMEtPx",                                400, -100., +100.);
+  TH1* histogram_deltaMEtPy                                = bookHistogram1d(fs, "deltaMEtPy",                                400, -100., +100.);
+
   int analyzedEntries = 0;
   int selectedEntries = 0;
   double selectedEntries_weighted = 0.;
@@ -819,7 +807,7 @@ int main(int argc, char* argv[])
 	genBJetsForMatching.push_back(GenJet(
           genBQuark->pt(), genBQuark->eta(), genBQuark->phi(), mem::bottomQuarkMass, genBQuark->pdgId()));
 	genBJetsForMatching.push_back(GenJet(
-          genAntiBQuark->pt(), genAntiBQuark->eta(), genAntiBQuark->phi(), mem::bottomQuarkMass, genAntiBQuark->pdgId()));
+          genAntiBQuark->pt(), genAntiBQuark->eta(), genAntiBQuark->phi(), mem::bottomQuarkMass, genAntiBQuark->pdgId()));	
       }
       if ( genWBosonPlus && genWBosonMinus ) {
 	std::pair<const GenLepton*, const GenParticle*> genLepton_and_NeutrinoFromWBosonPlus =
@@ -847,6 +835,8 @@ int main(int argc, char* argv[])
           genBQuark->pt(), genBQuark->eta(), genBQuark->phi(), mem::bottomQuarkMass, genBQuark->pdgId()));
       }
     }
+    std::sort(genLeptonsForMatching.begin(), genLeptonsForMatching.end(), isHigherPt_GenLepton);
+    std::sort(genBJetsForMatching.begin(), genBJetsForMatching.end(), isHigherPt_GenJet);
     if ( !(genLeptonsForMatching.size() == 2 && genBJetsForMatching.size() == 2) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
@@ -1040,16 +1030,31 @@ int main(int argc, char* argv[])
     std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    if ( selJetsAK4_Hbb.size() >= 2 ) {
+      std::pair<const RecoJet*, const RecoJet*> selBJets_higherCSV(selJetsAK4_Hbb[0], selJetsAK4_Hbb[1]);
+      fillWithOverFlow(histogram_numGenMatchedBJets_higherCSV, countGenMatchedBJets(selBJets_higherCSV, genBJetsForMatching, 0.2), evtWeight);
+      std::pair<const RecoJet*, const RecoJet*> selBJets_minDeltaMass1Lor1M = selectBJetsFromHbb(selJetsAK4_Hbb,
+        jetSelectorAK4_bTagLoose, 1, jetSelectorAK4_bTagMedium, 1);
+      fillWithOverFlow(histogram_numGenMatchedBJets_minDeltaMass1Lor1M, countGenMatchedBJets(selBJets_minDeltaMass1Lor1M, genBJetsForMatching, 0.2), evtWeight);
+      std::pair<const RecoJet*, const RecoJet*> selBJets_minDeltaMass2Lor1M = selectBJetsFromHbb(selJetsAK4_Hbb,
+        jetSelectorAK4_bTagLoose, 2, jetSelectorAK4_bTagMedium, 1);
+      fillWithOverFlow(histogram_numGenMatchedBJets_minDeltaMass2Lor1M, countGenMatchedBJets(selBJets_minDeltaMass2Lor1M, genBJetsForMatching, 0.2), evtWeight);
+    }
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
     int numBJets_loose = 0;
     int numBJets_medium = 0;
     if ( selJetsAK8_Hbb.size() >= 1 ) {
-      selJetAK8_Hbb = selJetsAK8_Hbb[0];
-      selJet1_Hbb = selJetAK8_Hbb->subJet1();
-      selJet2_Hbb = selJetAK8_Hbb->subJet2();
-      assert(selJet1_Hbb && selJet2_Hbb);
+      selJetAK8_Hbb = selJetsAK8_Hbb[0];    
+      assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
+      if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() ) {
+	selJet1_Hbb = selJetAK8_Hbb->subJet1();
+	selJet2_Hbb = selJetAK8_Hbb->subJet2();
+      } else {
+	selJet1_Hbb = selJetAK8_Hbb->subJet2();
+	selJet2_Hbb = selJetAK8_Hbb->subJet1();
+      }
       double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
       if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
       if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
@@ -1165,6 +1170,9 @@ int main(int argc, char* argv[])
     cutFlowTable.update("MEt filters", evtWeight);
     cutFlowHistManager->fillHistograms("MEt filters", evtWeight);
     
+    fillWithOverFlow(histogram_deltaMEtPx, metP4.px() - genMEtPx, evtWeight);
+    fillWithOverFlow(histogram_deltaMEtPy, metP4.py() - genMEtPy, evtWeight);
+
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1277,8 +1285,7 @@ int main(int argc, char* argv[])
     TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
     const bool PUSample = true;
     const int ievent = eventInfo.event;
-    //const int iterations = 100000;
-    const int iterations = 20000;
+    const int iterations = 10000;
     const int bjetrescaleAlgo = 2;
     const int metcorrection = 5;
     const bool weightfromonshellnupt_func = false;
@@ -1289,6 +1296,8 @@ int main(int argc, char* argv[])
     if( RefPDFfile.fullPath().empty() )
       throw cms::Exception("analyze_hh_bb2l")
 	<< "Failed to find file = 'REFPDFPU40.root' !!\n";
+    clock.Reset();
+    clock.Start("hmeAlgo");
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
@@ -1299,6 +1308,8 @@ int main(int argc, char* argv[])
       TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
       m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
     }
+    clock.Stop("hmeAlgo");
+    double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
@@ -1325,6 +1336,7 @@ int main(int argc, char* argv[])
     Particle::LorentzVector memLeptonP4_sublead;
     Particle::LorentzVector memBJetP4_lead;
     Particle::LorentzVector memBJetP4_sublead;
+    Particle::LorentzVector memBJetP4_highestCSV;
     double memMEtPx = 0.;
     double memMEtPy = 0.;
     if ( genMatchingOption == 1 ) {
@@ -1332,6 +1344,7 @@ int main(int argc, char* argv[])
       memLeptonP4_sublead = selLepton_sublead->genLepton()->p4();
       memBJetP4_lead = selJet_Hbb_lead->genJet()->p4();
       memBJetP4_sublead = selJet_Hbb_sublead->genJet()->p4();
+      memBJetP4_highestCSV = selJet1_Hbb->genJet()->p4();
       memMEtPx = genMEtPx;
       memMEtPy = genMEtPy;
     } else {
@@ -1339,6 +1352,7 @@ int main(int argc, char* argv[])
       memLeptonP4_sublead = selLepton_sublead->p4();
       memBJetP4_lead = selJet_Hbb_lead->p4();
       memBJetP4_sublead = selJet_Hbb_sublead->p4();
+      memBJetP4_highestCSV = selJet1_Hbb->p4();
       memMEtPx = metP4.px();
       memMEtPy = metP4.py();
     }
@@ -1361,42 +1375,147 @@ int main(int argc, char* argv[])
       memLeptonMass_sublead = mem::muonMass;
     } else assert(0);
 
-    std::vector<mem::MeasuredParticle> memMeasuredParticles;
-    memMeasuredParticles.push_back(mem::MeasuredParticle(memLeptonType_lead, 
+    mem::MeasuredParticle memMeasuredLepton_lead(memLeptonType_lead, 
       memLeptonP4_lead.pt(), memLeptonP4_lead.eta(), memLeptonP4_lead.phi(), 
-      memLeptonMass_lead, selLepton_lead->charge()));
-    memMeasuredParticles.push_back(mem::MeasuredParticle(memLeptonType_sublead, 
+      memLeptonMass_lead, selLepton_lead->charge());
+    mem::MeasuredParticle memMeasuredLepton_sublead(memLeptonType_sublead, 
       memLeptonP4_sublead.pt(), memLeptonP4_sublead.eta(), memLeptonP4_sublead.phi(), 
-      memLeptonMass_sublead, selLepton_sublead->charge()));
-    memMeasuredParticles.push_back(mem::MeasuredParticle(mem::MeasuredParticle::kBJet,
+      memLeptonMass_sublead, selLepton_sublead->charge());
+    mem::MeasuredParticle memMeasuredBJet_lead(mem::MeasuredParticle::kBJet,
       memBJetP4_lead.pt(), memBJetP4_lead.eta(), memBJetP4_lead.phi(), 
-      mem::bottomQuarkMass));
-    memMeasuredParticles.push_back(mem::MeasuredParticle(mem::MeasuredParticle::kBJet,
+      mem::bottomQuarkMass);
+    mem::MeasuredParticle memMeasuredBJet_sublead(mem::MeasuredParticle::kBJet,
       memBJetP4_sublead.pt(), memBJetP4_sublead.eta(), memBJetP4_sublead.phi(), 
-      mem::bottomQuarkMass));
+      mem::bottomQuarkMass);
+    mem::MeasuredParticle memMeasuredBJet_highestCSV(mem::MeasuredParticle::kBJet,
+      memBJetP4_highestCSV.pt(), memBJetP4_highestCSV.eta(), memBJetP4_highestCSV.phi(), 
+      mem::bottomQuarkMass);
+
+    std::vector<mem::MeasuredParticle> memMeasuredParticles;
+    memMeasuredParticles.push_back(memMeasuredLepton_lead);
+    memMeasuredParticles.push_back(memMeasuredLepton_sublead);
+    memMeasuredParticles.push_back(memMeasuredBJet_lead);
+    memMeasuredParticles.push_back(memMeasuredBJet_sublead);
+    
+    std::vector<mem::MeasuredParticle> memMeasuredParticles_missingBJet;
+    memMeasuredParticles_missingBJet.push_back(memMeasuredLepton_lead);
+    memMeasuredParticles_missingBJet.push_back(memMeasuredLepton_sublead);
+    memMeasuredParticles_missingBJet.push_back(memMeasuredBJet_highestCSV);
 
     const double sqrtS = 13.e+3;
     const std::string pdfName = "MSTW2008lo68cl";
     const std::string madgraphFileName_signal     = "hhAnalysis/bbwwMEM/data/param_hh.dat";
     const std::string madgraphFileName_background = "hhAnalysis/bbwwMEM/data/param_ttbar.dat";
     const bool applyOnshellWmassConstraint_signal = false;
+    const int memAlgo_verbosity = 1;
+    //const int memAlgo_verbosity = 3;
+    //const int maxObjFunctionCalls_signal = 2500;
+    //const int maxObjFunctionCalls_background = 25000;
+    const int maxObjFunctionCalls_signal = 1000;
+    const int maxObjFunctionCalls_background = 10000;
+    //const int maxObjFunctionCalls_background = 1000;
 
     clock.Reset();
     clock.Start("memAlgo");
-    const int verbosity = 1;
-    MEMbbwwAlgoDilepton memAlgo(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), verbosity);
+    MEMbbwwAlgoDilepton memAlgo(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), memAlgo_verbosity);
     memAlgo.applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
     memAlgo.setIntMode(MEMbbwwAlgoDilepton::kVAMP);
-    memAlgo.setMaxObjFunctionCalls_signal(2500);
-    memAlgo.setMaxObjFunctionCalls_background(25000);
+    memAlgo.setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
+    memAlgo.setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
     memAlgo.integrate(memMeasuredParticles, memMEtPx, memMEtPy, met.cov());
-    const MEMbbwwResultDilepton& memResult = memAlgo.getResult();
+    MEMbbwwResultDilepton memResult = memAlgo.getResult();
     clock.Stop("memAlgo");
 
     double memCpuTime = clock.GetCpuTime("memAlgo");
-    std::cout << "MEM: likelihood ratio = " << memResult.getLikelihoodRatio() << " +/- " << memResult.getLikelihoodRatioErr() << " (CPU time = " << memCpuTime << ")" << std::endl;
-    //---------------------------------------------------------------------------
+    std::cout << "MEM:"
+	      << " probability for signal hypothesis = " << memResult.getProb_signal() << " +/- " << memResult.getProbErr_signal() << ","
+	      << " probability for background hypothesis = " << memResult.getProb_background() << " +/- " << memResult.getProbErr_background() << " " 
+	      << "--> likelihood ratio = " << memResult.getLikelihoodRatio() << " +/- " << memResult.getLikelihoodRatioErr() 
+	      << " (CPU time = " << memCpuTime << ")" << std::endl;
 
+<<<<<<< HEAD
+=======
+    clock.Reset();
+    clock.Start("memAlgo_missingBJet");
+    MEMbbwwAlgoDilepton memAlgo_missingBJet(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), memAlgo_verbosity);
+    memAlgo_missingBJet.applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
+    memAlgo_missingBJet.setIntMode(MEMbbwwAlgoDilepton::kVAMP);
+    memAlgo_missingBJet.setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
+    memAlgo_missingBJet.setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
+    memAlgo_missingBJet.integrate(memMeasuredParticles_missingBJet, memMEtPx, memMEtPy, met.cov());
+    MEMbbwwResultDilepton memResult_missingBJet = memAlgo_missingBJet.getResult();
+    clock.Stop("memAlgo_missingBJet");
+    
+    double memCpuTime_missingBJet = clock.GetCpuTime("memAlgo_missingBJet");
+    std::cout << "MEM (missing b-jet case):" 
+	      << " probability for signal hypothesis = " << memResult_missingBJet.getProb_signal() << " +/- " << memResult_missingBJet.getProbErr_signal() << ","
+	      << " probability for background hypothesis = " << memResult_missingBJet.getProb_background() << " +/- " << memResult_missingBJet.getProbErr_background() << " " 
+	      << "--> likelihood ratio = " << memResult_missingBJet.getLikelihoodRatio() << " +/- " << memResult_missingBJet.getLikelihoodRatioErr() 
+	      << " (CPU time = " << memCpuTime_missingBJet << ")" << std::endl;
+
+    std::cout << "selLepton_lead->genLepton = " << selLepton_lead->genLepton() << std::endl;
+    std::cout << "selLepton_lead: pT = " << selLepton_lead->pt() << ", eta = " << selLepton_lead->eta() << ", phi = " << selLepton_lead->phi() << std::endl;
+    std::cout << "selLepton_sublead->genLepton = " << selLepton_sublead->genLepton() << std::endl;
+    std::cout << "selLepton_sublead: pT = " << selLepton_sublead->pt() << ", eta = " << selLepton_sublead->eta() << ", phi = " << selLepton_sublead->phi() << std::endl;
+    const GenJet* genBJet1 = &genBJetsForMatching[0];
+    std::cout << "genBJet #0: pT = " << genBJet1->pt() << ", eta = " << genBJet1->eta() << ", phi = " << genBJet1->phi() << std::endl;
+    const GenJet* genBJet2 = &genBJetsForMatching[1];
+    std::cout << "genBJet #1: pT = " << genBJet2->pt() << ", eta = " << genBJet2->eta() << ", phi = " << genBJet2->phi() << std::endl;
+    printCollection("uncleaned AK4 jets", jet_ptrs_ak4);
+    printCollection("selJetsAK4_Hbb", selJetsAK4_Hbb);
+    std::cout << "selJet_Hbb_lead->genJet = " << selJet_Hbb_lead->genJet() << std::endl;
+    printBJet("selJet_Hbb_lead", selJet_Hbb_lead);
+    std::cout << "selJet_Hbb_sublead->genJet = " << selJet_Hbb_sublead->genJet() << std::endl;
+    printBJet("selJet_Hbb_sublead", selJet_Hbb_sublead);
+    std::cout << "numBJets: loose = " << numBJets_loose << ", medium = " << numBJets_medium << std::endl;
+
+    if ( (memResult.getLikelihoodRatio() < 0.02 &&  isSignal) || 
+	 (memResult.getLikelihoodRatio() > 0.98 && !isSignal) ) {
+      const GenLepton* genLepton_lead = &genLeptonsForMatching[0];
+      int genLepton_lead_matchType = compGenMatchType(genLepton_lead, std::vector<const RecoLepton*>({ selLepton_lead, selLepton_sublead }), preselLeptonsFull, tightLeptonsFull);
+      fillWithOverFlow(histogram_badMEM_genLepton_lead_matchType, genLepton_lead_matchType, evtWeight);
+      const GenLepton* genLepton_sublead = &genLeptonsForMatching[1];
+      int genLepton_sublead_matchType = compGenMatchType(genLepton_sublead, std::vector<const RecoLepton*>({ selLepton_lead, selLepton_sublead }), preselLeptonsFull, tightLeptonsFull);
+      fillWithOverFlow(histogram_badMEM_genLepton_sublead_matchType, genLepton_sublead_matchType, evtWeight);
+      const GenJet* genJet_Hbb_lead = &genBJetsForMatching[0];
+      int genJet_Hbb_lead_matchType = compGenMatchType(genJet_Hbb_lead, std::vector<const RecoJetBase*>({ selJet_Hbb_lead, selJet_Hbb_sublead }), jet_ptrs_ak4, selJetsAK4);
+      fillWithOverFlow(histogram_badMEM_genJet_Hbb_lead_matchType, genJet_Hbb_lead_matchType, evtWeight);
+      const GenJet* genJet_Hbb_sublead = &genBJetsForMatching[1];
+      int genJet_Hbb_sublead_matchType = compGenMatchType(genJet_Hbb_sublead, std::vector<const RecoJetBase*>({ selJet_Hbb_lead, selJet_Hbb_sublead }), jet_ptrs_ak4, selJetsAK4);
+      fillWithOverFlow(histogram_badMEM_genJet_Hbb_sublead_matchType, genJet_Hbb_sublead_matchType, evtWeight);
+      fillWithOverFlow(histogram_badMEM_numBJets_loose, numBJets_loose, evtWeight);
+      fillWithOverFlow(histogram_badMEM_numBJets_medium, numBJets_medium, evtWeight);
+      const double nonzero = 1.e-30;
+      fillWithOverFlow(histogram_badMEM_log_memProb_signal, TMath::Log(TMath::Max(nonzero, memResult.getProb_signal())), evtWeight);
+      fillWithOverFlow(histogram_badMEM_log_memProb_signal_missingBJet, TMath::Log(TMath::Max(nonzero, memResult_missingBJet.getProb_signal())), evtWeight);
+      fillWithOverFlow(histogram_badMEM_log_memProb_background, TMath::Log(TMath::Max(nonzero, memResult.getProb_background())), evtWeight);
+      fillWithOverFlow(histogram_badMEM_log_memProb_background_missingBJet, TMath::Log(TMath::Max(nonzero, memResult_missingBJet.getProb_background())), evtWeight);
+      fillWithOverFlow(histogram_badMEM_memLR_missingBJet, memResult_missingBJet.getLikelihoodRatio(), evtWeight);
+      std::cout << "--> CHECK !!" << std::endl;
+    }
+    //---------------------------------------------------------------------------
+      
+    mvaInputs_XGB["m_ll"] = m_ll;
+    mvaInputs_XGB["m_Hbb"] = m_Hbb;
+    mvaInputs_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
+    mvaInputs_XGB["m_Hww"] = m_Hww;
+    mvaInputs_XGB["logTopness_fixedChi2"] = logTopness_fixedChi2;
+    mvaInputs_XGB["logHiggsness_fixedChi2"] = logHiggsness_fixedChi2;
+    mvaInputs_XGB["mT2_top_3particle"] = mT2_top_3particle;
+    mvaInputs_XGB["pT_HH"] = pT_HH;
+    mvaInputs_XGB["dPhi_HH"] = dPhi_HH;
+    mvaInputs_XGB["min_dPhi_lepMEt"] = min_dPhi_lepMEt;
+    mvaInputs_XGB["max_dR_b_lep"] = std::max(dR_b1lep1,std::max(dR_b1lep2,std::max(dR_b2lep1,dR_b2lep2)));
+    mvaInputs_XGB["met"] =  metP4.pt();
+    mvaInputs_XGB["max_lep_pt"] = std::max(selLepton_lead->pt(),selLepton_sublead->pt());
+    mvaInputs_XGB["max_bjet_pt"] = std::max(selJetP4_Hbb_lead.pt(),selJetP4_Hbb_sublead.pt());
+    mvaInputs_XGB["gen_mHH"] = 300;
+    double mvaoutput_bb2l300 = mva_xgb_bb2l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 400;
+    double mvaoutput_bb2l400 = mva_xgb_bb2l(mvaInputs_XGB);
+    mvaInputs_XGB["gen_mHH"] = 750;
+    double mvaoutput_bb2l750 = mva_xgb_bb2l(mvaInputs_XGB);
+>>>>>>> 2b822c9438d503f8dfe858afbf4752546c8daa14
     /*    mvaInputs_XGB["m_ll"] = 117.5084;
     mvaInputs_XGB["m_Hbb"] = 111.439705;
     mvaInputs_XGB["nBJetMedium"] = 1;
@@ -1518,11 +1637,12 @@ int main(int argc, char* argv[])
       m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
       m_ll, dR_ll, dPhi_ll, pT_ll,
       m_Hww, pT_Hww, Smin_Hww,
-      m_HHvis, m_HH, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
+      m_HHvis, m_HH, m_HH_hme, hmeCpuTime, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
       -1., -1., -1., -1., -1., -1., 
       &memResult, memCpuTime, 
+      &memResult_missingBJet, memCpuTime_missingBJet, 
       mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
       mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
       evtWeight);

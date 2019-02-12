@@ -36,11 +36,12 @@ public:
 		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
 		 double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
 		 double m_Hww, double pT_Hww, double Smin_Hww,
-		 double m_HHvis, double m_HH, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
+		 double m_HHvis, double m_HH, double m_HH_hme, double hmeCpuTime, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultDilepton* memResult, double memCpuTime,
+		 const MEMbbwwResultDilepton* memResult_missingBJet, double memCpuTime_missingBJet,
 		 double mvaoutput300, double mvaoutput400, double mvaoutput750,
 		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750, 
 		 double mvaoutput_bb2l_node3, double mvaoutput_bb2l_node7, double mvaoutput_bb2l_sm,
@@ -79,6 +80,7 @@ public:
   TH1 * histogram_m_HHvis_;
   TH1 * histogram_m_HH_;
   TH1 * histogram_m_HH_hme_;
+  TH1 * histogram_hmeCpuTime_;
   TH1 * histogram_dR_HH_;
   TH1 * histogram_dPhi_HH_;
   TH1 * histogram_pT_HH_;
@@ -110,6 +112,15 @@ public:
   TH1 * histogram_log_memLR_div_Err_;
   TH1 * histogram_memScore_;
   TH1 * histogram_memCpuTime_;
+
+  TH1 * histogram_log_memProb_signal_missingBJet_;
+  TH1 * histogram_log_memProbErr_signal_missingBJet_;
+  TH1 * histogram_log_memProb_background_missingBJet_;
+  TH1 * histogram_log_memProbErr_background_missingBJet_;
+  TH1 * histogram_memLR_missingBJet_;
+  TH1 * histogram_log_memLR_div_Err_missingBJet_;
+  TH1 * histogram_memScore_missingBJet_;
+  TH1 * histogram_memCpuTime_missingBJet_;
 
   TH1 * histogram_MVAOutput300_;
   TH1 * histogram_MVAOutput400_;

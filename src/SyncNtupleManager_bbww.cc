@@ -51,9 +51,9 @@ SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileNam
   {
     outputTree->SetDirectory(outputDir);
   }
-  for(int var = as_integer(FloatVariableType::PFMET); var <= as_integer(FloatVariableType::MC_weight); ++var)
+  for(int var = as_integer(FloatVariableType_bbww::PFMET); var <= as_integer(FloatVariableType_bbww::MC_weight); ++var)
   {
-    floatMap[static_cast<FloatVariableType>(var)] = placeholder_value;
+    floatMap[static_cast<FloatVariableType_bbww>(var)] = placeholder_value;
   }
 }
 
@@ -80,6 +80,8 @@ SyncNtupleManager_bbww::initializeBranches()
   const std::string n_presel_mu_str       = Form("n_presel_%s",      mstr);
   const std::string n_presel_ele_str      = Form("n_presel_%s",      estr);
   const std::string n_presel_jet_str      = Form("n_presel_%s",      jstr);
+  const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
+  const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
 
   setBranches(
     nEvent,            "event",
@@ -88,12 +90,14 @@ SyncNtupleManager_bbww::initializeBranches()
     n_presel_mu,       n_presel_mu_str,
     n_presel_ele,      n_presel_ele_str,
     n_presel_jet,      n_presel_jet_str,
+    n_presel_jetAK8,   n_presel_jetAK8_str,
+    n_presel_jetAK8LS, n_presel_jetAK8LS_str,
 
 //--- MET/MHT
-    floatMap[FloatVariableType::PFMET],                    "PFMET",
-    floatMap[FloatVariableType::PFMETphi],                 "PFMETphi",
-    floatMap[FloatVariableType::PU_weight],                "PU_weight",
-    floatMap[FloatVariableType::MC_weight],                "MC_weight"
+    floatMap[FloatVariableType_bbww::PFMET],                    "PFMET",
+    floatMap[FloatVariableType_bbww::PFMETphi],                 "PFMETphi",
+    floatMap[FloatVariableType_bbww::PU_weight],                "PU_weight",
+    floatMap[FloatVariableType_bbww::MC_weight],                "MC_weight"
   );
 
   setBranches(
@@ -272,7 +276,15 @@ void
 SyncNtupleManager_bbww::read(const std::vector<const RecoJetAK8 *> & jets,
                              bool isLS)
 {
-  const Int_t nof_iterations = std::min(static_cast<int>(jets.size()), isLS ? nof_jetsAk8LS : nof_jetsAk8);
+  if(isLS)
+  {
+    n_presel_jetAK8LS = jets.size();
+  }
+  else
+  {
+    n_presel_jetAK8 = jets.size();
+  }
+  const Int_t nof_iterations = std::min(isLS ? n_presel_jetAK8LS : n_presel_jetAK8, isLS ? nof_jetsAk8LS : nof_jetsAk8);
   for(Int_t i = 0; i < nof_iterations; ++i)
   {
     const RecoJetAK8 * const jet = jets[i];
@@ -333,7 +345,7 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoJetAK8 *> & jets,
 
 void
 SyncNtupleManager_bbww::read(Float_t value,
-                        FloatVariableType type)
+                             FloatVariableType_bbww type)
 {
   floatMap[type] = value;
 }
@@ -360,7 +372,9 @@ SyncNtupleManager_bbww::reset()
   reset(
     n_presel_mu,
     n_presel_ele,
-    n_presel_jet
+    n_presel_jet,
+    n_presel_jetAK8,
+    n_presel_jetAK8LS
   );
 
   for(auto & kv: floatMap)

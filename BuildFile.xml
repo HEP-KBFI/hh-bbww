@@ -2,6 +2,7 @@
 <use   name="FWCore/Utilities"/>
 <use   name="CommonTools/Utils"/>
 <use   name="DataFormats/Math"/>
+<use   name="PhysicsTools/FWLite"/>
 <use   name="tthAnalysis/HiggsToTauTau"/>
 <use   name="tthAnalysis/TauTriggerSFs2017"/>
 <use   name="TauAnalysis/ClassicSVfit4tau"/>
