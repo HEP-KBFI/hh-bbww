@@ -32,7 +32,7 @@ for sample_name, sample_info in samples_2017.items():
     sample_info["has_LHE"] = False
 
   if sample_info["process_name_specific"].startswith('signal') and 'hh' in sample_info["process_name_specific"]:
-    sample_info["use_it"] = 'nonresonant' not in sample_info["process_name_specific"] # temp: enable resonant samples only
+    sample_info["use_it"] = 'noncorr' not in sample_info["process_name_specific"] # temp: enable resonant samples only
 
   if sample_name.startswith('/ZZ'):
     sample_info["sample_category"] = "ZZ"
