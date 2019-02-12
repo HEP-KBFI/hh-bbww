@@ -42,7 +42,8 @@ public:
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultDilepton* memResult, double memCpuTime,
 		 double mvaoutput300, double mvaoutput400, double mvaoutput750,
-		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750,
+		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750, 
+		 double mvaoutput_bb2l_node3, double mvaoutput_bb2l_node7, double mvaoutput_bb2l_sm,
 		 double evtWeight);
 
   const TH1 *
@@ -116,6 +117,10 @@ public:
   TH1 * histogram_MVAOutputnohiggnessnotopness300_;
   TH1 * histogram_MVAOutputnohiggnessnotopness400_;
   TH1 * histogram_MVAOutputnohiggnessnotopness750_;
+  TH1 * histogram_MVAOutputnode3_;
+  TH1 * histogram_MVAOutputnode7_;
+  TH1 * histogram_MVAOutputsm_;
+
 
   TH1 * histogram_EventCounter_;
 
