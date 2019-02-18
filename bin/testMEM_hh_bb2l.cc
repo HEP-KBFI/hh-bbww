@@ -1433,8 +1433,6 @@ int main(int argc, char* argv[])
 	      << "--> likelihood ratio = " << memResult.getLikelihoodRatio() << " +/- " << memResult.getLikelihoodRatioErr() 
 	      << " (CPU time = " << memCpuTime << ")" << std::endl;
 
-<<<<<<< HEAD
-=======
     clock.Reset();
     clock.Start("memAlgo_missingBJet");
     MEMbbwwAlgoDilepton memAlgo_missingBJet(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), memAlgo_verbosity);
@@ -1495,27 +1493,6 @@ int main(int argc, char* argv[])
     }
     //---------------------------------------------------------------------------
       
-    mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["m_Hbb"] = m_Hbb;
-    mvaInputs_XGB["nBJetMedium"] = selBJetsAK4_medium.size();
-    mvaInputs_XGB["m_Hww"] = m_Hww;
-    mvaInputs_XGB["logTopness_fixedChi2"] = logTopness_fixedChi2;
-    mvaInputs_XGB["logHiggsness_fixedChi2"] = logHiggsness_fixedChi2;
-    mvaInputs_XGB["mT2_top_3particle"] = mT2_top_3particle;
-    mvaInputs_XGB["pT_HH"] = pT_HH;
-    mvaInputs_XGB["dPhi_HH"] = dPhi_HH;
-    mvaInputs_XGB["min_dPhi_lepMEt"] = min_dPhi_lepMEt;
-    mvaInputs_XGB["max_dR_b_lep"] = std::max(dR_b1lep1,std::max(dR_b1lep2,std::max(dR_b2lep1,dR_b2lep2)));
-    mvaInputs_XGB["met"] =  metP4.pt();
-    mvaInputs_XGB["max_lep_pt"] = std::max(selLepton_lead->pt(),selLepton_sublead->pt());
-    mvaInputs_XGB["max_bjet_pt"] = std::max(selJetP4_Hbb_lead.pt(),selJetP4_Hbb_sublead.pt());
-    mvaInputs_XGB["gen_mHH"] = 300;
-    double mvaoutput_bb2l300 = mva_xgb_bb2l(mvaInputs_XGB);
-    mvaInputs_XGB["gen_mHH"] = 400;
-    double mvaoutput_bb2l400 = mva_xgb_bb2l(mvaInputs_XGB);
-    mvaInputs_XGB["gen_mHH"] = 750;
-    double mvaoutput_bb2l750 = mva_xgb_bb2l(mvaInputs_XGB);
->>>>>>> 2b822c9438d503f8dfe858afbf4752546c8daa14
     /*    mvaInputs_XGB["m_ll"] = 117.5084;
     mvaInputs_XGB["m_Hbb"] = 111.439705;
     mvaInputs_XGB["nBJetMedium"] = 1;

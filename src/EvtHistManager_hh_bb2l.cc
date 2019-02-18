@@ -182,7 +182,6 @@ namespace
     const double nonzero = 1.e-30;
     fillWithOverFlow(histogram, TMath::Log(TMath::Max(nonzero, x)), evtWeight, evtWeightErr);
   }
->>>>>>> 2b822c9438d503f8dfe858afbf4752546c8daa14
 }
 
 void
