@@ -34,8 +34,9 @@ public:
 		 double HT,
 		 double STMET,
 		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
-		 double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
-		 double m_Hww, double pT_Hww, double Smin_Hww,
+		 double m_ll, double dR_ll, double dPhi_ll, double dEta_ll, double pT_ll,
+		 double m_Hww, double mT_Hww, double pT_Hww, double Smin_Hww, 
+		 double met_pt_proj,
 		 double m_HHvis, double m_HH, double m_HH_hme, double hmeCpuTime, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT2_W, int mT2_W_step, double mT2_top_2particle, int mT2_top_2particle_step, double mT2_top_3particle, int mT2_top_3particle_step, 
 		 double logHiggsness, double logTopness,
@@ -70,11 +71,14 @@ public:
   TH1 * histogram_m_ll_;
   TH1 * histogram_dR_ll_;
   TH1 * histogram_dPhi_ll_;
+  TH1 * histogram_dEta_ll_;
   TH1 * histogram_pT_ll_;
 
   TH1 * histogram_m_Hww_;
+  TH1 * histogram_mT_Hww_;
   TH1 * histogram_pT_Hww_;
   TH1 * histogram_Smin_Hww_;
+  TH1 * histogram_met_pt_proj_;
 
   TH1 * histogram_m_HHvis_;
   TH1 * histogram_m_HH_;

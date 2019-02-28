@@ -705,9 +705,10 @@ int main(int argc, char* argv[])
       "met", "mht", "met_LD", 
       "HT", "STMET", 
       "m_Hbb", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
-      "m_ll", "dR_ll", "dPhi_ll", "pT_ll",
+      "m_ll", "dR_ll", "dPhi_ll", "dEta_ll", "pT_ll",
       "min_dPhi_lepMEt", "max_dPhi_lepMEt", 
-      "m_Hww", "pT_Hww", "Smin_Hww",
+      "m_Hww", "mT_Hww", "pT_Hww", "Smin_Hww",
+      "met_pt_proj",
       "dR_b1lep1", "dR_b1lep2", "dR_b2lep1", "dR_b2lep2", 
       "m_HHvis", "pT_HHvis", "dPhi_HHvis", 
       "m_HH", "pT_HH", "dPhi_HH", "Smin_HH",
@@ -1412,6 +1413,7 @@ int main(int argc, char* argv[])
     double m_ll  = llP4.mass();
     double dR_ll = deltaR(selLeptonP4_lead, selLeptonP4_sublead);
     double dPhi_ll = TMath::Abs(deltaPhi(selLeptonP4_lead.phi(), selLeptonP4_sublead.phi())); 
+    double dEta_ll = TMath::Abs(selLeptonP4_lead.eta() - selLeptonP4_sublead.eta());
     double pT_ll = llP4.pt();
     double dPhi_lep1MEt = TMath::Abs(deltaPhi(selLeptonP4_lead.phi(), metP4.phi()));
     double dPhi_lep2MEt = TMath::Abs(deltaPhi(selLeptonP4_sublead.phi(), metP4.phi()));
@@ -1419,8 +1421,12 @@ int main(int argc, char* argv[])
     double max_dPhi_lepMEt = TMath::Max(dPhi_lep1MEt, dPhi_lep2MEt);
     Particle::LorentzVector HwwP4 = selLeptonP4_lead + selLeptonP4_sublead + metP4;
     double m_Hww = HwwP4.mass();
+    double mT_Hww = TMath::Sqrt(2.*llP4.pt()*metP4.pt()*(1. - TMath::Cos(deltaPhi(llP4.phi(), metP4.phi())))); // suggested in section 4.4 of arXiv:1212.5581
     double pT_Hww = HwwP4.pt();
     double Smin_Hww = comp_Smin(selLeptonP4_lead + selLeptonP4_sublead, metP4.px(), metP4.py());
+    double met_pt_proj; // suggested in section 4.4 of arXiv:1212.5581
+    if ( min_dPhi_lepMEt < 0.5*TMath::Pi() ) met_pt_proj = metP4.pt()*TMath::Sin(min_dPhi_lepMEt);
+    else met_pt_proj = metP4.pt();
     double dR_b1lep1 = deltaR(selJetP4_Hbb_lead, selLeptonP4_lead);
     double dR_b1lep2 = deltaR(selJetP4_Hbb_lead, selLeptonP4_sublead);
     double dR_b2lep1 = deltaR(selJetP4_Hbb_sublead, selLeptonP4_lead);
@@ -1683,8 +1689,9 @@ int main(int argc, char* argv[])
       HT, 
       STMET,
       m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
-      m_ll, dR_ll, dPhi_ll, pT_ll,
-      m_Hww, pT_Hww, Smin_Hww,
+      m_ll, dR_ll, dPhi_ll, dEta_ll, pT_ll,
+      m_Hww, mT_Hww, pT_Hww, Smin_Hww,
+      met_pt_proj,
       m_HHvis, m_HH, m_HH_hme, hmeCpuTime, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
       logHiggsness_publishedChi2, logTopness_publishedChi2,
@@ -1736,8 +1743,9 @@ int main(int argc, char* argv[])
 	    HT, 
 	    STMET,
 	    m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
-	    m_ll, dR_ll, dPhi_ll, pT_ll,
-	    m_Hww, pT_Hww, Smin_Hww,
+	    m_ll, dR_ll, dPhi_ll, dEta_ll, pT_ll,
+	    m_Hww, mT_Hww, pT_Hww, Smin_Hww,
+	    met_pt_proj,
 	    m_HHvis, m_HH, m_HH_hme, hmeCpuTime, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT2_W, mT2_W_step, mT2_top_2particle, mT2_top_2particle_step, mT2_top_3particle, mT2_top_3particle_step, 
 	    logHiggsness_publishedChi2, logTopness_publishedChi2,
@@ -1786,12 +1794,15 @@ int main(int argc, char* argv[])
           ("m_ll",                          m_ll)
           ("dR_ll",                         dR_ll)
           ("dPhi_ll",                       dPhi_ll)
+          ("dEta_ll",                       dEta_ll)
           ("pT_ll",                         pT_ll)
 	  ("min_dPhi_lepMEt",               min_dPhi_lepMEt)
 	  ("max_dPhi_lepMEt",               max_dPhi_lepMEt)
           ("m_Hww",                         m_Hww)
+          ("mT_Hww",                        mT_Hww) 
           ("Smin_Hww",                      Smin_Hww)
           ("pT_Hww",                        pT_Hww)
+	  ("met_pt_proj",                   met_pt_proj)     
 	  ("dR_b1lep1",                     dR_b1lep1)
           ("dR_b1lep2",                     dR_b1lep2)
           ("dR_b2lep1",                     dR_b2lep1)
