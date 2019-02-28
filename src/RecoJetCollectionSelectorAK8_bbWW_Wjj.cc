@@ -230,3 +230,106 @@ RecoJetSelectorAK8_bbWW_Wjj::operator()(const RecoJetAK8 & jet) const
   // jet passes all cuts
   return true;
 }
+
+
+bool
+RecoJetSelectorAK8_bbWW_Wjj::operator()(const RecoJetAK8 & jet, TString & returnType) const
+{
+  returnType = -1;
+  if ( !lepton_ ) 
+    throw cms::Exception("RecoJetSelectorAK8_bbWW_Wjj::operator()")
+      << "Value of 'lepton' has not been set. Did you call the 'set_lepton' function prior to calling operator() ?\n";
+  double dR_lepton = deltaR(jet.p4(), lepton_->p4());
+  if ( !(jet.pt() >= min_pt_) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS pT >= " << min_pt_ << " cut\n";
+    }
+    returnType = Form("FAILS pT >= %g cut",min_pt_);
+    return false;
+  }
+  if ( !(jet.absEta() <= max_absEta_) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS abs(eta) <= " << max_absEta_ << " cut\n";
+    }
+    returnType = Form("FAILS abs(eta) <= %g cut",max_absEta_);
+    return false;
+  }
+  if ( !((jet.jetId() % 4) >= min_jetId_) ) { // CV: loose (tight) jetId is stored in bit 0 (1), 
+                                              //     with value of 1 (2) in case the jet passes the loose (tight) jetId
+    if ( debug_ ) {
+      std::cout << "FAILS jet ID % 4 >= " << min_jetId_ << " cut\n";
+    }
+    returnType = Form("FAILS jet ID mod 4 >= %i cut",min_jetId_);
+    return false;
+  }
+  if ( !(jet.msoftdrop() >= min_msoftdrop_) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS m(softdrop) >= " << min_msoftdrop_ << " cut\n";
+    }
+    returnType = Form("FAILS m(softdrop) >= %g cut",min_msoftdrop_);
+    return false;
+  }
+  if ( !(jet.msoftdrop() <= max_msoftdrop_) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS m(softdrop) <= " << max_msoftdrop_ << " cut\n";
+    }
+    returnType = Form("FAILS m(softdrop) <= %g cut",max_msoftdrop_);
+    return false;
+  }
+  if ( !((jet.tau2()/jet.tau1()) <= max_tau2_div_tau1_) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS N-subjettiness ratio tau2/tau1 <= " << max_tau2_div_tau1_ << " cut\n";
+    }
+    returnType = Form("FAILS N-subjettiness ratio tau2/tau1 <= %g cut",max_tau2_div_tau1_);
+    return false;
+  }
+  if ( !(dR_lepton <= max_dR_lepton_) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS dR(lepton) <= " << max_dR_lepton_ << " cut\n";
+    }
+    returnType = Form("FAILS dR(lepton) <= %g cut",max_dR_lepton_);
+    return false;
+  }
+  if ( !(jet.subJet1() && jet.subJet2()                    && 
+	 // CV: make sure that lepton is not contained in either subjet 
+	 // (neccessary, as we do not yet reconstruct AK8 jets on nanoAOD level, which are cleaned with respect to leptons)
+	 deltaR(jet.subJet1()->p4(), lepton_->p4()) > 0.1  && 
+	 deltaR(jet.subJet2()->p4(), lepton_->p4()) > 0.1  && 
+	 ((jet.subJet1()->pt()      >= min_subJet1_pt_     && 
+	   jet.subJet1()->absEta()  <= max_subJet1_absEta_ && 
+	   jet.subJet2()->pt()      >= min_subJet2_pt_     && 
+	   jet.subJet2()->absEta()  <= max_subJet2_absEta_) ||
+	  (jet.subJet1()->pt()      >= min_subJet2_pt_     && 
+	   jet.subJet1()->absEta()  <= max_subJet2_absEta_ && 
+	   jet.subJet2()->pt()      >= min_subJet1_pt_     && 
+	   jet.subJet2()->absEta()  <= max_subJet1_absEta_))) ) {
+    if ( debug_ ) {
+      std::cout << "FAILS subjet selection criteria\n";
+      std::cout << "jet: " << jet;
+    }
+    returnType = Form("FAILS subjet selection criteria");
+    if ( !(deltaR(jet.subJet1()->p4(), lepton_->p4()) > 0.1  && 
+	   deltaR(jet.subJet2()->p4(), lepton_->p4()) > 0.1) )
+      returnType += Form("  dR(subjet, lep) < 0.1");
+    if ( !((jet.subJet1()->pt()      >= min_subJet1_pt_     && 	   
+	   jet.subJet2()->pt()      >= min_subJet2_pt_ ) ||
+	  (jet.subJet1()->pt()      >= min_subJet2_pt_     && 
+	   jet.subJet2()->pt()      >= min_subJet1_pt_)) )
+      returnType += Form("  pT < trsh");
+    if ( !((jet.subJet1()->absEta()  <= max_subJet1_absEta_ && 
+	    jet.subJet2()->absEta()  <= max_subJet2_absEta_) ||
+	   (jet.subJet1()->absEta()  <= max_subJet2_absEta_ && 
+	    jet.subJet2()->absEta()  <= max_subJet1_absEta_)) )
+      returnType += Form("  |eta| > trsh");	 
+
+    return false;
+  }
+
+
+  returnType = "";
+  // jet passes all cuts
+  return true;
+}
+
+
+

@@ -268,7 +268,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           sample_category = sample_info["sample_category"]
           is_mc = (sample_info["type"] == "mc")
           is_signal = (sample_category.startswith("signal"))
-
           for central_or_shift in self.central_or_shifts:
 
             inputFileList = inputFileLists[sample_name]

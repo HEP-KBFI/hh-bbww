@@ -170,14 +170,16 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
     histogram_memCpuTime_missingBJet_                = book1D(dir, "memCpuTime_missingBJet",                100,    0., 1000.);
   }
 
-  histogram_MVAOutput300_                            = book1D(dir, "MVAOutput_300",                         360,    0.,    1.);
-  histogram_MVAOutput400_                            = book1D(dir, "MVAOutput_400",                         360,    0.,    1.);
-  histogram_MVAOutput750_                            = book1D(dir, "MVAOutput_750",                         360,    0.,    1.);
-  histogram_MVAOutputnohiggnessnotopness300_         = book1D(dir, "MVAOutputnohiggnessnotopness_300",      360,    0.,    1.);
-  histogram_MVAOutputnohiggnessnotopness400_         = book1D(dir, "MVAOutputnohiggnessnotopness_400",      360,    0.,    1.);
-  histogram_MVAOutputnohiggnessnotopness750_         = book1D(dir, "MVAOutputnohiggnessnotopness_750",      360,    0.,    1.);
-
-  histogram_EventCounter_                            = book1D(dir, "EventCounter",                            1,   -0.5,  +0.5);
+  histogram_MVAOutput300_                    = book1D(dir, "MVAOutput_300",                    "MVAOutput_300",                    360,   0.,    1.);
+  histogram_MVAOutput400_                    = book1D(dir, "MVAOutput_400",                    "MVAOutput_400",                    360,   0.,    1.);
+  histogram_MVAOutput750_                    = book1D(dir, "MVAOutput_750",                    "MVAOutput_750",                    360,   0.,    1.);
+  histogram_MVAOutputnohiggnessnotopness300_ = book1D(dir, "MVAOutputnohiggnessnotopness_300", "MVAOutputnohiggnessnotopness_300", 360,   0.,    1.);
+  histogram_MVAOutputnohiggnessnotopness400_ = book1D(dir, "MVAOutputnohiggnessnotopness_400", "MVAOutputnohiggnessnotopness_400", 360,   0.,    1.);
+  histogram_MVAOutputnohiggnessnotopness750_ = book1D(dir, "MVAOutputnohiggnessnotopness_750", "MVAOutputnohiggnessnotopness_750", 360,   0.,    1.);
+  histogram_MVAOutputnode3_                  = book1D(dir, "MVAOutput_node3",                  "MVAOutput_node3",                  360,   0.,    1.);
+  histogram_MVAOutputnode7_                  = book1D(dir, "MVAOutput_node7",                  "MVAOutput_node7",                  360,   0.,    1.);
+  histogram_MVAOutputsm_                     = book1D(dir, "MVAOutput_sm",                     "MVAOutput_sm",                     360,   0.,    1.);
+  histogram_EventCounter_                    = book1D(dir, "EventCounter",                     "EventCounter",                       1,  -0.5,  +0.5);
 }
 
 namespace
@@ -209,6 +211,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 				       const MEMbbwwResultDilepton* memResult_missingBJet, double memCpuTime_missingBJet,
 				       double mvaoutput_bb2l300, double mvaoutput_bb2l400, double mvaoutput_bb2l750,
 				       double mvaoutputnohiggnessnotopness_bb2l300, double mvaoutputnohiggnessnotopness_bb2l400, double mvaoutputnohiggnessnotopness_bb2l750,
+				       double mvaoutput_bb2l_node3, double mvaoutput_bb2l_node7, double mvaoutput_bb2l_sm,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -302,12 +305,14 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_memCpuTime_missingBJet_,                     memCpuTime_missingBJet,                         evtWeight, evtWeightErr);   
   }
 
-  fillWithOverFlow(histogram_MVAOutput300_,                                 mvaoutput_bb2l300,                              evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput400_,                                 mvaoutput_bb2l400,                              evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput750_,                                 mvaoutput_bb2l750,                              evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness300_,              mvaoutputnohiggnessnotopness_bb2l300,           evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness400_,              mvaoutputnohiggnessnotopness_bb2l400,           evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness750_,              mvaoutputnohiggnessnotopness_bb2l750,           evtWeight, evtWeightErr);
-
-  fillWithOverFlow(histogram_EventCounter_,                                 0.,                                             evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput300_,                    mvaoutput_bb2l300,                    evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput400_,                    mvaoutput_bb2l400,                    evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutput750_,                    mvaoutput_bb2l750,                    evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness300_, mvaoutputnohiggnessnotopness_bb2l300, evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness400_, mvaoutputnohiggnessnotopness_bb2l400, evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnohiggnessnotopness750_, mvaoutputnohiggnessnotopness_bb2l750, evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnode3_,                  mvaoutput_bb2l_node3,                 evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputnode7_,                  mvaoutput_bb2l_node7,                 evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_MVAOutputsm_,                     mvaoutput_bb2l_sm,                    evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_EventCounter_,                    0.,                                   evtWeight, evtWeightErr);
 }
