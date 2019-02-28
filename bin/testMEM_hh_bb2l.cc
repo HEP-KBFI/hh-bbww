@@ -1198,9 +1198,9 @@ int main(int argc, char* argv[])
     if ( min_dPhi_lepMEt < 0.5*TMath::Pi() ) met_pt_proj = metP4.pt()*TMath::Sin(min_dPhi_lepMEt);
     else met_pt_proj = metP4.pt();
     double dR_b1lep1 = deltaR(selJetP4_Hbb_lead, selLeptonP4_lead);
-    double dR_b1lep2 = deltaR(selJetP4_Hbb_lead, selLeptonP4_sublead);
+    //double dR_b1lep2 = deltaR(selJetP4_Hbb_lead, selLeptonP4_sublead);
     double dR_b2lep1 = deltaR(selJetP4_Hbb_sublead, selLeptonP4_lead);
-    double dR_b2lep2 = deltaR(selJetP4_Hbb_sublead, selLeptonP4_sublead);
+    //double dR_b2lep2 = deltaR(selJetP4_Hbb_sublead, selLeptonP4_sublead);
     Particle::LorentzVector HHvisP4 = HbbP4 + selLeptonP4_lead + selLeptonP4_sublead;
     double m_HHvis = HHvisP4.mass();
     //double pT_HHvis = HHvisP4.pt();
