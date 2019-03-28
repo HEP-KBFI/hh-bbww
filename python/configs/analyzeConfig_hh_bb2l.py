@@ -582,7 +582,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   processes_input = [ process_input + "_fake" for process_input in processes_input ]
                   process_output += "_fake"
                 self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
-                  'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
+                  'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
                   'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_signal_tuple),
                   'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s_%s.root" % addBackgrounds_job_signal_tuple),
                   'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s_%s.log" % addBackgrounds_job_signal_tuple),
@@ -597,7 +597,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 if lepton_selection == "Tight":
                   self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
 
-            # initialize input and output file names for hadd_stage
+            # initialize input and output file names for hadd_stage2
             key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
             key_hadd_stage2_dir = getKey("hadd", lepton_charge_selection, lepton_selection_and_frWeight)
             hadd_stage2_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
