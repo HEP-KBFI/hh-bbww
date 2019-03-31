@@ -517,7 +517,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
                 if not key_hadd_stage1_5_job in self.inputFiles_hadd_stage1_5:
                   self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job] = []
-                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job].append(self.jobOptions_copyHistograms[key_copyHistograms]['inputFile'])
+                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job].append(self.jobOptions_copyHistograms[key_copyHistograms_job]['inputFile'])
 
           if self.isBDTtraining or self.do_sync:
             continue
@@ -597,7 +597,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 if lepton_selection == "Tight":
                   self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
 
-            # initialize input and output file names for hadd_stage
+            # initialize input and output file names for hadd_stage2
             key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
             key_hadd_stage2_dir = getKey("hadd", lepton_charge_selection, lepton_selection_and_frWeight)
             hadd_stage2_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
