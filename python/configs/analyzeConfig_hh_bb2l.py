@@ -582,7 +582,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   processes_input = [ process_input + "_fake" for process_input in processes_input ]
                   process_output += "_fake"
                 self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
-                  'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5],
+                  'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
                   'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_signal_tuple),
                   'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s_%s.root" % addBackgrounds_job_signal_tuple),
                   'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s_%s.log" % addBackgrounds_job_signal_tuple),
@@ -641,13 +641,13 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       for category in self.evtCategories:
         key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
         key_addFakes_dir = getKey("addBackgroundLeptonFakes")
-        addFakes_job_tuple = (category, lepton_charge_selection, category)
+        addFakes_job_tuple = (category, lepton_charge_selection)
         key_addFakes_job = getKey("fakes_data", *addFakes_job_tuple)
         self.jobOptions_addFakes[key_addFakes_job] = {
           'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
-          'cfgFile_modified' : os.path.join(self.dirs[key_addFakes_dir][DKEY_CFGS], "addBackgroundLeptonFakes_%s_%s_%s_cfg.py" % addFakes_job_tuple),
-          'outputFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_HIST], "addBackgroundLeptonFakes_%s_%s_%s.root" % addFakes_job_tuple),
-          'logFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_LOGS], "addBackgroundLeptonFakes_%s_%s_%s.log" % addFakes_job_tuple),
+          'cfgFile_modified' : os.path.join(self.dirs[key_addFakes_dir][DKEY_CFGS], "addBackgroundLeptonFakes_%s_%s_cfg.py" % addFakes_job_tuple),
+          'outputFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_HIST], "addBackgroundLeptonFakes_%s_%s.root" % addFakes_job_tuple),
+          'logFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_LOGS], "addBackgroundLeptonFakes_%s_%s.log" % addFakes_job_tuple),
           'category_signal' : getHistogramDir(category, "Tight", "disabled", lepton_charge_selection),
           'category_sideband' : getHistogramDir(category, "Fakeable", "enabled", lepton_charge_selection)
         }
@@ -722,7 +722,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
       if "Fakeable_mcClosure" in self.lepton_selections: #TODO
         key_hadd_stage2_job = getKey(self.evtCategory_inclusive, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-        key_makePlots_job = getKey(lepton_charge_selection)
+        key_makePlots_job = getKey("Fakeable_mcClosure", lepton_charge_selection)
         self.jobOptions_make_plots[key_makePlots_job] = {
           'executable' : self.executable_make_plots_mcClosure,
           'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
