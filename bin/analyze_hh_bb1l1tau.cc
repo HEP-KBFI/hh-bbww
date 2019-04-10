@@ -1285,15 +1285,7 @@ int main(int argc, char* argv[])
       dataToMCcorrectionInterface->setHadTaus(selHadTau_genPdgId, selHadTau->pt(), selHadTau->eta());
 
       dataToMCcorrectionInterface_1l_1tau_trigger->setLeptons(selLepton_type, selLepton->pt(), selLepton->eta());
-      if ( era == kEra_2016 ) {
-        dataToMCcorrectionInterface_1l_1tau_trigger->setHadTaus(selHadTau_genPdgId, selHadTau->pt(), selHadTau->eta(), selHadTau->decayMode());
-      } else if ( era == kEra_2017 ) {
-        dataToMCcorrectionInterface_1l_1tau_trigger->setHadTaus(selHadTau->pt(), selHadTau->eta(), selHadTau->phi());
-      } else if ( era == kEra_2018 ) {
-        throw cmsException("analyze_hh_bb1l1tau", __LINE__) << "Implement me!";
-      } else {
-        throw cmsException("analyze_hh_bb1l1tau", __LINE__) << "Invalid era = " << era;
-      }
+      dataToMCcorrectionInterface_1l_1tau_trigger->setHadTaus(selHadTau_genPdgId, selHadTau->pt(), selHadTau->eta(), selHadTau->decayMode());
       dataToMCcorrectionInterface_1l_1tau_trigger->setTriggerBits(isTriggered_1e, isTriggered_1e1tau, isTriggered_1mu, isTriggered_1mu1tau);
 
 //--- apply data/MC corrections for trigger efficiency
