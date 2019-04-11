@@ -228,6 +228,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   continue
                 evtcategories_extended = [""]
                 evtcategories_extended.extend(self.evtCategories)
+                if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
+                  continue
                 key_dir = getKey(process_name_or_dummy, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift_or_dummy)
                 for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT, DKEY_RLES, DKEY_SYNC ]:
                   initDict(self.dirs, [ key_dir, dir_type ])
