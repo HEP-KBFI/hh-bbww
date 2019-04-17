@@ -417,7 +417,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                                                                                 "hadd_stage1_%s_%s_%s.root" % hadd_stage1_job_tuple)
                 
                 if self.isBDTtraining:
-                  self.targets.append(self.outputFile_hadd_stage1[key_hadd_stage1])
+                  self.targets.append(self.outputFile_hadd_stage1[key_hadd_stage1_job])
                   
             if self.isBDTtraining or self.do_sync:
               continue
@@ -574,7 +574,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             genMatch_categories = [ "nonfake", "fake" ]
             for genMatch_category in genMatch_categories:
               for signal_base, signal_input in self.signal_io.items():
-                addBackgrounds_job_signal_tuple(category, lepton_charge_selection, lepton_selection, signal_base, genMatch_category)
+                addBackgrounds_job_signal_tuple = (category, lepton_charge_selection, lepton_selection, signal_base, genMatch_category)
                 key_addBackgrounds_job_signal = getKey(*addBackgrounds_job_signal_tuple)
                 if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
                   continue
