@@ -383,10 +383,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               self.inputFiles_hadd_stage1[key_hadd_stage1_job].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
               self.outputFile_hadd_stage1[key_hadd_stage1_job] = os.path.join(self.dirs[key_hadd_stage1_dir][DKEY_HIST], "hadd_stage1_%s_%s.root" % hadd_stage1_job_tuple)
 
-              if self.isBDTtraining:
-                  self.targets.append(self.outputFile_hadd_stage1[key_hadd_stage1_job])
-
-
           if self.isBDTtraining:
             continue
 
@@ -591,6 +587,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       lines_makefile = []
       self.addToMakefile_analyze(lines_makefile)
       self.addToMakefile_hadd_stage1(lines_makefile)
+      self.targets.extend(self.phoniesToAdd)
       self.createMakefile(lines_makefile)
       logging.info("Done")
       return self.num_jobs
