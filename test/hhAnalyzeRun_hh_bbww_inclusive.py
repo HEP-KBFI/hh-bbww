@@ -1,11 +1,16 @@
 #!/usr/bin/env python
-import os, logging, sys, getpass
+
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bbww_inclusive import analyzeConfig_hh_bbww_inclusive
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
+from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
 
-# E.g. to run: ./hhAnalyzeRun_inclusive.py -v 2017Dec13 -e 2017 -o syncTree
+import os
+import sys
+import getpass
+
+# E.g. to run: ./test/hhAnalyzeRun_inclusive.py -v 2017Dec13 -e 2017 -o syncTree
 
 sys_choices      = [ "full" ] + systematics.an_inclusive_opts
 systematics.full = systematics.an_inclusive
@@ -49,16 +54,9 @@ for systematic_label in systematics_label:
       central_or_shifts.append(central_or_shift)
 
 if use_nonnominal:
-  raise ValueError("Implement me!")
+  samples = load_samples(era, suffix = "sync")
 else:
-  if era == "2016":
-    raise ValueError("Implement me: %s!" % era)
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_sync import samples_2017 as samples
-  elif era == "2018":
-    raise ValueError("Implement me: %s!" % era)
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  raise ValueError("Implement me!")
 
 if __name__ == '__main__':
   logging.basicConfig(

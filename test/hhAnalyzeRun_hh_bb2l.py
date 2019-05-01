@@ -1,12 +1,17 @@
 #!/usr/bin/env python
-import os, logging, sys, getpass
-from collections import OrderedDict as OD
+
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bb2l import analyzeConfig_hh_bb2l
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
+from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
 
-# E.g.: ./tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
+import os
+import sys
+import getpass
+import importlib
+
+# E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default', 'forBDTtraining', 'sync' ]
 sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
@@ -58,15 +63,11 @@ do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
 
 if mode == "default":
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016 import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples_to_stitch = getattr(
+    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
+    "samples_to_stitch_{}".format(era)
+  )
+  samples = load_samples(era)
 
   # [*] use binned DY samples in BDT training
   dy_samples_inclusive = []
@@ -95,15 +96,11 @@ if mode == "default":
       sample_info["use_it"] = True  # [*]
 
 elif mode == "forBDTtraining":
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples_to_stitch = getattr(
+    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
+    "samples_to_stitch_{}".format(era)
+  )
+  samples = load_samples(era, suffix = "BDT")
 
   # [*] use binned DY samples in BDT training
   dy_samples_inclusive = []
@@ -133,14 +130,7 @@ elif mode == "forBDTtraining":
       sample_info["use_it"] = False  # [*]
 
 elif mode == "sync":
-  if era == "2016":
-    raise ValueError("Implement me: %s!" % era)
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_sync import samples_2017 as samples
-  elif era == "2018":
-    raise ValueError("Implement me: %s!" % era)
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples = load_samples(era, suffix = "sync")
 else:
   raise ValueError("Internal logic error")
 
@@ -170,12 +160,6 @@ else:
   ]
 
 if __name__ == '__main__':
-  logging.basicConfig(
-    stream = sys.stdout,
-    level  = logging.INFO,
-    format = '%(asctime)s - %(levelname)s: %(message)s',
-  )
-
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
     ', '.join(central_or_shifts)

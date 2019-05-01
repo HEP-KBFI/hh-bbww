@@ -1,12 +1,16 @@
 #!/usr/bin/env python
-import os, logging, sys, getpass
-from collections import OrderedDict as OD
+
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bb1l1tau import analyzeConfig_hh_bb1l1tau
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
-from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
+from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
+from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
 
-# E.g.: ./tthAnalyzeRun_hh_bb1l1tau.py -v 2017Dec13 -m default -e 2017
+import os
+import sys
+import getpass
+
+# E.g.: ./test/tthAnalyzeRun_hh_bb1l1tau.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default', 'forBDTtraining' ]
 sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
@@ -52,47 +56,15 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
+lumi = get_lumi(era)
 
 if mode == "default":
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016 import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017 as samples
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples = load_samples(era)
 elif mode == "forBDTtraining":
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples = load_samples(era, suffix = "BDT")
 else:
   raise ValueError("Internal logic error")
 
-if era == "2016":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2016 as lumi
-elif era == "2017":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2017 as lumi
-elif era == "2018":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2018 as lumi
-else:
-  raise ValueError("Invalid era: %s" % era)
-
-if era == "2016":
-  hadTau_mva_wp  = "dR03mvaTight"
-elif era == "2017":
-  hadTau_mva_wp  = "dR03mvaMedium"
-elif era == "2018":
-  raise ValueError("Implement me!")
-else:
-  raise ValueError("Invalid era: %s" % era)
-
-evtCategories = None
 if mode == "default" and len(central_or_shifts) <= 1:
   evtCategories = [
     "hh_bb1l1tau", "hh_bb1l1tau_resolvedHbb", "hh_bb1l1tau_resolvedHbb_vbf", "hh_bb1l1tau_resolvedHbb_nonvbf", "hh_bb1l1tau_boostedHbb", "hh_bb1l1tau_vbf", "hh_bb1l1tau_nonvbf",
@@ -111,13 +83,9 @@ if mode == "default" and len(central_or_shifts) <= 1:
 else:
   evtCategories = []
 
-if __name__ == '__main__':
-  logging.basicConfig(
-    stream = sys.stdout,
-    level  = logging.INFO,
-    format = '%(asctime)s - %(levelname)s: %(message)s',
-  )
+hadTau_mva_wp = "dR03mvaMedium"
 
+if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
     ', '.join(central_or_shifts)

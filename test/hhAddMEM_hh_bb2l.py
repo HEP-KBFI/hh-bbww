@@ -1,17 +1,21 @@
 #!/usr/bin/env python
-import os, logging, sys, getpass
 
 from hhAnalysis.bbww.configs.addMEMConfig_hh_bb2l import addMEMConfig_hh_bb2l
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
+from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
 
-sys_choices               = [ 'full' ] + systematics.an_addMEM_opts
-max_mem_integrations      = 10000000
-systematics.full          = systematics.an_addMEM
+import os
+import sys
+import getpass
+
+sys_choices          = [ 'full' ] + systematics.an_addMEM_opts
+max_mem_integrations = 10000000
+systematics.full     = systematics.an_addMEM
 mode_choices = {
   'default' : 'full',
-  'bdt'     : 'small',
+  'BDT'     : 'small',
   'sync'    : 'full',
 }
 
@@ -58,43 +62,7 @@ version = "%s_%s_%s" % (
   version, mode, 'nonNom' if use_nonnominal else 'nom'
 )
 
-if mode == 'default':
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016 import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
-
-  leptonSelection = "Fakeable"
-elif mode == 'bdt':
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_DYJets_2017 as samples_to_stitch
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
-
-  leptonSelection = "Fakeable"
-elif mode == "sync":
-  if era == "2016":
-    raise ValueError("Implement me: %s!" % era)
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_sync import samples_2017 as samples
-  elif era == "2018":
-    raise ValueError("Implement me: %s!" % era)
-  else:
-    raise ValueError("Invalid era: %s" % era)
-
-  leptonSelection = "Fakeable"
-else:
-  raise ValueError("Invalid mode: %s" % mode)
+samples = load_samples(era, suffix = mode if mode != "default" else "")
 
 if __name__ == '__main__':
   logging.basicConfig(
@@ -124,7 +92,7 @@ if __name__ == '__main__':
     mem_integrations_per_job = 400,
     max_mem_integrations     = max_mem_integrations, # use -1 if you don't want to limit the nof MEM integrations
     num_parallel_jobs        = num_parallel_jobs,
-    leptonSelection          = leptonSelection,
+    leptonSelection          = "Fakeable",
     isDebug                  = debug,
     central_or_shift         = central_or_shifts,
     dry_run                  = dry_run,

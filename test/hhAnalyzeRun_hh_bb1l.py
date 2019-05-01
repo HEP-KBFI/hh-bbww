@@ -1,12 +1,17 @@
 #!/usr/bin/env python
-import os, logging, sys, getpass
-from collections import OrderedDict as OD
+
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bb1l import analyzeConfig_hh_bb1l
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
-from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
+from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
+from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
 
-# E.g.: ./tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
+import os
+import sys
+import getpass
+import importlib
+
+# E.g.: ./test/tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default', 'forBDTtraining' ]
 sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
@@ -53,19 +58,17 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
+lumi = get_lumi(era)
+
+samples_to_stitch = getattr(
+  importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
+  "samples_to_stitch_{}".format(era)
+)
 
 if mode == "default":
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016 import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples = load_samples(era)
 
-  # [*] use binned DY samples in BDT training                                                                                                                                                               
+  # [*] use binned DY samples in BDT training
   dy_samples_inclusive = []
   dy_samples_binned = []
   for sample_set in samples_to_stitch:
@@ -78,6 +81,7 @@ if mode == "default":
           dy_binned_samples = list(
             filter(lambda sample_name: sample_name.startswith('DY'), sample_binned_value['samples']))
           dy_samples_binned.extend(dy_binned_samples)
+
   wjets_samples_inclusive = []
   wjets_samples_binned = []
   for sample_set in samples_to_stitch:
@@ -96,7 +100,7 @@ if mode == "default":
     if sample_info["process_name_specific"] in [
       "TTTo2L2Nu_PSweights", "TTToSemiLeptonic_PSweights", "TTToHadronic_PSweights",
     ]:
-      # Use non-PSweights samples for the analysis to estimate the irreducible ttbar background                                                                                                             
+      # Use non-PSweights samples for the analysis to estimate the irreducible ttbar background
       sample_info["use_it"] = False
     elif sample_info["process_name_specific"] in dy_samples_binned or sample_info["process_name_specific"] in wjets_samples_binned:
       sample_info["use_it"] = False  # [*]                                                                                                                                                                  
@@ -104,17 +108,9 @@ if mode == "default":
       sample_info["use_it"] = True  # [*]                  
 
 elif mode == "forBDTtraining":
-  if era == "2016":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2016_BDT import samples_2016 as samples
-  elif era == "2017":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_BDT import samples_2017 as samples
-    from tthAnalysis.HiggsToTauTau.samples.stitch_2017 import samples_to_stitch_2017 as samples_to_stitch
-  elif era == "2018":
-    from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_BDT import samples_2018 as samples
-  else:
-    raise ValueError("Invalid era: %s" % era)
+  samples = load_samples(era, suffix = "BDT")
 
-   # [*] use binned DY samples in BDT training                                                                                                                                                               
+   # [*] use binned DY samples in BDT training
   dy_samples_inclusive = []
   dy_samples_binned = []
   for sample_set in samples_to_stitch:
@@ -148,7 +144,7 @@ elif mode == "forBDTtraining":
     if sample_info["process_name_specific"] in [
       "TTTo2L2Nu", "TTToSemiLeptonic", "TTToHadronic",
     ]:
-        # Use PSweights samples only for BDT training                                                                                                                                                         
+      # Use PSweights samples only for BDT training
       sample_info["use_it"] = False
     elif sample_info["process_name_specific"] in dy_samples_binned or sample_info["process_name_specific"] in wjets_samples_binned:
       sample_info["use_it"] = True  # [*]
@@ -157,53 +153,30 @@ elif mode == "forBDTtraining":
 else:
   raise ValueError("Internal logic error")
 
-
-
-if era == "2016":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2016 as lumi
-elif era == "2017":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2017 as lumi
-elif era == "2018":
-  from tthAnalysis.HiggsToTauTau.analysisSettings import lumi_2018 as lumi
-else:
-  raise ValueError("Invalid era: %s" % era)
-
-if era == "2016":
-  hadTau_mva_wp_veto  = "dR03mvaTight"
-  #hadTau_mva_wp  = "dR03mvaTight"
-elif era == "2017":
-  hadTau_mva_wp_veto  = "dR03mvaMedium"
-  #hadTau_mva_wp  = "dR03mvaMedium"
-elif era == "2018":
-  raise ValueError("Implement me!")
-else:
-  raise ValueError("Invalid era: %s" % era)
-
-evtCategories = None
 if mode == "default" and len(central_or_shifts) <= 1:
   evtCategories = [
     "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_resolvedHbb_resolvedWjj_vbf", "hh_bb1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity", "hh_bb1l_vbf", "hh_bb1l_nonvbf", 
+    "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity", "hh_bb1l_vbf", "hh_bb1l_nonvbf",
     "hh_2bM1l", "hh_2bM1l_resolvedHbb_resolvedWjj", "hh_2bM1l_resolvedHbb_resolvedWjj_vbf", "hh_2bM1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_2bM1l_boostedHbb_resolvedWjj", "hh_2bM1l_boostedHbb_boostedWjj_lowPurity", "hh_2bM1l_boostedHbb_boostedWjj_highPurity", "hh_2bM1l_vbf", "hh_2bM1l_nonvbf", 
+    "hh_2bM1l_boostedHbb_resolvedWjj", "hh_2bM1l_boostedHbb_boostedWjj_lowPurity", "hh_2bM1l_boostedHbb_boostedWjj_highPurity", "hh_2bM1l_vbf", "hh_2bM1l_nonvbf",
     "hh_1bM1bL1l", "hh_1bM1bL1l_resolvedHbb_resolvedWjj", "hh_1bM1bL1l_resolvedHbb_resolvedWjj_vbf", "hh_1bM1bL1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1bL1l_boostedHbb_resolvedWjj", "hh_1bM1bL1l_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1l_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1l_vbf", "hh_1bM1bL1l_nonvbf", 
+    "hh_1bM1bL1l_boostedHbb_resolvedWjj", "hh_1bM1bL1l_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1l_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1l_vbf", "hh_1bM1bL1l_nonvbf",
     "hh_1bM1l", "hh_1bM1l_resolvedHbb_resolvedWjj", "hh_1bM1l_resolvedHbb_resolvedWjj_vbf", "hh_1bM1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_1bM1l_boostedHbb_boostedWjj_highPurity", "hh_1bM1l_vbf", "hh_1bM1l_nonvbf", 
+    "hh_1bM1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_1bM1l_boostedHbb_boostedWjj_highPurity", "hh_1bM1l_vbf", "hh_1bM1l_nonvbf",
     "hh_bb1e", "hh_bb1e_resolvedHbb_resolvedWjj", "hh_bb1e_resolvedHbb_resolvedWjj_vbf", "hh_bb1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_bb1e_boostedHbb_resolvedWjj", "hh_bb1e_boostedHbb_boostedWjj_lowPurity", "hh_bb1e_boostedHbb_boostedWjj_highPurity", "hh_bb1e_vbf", "hh_bb1e_nonvbf", 
+    "hh_bb1e_boostedHbb_resolvedWjj", "hh_bb1e_boostedHbb_boostedWjj_lowPurity", "hh_bb1e_boostedHbb_boostedWjj_highPurity", "hh_bb1e_vbf", "hh_bb1e_nonvbf",
     "hh_2bM1e", "hh_2bM1e_resolvedHbb_resolvedWjj", "hh_2bM1e_resolvedHbb_resolvedWjj_vbf", "hh_2bM1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_2bM1e_boostedHbb_resolvedWjj", "hh_2bM1e_boostedHbb_boostedWjj_lowPurity", "hh_2bM1e_boostedHbb_boostedWjj_highPurity", "hh_2bM1e_vbf", "hh_2bM1e_nonvbf", 
+    "hh_2bM1e_boostedHbb_resolvedWjj", "hh_2bM1e_boostedHbb_boostedWjj_lowPurity", "hh_2bM1e_boostedHbb_boostedWjj_highPurity", "hh_2bM1e_vbf", "hh_2bM1e_nonvbf",
     "hh_1bM1bL1e", "hh_1bM1bL1e_resolvedHbb_resolvedWjj", "hh_1bM1bL1e_resolvedHbb_resolvedWjj_vbf", "hh_1bM1bL1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1bL1e_boostedHbb_resolvedWjj", "hh_1bM1bL1e_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1e_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1e_vbf", "hh_1bM1bL1e_nonvbf", 
+    "hh_1bM1bL1e_boostedHbb_resolvedWjj", "hh_1bM1bL1e_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1e_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1e_vbf", "hh_1bM1bL1e_nonvbf",
     "hh_1bM1e", "hh_1bM1e_resolvedHbb_resolvedWjj", "hh_1bM1e_resolvedHbb_resolvedWjj_vbf", "hh_1bM1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1e_boostedHbb_resolvedWjj", "hh_bb1e_boostedHbb_boostedWjj_lowPurity", "hh_1bM1e_boostedHbb_boostedWjj_highPurity", "hh_1bM1e_vbf", "hh_1bM1e_nonvbf", 
+    "hh_1bM1e_boostedHbb_resolvedWjj", "hh_bb1e_boostedHbb_boostedWjj_lowPurity", "hh_1bM1e_boostedHbb_boostedWjj_highPurity", "hh_1bM1e_vbf", "hh_1bM1e_nonvbf",
     "hh_bb1mu", "hh_bb1mu_resolvedHbb_resolvedWjj", "hh_bb1mu_resolvedHbb_resolvedWjj_vbf", "hh_bb1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_bb1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_bb1mu_boostedHbb_boostedWjj_highPurity", "hh_bb1mu_vbf", "hh_bb1mu_nonvbf", 
+    "hh_bb1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_bb1mu_boostedHbb_boostedWjj_highPurity", "hh_bb1mu_vbf", "hh_bb1mu_nonvbf",
     "hh_2bM1mu", "hh_2bM1mu_resolvedHbb_resolvedWjj", "hh_2bM1mu_resolvedHbb_resolvedWjj_vbf", "hh_2bM1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_2bM1mu_boostedHbb_resolvedWjj", "hh_2bM1mu_boostedHbb_boostedWjj_lowPurity", "hh_2bM1mu_boostedHbb_boostedWjj_highPurity", "hh_2bM1mu_vbf", "hh_2bM1mu_nonvbf", 
+    "hh_2bM1mu_boostedHbb_resolvedWjj", "hh_2bM1mu_boostedHbb_boostedWjj_lowPurity", "hh_2bM1mu_boostedHbb_boostedWjj_highPurity", "hh_2bM1mu_vbf", "hh_2bM1mu_nonvbf",
     "hh_1bM1bL1mu", "hh_1bM1bL1mu_resolvedHbb_resolvedWjj", "hh_1bM1bL1mu_resolvedHbb_resolvedWjj_vbf", "hh_1bM1bL1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1bL1mu_boostedHbb_resolvedWjj", "hh_1bM1bL1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1mu_vbf", "hh_1bM1bL1mu_nonvbf", 
+    "hh_1bM1bL1mu_boostedHbb_resolvedWjj", "hh_1bM1bL1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1mu_vbf", "hh_1bM1bL1mu_nonvbf",
     "hh_1bM1mu", "hh_1bM1mu_resolvedHbb_resolvedWjj", "hh_1bM1mu_resolvedHbb_resolvedWjj_vbf", "hh_1bM1mu_resolvedHbb_resolvedWjj_nonvbf",
     "hh_1bM1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1mu_vbf", "hh_1bM1mu_nonvbf"
   ]
@@ -212,13 +185,9 @@ else:
     "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity"
   ]
 
-if __name__ == '__main__':
-  logging.basicConfig(
-    stream = sys.stdout,
-    level  = logging.INFO,
-    format = '%(asctime)s - %(levelname)s: %(message)s',
-  )
+hadTau_mva_wp_veto = "dR03mvaMedium"
 
+if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
     ', '.join(central_or_shifts)
