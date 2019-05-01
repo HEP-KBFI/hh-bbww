@@ -128,7 +128,14 @@ private:
   {
     for(int i = 0; i < count; ++i)
     {
-      var[i] = typeid(T) != typeid(Bool_t) ? placeholder_value : 0;
+      if(typeid(T) != typeid(Bool_t))
+      {
+        var[i] = placeholder_value;
+      }
+      else
+      {
+        var[i] = false;
+      }
     }
   }
 
@@ -149,7 +156,14 @@ private:
   void
   reset(T & var)
   {
-    var = typeid(T) != typeid(Bool_t) ? placeholder_value : 0;
+    if(typeid(T) != typeid(Bool_t))
+    {
+      var = placeholder_value;
+    }
+    else
+    {
+      var = false;
+    }
   }
 
   template<typename T,

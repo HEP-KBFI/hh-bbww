@@ -186,8 +186,6 @@ int main(int argc,
   // CV: apply jet pT cut on JEC upward shift, to make sure pT cut is loose enough
   //     to allow systematic uncertainty on JEC to be estimated on analysis level
   jetReaderAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJet_central_nonNominal : kJet_central);
-  jetReaderAK4->read_ptMass_systematics(isMC);
-  jetReaderAK4->read_BtagWeight_systematics(isMC);
   jetReaderAK4->setBranchAddresses(inputTree);
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
@@ -247,8 +245,6 @@ int main(int argc,
     electronWriter->setBranches(outputTree);
     jetWriterAK4 = new RecoJetWriter(era, isMC, Form("n%s", branchName_jets_ak4.data()), branchName_jets_ak4);
     jetWriterAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJet_central_nonNominal : kJet_central);
-    jetWriterAK4->write_ptMass_systematics(isMC);
-    jetWriterAK4->write_BtagWeight_systematics(isMC);
     jetWriterAK4->setBranches(outputTree);
     jetWriterAK8 = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8.data()), branchName_jets_ak8, Form("n%s", branchName_subjets_ak8.data()), branchName_subjets_ak8);
     // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
@@ -509,8 +505,8 @@ int main(int argc,
 	        std::cout << "computing MEM for " << eventInfo
 		  	  << " (idxPermutation = " << idxPermutation << "):\n"
                              "inputs:\n"
-			  << " leading lepton:     " << *(static_cast<const GenLepton *>(selLepton_lead)) << "\n"
-			  << " subleading lepton:  " << *(static_cast<const GenLepton *>(selLepton_sublead)) << "\n"
+                          << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
+                          << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
 		          << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
                           << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
 			  << " MET:                " << met << "\n";
