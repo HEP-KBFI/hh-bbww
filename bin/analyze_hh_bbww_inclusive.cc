@@ -237,7 +237,10 @@ main(int argc,
     const std::vector<const RecoMuon *> cleanedMuons = muon_ptrs;
     const std::vector<const RecoMuon *> preselMuons  = preselMuonSelector(cleanedMuons, isHigherConePt);
     const std::vector<const RecoMuon *> selMuons     = preselMuons;
-    printCollection("preselMuons", preselMuons);
+    if(isDEBUG)
+    {
+      printCollection("preselMuons", preselMuons);
+    }
 
     snm->read(preselMuons);
 
@@ -256,8 +259,11 @@ main(int argc,
     const std::vector<const RecoJet *> jet_ptrs = convert_to_ptrs(jets);
     const std::vector<const RecoJet *> cleanedJets = jetCleaner (jet_ptrs, preselLeptons);
     const std::vector<const RecoJet *> selJets     = jetSelector(cleanedJets, isHigherPt);
-    printCollection("cleanedJets", cleanedJets);
-    printCollection("selJets", selJets);
+    if(isDEBUG)
+    {
+      printCollection("cleanedJets", cleanedJets);
+      printCollection("selJets", selJets);
+    }
 
     snm->read(selJets);
 
@@ -265,8 +271,11 @@ main(int argc,
     const std::vector<const RecoJetAK8 *> fatJet_ptrs = convert_to_ptrs(fatJets);
     const std::vector<const RecoJetAK8 *> cleanedFatJets = jetCleanerAK8_dR08(fatJet_ptrs, preselLeptons);
     const std::vector<const RecoJetAK8 *> selFatJets     = jetSelectorAK8(cleanedFatJets, isHigherPt);
-    printCollection("cleanedFatJets", cleanedFatJets);
-    printCollection("selFatJets", selFatJets);
+    if(isDEBUG)
+    {
+      printCollection("cleanedFatJets", cleanedFatJets);
+      printCollection("selFatJets", selFatJets);
+    }
 
     snm->read(selFatJets, false);
 
