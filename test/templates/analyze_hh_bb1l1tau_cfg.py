@@ -89,7 +89,10 @@ process.analyze_hh_bb1l1tau = cms.PSet(
     branchName_genHadTaus = cms.string('GenVisTau'),
     branchName_genPhotons = cms.string('GenPhoton'),
     branchName_genJets = cms.string('GenJet'),
+
     redoGenMatching = cms.bool(True),
+    genMatchingByIndex = cms.bool(False),
+    jetCleaningByIndex = cms.bool(False),
 
     branchName_genTauLeptons = cms.string('GenTau'),
 

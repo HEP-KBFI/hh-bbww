@@ -66,8 +66,6 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_jets_ak4 = cms.string('Jet'),
     branchName_jets_ak8_Hbb = cms.string('FatJet'),
     branchName_subjets_ak8_Hbb = cms.string('SubJet'),
-    #branchName_jets_ak8_Wjj = cms.string('FatJetAK8LS'),
-    #branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LS'),
     branchName_jets_ak8_Wjj = cms.string('FatJet'),
     branchName_subjets_ak8_Wjj = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
@@ -76,7 +74,10 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_genHadTaus = cms.string('GenVisTau'),
     branchName_genPhotons = cms.string('GenPhoton'),
     branchName_genJets = cms.string('GenJet'),
+
     redoGenMatching = cms.bool(True),
+    genMatchingByIndex = cms.bool(False),
+    jetCleaningByIndex = cms.bool(False),
 
     branchName_genTauLeptons = cms.string('GenTau'),
 
