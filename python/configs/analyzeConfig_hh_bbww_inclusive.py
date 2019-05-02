@@ -20,34 +20,37 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
         isDebug,
         rle_select,
         central_or_shifts,
+        lepton_subtraction,
         use_nonnominal = False,
         use_home       = True,
       ):
     analyzeConfig_hh.__init__(self,
-      configDir          = configDir,
-      outputDir          = outputDir,
-      executable_analyze = executable_analyze,
-      channel            = "hh_bbww_inclusive",
-      samples            = samples,
-      central_or_shifts  = central_or_shifts,
-      max_files_per_job  = 1,
-      era                = era,
-      use_lumi           = False,
-      lumi               = -1.,
-      check_output_files = False,
-      running_method     = running_method,
-      num_parallel_jobs  = 1,
-      histograms_to_fit  = [],
-      triggers           = [
+      configDir             = configDir,
+      outputDir             = outputDir,
+      executable_analyze    = executable_analyze,
+      channel               = "hh_bbww_inclusive",
+      samples               = samples,
+      jet_cleaning_by_index = False,
+      gen_matching_by_index = False,
+      central_or_shifts     = central_or_shifts,
+      max_files_per_job     = 1,
+      era                   = era,
+      use_lumi              = False,
+      lumi                  = -1.,
+      check_output_files    = False,
+      running_method        = running_method,
+      num_parallel_jobs     = 1,
+      histograms_to_fit     = [],
+      triggers              = [
         '1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu',
         '1e2mu', '2e1mu', '1e1tau', '1mu1tau', '2tau',
       ],
-      verbose            = False,
-      dry_run            = dry_run,
-      isDebug            = isDebug,
-      do_sync            = True,
-      use_home           = use_home,
-      template_dir       = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
+      verbose               = False,
+      dry_run               = dry_run,
+      isDebug               = isDebug,
+      do_sync               = True,
+      use_home              = use_home,
+      template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
     )
 
     self.cfgFile_analyze = cfgFile_analyze
@@ -55,6 +58,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
     self.check_output_files = check_output_files
     self.rle_select = rle_select
     self.use_nonnominal = use_nonnominal
+    self.lepton_subtraction = lepton_subtraction.capitalize()
 
     if self.rle_select and not os.path.isfile(self.rle_select):
       raise ValueError('Input RLE file for the sync is missing: %s' % self.rle_select)
@@ -62,6 +66,8 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
 
   def createCfg_analyze(self, jobOptions, sample_info):
+    jobOptions['branchName_fatJetsLS'] = 'FatJetAK8LS{}'.format(self.lepton_subtraction)
+    jobOptions['branchName_subJetsLS'] = 'SubJetAK8LS{}'.format(self.lepton_subtraction)
     lines = super(analyzeConfig_hh_bbww_inclusive, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
