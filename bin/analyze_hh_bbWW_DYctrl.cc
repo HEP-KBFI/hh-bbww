@@ -79,7 +79,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bbWW_DYctrl.h" // EvtHistManager_hh_bbWW_DYctrl
-#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_bbWW_Hbb.h" // RecoJetSelectorAK8_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle
 #include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
@@ -414,7 +414,7 @@ int main(int argc, char* argv[])
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
-  RecoJetCollectionSelectorAK8_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
+  RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
   GenParticleReader* genTauLeptonReader = nullptr;
   if ( isMC && apply_DYMCReweighting ) {
