@@ -13,6 +13,7 @@ git clone               https://github.com/SVfit/ClassicSVfit4tau         $CMSSW
 git clone               https://github.com/SVfit/ClassicSVfit             $CMSSW_BASE/src/TauAnalysis/ClassicSVfit
 git clone               https://github.com/SVfit/SVfitTF                  $CMSSW_BASE/src/TauAnalysis/SVfitTF
 
-curl -s https://raw.githubusercontent.com/cms-hh/HHStatAnalysis/master/install_ana_models.sh | bash -s (in $CMSSW_BASE/src/)
+cd $CMSSW_BASE/src/
+curl -s https://raw.githubusercontent.com/cms-hh/HHStatAnalysis/master/install_ana_models.sh | bash -s
 git clone https://github.com/cms-hh/Support.git $CMSSW_BASE/src/Support
 ```
