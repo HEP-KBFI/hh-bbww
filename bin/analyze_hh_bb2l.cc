@@ -499,9 +499,9 @@ int main(int argc, char* argv[])
   }
 
   std::string xmlFileName_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_15Var_test.xml";
-  std::string xgbFileName_bb2l_res = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_13Var.pkl";
-  std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_11Var_nohiggnessnotopness.pkl";
-  std::string xgbFileName_bb2l_nonres = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_nonres_15Var.pkl";
+  std::string xgbFileName_bb2l_res = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_12Var.pkl";
+  std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_10Var_nohiggnessnotopness.pkl";
+  std::string xgbFileName_bb2l_nonres = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_nonres_13Var.pkl";
 
   std::vector<std::string> xgbInputVariables_bb2l_res = 
     {"mht", "m_Hbb", "m_ll", "dR_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
@@ -1620,7 +1620,6 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["mht"] = mhtP4.pt();  
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["dR_ll"] = dR_ll;
     mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
     mvaInputs_XGB["m_HHvis"] = m_HHvis;
     mvaInputs_XGB["pT_HH"] = pT_HH;
@@ -1641,7 +1640,6 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["mht"] = mhtP4.pt();
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["dR_ll"] = dR_ll;
     mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
     mvaInputs_XGB["m_HHvis"] = m_HHvis;
     mvaInputs_XGB["pT_HH"] = pT_HH;
@@ -1660,11 +1658,9 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["mht"] = mhtP4.pt();
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["dR_ll"] = dR_ll;
     mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
     mvaInputs_XGB["dR_b1lep1"] = dR_b1lep1;
     mvaInputs_XGB["dR_b2lep1"] = dR_b2lep1;
-    mvaInputs_XGB["m_HHvis"] = m_HHvis;
     mvaInputs_XGB["pT_HH"] = pT_HH;
     mvaInputs_XGB["mT2_top_2particle"] = mT2_top_2particle;
     mvaInputs_XGB["m_HH_hme"] = m_HH_hme;
