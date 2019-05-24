@@ -1,6 +1,6 @@
-#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_bbWW_Hbb.h" // RecoJetSelectorAK8_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 
-RecoJetSelectorAK8_bbWW_Hbb::RecoJetSelectorAK8_bbWW_Hbb(int era, int index, bool debug)
+RecoJetSelectorAK8_hh_bbWW_Hbb::RecoJetSelectorAK8_hh_bbWW_Hbb(int era, int index, bool debug)
   : min_pt_(200.)
   , max_absEta_(2.4)
   , min_jetId_(2)
@@ -21,193 +21,193 @@ RecoJetSelectorAK8_bbWW_Hbb::RecoJetSelectorAK8_bbWW_Hbb(int era, int index, boo
 {}
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_pt(double min_pt)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_pt(double min_pt)
 {
   min_pt_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_max_absEta(double max_absEta)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_max_absEta(double max_absEta)
 {
   max_absEta_ = max_absEta;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_msoftdrop(double min_msoftdrop)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_msoftdrop(double min_msoftdrop)
 {
   min_msoftdrop_ = min_msoftdrop;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_max_msoftdrop(double max_msoftdrop)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_max_msoftdrop(double max_msoftdrop)
 {
   max_msoftdrop_ = max_msoftdrop;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_max_tau2_div_tau1(double max_tau2_div_tau1)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_max_tau2_div_tau1(double max_tau2_div_tau1)
 {
   max_tau2_div_tau1_ = max_tau2_div_tau1;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet1_pt(double min_pt)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_subJet1_pt(double min_pt)
 {
   min_subJet1_pt_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet1_pt_forBtag(double min_pt)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_subJet1_pt_forBtag(double min_pt)
 {
   min_subJet1_pt_forBtag_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_max_subJet1_absEta(double max_absEta)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_max_subJet1_absEta(double max_absEta)
 {
   max_subJet1_absEta_ = max_absEta;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet2_pt(double min_pt)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_subJet2_pt(double min_pt)
 {
   min_subJet2_pt_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_subJet2_pt_forBtag(double min_pt)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_subJet2_pt_forBtag(double min_pt)
 {
   min_subJet2_pt_forBtag_ = min_pt;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_max_subJet2_absEta(double max_absEta)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_max_subJet2_absEta(double max_absEta)
 {
   max_subJet2_absEta_ = max_absEta;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_BtagCSV_loose(double min_BtagCSV_loose) 
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_BtagCSV_loose(double min_BtagCSV_loose) 
 {
   min_BtagCSV_loose_ = min_BtagCSV_loose;
 }
  
 void 
-RecoJetSelectorAK8_bbWW_Hbb::set_min_BtagCSV_medium(double min_BtagCSV_medium) 
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_BtagCSV_medium(double min_BtagCSV_medium) 
 {
   min_BtagCSV_medium_ = min_BtagCSV_medium;
 }
 
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_numSubJetsBtag_loose(int min_numSubJetsBtag_loose) 
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_numSubJetsBtag_loose(int min_numSubJetsBtag_loose) 
 {
   min_numSubJetsBtag_loose_ = min_numSubJetsBtag_loose;
 }
  
 void
-RecoJetSelectorAK8_bbWW_Hbb::set_min_numSubJetsBtag_medium(int min_numSubJetsBtag_medium) 
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_numSubJetsBtag_medium(int min_numSubJetsBtag_medium) 
 {
   min_numSubJetsBtag_medium_ = min_numSubJetsBtag_medium;
 }
 
 void 
-RecoJetSelectorAK8_bbWW_Hbb::set_min_jetId(int min_jetId)
+RecoJetSelectorAK8_hh_bbWW_Hbb::set_min_jetId(int min_jetId)
 {
   min_jetId_ = min_jetId;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_min_pt() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_pt() const
 {
   return min_pt_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_max_absEta() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_max_absEta() const
 {
   return max_absEta_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_min_msoftdrop() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_msoftdrop() const
 {
   return min_msoftdrop_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_max_msoftdrop() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_max_msoftdrop() const
 {
   return max_msoftdrop_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_max_tau2_div_tau1() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_max_tau2_div_tau1() const
 {
   return max_tau2_div_tau1_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet1_pt() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_subJet1_pt() const
 {
   return min_subJet1_pt_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet1_pt_forBtag() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_subJet1_pt_forBtag() const
 {
   return min_subJet1_pt_forBtag_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_max_subJet1_absEta() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_max_subJet1_absEta() const
 {
   return max_subJet1_absEta_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet2_pt() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_subJet2_pt() const
 {
   return min_subJet2_pt_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_min_subJet2_pt_forBtag() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_subJet2_pt_forBtag() const
 {
   return min_subJet2_pt_forBtag_;
 }
 
 double
-RecoJetSelectorAK8_bbWW_Hbb::get_max_subJet2_absEta() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_max_subJet2_absEta() const
 {
   return max_subJet2_absEta_;
 }
 
 double 
-RecoJetSelectorAK8_bbWW_Hbb::get_min_BtagCSV_loose() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_BtagCSV_loose() const
 {
   return min_BtagCSV_loose_;
 }
  
 double 
-RecoJetSelectorAK8_bbWW_Hbb::get_min_BtagCSV_medium() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_BtagCSV_medium() const
 {
   return min_BtagCSV_medium_;
 }
 
 int 
-RecoJetSelectorAK8_bbWW_Hbb::get_min_numSubJetsBtag_loose() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_numSubJetsBtag_loose() const
 {
   return min_numSubJetsBtag_loose_;
 }
  
 int 
-RecoJetSelectorAK8_bbWW_Hbb::get_min_numSubJetsBtag_medium() const
+RecoJetSelectorAK8_hh_bbWW_Hbb::get_min_numSubJetsBtag_medium() const
 {
   return min_numSubJetsBtag_medium_;
 }
 
 bool
-RecoJetSelectorAK8_bbWW_Hbb::operator()(const RecoJetAK8 & jet) const
+RecoJetSelectorAK8_hh_bbWW_Hbb::operator()(const RecoJetAK8 & jet) const
 {
   int numSubJetsBtag_loose  = 0;
   int numSubJetsBtag_medium = 0;
@@ -243,7 +243,7 @@ RecoJetSelectorAK8_bbWW_Hbb::operator()(const RecoJetAK8 & jet) const
   ;
   if(debug_)
   {
-    std::cout << "<RecoJetSelectorAK8_bbWW_Hbb::operator()>:\n jet: " << jet << " "
+    std::cout << "<RecoJetSelectorAK8_hh_bbWW_Hbb::operator()>:\n jet: " << jet << " "
                  "(" << (passes ? "passes" : "fails") << ")\n"
     ;
   }

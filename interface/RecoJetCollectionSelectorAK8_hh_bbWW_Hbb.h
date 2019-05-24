@@ -1,16 +1,16 @@
-#ifndef hhAnalysis_bbww_RecoJetCollectionSelectorAK8_bbWW_Hbb_h
-#define hhAnalysis_bbww_RecoJetCollectionSelectorAK8_bbWW_Hbb_h
+#ifndef hhAnalysis_bbww_RecoJetCollectionSelectorAK8_hh_bbWW_Hbb_h
+#define hhAnalysis_bbww_RecoJetCollectionSelectorAK8_hh_bbWW_Hbb_h
 
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionSelector.h" // ParticleCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetAK8.h" // RecoJet
 
-class RecoJetSelectorAK8_bbWW_Hbb
+class RecoJetSelectorAK8_hh_bbWW_Hbb
 {
 public:
-  explicit RecoJetSelectorAK8_bbWW_Hbb(int era,
+  explicit RecoJetSelectorAK8_hh_bbWW_Hbb(int era,
                            int index = -1,
                            bool debug = false);
-  ~RecoJetSelectorAK8_bbWW_Hbb() {}
+  ~RecoJetSelectorAK8_hh_bbWW_Hbb() {}
 
   /**
    * @brief Set cut thresholds
@@ -79,6 +79,6 @@ protected:
   bool debug_;
 };
 
-typedef ParticleCollectionSelector<RecoJetAK8, RecoJetSelectorAK8_bbWW_Hbb> RecoJetCollectionSelectorAK8_bbWW_Hbb;
+typedef ParticleCollectionSelector<RecoJetAK8, RecoJetSelectorAK8_hh_bbWW_Hbb> RecoJetCollectionSelectorAK8_hh_bbWW_Hbb;
 
-#endif // hhAnalysis_bbww_RecoJetCollectionSelectorAK8_bbWW_Hbb_h
+#endif // hhAnalysis_bbww_RecoJetCollectionSelectorAK8_hh_bbWW_Hbb_h
