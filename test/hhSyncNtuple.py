@@ -89,6 +89,8 @@ if __name__ == '__main__':
     systematics_label  = systematics_label,
     project_dir        = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww'),
     file_pattern       = 'hhAnalyzeRun_%s.py',
+    jet_cleaning       = '',
+    gen_matching       = '',
     suffix             = 'bbww',
   )
 
