@@ -131,8 +131,8 @@ struct categoryEntryType
     else if ( numBJets_medium_ >= 1 && numBJets_loose_ >= 2 ) name_ += "1bM2bL";
     else if ( numBJets_medium_ >= 1                         ) name_ += "1bM";
     else if (                          numBJets_loose_ >= 2 ) name_ += "2bL";
-    else if (                          numBJets_loose_ >= 1 ) name_ += "1bL";    
-    else if (                          numBJets_loose_ == 0 ) name_ += "nobL";    
+    else if (                          numBJets_loose_ >= 1 ) name_ += "1bL";
+    else if (                          numBJets_loose_ == 0 ) name_ += "nobL";
     if      ( minNumJets == -1 && maxNumJets == -1          ) (void)0; // CV: do nothing ("no operation")
     else if ( minNumJets == maxNumJets                      ) name_ += Form("%ij", minNumJets);
     else if ( minNumJets == -1                              ) name_ += Form("le%ij", maxNumJets);
@@ -158,7 +158,7 @@ struct categoryEntryType
   int numBJets_medium_;
   int numBJets_loose_;
   int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
-  int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
+  int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged
 };
 
 /**
@@ -248,7 +248,7 @@ int main(int argc, char* argv[])
   std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
   double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
-  bool apply_DYMCReweighting = cfg_analyze.getParameter<bool>("apply_DYMCReweighting"); 
+  bool apply_DYMCReweighting = cfg_analyze.getParameter<bool>("apply_DYMCReweighting");
   bool apply_hlt_filter = cfg_analyze.getParameter<bool>("apply_hlt_filter");
   bool apply_met_filters = cfg_analyze.getParameter<bool>("apply_met_filters");
   edm::ParameterSet cfgMEtFilter = cfg_analyze.getParameter<edm::ParameterSet>("cfgMEtFilter");
@@ -407,8 +407,8 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
-  // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
+  // TO-DO: implement jet energy scale uncertainties, b-tag weights,
   //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
@@ -493,7 +493,7 @@ int main(int argc, char* argv[])
     JetHistManager* leadJetAK4_;
     JetHistManager* subleadJetAK4_;
     JetHistManager* thirdJetAK4_;
-    JetHistManager* fourthJetAK4_;    
+    JetHistManager* fourthJetAK4_;
     JetHistManagerAK8* jetsAK8_Hbb_;
     JetHistManager* BJetsAK4_loose_;
     JetHistManager* leadBJetAK4_loose_;
@@ -520,7 +520,7 @@ int main(int argc, char* argv[])
     int numMuons     = ( type_lepton == kDimuon     ) ? 2 : -1;
     // CV: add categories for "resolved" b-jets without VBF jet selection
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2j2e_DYctrl,      hh_bbWW_2bM2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2j2e_DYctrl,      hh_bbWW_2bM2j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM3j2e_DYctrl,      hh_bbWW_2bM3j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bMge4j2e_DYctrl,    hh_bbWW_2bMge4j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  2, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2bL2e_DYctrl,     hh_bbWW_1bM2bL2mu_DYctrl
@@ -528,25 +528,25 @@ int main(int argc, char* argv[])
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  2,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2bL3j2e_DYctrl,   hh_bbWW_1bM2bL3j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  2,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2bLge4j2e_DYctrl, hh_bbWW_1bM2bLge4j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2e_DYctrl,        hh_bbWW_1bM2mu_DYctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  1,  1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1j2e_DYctrl,      hh_bbWW_1bM2j2mu_DYctrl 
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2j2e_DYctrl,      hh_bbWW_1bM2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  1,  1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM1j2e_DYctrl,      hh_bbWW_1bM2j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM2j2e_DYctrl,      hh_bbWW_1bM2j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bM3j2e_DYctrl,      hh_bbWW_1bM3j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1, -1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bMge4j2e_DYctrl,    hh_bbWW_1bMge4j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2e_DYctrl,        hh_bbWW_2bL2mu_DYctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2j2e_DYctrl,      hh_bbWW_2bL2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL2j2e_DYctrl,      hh_bbWW_2bL2j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bL3j2e_DYctrl,      hh_bbWW_2bL3j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  2,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bLge4j2e_DYctrl,    hh_bbWW_2bLge4j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bL2e_DYctrl,        hh_bbWW_1bL2mu_DYctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1,  1,  1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bL1j2e_DYctrl,      hh_bbWW_1bL1j2mu_DYctrl 
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bL2j2e_DYctrl,      hh_bbWW_1bL2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1,  1,  1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bL1j2e_DYctrl,      hh_bbWW_1bL1j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bL2j2e_DYctrl,      hh_bbWW_1bL2j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bL3j2e_DYctrl,      hh_bbWW_1bL3j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_1bLge4j2e_DYctrl,    hh_bbWW_1bLge4j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL2e_DYctrl,       hh_bbWW_nobL2mu_DYctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  0,  0, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL0j2e_DYctrl,     hh_bbWW_nobL0j2mu_DYctrl 
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  1,  1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL1j2e_DYctrl,     hh_bbWW_nobL1j2mu_DYctrl 
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL2j2e_DYctrl,     hh_bbWW_nobL2j2mu_DYctrl 
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  0,  0, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL0j2e_DYctrl,     hh_bbWW_nobL0j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  1,  1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL1j2e_DYctrl,     hh_bbWW_nobL1j2mu_DYctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL2j2e_DYctrl,     hh_bbWW_nobL2j2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  3,  3, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobL3j2e_DYctrl,     hh_bbWW_nobL3j2mu_DYctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobLge4j2e_DYctrl,   hh_bbWW_nobLge4j2mu_DYctrl    
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0,  4, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_nobLge4j2e_DYctrl,   hh_bbWW_nobLge4j2mu_DYctrl
     // CV: add categories for "resolved" b-jets with VBF jet selection
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  2, -1, -1, kHbb_resolved, kVBF_tagged));    // hh_bbWW_1bM2bL2e_DYctrl,     hh_bbWW_1bM2bL2mu_DYctrl
@@ -671,12 +671,12 @@ int main(int argc, char* argv[])
 	selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->bookHistograms(fs);
       }
     }
-    edm::ParameterSet cfg_EvtYieldHistManager_sel = makeHistManager_cfg(process_and_genMatch, 
+    edm::ParameterSet cfg_EvtYieldHistManager_sel = makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/evtYield", histogramDir.data()), era_string, central_or_shift);
     cfg_EvtYieldHistManager_sel.addParameter<edm::ParameterSet>("runPeriods", cfg_EvtYieldHistManager);
     cfg_EvtYieldHistManager_sel.addParameter<bool>("isMC", isMC);
     selHistManager->evtYield_ = new EvtYieldHistManager(cfg_EvtYieldHistManager_sel);
-    selHistManager->evtYield_->bookHistograms(fs);  
+    selHistManager->evtYield_->bookHistograms(fs);
     selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
     selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "data_to_MC_correction", "fakeRate" });
@@ -785,7 +785,8 @@ int main(int argc, char* argv[])
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(lheScale_option);
       evtWeight_inclusive *= eventInfo.pileupWeight;
-      evtWeight_inclusive *= eventInfo.genWeight_tH();
+      std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
+      evtWeight_inclusive *= param_weight["kt_1p0_kv_1p0"];
       evtWeight_inclusive *= lumiScale;
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
       if(eventWeightManager)
@@ -1191,12 +1192,12 @@ int main(int argc, char* argv[])
 
     std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
     std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
-    
+
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("uncleaned AK8 jets", jet_ptrs_ak8);
     }
 
-    // select b-jet candidate pair 
+    // select b-jet candidate pair
     std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
@@ -1258,7 +1259,7 @@ int main(int argc, char* argv[])
     //cutFlowTable.update(">= 2 loose b-jets || 1 medium b-jet", evtWeight_inclusive);
     //cutFlowHistManager->fillHistograms(">= 2 loose b-jets || 1 medium b-jet", evtWeight_inclusive);
 
-    // select jets not overlapping with b-jet candidate pair 
+    // select jets not overlapping with b-jet candidate pair
     std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
     if ( selJetAK8_Hbb ) {
       std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
@@ -1269,7 +1270,7 @@ int main(int argc, char* argv[])
     }
     std::vector<const RecoJet*> selJetsAK4_nonHbb = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
     int numJets_nonHbb = selJetsAK4_nonHbb.size();
-    
+
     // select VBF jet candidates
     std::vector<const RecoJet*> cleanedJetsAK4_vbf;
     if ( selJetAK8_Hbb ) {
@@ -1299,7 +1300,7 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update("m(ll) > 12 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("m(ll) > 12 GeV", evtWeight);
-    
+
     bool isSameFlavor_OS = false;
     double massSameFlavor_OS = -1.;
     for ( std::vector<const RecoLepton*>::const_iterator lepton1 = selLeptons.begin();
@@ -1322,7 +1323,7 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update("Z-boson mass", evtWeight);
     cutFlowHistManager->fillHistograms("Z-boson mass", evtWeight);
-    
+
 //--- compute MHT and linear MET discriminant (met_LD)
     RecoMEt met = metReader->read();
     const Particle::LorentzVector& metP4 = met.p4();
@@ -1346,7 +1347,7 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update("MEt filters", evtWeight);
     cutFlowHistManager->fillHistograms("MEt filters", evtWeight);
-    
+
     bool failsSignalRegionVeto = false;
     if ( isMCClosure_e || isMCClosure_m ) {
       bool applySignalRegionVeto = (isMCClosure_e && countFakeElectrons(selLeptons) >= 1) || (isMCClosure_m && countFakeMuons(selLeptons) >= 1);
@@ -1380,14 +1381,14 @@ int main(int argc, char* argv[])
     Particle::LorentzVector bbllP4 = bbP4 + llP4;
     double m_bbll = bbllP4.mass();
     double pT_bbll = bbllP4.pt();
-    double dPhi_bbll = deltaPhi(bbP4.phi(), llP4.phi()); 
+    double dPhi_bbll = deltaPhi(bbP4.phi(), llP4.phi());
     Particle::LorentzVector bbllMEtP4 = bbllP4 + metP4;
     double m_bbllMEt = bbllMEtP4.mass();
     double pT_bbllMEt = bbllMEtP4.pt();
     double Smin_bbllMEt = comp_Smin(bbllP4, metP4.px(), metP4.py());
     double dPhi_bbllMEt = deltaPhi(bbP4.phi(), (llP4 + metP4).phi());
     double m_HH_hme = -1.; // CV: not implemented yet
-    
+
     double vbf_dEta_jj = -1.;
     double vbf_m_jj = -1.;
     const RecoJet* selJet_vbf_lead = nullptr;
@@ -1408,7 +1409,7 @@ int main(int argc, char* argv[])
 	}
       }
     }
-    bool isVBF = false;    
+    bool isVBF = false;
     std::vector<const RecoJet*> selJetsAK4_nonVBF;
     if ( selJet_vbf_lead && selJet_vbf_sublead ) {
       std::vector<const RecoJet*> overlaps = { selJet_vbf_lead, selJet_vbf_sublead };
@@ -1441,7 +1442,7 @@ int main(int argc, char* argv[])
     selHistManager->leadJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
     selHistManager->subleadJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
     selHistManager->thirdJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
-    selHistManager->fourthJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);   
+    selHistManager->fourthJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
     if ( selJetAK8_Hbb ) {
       selHistManager->jetsAK8_Hbb_->fillHistograms({ selJetAK8_Hbb }, evtWeight);
     }
@@ -1461,11 +1462,11 @@ int main(int argc, char* argv[])
       numSelJetsAK4_nonVBF,
       selBJetsAK4_loose.size(),
       selBJetsAK4_medium.size(),
-      HT, 
+      HT,
       STMET,
-      m_bb, dR_bb, dPhi_bb, pT_bb, 
+      m_bb, dR_bb, dPhi_bb, pT_bb,
       m_ll, dR_ll, dPhi_ll, pT_ll,
-      m_bbll, dPhi_bbll, pT_bbll, 
+      m_bbll, dPhi_bbll, pT_bbll,
       m_bbllMEt, m_HH_hme, dPhi_bbllMEt, pT_bbllMEt, Smin_bbllMEt,
       vbf_m_jj, vbf_dEta_jj,
       evtWeight);
@@ -1491,7 +1492,7 @@ int main(int argc, char* argv[])
     if ( selLepton_lead_type    == kMuon     ) ++numMuons;
     if ( selLepton_sublead_type == kMuon     ) ++numMuons;
     int numJets_forCategorization = ( selJetAK8_Hbb ) ? numJets_nonHbb + 2 : numJets_nonHbb; // CV: add the two subjets of the AK8 "fat" jet
-    int type_Hbb = ( selJetAK8_Hbb ) ? kHbb_boosted : kHbb_resolved; 
+    int type_Hbb = ( selJetAK8_Hbb ) ? kHbb_boosted : kHbb_resolved;
     int type_vbf = ( isVBF         ) ?  kVBF_tagged : kVBF_nottagged;
     for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
 	  category != categories_evt.end(); ++category ) {
@@ -1499,8 +1500,8 @@ int main(int argc, char* argv[])
 	   (category->numMuons_        ==             -1 || numMuons                  == category->numMuons_)        &&
 	   (category->numBJets_medium_ ==             -1 || numBJets_medium           == category->numBJets_medium_) &&
 	   (category->numBJets_loose_  ==             -1 || numBJets_loose            == category->numBJets_loose_)  &&
-	   (category->minNumJets_      ==             -1 || numJets_forCategorization >= category->minNumJets_)      && 
-	   (category->maxNumJets_      ==             -1 || numJets_forCategorization <= category->maxNumJets_)      && 
+	   (category->minNumJets_      ==             -1 || numJets_forCategorization >= category->minNumJets_)      &&
+	   (category->maxNumJets_      ==             -1 || numJets_forCategorization <= category->maxNumJets_)      &&
 	   (category->type_Hbb_        == kHbb_undefined || type_Hbb                  == category->type_Hbb_)        &&
 	   (category->type_vbf_        == kVBF_undefined || type_vbf                  == category->type_vbf_)        ) {
 	if ( selHistManager->evt_in_categories_.find(category->name_) != selHistManager->evt_in_categories_.end() ) {
@@ -1510,11 +1511,11 @@ int main(int argc, char* argv[])
 	    numSelJetsAK4_nonVBF,
 	    selBJetsAK4_loose.size(),
 	    selBJetsAK4_medium.size(),
-	    HT, 
+	    HT,
 	    STMET,
-	    m_bb, dR_bb, dPhi_bb, pT_bb, 
+	    m_bb, dR_bb, dPhi_bb, pT_bb,
 	    m_ll, dR_ll, dPhi_ll, pT_ll,
-	    m_bbll, dPhi_bbll, pT_bbll, 
+	    m_bbll, dPhi_bbll, pT_bbll,
 	    m_bbllMEt, m_HH_hme, dPhi_bbllMEt, pT_bbllMEt, Smin_bbllMEt,
 	    vbf_m_jj, vbf_dEta_jj,
 	    evtWeight);
@@ -1569,7 +1570,7 @@ int main(int argc, char* argv[])
   delete muonReader;
   delete electronReader;
   delete jetReaderAK4;
-  delete jetReaderAK8; 
+  delete jetReaderAK8;
   delete metReader;
   delete metFilterReader;
   delete genLeptonReader;
