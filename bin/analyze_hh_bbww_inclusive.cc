@@ -162,7 +162,7 @@ main(int argc,
   const RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
 
   RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, false);
-  electronReader->readUncorrected(useNonNominal);
+  //electronReader->readUncorrected(useNonNominal);
   inputTree->registerReader(electronReader);
   const RecoElectronCollectionCleaner electronCleaner(0.05, isDEBUG);
   const RecoElectronCollectionSelectorLoose preselElectronSelector(era, -1, isDEBUG);
@@ -234,7 +234,7 @@ main(int argc,
     const std::vector<const RecoMuon *> muon_ptrs = convert_to_ptrs(muons);
     // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
     const std::vector<const RecoMuon *> cleanedMuons = muon_ptrs;
-    const std::vector<const RecoMuon *> preselMuons  = preselMuonSelector(cleanedMuons, isHigherConePt);
+    const std::vector<const RecoMuon *> preselMuons  = preselMuonSelector(cleanedMuons, isHigherPt);
     const std::vector<const RecoMuon *> selMuons     = preselMuons;
     if(isDEBUG)
     {
@@ -246,12 +246,12 @@ main(int argc,
     const std::vector<RecoElectron> electrons = electronReader->read();
     const std::vector<const RecoElectron *> electron_ptrs = convert_to_ptrs(electrons);
     const std::vector<const RecoElectron *> cleanedElectrons = electronCleaner(electron_ptrs, selMuons);
-    const std::vector<const RecoElectron *> preselElectrons  = preselElectronSelector(cleanedElectrons, isHigherConePt);
+    const std::vector<const RecoElectron *> preselElectrons  = preselElectronSelector(cleanedElectrons, isHigherPt);
     const std::vector<const RecoElectron *> selElectrons     = preselElectrons;
 
     snm->read(preselElectrons);
 
-    const std::vector<const RecoLepton *> preselLeptons = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
+    const std::vector<const RecoLepton *> preselLeptons = mergeLeptonCollections(preselElectrons, preselMuons, isHigherPt);
 
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     const std::vector<RecoJet> jets = jetReader->read();
