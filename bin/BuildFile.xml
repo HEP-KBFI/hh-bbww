@@ -43,7 +43,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="addMEM_hh_bb2l.cc" name="addMEM_hh_bb2l">
   <use   name="FWCore/FWLite"/>
@@ -89,7 +89,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="testMEM_hh_bb1l.cc" name="testMEM_hh_bb1l">
   <use   name="FWCore/FWLite"/>
@@ -106,7 +106,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="testMEM_hh_bb2l.cc" name="testMEM_hh_bb2l">
   <use   name="FWCore/FWLite"/>
@@ -123,5 +123,5 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>

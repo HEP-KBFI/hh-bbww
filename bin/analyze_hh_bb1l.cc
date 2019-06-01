@@ -88,7 +88,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
-#include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager 
+#include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
@@ -151,7 +151,7 @@ struct categoryEntryType
   int numBJets_loose_;
   int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
   int type_Wjj_; // 0 = either resolved or boosted (any purity); 1 = resolved; 2 = boosted, low purity; 3 = boosted, high purity
-  int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged 
+  int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged
   };
 
 void addCategory_conditionally(std::vector<categoryEntryType>& categories_evt, const categoryEntryType& category, const std::vector<std::string>& evtCategories)
@@ -194,7 +194,7 @@ void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& 
   }
 }
 
-void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb, 
+void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
 	      const std::vector<GenParticle>& genBJets)
 {
   std::cout << "<printHbb>:" << std::endl;
@@ -215,29 +215,29 @@ void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
 	if ( jetSelectorAK8_Hbb.getSelector()(**jet_ak8) ) {
 	  std::cout << "PASSES";
 	  isMatched = true;
-	} else { 
+	} else {
 	  std::cout << "FAILS";
 	}
 	std::cout << " the H->bb jet selection." << std::endl;
       }
     }
-    if ( genHbbP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Hbb) !!" << std::endl;    
+    if ( genHbbP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Hbb) !!" << std::endl;
   }
 }
 
-void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8_Wjj, 
+void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8_Wjj,
 	      const std::vector<GenParticle>& genWBosons, const std::vector<GenParticle>& genWJets)
 {
   std::cout << "<printWjj>:" << std::endl;
   std::cout << "#genWBosons = " << genWBosons.size() << std::endl;
   for ( size_t idxWBoson = 0; idxWBoson < genWBosons.size(); ++idxWBoson ) {
     const GenParticle& genWBoson = genWBosons[idxWBoson];
-    std::cout << " genWBoson #" << idxWBoson << ": pT = " << genWBoson.pt() << ", eta = " << genWBoson.eta() << ", phi = " << genWBoson.phi() << std::endl;   
+    std::cout << " genWBoson #" << idxWBoson << ": pT = " << genWBoson.pt() << ", eta = " << genWBoson.eta() << ", phi = " << genWBoson.phi() << std::endl;
   }
-  std::cout << "#genWJets = " << genWJets.size() << std::endl;  
+  std::cout << "#genWJets = " << genWJets.size() << std::endl;
   for ( size_t idxWJet = 0; idxWJet < genWJets.size(); ++idxWJet ) {
     const GenParticle& genWJet = genWJets[idxWJet];
-    std::cout << " genWJet #" << idxWJet << ": pT = " << genWJet.pt() << ", eta = " << genWJet.eta() << ", phi = " << genWJet.phi() << std::endl;   
+    std::cout << " genWJet #" << idxWJet << ": pT = " << genWJet.pt() << ", eta = " << genWJet.eta() << ", phi = " << genWJet.phi() << std::endl;
   }
   if ( genWBosons.size() == 1 ) {
     bool isMatched = false;
@@ -252,7 +252,7 @@ void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
 	if ( jetSelectorAK8_Wjj.getSelector()(**jet_ak8) ) {
 	  std::cout << "PASSES";
 	  isMatched = true;
-	} else { 
+	} else {
 	  std::cout << "FAILS";
 	}
 	std::cout << " the W->jj jet selection." << std::endl;
@@ -262,11 +262,11 @@ void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
 	  for ( std::vector<GenParticle>::const_iterator genWJet2 = genWJet1 + 1;
 		genWJet2 != genWJets.end(); ++genWJet2 ) {
 	    if ( deltaR(genWJet1->p4() + genWJet2->p4(), genWjjP4) < 1.e-1 && std::fabs((genWJet1->p4() + genWJet2->p4()).mass() - genWjjP4.mass()) < 1.e+1 ) {
-	      std::cout << " genWJet #1: pT = " << genWJet1->pt() << ", eta = " << genWJet1->eta() << ", phi = " << genWJet1->phi() << std::endl;   
-	      std::cout << " genWJet #2: pT = " << genWJet2->pt() << ", eta = " << genWJet2->eta() << ", phi = " << genWJet2->phi() << std::endl;   
+	      std::cout << " genWJet #1: pT = " << genWJet1->pt() << ", eta = " << genWJet1->eta() << ", phi = " << genWJet1->phi() << std::endl;
+	      std::cout << " genWJet #2: pT = " << genWJet2->pt() << ", eta = " << genWJet2->eta() << ", phi = " << genWJet2->phi() << std::endl;
 	    }
-	  } 
-	}  
+	  }
+	}
 	std::cout << "reconstructed subjets:" << std::endl;
 	const RecoSubjetAK8* subjet1 = (*jet_ak8)->subJet1();
 	if ( subjet1 ) std::cout << " subjet #1: pT = " << subjet1->pt() << ", eta = " << subjet1->eta() << ", phi = " << subjet1->phi() << std::endl;
@@ -274,7 +274,7 @@ void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
 	if ( subjet2 ) std::cout << " subjet #2: pT = " << subjet2->pt() << ", eta = " << subjet2->eta() << ", phi = " << subjet2->phi() << std::endl;
       }
     }
-    if ( genWjjP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Wjj) !!" << std::endl;    
+    if ( genWjjP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Wjj) !!" << std::endl;
   }
 }
 
@@ -354,7 +354,7 @@ int main(int argc, char* argv[])
   std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
   double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
-  bool apply_DYMCReweighting = cfg_analyze.getParameter<bool>("apply_DYMCReweighting"); 
+  bool apply_DYMCReweighting = cfg_analyze.getParameter<bool>("apply_DYMCReweighting");
   bool apply_hlt_filter = cfg_analyze.getParameter<bool>("apply_hlt_filter");
   bool apply_met_filters = cfg_analyze.getParameter<bool>("apply_met_filters");
   edm::ParameterSet cfgMEtFilter = cfg_analyze.getParameter<edm::ParameterSet>("cfgMEtFilter");
@@ -537,14 +537,14 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8_Hbb = new RecoJetReaderAK8(era, branchName_jets_ak8_Hbb, branchName_subjets_ak8_Hbb, true); 
+  RecoJetReaderAK8* jetReaderAK8_Hbb = new RecoJetReaderAK8(era, branchName_jets_ak8_Hbb, branchName_subjets_ak8_Hbb, true);
   RecoJetReaderAK8* jetReaderAK8_Wjj = nullptr;
   if ( branchName_jets_ak8_Wjj != branchName_jets_ak8_Hbb ) {
     jetReaderAK8_Wjj = new RecoJetReaderAK8(era, branchName_jets_ak8_Wjj, branchName_subjets_ak8_Wjj, false);
   } else {
     jetReaderAK8_Wjj = jetReaderAK8_Hbb;
   }
-  // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
+  // TO-DO: implement jet energy scale uncertainties, b-tag weights,
   //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
   inputTree->registerReader(jetReaderAK8_Hbb);
   inputTree->registerReader(jetReaderAK8_Wjj);
@@ -553,7 +553,7 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
-  
+
   GenParticleReader* genTauLeptonReader = nullptr;
   if ( isMC && apply_DYMCReweighting ) {
     genTauLeptonReader = new GenParticleReader(branchName_genTauLeptons);
@@ -697,7 +697,7 @@ int main(int argc, char* argv[])
 	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1, -1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_bb1mu
 	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  2, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_2bM1mu
 	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  1,  2, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1bL1mu
-	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1mu     
+	addCategory_conditionally(categories_evt, categoryEntryType(-1,  1,  1, -1, type_Hbb, type_Wjj, type_vbf), evtCategoryNames); // hh_1bM1mu
       }
     }
   }
@@ -797,12 +797,12 @@ int main(int argc, char* argv[])
 	selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->bookHistograms(fs);
       }
     }
-    edm::ParameterSet cfg_EvtYieldHistManager_sel = makeHistManager_cfg(process_and_genMatch, 
+    edm::ParameterSet cfg_EvtYieldHistManager_sel = makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/evtYield", histogramDir.data()), era_string, central_or_shift);
     cfg_EvtYieldHistManager_sel.addParameter<edm::ParameterSet>("runPeriods", cfg_EvtYieldHistManager);
     cfg_EvtYieldHistManager_sel.addParameter<bool>("isMC", isMC);
     selHistManager->evtYield_ = new EvtYieldHistManager(cfg_EvtYieldHistManager_sel);
-    selHistManager->evtYield_->bookHistograms(fs);  
+    selHistManager->evtYield_->bookHistograms(fs);
     selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
     selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "data_to_MC_correction", "fakeRate" });
@@ -819,27 +819,27 @@ int main(int argc, char* argv[])
       makeHistManager_cfg(process_string, Form("%s/sel/evtntuple", histogramDir.data()), era_string, central_or_shift)
     );
     bdt_filler->register_variable<float_type>(
-      "lep_pt", "lep_conePt", "lep_eta", 
+      "lep_pt", "lep_conePt", "lep_eta",
       "bjet1_pt", "bjet1_eta",
       "bjet2_pt", "bjet2_eta",
-      "met", "mht", "met_LD", 
+      "met", "mht", "met_LD",
       "HT", "STMET",
       "m_Hbb", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
       "m_Wjj", "dR_Wjj", "dPhi_Wjj", "pT_Wjj", "tau21_Wjj",
       "dR_Hww", "dPhi_Hww", "pT_Hww", "Smin_Hww",
       "dR_b1lep", "dR_b2lep",
-      "m_HHvis", "pT_HHvis", "dPhi_HHvis", 
+      "m_HHvis", "pT_HHvis", "dPhi_HHvis",
       "m_HH", "m_HH_B2G_18_008", "pT_HH", "dPhi_HH", "Smin_HH",
-      "mT_W", "mT_top_2particle", "mT_top_3particle", 
+      "mT_W", "mT_top_2particle", "mT_top_3particle",
       "m_HH_hme",
       "mvaOutput_Hj_tagger", "mvaOutput_Hjj_tagger",
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight"
     );
     bdt_filler->register_variable<int_type>(
-      "lep_charge", 
-      "nJet", "nBJetLoose", "nBJetMedium", 
-      "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity", 
+      "lep_charge",
+      "nJet", "nBJetLoose", "nBJetMedium",
+      "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity",
       "nJet_vbf", "isVBF"
     );
     bdt_filler->bookTree(fs);
@@ -865,12 +865,12 @@ int main(int argc, char* argv[])
     "HLT filter matching",
     ">= 2 jets from H->bb",
     ">= 1 medium b-jet",
-    ">= 1 jets from W->jj",    
-    "tau veto", 
+    ">= 1 jets from W->jj",
+    "tau veto",
     "m(ll) > 12 GeV",
     "Z-boson mass veto",
-    "boosted W->jj: mD < 125 GeV", 
-    "boosted W->jj: pT_HWW/mHH > 0.3", 
+    "boosted W->jj: mD < 125 GeV",
+    "boosted W->jj: pT_HWW/mHH > 0.3",
     "MEt filters",
     "signal region veto"
   };
@@ -949,7 +949,7 @@ int main(int argc, char* argv[])
       genWBosons = genWBosonReader->read();
       genWJets = genWJetReader->read();
     }
-    
+
     if ( isDEBUG ) {
       dumpGenParticles("genBJet", genBJets);
       dumpGenParticles("genWBoson", genWBosons);
@@ -964,7 +964,8 @@ int main(int argc, char* argv[])
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(lheScale_option);
       evtWeight_inclusive *= eventInfo.pileupWeight;
-      evtWeight_inclusive *= eventInfo.genWeight_tH();
+      std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
+      evtWeight_inclusive *= param_weight["kt_1p0_kv_1p0"];
       evtWeight_inclusive *= lumiScale;
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
       if(eventWeightManager)
@@ -972,7 +973,7 @@ int main(int argc, char* argv[])
         genEvtHistManager_beforeCuts->fillHistograms(eventWeightManager, evtWeight_inclusive);
       }
     }
-    
+
     bool isTriggered_1e = hltPaths_isTriggered(triggers_1e);
     bool isTriggered_1mu = hltPaths_isTriggered(triggers_1mu);
 
@@ -1037,7 +1038,7 @@ int main(int argc, char* argv[])
       printCollection("fakeableElectrons", fakeableElectrons);
       printCollection("tightElectrons",    tightElectrons);
     }
-    
+
     std::vector<const RecoLepton*> preselLeptonsFull = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
     std::vector<const RecoLepton*> fakeableLeptonsFull = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
     std::vector<const RecoLepton*> tightLeptonsFull = mergeLeptonCollections(tightElectrons, tightMuons, isHigherConePt);
@@ -1073,7 +1074,7 @@ int main(int argc, char* argv[])
 
     std::vector<RecoHadTau> hadTaus = hadTauReader->read();
     std::vector<const RecoHadTau*> hadTau_ptrs = convert_to_ptrs(hadTaus);
-    std::vector<const RecoHadTau*> cleanedHadTaus = hadTauCleaner(hadTau_ptrs, preselMuons, preselElectrons);     
+    std::vector<const RecoHadTau*> cleanedHadTaus = hadTauCleaner(hadTau_ptrs, preselMuons, preselElectrons);
     // CV: veto events containing one or more taus, to avoid overlap with HH->bbWW single lepton channel
     std::vector<const RecoHadTau*> vetoHadTaus = vetoHadTauSelector(cleanedHadTaus, isHigherPt);
 
@@ -1140,8 +1141,8 @@ int main(int argc, char* argv[])
     cutFlowTable.update(">= 1 presel leptons", evtWeight_inclusive);
     cutFlowHistManager->fillHistograms(">= 1 presel leptons", evtWeight_inclusive);
 
-    // require at least one lepton passing fakeable or tight selection criteria 
-    // (fakeable lepton selection applied in fake background control region, 
+    // require at least one lepton passing fakeable or tight selection criteria
+    // (fakeable lepton selection applied in fake background control region,
     //  tight lepton selection applied in signal region)
     if ( !(selLeptons.size() >= 1) ) {
       if ( run_lumi_eventSelector ) {
@@ -1300,12 +1301,12 @@ int main(int argc, char* argv[])
     std::vector<const RecoJetAK8*> jet_ptrs_ak8_Wjj = convert_to_ptrs(jets_ak8_Wjj);
 
     if ( isDEBUG || run_lumi_eventSelector ) {
-      printCollection("uncleaned AK8 jets (Hbb)", jet_ptrs_ak8_Hbb);      
+      printCollection("uncleaned AK8 jets (Hbb)", jet_ptrs_ak8_Hbb);
       printHbb(jet_ptrs_ak8_Hbb, jetSelectorAK8_Hbb, genBJets);
-      printCollection("uncleaned AK8 jets (Wjj)", jet_ptrs_ak8_Wjj);   
+      printCollection("uncleaned AK8 jets (Wjj)", jet_ptrs_ak8_Wjj);
       printWjj(jet_ptrs_ak8_Wjj, jetSelectorAK8_Wjj, genWBosons, genWJets);
     }
-    
+
     // select jets from H->bb decay
     std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_Hbb, fakeableLeptons);
     std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
@@ -1315,18 +1316,18 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet2_Hbb = nullptr;
     int numBJets_loose = 0;
     int numBJets_medium = 0;
-    if ( selJetsAK8_Hbb.size() >= 1 ) {      
+    if ( selJetsAK8_Hbb.size() >= 1 ) {
       selJetAK8_Hbb = selJetsAK8_Hbb[0];
       selJet1_Hbb = selJetAK8_Hbb->subJet1();
       selJet2_Hbb = selJetAK8_Hbb->subJet2();
       assert(selJet1_Hbb && selJet2_Hbb);
       if ( isDEBUG ) {
 	std::cout << "found boosted H->bb decay:" << std::endl;
-	std::cout << "AK8 jet: pT = " << selJetAK8_Hbb->pt() << ", eta = " << selJetAK8_Hbb->eta() << ", phi = " << selJetAK8_Hbb->phi() << "," 
+	std::cout << "AK8 jet: pT = " << selJetAK8_Hbb->pt() << ", eta = " << selJetAK8_Hbb->eta() << ", phi = " << selJetAK8_Hbb->phi() << ","
 		  << " dR(selLepton) = " << deltaR(selJetAK8_Hbb->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #1: pT = " << selJet1_Hbb->pt() << ", eta = " << selJet1_Hbb->eta() << ", phi = " << selJet1_Hbb->phi() << "," 
+	std::cout << " subjet #1: pT = " << selJet1_Hbb->pt() << ", eta = " << selJet1_Hbb->eta() << ", phi = " << selJet1_Hbb->phi() << ","
 		  << " dR(selLepton) = " << deltaR(selJet1_Hbb->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #2: pT = " << selJet2_Hbb->pt() << ", eta = " << selJet2_Hbb->eta() << ", phi = " << selJet2_Hbb->phi() << "," 
+	std::cout << " subjet #2: pT = " << selJet2_Hbb->pt() << ", eta = " << selJet2_Hbb->eta() << ", phi = " << selJet2_Hbb->phi() << ","
 		  << " dR(selLepton) = " << deltaR(selJet2_Hbb->p4(), selLepton->p4()) << std::endl;
       }
       double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
@@ -1396,11 +1397,11 @@ int main(int argc, char* argv[])
       assert(selJet1_Wjj && selJet2_Wjj);
       if ( isDEBUG ) {
 	std::cout << "found boosted W->jj decay:" << std::endl;
-	std::cout << "AK8LS jet: pT = " << selJetAK8_Wjj->pt() << ", eta = " << selJetAK8_Wjj->eta() << ", phi = " << selJetAK8_Wjj->phi() << "," 
+	std::cout << "AK8LS jet: pT = " << selJetAK8_Wjj->pt() << ", eta = " << selJetAK8_Wjj->eta() << ", phi = " << selJetAK8_Wjj->phi() << ","
 		  << " dR(selLepton) = " << deltaR(selJetAK8_Wjj->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #1: pT = " << selJet1_Wjj->pt() << ", eta = " << selJet1_Wjj->eta() << ", phi = " << selJet1_Wjj->phi() << "," 
+	std::cout << " subjet #1: pT = " << selJet1_Wjj->pt() << ", eta = " << selJet1_Wjj->eta() << ", phi = " << selJet1_Wjj->phi() << ","
 		  << " dR(selLepton) = " << deltaR(selJet1_Wjj->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #2: pT = " << selJet2_Wjj->pt() << ", eta = " << selJet2_Wjj->eta() << ", phi = " << selJet2_Wjj->phi() << "," 
+	std::cout << " subjet #2: pT = " << selJet2_Wjj->pt() << ", eta = " << selJet2_Wjj->eta() << ", phi = " << selJet2_Wjj->phi() << ","
 		  << " dR(selLepton) = " << deltaR(selJet2_Wjj->p4(), selLepton->p4()) << std::endl;
       }
     } else {
@@ -1418,7 +1419,7 @@ int main(int argc, char* argv[])
 	    selJet2_Wjj = (*selJet2);
 	    minRank = rank;
 	  }
-	} 
+	}
       }
       if ( !selJet1_Wjj && selJetsAK4_Wjj.size() >= 1 ) selJet1_Wjj = selJetsAK4_Wjj[0];
       if ( !selJet2_Wjj && selJetsAK4_Wjj.size() >= 2 ) selJet2_Wjj = selJetsAK4_Wjj[1];
@@ -1443,7 +1444,7 @@ int main(int argc, char* argv[])
 
     std::vector<const RecoJetBase*> selJets_Wjj;
     if ( selJet1_Wjj ) selJets_Wjj.push_back(selJet1_Wjj);
-    if ( selJet2_Wjj ) selJets_Wjj.push_back(selJet2_Wjj);    
+    if ( selJet2_Wjj ) selJets_Wjj.push_back(selJet2_Wjj);
     std::sort(selJets_Wjj.begin(), selJets_Wjj.end(), isHigherPt);
     assert(selJets_Wjj.size() >= 1);
     const RecoJetBase* selJet_Wjj_lead = selJets_Wjj[0];
@@ -1520,7 +1521,7 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update("Z-boson mass veto", evtWeight);
     cutFlowHistManager->fillHistograms("Z-boson mass veto", evtWeight);
-    
+
 //--- compute MHT and linear MET discriminant (met_LD)
     RecoMEt met = metReader->read();
     const Particle::LorentzVector& metP4 = met.p4();
@@ -1555,7 +1556,7 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update("boosted W->jj: mD < 125 GeV selection", evtWeight);
     cutFlowHistManager->fillHistograms("boosted W->jj: mD < 125 GeV selection", evtWeight);
-    
+
     // apply cut on event centrality variable, defined in Table 9 of AN-2018/058 (v4)
     bool fails_centrality_cut = false;
     if ( selJetAK8_Wjj ) {
@@ -1608,14 +1609,14 @@ int main(int argc, char* argv[])
 
     //std::cout << "selJet_Hbb_lead:" << (*selJet_Hbb_lead) << std::endl;
     //std::cout << "selJet_Hbb_sublead:" << (*selJet_Hbb_sublead) << std::endl;
-    //std::cout << "(m_Hbb = " << (selJetP4_Hbb_lead + selJetP4_Hbb_sublead).mass() << ")" << std::endl;    
+    //std::cout << "(m_Hbb = " << (selJetP4_Hbb_lead + selJetP4_Hbb_sublead).mass() << ")" << std::endl;
     //std::cout << "selJet_Wjj_lead:" << (*selJet_Wjj_lead) << std::endl;
     //if ( selJet_Wjj_sublead ) {
     //  std::cout << "selJet_Wjj_sublead:" << (*selJet_Wjj_sublead) << std::endl;
     //  std::cout << "(m_Wjj = " << (selJetP4_Wjj_lead + selJetP4_Wjj_sublead).mass() << ")" << std::endl;
     //}
 
-    // compute signal extraction observables    
+    // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
     double dR_Hbb   = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
@@ -1641,31 +1642,31 @@ int main(int argc, char* argv[])
     double Smin_Hww = comp_Smin(WjjP4 + selLeptonP4, metP4.px(), metP4.py());
     double dR_b1lep = deltaR(selJetP4_Hbb_lead, selLeptonP4);
     double dR_b2lep = deltaR(selJetP4_Hbb_sublead, selLeptonP4);
-    Particle::LorentzVector HHvisP4 = HbbP4 + WjjP4 + selLeptonP4;    
+    Particle::LorentzVector HHvisP4 = HbbP4 + WjjP4 + selLeptonP4;
     double m_HHvis = HHvisP4.mass();
     double pT_HHvis = HHvisP4.pt();
-    double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4).phi()));        
+    double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4).phi()));
     Particle::LorentzVector HHP4_B2G_18_008 = HbbP4 + WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008;
     Particle::LorentzVector HHP4 = HbbP4 + WjjP4 + selLeptonP4 + metP4;
     double m_HH = HHP4.mass();
-    double m_HH_B2G_18_008 = HHP4_B2G_18_008.mass(); 
+    double m_HH_B2G_18_008 = HHP4_B2G_18_008.mass();
     double pT_HH = HHP4.pt();
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
     double dR_HH = deltaR(HbbP4, WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008);
     double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4 + metP4).phi()));
     double mT_W = mT2_2particle::comp_mT(selLeptonP4.px(), selLeptonP4.py(), selLeptonP4.mass(), metP4.px(), metP4.py(), 0.);
     double mT_top_2particle_permutation1 = mT2_2particle::comp_mT(
-      selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(), 
+      selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selLeptonP4.px() + metP4.px(), selLeptonP4.py() + metP4.py(), wBosonMass);
     double mT_top_2particle_permutation2 = mT2_2particle::comp_mT(
-      selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(), 
+      selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       selLeptonP4.px() + metP4.px(), selLeptonP4.py() + metP4.py(), wBosonMass);
     double mT_top_2particle = TMath::Min(mT_top_2particle_permutation1, mT_top_2particle_permutation2);
     double mT_top_3particle_permutation1 = mT2_3particle::comp_mT(
-      selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(), 
+      selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selLeptonP4.px(), selLeptonP4.py(), selLeptonP4.mass(), metP4.px(), metP4.py(), 0.);
     double mT_top_3particle_permutation2 = mT2_3particle::comp_mT(
-      selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(), 
+      selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       selLeptonP4.px(), selLeptonP4.py(), selLeptonP4.mass(), metP4.px(), metP4.py(), 0.);
     double mT_top_3particle = TMath::Min(mT_top_3particle_permutation1, mT_top_3particle_permutation2);
     double m_HH_hme = -1.; // CV: not implemented yet
@@ -1701,7 +1702,7 @@ int main(int argc, char* argv[])
     const RecoJet* selJet_vbf_sublead = nullptr;
     double vbf_dEta_jj = -1.;
     double vbf_m_jj = -1.;
-    bool isVBF = false;   
+    bool isVBF = false;
     for ( std::vector<const RecoJet*>::const_iterator selJet1_vbf = selJetsAK4_vbf.begin();
           selJet1_vbf != selJetsAK4_vbf.end(); ++selJet1_vbf ) {
       for ( std::vector<const RecoJet*>::const_iterator selJet2_vbf = selJet1_vbf + 1;
@@ -1794,16 +1795,16 @@ int main(int argc, char* argv[])
       selJetsAK4.size(),
       selBJetsAK4_loose.size(),
       selBJetsAK4_medium.size(),
-      HT, 
+      HT,
       STMET,
-      m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
-      m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj, 
+      m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb,
+      m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj,
       dR_Hww, dPhi_Hww, pT_Hww, Smin_Hww,
       m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
       mT_W, mT_top_2particle, mT_top_3particle,
       mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, 
-      nullptr, -1., 
+      vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+      nullptr, -1.,
       mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
       evtWeight);
     if ( isMC ) {
@@ -1821,10 +1822,10 @@ int main(int argc, char* argv[])
     selHistManager->weights_->fillHistograms("triggerWeight", triggerWeight);
     selHistManager->weights_->fillHistograms("data_to_MC_correction", weight_data_to_MC_correction);
     selHistManager->weights_->fillHistograms("fakeRate", weight_fakeRate);
-    
+
     int numElectrons = ( selLepton_type == kElectron ) ?            1 : 0;
     int numMuons     = ( selLepton_type == kMuon     ) ?            1 : 0;
-    int type_Hbb     = ( selJetAK8_Hbb               ) ? kHbb_boosted : kHbb_resolved; 
+    int type_Hbb     = ( selJetAK8_Hbb               ) ? kHbb_boosted : kHbb_resolved;
     if ( isDEBUG ) {
       std::cout << "type_Hbb = " << type_Hbb << std::endl;
     }
@@ -1836,8 +1837,8 @@ int main(int argc, char* argv[])
     if ( isDEBUG ) {
       std::cout << "type_Wjj = " << type_Wjj << std::endl;
       if ( selJetAK8_Wjj ) {
-	std::cout << " (fails_mD_cut = " << fails_mD_cut << "," 
-		  << " fails_centrality_cut = " << fails_centrality_cut << "," 
+	std::cout << " (fails_mD_cut = " << fails_mD_cut << ","
+		  << " fails_centrality_cut = " << fails_centrality_cut << ","
 		  << " tau21 = " << selJetAK8_Wjj->tau2()/selJetAK8_Wjj->tau1() << ")" << std::endl;
       }
     }
@@ -1860,16 +1861,16 @@ int main(int argc, char* argv[])
 	    selJetsAK4.size(),
 	    selBJetsAK4_loose.size(),
 	    selBJetsAK4_medium.size(),
-	    HT, 
+	    HT,
 	    STMET,
-	    m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb, 
-	    m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj, 
+	    m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb,
+	    m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj,
 	    dR_Hww, dPhi_Hww, pT_Hww, Smin_Hww,
 	    m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
 	    mT_W, mT_top_2particle, mT_top_3particle,
 	    mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, 
-	    nullptr, -1., 
+	    vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+	    nullptr, -1.,
 	    mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
 	    evtWeight);
 	}
@@ -1920,14 +1921,14 @@ int main(int argc, char* argv[])
           ("m_HH_B2G_18_008",               m_HH_B2G_18_008)
           ("pT_HH",                         pT_HH)
           ("dPhi_HH",                       dPhi_HH)
-  	  ("Smin_HH",                       Smin_HH)          
+  	  ("Smin_HH",                       Smin_HH)
           ("mT_W",                          mT_W)
           ("mT_top_2particle",              mT_top_2particle)
           ("mT_top_3particle",              mT_top_3particle)
           ("m_HH_hme",                      m_HH_hme)
 	  ("mvaOutput_Hj_tagger",           mvaOutput_Hj_tagger)
 	  ("mvaOutput_Hjj_tagger",          mvaOutput_Hjj_tagger)
-	  ("vbf_jet1_pt",                   vbf_jet1_pt) 
+	  ("vbf_jet1_pt",                   vbf_jet1_pt)
           ("vbf_jet1_eta",                  vbf_jet1_eta)
           ("vbf_jet2_pt",                   vbf_jet2_pt)
 	  ("vbf_jet2_eta",                  vbf_jet2_eta)
@@ -1965,12 +1966,12 @@ int main(int argc, char* argv[])
   std::cout << "sel. Entries by gen. matching:" << std::endl;
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
         leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
-    
+
     std::string process_and_genMatch = process_string;
     if ( apply_leptonGenMatching ) process_and_genMatch += leptonGenMatch_definition->name_;
-    
+
     int idxLepton = leptonGenMatch_definition->idx_;
-    
+
     const TH1* histogram_EventCounter = selHistManagers[idxLepton]->evt_->getHistogram_EventCounter();
     std::cout << " " << process_and_genMatch << " = " << histogram_EventCounter->GetEntries() << " (weighted = " << histogram_EventCounter->Integral() << ")" << std::endl;
   }
@@ -1987,7 +1988,7 @@ int main(int argc, char* argv[])
   delete muonReader;
   delete electronReader;
   delete jetReaderAK4;
-  delete jetReaderAK8_Hbb; 
+  delete jetReaderAK8_Hbb;
   if ( jetReaderAK8_Wjj != jetReaderAK8_Hbb ) {
     delete jetReaderAK8_Wjj;
   }
