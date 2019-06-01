@@ -401,7 +401,7 @@ int main(int argc, char* argv[])
   tightMuonSelector.getSelector().set_min_mvaTTH(lep_mva_cut);
 
   RecoElectronReader* electronReader = new RecoElectronReader(era, branchName_electrons, readGenObjects);
-  electronReader->readUncorrected(useNonNominal);
+  //electronReader->readUncorrected(useNonNominal);
   inputTree->registerReader(electronReader);
   RecoElectronCollectionGenMatcher electronGenMatcher;
   RecoElectronCollectionCleaner electronCleaner(0.3, isDEBUG);
@@ -509,17 +509,17 @@ int main(int argc, char* argv[])
   std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_10Var_nohiggnessnotopness.pkl";
   std::string xgbFileName_bb2l_nonres = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_nonres_13Var.pkl";
 
-  std::vector<std::string> xgbInputVariables_bb2l_res =
-    {"mht", "m_Hbb", "m_ll", "dR_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
+  std::vector<std::string> xgbInputVariables_bb2l_res = 
+    {"mht", "m_Hbb", "m_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
   };
 
   std::vector<std::string> xgbInputVariablesnohiggnessnotopness_bb2l =
     {
-      "mht", "m_Hbb", "m_ll", "dR_ll", "Smin_Hww", "m_HHvis", "pT_HH","mT2_top_2particle","m_HH_hme","nBJetLoose","gen_mHH"
+      "mht", "m_Hbb", "m_ll", "Smin_Hww", "m_HHvis", "pT_HH","mT2_top_2particle","m_HH_hme","nBJetLoose","gen_mHH"
     };
 
   std::vector<std::string> xgbInputVariables_bb2l_nonres =
-    {"mht", "m_Hbb", "m_ll", "dR_ll", "Smin_Hww", "dR_b1lep1", "dR_b2lep1", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "node"
+    {"mht", "m_Hbb", "m_ll", "Smin_Hww", "dR_b1lep1", "dR_b2lep1", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "node"
     };
 
   XGBInterface mva_xgb_bb2l_res(xgbFileName_bb2l_res, xgbInputVariables_bb2l_res);
@@ -1021,9 +1021,9 @@ int main(int argc, char* argv[])
     std::vector<RecoMuon> muons = muonReader->read();
     std::vector<const RecoMuon*> muon_ptrs = convert_to_ptrs(muons);
     std::vector<const RecoMuon*> cleanedMuons = muon_ptrs; // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
-    std::vector<const RecoMuon*> preselMuons = preselMuonSelector(cleanedMuons, isHigherConePt);
-    std::vector<const RecoMuon*> fakeableMuons = fakeableMuonSelector(preselMuons, isHigherConePt);
-    std::vector<const RecoMuon*> tightMuons = tightMuonSelector(fakeableMuons, isHigherConePt);
+    std::vector<const RecoMuon*> preselMuons = preselMuonSelector(cleanedMuons, isHigherPt);
+    std::vector<const RecoMuon*> fakeableMuons = fakeableMuonSelector(preselMuons, isHigherPt);
+    std::vector<const RecoMuon*> tightMuons = tightMuonSelector(fakeableMuons, isHigherPt);
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("preselMuons",   preselMuons);
       printCollection("fakeableMuons", fakeableMuons);
@@ -1033,22 +1033,22 @@ int main(int argc, char* argv[])
     std::vector<RecoElectron> electrons = electronReader->read();
     std::vector<const RecoElectron*> electron_ptrs = convert_to_ptrs(electrons);
     std::vector<const RecoElectron*> cleanedElectrons = electronCleaner(electron_ptrs, preselMuons);
-    std::vector<const RecoElectron*> preselElectrons = preselElectronSelector(cleanedElectrons, isHigherConePt);
-    std::vector<const RecoElectron*> fakeableElectrons = fakeableElectronSelector(preselElectrons, isHigherConePt);
-    std::vector<const RecoElectron*> tightElectrons = tightElectronSelector(fakeableElectrons, isHigherConePt);
+    std::vector<const RecoElectron*> preselElectrons = preselElectronSelector(cleanedElectrons, isHigherPt);
+    std::vector<const RecoElectron*> fakeableElectrons = fakeableElectronSelector(preselElectrons, isHigherPt);
+    std::vector<const RecoElectron*> tightElectrons = tightElectronSelector(fakeableElectrons, isHigherPt);
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("preselElectrons",   preselElectrons);
       printCollection("fakeableElectrons", fakeableElectrons);
       printCollection("tightElectrons",    tightElectrons);
     }
 
-    std::vector<const RecoLepton*> preselLeptonsFull = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
-    std::vector<const RecoLepton*> fakeableLeptonsFull = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
-    std::vector<const RecoLepton*> tightLeptonsFull = mergeLeptonCollections(tightElectrons, tightMuons, isHigherConePt);
+    std::vector<const RecoLepton*> preselLeptonsFull = mergeLeptonCollections(preselElectrons, preselMuons, isHigherPt);
+    std::vector<const RecoLepton*> fakeableLeptonsFull = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherPt);
+    std::vector<const RecoLepton*> tightLeptonsFull = mergeLeptonCollections(tightElectrons, tightMuons, isHigherPt);
 
     std::vector<const RecoLepton*> preselLeptons = pickFirstNobjects(preselLeptonsFull, 2);
     std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 2);
-    std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
+    std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherPt);
 
     std::vector<const RecoLepton*> selLeptons;
     std::vector<const RecoMuon*> selMuons;
@@ -1954,7 +1954,6 @@ int main(int argc, char* argv[])
       snm->read({
         triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
       });
-
       snm->read(preselMuons);
       snm->read(preselElectrons);
       snm->read(selJetsAK4);
