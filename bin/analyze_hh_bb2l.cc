@@ -618,11 +618,12 @@ int main(int argc, char* argv[])
   double cg = 0.0;
   double c2g = 0.0;
   HHWeightInterface HHWeight_calc(CX_o_CXSM, BM, Norm, kl, kt, c2, cg, c2g, NormBM, Norm_klScan, BM_klScan, isDEBUG);
+  std::cout << " This just demenstrate that we could calculate cross section deviation in situ: we problaby do not need it -- to be discussed" << "\n";
   if ( BM == 0 ) std::cout << " The closest shape benchmark is: SM" << "\n";
   else std::cout << "The closest shape benchmark is: " << BM << " : ";
   std::cout << "Cross section / Cross section SM = " << CX_o_CXSM << "\n ";
 
-  if ( isDEBUG || 1 > 0 ) {
+  if ( isDEBUG ) {
     std::cout << "(" << NormBM.size() << " - SM + 12 shape benchmarks) ";
     for (unsigned int bm_list = 0; bm_list < NormBM.size(); bm_list++)
     std::cout << "shape BM = " << bm_list << " CX_o_CXSM = "<< NormBM[bm_list] << " \n";
@@ -832,7 +833,7 @@ int main(int argc, char* argv[])
     }
     ++analyzedEntries;
     histogram_analyzedEntries->Fill(0.);
-    if ( analyzedEntries > 1 ) break;
+    //if ( analyzedEntries > 1 ) break;
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
@@ -916,7 +917,7 @@ int main(int argc, char* argv[])
 
           std::cout << "(" << Weight_klScan.size() << " - weight kl scan) \n";
           for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++) {std::cout <<  Weight_klScan[bm_list] << " " << bm_list << " \n";}
-          std::cout << "hgdh\n";
+          std::cout << "\n";
         }
       }
       if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
