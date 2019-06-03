@@ -589,8 +589,8 @@ int main(int argc, char* argv[])
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(kLHE_scale_central);
       evtWeight_inclusive *= eventInfo.pileupWeight;
-      std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
-      evtWeight_inclusive *= param_weight["kt_1p0_kv_1p0"];
+      //std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
+      evtWeight_inclusive *= 1.0; //param_weight["kt_1p0_kv_1p0"];
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, {}, {}, genJets, evtWeight_inclusive);
     }
 
