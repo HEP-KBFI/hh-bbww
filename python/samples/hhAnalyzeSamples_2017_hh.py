@@ -4836,7 +4836,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/RunIIFall17MiniAODv2-PU
 
 samples_2017["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_sm_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_sm_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    18),
@@ -4882,7 +4882,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg/RunIIFall1
 
 samples_2017["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_2_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_2_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    14),
@@ -4928,7 +4928,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg/RunIIFall17
 
 samples_2017["/GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_3_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_3_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    22),
@@ -4974,7 +4974,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg/RunIIFall17
 
 samples_2017["/GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_4_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_4_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    21),
@@ -5020,7 +5020,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg/RunIIFall17
 
 samples_2017["/GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_7_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_7_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    16),
@@ -5066,7 +5066,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg/RunIIFall17
 
 samples_2017["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_9_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_9_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    18),
@@ -5112,7 +5112,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg/RunIIFall17
 
 samples_2017["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_ggf_nonresonant_node_12_hh_bbtt"),
+  ("sample_category",                 "signal_ggf_nonresonant_bbtt"),
   ("process_name_specific",           "signal_ggf_nonresonant_node_12_hh_2b2t"),
   ("nof_files",                       1),
   ("nof_db_files",                    10),
@@ -5157,5 +5157,6 @@ samples_2017["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg/RunIIFall1
 ])
 
 samples_2017["sum_events"] = [
-    ["signal_ggf_nonresonant_node_sm_hh_2b2v", "signal_ggf_nonresonant_node_2_hh_2b2v", "signal_ggf_nonresonant_node_3_hh_2b2v", "signal_ggf_nonresonant_node_7_hh_2b2v", "signal_ggf_nonresonant_node_9_hh_2b2v", "signal_ggf_nonresonant_node_12_hh_2b2v"]
+    ["signal_ggf_nonresonant_node_sm_hh_2b2v", "signal_ggf_nonresonant_node_2_hh_2b2v", "signal_ggf_nonresonant_node_3_hh_2b2v", "signal_ggf_nonresonant_node_7_hh_2b2v", "signal_ggf_nonresonant_node_9_hh_2b2v", "signal_ggf_nonresonant_node_12_hh_2b2v"],
+    ["signal_ggf_nonresonant_node_sm_hh_2b2t", "signal_ggf_nonresonant_node_2_hh_2b2t", "signal_ggf_nonresonant_bbtt", "signal_ggf_nonresonant_node_4_hh_2b2t", "signal_ggf_nonresonant_node_7_hh_2b2t", "signal_ggf_nonresonant_node_9_hh_2b2t", "signal_ggf_nonresonant_node_12_hh_2b2t"]
 ]
