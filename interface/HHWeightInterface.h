@@ -23,7 +23,7 @@ public:
   HHWeightInterface(
               std::vector<double> & BM_klScan,
               int & Nscan,
-              const int era,
+              std::string era,
               bool isDEBUG
              );
   ~HHWeightInterface();

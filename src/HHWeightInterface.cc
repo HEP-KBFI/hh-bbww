@@ -25,7 +25,7 @@ double comp_cosThetaS(const LorentzVector& hadTauP4_lead, const LorentzVector& h
 HHWeightInterface::HHWeightInterface(
   std::vector<double> & BM_klScan, // for the case we want to use to chose an specific BDT
   int & Nscan,
-  const int era,
+  std::string era,
   bool isDEBUG
 )
 {
@@ -128,8 +128,9 @@ HHWeightInterface::HHWeightInterface(
 
   // this histogram bellow should be adapted to our input events
   std::string denominator_hist = "/src/hhAnalysis/bbww/data/denominator_reweighting_";
-  denominator_hist += std::to_string(era);
+  denominator_hist += era;
   denominator_hist += ".root";
+  //std::cout<<"era "<< era << " " << std::to_string(era) << "\n";
   const std::string FileDenominator = (
     boost::filesystem::path(std::getenv("CMSSW_BASE")) /
     boost::filesystem::path(denominator_hist)
