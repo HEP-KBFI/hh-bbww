@@ -7,9 +7,7 @@ from rootpy.plotting import Hist2D, Hist
 import os
 os.environ["MKL_NUM_THREADS"] = "1"
 
-cms_base = os.environ['CMSSW_BASE'] #"/home/acaan/VHbbNtuples_8_0_x/CMSSW_9_4_7/"
-print (cms_base)
-
+cms_base = os.environ['CMSSW_BASE']
 model = NonResonantModel()
 # X: to get the binning of the histogram it should contruct
 
