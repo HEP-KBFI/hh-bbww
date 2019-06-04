@@ -610,7 +610,11 @@ int main(int argc, char* argv[])
   std::vector<double> BM_klScan;
   int Nscan = 0;
   std::cout << "Before Entered CX interface " << '\n';
-  HHWeightInterface HHWeight_calc(BM_klScan, Nscan, era, isDEBUG);
+  std::string year = "-1";
+  if ( era == kEra_2017 ) year = "2017";
+  else throw cms::Exception("HHWeightInterface")
+    << "The reweighting is set only to 2017";
+  HHWeightInterface HHWeight_calc(BM_klScan, Nscan, year, isDEBUG);
   std::cout << "Number of points being scanned = " << Nscan << "\n ";
 
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
@@ -1572,28 +1576,28 @@ int main(int argc, char* argv[])
     //	        << " permutation1 = " << mT2_top_3particle_permutation1 << " (found @ step #" << mT2_top_3particle_permutation1_step << "),"
     //	        << " permutation2 = " << mT2_top_3particle_permutation2 << " (found @ step #" << mT2_top_3particle_permutation2_step << "),"
     //	        << " min = " << mT2_top_3particle << " (found @ step #" << mT2_top_3particle_step << ")" << std::endl;
-    Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
-    algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    //Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
+    //algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
     double logHiggsness_publishedChi2 = -99.;
-    if ( algoHiggsness_publishedChi2.isValidSolution() ) {
+    /*if ( algoHiggsness_publishedChi2.isValidSolution() ) {
       logHiggsness_publishedChi2 = algoHiggsness_publishedChi2.logHiggsness();
     }
     Topness algoTopness_publishedChi2(Topness::kPublishedChi2);
-    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
+    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
     double logTopness_publishedChi2 = -99.;
-    if ( algoTopness_publishedChi2.isValidSolution() ) {
+    /*if ( algoTopness_publishedChi2.isValidSolution() ) {
       logTopness_publishedChi2 = algoTopness_publishedChi2.logTopness();
     }
     Higgsness algoHiggsness_fixedChi2(Higgsness::kFixedChi2);
-    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());*/
     double logHiggsness_fixedChi2 = -99.;
-    if ( algoHiggsness_fixedChi2.isValidSolution() ) {
+    /*if ( algoHiggsness_fixedChi2.isValidSolution() ) {
       logHiggsness_fixedChi2 = algoHiggsness_fixedChi2.logHiggsness();
     }
     Topness algoTopness_fixedChi2(Topness::kFixedChi2);
-    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
+    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
     double logTopness_fixedChi2 = -99.;
-    if ( algoTopness_fixedChi2.isValidSolution() ) {
+    /*if ( algoTopness_fixedChi2.isValidSolution() ) {
       logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
     }
     //---------------------------------------------------------------------------
@@ -1627,14 +1631,15 @@ int main(int argc, char* argv[])
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);
+      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);*/
     double m_HH_hme = -1.;
-    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    /*bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
     if ( hme_isValidSolution ) {
       TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
       m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
     }
     clock.Stop("hmeAlgo");
+    */
     double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
