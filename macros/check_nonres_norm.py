@@ -62,7 +62,7 @@ for era in [2016, 2017, 2018] :
     for fi in list : print (fi)
 
     label = list[0].split("/")[6]
-    outputfile = cms_base + "/src/hhAnalysis/bbww/data/denominator_reweighting.root"
+    outputfile = cms_base + "/src/hhAnalysis/bbww/data/denominator_reweighting_" + channel + "_" + str(era) + ".root"
     histfile = outputfile
     histtitle = 'denominator_reweighting'
     fileHH=ROOT.TFile(histfile)
