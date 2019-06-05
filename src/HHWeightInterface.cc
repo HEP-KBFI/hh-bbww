@@ -82,6 +82,7 @@ HHWeightInterface::HHWeightInterface(
 
   ///////////////////////////////////////////////////////////////////
   // Load a file with an specific scan, that we can decide at later stage on the analysis
+  // save the closest shape BM to use this value on the evaluation of a BDT
   std::string applicationLoadPath_klScan = (
     boost::filesystem::path(std::getenv("CMSSW_BASE")) /
     boost::filesystem::path("src/hhAnalysis/bbww/data/kl_scan.dat")
@@ -133,7 +134,6 @@ HHWeightInterface::operator()(
   const double & costSgen_gen,
   //
   std::vector<double> & WeightBM,
-  std::vector<double> & WeightBMp,
   std::vector<double> & Weight_klScan,
   bool isDEBUG
 ) const
@@ -163,27 +163,6 @@ HHWeightInterface::operator()(
   }
   if ( isDEBUG ) for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
   {std::cout << bm_list << " " <<  WeightBM[bm_list] << " " << denominator << "\n";}
-
-  ///////////////////////////////////////////////////////////
-  // This can be calculated at post-production stage
-  // it is here just for closure test on the 2017 samples
-  for (unsigned int bm_list = 0; bm_list < 13; bm_list++){
-    PyObject* args_BM_list = PyTuple_Pack(10,
-      PyFloat_FromDouble(static_cast<double>(klJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(ktJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2JHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(cgJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(1.0)), // there was this typo on the 2017 samples, we use this MC anyways
-      PyFloat_FromDouble(static_cast<double>(mhh_gen)),
-      PyFloat_FromDouble(static_cast<double>(costSgen_gen)),
-      PyFloat_FromDouble(static_cast<double>(norm_2017MC_BM[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(denominator)),
-      modeldata_);
-    WeightBMp.push_back(
-      PyFloat_AsDouble(PyObject_CallObject(func_Weight_, args_BM_list))
-    );
-    Py_XDECREF(args_BM_list);
-  }
 
   ///////////////////////////////////////////////////////////////////
   // This part is for any scan that we can decide at later stage on the analysis

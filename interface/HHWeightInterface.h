@@ -39,7 +39,6 @@ public:
     const double & costSgen_gen,
     //
     std::vector<double> & WeightBM,
-    std::vector<double> & WeightBMp,
     std::vector<double> & Weight_klScan,
     bool isDEBUG
   ) const;
@@ -67,7 +66,6 @@ private:
   const double cgJHEP[13]  = {0.0,  0.0, -0.8,  0.0, 0.0,   0.8, 0.2, 0.2, -1.0, -0.6, 0.0, 1.0, 0.0};
   const double c2gJHEP[13] = {0.0, 0.0, 0.6, -0.8, 0.0, -1.0, -0.2,-0.2,  1.0,  0.6, 0.0, -1.0, 0.0};
   const double normJHEP[13] = {0.99997, 0.94266, 0.71436, 0.95608, 0.97897, 0.87823, 0.95781, 1.00669, 0.92494, 0.86083, 1.00658, 0.95096, 1.00063};
-  const double norm_2017MC_BM[13] = {0.96923, 0.92239, 0.81805, 0.96286, 0.97893, 0.96260, 0.92272, 0.97476, 0.92495, 0.82462, 0.99226, 0.92999, 1.00169};
 
   std::vector<double> Norm_klScan;
   std::vector<double> kl_scan;

@@ -769,8 +769,6 @@ int main(int argc, char* argv[])
       "genWeight", "evtWeight",
       "SM_HHWeight",
       "BM1_HHWeight", "BM2_HHWeight", "BM3_HHWeight", "BM4_HHWeight", "BM5_HHWeight", "BM6_HHWeight", "BM7_HHWeight", "BM8_HHWeight", "BM9_HHWeight", "BM10_HHWeight", "BM11_HHWeight", "BM12_HHWeight",
-      // X: test point for 2017 files
-      "BM0p_HHWeight", "BM2p_HHWeight", "BM3p_HHWeight", "BM7p_HHWeight", "BM9p_HHWeight", "BM12p_HHWeight",
       // X: test points -- for now hardcoded the numbers
       "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl2p45_HHWeight", "kl2p455_HHWeight", "kl10_HHWeight"
     );
@@ -822,7 +820,6 @@ int main(int argc, char* argv[])
     }
     ++analyzedEntries;
     histogram_analyzedEntries->Fill(0.);
-    if ( analyzedEntries > 50000 ) break;
     //if ( analyzedEntries > 100 ) break;
 
     if ( isDEBUG ) {
@@ -885,7 +882,6 @@ int main(int argc, char* argv[])
 
     double evtWeight_inclusive = 1.;
     std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::vector<double> WeightBMp; // weights to do histograms for BMs that are on 2017 files
     std::vector<double> Weight_klScan; // weights to do histograms for BMs
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
     if ( isMC ) {
@@ -900,7 +896,7 @@ int main(int argc, char* argv[])
           costS_gen = comp_cosThetaS( genHiggses[0].p4() , genHiggses[1].p4() );
           if (mhh_gen > 247.)
           {
-            HHWeight_calc(mhh_gen, costS_gen, WeightBM, WeightBMp, Weight_klScan, isDEBUG);
+            HHWeight_calc(mhh_gen, costS_gen, WeightBM, Weight_klScan, isDEBUG);
             evtWeight_inclusive *= WeightBM[0]; // SM by default
 
             if ( isDEBUG ) {
@@ -1929,13 +1925,6 @@ int main(int argc, char* argv[])
           ("BM10_HHWeight",                 WeightBM[10])
           ("BM11_HHWeight",                 WeightBM[11])
           ("BM12_HHWeight",                 WeightBM[12])
-          // X: Test points for 2017
-          ("BM0p_HHWeight",                  WeightBMp[0])
-          ("BM2p_HHWeight",                  WeightBMp[2])
-          ("BM3p_HHWeight",                  WeightBMp[3])
-          ("BM7p_HHWeight",                  WeightBMp[7])
-          ("BM9p_HHWeight",                  WeightBMp[9])
-          ("BM12p_HHWeight",                 WeightBMp[12])
           // X: test points -- for now hardcoded the numbers
           ("klm10_HHWeight",                Weight_klScan[5])
           ("kl1_HHWeight",                  Weight_klScan[11])
