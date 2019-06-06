@@ -1495,7 +1495,7 @@ int main(int argc, char* argv[])
           }
 
         } else throw cms::Exception("analyze_hh_bb2l")
-          << "mhh_gen = " << mhh_gen << " < 247; Check that this is realy a file for HH production !!\n";
+          << "mhh_gen = " << mhh_gen << " < 247 GeV; Check that this is realy a file for HH production !!\n";
       }
       evtWeight_inclusive *= HHWeight;
     }
