@@ -770,7 +770,8 @@ int main(int argc, char* argv[])
       "SM_HHWeight",
       "BM1_HHWeight", "BM2_HHWeight", "BM3_HHWeight", "BM4_HHWeight", "BM5_HHWeight", "BM6_HHWeight", "BM7_HHWeight", "BM8_HHWeight", "BM9_HHWeight", "BM10_HHWeight", "BM11_HHWeight", "BM12_HHWeight",
       // X: test points -- for now hardcoded the numbers
-      "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl2p45_HHWeight", "kl2p455_HHWeight", "kl10_HHWeight"
+      "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl2p45_HHWeight", "kl2p455_HHWeight", "kl10_HHWeight",
+      "mhh_gen","costS_gen"
     );
     bdt_filler->register_variable<int_type>(
       "nJet", "nBJetLoose", "nBJetMedium",
@@ -881,41 +882,8 @@ int main(int argc, char* argv[])
     }
 
     double evtWeight_inclusive = 1.;
-    std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::vector<double> Weight_klScan; // weights to do histograms for BMs
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
     if ( isMC ) {
-      if ( isMC_HH_nonres )
-      {
-        if ( isDEBUG ) std::cout << "===================================\n";
-        double mhh_gen = 0.;
-        double costS_gen = 0.;
-        if ( genHiggses.size() == 2 )
-        {
-          mhh_gen = ( genHiggses[0].p4() + genHiggses[1].p4() ).mass();
-          costS_gen = comp_cosThetaS( genHiggses[0].p4() , genHiggses[1].p4() );
-          if (mhh_gen > 247.)
-          {
-            HHWeight_calc(mhh_gen, costS_gen, WeightBM, Weight_klScan, isDEBUG);
-            evtWeight_inclusive *= WeightBM[0]; // SM by default
-
-            if ( isDEBUG ) {
-              std::cout<< "genHiggses weights " << genHiggses.size() << " mhh = " << mhh_gen << " : cost " << costS_gen << " : weight = " << HHWeight << std::endl;
-              std::cout << "Calculated " << WeightBM.size() << "BM weights - SM (BM = 0) + 12 shape benchmarks \n";
-              for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
-              {std::cout << "BM = " << bm_list << "; Weight = " <<  WeightBM[bm_list] << " \n";}
-              std::cout << "\n";
-              ///////////
-              std::cout << "Calculated " << Weight_klScan.size() << " scan weights\n";
-              for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
-              {std::cout << "line = " << bm_list << "; Weight = " <<  Weight_klScan[bm_list] << " \n";}
-              std::cout << "\n";
-            }
-
-          } else throw cms::Exception("analyze_hh_bb2l")
-            << "mhh_gen = " << mhh_gen << " < 247; Check that this is realy a file for HH production !!\n";
-        }
-      }
       if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
       if ( apply_DYMCReweighting ) evtWeight_inclusive *= dyReweighting->getWeight(genTauLeptons);
       if ( isMC_tH               ) evtWeight_inclusive *= eventInfo.genWeight_tH;
@@ -1498,6 +1466,41 @@ int main(int argc, char* argv[])
     cutFlowTable.update("signal region veto", evtWeight);
     cutFlowHistManager->fillHistograms("signal region veto", evtWeight);
 
+    std::vector<double> WeightBM; // weights to do histograms for BMs
+    std::vector<double> Weight_klScan; // weights to do histograms for BMs
+    double mhh_gen = 0.;
+    double costS_gen = 0.;
+    if ( isMC_HH_nonres )
+    {
+      if ( isDEBUG ) std::cout << "===================================\n";
+      if ( genHiggses.size() == 2 )
+      {
+        mhh_gen = ( genHiggses[0].p4() + genHiggses[1].p4() ).mass();
+        costS_gen = comp_cosThetaS( genHiggses[0].p4() , genHiggses[1].p4() );
+        if (mhh_gen > 247.)
+        {
+          HHWeight_calc(mhh_gen, costS_gen, WeightBM, Weight_klScan, isDEBUG);
+          evtWeight_inclusive *= WeightBM[0]; // SM by default
+
+          if ( isDEBUG ) {
+            std::cout<< "genHiggses weights " << genHiggses.size() << " mhh = " << mhh_gen << " : cost " << costS_gen << " : weight = " << HHWeight << std::endl;
+            std::cout << "Calculated " << WeightBM.size() << "BM weights - SM (BM = 0) + 12 shape benchmarks \n";
+            for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
+            {std::cout << "BM = " << bm_list << "; Weight = " <<  WeightBM[bm_list] << " \n";}
+            std::cout << "\n";
+            ///////////
+            std::cout << "Calculated " << Weight_klScan.size() << " scan weights\n";
+            for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
+            {std::cout << "line = " << bm_list << "; Weight = " <<  Weight_klScan[bm_list] << " \n";}
+            std::cout << "\n";
+          }
+
+        } else throw cms::Exception("analyze_hh_bb2l")
+          << "mhh_gen = " << mhh_gen << " < 247; Check that this is realy a file for HH production !!\n";
+      }
+    }
+
+
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1929,9 +1932,9 @@ int main(int argc, char* argv[])
           ("klm10_HHWeight",                Weight_klScan[5])
           ("kl1_HHWeight",                  Weight_klScan[11])
           ("kl2p4_HHWeight",                Weight_klScan[13])
-          ("kl2p45_HHWeight",               Weight_klScan[14])
-          ("kl2p455_HHWeight",              Weight_klScan[15])
           ("kl10_HHWeight",                 Weight_klScan[17])
+          ("mhh_gen",                       mhh_gen)
+          ("costS_gen",                     costS_gen)
         .fill()
       ;
     }
