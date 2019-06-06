@@ -550,7 +550,7 @@ int main(int argc, char* argv[])
     MEtFilterHistManager* metFilters_;
     EvtHistManager_hh_bb2l* evt_;
     std::map<int, EvtHistManager_hh_bb2l*> evt_BMs_;
-    //std::map<int, EvtHistManager_hh_bb2l*> evt_scan_;
+    std::map<int, EvtHistManager_hh_bb2l*> evt_scan_;
     std::map<std::string, EvtHistManager_hh_bb2l*> evt_in_categories_;
     GenEvtHistManager* genEvtHistManager_afterCuts_;
     LHEInfoHistManager* lheInfoHistManager_afterCuts_;
@@ -609,12 +609,12 @@ int main(int argc, char* argv[])
 
   std::vector<double> BM_klScan;
   int Nscan = 0;
-  std::cout << "Before Entered CX interface " << '\n';
+  double do_scan = true;
   std::string year = "-1";
   if ( era == kEra_2017 ) year = "2017";
   else throw cms::Exception("HHWeightInterface")
     << "The reweighting is set only to 2017";
-  HHWeightInterface HHWeight_calc(BM_klScan, Nscan, year, isDEBUG);
+  HHWeightInterface HHWeight_calc(BM_klScan, Nscan, year, do_scan, isDEBUG);
   std::cout << "Number of points being scanned = " << Nscan << "\n ";
 
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
@@ -688,7 +688,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_BMs_[bm_list]->bookHistograms(fs);
       }
-      /*for (int bm_list = 0; bm_list < Nscan; bm_list++)
+      for (int bm_list = 0; bm_list < Nscan; bm_list++)
       {
         std::string process_and_genMatch_BM = process_string;
         process_and_genMatch_BM += "_scan";
@@ -698,7 +698,7 @@ int main(int argc, char* argv[])
         selHistManager->evt_scan_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_scan_[bm_list]->bookHistograms(fs);
-      }*/
+      }
     }
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_ = new GenEvtHistManager(makeHistManager_cfg(process_and_genMatch,
@@ -770,7 +770,7 @@ int main(int argc, char* argv[])
       "SM_HHWeight",
       "BM1_HHWeight", "BM2_HHWeight", "BM3_HHWeight", "BM4_HHWeight", "BM5_HHWeight", "BM6_HHWeight", "BM7_HHWeight", "BM8_HHWeight", "BM9_HHWeight", "BM10_HHWeight", "BM11_HHWeight", "BM12_HHWeight",
       // X: test points -- for now hardcoded the numbers
-      "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl2p45_HHWeight", "kl2p455_HHWeight", "kl10_HHWeight",
+      "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl10_HHWeight",
       "mhh_gen","costS_gen"
     );
     bdt_filler->register_variable<int_type>(
@@ -1480,6 +1480,7 @@ int main(int argc, char* argv[])
         {
           HHWeight_calc(mhh_gen, costS_gen, WeightBM, Weight_klScan, isDEBUG);
           evtWeight_inclusive *= WeightBM[0]; // SM by default
+          HHWeight = WeightBM[0];
 
           if ( isDEBUG ) {
             std::cout<< "genHiggses weights " << genHiggses.size() << " mhh = " << mhh_gen << " : cost " << costS_gen << " : weight = " << HHWeight << std::endl;
@@ -1497,7 +1498,6 @@ int main(int argc, char* argv[])
         } else throw cms::Exception("analyze_hh_bb2l")
           << "mhh_gen = " << mhh_gen << " < 247 GeV; Check that this is realy a file for HH production !!\n";
       }
-      evtWeight_inclusive *= HHWeight;
     }
 
 
@@ -1774,7 +1774,7 @@ int main(int argc, char* argv[])
           mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
           evtWeight0);
       }
-      /*for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
+      for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
       {
         double evtWeight0 = evtWeight * Weight_klScan[bm_list]/HHWeight;
         selHistManager->evt_scan_[bm_list]->fillHistograms(
@@ -1788,7 +1788,7 @@ int main(int argc, char* argv[])
           mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
           mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
           evtWeight0);
-      }*/
+      }
     }
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
