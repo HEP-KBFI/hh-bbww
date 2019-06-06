@@ -21,9 +21,10 @@ class HHWeightInterface
 {
 public:
   HHWeightInterface(
-              std::vector<double> & BM_klScan,
+              std::vector<double> & BM_klScan, // for the case we want to use to chose an specific BDT
               int & Nscan,
               std::string era,
+              bool do_scan,
               bool isDEBUG
              );
   ~HHWeightInterface();
@@ -52,13 +53,6 @@ private:
   PyObject* moduleMain_;
   PyObject* func_Weight_;
   PyObject* cms_base;
-
-  // any point can be chosen here
-  const double kl = 1.0;
-  const double kt = 1.0;
-  const double c2 = 0.0;
-  const double cg = 0.0;
-  const double c2g = 0.0;
 
   const double klJHEP[13]  = {1.0,  7.5,  1.0,  1.0,  -3.5, 1.0, 2.4, 5.0, 15.0, 1.0, 10.0, 2.4, 15.0};
   const double ktJHEP[13]  = {1.0,  1.0,  1.0,  1.0,  1.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.5,  1.0, 1.0};

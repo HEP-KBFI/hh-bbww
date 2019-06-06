@@ -26,6 +26,7 @@ HHWeightInterface::HHWeightInterface(
   std::vector<double> & BM_klScan, // for the case we want to use to chose an specific BDT
   int & Nscan,
   std::string era,
+  bool do_scan,
   bool isDEBUG
 )
 {
@@ -83,37 +84,40 @@ HHWeightInterface::HHWeightInterface(
   ///////////////////////////////////////////////////////////////////
   // Load a file with an specific scan, that we can decide at later stage on the analysis
   // save the closest shape BM to use this value on the evaluation of a BDT
-  std::string applicationLoadPath_klScan = (
-    boost::filesystem::path(std::getenv("CMSSW_BASE")) /
-    boost::filesystem::path("src/hhAnalysis/bbww/data/kl_scan.dat")
-  ).string();
-
-  std::ifstream inFile_kl_scan;
-  inFile_kl_scan.open(applicationLoadPath_klScan);
-  if (!inFile_kl_scan) throw cms::Exception("HHWeightInterface")
-    << "Error opening file for kl scan !!\n";
-  double value1;
-  int count = 0;
-  while (inFile_kl_scan >> value1)
+  if ( do_scan )
   {
-    if ( isDEBUG ) std::cout << " ====================== \n";
-    if ( count == 0 ) kl_scan.push_back(value1);
-    if ( count == 1 ) kt_scan.push_back(value1);
-    //if ( count == 2 ) c2_scan.push_back(value1);
-    //if ( count == 3 ) cg_scan.push_back(value1);
-    //if ( count == 4 ) c2g_scan.push_back(value1);
-    if ( count == 5 ) BM_klScan.push_back(value1); // the closest BM is hardcoded in the scan file intead of calculated in situ
+    std::string applicationLoadPath_klScan = (
+      boost::filesystem::path(std::getenv("CMSSW_BASE")) /
+      boost::filesystem::path("src/hhAnalysis/bbww/data/kl_scan.dat")
+    ).string();
 
-    if ( count == 6 )
+    std::ifstream inFile_kl_scan;
+    inFile_kl_scan.open(applicationLoadPath_klScan);
+    if (!inFile_kl_scan) throw cms::Exception("HHWeightInterface")
+      << "Error opening file for kl scan !!\n";
+    double value1;
+    int count = 0;
+    while (inFile_kl_scan >> value1)
     {
-      Norm_klScan.push_back(value1);
-      count = 0;
-    } // the normalization is hardcoded in the scan file intead of calculated in situ
-    else {++count;}
+      if ( isDEBUG ) std::cout << " ====================== \n";
+      if ( count == 0 ) kl_scan.push_back(value1);
+      if ( count == 1 ) kt_scan.push_back(value1);
+      //if ( count == 2 ) c2_scan.push_back(value1);
+      //if ( count == 3 ) cg_scan.push_back(value1);
+      //if ( count == 4 ) c2g_scan.push_back(value1);
+      if ( count == 5 ) BM_klScan.push_back(value1); // the closest BM is hardcoded in the scan file intead of calculated in situ
+
+      if ( count == 6 )
+      {
+        Norm_klScan.push_back(value1);
+        count = 0;
+      } // the normalization is hardcoded in the scan file intead of calculated in situ
+      else {++count;}
+    }
+    Nscan = Norm_klScan.size();
+    if ( isDEBUG )  for (unsigned int bm_list = 0; bm_list < Norm_klScan.size(); bm_list++)
+                        {std::cout << "line = "<< bm_list << " kl = " << kl_scan[bm_list] << " ; Norm = " << Norm_klScan[bm_list] << "\n ";}
   }
-  Nscan = Norm_klScan.size();
-  if ( isDEBUG )  for (unsigned int bm_list = 0; bm_list < Norm_klScan.size(); bm_list++)
-                      {std::cout << "line = "<< bm_list << " kl = " << kl_scan[bm_list] << " ; Norm = " << Norm_klScan[bm_list] << "\n ";}
 
   Py_XDECREF(func_load);
   Py_XDECREF(args_load);
