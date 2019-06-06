@@ -882,12 +882,10 @@ int main(int argc, char* argv[])
     }
 
     double evtWeight_inclusive = 1.;
-    double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
     if ( isMC ) {
       if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
       if ( apply_DYMCReweighting ) evtWeight_inclusive *= dyReweighting->getWeight(genTauLeptons);
       if ( isMC_tH               ) evtWeight_inclusive *= eventInfo.genWeight_tH;
-      if ( isMC_HH_nonres        ) evtWeight_inclusive *= HHWeight;
       if ( eventWeightManager    ) evtWeight_inclusive *= eventWeightManager->getWeight();
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(lheScale_option);
@@ -1470,6 +1468,7 @@ int main(int argc, char* argv[])
     std::vector<double> Weight_klScan; // weights to do histograms for BMs
     double mhh_gen = 0.;
     double costS_gen = 0.;
+    double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
     if ( isMC_HH_nonres )
     {
       if ( isDEBUG ) std::cout << "===================================\n";
@@ -1498,6 +1497,7 @@ int main(int argc, char* argv[])
         } else throw cms::Exception("analyze_hh_bb2l")
           << "mhh_gen = " << mhh_gen << " < 247; Check that this is realy a file for HH production !!\n";
       }
+      evtWeight_inclusive *= HHWeight;
     }
 
 
