@@ -70,9 +70,9 @@ private:
   std::vector<double> Norm_klScan;
   std::vector<double> kl_scan;
   std::vector<double> kt_scan;
-  std::vector<double> c2_scan;
-  std::vector<double> cg_scan;
-  std::vector<double> c2g_scan;
+  //std::vector<double> c2_scan;
+  //std::vector<double> cg_scan;
+  //std::vector<double> c2g_scan;
 
   TFile * fileHH;
   TH2 * sumEvt;

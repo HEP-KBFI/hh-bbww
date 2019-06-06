@@ -99,9 +99,9 @@ HHWeightInterface::HHWeightInterface(
     if ( isDEBUG ) std::cout << " ====================== \n";
     if ( count == 0 ) kl_scan.push_back(value1);
     if ( count == 1 ) kt_scan.push_back(value1);
-    if ( count == 2 ) c2_scan.push_back(value1);
-    if ( count == 3 ) cg_scan.push_back(value1);
-    if ( count == 4 ) c2g_scan.push_back(value1);
+    //if ( count == 2 ) c2_scan.push_back(value1);
+    //if ( count == 3 ) cg_scan.push_back(value1);
+    //if ( count == 4 ) c2g_scan.push_back(value1);
     if ( count == 5 ) BM_klScan.push_back(value1); // the closest BM is hardcoded in the scan file intead of calculated in situ
 
     if ( count == 6 )
@@ -148,9 +148,9 @@ HHWeightInterface::operator()(
     PyObject* args_BM_list = PyTuple_Pack(10,
       PyFloat_FromDouble(static_cast<double>(klJHEP[bm_list])),
       PyFloat_FromDouble(static_cast<double>(ktJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2JHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(cgJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2gJHEP[bm_list])),
+      PyFloat_FromDouble(static_cast<double>(0.0)),
+      PyFloat_FromDouble(static_cast<double>(0.0)),
+      PyFloat_FromDouble(static_cast<double>(0.0)),
       PyFloat_FromDouble(static_cast<double>(mhh_gen)),
       PyFloat_FromDouble(static_cast<double>(costSgen_gen)),
       PyFloat_FromDouble(static_cast<double>(normJHEP[bm_list])),
