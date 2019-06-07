@@ -51,6 +51,53 @@ public:
   TH1 * histogram_numBJets_loose_;
   TH1 * histogram_numBJets_medium_;
 
+  TH1 * histogram_HT_;
+  TH1 * histogram_STMET_;
+
+  TH1 * histogram_m_Hbb_;
+  TH1 * histogram_dR_Hbb_;
+  TH1 * histogram_dPhi_Hbb_;
+  TH1 * histogram_pT_Hbb_;
+
+  TH1 * histogram_m_ll_;
+  TH1 * histogram_dR_ll_;
+  TH1 * histogram_dPhi_ll_;
+  TH1 * histogram_dEta_ll_;
+  TH1 * histogram_pT_ll_;
+
+  TH1 * histogram_m_Hww_;
+  TH1 * histogram_mT_Hww_;
+  TH1 * histogram_pT_Hww_;
+  TH1 * histogram_Smin_Hww_;
+  TH1 * histogram_met_pt_proj_;
+
+  TH1 * histogram_m_HHvis_;
+  TH1 * histogram_m_HH_;
+  TH1 * histogram_m_HH_hme_;
+  TH1 * histogram_hmeCpuTime_;
+  TH1 * histogram_dR_HH_;
+  TH1 * histogram_dPhi_HH_;
+  TH1 * histogram_pT_HH_;
+  TH1 * histogram_Smin_HH_;
+
+  TH1 * histogram_mT2_W_;
+  TH1 * histogram_mT2_W_step_;
+  TH1 * histogram_mT2_top_2particle_;
+  TH1 * histogram_mT2_top_2particle_step_;
+  TH1 * histogram_mT2_top_3particle_;
+  TH1 * histogram_mT2_top_3particle_step_;
+
+  TH1 * histogram_logHiggsness_;
+  TH1 * histogram_logTopness_;
+  TH2 * histogram_logTopness_vs_logHiggsness_;
+
+  TH1 * histogram_vbf_jet1_pt_;
+  TH1 * histogram_vbf_jet1_eta_;
+  TH1 * histogram_vbf_jet2_pt_;
+  TH1 * histogram_vbf_jet2_eta_;
+  TH1 * histogram_vbf_m_jj_;
+  TH1 * histogram_vbf_dEta_jj_;
+
   TH1 * histogram_log_memProb_signal_;
   TH1 * histogram_log_memProbErr_signal_;
   TH1 * histogram_log_memProb_background_;

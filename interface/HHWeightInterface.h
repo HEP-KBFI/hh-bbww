@@ -12,21 +12,19 @@ typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > LorentzVecto
 #include <TLorentzVector.h> // TLorentzVector
 #include <fstream> // std::ifstream
 
+#include <TFile.h> // TH1
+#include <TH2.h> // TH2
+
 double comp_cosThetaS(const LorentzVector& hadTauP4_lead, const LorentzVector& hadTauP4_sublead);
 
 class HHWeightInterface
 {
 public:
   HHWeightInterface(
-              double & CX, int & BM, double & Norm,
-              const double & kl,
-              const double & kt,
-              const double & c2,
-              const double & cg,
-              const double & c2g,
-              std::vector<double> & NormBM,
-              std::vector<double> & Norm_klScan,
-              std::vector<double> & BM_klScan,
+              std::vector<double> & BM_klScan, // for the case we want to use to chose an specific BDT
+              int & Nscan,
+              std::string era,
+              bool do_scan,
               bool isDEBUG
              );
   ~HHWeightInterface();
@@ -36,20 +34,14 @@ public:
    * @param mvaInputs Values of MVA input variables (stored in std::map with key = MVA input variable name)
    * @return          MVA output
    */
-  double
+  void
   operator()(
     const double & mhh_gen,
     const double & costSgen_gen,
     //
-    const double & kl,
-    const double & kt,
-    const double & c2,
-    const double & cg,
-    const double & c2g,
-    //
-    const double & normalization,
     std::vector<double> & WeightBM,
-    std::vector<double> & Weight_klScan
+    std::vector<double> & Weight_klScan,
+    bool isDEBUG
   ) const;
 
 private:
@@ -59,15 +51,26 @@ private:
   PyObject* modeldata_;
   PyObject* moduleMainString_;
   PyObject* moduleMain_;
+  PyObject* func_Weight_;
   PyObject* cms_base;
 
-  double klJHEP[13]  = {1.0,  7.5,  1.0,  1.0,  -3.5, 1.0, 2.4, 5.0, 15.0, 1.0, 10.0, 2.4, 15.0};
-  double ktJHEP[13]  = {1.0,  1.0,  1.0,  1.0,  1.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.5,  1.0, 1.0};
-  double c2JHEP[13]  = {0.0,  -1.0, 0.5, -1.5, -3.0,  0.0, 0.0, 0.0, 0.0,  1.0, -1.0, 0.0, 1.0};
-  double cgJHEP[13]  = {0.0,  0.0, -0.8,  0.0, 0.0,   0.8, 0.2, 0.2, -1.0, -0.6, 0.0, 1.0, 0.0};
-  double c2gJHEP[13] = {0.0, 0.0, 0.6, -0.8, 0.0, -1.0, -0.2,-0.2,  1.0,  0.6, 0.0, -1.0, 0.0};
+  const double klJHEP[13]  = {1.0,  7.5,  1.0,  1.0,  -3.5, 1.0, 2.4, 5.0, 15.0, 1.0, 10.0, 2.4, 15.0};
+  const double ktJHEP[13]  = {1.0,  1.0,  1.0,  1.0,  1.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.5,  1.0, 1.0};
+  const double c2JHEP[13]  = {0.0,  -1.0, 0.5, -1.5, -3.0,  0.0, 0.0, 0.0, 0.0,  1.0, -1.0, 0.0, 1.0};
+  const double cgJHEP[13]  = {0.0,  0.0, -0.8,  0.0, 0.0,   0.8, 0.2, 0.2, -1.0, -0.6, 0.0, 1.0, 0.0};
+  const double c2gJHEP[13] = {0.0, 0.0, 0.6, -0.8, 0.0, -1.0, -0.2,-0.2,  1.0,  0.6, 0.0, -1.0, 0.0};
+  const double normJHEP[13] = {0.99997, 0.94266, 0.71436, 0.95608, 0.97897, 0.87823, 0.95781, 1.00669, 0.92494, 0.86083, 1.00658, 0.95096, 1.00063};
 
-  std::string applicationLoadPath_klScan;
+  std::vector<double> Norm_klScan;
+  std::vector<double> kl_scan;
+  std::vector<double> kt_scan;
+  //std::vector<double> c2_scan;
+  //std::vector<double> cg_scan;
+  //std::vector<double> c2g_scan;
+
+  TFile * fileHH;
+  TH2 * sumEvt;
+  const std::string histtitle_ = "denominator_reweighting";
 
 };
 

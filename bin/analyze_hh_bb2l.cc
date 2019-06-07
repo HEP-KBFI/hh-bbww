@@ -90,8 +90,8 @@
 
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
-#include "hhAnalysis/bbww/interface/HHWeightInterface.h" // HHWeightInterface
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
+#include "hhAnalysis/bbww/interface/HHWeightInterface.h" // HHWeightInterface
 
 #include <iostream> // std::cerr, std::fixed
 #include <iomanip> // std::setprecision(), std::setw()
@@ -244,6 +244,8 @@ int main(int argc, char* argv[])
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
+  bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
+  bool isMC_HH_nonres = ( process_string == "signal_ggf_nonresonant_bbvv" ) ? true : false;
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
   double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
@@ -519,17 +521,14 @@ int main(int argc, char* argv[])
     };
 
   std::vector<std::string> xgbInputVariables_bb2l_nonres =
-    {"mht", "m_Hbb", "m_ll", "Smin_Hww", "dR_b1lep1", "dR_b2lep1", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "node"
+    {"mht", "m_Hbb", "m_ll", "Smin_Hww", "dR_b1lep1", "dR_b2lep1", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "node"
     };
 
   XGBInterface mva_xgb_bb2l_res(xgbFileName_bb2l_res, xgbInputVariables_bb2l_res);
   XGBInterface mva_xgbnohiggnessnotopness_bb2l(xgbFileNamenohiggnessnotopness_bb2l, xgbInputVariablesnohiggnessnotopness_bb2l);
   XGBInterface mva_xgb_bb2l_nonres(xgbFileName_bb2l_nonres, xgbInputVariables_bb2l_nonres);
-
   std::map<std::string, double> mvaInputs_XGB;
-  //  TMVAInterface * mva_xml_bb2l;
-  //mva_xml_bb2l = new TMVAInterface(xmlFileName_bb2l, xgbInputVariables_bb2l_res);
-  //mva_xml_bb2l->enableBDTTransform();
+  std::cout << "declared bdts " << '\n';
 
   struct selHistManagerType
   {
@@ -550,15 +549,16 @@ int main(int argc, char* argv[])
     MEtHistManager* met_;
     MEtFilterHistManager* metFilters_;
     EvtHistManager_hh_bb2l* evt_;
-    std::map<std::string, EvtHistManager_hh_bb2l*> evt_in_categories_;
     std::map<int, EvtHistManager_hh_bb2l*> evt_BMs_;
     std::map<int, EvtHistManager_hh_bb2l*> evt_scan_;
+    std::map<std::string, EvtHistManager_hh_bb2l*> evt_in_categories_;
     GenEvtHistManager* genEvtHistManager_afterCuts_;
     LHEInfoHistManager* lheInfoHistManager_afterCuts_;
     std::map<std::string, LHEInfoHistManager*> lheInfoHistManager_afterCuts_in_categories_;
     EvtYieldHistManager* evtYield_;
     WeightHistManager* weights_;
   };
+  std::cout << "selHistManagers " << '\n';
   std::map<int, selHistManagerType*> selHistManagers;
   std::vector<categoryEntryType> categories_evt;
   for ( int type_Hbb = kHbb_undefined; type_Hbb <= kHbb_boosted; ++type_Hbb ) {
@@ -583,6 +583,7 @@ int main(int argc, char* argv[])
       addCategory_conditionally(categories_evt, categoryEntryType( 1,  1,  1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1e1mu
     }
   }
+  std::cout << "check that all categories specified in python " << '\n';
   // check that all categories specified in python configuration (by evtCategories) have been added
   vstring undefinedEvtCategories;
   for ( vstring::const_iterator evtCategoryName = evtCategoryNames.begin();
@@ -600,40 +601,21 @@ int main(int argc, char* argv[])
       undefinedEvtCategories.push_back(*evtCategoryName);
     }
   }
+  std::cout << "check that all categories specified in python 2" << '\n';
   if ( undefinedEvtCategories.size() >= 1 ) {
     throw cms::Exception("analyze_hh_bb2l")
       << "Invalid Configuration parameter 'evtCategories'. The following event categories are undefined: " << format_vstring(undefinedEvtCategories) << " !!\n";
   }
 
-  std::vector<double> NormBM;
-  std::vector<double> Norm_klScan;
   std::vector<double> BM_klScan;
-  int BM = -10;
-  double CX_o_CXSM = 1.0;
-  // any point can be chosen here
-  double Norm = 1.0;
-  double kl = 1.0;
-  double kt = 1.0;
-  double c2 = 0.0;
-  double cg = 0.0;
-  double c2g = 0.0;
-  HHWeightInterface HHWeight_calc(CX_o_CXSM, BM, Norm, kl, kt, c2, cg, c2g, NormBM, Norm_klScan, BM_klScan, isDEBUG);
-  std::cout << " This just demenstrate that we could calculate cross section deviation in situ: we problaby do not need it -- to be discussed" << "\n";
-  if ( BM == 0 ) std::cout << " The closest shape benchmark is: SM" << "\n";
-  else std::cout << "The closest shape benchmark is: " << BM << " : ";
-  std::cout << "Cross section / Cross section SM = " << CX_o_CXSM << "\n ";
-
-  if ( isDEBUG ) {
-    std::cout << "(" << NormBM.size() << " - SM + 12 shape benchmarks) ";
-    for (unsigned int bm_list = 0; bm_list < NormBM.size(); bm_list++)
-    std::cout << "shape BM = " << bm_list << " CX_o_CXSM = "<< NormBM[bm_list] << " \n";
-    std::cout << '\n';
-
-    std::cout << "(" << Norm_klScan.size() << " - norm : closest BM kl scans) \n";
-    for (unsigned int bm_list = 0; bm_list < Norm_klScan.size(); bm_list++)
-    std::cout << "CX_o_CXSM = " <<  Norm_klScan[bm_list] << " : shape BM = " <<  BM_klScan[bm_list] << " \n";;
-    std::cout << '\n';
-  }
+  int Nscan = 0;
+  double do_scan = true;
+  std::string year = "-1";
+  if ( era == kEra_2017 ) year = "2017";
+  else throw cms::Exception("HHWeightInterface")
+    << "The reweighting is set only to 2017";
+  HHWeightInterface HHWeight_calc(BM_klScan, Nscan, year, do_scan, isDEBUG);
+  std::cout << "Number of points being scanned = " << Nscan << "\n ";
 
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
         leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
@@ -694,27 +676,29 @@ int main(int argc, char* argv[])
     selHistManager->evt_ = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
     selHistManager->evt_->bookHistograms(fs);
-    for (unsigned int bm_list = 0; bm_list < NormBM.size(); bm_list++)
-    {
-      std::string process_and_genMatch_BM = process_string;
-      process_and_genMatch_BM += "_BM";
-      process_and_genMatch_BM += std::to_string(bm_list);
-      process_and_genMatch_BM += "_";
-      if ( apply_leptonGenMatching ) process_and_genMatch_BM += leptonGenMatch_definition->name_;
-      selHistManager->evt_BMs_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
-        Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
-      selHistManager->evt_BMs_[bm_list]->bookHistograms(fs);
-    }
-    for (unsigned int bm_list = 0; bm_list < Norm_klScan.size(); bm_list++)
-    {
-      std::string process_and_genMatch_BM = process_string;
-      process_and_genMatch_BM += "_scan";
-      process_and_genMatch_BM += std::to_string(bm_list);
-      process_and_genMatch_BM += "_";
-      if ( apply_leptonGenMatching ) process_and_genMatch_BM += leptonGenMatch_definition->name_;
-      selHistManager->evt_scan_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
-        Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
-      selHistManager->evt_scan_[bm_list]->bookHistograms(fs);
+    if ( isMC_HH_nonres ) {
+      for (unsigned int bm_list = 0; bm_list < 13; bm_list++)
+      {
+        std::string process_and_genMatch_BM = process_string;
+        process_and_genMatch_BM += "_BM";
+        process_and_genMatch_BM += std::to_string(bm_list);
+        process_and_genMatch_BM += "_";
+        if ( apply_leptonGenMatching ) process_and_genMatch_BM += leptonGenMatch_definition->name_;
+        selHistManager->evt_BMs_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
+          Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
+        selHistManager->evt_BMs_[bm_list]->bookHistograms(fs);
+      }
+      for (int bm_list = 0; bm_list < Nscan; bm_list++)
+      {
+        std::string process_and_genMatch_BM = process_string;
+        process_and_genMatch_BM += "_scan";
+        process_and_genMatch_BM += std::to_string(bm_list);
+        process_and_genMatch_BM += "_";
+        if ( apply_leptonGenMatching ) process_and_genMatch_BM += leptonGenMatch_definition->name_;
+        selHistManager->evt_scan_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
+          Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
+        selHistManager->evt_scan_[bm_list]->bookHistograms(fs);
+      }
     }
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_ = new GenEvtHistManager(makeHistManager_cfg(process_and_genMatch,
@@ -782,7 +766,12 @@ int main(int argc, char* argv[])
       "m_HH_hme",
       "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
-      "genWeight", "evtWeight"
+      "genWeight", "evtWeight",
+      "SM_HHWeight",
+      "BM1_HHWeight", "BM2_HHWeight", "BM3_HHWeight", "BM4_HHWeight", "BM5_HHWeight", "BM6_HHWeight", "BM7_HHWeight", "BM8_HHWeight", "BM9_HHWeight", "BM10_HHWeight", "BM11_HHWeight", "BM12_HHWeight",
+      // X: test points -- for now hardcoded the numbers
+      "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl10_HHWeight",
+      "mhh_gen","costS_gen"
     );
     bdt_filler->register_variable<int_type>(
       "nJet", "nBJetLoose", "nBJetMedium",
@@ -822,8 +811,7 @@ int main(int argc, char* argv[])
   CutFlowTableHistManager * cutFlowHistManager = new CutFlowTableHistManager(cutFlowTableCfg, cuts);
   cutFlowHistManager->bookHistograms(fs);
 
-  while ( inputTree->hasNextEvent() && (! run_lumi_eventSelector || (run_lumi_eventSelector && ! run_lumi_eventSelector -> areWeDone())) )
-  {
+  while ( inputTree->hasNextEvent() && (! run_lumi_eventSelector || (run_lumi_eventSelector && ! run_lumi_eventSelector -> areWeDone())) ) {
     if ( inputTree -> canReport(reportEvery) ) {
       std::cout << "processing Entry " << inputTree -> getCurrentMaxEventIdx()
                 << " or " << inputTree -> getCurrentEventIdx() << " entry in #"
@@ -833,13 +821,12 @@ int main(int argc, char* argv[])
     }
     ++analyzedEntries;
     histogram_analyzedEntries->Fill(0.);
-    //if ( analyzedEntries > 1 ) break;
+    //if ( analyzedEntries > 100 ) break;
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
     }
-    std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::vector<double> Weight_klScan; // weights to do histograms for BMs
+
     if ( run_lumi_eventSelector && !(*run_lumi_eventSelector)(eventInfo) ) continue;
     cutFlowTable.update("run:ls:event selection");
     cutFlowHistManager->fillHistograms("run:ls:event selection", lumiScale);
@@ -896,38 +883,13 @@ int main(int argc, char* argv[])
 
     double evtWeight_inclusive = 1.;
     if ( isMC ) {
-      double mhh_gen = 0.;
-      double costS_gen = 0.;
-      double HHWeight = 1.0;
-      if ( genHiggses.size() == 2 )
-      {
-        mhh_gen = ( genHiggses[0].p4() + genHiggses[1].p4() ).mass();
-        costS_gen = comp_cosThetaS( genHiggses[0].p4() , genHiggses[1].p4() );
-        if (mhh_gen > 247.)
-        {
-          HHWeight = HHWeight_calc(mhh_gen, costS_gen, kl, kt, c2, cg, c2g, Norm, WeightBM, Weight_klScan);
-          HHWeight *= CX_o_CXSM;
-        }
-        if ( isDEBUG ) {
-          std::cout<< " genHiggses weights " << genHiggses.size() << " " << HHWeight << " " << mhh_gen << " " << costS_gen << std::endl;
-          std::cout << "(" << WeightBM.size() << " - SM + 12 shape benchmarks) ";
-          for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
-          {std::cout <<  WeightBM[bm_list] << " ";}
-          std::cout << "\n";
-
-          std::cout << "(" << Weight_klScan.size() << " - weight kl scan) \n";
-          for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++) {std::cout <<  Weight_klScan[bm_list] << " " << bm_list << " \n";}
-          std::cout << "\n";
-        }
-      }
       if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
       if ( apply_DYMCReweighting ) evtWeight_inclusive *= dyReweighting->getWeight(genTauLeptons);
+      if ( isMC_tH               ) evtWeight_inclusive *= eventInfo.genWeight_tH();
       if ( eventWeightManager    ) evtWeight_inclusive *= eventWeightManager->getWeight();
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(lheScale_option);
       evtWeight_inclusive *= eventInfo.pileupWeight;
-      //std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
-      evtWeight_inclusive *= 1.0; //param_weight["kt_1p0_kv_1p0"];
       evtWeight_inclusive *= lumiScale;
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
       if(eventWeightManager)
@@ -1022,9 +984,9 @@ int main(int argc, char* argv[])
     std::vector<RecoMuon> muons = muonReader->read();
     std::vector<const RecoMuon*> muon_ptrs = convert_to_ptrs(muons);
     std::vector<const RecoMuon*> cleanedMuons = muon_ptrs; // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
-    std::vector<const RecoMuon*> preselMuons = preselMuonSelector(cleanedMuons, isHigherPt);
-    std::vector<const RecoMuon*> fakeableMuons = fakeableMuonSelector(preselMuons, isHigherPt);
-    std::vector<const RecoMuon*> tightMuons = tightMuonSelector(fakeableMuons, isHigherPt);
+    std::vector<const RecoMuon*> preselMuons = preselMuonSelector(cleanedMuons, isHigherConePt);
+    std::vector<const RecoMuon*> fakeableMuons = fakeableMuonSelector(preselMuons, isHigherConePt);
+    std::vector<const RecoMuon*> tightMuons = tightMuonSelector(fakeableMuons, isHigherConePt);
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("preselMuons",   preselMuons);
       printCollection("fakeableMuons", fakeableMuons);
@@ -1034,22 +996,22 @@ int main(int argc, char* argv[])
     std::vector<RecoElectron> electrons = electronReader->read();
     std::vector<const RecoElectron*> electron_ptrs = convert_to_ptrs(electrons);
     std::vector<const RecoElectron*> cleanedElectrons = electronCleaner(electron_ptrs, preselMuons);
-    std::vector<const RecoElectron*> preselElectrons = preselElectronSelector(cleanedElectrons, isHigherPt);
-    std::vector<const RecoElectron*> fakeableElectrons = fakeableElectronSelector(preselElectrons, isHigherPt);
-    std::vector<const RecoElectron*> tightElectrons = tightElectronSelector(fakeableElectrons, isHigherPt);
+    std::vector<const RecoElectron*> preselElectrons = preselElectronSelector(cleanedElectrons, isHigherConePt);
+    std::vector<const RecoElectron*> fakeableElectrons = fakeableElectronSelector(preselElectrons, isHigherConePt);
+    std::vector<const RecoElectron*> tightElectrons = tightElectronSelector(fakeableElectrons, isHigherConePt);
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("preselElectrons",   preselElectrons);
       printCollection("fakeableElectrons", fakeableElectrons);
       printCollection("tightElectrons",    tightElectrons);
     }
 
-    std::vector<const RecoLepton*> preselLeptonsFull = mergeLeptonCollections(preselElectrons, preselMuons, isHigherPt);
-    std::vector<const RecoLepton*> fakeableLeptonsFull = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherPt);
-    std::vector<const RecoLepton*> tightLeptonsFull = mergeLeptonCollections(tightElectrons, tightMuons, isHigherPt);
+    std::vector<const RecoLepton*> preselLeptonsFull = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
+    std::vector<const RecoLepton*> fakeableLeptonsFull = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
+    std::vector<const RecoLepton*> tightLeptonsFull = mergeLeptonCollections(tightElectrons, tightMuons, isHigherConePt);
 
     std::vector<const RecoLepton*> preselLeptons = pickFirstNobjects(preselLeptonsFull, 2);
     std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 2);
-    std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherPt);
+    std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
 
     std::vector<const RecoLepton*> selLeptons;
     std::vector<const RecoMuon*> selMuons;
@@ -1502,6 +1464,43 @@ int main(int argc, char* argv[])
     cutFlowTable.update("signal region veto", evtWeight);
     cutFlowHistManager->fillHistograms("signal region veto", evtWeight);
 
+    std::vector<double> WeightBM; // weights to do histograms for BMs
+    std::vector<double> Weight_klScan; // weights to do histograms for BMs
+    double mhh_gen = 0.;
+    double costS_gen = 0.;
+    double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
+    if ( isMC_HH_nonres )
+    {
+      if ( isDEBUG ) std::cout << "===================================\n";
+      if ( genHiggses.size() == 2 )
+      {
+        mhh_gen = ( genHiggses[0].p4() + genHiggses[1].p4() ).mass();
+        costS_gen = comp_cosThetaS( genHiggses[0].p4() , genHiggses[1].p4() );
+        if (mhh_gen > 247.)
+        {
+          HHWeight_calc(mhh_gen, costS_gen, WeightBM, Weight_klScan, isDEBUG);
+          evtWeight_inclusive *= WeightBM[0]; // SM by default
+          HHWeight = WeightBM[0];
+
+          if ( isDEBUG ) {
+            std::cout<< "genHiggses weights " << genHiggses.size() << " mhh = " << mhh_gen << " : cost " << costS_gen << " : weight = " << HHWeight << std::endl;
+            std::cout << "Calculated " << WeightBM.size() << "BM weights - SM (BM = 0) + 12 shape benchmarks \n";
+            for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
+            {std::cout << "BM = " << bm_list << "; Weight = " <<  WeightBM[bm_list] << " \n";}
+            std::cout << "\n";
+            ///////////
+            std::cout << "Calculated " << Weight_klScan.size() << " scan weights\n";
+            for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
+            {std::cout << "line = " << bm_list << "; Weight = " <<  Weight_klScan[bm_list] << " \n";}
+            std::cout << "\n";
+          }
+
+        } else throw cms::Exception("analyze_hh_bb2l")
+          << "mhh_gen = " << mhh_gen << " < 247 GeV; Check that this is realy a file for HH production !!\n";
+      }
+    }
+
+
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1540,40 +1539,40 @@ int main(int argc, char* argv[])
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
     double dR_HH = deltaR(HbbP4, HwwP4);
     double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), HwwP4.phi()));
-    mT2_2particle mT2Algo_2particle;
+    /*mT2_2particle mT2Algo_2particle;
     mT2Algo_2particle(
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
-      metP4.px(), metP4.py(), 0.);
-    double mT2_W = mT2Algo_2particle.get_min_mT2();
-    int mT2_W_step = mT2Algo_2particle.get_min_step();
+      metP4.px(), metP4.py(), 0.);*/
+    double mT2_W = 1.0; //mT2Algo_2particle.get_min_mT2();
+    int mT2_W_step = 1.0; //mT2Algo_2particle.get_min_step();
     //std::cout << "mT2_W = " << mT2_W << " (found @ step #" << mT2_W_step << ")" << std::endl;
-    double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
-    double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
-    mT2Algo_2particle(
+    //double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
+    //double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
+    /*mT2Algo_2particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
-      cSumPx, cSumPy, wBosonMass);
-    double mT2_top_2particle = mT2Algo_2particle.get_min_mT2();
-    int mT2_top_2particle_step = mT2Algo_2particle.get_min_step();
+      cSumPx, cSumPy, wBosonMass);*/
+    double mT2_top_2particle = 1.0; //mT2Algo_2particle.get_min_mT2();
+    int mT2_top_2particle_step = 1.0; //mT2Algo_2particle.get_min_step();
     //std::cout << "mT2_top_2particle = " << mT2_top_2particle << " (found @ step #" << mT2_top_2particle_step << ")" << std::endl;
-    mT2_3particle mT2Algo_3particle;
+    /*mT2_3particle mT2Algo_3particle;
     mT2Algo_3particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
-      metP4.px(), metP4.py(), 0.);
-    double mT2_top_3particle_permutation1 = mT2Algo_3particle.get_min_mT2();
-    int mT2_top_3particle_permutation1_step = mT2Algo_3particle.get_min_step();
-    mT2Algo_3particle(
+      metP4.px(), metP4.py(), 0.);*/
+    double mT2_top_3particle_permutation1 = 1.0; // mT2Algo_3particle.get_min_mT2();
+    int mT2_top_3particle_permutation1_step = 1.0; // mT2Algo_3particle.get_min_step();
+    /*mT2Algo_3particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),
-      metP4.px(), metP4.py(), 0.);
-    double mT2_top_3particle_permutation2 = mT2Algo_3particle.get_min_mT2();
-    double mT2_top_3particle_permutation2_step = mT2Algo_3particle.get_min_step();
+      metP4.px(), metP4.py(), 0.);*/
+    double mT2_top_3particle_permutation2 = 1.0; //mT2Algo_3particle.get_min_mT2();
+    double mT2_top_3particle_permutation2_step = 1.0; //mT2Algo_3particle.get_min_step();
     double mT2_top_3particle = -1.;
     double mT2_top_3particle_step = -1;
     if ( mT2_top_3particle_permutation1 <= mT2_top_3particle_permutation2 ) {
@@ -1586,29 +1585,29 @@ int main(int argc, char* argv[])
     //std::cout << "mT2_top_3particle:"
     //	        << " permutation1 = " << mT2_top_3particle_permutation1 << " (found @ step #" << mT2_top_3particle_permutation1_step << "),"
     //	        << " permutation2 = " << mT2_top_3particle_permutation2 << " (found @ step #" << mT2_top_3particle_permutation2_step << "),"
-    //	        << " min = " << mT2_top_3particle << " (found @ step #" << mT2_top_3particle_step << ")" << met_pt_proj << mT2_top_3particle << mT2_top_3particle_step << std::endl;
-    Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
-    algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    //	        << " min = " << mT2_top_3particle << " (found @ step #" << mT2_top_3particle_step << ")" << std::endl;
+    //Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
+    //algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
     double logHiggsness_publishedChi2 = -99.;
-    if ( algoHiggsness_publishedChi2.isValidSolution() ) {
+    /*if ( algoHiggsness_publishedChi2.isValidSolution() ) {
       logHiggsness_publishedChi2 = algoHiggsness_publishedChi2.logHiggsness();
     }
     Topness algoTopness_publishedChi2(Topness::kPublishedChi2);
-    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
+    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
     double logTopness_publishedChi2 = -99.;
-    if ( algoTopness_publishedChi2.isValidSolution() ) {
+    /*if ( algoTopness_publishedChi2.isValidSolution() ) {
       logTopness_publishedChi2 = algoTopness_publishedChi2.logTopness();
     }
     Higgsness algoHiggsness_fixedChi2(Higgsness::kFixedChi2);
-    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());*/
     double logHiggsness_fixedChi2 = -99.;
-    if ( algoHiggsness_fixedChi2.isValidSolution() ) {
+    /*if ( algoHiggsness_fixedChi2.isValidSolution() ) {
       logHiggsness_fixedChi2 = algoHiggsness_fixedChi2.logHiggsness();
     }
     Topness algoTopness_fixedChi2(Topness::kFixedChi2);
-    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
+    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
     double logTopness_fixedChi2 = -99.;
-    if ( algoTopness_fixedChi2.isValidSolution() ) {
+    /*if ( algoTopness_fixedChi2.isValidSolution() ) {
       logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
     }
     //---------------------------------------------------------------------------
@@ -1642,17 +1641,19 @@ int main(int argc, char* argv[])
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);
+      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);*/
     double m_HH_hme = -1.;
-    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    /*bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
     if ( hme_isValidSolution ) {
       TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
       m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
     }
     clock.Stop("hmeAlgo");
+    */
     double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
+
     const RecoJet* selJet_vbf_lead = nullptr;
     const RecoJet* selJet_vbf_sublead = nullptr;
     double vbf_dEta_jj = -1.;
@@ -1687,11 +1688,9 @@ int main(int argc, char* argv[])
       vbf_jet2_pt = selJet_vbf_sublead->pt();
       vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
-
     mvaInputs_XGB["mht"] = mhtP4.pt();
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["dR_ll"] = dR_ll;
     mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
     mvaInputs_XGB["m_HHvis"] = m_HHvis;
     mvaInputs_XGB["pT_HH"] = pT_HH;
@@ -1707,47 +1706,17 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["gen_mHH"] = 750;
     double mvaoutput_bb2l750 = mva_xgb_bb2l_res(mvaInputs_XGB);
 
-    mvaInputs_XGB.clear();
-
-    mvaInputs_XGB["mht"] = mhtP4.pt();
-    mvaInputs_XGB["m_Hbb"] = m_Hbb;
-    mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["dR_ll"] = dR_ll;
-    mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
-    mvaInputs_XGB["m_HHvis"] = m_HHvis;
-    mvaInputs_XGB["pT_HH"] = pT_HH;
-    mvaInputs_XGB["mT2_top_2particle"] = mT2_top_2particle;
-    mvaInputs_XGB["m_HH_hme"] = m_HH_hme;
-    mvaInputs_XGB["nBJetLoose"] = selBJetsAK4_loose.size();
-    mvaInputs_XGB["gen_mHH"] = 300;
     double mvaoutputnohiggnessnotopness_bb2l300 = mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 400;
     double mvaoutputnohiggnessnotopness_bb2l400 = mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 750;
     double mvaoutputnohiggnessnotopness_bb2l750 = mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
-
     mvaInputs_XGB.clear();
 
-    mvaInputs_XGB["mht"] = mhtP4.pt();
-    mvaInputs_XGB["m_Hbb"] = m_Hbb;
-    mvaInputs_XGB["m_ll"] = m_ll;
-    mvaInputs_XGB["dR_ll"] = dR_ll;
-    mvaInputs_XGB["Smin_Hww"] = Smin_Hww;
-    mvaInputs_XGB["m_HHvis"] = m_HHvis;
-    mvaInputs_XGB["dR_b1lep1"] = dR_b1lep1;
-    mvaInputs_XGB["dR_b2lep1"] = dR_b2lep1;
-    mvaInputs_XGB["pT_HH"] = pT_HH;
-    mvaInputs_XGB["mT2_top_2particle"] = mT2_top_2particle;
-    mvaInputs_XGB["m_HH_hme"] = m_HH_hme;
-    mvaInputs_XGB["logTopness_fixedChi2"] = logTopness_fixedChi2;
-    mvaInputs_XGB["logHiggsness_fixedChi2"] = logHiggsness_fixedChi2;
-    mvaInputs_XGB["nBJetLoose"] = selBJetsAK4_loose.size();
-    mvaInputs_XGB["node"] = 3;
-    double mvaoutput_bb2l_node3 = mva_xgb_bb2l_nonres(mvaInputs_XGB);
-    mvaInputs_XGB["node"] = 7;
-    double mvaoutput_bb2l_node7 = mva_xgb_bb2l_nonres(mvaInputs_XGB);
-    mvaInputs_XGB["node"] = 20;
-    double mvaoutput_bb2l_sm = mva_xgb_bb2l_nonres(mvaInputs_XGB);
+    double mvaoutput_bb2l_node3 = 1.0; //mva_xgb_bb2l_nonres(mvaInputs_XGB);
+    double mvaoutput_bb2l_node7 = 1.0; //mva_xgb_bb2l_nonres(mvaInputs_XGB);
+    double mvaoutput_bb2l_sm = 1.0; //mva_xgb_bb2l_nonres(mvaInputs_XGB);
+
 
 //--- fill histograms with events passing final selection
     selHistManagerType* selHistManager = selHistManagers[idxSelLepton_genMatch];
@@ -1789,39 +1758,42 @@ int main(int argc, char* argv[])
       mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
       mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
       evtWeight);
-    for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
-    {
-      double evtWeight0 = evtWeight * WeightBM[bm_list]/WeightBM[0];
-      selHistManager->evt_BMs_[bm_list]->fillHistograms(
-        selElectrons.size(),
-        selMuons.size(),
-        selJetsAK4.size(),
-        selBJetsAK4_loose.size(),
-        selBJetsAK4_medium.size(),
-        nullptr, -1.,
-        nullptr, -1.,
-        mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-        mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
-        evtWeight0);
-    }
-    for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
-    {
-      double evtWeight0 = evtWeight * Weight_klScan[bm_list]/WeightBM[0];
-      selHistManager->evt_scan_[bm_list]->fillHistograms(
-        selElectrons.size(),
-        selMuons.size(),
-        selJetsAK4.size(),
-        selBJetsAK4_loose.size(),
-        selBJetsAK4_medium.size(),
-        nullptr, -1.,
-        nullptr, -1.,
-        mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-        mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
-        evtWeight0);
+    if ( isMC_HH_nonres ) {
+      for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
+      {
+        double evtWeight0 = evtWeight * WeightBM[bm_list]/HHWeight;
+        selHistManager->evt_BMs_[bm_list]->fillHistograms(
+          selElectrons.size(),
+          selMuons.size(),
+          selJetsAK4.size(),
+          selBJetsAK4_loose.size(),
+          selBJetsAK4_medium.size(),
+          nullptr, -1.,
+          nullptr, -1.,
+          mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
+          mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
+          evtWeight0);
+      }
+      for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
+      {
+        double evtWeight0 = evtWeight * Weight_klScan[bm_list]/HHWeight;
+        selHistManager->evt_scan_[bm_list]->fillHistograms(
+          selElectrons.size(),
+          selMuons.size(),
+          selJetsAK4.size(),
+          selBJetsAK4_loose.size(),
+          selBJetsAK4_medium.size(),
+          nullptr, -1.,
+          nullptr, -1.,
+          mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
+          mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
+          evtWeight0);
+      }
     }
     if ( isMC ) {
       selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
       selHistManager->lheInfoHistManager_afterCuts_->fillHistograms(*lheInfoReader, evtWeight);
+
       if(eventWeightManager)
       {
         selHistManager->genEvtHistManager_afterCuts_->fillHistograms(eventWeightManager, evtWeight_inclusive);
@@ -1843,15 +1815,13 @@ int main(int argc, char* argv[])
     int type_Hbb = ( selJetAK8_Hbb ) ? kHbb_boosted : kHbb_resolved;
     int type_vbf = ( isVBF         ) ?  kVBF_tagged : kVBF_nottagged;
     for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
-	  category != categories_evt.end(); ++category )
-    {
+	  category != categories_evt.end(); ++category ) {
       if ( (category->numElectrons_    ==             -1 || numElectrons    == category->numElectrons_)    &&
 	   (category->numMuons_        ==             -1 || numMuons        == category->numMuons_)        &&
 	   (category->numBJets_medium_ ==             -1 || numBJets_medium == category->numBJets_medium_) &&
 	   (category->numBJets_loose_  ==             -1 || numBJets_loose  == category->numBJets_loose_)  &&
 	   (category->type_Hbb_        == kHbb_undefined || type_Hbb        == category->type_Hbb_)        &&
-	   (category->type_vbf_        == kVBF_undefined || type_vbf        == category->type_vbf_)        )
-     {
+	   (category->type_vbf_        == kVBF_undefined || type_vbf        == category->type_vbf_)        ) {
 	if ( selHistManager->evt_in_categories_.find(category->name_) != selHistManager->evt_in_categories_.end() ) {
 	  selHistManager->evt_in_categories_[category->name_]->fillHistograms(
             selElectrons.size(),
@@ -1945,6 +1915,26 @@ int main(int argc, char* argv[])
           ("nJet_vbf",                      selJetsAK4_vbf.size())
 	  ("isHbb_boosted",                 type_Hbb == kHbb_boosted)
           ("isVBF",                         isVBF)
+          ("SM_HHWeight",                   WeightBM[0])
+          ("BM1_HHWeight",                  WeightBM[1])
+          ("BM2_HHWeight",                  WeightBM[2])
+          ("BM3_HHWeight",                  WeightBM[3])
+          ("BM4_HHWeight",                  WeightBM[4])
+          ("BM5_HHWeight",                  WeightBM[5])
+          ("BM6_HHWeight",                  WeightBM[6])
+          ("BM7_HHWeight",                  WeightBM[7])
+          ("BM8_HHWeight",                  WeightBM[8])
+          ("BM9_HHWeight",                  WeightBM[9])
+          ("BM10_HHWeight",                 WeightBM[10])
+          ("BM11_HHWeight",                 WeightBM[11])
+          ("BM12_HHWeight",                 WeightBM[12])
+          // X: test points -- for now hardcoded the numbers
+          ("klm10_HHWeight",                Weight_klScan[5])
+          ("kl1_HHWeight",                  Weight_klScan[11])
+          ("kl2p4_HHWeight",                Weight_klScan[13])
+          ("kl10_HHWeight",                 Weight_klScan[17])
+          ("mhh_gen",                       mhh_gen)
+          ("costS_gen",                     costS_gen)
         .fill()
       ;
     }
@@ -1955,6 +1945,7 @@ int main(int argc, char* argv[])
       snm->read({
         triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
       });
+
       snm->read(preselMuons);
       snm->read(preselElectrons);
       snm->read(selJetsAK4);

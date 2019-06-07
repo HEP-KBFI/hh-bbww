@@ -180,6 +180,7 @@ int main(int argc, char* argv[])
   double lep_mva_cut = cfg_testMEM.getParameter<double>("lep_mva_cut"); // CV: used for tight lepton selection only
 
   bool isMC = true;
+  bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
   bool hasLHE = cfg_testMEM.getParameter<bool>("hasLHE");
   std::string central_or_shift = cfg_testMEM.getParameter<std::string>("central_or_shift");
   double lumiScale = 1.;
@@ -586,11 +587,10 @@ int main(int argc, char* argv[])
     double evtWeight_inclusive = 1.;
     if ( isMC ) {
       if(apply_genWeight) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
+      evtWeight_inclusive *= eventInfo.genWeight_tH();
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(kLHE_scale_central);
       evtWeight_inclusive *= eventInfo.pileupWeight;
-      //std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
-      evtWeight_inclusive *= 1.0; //param_weight["kt_1p0_kv_1p0"];
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, {}, {}, genJets, evtWeight_inclusive);
     }
 
@@ -1254,16 +1254,16 @@ int main(int argc, char* argv[])
     }
     Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
     algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
-    double logHiggsness_publishedChi2 = -99.;
+    /*double logHiggsness_publishedChi2 = -99.;
     if ( algoHiggsness_publishedChi2.isValidSolution() ) {
       logHiggsness_publishedChi2 = algoHiggsness_publishedChi2.logHiggsness();
-    }
+    }*/
     Topness algoTopness_publishedChi2(Topness::kPublishedChi2);
     algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
-    double logTopness_publishedChi2 = -99.;
+    /*double logTopness_publishedChi2 = -99.;
     if ( algoTopness_publishedChi2.isValidSolution() ) {
       logTopness_publishedChi2 = algoTopness_publishedChi2.logTopness();
-    }
+    }*/
     Higgsness algoHiggsness_fixedChi2(Higgsness::kFixedChi2);
     algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
     double logHiggsness_fixedChi2 = -99.;

@@ -8,6 +8,9 @@
 #include <streambuf> // std::istreambuf_iterator<>()
 #include <iostream> // std::cerr, std::fixed
 
+#include "tthAnalysis/HiggsToTauTau/interface/TFileOpenWrapper.h" // TFileOpenWrapper::
+#include <TFile.h> // TH1
+#include <TH2.h> // TH2
 
 double comp_cosThetaS(const LorentzVector& hadTauP4_lead, const LorentzVector& hadTauP4_sublead)
 {
@@ -20,19 +23,12 @@ double comp_cosThetaS(const LorentzVector& hadTauP4_lead, const LorentzVector& h
 }
 
 HHWeightInterface::HHWeightInterface(
-  double & CX, int & BM, double & Norm,
-  const double & kl,
-  const double & kt,
-  const double & c2,
-  const double & cg,
-  const double & c2g,
-  std::vector<double> & NormBM,
-  std::vector<double> & Norm_klScan, // do kl scan -- this number can be in the inFile_kl_scan instead of being calculated in site
   std::vector<double> & BM_klScan, // for the case we want to use to chose an specific BDT
+  int & Nscan,
+  std::string era,
+  bool do_scan,
   bool isDEBUG
 )
-  //: mvaFileName_(LocalFileInPath(mvaFileName).fullPath())
-  //, mvaInputVariables_(mvaInputVariables)
 {
   // AC: limit number of threads running in python to one
   setenv("OMP_NUM_THREADS", "1", 0);
@@ -59,91 +55,69 @@ HHWeightInterface::HHWeightInterface(
   moduleMain_ = PyImport_Import(moduleMainString_);
   PyRun_SimpleString(applicationLoadStr.c_str());
 
-  // Load the class
+  /////////////////////////////////////////////////////////
+  // General: Load the class with the functions to calculate the different parts of the weights
   cms_base = PyString_FromString(std::getenv("CMSSW_BASE"));
   PyObject* func_load = PyObject_GetAttrString(moduleMain_, "load");
   PyObject* args_load = PyTuple_Pack(1, cms_base);
   modeldata_ = PyObject_CallObject(func_load, args_load);
-
-  PyObject * kl_py = PyFloat_FromDouble(static_cast<double>(kl));
-  PyObject * kt_py = PyFloat_FromDouble(static_cast<double>(kt));
-  PyObject * c2_py = PyFloat_FromDouble(static_cast<double>(c2));
-  PyObject * cg_py = PyFloat_FromDouble(static_cast<double>(cg));
-  PyObject * c2g_py = PyFloat_FromDouble(static_cast<double>(c2g));
-
-  // calculate and return CX
-  PyObject* func_CX = PyObject_GetAttrString(moduleMain_, "getCX");
-  PyObject* args_CX = PyTuple_Pack(6,  kl_py, kt_py, c2_py, cg_py, c2g_py, modeldata_);
-  CX = PyFloat_AsDouble(PyObject_CallObject(func_CX, args_CX));
-
-  // calculate and return BM -- it takes a bit of time (~30sec), but it can be done previouslly for large lists
-  PyObject* func_BM = PyObject_GetAttrString(moduleMain_, "getBM");
-  PyObject* args_BM = PyTuple_Pack(7,  kl_py, kt_py, c2_py, cg_py, c2g_py, modeldata_, cms_base);
-  BM   = PyInt_AsLong(PyObject_CallObject(func_BM, args_BM));
-
-  // calculate and return normalization
-  PyObject* func_Norm = PyObject_GetAttrString(moduleMain_, "getNorm");
-  Norm   = PyFloat_AsDouble(PyObject_CallObject(func_Norm, args_BM));
-
-  for (unsigned int bm_list = 0; bm_list < 13; bm_list++){
-    PyObject* args_BM_list = PyTuple_Pack(7,
-      PyFloat_FromDouble(static_cast<double>(klJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(ktJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2JHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(cgJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2gJHEP[bm_list])),
-      modeldata_, cms_base);
-    NormBM.push_back(PyFloat_AsDouble(PyObject_CallObject(func_Norm, args_BM_list)));
-    Py_XDECREF(args_BM_list);
-  }
-
-  applicationLoadPath_klScan = (
+  // function to calculate and return parts of the weights
+  func_Weight_ = PyObject_GetAttrString(moduleMain_, "evaluate_weight");
+  // This histogram is adapted to our input events -- it is going to be used event-by-event
+  // calculated on macros/make_nonres_norm.py
+  std::string denominator_hist = "/src/hhAnalysis/bbww/data/denominator_reweighting_bbvv_";
+  denominator_hist += era;
+  denominator_hist += ".root";
+  const std::string FileDenominator = (
     boost::filesystem::path(std::getenv("CMSSW_BASE")) /
-    boost::filesystem::path("src/hhAnalysis/bbww/data/kl_scan.dat")
+    boost::filesystem::path(denominator_hist)
   ).string();
+  fileHH = TFileOpenWrapper::Open(FileDenominator.c_str(), "READ");
+  if(! fileHH) throw cms::Exception("HHWeightInterface")
+    << "Could not open file " << FileDenominator<< " !!\n";
+  if(fileHH -> IsZombie()) throw cms::Exception("HHWeightInterface")
+    << "The file '" << FileDenominator << "' appears to be a zombie";
+  sumEvt = static_cast<TH2 *>(fileHH -> Get(histtitle_.c_str()));
+  if(! sumEvt) throw cms::Exception("HHWeightInterface")
+    << "The file '" << fileHH << "' does not have a TTree named " << sumEvt;
 
-  std::ifstream inFile_kl_scan;
-  inFile_kl_scan.open(applicationLoadPath_klScan);
-  if (!inFile_kl_scan) throw cms::Exception("HHWeightInterface")
-    << "Error opening file for kl scan !!\n";
-  double value1;
-  int count = 0;
-  double kl_scan = 1.0;
-  while (inFile_kl_scan >> value1)
+  ///////////////////////////////////////////////////////////////////
+  // Load a file with an specific scan, that we can decide at later stage on the analysis
+  // save the closest shape BM to use this value on the evaluation of a BDT
+  if ( do_scan )
   {
-    if ( isDEBUG ) std::cout << " " << value1;
-    if ( count == 0 ) kl_scan = value1;
-    if ( count == 5 )
+    std::string applicationLoadPath_klScan = (
+      boost::filesystem::path(std::getenv("CMSSW_BASE")) /
+      boost::filesystem::path("src/hhAnalysis/bbww/data/kl_scan.dat")
+    ).string();
+
+    std::ifstream inFile_kl_scan;
+    inFile_kl_scan.open(applicationLoadPath_klScan);
+    if (!inFile_kl_scan) throw cms::Exception("HHWeightInterface")
+      << "Error opening file for kl scan !!\n";
+    double value1;
+    int count = 0;
+    while (inFile_kl_scan >> value1)
     {
-      BM_klScan.push_back(value1);
-      PyObject* args_CX_kl = PyTuple_Pack(6,
-        PyFloat_FromDouble(static_cast<double>(kl_scan)),
-        PyFloat_FromDouble(static_cast<double>(1.0)),
-        PyFloat_FromDouble(static_cast<double>(0.0)),
-        PyFloat_FromDouble(static_cast<double>(0.0)),
-        PyFloat_FromDouble(static_cast<double>(0.0)),
-        modeldata_
-      );
-      double CX_kl = PyFloat_AsDouble(PyObject_CallObject(func_CX, args_CX_kl));
-      if ( isDEBUG ) std::cout << " (kl = "<< kl_scan << " : CX = " << CX_kl << ")\n";
-      Norm_klScan.push_back(CX_kl);
-      count = 0;
-      Py_XDECREF(args_CX_kl);
+      if ( isDEBUG ) std::cout << " ====================== \n";
+      if ( count == 0 ) kl_scan.push_back(value1);
+      if ( count == 1 ) kt_scan.push_back(value1);
+      //if ( count == 2 ) c2_scan.push_back(value1);
+      //if ( count == 3 ) cg_scan.push_back(value1);
+      //if ( count == 4 ) c2g_scan.push_back(value1);
+      if ( count == 5 ) BM_klScan.push_back(value1); // the closest BM is hardcoded in the scan file intead of calculated in situ
+
+      if ( count == 6 )
+      {
+        Norm_klScan.push_back(value1);
+        count = 0;
+      } // the normalization is hardcoded in the scan file intead of calculated in situ
+      else {++count;}
     }
-    else {++count;}
+    Nscan = Norm_klScan.size();
+    if ( isDEBUG )  for (unsigned int bm_list = 0; bm_list < Norm_klScan.size(); bm_list++)
+                        {std::cout << "line = "<< bm_list << " kl = " << kl_scan[bm_list] << " ; Norm = " << Norm_klScan[bm_list] << "\n ";}
   }
-
-  Py_XDECREF(func_CX);
-  Py_XDECREF(args_CX);
-  Py_XDECREF(func_BM);
-  Py_XDECREF(args_BM);
-  Py_XDECREF(func_Norm);
-
-  Py_XDECREF(kl_py);
-  Py_XDECREF(kt_py);
-  Py_XDECREF(c2_py);
-  Py_XDECREF(cg_py);
-  Py_XDECREF(c2g_py);
 
   Py_XDECREF(func_load);
   Py_XDECREF(args_load);
@@ -154,84 +128,65 @@ HHWeightInterface::~HHWeightInterface()
   Py_XDECREF(modeldata_);
   Py_XDECREF(moduleMainString_);
   Py_XDECREF(moduleMain_);
+  Py_XDECREF(moduleMain_);
+  Py_XDECREF(func_Weight_);
 }
 
-double
-HHWeightInterface::operator()( //const std::map<std::string, double>& mvaInputs
+void
+HHWeightInterface::operator()(
   const double & mhh_gen,
   const double & costSgen_gen,
   //
-  const double & kl,
-  const double & kt,
-  const double & c2,
-  const double & cg,
-  const double & c2g,
-  //
-  const double & normalization,
   std::vector<double> & WeightBM,
-  std::vector<double> & Weight_klScan
+  std::vector<double> & Weight_klScan,
+  bool isDEBUG
 ) const
 {
+  setenv("OMP_NUM_THREADS", "1", 0);
+  // this info could also be on the post-production stage
+  double denominator = sumEvt->GetBinContent(sumEvt->GetXaxis()->FindBin(mhh_gen), sumEvt->GetYaxis()->FindBin(std::abs(costSgen_gen)));
 
-  // calculate and return normalization
-  PyObject* func_Weight = PyObject_GetAttrString(moduleMain_, "evaluate_weight");
-  PyObject* args_Weight = PyTuple_Pack(10,
-    PyFloat_FromDouble(static_cast<double>(kl)),
-    PyFloat_FromDouble(static_cast<double>(kt)),
-    PyFloat_FromDouble(static_cast<double>(c2)),
-    PyFloat_FromDouble(static_cast<double>(cg)),
-    PyFloat_FromDouble(static_cast<double>(c2g)),
-    PyFloat_FromDouble(static_cast<double>(mhh_gen)),
-    PyFloat_FromDouble(static_cast<double>(costSgen_gen)),
-    PyFloat_FromDouble(static_cast<double>(normalization)),
-    cms_base, modeldata_
-  );
-  PyObject* Weightpy = PyObject_CallObject(func_Weight, args_Weight);
-  double HHWeight   = PyFloat_AsDouble(Weightpy);
-
+  /////////////////////////////////////////////////////////
+  // This can be calculated at post-production stage
   for (unsigned int bm_list = 0; bm_list < 13; bm_list++){
     PyObject* args_BM_list = PyTuple_Pack(10,
       PyFloat_FromDouble(static_cast<double>(klJHEP[bm_list])),
       PyFloat_FromDouble(static_cast<double>(ktJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2JHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(cgJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(c2gJHEP[bm_list])),
+      PyFloat_FromDouble(static_cast<double>(0.0)),
+      PyFloat_FromDouble(static_cast<double>(0.0)),
+      PyFloat_FromDouble(static_cast<double>(0.0)),
       PyFloat_FromDouble(static_cast<double>(mhh_gen)),
       PyFloat_FromDouble(static_cast<double>(costSgen_gen)),
-      PyFloat_FromDouble(static_cast<double>(normalization)),
-      cms_base, modeldata_);
-    WeightBM.push_back(PyFloat_AsDouble(PyObject_CallObject(func_Weight, args_BM_list)));
+      PyFloat_FromDouble(static_cast<double>(normJHEP[bm_list])),
+      PyFloat_FromDouble(static_cast<double>(denominator)),
+      modeldata_);
+    WeightBM.push_back(
+      PyFloat_AsDouble(PyObject_CallObject(func_Weight_, args_BM_list))
+    );
     Py_XDECREF(args_BM_list);
   }
+  if ( isDEBUG ) for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
+  {std::cout << bm_list << " " <<  WeightBM[bm_list] << " " << denominator << "\n";}
 
-  std::ifstream inFile_kl_scan;
-  inFile_kl_scan.open(applicationLoadPath_klScan);
-  if (!inFile_kl_scan) throw cms::Exception("HHWeightInterface")
-    << "Error opening file for kl scan !!\n";
-  double value1;
-  int count = 0;
-  double kl_scan = 1.0;
-  while (inFile_kl_scan >> value1)
+  ///////////////////////////////////////////////////////////////////
+  // This part is for any scan that we can decide at later stage on the analysis
+  for (unsigned int scan_list = 0; scan_list < Norm_klScan.size(); scan_list++)
   {
-    if ( count == 0 ) kl_scan = value1;
-    if ( count == 5 )
-    {
       PyObject* args_kl_scan_list = PyTuple_Pack(10,
-        PyFloat_FromDouble(static_cast<double>(kl_scan)),
-        PyFloat_FromDouble(static_cast<double>(1.0)),
+        PyFloat_FromDouble(static_cast<double>(kl_scan[scan_list])),
+        PyFloat_FromDouble(static_cast<double>(kt_scan[scan_list])),
         PyFloat_FromDouble(static_cast<double>(0.0)),
         PyFloat_FromDouble(static_cast<double>(0.0)),
         PyFloat_FromDouble(static_cast<double>(0.0)),
         PyFloat_FromDouble(static_cast<double>(mhh_gen)),
         PyFloat_FromDouble(static_cast<double>(costSgen_gen)),
-        PyFloat_FromDouble(static_cast<double>(normalization)),
-        cms_base, modeldata_);
-      Weight_klScan.push_back(PyFloat_AsDouble(PyObject_CallObject(func_Weight, args_kl_scan_list)));
+        PyFloat_FromDouble(static_cast<double>(Norm_klScan[scan_list])),
+        PyFloat_FromDouble(static_cast<double>(denominator)),
+        modeldata_);
+      Weight_klScan.push_back(
+        PyFloat_AsDouble(PyObject_CallObject(func_Weight_, args_kl_scan_list))
+      );
       Py_XDECREF(args_kl_scan_list);
-      count = 0;
-    }
-    else {++count;}
   }
 
-  return 0;
 }

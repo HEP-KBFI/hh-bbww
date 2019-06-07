@@ -11,7 +11,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="analyze_hh_bb1l1tau.cc" name="analyze_hh_bb1l1tau">
   <use   name="FWCore/FWLite"/>
@@ -27,7 +27,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="analyze_hh_bb2l.cc" name="analyze_hh_bb2l">
   <use   name="FWCore/FWLite"/>
@@ -59,7 +59,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="analyze_hh_bbWW_DYctrl.cc" name="analyze_hh_bbWW_DYctrl">
   <use   name="FWCore/FWLite"/>
@@ -74,7 +74,7 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
 </bin>
 <bin file="analyze_hh_bbww_inclusive.cc" name="analyze_hh_bbww_inclusive">
   <use   name="FWCore/FWLite"/>
@@ -106,7 +106,11 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
+<<<<<<< HEAD
   <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
+=======
+  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
+>>>>>>> master
 </bin>
 <bin file="testMEM_hh_bb2l.cc" name="testMEM_hh_bb2l">
   <use   name="FWCore/FWLite"/>
@@ -123,5 +127,9 @@
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
+<<<<<<< HEAD
   <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
+=======
+  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
+>>>>>>> master
 </bin>
