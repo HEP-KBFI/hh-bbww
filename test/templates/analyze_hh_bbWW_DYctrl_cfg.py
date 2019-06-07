@@ -96,4 +96,5 @@ process.analyze_hh_bbWW_DYctrl = cms.PSet(
         branchTypeXaxis = cms.string(''),
         branchTypeYaxis = cms.string(''),
     ),
+    tHweights = cms.VPSet(),
 )

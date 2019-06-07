@@ -187,6 +187,8 @@ int main(int argc, char* argv[])
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
   bool isSignal = ( process_string == "signal" ) ? true : false;
+  const bool isMC_tH = process_string == "TH";
+  const bool isMC_ttH = process_string == "TTH";
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -244,7 +246,6 @@ int main(int argc, char* argv[])
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isMC_tH = ( process_string == "tHq" || process_string == "tHW" ) ? true : false;
   bool isMC_HH_nonres = ( process_string == "signal_ggf_nonresonant_bbvv" ) ? true : false;
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
@@ -483,6 +484,12 @@ int main(int argc, char* argv[])
     }
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
+  }
+
+  const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
+  if((isMC_tH || isMC_ttH) && ! tHweights.empty())
+  {
+    eventInfo.loadWeight_tH(tHweights);
   }
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
@@ -882,15 +889,17 @@ int main(int argc, char* argv[])
     }
 
     double evtWeight_inclusive = 1.;
-    if ( isMC ) {
-      if ( apply_genWeight       ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
-      if ( apply_DYMCReweighting ) evtWeight_inclusive *= dyReweighting->getWeight(genTauLeptons);
-      if ( isMC_tH               ) evtWeight_inclusive *= eventInfo.genWeight_tH();
-      if ( eventWeightManager    ) evtWeight_inclusive *= eventWeightManager->getWeight();
+    if(isMC)
+    {
+      if(apply_genWeight      ) evtWeight_inclusive *= boost::math::sign(eventInfo.genWeight);
+      if(apply_DYMCReweighting) evtWeight_inclusive *= dyReweighting->getWeight(genTauLeptons);
+      if(eventWeightManager   ) evtWeight_inclusive *= eventWeightManager->getWeight();
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(lheScale_option);
       evtWeight_inclusive *= eventInfo.pileupWeight;
       evtWeight_inclusive *= lumiScale;
+      evtWeight_inclusive *= eventInfo.genWeight_tH();
+
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
       if(eventWeightManager)
       {

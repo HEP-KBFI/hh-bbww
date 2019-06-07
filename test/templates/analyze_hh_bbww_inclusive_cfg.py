@@ -63,4 +63,5 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
         output = cms.string('inclusive.root'),
         requireGenMatching = cms.bool(False),
     ),
+    tHweights = cms.VPSet(),
 )

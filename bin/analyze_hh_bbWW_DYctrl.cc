@@ -194,6 +194,8 @@ int main(int argc, char* argv[])
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
   bool isSignal = ( process_string == "signal" ) ? true : false;
+  const bool isMC_tH = process_string == "TH";
+  const bool isMC_ttH = process_string == "TTH";
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -458,6 +460,12 @@ int main(int argc, char* argv[])
     }
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
+  }
+
+  const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
+  if((isMC_tH || isMC_ttH) && ! tHweights.empty())
+  {
+    eventInfo.loadWeight_tH(tHweights);
   }
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
@@ -785,8 +793,7 @@ int main(int argc, char* argv[])
       lheInfoReader->read();
       evtWeight_inclusive *= lheInfoReader->getWeight_scale(lheScale_option);
       evtWeight_inclusive *= eventInfo.pileupWeight;
-      //std::map<std::string, double> param_weight = eventInfo.genWeight_tH();
-      evtWeight_inclusive *= 1.0; //param_weight["kt_1p0_kv_1p0"];
+      evtWeight_inclusive *= eventInfo.genWeight_tH();
       evtWeight_inclusive *= lumiScale;
       genEvtHistManager_beforeCuts->fillHistograms(genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeight_inclusive);
       if(eventWeightManager)

@@ -108,4 +108,5 @@ process.analyze_hh_bb2l = cms.PSet(
         branchTypeXaxis = cms.string(''),
         branchTypeYaxis = cms.string(''),
     ),
+    tHweights = cms.VPSet(),
 )

@@ -94,7 +94,8 @@ process.testMEM_hh_bb2l = cms.PSet(
     selEventsFileName_output = cms.string(''),
 
     hasLHE = cms.bool(True),
-    isDEBUG = cms.bool(False)
+    isDEBUG = cms.bool(False),
+    tHweights = cms.VPSet(),
 )
 
 process_value = "$PROCESS"
