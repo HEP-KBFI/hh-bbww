@@ -187,7 +187,6 @@ int main(int argc, char* argv[])
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
-  bool isSignal = ( process_string == "signal" ) ? true : false;
   const bool isMC_tH = process_string == "TH";
   const bool isMC_ttH = process_string == "TTH";
 
@@ -389,7 +388,7 @@ int main(int argc, char* argv[])
   }
 
 //--- declare event-level variables
-  EventInfo eventInfo(isSignal, isMC);
+  EventInfo eventInfo(isMC);
   EventInfoReader eventInfoReader(&eventInfo, puSys_option);
   inputTree->registerReader(&eventInfoReader);
 

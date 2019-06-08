@@ -72,7 +72,6 @@ main(int argc,
 
   const std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
   const std::string process_string = cfg_analyze.getParameter<std::string>("process");
-  const bool isSignal = process_string == "signal";
 
   const std::string era_string = cfg_analyze.getParameter<std::string>("era");
   const int era = get_era(era_string);
@@ -147,7 +146,7 @@ main(int argc,
   });
 
 //--- declare event-level variables
-  EventInfo eventInfo(isSignal, isMC);
+  EventInfo eventInfo(isMC);
   EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
 
