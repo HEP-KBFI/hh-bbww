@@ -18,8 +18,9 @@ double comp_cosThetaS(const LorentzVector& hadTauP4_lead, const LorentzVector& h
   hadTauP4tlv_lead.SetPtEtaPhiM(hadTauP4_lead.pt(), hadTauP4_lead.eta(), hadTauP4_lead.phi(), hadTauP4_lead.mass());
   TLorentzVector hadTauP4tlv_sublead;
   hadTauP4tlv_sublead.SetPtEtaPhiM(hadTauP4_sublead.pt(), hadTauP4_sublead.eta(), hadTauP4_sublead.phi(), hadTauP4_sublead.mass());
-  TLorentzVector hadTauBoost = hadTauP4tlv_lead;
-  return std::fabs(hadTauBoost.CosTheta());
+  TLorentzVector hadTauBoost = hadTauP4tlv_lead + hadTauP4tlv_sublead;
+  hadTauP4tlv_lead.Boost(-hadTauBoost.BoostVector());
+  return std::fabs(hadTauP4tlv_lead.CosTheta());
 }
 
 HHWeightInterface::HHWeightInterface(
@@ -152,9 +153,9 @@ HHWeightInterface::operator()(
     PyObject* args_BM_list = PyTuple_Pack(10,
       PyFloat_FromDouble(static_cast<double>(klJHEP[bm_list])),
       PyFloat_FromDouble(static_cast<double>(ktJHEP[bm_list])),
-      PyFloat_FromDouble(static_cast<double>(0.0)),
-      PyFloat_FromDouble(static_cast<double>(0.0)),
-      PyFloat_FromDouble(static_cast<double>(0.0)),
+      PyFloat_FromDouble(static_cast<double>(c2JHEP[bm_list])),
+      PyFloat_FromDouble(static_cast<double>(cgJHEP[bm_list])),
+      PyFloat_FromDouble(static_cast<double>(c2gJHEP[bm_list])),
       PyFloat_FromDouble(static_cast<double>(mhh_gen)),
       PyFloat_FromDouble(static_cast<double>(costSgen_gen)),
       PyFloat_FromDouble(static_cast<double>(normJHEP[bm_list])),
