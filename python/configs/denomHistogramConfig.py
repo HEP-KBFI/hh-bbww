@@ -46,12 +46,16 @@ def validate_denom(output_file, samples):
     if not histogram_file:
         logging.error('Not a valid ROOT file: {}'.format(output_file))
         return 2
+    category_sums = {}
     for sample_name, sample_info in samples.items():
-        is_mc = (sample_info["type"] == "mc")
-        if not is_mc:
+        if not sample_info["use_it"]:
             continue
         process_name = sample_info["process_name_specific"]
+        category_name = sample_info["sample_category"]
         expected_nof_events = sample_info["nof_tree_events"]
+        if category_name not in category_sums:
+            category_sums[category_name] = 0
+        category_sums[category_name] += expected_nof_events
         logging.info('Validating {} (expecting {} events)'.format(process_name, expected_nof_events))
         histogram = histogram_file.Get(process_name)
         if not histogram:
@@ -68,6 +72,23 @@ def validate_denom(output_file, samples):
             error_code = 4
         else:
             logging.info('Validation successful for sample {}'.format(process_name))
+
+    for category_name, expected_nof_events in category_sums.items():
+        histogram = histogram_file.Get(category_name)
+        if not histogram:
+            logging.error("Could not find histogram '{}' in file {}".format(category_name, output_file))
+            error_code = 3
+        nof_events = int(histogram.GetEntries())
+        if nof_events != expected_nof_events:
+            logging.error(
+                'Histogram {} in file {} has {} events, but expected {} events'.format(
+                    category_name, output_file, nof_events, expected_nof_events,
+                )
+            )
+            error_code = 4
+        else:
+            logging.info('Validation successful for category {}'.format(category_name))
+
     histogram_file.Close()
     if error_code == 0:
         logging.info("Validation successful!")
