@@ -27,7 +27,7 @@ parser.add_argument('-V', '--validate',
   help = 'R|Validate the results',
 )
 parser.add_argument('-o', '--output-file',
-  type = str, dest = 'output_file', metavar = 'filename', default = 'pileup_{era}.root',
+  type = str, dest = 'output_file', metavar = 'filename', default = 'denom_{era}.root',
   required = False,
   help = 'R|File name of the output file',
 )
