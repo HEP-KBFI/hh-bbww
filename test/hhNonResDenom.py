@@ -18,6 +18,10 @@ parser = tthAnalyzeParser(default_num_parallel_jobs = 40)
 parser.add_modes(mode_choices)
 parser.add_files_per_job(100)
 parser.add_use_home()
+parser.add_argument('-P', '--use-preprocessed',
+  dest = 'use_preprocessed', action = 'store_true', default = False,
+  help = 'R|Use Ntuples that have not been post-processed yet',
+)
 parser.add_argument('-V', '--validate',
   dest = 'validate', action = 'store_true', default = False,
   help = 'R|Validate the results',
@@ -45,6 +49,7 @@ mode          = args.mode
 files_per_job = args.files_per_job
 validate      = args.validate
 use_home      = args.use_home
+use_preproc   = args.use_preprocessed
 
 # Custom arguments
 output_file = args.output_file
@@ -54,11 +59,11 @@ if '{era}' in output_file:
   output_file = output_file.format(era = era)
 
 if mode == 'hh_multilepton':
-  samples = load_samples(era, False, base = 'hh_multilepton', suffix = 'hh')
+  samples = load_samples(era, not use_preproc, base = 'hh_multilepton', suffix = 'hh')
 elif mode == 'hh_bbww':
-  samples = load_samples(era, False, base = 'hh_bbww', suffix = 'hh')
+  samples = load_samples(era, not use_preproc, base = 'hh_bbww', suffix = 'hh')
 elif mode == 'hh_bbww_sync':
-  samples = load_samples(era, False, base = 'hh_bbww', suffix = 'sync')
+  samples = load_samples(era, not use_preproc, base = 'hh_bbww', suffix = 'sync')
 else:
   raise ValueError('Invalid mode: %s' % mode)
 
