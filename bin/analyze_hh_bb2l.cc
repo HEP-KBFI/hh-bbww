@@ -64,7 +64,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_2lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
 #include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
-#include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt, comp_lep2_conePt
+#include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt(), comp_lep2_conePt(), comp_cosThetaStar()
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
 #include "tthAnalysis/HiggsToTauTau/interface/hltPathReader.h" // hltPathReader
 #include "tthAnalysis/HiggsToTauTau/interface/Data_to_MC_CorrectionInterface_2016.h"
@@ -78,21 +78,24 @@
 #include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper
 #include "tthAnalysis/HiggsToTauTau/interface/hltFilter.h" // hltFilter()
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
-
-#include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
-#include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
-#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
+#include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle
 #include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
 #include "tthAnalysis/HiggsToTauTau/interface/Topness.h" // Topness
-#include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 #include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
+#include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
-#include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
-#include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
+#include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
+
+#include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
+#include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/HHWeightInterface.h" // HHWeightInterface
+
+#include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
+#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
 #include <iostream> // std::cerr, std::fixed
 #include <iomanip> // std::setprecision(), std::setw()
@@ -101,7 +104,6 @@
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
 #include <fstream> // std::ofstream
 #include <assert.h> // assert
-#include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
@@ -246,7 +248,7 @@ int main(int argc, char* argv[])
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isMC_HH_nonres = ( process_string == "signal_ggf_nonresonant_bbvv" ) ? true : false;
+  bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_" );
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
   double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
@@ -627,15 +629,15 @@ int main(int argc, char* argv[])
       << "Invalid Configuration parameter 'evtCategories'. The following event categories are undefined: " << format_vstring(undefinedEvtCategories) << " !!\n";
   }
 
-  std::vector<double> BM_klScan;
-  int Nscan = 0;
-  double do_scan = true;
-  std::string year = "-1";
-  if ( era == kEra_2017 ) year = "2017";
-  else throw cms::Exception("HHWeightInterface")
-    << "The reweighting is set only to 2017";
-  HHWeightInterface HHWeight_calc(BM_klScan, Nscan, year, do_scan, isDEBUG);
-  std::cout << "Number of points being scanned = " << Nscan << "\n ";
+  const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
+  const HHWeightInterface * HHWeight_calc = nullptr;
+  std::size_t Nscan = 0;
+  if(isMC_HH_nonres)
+  {
+    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
+    Nscan = HHWeight_calc->get_nof_scans();
+  }
+  std::cout << "Number of points being scanned = " << Nscan << '\n';
 
   for ( std::vector<leptonGenMatchEntry>::const_iterator leptonGenMatch_definition = leptonGenMatch_definitions.begin();
         leptonGenMatch_definition != leptonGenMatch_definitions.end(); ++leptonGenMatch_definition ) {
@@ -696,8 +698,9 @@ int main(int argc, char* argv[])
     selHistManager->evt_ = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
       Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
     selHistManager->evt_->bookHistograms(fs);
-    if ( isMC_HH_nonres ) {
-      for (unsigned int bm_list = 0; bm_list < 13; bm_list++)
+    if(isMC_HH_nonres)
+    {
+      for(std::size_t bm_list = 0; bm_list < HHWeightInterface::nof_JHEP; bm_list++)
       {
         std::string process_and_genMatch_BM = process_string;
         process_and_genMatch_BM += "_BM";
@@ -708,7 +711,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_BMs_[bm_list]->bookHistograms(fs);
       }
-      for (int bm_list = 0; bm_list < Nscan; bm_list++)
+      for(std::size_t bm_list = 0; bm_list < Nscan; bm_list++)
       {
         std::string process_and_genMatch_BM = process_string;
         process_and_genMatch_BM += "_scan";
@@ -1492,34 +1495,48 @@ int main(int argc, char* argv[])
     double mhh_gen = 0.;
     double costS_gen = 0.;
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
-    if ( isMC_HH_nonres )
+    if(HHWeight_calc)
     {
-      if ( isDEBUG ) std::cout << "===================================\n";
-      if ( genHiggses.size() == 2 )
+      //TODO read mHH and cosThetaStar from the input Ntuple directly
+      if(genHiggses.size() == 2)
       {
-        mhh_gen = ( genHiggses[0].p4() + genHiggses[1].p4() ).mass();
-        costS_gen = comp_cosThetaS( genHiggses[0].p4() , genHiggses[1].p4() );
+        mhh_gen = (genHiggses[0].p4() + genHiggses[1].p4()).mass();
+        costS_gen = comp_cosThetaStar( genHiggses[0].p4() , genHiggses[1].p4() );
         if (mhh_gen > 247.)
         {
-          HHWeight_calc(mhh_gen, costS_gen, WeightBM, Weight_klScan, isDEBUG);
+          WeightBM = HHWeight_calc->getJHEPWeight(mhh_gen, costS_gen, isDEBUG);
+          Weight_klScan = HHWeight_calc->getScanWeight(mhh_gen, costS_gen, isDEBUG);
+
           evtWeight_inclusive *= WeightBM[0]; // SM by default
           HHWeight = WeightBM[0];
 
-          if ( isDEBUG ) {
-            std::cout<< "genHiggses weights " << genHiggses.size() << " mhh = " << mhh_gen << " : cost " << costS_gen << " : weight = " << HHWeight << std::endl;
+          if(isDEBUG)
+          {
+            std::cout << "genHiggses weights " << genHiggses.size() << " "
+                         "mhh = "              << mhh_gen           << " : "
+                         "cost "               << costS_gen         << " : "
+                         "weight = "           << HHWeight          << '\n'
+            ;
             std::cout << "Calculated " << WeightBM.size() << "BM weights - SM (BM = 0) + 12 shape benchmarks \n";
-            for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
-            {std::cout << "BM = " << bm_list << "; Weight = " <<  WeightBM[bm_list] << " \n";}
-            std::cout << "\n";
-            ///////////
+            for(std::size_t bm_list = 0; bm_list < WeightBM.size(); ++bm_list)
+            {
+              std::cout << "BM = " << bm_list << "; Weight = " <<  WeightBM[bm_list] << '\n';
+            }
             std::cout << "Calculated " << Weight_klScan.size() << " scan weights\n";
-            for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
-            {std::cout << "line = " << bm_list << "; Weight = " <<  Weight_klScan[bm_list] << " \n";}
+            for(std::size_t bm_list = 0; bm_list < Weight_klScan.size(); ++bm_list)
+            {
+              std::cout << "line = " << bm_list << "; Weight = " <<  Weight_klScan[bm_list] << '\n';
+            }
             std::cout << "\n";
           }
 
-        } else throw cms::Exception("analyze_hh_bb2l")
-          << "mhh_gen = " << mhh_gen << " < 247 GeV; Check that this is realy a file for HH production !!\n";
+        }
+        else
+        {
+          throw cms::Exception("analyze_hh_bb2l")
+            << "mhh_gen = " << mhh_gen << " < 247 GeV; Check that this is realy a file for HH production\n"
+          ;
+        }
       }
     }
 
@@ -1781,7 +1798,8 @@ int main(int argc, char* argv[])
       mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
       mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
       evtWeight);
-    if ( isMC_HH_nonres ) {
+    if(! WeightBM.empty())
+    {
       for (unsigned int bm_list = 0; bm_list < WeightBM.size(); bm_list++)
       {
         double evtWeight0 = evtWeight * WeightBM[bm_list]/HHWeight;
@@ -1797,7 +1815,10 @@ int main(int argc, char* argv[])
           mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
           evtWeight0);
       }
-      for (unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
+    }
+    if(! Weight_klScan.empty())
+    {
+      for(unsigned int bm_list = 0; bm_list < Weight_klScan.size(); bm_list++)
       {
         double evtWeight0 = evtWeight * Weight_klScan[bm_list]/HHWeight;
         selHistManager->evt_scan_[bm_list]->fillHistograms(

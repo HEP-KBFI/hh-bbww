@@ -4,6 +4,7 @@ from hhAnalysis.bbww.configs.denomHistogramConfig import denomHistogramConfig, v
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples
+from hhAnalysis.bbww.common import is_nonresonant
 
 import os
 import sys
@@ -70,7 +71,7 @@ else:
 if mode != 'hh_bbww_sync':
   for sample_name, sample_entry in samples.items():
     if sample_name == 'sum_events': continue
-    sample_entry['use_it'] = bool(re.match(r'signal_ggf_nonresonant_hh_\w+', sample_entry['sample_category']))
+    sample_entry['use_it'] = is_nonresonant(sample_entry['sample_category'])
 
 if __name__ == '__main__':
   if sample_filter:
