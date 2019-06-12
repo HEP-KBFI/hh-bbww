@@ -8,6 +8,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
@@ -23,6 +24,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="TauAnalysis/ClassicSVfit"/>
   <use   name="root"/>
   <use   name="roottmva"/>
@@ -39,6 +41,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="hhAnalysis/Heavymassestimator"/>
   <use   name="root"/>
   <use   name="roottmva"/>
@@ -55,6 +58,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="root"/>
   <use   name="roottmva"/>
@@ -71,6 +75,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
@@ -86,6 +91,7 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
@@ -101,16 +107,13 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="hhAnalysis/Heavymassestimator"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-<<<<<<< HEAD
-  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
-=======
   <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
->>>>>>> master
 </bin>
 <bin file="testMEM_hh_bb2l.cc" name="testMEM_hh_bb2l">
   <use   name="FWCore/FWLite"/>
@@ -122,14 +125,11 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
   <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="hhAnalysis/Heavymassestimator"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
-<<<<<<< HEAD
-  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
-=======
   <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
->>>>>>> master
 </bin>

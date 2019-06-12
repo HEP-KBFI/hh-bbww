@@ -185,9 +185,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     jobOptions['leptonFakeRateWeight.histogramName_e'] = self.leptonFakeRateWeight_histogramName_e
     jobOptions['leptonFakeRateWeight.histogramName_mu'] = self.leptonFakeRateWeight_histogramName_mu
 
-    if is_nonresonant(sample_info["sample_category"]):
-      jobOptions['hhWeight_cfg.denominator_file'] = 'hhAnalysis/bbww/data/data/denom_{}{}.root'.format(self.era, '_sync' if self.do_sync else '')
-      jobOptions['hhWeight_cfg.histtitle']        = sample_info["sample_category"]
+    if is_nonresonant(sample_info["sample_category"]) or self.do_sync:
+      jobOptions['hhWeight_cfg.denominator_file'] = 'hhAnalysis/bbww/data/denom_{}{}.root'.format(self.era, '_sync' if self.do_sync else '')
+      jobOptions['hhWeight_cfg.histtitle'] = sample_info["sample_category"]
 
     lines = super(analyzeConfig_hh_bb2l, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)

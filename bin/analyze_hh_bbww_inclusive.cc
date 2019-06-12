@@ -1,11 +1,9 @@
-#include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_*()
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h" // RecoJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReaderAK8.h" // RecoJetReaderAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtReader.h" // RecoMEtReader
-#include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs()
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionCleaner.h" // Reco*CollectionCleaner
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronCollectionSelectorLoose.h" // RecoElectronCollectionSelectorLoose
@@ -19,6 +17,10 @@
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths(), hltPaths_isTriggered()re
 #include "tthAnalysis/HiggsToTauTau/interface/hltPathReader.h" // hltPathReader
 #include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper
+
+#include "hhAnalysis/multilepton/interface/EventInfoHH.h" // EventInfoHH
+#include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
+
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 
 #include <FWCore/ParameterSet/interface/ParameterSet.h> // edm::ParameterSet
@@ -146,8 +148,8 @@ main(int argc,
   });
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC);
-  EventInfoReader eventInfoReader(&eventInfo);
+  EventInfoHH eventInfo(isMC);
+  EventInfoHHReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
 
   hltPathReader hltPathReader_instance({
