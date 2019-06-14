@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-06-10 03:32:21 with the following command:
+# file generated at 2019-06-14 03:11:04 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2016_RunIISummer16MiniAODv3.txt -m python/samples/metaDict_2016_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2016_RunIISummer16MiniAODv3.txt
 
 meta_dictionary = OD()
@@ -9,7 +9,7 @@ meta_dictionary = OD()
 ### event sums
 
 sum_events = { 
-  ("signal_ggf_nonresonant_node_sm_hh_2b2v", "signal_ggf_nonresonant_node_box_hh_2b2v", "signal_ggf_nonresonant_node_1_hh_2b2v", "signal_ggf_nonresonant_node_3_hh_2b2v", "signal_ggf_nonresonant_node_4_hh_2b2v", "signal_ggf_nonresonant_node_5_hh_2b2v", "signal_ggf_nonresonant_node_6_hh_2b2v", "signal_ggf_nonresonant_node_7_hh_2b2v", "signal_ggf_nonresonant_node_8_hh_2b2v", "signal_ggf_nonresonant_node_9_hh_2b2v", "signal_ggf_nonresonant_node_10_hh_2b2v", "signal_ggf_nonresonant_node_11_hh_2b2v", "signal_ggf_nonresonant_node_12_hh_2b2v"),
+  ("signal_ggf_nonresonant_node_sm_hh_2b2v", "signal_ggf_nonresonant_node_box_hh_2b2v", "signal_ggf_nonresonant_node_1_hh_2b2v", "signal_ggf_nonresonant_node_2_hh_2b2v", "signal_ggf_nonresonant_node_3_hh_2b2v", "signal_ggf_nonresonant_node_4_hh_2b2v", "signal_ggf_nonresonant_node_5_hh_2b2v", "signal_ggf_nonresonant_node_6_hh_2b2v", "signal_ggf_nonresonant_node_7_hh_2b2v", "signal_ggf_nonresonant_node_8_hh_2b2v", "signal_ggf_nonresonant_node_9_hh_2b2v", "signal_ggf_nonresonant_node_10_hh_2b2v", "signal_ggf_nonresonant_node_11_hh_2b2v", "signal_ggf_nonresonant_node_12_hh_2b2v"),
   ("signal_ggf_nonresonant_node_sm_hh_2b2t", "signal_ggf_nonresonant_node_box_hh_2b2t", "signal_ggf_nonresonant_node_2_hh_2b2t", "signal_ggf_nonresonant_node_9_hh_2b2t", "signal_ggf_nonresonant_node_10_hh_2b2t", "signal_ggf_nonresonant_node_11_hh_2b2t", "signal_ggf_nonresonant_node_12_hh_2b2t", "signal_ggf_nonresonant_node_13_hh_2b2t"),
 }
 
@@ -181,6 +181,19 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "status: VALID; size: 14.39GB; nevents: 298.73k; release: 9_4_9; last modified: 2019-02-28 21:01:17"),
+])
+
+meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin0_1000_hh_bbvv"),
+  ("process_name_specific", "signal_ggf_spin0_1000_hh_2b2v"),
+  ("nof_db_events",         299999),
+  ("nof_db_files",          4),
+  ("fsize_db",              14685031472),
+  ("xsection",              0.026422),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 14.69GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-03-03 05:04:25"),
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
@@ -480,6 +493,19 @@ meta_dictionary["/GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2/RunIISummer16
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "status: VALID; size: 13.52GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-03-03 13:37:58"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v3/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_2_hh_2b2v"),
+  ("nof_db_events",         8218),
+  ("nof_db_files",          1),
+  ("fsize_db",              452565251),
+  ("xsection",              0.026422),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: PRODUCTION; size: 452.57MB; nevents: 8.22k; release: 9_4_9; last modified: 2019-06-05 04:55:39"),
 ])
 
 meta_dictionary["/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
@@ -1225,6 +1251,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAOD
 # signal_ggf_spin0_750_hh_bbvv:           298.73k
 # signal_ggf_spin0_800_hh_bbvv:           299.70k
 # signal_ggf_spin0_900_hh_bbvv:           298.73k
+# signal_ggf_spin0_1000_hh_bbvv:          300.00k
 # signal_ggf_spin2_260_hh_bbvv:           300.00k
 # signal_ggf_spin2_270_hh_bbvv:           300.00k
 # signal_ggf_spin2_300_hh_bbvv:           300.00k
@@ -1245,7 +1272,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAOD
 # signal_vbf_nonresonant_1_1_0_hh_bbvv:   300.00k
 # signal_vbf_nonresonant_1p5_1_1_hh_bbvv: 299.40k
 # signal_vbf_nonresonant_0p5_1_1_hh_bbvv: 297.18k
-# signal_ggf_nonresonant_hh_bbvv:         3.90M
+# signal_ggf_nonresonant_hh_bbvv:         3.91M
 # signal_ggf_spin0_250_hh_bbtt:           50.00k
 # signal_ggf_spin0_260_hh_bbtt:           50.00k
 # signal_ggf_spin0_270_hh_bbtt:           50.00k

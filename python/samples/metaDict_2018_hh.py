@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-06-10 03:41:40 with the following command:
+# file generated at 2019-06-14 03:24:58 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2018_RunIIAutumn18MiniAOD.txt
 
 meta_dictionary = OD()
@@ -9,7 +9,7 @@ meta_dictionary = OD()
 ### event sums
 
 sum_events = { 
-  ("signal_ggf_nonresonant_node_sm_hh_2b2t", "signal_ggf_nonresonant_node_2_hh_2b2t", "signal_ggf_nonresonant_node_3_hh_2b2t", "signal_ggf_nonresonant_node_4_hh_2b2t", "signal_ggf_nonresonant_node_5_hh_2b2t", "signal_ggf_nonresonant_node_6_hh_2b2t", "signal_ggf_nonresonant_node_7_hh_2b2t", "signal_ggf_nonresonant_node_8_hh_2b2t", "signal_ggf_nonresonant_node_10_hh_2b2t", "signal_ggf_nonresonant_node_11_hh_2b2t", "signal_ggf_nonresonant_node_12_hh_2b2t"),
+  ("signal_ggf_nonresonant_node_sm_hh_2b2t", "signal_ggf_nonresonant_node_2_hh_2b2t", "signal_ggf_nonresonant_node_3_hh_2b2t", "signal_ggf_nonresonant_node_4_hh_2b2t", "signal_ggf_nonresonant_node_5_hh_2b2t", "signal_ggf_nonresonant_node_6_hh_2b2t", "signal_ggf_nonresonant_node_7_hh_2b2t", "signal_ggf_nonresonant_node_8_hh_2b2t", "signal_ggf_nonresonant_node_9_hh_2b2t", "signal_ggf_nonresonant_node_10_hh_2b2t", "signal_ggf_nonresonant_node_11_hh_2b2t", "signal_ggf_nonresonant_node_12_hh_2b2t"),
 }
 
 
@@ -76,6 +76,19 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_13TeV-m
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "status: VALID; size: 18.78GB; nevents: 300.00k; release: 10_2_5; last modified: 2019-06-02 00:53:21"),
+])
+
+meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_vbf_spin0_320_hh_bbtt"),
+  ("process_name_specific", "signal_vbf_spin0_320_hh_2b2t"),
+  ("nof_db_events",         268000),
+  ("nof_db_files",          17),
+  ("fsize_db",              16443985477),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 16.44GB; nevents: 268.00k; release: 10_2_5; last modified: 2019-05-28 21:52:02"),
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -1391,6 +1404,19 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_8_TuneCP5_PSWeights_13TeV-madgraph-pyt
   ("comment",               "status: VALID; size: 20.87GB; nevents: 400.00k; release: 10_2_5; last modified: 2019-05-04 21:04:16"),
 ])
 
+meta_dictionary["/GluGluToHHTo2B2Tau_node_9_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_9_hh_2b2t"),
+  ("nof_db_events",         395000),
+  ("nof_db_files",          19),
+  ("fsize_db",              22426425741),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 22.43GB; nevents: 395.00k; release: 10_2_5; last modified: 2019-06-13 14:00:42"),
+])
+
 meta_dictionary["/GluGluToHHTo2B2Tau_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
   ("crab_string",           ""),
   ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
@@ -1437,6 +1463,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_12_TuneCP5_PSWeights_13TeV-madgraph-py
 # signal_vbf_spin0_270_hh_bbtt:           384.00k
 # signal_vbf_spin0_280_hh_bbtt:           378.00k
 # signal_vbf_spin0_300_hh_bbtt:           300.00k
+# signal_vbf_spin0_320_hh_bbtt:           268.00k
 # signal_vbf_spin0_350_hh_bbtt:           300.00k
 # signal_vbf_spin0_400_hh_bbtt:           284.00k
 # signal_vbf_spin0_450_hh_bbtt:           300.00k
@@ -1530,5 +1557,5 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_12_TuneCP5_PSWeights_13TeV-madgraph-py
 # signal_vbf_nonresonant_1_2_1_hh_bbtt:   400.00k
 # signal_vbf_nonresonant_1p5_1_1_hh_bbtt: 400.00k
 # signal_vbf_nonresonant_0p5_1_1_hh_bbtt: 388.00k
-# signal_ggf_nonresonant_hh_bbtt:         4.32M
+# signal_ggf_nonresonant_hh_bbtt:         4.71M
 
