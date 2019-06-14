@@ -89,11 +89,11 @@
 
 #include "hhAnalysis/multilepton/interface/EventInfoHH.h" // EventInfoHH
 #include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
+#include "hhAnalysis/multilepton/interface/HHWeightInterface.h" // HHWeightInterface
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
-#include "hhAnalysis/bbww/interface/HHWeightInterface.h" // HHWeightInterface
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
