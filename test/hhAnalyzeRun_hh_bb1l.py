@@ -26,7 +26,6 @@ parser.add_tau_id_wp()
 parser.add_hlt_filter()
 parser.add_files_per_job() 
 parser.add_use_home()
-parser.add_lep_mva_wp()
 args = parser.parse_args()
 
 # Common arguments
@@ -49,7 +48,6 @@ use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
-lep_mva_wp        = args.lep_mva_wp
 
 # Use the arguments
 central_or_shifts = []
@@ -208,7 +206,6 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hh_bb1l",
     cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
     samples                               = samples,
-    lep_mva_wp                            = lep_mva_wp,
     apply_hadTauVeto                      = False,
     hadTau_mva_wp_veto                    = hadTau_mva_wp_veto,
     applyFakeRateWeights                  = "enabled",

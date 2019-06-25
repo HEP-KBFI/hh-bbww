@@ -26,7 +26,6 @@ parser.add_nonnominal()
 parser.add_hlt_filter()
 parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processed per job, as computation of HH mass with HME algorithm takes considerable time
 parser.add_use_home()
-parser.add_lep_mva_wp()
 args = parser.parse_args()
 
 # Common arguments
@@ -50,7 +49,6 @@ use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
-lep_mva_wp        = args.lep_mva_wp
 
 # Use the arguments
 central_or_shifts = []
@@ -176,7 +174,6 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hh_bb2l",
     cfgFile_analyze                       = "analyze_hh_bb2l_cfg.py",
     samples                               = samples,
-    lep_mva_wp                            = lep_mva_wp,
     lepton_charge_selections              = [ "OS", "SS" ],
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
