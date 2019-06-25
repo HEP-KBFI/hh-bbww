@@ -41,7 +41,6 @@ process.testMEM_hh_bb1l = cms.PSet(
     
     electronSelection = cms.string('Tight'),
     muonSelection = cms.string('Tight'),
-    lep_mva_cut = cms.double(0.90),
     leptonChargeSelection = cms.string('OS'),
 
     central_or_shift = cms.string(''),

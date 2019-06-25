@@ -391,7 +391,6 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                   'leptonChargeSelection'    : lepton_charge_selection,
                   'electronSelection'        : electron_selection,
                   'muonSelection'            : muon_selection,
-                  'lep_mva_cut'              : self.lep_mva_cut,
                   'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
                   'applyFakeRateWeights'     : applyFakeRateWeights,
                   'central_or_shift'         : central_or_shift,

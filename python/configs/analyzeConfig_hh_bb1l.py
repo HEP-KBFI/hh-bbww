@@ -360,7 +360,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'selEventsFileName_output' : rleOutputFile_path,
                 'electronSelection'        : electron_selection,
                 'muonSelection'            : muon_selection,
-                'lep_mva_cut'              : self.lep_mva_cut,
                 'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
                 'apply_hadTauVeto'         : self.apply_hadTauVeto,
                 'hadTauSelection_veto'     : self.hadTau_mva_wp_veto,

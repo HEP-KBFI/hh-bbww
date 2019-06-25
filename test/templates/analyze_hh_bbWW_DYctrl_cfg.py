@@ -39,7 +39,6 @@ process.analyze_hh_bbWW_DYctrl = cms.PSet(
 
     electronSelection = cms.string(''),
     muonSelection = cms.string(''),
-    lep_mva_cut = cms.double(1.),
     apply_leptonGenMatching = cms.bool(True),
     leptonChargeSelection = cms.string(''),
 
