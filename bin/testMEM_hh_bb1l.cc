@@ -277,7 +277,6 @@ int main(int argc, char* argv[])
   ;
   const int electronSelection = get_selection(electronSelection_string);
   const int muonSelection     = get_selection(muonSelection_string);
-  double lep_mva_cut = cfg_testMEM.getParameter<double>("lep_mva_cut"); // CV: used for tight lepton selection only
 
   bool isMC = true;
   bool hasLHE = cfg_testMEM.getParameter<bool>("hasLHE");
@@ -376,7 +375,6 @@ int main(int argc, char* argv[])
   RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
   RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era, -1, isDEBUG);
   RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
-  tightMuonSelector.getSelector().set_min_mvaTTH(lep_mva_cut);
 
   RecoElectronReader* electronReader = new RecoElectronReader(era, branchName_electrons, readGenObjects);
   inputTree->registerReader(electronReader);
@@ -385,7 +383,6 @@ int main(int argc, char* argv[])
   RecoElectronCollectionSelectorLoose preselElectronSelector(era, -1, isDEBUG);
   RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
   RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
-  tightElectronSelector.getSelector().set_min_mvaTTH(lep_mva_cut);
 
   RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, readGenObjects);
   inputTree->registerReader(jetReaderAK4);
