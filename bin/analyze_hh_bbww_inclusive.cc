@@ -20,6 +20,7 @@
 
 #include "hhAnalysis/multilepton/interface/EventInfoHH.h" // EventInfoHH
 #include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
+#include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
@@ -178,7 +179,7 @@ main(int argc,
 
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, branchName_fatJets, branchName_subJets, true);
   inputTree->registerReader(jetReaderAK8);
-  const RecoJetCollectionSelectorAK8 jetSelectorAK8(era, -1, isDEBUG);
+  const RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
@@ -261,54 +262,51 @@ main(int argc,
     const std::vector<RecoJet> jets = jetReader->read();
     const std::vector<const RecoJet *> jet_ptrs = convert_to_ptrs(jets);
     const std::vector<const RecoJet *> cleanedJets = jetCleaner (jet_ptrs, preselLeptons);
-    const std::vector<const RecoJet *> selJets     = jetSelector(cleanedJets, isHigherPt);
+    std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     if(isDEBUG)
     {
       printCollection("cleanedJets", cleanedJets);
       printCollection("selJets", selJets);
     }
-
+    // preselected AK4 jets, sorted by pT in decreasing order
     snm->read(selJets);
 
     const std::vector<RecoJetAK8> fatJets = jetReaderAK8->read();
     const std::vector<const RecoJetAK8 *> fatJet_ptrs = convert_to_ptrs(fatJets);
     const std::vector<const RecoJetAK8 *> cleanedFatJets = jetCleanerAK8_dR08(fatJet_ptrs, preselLeptons);
-    const std::vector<const RecoJetAK8 *> selFatJets     = jetSelectorAK8_Hbb(cleanedFatJets, isHigherPt);
+    std::vector<const RecoJetAK8 *> selFatJets = jetSelectorAK8_Hbb(cleanedFatJets, isHigherPt);
     if(isDEBUG)
     {
       printCollection("cleanedFatJets", cleanedFatJets);
       printCollection("selFatJets", selFatJets);
     }
-
+    // "regular" AK8 jets, selected to target H->bb decay, sorted by pT in decreasing order
     snm->read(selFatJets, false);
 
     const std::vector<RecoJetAK8> fatJetsLS = jetReaderAK8LS->read();
     const std::vector<const RecoJetAK8 *> fatJetLS_ptrs = convert_to_ptrs(fatJetsLS);
-    // Since we want to keep only the jets that overlap with the preselected leptons within a cone of size 1.2,
-    // we need to subtract the "cleaned" jets from the "un-cleaned" jet collection to obtain the jets that overlap
-    // with the preselected leptons
-    // However, since we check the fatjets against *all* preselected leptons, we may loose too many fatjets and thus
-    // hinder the synchronization procedure. For this reason we'll just skip the cleaning part.
-//    const std::vector<const RecoJetAK8 *> cleanedFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, preselLeptons);
-//    const std::vector<const RecoJetAK8 *> fatJetsLS_inCone = subtractCollections(fatJetLS_ptrs, cleanedFatJetsLS);
-//    const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetsLS_inCone, isHigherPt);
-    //const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetLS_ptrs, isHigherPt);
 
-    const std::vector<const RecoJetAK8 *> selFatJets_Hbb = jetSelectorAK8_Hbb(cleanedFatJets, isHigherCSV_ak8);
-    const std::vector<const RecoJet*> selJetsAK4_Hbb  = jetSelector(cleanedJets, isHigherCSV);
-    
     std::vector<const RecoJetAK8 *> selFatJetsLS;
-
-    if(selFatJets_Hbb.size()) {
+    if(! selFatJets.empty())
+    {
+      // sort "regular" AK8 jets that passed H->bb selection by their b-tagging score
+      std::sort(selFatJets.begin(), selFatJets.end(), isHigherCSV);
+      // pick the AK8 jet with the highest b-tagging score that passed H->bb selection
+      const std::vector<const RecoJetAK8 *> selFatJets_Hbb = { selFatJets[0] };
       const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR16(fatJetLS_ptrs, selFatJets_Hbb);
-      selFatJetsLS = jetSelectorAK8(cleaned_selFatJetsLS, isHigherPt);
+      selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
     }
-    else if(selJetsAK4_Hbb.size()) {
+    else if(selJets.size() >= 2)
+    {
+      // sort AK4 jets by their b-tagging score
+      std::sort(selJets.begin(), selJets.end(), isHigherCSV);
+      // pick the two AK4 jets with the highest b-tagging score
+      std::vector<const RecoJet *> selJetsAK4_Hbb = { selJets[0], selJets[1] };
       const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, selJetsAK4_Hbb);
-      selFatJetsLS = jetSelectorAK8(cleaned_selFatJetsLS, isHigherPt);
+      selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
     }
-
-
+    // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection
+    // the AK8 jets have been selected to target H->WW*->lnujj decays, sorted by pT in decreasing order
     snm->read(selFatJetsLS, true);
 
 //--- compute MHT and linear MET discriminant (met_LD)
