@@ -286,25 +286,28 @@ main(int argc,
     const std::vector<RecoJetAK8> fatJetsLS = jetReaderAK8LS->read();
     const std::vector<const RecoJetAK8 *> fatJetLS_ptrs = convert_to_ptrs(fatJetsLS);
 
-    jetSelectorAK8_Wjj.getSelector().set_leptons(preselLeptons);
     std::vector<const RecoJetAK8 *> selFatJetsLS;
-    if(! selFatJets.empty())
+    if(! preselLeptons.empty())
     {
-      // sort "regular" AK8 jets that passed H->bb selection by their b-tagging score
-      std::sort(selFatJets.begin(), selFatJets.end(), isHigherCSV_ak8);
-      // pick the AK8 jet with the highest b-tagging score that passed H->bb selection
-      const std::vector<const RecoJetAK8 *> selFatJets_Hbb = { selFatJets[0] };
-      const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR16(fatJetLS_ptrs, selFatJets_Hbb);
-      selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
-    }
-    else if(selJets.size() >= 2)
-    {
-      // sort AK4 jets by their b-tagging score
-      std::sort(selJets.begin(), selJets.end(), isHigherCSV);
-      // pick the two AK4 jets with the highest b-tagging score
-      std::vector<const RecoJet *> selJetsAK4_Hbb = { selJets[0], selJets[1] };
-      const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, selJetsAK4_Hbb);
-      selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
+      jetSelectorAK8_Wjj.getSelector().set_leptons(preselLeptons);
+      if(! selFatJets.empty())
+      {
+        // sort "regular" AK8 jets that passed H->bb selection by their b-tagging score
+        std::sort(selFatJets.begin(), selFatJets.end(), isHigherCSV_ak8);
+        // pick the AK8 jet with the highest b-tagging score that passed H->bb selection
+        const std::vector<const RecoJetAK8 *> selFatJets_Hbb = { selFatJets[0] };
+        const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR16(fatJetLS_ptrs, selFatJets_Hbb);
+        selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
+      }
+      else if(selJets.size() >= 2)
+      {
+        // sort AK4 jets by their b-tagging score
+        std::sort(selJets.begin(), selJets.end(), isHigherCSV);
+        // pick the two AK4 jets with the highest b-tagging score
+        std::vector<const RecoJet *> selJetsAK4_Hbb = { selJets[0], selJets[1] };
+        const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, selJetsAK4_Hbb);
+        selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
+      }
     }
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection
     // the AK8 jets have been selected to target H->WW*->lnujj decays, sorted by pT in decreasing order
