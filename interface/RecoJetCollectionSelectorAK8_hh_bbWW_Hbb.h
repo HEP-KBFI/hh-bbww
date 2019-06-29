@@ -8,8 +8,8 @@ class RecoJetSelectorAK8_hh_bbWW_Hbb
 {
 public:
   explicit RecoJetSelectorAK8_hh_bbWW_Hbb(int era,
-                           int index = -1,
-                           bool debug = false);
+                                          int index = -1,
+                                          bool debug = false);
   ~RecoJetSelectorAK8_hh_bbWW_Hbb() {}
 
   /**
