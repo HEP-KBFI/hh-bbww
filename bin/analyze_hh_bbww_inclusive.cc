@@ -179,7 +179,7 @@ main(int argc,
 
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, branchName_fatJets, branchName_subJets, true);
   inputTree->registerReader(jetReaderAK8);
-  const RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
+  RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
@@ -286,6 +286,7 @@ main(int argc,
     const std::vector<RecoJetAK8> fatJetsLS = jetReaderAK8LS->read();
     const std::vector<const RecoJetAK8 *> fatJetLS_ptrs = convert_to_ptrs(fatJetsLS);
 
+    jetSelectorAK8_Wjj.getSelector().set_leptons(preselLeptons);
     std::vector<const RecoJetAK8 *> selFatJetsLS;
     if(! selFatJets.empty())
     {
