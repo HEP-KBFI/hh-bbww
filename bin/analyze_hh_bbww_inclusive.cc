@@ -22,6 +22,7 @@
 #include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 
 #include <FWCore/ParameterSet/interface/ParameterSet.h> // edm::ParameterSet
 #include <FWCore/PythonParameterSet/interface/MakeParameterSets.h> // edm::readPSetsFrom()
@@ -179,11 +180,13 @@ main(int argc,
   inputTree->registerReader(jetReaderAK8);
   const RecoJetCollectionSelectorAK8 jetSelectorAK8(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
+  RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
   RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_fatJetsLS, branchName_subJetsLS, false);
   inputTree->registerReader(jetReaderAK8LS);
   const RecoJetCollectionSelectorAK8 jetSelectorAK8LS(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
+  const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
 
 //--- declare missing transverse energy
   RecoMEtReader * const metReader = new RecoMEtReader(era, isMC, branchName_met);
@@ -270,7 +273,7 @@ main(int argc,
     const std::vector<RecoJetAK8> fatJets = jetReaderAK8->read();
     const std::vector<const RecoJetAK8 *> fatJet_ptrs = convert_to_ptrs(fatJets);
     const std::vector<const RecoJetAK8 *> cleanedFatJets = jetCleanerAK8_dR08(fatJet_ptrs, preselLeptons);
-    const std::vector<const RecoJetAK8 *> selFatJets     = jetSelectorAK8(cleanedFatJets, isHigherPt);
+    const std::vector<const RecoJetAK8 *> selFatJets     = jetSelectorAK8_Hbb(cleanedFatJets, isHigherPt);
     if(isDEBUG)
     {
       printCollection("cleanedFatJets", cleanedFatJets);
@@ -289,7 +292,22 @@ main(int argc,
 //    const std::vector<const RecoJetAK8 *> cleanedFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, preselLeptons);
 //    const std::vector<const RecoJetAK8 *> fatJetsLS_inCone = subtractCollections(fatJetLS_ptrs, cleanedFatJetsLS);
 //    const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetsLS_inCone, isHigherPt);
-    const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetLS_ptrs, isHigherPt);
+    //const std::vector<const RecoJetAK8 *> selFatJetsLS = jetSelectorAK8(fatJetLS_ptrs, isHigherPt);
+
+    const std::vector<const RecoJetAK8 *> selFatJets_Hbb = jetSelectorAK8_Hbb(cleanedFatJets, isHigherCSV_ak8);
+    const std::vector<const RecoJet*> selJetsAK4_Hbb  = jetSelector(cleanedJets, isHigherCSV);
+    
+    std::vector<const RecoJetAK8 *> selFatJetsLS;
+
+    if(selFatJets_Hbb.size()) {
+      const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR16(fatJetLS_ptrs, selFatJets_Hbb);
+      selFatJetsLS = jetSelectorAK8(cleaned_selFatJetsLS, isHigherPt);
+    }
+    else if(selJetsAK4_Hbb.size()) {
+      const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, selJetsAK4_Hbb);
+      selFatJetsLS = jetSelectorAK8(cleaned_selFatJetsLS, isHigherPt);
+    }
+
 
     snm->read(selFatJetsLS, true);
 

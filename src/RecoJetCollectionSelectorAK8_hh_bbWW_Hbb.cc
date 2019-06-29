@@ -6,15 +6,15 @@ RecoJetSelectorAK8_hh_bbWW_Hbb::RecoJetSelectorAK8_hh_bbWW_Hbb(int era, int inde
   , min_jetId_(2)
   , min_msoftdrop_(30.)
   , max_msoftdrop_(210.)
-  , max_tau2_div_tau1_(+1.e+3)
+  , max_tau2_div_tau1_(0.75) //(+1.e+3)
   , min_subJet1_pt_(20.)
   , min_subJet1_pt_forBtag_(30.)
   , max_subJet1_absEta_(2.4)
   , min_subJet2_pt_(20.)
   , min_subJet2_pt_forBtag_(30.)
   , max_subJet2_absEta_(2.4)
-  , min_BtagCSV_loose_(0.5426)  // CV: cuts on CSV b-tagging discriminator values taken from 
-  , min_BtagCSV_medium_(0.8484) //     https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco#Boosted_event_topologies
+  , min_BtagCSV_loose_(0.1522)  // CV: cuts on CSV b-tagging discriminator values taken from 
+  , min_BtagCSV_medium_(0.4941) //     https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X#Boosted_event_topologies
   , min_numSubJetsBtag_loose_(-1)
   , min_numSubJetsBtag_medium_(1)
   , debug_(debug)
