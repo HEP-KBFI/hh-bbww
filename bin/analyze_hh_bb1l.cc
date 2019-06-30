@@ -1294,8 +1294,6 @@ int main(int argc, char* argv[])
       evtWeight *= weight_data_to_MC_correction;
     }
 
-    bool passesTight_lepton = isMatched(*selLepton, tightElectrons) || isMatched(*selLepton, tightMuons);
-
     double weight_fakeRate = 1.;
     double prob_fake_lepton = 1.;
     if ( leptonFakeRateInterface ) {
@@ -1307,7 +1305,7 @@ int main(int argc, char* argv[])
     }
 
     if ( applyFakeRateWeights == kFR_enabled ) {
-      weight_fakeRate = getWeight_1L(prob_fake_lepton, passesTight_lepton);
+      weight_fakeRate = getWeight_1L(prob_fake_lepton);
       evtWeight *= weight_fakeRate;
     }
 
