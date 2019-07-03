@@ -261,6 +261,10 @@ main(int argc,
     snm->read(preselElectrons);
 
     const std::vector<const RecoLepton *> preselLeptons = mergeLeptonCollections(preselElectrons, preselMuons, isHigherPt);
+    if(isDEBUG)
+    {
+      printCollection("preselLeptons", preselLeptons);
+    }
 
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     const std::vector<RecoJet> jets = jetReader->read();
@@ -293,6 +297,10 @@ main(int argc,
     std::vector<const RecoJetAK8 *> selFatJetsLS;
     if(! preselLeptons.empty())
     {
+      if(isDEBUG)
+      {
+        std::cout << "Number of preselected leptons = " << preselLeptons.size() << " > 0\n";
+      }
       jetSelectorAK8_Wjj.getSelector().set_leptons(preselLeptons);
       if(! selFatJets.empty())
       {
@@ -301,6 +309,11 @@ main(int argc,
         // pick the AK8 jet with the highest b-tagging score that passed H->bb selection
         const std::vector<const RecoJetAK8 *> selFatJets_Hbb = { selFatJets[0] };
         const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR16(fatJetLS_ptrs, selFatJets_Hbb);
+        if(isDEBUG)
+        {
+          printCollection("cleaned_selFatJetsLS", cleaned_selFatJetsLS);
+        }
+        std::cout << "Number of AK8 jets = " << selFatJets.size() << " > 0\n";
         selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
       }
       else if(selJets.size() >= 2)
@@ -310,7 +323,17 @@ main(int argc,
         // pick the two AK4 jets with the highest b-tagging score
         std::vector<const RecoJet *> selJetsAK4_Hbb = { selJets[0], selJets[1] };
         const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, selJetsAK4_Hbb);
+        if(isDEBUG)
+        {
+          std::cout << "Number of AK4 jets = " << selJets.size() << " >= 2\n";
+          printCollection("cleaned_selFatJetsLS", cleaned_selFatJetsLS);
+        }
         selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
+      }
+      else if(isDEBUG)
+      {
+        std::cout << "Not enough AK4 or AK8 jets to clean AK8LS jets\n";
+        selFatJetsLS = jetSelectorAK8_Wjj(fatJetLS_ptrs, isHigherPt);
       }
     }
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection
