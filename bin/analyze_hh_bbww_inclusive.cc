@@ -313,6 +313,12 @@ main(int argc,
     // the AK8 jets have been selected to target H->WW*->lnujj decays, sorted by pT in decreasing order
     snm->read(selFatJetsLS, true);
 
+    if(isDEBUG)
+    {
+      printCollection("fatJetLS_ptrs", fatJetLS_ptrs);
+      printCollection("selFatJetsLS", selFatJetsLS);
+    }
+
 //--- compute MHT and linear MET discriminant (met_LD)
     RecoMEt met = metReader->read();
 
