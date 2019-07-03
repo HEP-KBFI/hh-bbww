@@ -253,6 +253,10 @@ main(int argc,
     const std::vector<const RecoElectron *> cleanedElectrons = electronCleaner(electron_ptrs, selMuons);
     const std::vector<const RecoElectron *> preselElectrons  = preselElectronSelector(cleanedElectrons, isHigherPt);
     const std::vector<const RecoElectron *> selElectrons     = preselElectrons;
+    if(isDEBUG)
+    {
+      printCollection("preselElectrons", preselElectrons);
+    }
 
     snm->read(preselElectrons);
 
