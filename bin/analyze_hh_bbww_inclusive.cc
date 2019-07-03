@@ -311,9 +311,9 @@ main(int argc,
         const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR16(fatJetLS_ptrs, selFatJets_Hbb);
         if(isDEBUG)
         {
+          std::cout << "Number of AK8 jets = " << selFatJets.size() << " > 0\n";
           printCollection("cleaned_selFatJetsLS", cleaned_selFatJetsLS);
         }
-        std::cout << "Number of AK8 jets = " << selFatJets.size() << " > 0\n";
         selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
       }
       else if(selJets.size() >= 2)
