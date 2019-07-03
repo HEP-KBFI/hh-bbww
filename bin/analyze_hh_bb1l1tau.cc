@@ -391,16 +391,8 @@ int main(int argc, char* argv[])
   std::cout << "selEventsFileName_output = " << selEventsFileName_output << std::endl;
 
   const double maxAbsEta_lepton = 2.1;
-  double minPt_e = -1.;
-  double minPt_mu = -1.;
-  switch(era)
-  {
-    case kEra_2016: minPt_e = 25.; minPt_mu = 20.; break; // AN2016_372_v14:331
-    case kEra_2017: minPt_e = 30.; minPt_mu = 25.; break;
-    case kEra_2018: throw cmsException("analyze_hh_bb1l1tau", __LINE__) << "Implement me!";
-    default:        throw cmsException("analyze_hh_bb1l1tau", __LINE__) << "Invalid era = " << era;
-  }
-  assert(minPt_e > 0. && minPt_mu > 0.);
+  const double minPt_e = 30.;
+  const double minPt_mu = 25.;
   const double minPt_hadTau = 30.;
 
   fwlite::InputSource inputFiles(cfg);
