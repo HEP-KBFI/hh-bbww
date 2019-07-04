@@ -282,7 +282,7 @@ int main(int argc, char* argv[])
   RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
   RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
 
-  RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, isMC, readGenObjects);
+  RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, readGenObjects);
   inputTree->registerReader(jetReaderAK4);
   RecoJetCollectionGenMatcher jetGenMatcherAK4;
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
