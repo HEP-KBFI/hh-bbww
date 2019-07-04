@@ -13,44 +13,15 @@
 
 #include <algorithm> // std::min()
 
-const Int_t SyncNtupleManager_bbww::placeholder_value = -9999;
-
 SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileName,
                                                const std::string & outputTreeName)
-  : outputFile(new TFile(outputFileName.c_str(), "recreate"))
-  , outputDir(nullptr)
-  , outputTree(nullptr)
+  : SyncNtupleManagerBase(new TFile(outputFileName.c_str(), "recreate"), outputTreeName)
   , nof_mus(2)
   , nof_eles(2)
   , nof_jets(4)
   , nof_jetsAk8(2)
   , nof_jetsAk8LS(2)
 {
-  std::string outputDirName_;
-  std::string outputTreeName_ = outputTreeName;
-  const auto nofSlashes = std::count(outputTreeName.cbegin(), outputTreeName.cend(), '/');
-  if(nofSlashes == 1)
-  {
-    const std::size_t slashPos = outputTreeName.find('/');
-    outputDirName_ = outputTreeName.substr(0, slashPos);
-    outputTreeName_ = outputTreeName.substr(slashPos + 1);
-  }
-  else if(nofSlashes > 1)
-  {
-    throw cmsException(this) << "Invalid name for TTree = " << outputTreeName;
-  }
-
-  if(! outputDirName_.empty())
-  {
-    outputDir = outputFile->mkdir(outputDirName_.c_str());
-    outputDir -> cd();
-  }
-
-  outputTree = new TTree(outputTreeName_.c_str(), outputTreeName_.c_str());
-  if(outputDir)
-  {
-    outputTree->SetDirectory(outputDir);
-  }
   for(int var = as_integer(FloatVariableType_bbww::PFMET); var <= as_integer(FloatVariableType_bbww::MC_weight); ++var)
   {
     floatMap[static_cast<FloatVariableType_bbww>(var)] = placeholder_value;
@@ -180,7 +151,7 @@ SyncNtupleManager_bbww::initializeBranches()
     jetAk8Ls_subjet1_CSV, "subjet1_CSV"
   );
 
-  reset();
+  resetBranches();
 }
 
 void
@@ -363,7 +334,7 @@ SyncNtupleManager_bbww::read(const std::vector<std::vector<hltPath *>> & hltPath
 }
 
 void
-SyncNtupleManager_bbww::reset()
+SyncNtupleManager_bbww::resetBranches()
 {
   nEvent = 0;
   ls = 0;
@@ -466,33 +437,4 @@ SyncNtupleManager_bbww::reset()
   {
     hltMap[kv.first] = -1;
   }
-}
-
-void
-SyncNtupleManager_bbww::fill()
-{
-  if(outputDir)
-  {
-    outputDir -> cd();
-  }
-  else
-  {
-    outputFile -> cd();
-  }
-  outputTree -> Fill();
-  reset();
-}
-
-void
-SyncNtupleManager_bbww::write()
-{
-  if(outputDir)
-  {
-    outputDir -> cd();
-  }
-  else
-  {
-    outputFile -> cd();
-  }
-  outputTree -> Write();
 }
