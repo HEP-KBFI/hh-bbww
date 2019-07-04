@@ -1,16 +1,9 @@
-#ifndef SYNCNTUPLEMANAGER_H
-#define SYNCNTUPLEMANAGER_H
+#ifndef hhAnalysis_bbww_SyncNtupleManager_bbww_h
+#define hhAnalysis_bbww_SyncNtupleManager_bbww_h
 
-#include "tthAnalysis/HiggsToTauTau/interface/TypeTraits.h" // Traits<>
-#include "tthAnalysis/HiggsToTauTau/interface/cmsException.h" // cmsException()
-#include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
-
-#include <TTree.h> // TTree
-
-#include <type_traits> // std::enable_if<,>, std::is_arithmetic<>
+#include "tthAnalysis/HiggsToTauTau/interface/SyncNtupleManagerBase.h"
 
 // forward declarations
-class TFile;
 class RecoMuon;
 class RecoElectron;
 class RecoJet;
@@ -27,13 +20,14 @@ enum class FloatVariableType_bbww
 };
 
 class SyncNtupleManager_bbww
+  : public virtual SyncNtupleManagerBase
 {
 public:
   SyncNtupleManager_bbww(const std::string & outputFileName,
                          const std::string & outputTreeName);
-  ~SyncNtupleManager_bbww();
+  ~SyncNtupleManager_bbww() override;
 
-  void initializeBranches();
+  void initializeBranches() override;
   void initializeHLTBranches(const std::vector<std::vector<hltPath *>> & hltPaths);
   void read(const EventInfo & eventInfo);
   void read(const std::vector<const RecoMuon *> & muons);
@@ -44,143 +38,9 @@ public:
   void read(Float_t value,
             FloatVariableType_bbww type);
   void read(const std::vector<std::vector<hltPath *>> & hltPaths);
-  void fill();
-  void write();
-  void reset();
+  void resetBranches() override;
 
-  static const Int_t placeholder_value;
-
-private:
-  template<typename T,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  setBranches(const std::string & infix,
-              int count,
-              T * & var,
-              const std::string & label)
-  {
-    if(count > 0)
-    {
-      var = new T[count];
-      for(int i = 0; i < count; ++i)
-      {
-        var[i] = placeholder_value;
-        const std::string branchName = Form("%s%d_%s", infix.c_str(), i + 1, label.c_str());
-        outputTree -> Branch(branchName.c_str(), &(var[i]), Form("%s/%s", branchName.c_str(), Traits<T>::TYPE_NAME));
-      }
-    }
-    else
-    {
-      throw cmsException(this, __func__)
-        << "Invalid array size = " << count << " for variable " << label << " with infix = " << infix;
-    }
-  }
-
-  template<typename T,
-           typename... Args,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  setBranches(const std::string & infix,
-              int count,
-              T * & var,
-              const std::string & label,
-              Args & ... remainingVars)
-  {
-    if(! outputTree)
-    {
-      throw cmsException(this, __func__) << "Input tree uninitialized";
-    }
-    setBranches(infix, count, var, label);
-    setBranches(infix, count, remainingVars...);
-  }
-
-  template<typename T,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  setBranches(T & var,
-              const std::string & label)
-  {
-    var = placeholder_value;
-    outputTree -> Branch(label.c_str(), &var, Form("%s/%s", label.c_str(), Traits<T>::TYPE_NAME));
-  }
-
-  template<typename T,
-           typename... Args,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  setBranches(T & var,
-              const std::string & label,
-              Args & ... remainingVars)
-  {
-    if(! outputTree)
-    {
-      throw cmsException(this, __func__) << "Input tree uninitialized";
-    }
-    setBranches(var, label);
-    setBranches(remainingVars...);
-  }
-
-  template<typename T,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  reset(int count,
-        T * & var)
-  {
-    for(int i = 0; i < count; ++i)
-    {
-      if(typeid(T) != typeid(Bool_t))
-      {
-        var[i] = placeholder_value;
-      }
-      else
-      {
-        var[i] = false;
-      }
-    }
-  }
-
-  template<typename T,
-           typename... Args,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  reset(int count,
-        T * & var,
-        Args & ... remainingVars)
-  {
-    reset(count, var);
-    reset(count, remainingVars...);
-  }
-
-  template<typename T,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  reset(T & var)
-  {
-    if(typeid(T) != typeid(Bool_t))
-    {
-      var = placeholder_value;
-    }
-    else
-    {
-      var = false;
-    }
-  }
-
-  template<typename T,
-           typename... Args,
-           typename = std::enable_if<std::is_arithmetic<T>::value && ! std::is_pointer<T>::value>>
-  void
-  reset(T & var,
-        Args & ... remainingVars)
-  {
-    reset(var);
-    reset(remainingVars...);
-  }
-
-  TFile * outputFile;
-  TDirectory * outputDir;
-  TTree * outputTree;
-
+protected:
   const Int_t nof_mus;
   const Int_t nof_eles;
   const Int_t nof_jets;
@@ -267,4 +127,4 @@ private:
   std::map<FloatVariableType_bbww, Float_t> floatMap;
 };
 
-#endif // SYNCNTUPLEMANAGER_H
+#endif // hhAnalysis_bbww_SyncNtupleManager_bbww_h
