@@ -160,11 +160,11 @@ main(int argc,
   inputTree -> registerReader(&hltPathReader_instance);
 
 //--- declare particle collections
-  RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, false);
+  RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, isMC, false);
   inputTree->registerReader(muonReader);
   const RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
 
-  RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, false);
+  RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, isMC, false);
   //electronReader->readUncorrected(useNonNominal);
   inputTree->registerReader(electronReader);
   const RecoElectronCollectionCleaner electronCleaner(0.05, isDEBUG);
