@@ -29,7 +29,13 @@ SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileNam
 }
 
 SyncNtupleManager_bbww::~SyncNtupleManager_bbww()
-{}
+{
+  outputFile -> Close();
+  delete outputFile;
+  outputTree = nullptr;
+  outputDir = nullptr;
+  outputFile = nullptr;
+}
 
 void
 SyncNtupleManager_bbww::initializeBranches()
