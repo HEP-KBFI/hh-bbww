@@ -330,9 +330,12 @@ main(int argc,
         }
         selFatJetsLS = jetSelectorAK8_Wjj(cleaned_selFatJetsLS, isHigherPt);
       }
-      else if(isDEBUG)
+      else 
       {
-        std::cout << "Not enough AK4 or AK8 jets to clean AK8LS jets\n";
+	if(isDEBUG) 
+	  {
+	    std::cout << "Not enough AK4 or AK8 jets to clean AK8LS jets\n";
+	  }
         selFatJetsLS = jetSelectorAK8_Wjj(fatJetLS_ptrs, isHigherPt);
       }
     }
