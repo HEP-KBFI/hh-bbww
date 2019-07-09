@@ -1705,7 +1705,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_c
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2tau_M-300_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           "2017v2_2019Jun16_GluGluToBulkGravitonToHHTo2B2tau_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1"),
+  ("crab_string",           ""),
   ("sample_category",       "signal_ggf_spin2_300_hh_bbtt"),
   ("process_name_specific", "signal_ggf_spin2_300_hh_2b2t"),
   ("nof_db_events",         981549),
