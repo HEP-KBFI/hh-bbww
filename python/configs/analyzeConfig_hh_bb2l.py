@@ -3,7 +3,7 @@ from hhAnalysis.multilepton.configs.analyzeConfig_hh import *
 from tthAnalysis.HiggsToTauTau.jobTools import create_if_not_exists
 from tthAnalysis.HiggsToTauTau.analysisTools import initDict, getKey, create_cfg, createFile, generateInputFileList
 from tthAnalysis.HiggsToTauTau.common import logging
-from hhAnalysis.bbww.common import is_nonresonant
+from hhAnalysis.multilepton.common import is_nonresonant
 
 import re
 
