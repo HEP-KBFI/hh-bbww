@@ -110,10 +110,10 @@ process.analyze_hh_bb2l = cms.PSet(
     ),
     tHweights = cms.VPSet(),
     hhWeight_cfg = cms.PSet(
-        denominator_file = cms.string('hhAnalysis/bbww/data/denominator_reweighting_bbvv_2017.root'),
+        denominator_file = cms.string(''),
         klScan_file      = cms.string('hhAnalysis/multilepton/data/kl_scan.dat'),
         coefFile         = cms.string('HHStatAnalysis/AnalyticalModels/data/coefficientsByBin_extended_3M_costHHSim_19-4.txt'),
-        histtitle        = cms.string('denominator_reweighting'),
+        histtitle        = cms.string(''),
         isDEBUG          = cms.bool(False),
         do_scan          = cms.bool(True),
     ),
