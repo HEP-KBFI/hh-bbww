@@ -1,6 +1,5 @@
 from tthAnalysis.HiggsToTauTau.samples.tthAnalyzeSamples_2017 import samples_2017 as samples_2017_bkg
-from hhAnalysis.multilepton.samples.hhAnalyzeSamples_2017_wjets import samples_2017 as samples_2017_wjets
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_hh import samples_2017 as samples_2017_hh
 
 from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples
-samples_2016 = reclassifySamples(samples_2017_hh, samples_2017_bkg, samples_2017_wjets)
+samples_2016 = reclassifySamples(samples_2017_hh, samples_2017_bkg)
