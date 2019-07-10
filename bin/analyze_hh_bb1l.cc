@@ -1201,10 +1201,7 @@ int main(int argc, char* argv[])
       }
     }
 
-    double minPt_lead = -1.;
-    if      ( era == kEra_2016 ) minPt_lead = 25.;
-    else if ( era == kEra_2017 ) minPt_lead = 25.;
-    else assert(0);
+    const double minPt_lead = 25.;
     if ( !(selLepton->cone_pt() > minPt_lead) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS lepton pT selection." << std::endl;
