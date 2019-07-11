@@ -62,10 +62,11 @@ for systematic_label in systematics_label:
 do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
 
-samples_to_stitch = getattr(
-  importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
-  "samples_to_stitch_{}".format(era)
-)
+if mode != "sync":
+  samples_to_stitch = getattr(
+    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
+    "samples_to_stitch_{}".format(era)
+  )
 
 if mode == "default":
   samples = load_samples(era)
