@@ -1969,8 +1969,8 @@ int main(int argc, char* argv[])
         triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
       });
 
-      snm->read(preselMuons);
-      snm->read(preselElectrons);
+      snm->read(preselMuons, fakeableMuons, tightMuons);
+      snm->read(preselElectrons, fakeableElectrons, tightElectrons);
       snm->read(selJetsAK4);
       snm->read(selJetsAK8_Hbb, false);
 

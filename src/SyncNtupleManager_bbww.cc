@@ -78,34 +78,57 @@ SyncNtupleManager_bbww::initializeBranches()
   setBranches(
     mstr, nof_mus,
     mu_pt,                   "pt",
+    mu_conept,               "conept",
     mu_eta,                  "eta",
     mu_phi,                  "phi",
     mu_E,                    "E",
     mu_charge,               "charge",
     mu_miniRelIso,           "miniRelIso",
+    mu_pfRelIso04All,        "PFRelIso04",
+    mu_jetNDauChargedMVASel, "jetNDauChargedMVASel",
+    mu_jetPtRel,             "jetPtRel",
+    mu_jetRelIso,            "jetRelIso",
+    mu_jetDeepJet,           "jetDeepJet",
     mu_sip3D,                "sip3D",
-    mu_dxyAbs,               "dxyAbs",
     mu_dxy,                  "dxy",
+    mu_dxyAbs,               "dxyAbs",
     mu_dz,                   "dz",
     mu_segmentCompatibility, "segmentCompatibility",
     mu_leptonMVA,            "leptonMVA",
-    mu_mediumID,             "mediumID"
+    mu_mediumID,             "mediumID",
+    mu_isfakeablesel,        "isfakeablesel",
+    mu_ismvasel,             "ismvasel",
+    mu_isGenMatched,         "isGenMatched"
   );
 
   setBranches(
     estr, nof_eles,
     ele_pt,                   "pt",
+    ele_conept,               "conept",
     ele_eta,                  "eta",
     ele_phi,                  "phi",
     ele_E,                    "E",
     ele_charge,               "charge",
     ele_miniRelIso,           "miniRelIso",
+    ele_pfRelIso04All,        "PFRelIso04",
+    ele_jetNDauChargedMVASel, "jetNDauChargedMVASel",
+    ele_jetPtRel,             "jetPtRel",
+    ele_jetRelIso,            "jetRelIso",
+    ele_jetDeepJet,           "jetDeepJet",
     ele_sip3D,                "sip3D",
     ele_dxyAbs,               "dxyAbs",
     ele_dxy,                  "dxy",
     ele_dz,                   "dz",
     ele_ntMVAeleID,           "ntMVAeleID",
-    ele_leptonMVA,            "leptonMVA"
+    ele_leptonMVA,            "leptonMVA",
+    ele_passesConversionVeto, "passesConversionVeto",
+    ele_nMissingHits,         "nMissingHits",
+    ele_sigmaEtaEta,          "sigmaEtaEta",
+    ele_HoE,                  "HoE",
+    ele_OoEminusOoP,          "OoEminusOoP",
+    ele_isfakeablesel,        "isfakeablesel",
+    ele_ismvasel,             "ismvasel",
+    ele_isGenMatched,         "isGenMatched"
   );
 
   setBranches(
@@ -183,20 +206,30 @@ SyncNtupleManager_bbww::read(const EventInfo & eventInfo)
 }
 
 void
-SyncNtupleManager_bbww::read(const std::vector<const RecoMuon *> & muons)
+SyncNtupleManager_bbww::read(const std::vector<const RecoMuon *> & muons,
+                             const std::vector<const RecoMuon *> & fakeable_muons,
+                             const std::vector<const RecoMuon *> & tight_muons)
 {
   n_presel_mu = muons.size();
+  n_fakeablesel_mu = fakeable_muons.size();
+  n_mvasel_mu = tight_muons.size();
 
   const Int_t nof_iterations = std::min(n_presel_mu, nof_mus);
   for(Int_t i = 0; i < nof_iterations; ++i)
   {
     const RecoMuon * const muon = muons[i];
     mu_pt[i] = muon -> pt();
+    mu_conept[i] = muon -> cone_pt();
     mu_eta[i] = muon -> eta();
     mu_phi[i] = muon -> phi();
     mu_E[i] = (muon -> p4()).E();
     mu_charge[i] = muon -> charge();
     mu_miniRelIso[i] = muon -> relIso();
+    mu_pfRelIso04All[i] = muon -> pfRelIso04All();
+    mu_jetNDauChargedMVASel[i] = muon -> jetNDauChargedMVASel();
+    mu_jetPtRel[i] = muon -> jetPtRel();
+    mu_jetRelIso[i] = muon -> jetRelIso();
+    mu_jetDeepJet[i] = std::max(0., muon -> jetBtagCSV(Btag::kDeepJet));
     mu_sip3D[i] = muon -> sip3d();
     mu_dxyAbs[i] = std::fabs(muon -> dxy());
     mu_dxy[i] = muon -> dxy();
@@ -204,30 +237,87 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoMuon *> & muons)
     mu_segmentCompatibility[i] = muon -> segmentCompatibility();
     mu_leptonMVA[i] = muon -> mvaRawTTH();
     mu_mediumID[i] = muon -> passesMediumIdPOG();
+
+    mu_isfakeablesel[i] = 0;
+    for(const auto & fakeable_muon: fakeable_muons)
+    {
+      if(muon == fakeable_muon)
+      {
+        mu_isfakeablesel[i] = 1;
+        break;
+      }
+    }
+    mu_ismvasel[i] = 0;
+    for(const auto & tight_muon: tight_muons)
+    {
+      if(muon == tight_muon)
+      {
+        mu_ismvasel[i] = 1;
+        break;
+      }
+    }
+
+    mu_isGenMatched[i] = muon -> isGenMatched(false);
   }
 }
 
 void
-SyncNtupleManager_bbww::read(const std::vector<const RecoElectron *> & electrons)
+SyncNtupleManager_bbww::read(const std::vector<const RecoElectron *> & electrons,
+                             const std::vector<const RecoElectron *> & fakeable_electrons,
+                             const std::vector<const RecoElectron *> & tight_electrons)
 {
   n_presel_ele = electrons.size();
+  n_fakeablesel_ele = fakeable_electrons.size();
+  n_mvasel_ele = tight_electrons.size();
 
   const Int_t nof_iterations = std::min(n_presel_ele, nof_eles);
   for(Int_t i = 0; i < nof_iterations; ++i)
   {
     const RecoElectron * const electron = electrons[i];
     ele_pt[i] = electron -> pt();
+    ele_conept[i] = electron -> cone_pt();
     ele_eta[i] = electron -> eta();
     ele_phi[i] = electron -> phi();
     ele_E[i] = (electron -> p4()).E();
     ele_charge[i] = electron -> charge();
     ele_miniRelIso[i] = electron -> relIso();
+    ele_pfRelIso04All[i] = electron -> pfRelIso04All();
+    ele_jetNDauChargedMVASel[i] = electron -> jetNDauChargedMVASel();
+    ele_jetPtRel[i] = electron -> jetPtRel();
+    ele_jetRelIso[i] = electron -> jetRelIso();
+    ele_jetDeepJet[i] = std::max(0., electron -> jetBtagCSV(Btag::kDeepJet));
     ele_sip3D[i] = electron -> sip3d();
     ele_dxyAbs[i] = std::fabs(electron -> dxy());
     ele_dxy[i] = electron -> dxy();
     ele_dz[i] = electron -> dz();
     ele_ntMVAeleID[i] = electron -> mvaRaw_POG();
     ele_leptonMVA[i] = electron -> mvaRawTTH();
+    ele_passesConversionVeto[i] = electron -> passesConversionVeto();
+    ele_nMissingHits[i] = electron -> nLostHits();
+    ele_sigmaEtaEta[i] = electron -> sigmaEtaEta();
+    ele_HoE[i] = electron -> HoE();
+    ele_OoEminusOoP[i] = electron -> OoEminusOoP();
+
+    ele_isfakeablesel[i] = 0;
+    for(const auto & fakeable_electron: fakeable_electrons)
+    {
+      if(electron == fakeable_electron)
+      {
+        ele_isfakeablesel[i] = 1;
+        break;
+      }
+    }
+    ele_ismvasel[i] = 0;
+    for(const auto & tight_electron: tight_electrons)
+    {
+      if(electron == tight_electron)
+      {
+        ele_ismvasel[i] = 1;
+        break;
+      }
+    }
+
+    ele_isGenMatched[i] = electron -> isGenMatched(false);
   }
 }
 
@@ -359,7 +449,11 @@ SyncNtupleManager_bbww::resetBranches()
     flag_semiboosted,
     flag_resolved,
     n_presel_mu,
+    n_fakeablesel_mu,
+    n_mvasel_mu,
     n_presel_ele,
+    n_fakeablesel_ele,
+    n_mvasel_ele,
     n_presel_jet,
     n_presel_jetAK8,
     n_presel_jetAK8LS
@@ -373,34 +467,57 @@ SyncNtupleManager_bbww::resetBranches()
   reset(
     nof_mus,
     mu_pt,
+    mu_conept,
     mu_eta,
     mu_phi,
     mu_E,
     mu_charge,
     mu_miniRelIso,
+    mu_pfRelIso04All,
+    mu_jetNDauChargedMVASel,
+    mu_jetPtRel,
+    mu_jetRelIso,
+    mu_jetDeepJet,
     mu_sip3D,
     mu_dxy,
     mu_dxyAbs,
     mu_dz,
     mu_segmentCompatibility,
     mu_leptonMVA,
-    mu_mediumID
+    mu_mediumID,
+    mu_isfakeablesel,
+    mu_ismvasel,
+    mu_isGenMatched
   );
 
   reset(
     nof_eles,
     ele_pt,
+    ele_conept,
     ele_eta,
     ele_phi,
     ele_E,
     ele_charge,
     ele_miniRelIso,
+    ele_pfRelIso04All,
+    ele_jetNDauChargedMVASel,
+    ele_jetPtRel,
+    ele_jetRelIso,
+    ele_jetDeepJet,
     ele_sip3D,
     ele_dxy,
     ele_dxyAbs,
     ele_dz,
     ele_ntMVAeleID,
-    ele_leptonMVA
+    ele_leptonMVA,
+    ele_passesConversionVeto,
+    ele_nMissingHits,
+    ele_sigmaEtaEta,
+    ele_HoE,
+    ele_OoEminusOoP,
+    ele_isfakeablesel,
+    ele_ismvasel,
+    ele_isGenMatched
   );
 
   reset(

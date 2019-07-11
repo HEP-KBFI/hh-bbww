@@ -31,8 +31,12 @@ public:
   void initializeBranches() override;
   void initializeHLTBranches(const std::vector<std::vector<hltPath *>> & hltPaths);
   void read(const EventInfo & eventInfo);
-  void read(const std::vector<const RecoMuon *> & muons);
-  void read(const std::vector<const RecoElectron *> & electrons);
+  void read(const std::vector<const RecoMuon *> & muons,
+            const std::vector<const RecoMuon *> & fakeable_muons,
+            const std::vector<const RecoMuon *> & tight_muons);
+  void read(const std::vector<const RecoElectron *> & electrons,
+            const std::vector<const RecoElectron *> & fakeable_electrons,
+            const std::vector<const RecoElectron *> & tight_electrons);
   void read(const std::vector<const RecoJet *> & jets);
   void read(const std::vector<const RecoJetAK8 *> & jetsAk8,
             bool isLS);
@@ -56,7 +60,11 @@ protected:
   Int_t run;
 
   Int_t n_presel_mu;
+  Int_t n_fakeablesel_mu;
+  Int_t n_mvasel_mu;
   Int_t n_presel_ele;
+  Int_t n_fakeablesel_ele;
+  Int_t n_mvasel_ele;
   Int_t n_presel_jet;
   Int_t n_presel_jetAK8;
   Int_t n_presel_jetAK8LS;
@@ -66,31 +74,54 @@ protected:
   Int_t flag_resolved;
 
   Float_t * mu_pt;
+  Float_t * mu_conept;
   Float_t * mu_eta;
   Float_t * mu_phi;
   Float_t * mu_E;
   Int_t * mu_charge;
   Float_t * mu_miniRelIso;
+  Float_t * mu_pfRelIso04All;
+  Int_t * mu_jetNDauChargedMVASel;
+  Float_t * mu_jetPtRel;
+  Float_t * mu_jetRelIso;
+  Float_t * mu_jetDeepJet;
   Float_t * mu_sip3D;
   Float_t * mu_dxyAbs;
   Float_t * mu_dxy;
   Float_t * mu_dz;
   Float_t * mu_segmentCompatibility;
   Float_t * mu_leptonMVA;
-  Bool_t * mu_mediumID;
+  Int_t * mu_mediumID;
+  Int_t * mu_isfakeablesel;
+  Int_t * mu_ismvasel;
+  Int_t * mu_isGenMatched;
 
   Float_t * ele_pt;
+  Float_t * ele_conept;
   Float_t * ele_eta;
   Float_t * ele_phi;
   Float_t * ele_E;
   Int_t * ele_charge;
   Float_t * ele_miniRelIso;
+  Float_t * ele_pfRelIso04All;
+  Int_t * ele_jetNDauChargedMVASel;
+  Float_t * ele_jetPtRel;
+  Float_t * ele_jetRelIso;
+  Float_t * ele_jetDeepJet;
   Float_t * ele_sip3D;
   Float_t * ele_dxyAbs;
   Float_t * ele_dxy;
   Float_t * ele_dz;
   Float_t * ele_ntMVAeleID;
   Float_t * ele_leptonMVA;
+  Int_t * ele_passesConversionVeto;
+  Int_t * ele_nMissingHits;
+  Float_t * ele_sigmaEtaEta;
+  Float_t * ele_HoE;
+  Float_t * ele_OoEminusOoP;
+  Int_t * ele_isfakeablesel;
+  Int_t * ele_ismvasel;
+  Int_t * ele_isGenMatched;
 
   Float_t * jet_pt;
   Float_t * jet_eta;
