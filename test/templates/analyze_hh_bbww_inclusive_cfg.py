@@ -47,8 +47,8 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
     branchName_jets = cms.string('Jet'),
     branchName_fatJets = cms.string('FatJet'),
     branchName_subJets = cms.string('SubJet'),
-    branchName_fatJetsLS = cms.string('FatJetAK8LS'),
-    branchName_subJetsLS = cms.string('SubJetAK8LS'),
+    branchName_fatJetsLS = cms.string('FatJetAK8LSLoose'),
+    branchName_subJetsLS = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
     selEventsFileName_input = cms.string(''),

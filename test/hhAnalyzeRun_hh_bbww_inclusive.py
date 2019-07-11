@@ -24,11 +24,6 @@ parser.add_argument('-o', '--output-tree',
   type = str, dest = 'output_tree', metavar = 'name', default = 'syncTree', required = False,
   help = 'R|Output TTree name',
 )
-parser.add_argument('-l', '--lepton-subtraction',
-  type = str, dest = 'lepton_subtraction', metavar = 'selection', default = 'loose', required = False,
-  choices = [ 'loose', 'fakeable' ],
-  help = 'R|Lepton selection in lepton-subtracted AK8 jets',
-)
 args = parser.parse_args()
 
 # Common arguments
@@ -47,7 +42,6 @@ rle_select         = os.path.expanduser(args.rle_select)
 systematics_label  = args.systematics
 use_nonnominal     = args.original_central
 use_home           = args.use_home
-lepton_subtraction = args.lepton_subtraction
 
 # Custom arguments
 output_tree = args.output_tree
@@ -96,7 +90,6 @@ if __name__ == '__main__':
     isDebug                 = debug,
     rle_select              = rle_select,
     central_or_shifts       = central_or_shifts,
-    lepton_subtraction      = lepton_subtraction,
     use_nonnominal          = use_nonnominal,
     use_home                = use_home,
   )

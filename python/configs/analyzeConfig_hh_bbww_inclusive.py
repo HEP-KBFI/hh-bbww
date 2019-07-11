@@ -20,7 +20,6 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
         isDebug,
         rle_select,
         central_or_shifts,
-        lepton_subtraction,
         use_nonnominal = False,
         use_home       = True,
       ):
@@ -58,7 +57,6 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
     self.check_output_files = check_output_files
     self.rle_select = rle_select
     self.use_nonnominal = use_nonnominal
-    self.lepton_subtraction = lepton_subtraction.capitalize()
 
     if self.rle_select and not os.path.isfile(self.rle_select):
       raise ValueError('Input RLE file for the sync is missing: %s' % self.rle_select)
@@ -66,8 +64,6 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
 
   def createCfg_analyze(self, jobOptions, sample_info):
-    jobOptions['branchName_fatJetsLS'] = 'FatJetAK8LS{}'.format(self.lepton_subtraction)
-    jobOptions['branchName_subJetsLS'] = 'SubJetAK8LS{}'.format(self.lepton_subtraction)
     lines = super(analyzeConfig_hh_bbww_inclusive, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
