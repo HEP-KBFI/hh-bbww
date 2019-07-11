@@ -81,7 +81,7 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_genHiggses = cms.string('GenHiggs'),
 
     redoGenMatching = cms.bool(True),
-    genMatchingByIndex = cms.bool(False),
+    genMatchingByIndex = cms.bool(True),
     jetCleaningByIndex = cms.bool(False),
 
     branchName_genTauLeptons = cms.string('GenTau'),

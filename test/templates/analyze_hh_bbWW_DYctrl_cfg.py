@@ -75,7 +75,7 @@ process.analyze_hh_bbWW_DYctrl = cms.PSet(
     branchName_genJets = cms.string('GenJet'),
 
     redoGenMatching = cms.bool(True),
-    genMatchingByIndex = cms.bool(False),
+    genMatchingByIndex = cms.bool(True),
     jetCleaningByIndex = cms.bool(False),
 
     branchName_genTauLeptons = cms.string('GenTau'),

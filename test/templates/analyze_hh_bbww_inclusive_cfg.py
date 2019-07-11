@@ -55,7 +55,7 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
     isDEBUG = cms.bool(False),
     useNonNominal = cms.bool(False),
 
-    genMatchingByIndex = cms.bool(False),
+    genMatchingByIndex = cms.bool(True),
     jetCleaningByIndex = cms.bool(False),
 
     syncNtuple = cms.PSet(
