@@ -39,6 +39,9 @@ public:
   void read(Float_t value,
             FloatVariableType_bbww type);
   void read(const std::vector<std::vector<hltPath *>> & hltPaths);
+  void read(bool is_boosted,
+            bool is_semiboosted,
+            bool is_resolved);
   void resetBranches() override;
 
 protected:
@@ -57,6 +60,10 @@ protected:
   Int_t n_presel_jet;
   Int_t n_presel_jetAK8;
   Int_t n_presel_jetAK8LS;
+
+  Int_t flag_boosted;
+  Int_t flag_semiboosted;
+  Int_t flag_resolved;
 
   Float_t * mu_pt;
   Float_t * mu_eta;

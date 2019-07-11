@@ -58,6 +58,9 @@ SyncNtupleManager_bbww::initializeBranches()
     nEvent,            "event",
     ls,                "ls",
     run,               "run",
+    flag_boosted,      "is_boosted",
+    flag_semiboosted,  "is_semiboosted",
+    flag_resolved,     "is_resolved",
     n_presel_mu,       n_presel_mu_str,
     n_presel_ele,      n_presel_ele_str,
     n_presel_jet,      n_presel_jet_str,
@@ -335,6 +338,16 @@ SyncNtupleManager_bbww::read(const std::vector<std::vector<hltPath *>> & hltPath
 }
 
 void
+SyncNtupleManager_bbww::read(bool is_boosted,
+                             bool is_semiboosted,
+                             bool is_resolved)
+{
+  flag_boosted = is_boosted;
+  flag_semiboosted = is_semiboosted;
+  flag_resolved = is_resolved;
+}
+
+void
 SyncNtupleManager_bbww::resetBranches()
 {
   nEvent = 0;
@@ -342,6 +355,9 @@ SyncNtupleManager_bbww::resetBranches()
   run = 0;
 
   reset(
+    flag_boosted,
+    flag_semiboosted,
+    flag_resolved,
     n_presel_mu,
     n_presel_ele,
     n_presel_jet,

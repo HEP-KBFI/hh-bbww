@@ -1990,6 +1990,11 @@ int main(int argc, char* argv[])
       snm->read(selJetsAK8_Hbb, false);
       snm->read(selJetsAK8_Wjj, true);
 
+      const bool is_boosted = type_Hbb == kHbb_boosted && (type_Wjj == kWjj_resolved|| type_Wjj == kWjj_boosted_highPurity);
+      const bool is_semiboosted = type_Hbb == kHbb_boosted && type_Wjj == kWjj_resolved;
+      const bool is_resolved = type_Hbb == kHbb_resolved && type_Wjj == kWjj_resolved;
+      snm->read(is_boosted, is_semiboosted, is_resolved);
+
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);

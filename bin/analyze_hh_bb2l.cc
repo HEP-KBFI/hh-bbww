@@ -1974,6 +1974,7 @@ int main(int argc, char* argv[])
       snm->read(selJetsAK4);
       snm->read(selJetsAK8_Hbb, false);
 
+      snm->read(type_Hbb == kHbb_boosted, false, type_Hbb == kHbb_resolved);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
