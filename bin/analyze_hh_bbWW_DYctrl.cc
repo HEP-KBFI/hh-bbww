@@ -1297,17 +1297,7 @@ int main(int argc, char* argv[])
     }
     std::vector<const RecoJet*> selJetsAK4_vbf = jetSelectorAK4_vbf(cleanedJetsAK4_vbf, isHigherPt);
 
-    bool failsLowMassVeto = false;
-    for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();
-	  lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
-      for ( std::vector<const RecoLepton*>::const_iterator lepton2 = lepton1 + 1;
-	    lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
-        double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
-        if ( mass < 12. ) {
-          failsLowMassVeto = true;
-        }
-      }
-    }
+    const bool failsLowMassVeto = isfailsLowMassVeto(preselLeptonsFull);
     if ( failsLowMassVeto ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS low mass lepton pair veto." << std::endl;

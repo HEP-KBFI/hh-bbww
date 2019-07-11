@@ -1108,17 +1108,7 @@ int main(int argc, char* argv[])
     cutFlowTable.update("m(ll) < 76 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeight);
 
-    bool failsLowMassVeto = false;
-    for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();
-	  lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
-      for ( std::vector<const RecoLepton*>::const_iterator lepton2 = lepton1 + 1;
-	    lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
-        double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
-        if ( mass < 12. ) {
-          failsLowMassVeto = true;
-        }
-      }
-    }
+    const bool failsLowMassVeto = isfailsLowMassVeto(preselLeptonsFull);
     if ( failsLowMassVeto ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS low mass lepton pair veto." << std::endl;
@@ -1128,20 +1118,7 @@ int main(int argc, char* argv[])
     cutFlowTable.update("m(ll) > 12 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("m(ll) > 12 GeV", evtWeight);
 
-    bool isSameFlavor_OS = false;
-    double massSameFlavor_OS = -1.;
-    for ( std::vector<const RecoLepton*>::const_iterator lepton1 = preselLeptonsFull.begin();
-	  lepton1 != preselLeptonsFull.end(); ++lepton1 ) {
-      for ( std::vector<const RecoLepton*>::const_iterator lepton2 = lepton1 + 1;
-	    lepton2 != preselLeptonsFull.end(); ++lepton2 ) {
-        if ( (*lepton1)->pdgId() == -(*lepton2)->pdgId() ) { // pair of same flavor leptons of opposite charge
-          isSameFlavor_OS = true;
-          double mass = ((*lepton1)->p4() + (*lepton2)->p4()).mass();
-          if ( std::fabs(mass - z_mass) < std::fabs(massSameFlavor_OS - z_mass) ) massSameFlavor_OS = mass;
-        }
-      }
-    }
-    bool failsZbosonMassVeto = isSameFlavor_OS && std::fabs(massSameFlavor_OS - z_mass) < z_window;
+    const bool failsZbosonMassVeto = isfailsZbosonMassVetoSFOS(preselLeptonsFull);
     if ( failsZbosonMassVeto ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
