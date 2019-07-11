@@ -67,6 +67,7 @@ SyncNtupleManager_bbww::initializeBranches()
 //--- MET/MHT
     floatMap[FloatVariableType_bbww::PFMET],                    "PFMET",
     floatMap[FloatVariableType_bbww::PFMETphi],                 "PFMETphi",
+    floatMap[FloatVariableType_bbww::HME],                      "HME",
     floatMap[FloatVariableType_bbww::PU_weight],                "PU_weight",
     floatMap[FloatVariableType_bbww::MC_weight],                "MC_weight"
   );

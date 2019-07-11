@@ -62,7 +62,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         select_rle_output = False,
         verbose           = False,
         dry_run           = False,
+        do_sync           = False,
         isDebug           = False,
+        rle_select        = '',
         use_nonnominal    = False,
         hlt_filter        = False,
         use_home          = True,
@@ -87,6 +89,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       triggers              = [ '1e', '1mu', '2e', '2mu', '1e1mu' ],
       verbose               = verbose,
       dry_run               = dry_run,
+      do_sync               = do_sync,
       isDebug               = isDebug,
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
@@ -141,6 +144,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb1l_cfg.py")
 
     self.select_rle_output = select_rle_output
+    self.rle_select = rle_select
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
@@ -177,6 +181,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     jobOptions['leptonFakeRateWeight.inputFileName'] = self.leptonFakeRateWeight_inputFile
     jobOptions['leptonFakeRateWeight.histogramName_e'] = self.leptonFakeRateWeight_histogramName_e
     jobOptions['leptonFakeRateWeight.histogramName_mu'] = self.leptonFakeRateWeight_histogramName_mu
+
     lines = super(analyzeConfig_hh_bb1l, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
@@ -343,6 +348,34 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 logging.warning("No input ntuples for %s --> skipping job !!" % (key_analyze_job))
                 continue
 
+              syncOutput = ''
+              syncTree = ''
+              syncGenMatch = self.lepton_genMatches_nonfakes
+              if self.do_sync:
+                mcClosure_match = mcClosure_regex.match(lepton_selection_and_frWeight)
+                if lepton_selection_and_frWeight == 'Tight':
+                  syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_SR.root' % (self.channel, central_or_shift))
+                  syncTree = 'syncTree_%s_SR' % self.channel.replace('_', '')
+                elif lepton_selection_and_frWeight == 'Fakeable_wFakeRateWeights':
+                  syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_Fake.root' % (self.channel, central_or_shift))
+                  syncTree = 'syncTree_%s_Fake' % self.channel.replace('_', '')
+                elif mcClosure_match:
+                  mcClosure_type = mcClosure_match.group('type')
+                  syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_mcClosure_%s.root' % (self.channel, central_or_shift, mcClosure_type))
+                  syncTree = 'syncTree_%s_mcClosure_%s' % (self.channel.replace('_', ''), mcClosure_type)
+                else:
+                  continue
+              if syncTree and central_or_shift != "central":
+                syncTree = os.path.join(central_or_shift, syncTree)
+              syncRLE = ''
+              if self.do_sync and self.rle_select:
+                syncRLE = self.rle_select % syncTree
+                if not os.path.isfile(syncRLE):
+                  logging.warning("Input RLE file for the sync is missing: %s; skipping the job" % syncRLE)
+                  continue
+              if syncOutput:
+                self.inputFiles_sync['sync'].append(syncOutput)
+
               cfgFile_modified_path = os.path.join(self.dirs[key_analyze_dir][DKEY_CFGS], "analyze_%s_%s_%s_%i_cfg.py" % analyze_job_tuple)
               histogramFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_HIST], "analyze_%s_%s_%s_%i.root" % analyze_job_tuple)
               logFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_LOGS], "analyze_%s_%s_%s_%i.log" % analyze_job_tuple)
@@ -370,6 +403,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'apply_hlt_filter'         : self.hlt_filter,
                 'useNonNominal'            : self.use_nonnominal,
                 'fillGenEvtHistograms'     : True,
+                'syncOutput'               : syncOutput,
+                'syncTree'                 : syncTree,
+                'syncRLE'                  : syncRLE,
+                'syncGenMatch'             : syncGenMatch,
               }
               self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
@@ -382,7 +419,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               self.inputFiles_hadd_stage1[key_hadd_stage1_job].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
               self.outputFile_hadd_stage1[key_hadd_stage1_job] = os.path.join(self.dirs[key_hadd_stage1_dir][DKEY_HIST], "hadd_stage1_%s_%s.root" % hadd_stage1_job_tuple)
 
-          if self.isBDTtraining:
+          if self.isBDTtraining or self.do_sync:
             continue
 
           #----------------------------------------------------------------------------
@@ -474,8 +511,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                     self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job].append(self.jobOptions_addBackgrounds[key_addBackgrounds_job]['outputFile'])
                     self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job] = os.path.join(self.dirs[key_hadd_stage1_5_dir][DKEY_HIST], "hadd_stage1_5_%s_%s.root" % hadd_stage1_5_job_tuple)
 
-          if self.isBDTtraining:
+          if self.isBDTtraining or self.do_sync:
             continue
+
           # add output files of hadd_stage1 for data to list of input files for hadd_stage1_5
           if not is_mc:
             for category in self.evtCategories:
@@ -485,7 +523,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job] = []
               self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job].append(self.jobOptions_copyHistograms[key_copyHistograms_job]['inputFile'])
 
-        if self.isBDTtraining:
+        if self.isBDTtraining or self.do_sync:
           continue
 
         for category in self.evtCategories:
@@ -577,18 +615,29 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST], 
                                                                           "hadd_stage2_%s_%s.root" % hadd_stage2_job_tuple)
 
-    if self.isBDTtraining:
+    if self.isBDTtraining or self.do_sync:
       if self.is_sbatch:
         logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
         self.sbatchFile_analyze = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_analyze_%s.py" % self.channel)
-        self.createScript_sbatch_analyze(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
+        if self.isBDTtraining:
+          self.createScript_sbatch_analyze(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
+        elif self.do_sync:
+          self.createScript_sbatch_syncNtuple(self.executable_analyze, self.sbatchFile_analyze, self.jobOptions_analyze)
       logging.info("Creating Makefile")
       lines_makefile = []
-      self.addToMakefile_analyze(lines_makefile)
-      self.addToMakefile_hadd_stage1(lines_makefile)
+      if self.isBDTtraining:
+        self.addToMakefile_analyze(lines_makefile)
+        self.addToMakefile_hadd_stage1(lines_makefile)        
+      elif self.do_sync:
+        self.addToMakefile_syncNtuple(lines_makefile)
+        outputFile_sync_path = os.path.join(self.outputDir, DKEY_SYNC, '%s.root' % self.channel)
+        self.outputFile_sync['sync'] = outputFile_sync_path
+        self.addToMakefile_hadd_sync(lines_makefile)
+      else:
+        raise ValueError("Internal logic error")
       self.targets.extend(self.phoniesToAdd)
       self.createMakefile(lines_makefile)
-      logging.info("Done")
+      logging.info("Done.")
       return self.num_jobs
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")

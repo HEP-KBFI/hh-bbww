@@ -266,7 +266,7 @@ int main(int argc, char* argv[])
   const edm::ParameterSet syncNtuple_cfg = cfg_analyze.getParameter<edm::ParameterSet>("syncNtuple");
   const std::string syncNtuple_tree = syncNtuple_cfg.getParameter<std::string>("tree");
   const std::string syncNtuple_output = syncNtuple_cfg.getParameter<std::string>("output");
-  const bool sync_requireGenMatching = syncNtuple_cfg.getParameter<bool>("requireGenMatching");
+  const vstring syncNtuple_genMatch = syncNtuple_cfg.getParameter<vstring>("genMatch");
   const bool do_sync = ! syncNtuple_tree.empty() && ! syncNtuple_output.empty();
 
   const edm::ParameterSet additionalEvtWeight = cfg_analyze.getParameter<edm::ParameterSet>("evtWeight");
@@ -378,7 +378,7 @@ int main(int argc, char* argv[])
   fwlite::TFileService fs = fwlite::TFileService(outputFile.file().data());
 
   TTreeWrapper* inputTree = new TTreeWrapper(treeName.data(), inputFiles.files(), maxEvents);
-  std::cout << "Loaded " << inputTree->getFileCount() << " file(s)." << std::endl;
+  std::cout << "Loaded " << inputTree->getFileCount() << " file(s)\n";
 
 //--- prepare sync Ntuple
   SyncNtupleManager_bbww * snm = nullptr;
@@ -1554,7 +1554,7 @@ int main(int argc, char* argv[])
     double m_HH = HHP4.mass();
     double pT_HH = HHP4.pt();
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
-    double dR_HH = deltaR(HbbP4, HwwP4);
+    //double dR_HH = deltaR(HbbP4, HwwP4);
     double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), HwwP4.phi()));
     /*mT2_2particle mT2Algo_2particle;
     mT2Algo_2particle(
@@ -1562,7 +1562,7 @@ int main(int argc, char* argv[])
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
       metP4.px(), metP4.py(), 0.);*/
     double mT2_W = 1.0; //mT2Algo_2particle.get_min_mT2();
-    int mT2_W_step = 1.0; //mT2Algo_2particle.get_min_step();
+    //int mT2_W_step = 1.0; //mT2Algo_2particle.get_min_step();
     //std::cout << "mT2_W = " << mT2_W << " (found @ step #" << mT2_W_step << ")" << std::endl;
     //double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
     //double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
@@ -1571,7 +1571,7 @@ int main(int argc, char* argv[])
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       cSumPx, cSumPy, wBosonMass);*/
     double mT2_top_2particle = 1.0; //mT2Algo_2particle.get_min_mT2();
-    int mT2_top_2particle_step = 1.0; //mT2Algo_2particle.get_min_step();
+    //int mT2_top_2particle_step = 1.0; //mT2Algo_2particle.get_min_step();
     //std::cout << "mT2_top_2particle = " << mT2_top_2particle << " (found @ step #" << mT2_top_2particle_step << ")" << std::endl;
     /*mT2_3particle mT2Algo_3particle;
     mT2Algo_3particle(
@@ -1624,9 +1624,9 @@ int main(int argc, char* argv[])
     Topness algoTopness_fixedChi2(Topness::kFixedChi2);
     algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
     double logTopness_fixedChi2 = -99.;
-    /*if ( algoTopness_fixedChi2.isValidSolution() ) {
-      logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
-    }
+//    if ( algoTopness_fixedChi2.isValidSolution() ) {
+//      logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
+//    }
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
     TLorentzVector hmeLepton1P4(selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.pz(), selLeptonP4_lead.energy());
@@ -1651,23 +1651,21 @@ int main(int argc, char* argv[])
     const bool useMET = true;
     LocalFileInPath RefPDFfile = LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root");
     if( RefPDFfile.fullPath().empty() )
-      throw cms::Exception("analyze_hh_bb2l")
-	<< "Failed to find file = 'REFPDFPU40.root' !!\n";
+      throw cms::Exception("analyze_hh_bb2l") << "Failed to find file = 'REFPDFPU40.root'\n";
     clock.Reset();
     clock.Start("hmeAlgo");
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);*/
+      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);
     double m_HH_hme = -1.;
-    /*bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
     if ( hme_isValidSolution ) {
       TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
       m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
     }
     clock.Stop("hmeAlgo");
-    */
-    double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
+    //double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
@@ -1874,10 +1872,6 @@ int main(int argc, char* argv[])
       (*selEventsFile) << eventInfo.run << ':' << eventInfo.lumi << ':' << eventInfo.event << '\n';
     }
 
-    const bool isGenMatched = isMC &&
-      ((apply_leptonGenMatching && selLepton_genMatch.numGenMatchedJets_ == 0) || ! apply_leptonGenMatching)
-    ;
-
     if ( bdt_filler ) {
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep1_pt",                       selLepton_lead->pt())
@@ -1982,10 +1976,11 @@ int main(int argc, char* argv[])
 
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
+      snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
 
-      if((sync_requireGenMatching && isGenMatched) || ! sync_requireGenMatching)
+      if(isMC && contains(syncNtuple_genMatch, selLepton_genMatch.name_))
       {
         snm->fill();
       }

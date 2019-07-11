@@ -85,6 +85,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 
+#include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "hhAnalysis/multilepton/interface/EventInfoHH.h" // EventInfoHH
 #include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
@@ -365,6 +366,12 @@ int main(int argc, char* argv[])
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
 
+  const edm::ParameterSet syncNtuple_cfg = cfg_analyze.getParameter<edm::ParameterSet>("syncNtuple");
+  const std::string syncNtuple_tree = syncNtuple_cfg.getParameter<std::string>("tree");
+  const std::string syncNtuple_output = syncNtuple_cfg.getParameter<std::string>("output");
+  const vstring syncNtuple_genMatch = syncNtuple_cfg.getParameter<vstring>("genMatch");
+  const bool do_sync = ! syncNtuple_tree.empty() && ! syncNtuple_output.empty();
+
   const edm::ParameterSet additionalEvtWeight = cfg_analyze.getParameter<edm::ParameterSet>("evtWeight");
   const bool applyAdditionalEvtWeight = additionalEvtWeight.getParameter<bool>("apply");
   EvtWeightManager * eventWeightManager = nullptr;
@@ -484,7 +491,16 @@ int main(int argc, char* argv[])
   fwlite::TFileService fs = fwlite::TFileService(outputFile.file().data());
 
   TTreeWrapper* inputTree = new TTreeWrapper(treeName.data(), inputFiles.files(), maxEvents);
-  std::cout << "Loaded " << inputTree->getFileCount() << " file(s)." << std::endl;
+  std::cout << "Loaded " << inputTree->getFileCount() << " file(s)\n";
+
+//--- prepare sync Ntuple
+  SyncNtupleManager_bbww * snm = nullptr;
+  if(do_sync)
+  {
+    snm = new SyncNtupleManager_bbww(syncNtuple_output, syncNtuple_tree);
+    snm->initializeBranches();
+    snm->initializeHLTBranches({ triggers_1e, triggers_1mu });
+  }
 
 //--- declare event-level variables
   EventInfoHH eventInfo(isMC);
@@ -1961,6 +1977,32 @@ int main(int argc, char* argv[])
           ("isVBF",                         isVBF)
         .fill()
       ;
+    }
+
+    if(snm)
+    {
+      snm->read(eventInfo);
+      snm->read({ triggers_1e, triggers_1mu });
+
+      snm->read(preselMuons);
+      snm->read(preselElectrons);
+      snm->read(selJetsAK4);
+      snm->read(selJetsAK8_Hbb, false);
+      snm->read(selJetsAK8_Wjj, true);
+
+      snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
+      snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
+      snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
+      snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
+
+      if(isMC && contains(syncNtuple_genMatch, selLepton_genMatch.name_))
+      {
+        snm->fill();
+      }
+      else
+      {
+        snm->resetBranches();
+      }
     }
 
     ++selectedEntries;

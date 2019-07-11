@@ -13,7 +13,7 @@ import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
 
-mode_choices     = [ 'default', 'forBDTtraining' ]
+mode_choices     = [ 'default', 'forBDTtraining', 'sync' ]
 sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
 systematics.full = systematics.an_extended_hh
 
@@ -21,6 +21,7 @@ parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_preselect()
+parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
@@ -44,6 +45,7 @@ running_method     = args.running_method
 mode              = args.mode
 systematics_label = args.systematics
 use_preselected   = args.use_preselected
+rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
@@ -56,6 +58,8 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
+
+do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
 
 samples_to_stitch = getattr(
@@ -147,7 +151,10 @@ elif mode == "forBDTtraining":
     elif sample_info["process_name_specific"] in dy_samples_binned or sample_info["process_name_specific"] in wjets_samples_binned:
       sample_info["use_it"] = True  # [*]
     elif sample_info["process_name_specific"] in dy_samples_inclusive or sample_info["process_name_specific"] in wjets_samples_inclusive:
-      sample_info["use_it"] = False  # [*]        
+      sample_info["use_it"] = False  # [*]
+
+elif mode == "sync":
+  samples = load_samples(era, suffix = "sync")
 else:
   raise ValueError("Internal logic error")
 
@@ -230,7 +237,9 @@ if __name__ == '__main__':
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
+    do_sync                               = do_sync,
     isDebug                               = debug,
+    rle_select                            = rle_select,
     use_nonnominal                        = use_nonnominal,
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
