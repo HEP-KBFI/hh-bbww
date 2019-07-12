@@ -89,6 +89,12 @@ process.analyze_hh_bb1l = cms.PSet(
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
 
+    syncNtuple = cms.PSet(
+        tree = cms.string(''),
+        output = cms.string(''),
+        requireGenMatching = cms.bool(False),
+    ),
+
     useNonNominal = cms.bool(False),
     isDEBUG = cms.bool(False),
     hasLHE = cms.bool(True),
