@@ -1992,6 +1992,11 @@ int main(int argc, char* argv[])
     histogram_selectedEntries->Fill(0.);
   }
 
+  if(snm)
+  {
+    snm->write();
+  }
+
   std::cout << "max num. Entries = " << inputTree -> getCumulativeMaxEventCount()
             << " (limited by " << maxEvents << ") processed in "
             << inputTree -> getProcessedFileCount() << " file(s) (out of "
@@ -2047,6 +2052,7 @@ int main(int argc, char* argv[])
   hltPaths_delete(triggers_1mu);
 
   delete inputTree;
+  delete snm;
 
   clock.Show("analyze_hh_bb1l");
 
