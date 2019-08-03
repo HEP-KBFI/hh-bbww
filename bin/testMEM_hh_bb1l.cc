@@ -1273,7 +1273,7 @@ int main(int argc, char* argv[])
     cutFlowTable.update("m(ll) > 12 GeV", evtWeight);
     cutFlowHistManager->fillHistograms("m(ll) > 12 GeV", evtWeight);
 
-    const bool failsZbosonMassVeto = isfailsZbosonMassVetoSFOS(preselLeptonsFull);
+    const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
     if ( failsZbosonMassVeto ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
