@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-07-10 16:45:04 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_hh.py -p /hdfs/local/karl/ttHNtupleProduction/2017/2019Jul09_woPresel_nom_hh_bbww/ntuples -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_hh.py -M
+# file generated at 2019-08-04 14:25:12 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017_hh.py -p python/samples/sampleLocations_2017_hh_bbww.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_hh.py -M
 
 samples_2017 = OD()
 samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
@@ -6125,6 +6125,54 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_corr
     [
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2019Jul09_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_280_hh_2b2t"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/GluGluToBulkGravitonToHHTo2B2tau_M-300_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_300_hh_bbtt"),
+  ("process_name_specific",           "signal_ggf_spin2_300_hh_2b2t"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    33),
+  ("nof_events",                      {
+    'Count'                                                      : [        40000, ],
+    'CountWeighted'                                              : [        39995,        39994,        39998, ],
+    'CountWeightedLHEWeightScale'                                : [        41097,        39995,        38736,        41097,        39995,        38736,        41097,        39995,        38736, ],
+    'CountWeightedL1PrefireNom'                                  : [        39100,        39098,        39105, ],
+    'CountWeightedL1Prefire'                                     : [        39100,        38876,        39316, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [        40171,        39100,        37875,        40171,        39100,        37875,        40171,        39100,        37875, ],
+  }),
+  ("nof_tree_events",                 40000),
+  ("nof_db_events",                   981549),
+  ("fsize_local",                     84871798), # 84.87MB, avg file size 84.87MB
+  ("fsize_db",                        50466696906), # 50.47GB, avg file size 1.53GB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2019Aug03_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_300_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
