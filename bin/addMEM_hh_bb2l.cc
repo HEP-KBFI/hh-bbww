@@ -185,7 +185,7 @@ int main(int argc,
   RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, readGenObjects);
   // CV: apply jet pT cut on JEC upward shift, to make sure pT cut is loose enough
   //     to allow systematic uncertainty on JEC to be estimated on analysis level
-  jetReaderAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJet_central_nonNominal : kJet_central);
+  jetReaderAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   jetReaderAK4->setBranchAddresses(inputTree);
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
@@ -193,7 +193,7 @@ int main(int argc,
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
   // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
   //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-  //jetReaderAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJet_central_nonNominal : kJet_central);
+  //jetReaderAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   //jetReaderAK8->read_ptMass_systematics(isMC);
   //jetReaderAK8->read_BtagWeight_systematics(isMC);
   jetReaderAK8->setBranchAddresses(inputTree);
@@ -202,7 +202,7 @@ int main(int argc,
 
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
-  metReader->setMEt_central_or_shift(useNonNominal_jetmet ? kMEt_central_nonNominal : kMEt_central);
+  metReader->setMEt_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   metReader->read_ptPhi_systematics(isMC);
   metReader->setBranchAddresses(inputTree);
 
@@ -244,17 +244,17 @@ int main(int argc,
     electronWriter->writeUncorrected(useNonNominal);
     electronWriter->setBranches(outputTree);
     jetWriterAK4 = new RecoJetWriter(era, isMC, Form("n%s", branchName_jets_ak4.data()), branchName_jets_ak4);
-    jetWriterAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJet_central_nonNominal : kJet_central);
+    jetWriterAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     jetWriterAK4->setBranches(outputTree);
     jetWriterAK8 = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8.data()), branchName_jets_ak8, Form("n%s", branchName_subjets_ak8.data()), branchName_subjets_ak8);
     // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
     //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-    //jetWriterAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJet_central_nonNominal : kJet_central);
+    //jetWriterAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     //jetWriterAK8->write_ptMass_systematics(isMC);
     //jetWriterAK8->write_BtagWeight_systematics(isMC);
     jetWriterAK8->setBranches(outputTree);
     metWriter = new RecoMEtWriter(era, isMC, branchName_met);
-    metWriter->setPtPhi_central_or_shift(useNonNominal_jetmet ? kMEt_central_nonNominal : kMEt_central);
+    metWriter->setPtPhi_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     metWriter->write_ptPhi_systematics(isMC);
     metWriter->setBranches(outputTree);
 
@@ -442,8 +442,8 @@ int main(int argc,
             const int jetPt_option = getJet_option(central_or_shift, isMC);
             const int met_option   = getMET_option(central_or_shift, isMC);
 
-            if ( jetPt_option == kJet_central &&
-		 met_option   == kMEt_central &&
+            if ( jetPt_option == kJetMET_central &&
+                 met_option   == kJetMET_central &&
 		 central_or_shift != "central")
             {
               std::cout << "Skipping systematics: " << central_or_shift << '\n';
