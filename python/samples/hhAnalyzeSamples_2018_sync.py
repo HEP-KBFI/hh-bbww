@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-07-10 18:00:56 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2018_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2018/2019Jul10_woPresel_nonNom_hh_bbww_sync/ntuples -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_sync.py -M
+# file generated at 2019-08-05 15:40:24 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2018_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2018/2019Aug05_woPresel_nonNom_hh_bbww_sync/ntuples -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_sync.py -M
 
 samples_2018 = OD()
 samples_2018["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
@@ -16,7 +16,7 @@ samples_2018["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-m
   }),
   ("nof_tree_events",                 42000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     118405770), # 118.41MB, avg file size 118.41MB
+  ("fsize_local",                     118403173), # 118.40MB, avg file size 118.40MB
   ("fsize_db",                        11645634056), # 11.65GB, avg file size 1.16GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -28,7 +28,7 @@ samples_2018["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-m
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2019Jul10_woPresel_nonNom_hh_bbww_sync/ntuples/signal_ggf_spin0_750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2019Aug05_woPresel_nonNom_hh_bbww_sync/ntuples/signal_ggf_spin0_750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
