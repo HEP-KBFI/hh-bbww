@@ -326,15 +326,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 if not is_mc and not isFR_shape_shift:
                   continue
 
-              if central_or_shift in systematics.LHE().hh and not (sample_category.startswith("signal") and sample_info['has_LHE']):
-                continue
-              if central_or_shift in systematics.LHE().ttH and sample_category != "TTH":
-                continue
-              if central_or_shift in systematics.LHE().ttW and sample_category != "TTW":
-                continue
-              if central_or_shift in systematics.LHE().ttZ and sample_category != "TTZ":
-                continue
-              if central_or_shift in systematics.DYMCReweighting and not ('DYMCReweighting' in sample_info.keys() and sample_info["DYMCReweighting"]):
+              if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name):
                 continue
 
               logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
