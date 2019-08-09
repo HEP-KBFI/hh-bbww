@@ -172,7 +172,7 @@ void dumpEventYields()
 
   std::vector<std::string> signal_process_parts;
   signal_process_parts.push_back("");
-  signal_process_parts.push_back("_conversion");
+  signal_process_parts.push_back("_Convs");
   signal_process_parts.push_back("_fake");
   
   std::map<std::string, vstring> background_processes; // key = channel
@@ -186,8 +186,8 @@ void dumpEventYields()
   background_processes["hh_bb1l"].push_back("ZZ");
   background_processes["hh_bb1l"].push_back("DY");
   background_processes["hh_bb1l"].push_back("W");
-  background_processes["hh_bb1l"].push_back("conversions");
-  background_processes["hh_bb1l"].push_back("fakes_data");
+  background_processes["hh_bb1l"].push_back("Convs");
+  background_processes["hh_bb1l"].push_back("data_fakes");
   background_processes["hh_bb1l"].push_back("fakes_mc");
   background_processes["hh_bb1l"].push_back("VH");
   background_processes["hh_bb2l"].push_back("TT");
@@ -200,8 +200,8 @@ void dumpEventYields()
   background_processes["hh_bb2l"].push_back("ZZ");
   background_processes["hh_bb2l"].push_back("DY");
   background_processes["hh_bb2l"].push_back("W");
-  background_processes["hh_bb2l"].push_back("conversions");
-  background_processes["hh_bb2l"].push_back("fakes_data");
+  background_processes["hh_bb2l"].push_back("Convs");
+  background_processes["hh_bb2l"].push_back("data_fakes");
   background_processes["hh_bb2l"].push_back("fakes_mc");
   background_processes["hh_bb2l"].push_back("VH");
   background_processes["hh_bb1l1tau"].push_back("TT");
@@ -214,14 +214,14 @@ void dumpEventYields()
   background_processes["hh_bb1l1tau"].push_back("ZZ");
   background_processes["hh_bb1l1tau"].push_back("DY");
   background_processes["hh_bb1l1tau"].push_back("W");
-  background_processes["hh_bb1l1tau"].push_back("conversions");
-  background_processes["hh_bb1l1tau"].push_back("fakes_data");
+  background_processes["hh_bb1l1tau"].push_back("Convs");
+  background_processes["hh_bb1l1tau"].push_back("data_fakes");
   background_processes["hh_bb1l1tau"].push_back("fakes_mc");
   background_processes["hh_bb1l1tau"].push_back("VH");
   
   std::vector<std::string> background_process_parts;
   background_process_parts.push_back("");
-  background_process_parts.push_back("_conversion");
+  background_process_parts.push_back("_Convs");
   background_process_parts.push_back("_fake");
 
   double lumi_datacard = 41.5;
@@ -272,7 +272,7 @@ void dumpEventYields()
 	if ( integral_parts.size() > 1 ) {
 	  std::cout << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
 		    << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
-		    << " conversion = " << integral_parts["_conversion"] << " +/- " << integralErr_parts["_conversion"] << ")" << std::endl;
+		    << " conversion = " << integral_parts["_Convs"] << " +/- " << integralErr_parts["_Convs"] << ")" << std::endl;
 	}
       }
       for ( vstring::const_iterator background_process = background_processes[*channel].begin();
@@ -301,7 +301,7 @@ void dumpEventYields()
 	if ( integral_parts.size() > 1 ) {
 	  std::cout << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
 		    << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
-		    << " conversion = " << integral_parts["_conversion"] << " +/- " << integralErr_parts["_conversion"] << ")" << std::endl;
+		    << " conversion = " << integral_parts["_Convs"] << " +/- " << integralErr_parts["_Convs"] << ")" << std::endl;
 	}
       }
 

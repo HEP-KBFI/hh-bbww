@@ -15,7 +15,7 @@ process.fwliteOutput = cms.PSet(
 
 process.addSystFakeRates = cms.PSet(
 
-    process = cms.string("fakes_data"),
+    process = cms.string("data_fakes"),
 
     histogramToFit = cms.string("mvaOutput_final"),
     xAxisTitle = cms.string("MVA Discriminant"),

@@ -193,7 +193,7 @@ void compDYSF()
     
   std::vector<std::string> signal_processes;
   signal_processes.push_back("DY");
-  signal_processes.push_back("DY_conversion");
+  signal_processes.push_back("DY_Convs");
   signal_processes.push_back("DY_fake");
 
   std::vector<std::string> background_processes;
@@ -206,8 +206,8 @@ void compDYSF()
   background_processes.push_back("WZ");
   background_processes.push_back("ZZ");
   background_processes.push_back("W");
-  //background_processes.push_back("conversions");
-  //background_processes.push_back("fakes_data");
+  //background_processes.push_back("Convs");
+  //background_processes.push_back("data_fakes");
   //background_processes.push_back("fakes_mc");
   background_processes.push_back("VH");
   

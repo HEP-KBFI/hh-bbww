@@ -20,8 +20,8 @@ process.prepareDatacards = cms.PSet(
         "TTZ",
         "WZ",
         "Rares",
-        "fakes_data",
-        "flips_data"
+        "data_fakes",
+        "data_flips"
     ),
 
     sf_signal = cms.double(1.),

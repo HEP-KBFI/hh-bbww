@@ -81,9 +81,9 @@ process.makePlots = cms.PSet(
             WZ = cms.string("1.0 +/- 0.20"),
             DY = cms.string("1.0 +/- 0.20"),
             W = cms.string("1.0 +/- 0.20"),
-            fakes_data = cms.string("1.0 +/- 0.20"),
-            flips_data = cms.string("1.0 +/- 0.20"),
-            conversions = cms.string("1.0 +/- 0.20"),
+            data_fakes = cms.string("1.0 +/- 0.20"),
+            data_flips = cms.string("1.0 +/- 0.20"),
+            Convs = cms.string("1.0 +/- 0.20"),
             signal_spin0_400_hh = cms.string("1.0 +/- 0.20"),
         ),
         shape = cms.PSet(
