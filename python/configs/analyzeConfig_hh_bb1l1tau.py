@@ -198,15 +198,13 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
 
   def addToMakefile_backgrounds_from_data(self, lines_makefile,  make_target = "phony_addFakes", make_dependency = "phony_copyHistograms"):
     self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds", make_dependency, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
-    self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds_sum", "phony_addBackgrounds", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
-    #self.addToMakefile_hadd_stage1_5(lines_makefile, max_input_files_per_job = 2)
-    self.addToMakefile_hadd_stage1_5(lines_makefile, "phony_hadd_stage1_5", "phony_addBackgrounds_sum")
+    self.addToMakefile_hadd_stage1_5(lines_makefile, "phony_hadd_stage1_5", "phony_addBackgrounds")
+    self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds_sum", "phony_hadd_stage1_5", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
     self.addToMakefile_addFakes(lines_makefile, "phony_addFakes", "phony_hadd_stage1_5")
     if make_target != "phony_addFakes":
       lines_makefile.append("%s: %s" % (make_target, "phony_addFakes"))
       lines_makefile.append("")
-    self.make_dependency_hadd_stage2 = make_target
-
+    self.make_dependency_hadd_stage2 = " ".join([ "phony_addBackgrounds_sum", make_target ])
 
   def create(self):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
