@@ -259,6 +259,11 @@ int main(int argc, char* argv[])
 
 //--- declare event-level variables
   EventInfo eventInfo(isMC, isSignal);
+  const std::vector<edm::ParameterSet> tHweights = cfg_testMEM.getParameterSetVector("tHweights");
+  if((isMC_tH || isMC_ttH) && ! tHweights.empty())
+  {
+    eventInfo.loadWeight_tH(tHweights);
+  }
   EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
 
@@ -330,12 +335,6 @@ int main(int argc, char* argv[])
   }
   LHEInfoReader* lheInfoReader = new LHEInfoReader(hasLHE);
   inputTree->registerReader(lheInfoReader);
-
-  const std::vector<edm::ParameterSet> tHweights = cfg_testMEM.getParameterSetVector("tHweights");
-  if((isMC_tH || isMC_ttH) && ! tHweights.empty())
-  {
-    eventInfo.loadWeight_tH(tHweights);
-  }
 
   // information specific to HH signal
   GenParticleReader* genParticleFromHiggsReader = nullptr;
