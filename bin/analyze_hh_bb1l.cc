@@ -19,6 +19,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h" // GenLepton
 #include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
 #include "tthAnalysis/HiggsToTauTau/interface/GenHadTau.h" // GenHadTau
+#include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicity.h" // ObjectMultiplicity
 #include "tthAnalysis/HiggsToTauTau/interface/mvaAuxFunctions.h" // check_mvaInputs, get_mvaInputVariables
 #include "tthAnalysis/HiggsToTauTau/interface/mvaAuxFunctions_Hj_and_Hjj_taggers.h" // comp_mvaOutput_Hj_tagger, comp_mvaOutput_Hjj_tagger
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // auxiliary functions for computing input variables of the MVA used for signal extraction
@@ -36,6 +37,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonReader.h" // GenPhotonReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h" // GenJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoReader.h" // LHEInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicityReader.h" // ObjectMultiplicityReader
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionCleaner.h" // RecoElectronCollectionCleaner, RecoMuonCollectionCleaner, RecoJetCollectionCleaner
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionGenMatcher.h" // RecoElectronCollectionGenMatcher, RecoMuonCollectionGenMatcher, RecoJetCollectionGenMatcher
@@ -354,6 +356,7 @@ int main(int argc, char* argv[])
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
+  bool useObjectMultiplicity = cfg_analyze.getParameter<bool>("useObjectMultiplicity");
   std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
   double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
@@ -511,6 +514,14 @@ int main(int argc, char* argv[])
   }
   EventInfoHHReader eventInfoReader(&eventInfo, puSys_option);
   inputTree->registerReader(&eventInfoReader);
+
+  ObjectMultiplicity objectMultiplicity;
+  ObjectMultiplicityReader objectMultiplicityReader(&objectMultiplicity);
+  if(useObjectMultiplicity)
+  {
+    inputTree -> registerReader(&objectMultiplicityReader);
+  }
+  const int minLeptonSelection = std::min(electronSelection, muonSelection);
 
   hltPathReader hltPathReader_instance({ triggers_1e, triggers_1mu });
   inputTree->registerReader(&hltPathReader_instance);
@@ -890,6 +901,7 @@ int main(int argc, char* argv[])
   );
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
+    "object multiplicity",
     "trigger",
     ">= 1 presel leptons",
     ">= 1 sel leptons",
@@ -935,6 +947,21 @@ int main(int argc, char* argv[])
         std::cout << "input File = " << inputTree->getCurrentFileName() << std::endl;
       }
     }
+
+    if(useObjectMultiplicity)
+    {
+      if(objectMultiplicity.getNRecoLepton(minLeptonSelection) < 1 ||
+         objectMultiplicity.getNRecoLepton(kTight)             > 1  )
+      {
+        if(! isDEBUG || run_lumi_eventSelector)
+        {
+          std::cout << "event " << eventInfo.str() << " FAILS preliminary object multiplicity cuts\n";
+        }
+        continue;
+      }
+    }
+    cutFlowTable.update("object multiplicity");
+    cutFlowHistManager->fillHistograms("object multiplicity", lumiScale);
 
 //--- build collections of generator level particles (before any cuts are applied, to check distributions in unbiased event samples)
     std::vector<GenLepton> genLeptons;
