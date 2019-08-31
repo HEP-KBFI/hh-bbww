@@ -1,4 +1,4 @@
-from tthAnalysis.HiggsToTauTau.samples.tthAnalyzeSamples_2018 import samples_2018 as samples_2018_bkg
+from tthAnalysis.HiggsToTauTau.samples.tthAnalyzeSamples_2018_base import samples_2018 as samples_2018_bkg
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_hh import samples_2018 as samples_2018_hh
 
 from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples
