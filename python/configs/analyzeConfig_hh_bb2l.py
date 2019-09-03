@@ -204,18 +204,25 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
     """
     for sample_name, sample_info in self.samples.items():
-      if not sample_info["use_it"] or sample_info["sample_category"] in [ "additional_signal_overlap", "background_data_estimate" ]:
+      if not sample_info["use_it"]:
         continue
+
+      sample_category = sample_info["sample_category"]
+      is_mc = (sample_info["type"] == "mc")
       process_name = sample_info["process_name_specific"]
+
+      logging.info("Building dictionaries for sample %s..." % process_name)
       for lepton_charge_selection in self.lepton_charge_selections:
         for lepton_selection in self.lepton_selections:
           for lepton_frWeight in self.lepton_frWeights:
             if lepton_frWeight == "enabled" and not lepton_selection.startswith("Fakeable"):
               continue
+            if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
+              continue
+
             lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-            central_or_shifts_extended = [ "" ]
-            central_or_shifts_extended.extend(self.central_or_shifts)
-            central_or_shifts_extended.extend([ "hadd", "copyHistograms", "addBackgrounds" ])
+            central_or_shift_extensions = ["", "hadd", "copyHistograms", "addBackgrounds"]
+            central_or_shifts_extended = central_or_shift_extensions + self.central_or_shifts
             for central_or_shift_or_dummy in central_or_shifts_extended:
               process_name_extended = [ process_name, "hadd" ]
               for process_name_or_dummy in process_name_extended: 
@@ -225,6 +232,16 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 evtcategories_extended.extend(self.evtCategories)
                 if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
                   continue
+                if central_or_shift_or_dummy != "central" and central_or_shift_or_dummy not in central_or_shift_extensions:
+                  isFR_shape_shift = (central_or_shift_or_dummy in systematics.FR_all)
+                  if not ((lepton_selection == "Fakeable" and lepton_charge_selection == "OS" and isFR_shape_shift) or
+                          (lepton_selection == "Tight"    and lepton_charge_selection == "OS")):
+                    continue
+                  if not is_mc and not isFR_shape_shift:
+                    continue
+                  if not self.accept_central_or_shift(central_or_shift_or_dummy, sample_category, sample_name, sample_info['has_LHE']):
+                    continue
+
                 key_dir = getKey(process_name_or_dummy, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift_or_dummy)
                 for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT, DKEY_RLES, DKEY_SYNC ]:
                   initDict(self.dirs, [ key_dir, dir_type ])
@@ -298,30 +315,33 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             continue
           lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
           for sample_name, sample_info in self.samples.items():
-            if not sample_info["use_it"] or sample_info["sample_category"] in [ "additional_signal_overlap", "background_data_estimate" ]:
+            if not sample_info["use_it"]:
               continue
             process_name = sample_info["process_name_specific"]
             logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
+            inputFileList = inputFileLists[sample_name]
+
             sample_category = sample_info["sample_category"]
             is_mc = (sample_info["type"] == "mc")
             for central_or_shift in self.central_or_shifts:
-
-              inputFileList = inputFileLists[sample_name]
-              for jobId in inputFileList.keys():
-                if central_or_shift != "central":
-                  isFR_shape_shift = (central_or_shift in systematics.FR_all)
-                  if not ((lepton_selection == "Fakeable" and lepton_charge_selection == "OS" and isFR_shape_shift) or
-                          (lepton_selection == "Tight"    and lepton_charge_selection == "OS")):
-                    continue
-                  if not is_mc and not isFR_shape_shift:
-                    continue
-
-                if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name, sample_info['has_LHE']):
+              
+              if central_or_shift != "central":
+                isFR_shape_shift = (central_or_shift in systematics.FR_all)
+                if not ((lepton_selection == "Fakeable" and lepton_charge_selection == "OS" and isFR_shape_shift) or
+                        (lepton_selection == "Tight"    and lepton_charge_selection == "OS")):
+                  continue
+                if not is_mc and not isFR_shape_shift:
                   continue
 
-                logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
-                # build config files for executing analysis code
-                key_analyze_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift)
+              if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name, sample_info['has_LHE']):
+                continue
+
+              logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
+              # build config files for executing analysis code
+              key_analyze_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift)
+
+              for jobId in inputFileList.keys():
+                
                 analyze_job_tuple = (process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift, jobId)
                 key_analyze_job = getKey(*analyze_job_tuple)
                 ntupleFiles = inputFileList[jobId]
