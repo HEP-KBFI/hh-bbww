@@ -62,7 +62,7 @@ lumi = get_lumi(era)
 
 if mode == "default":
   samples_to_stitch = getattr(
-    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
+    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch"),
     "samples_to_stitch_{}".format(era)
   )
   samples = load_samples(era)

@@ -341,7 +341,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
                   if not is_mc and not isFR_shape_shift:
                     continue
 
-                if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name):
+                if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name, sample_info['has_LHE']):
                   continue
 
                 logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_and_hadTau_selection_and_frWeight, central_or_shift))

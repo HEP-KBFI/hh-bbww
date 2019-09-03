@@ -316,7 +316,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   if not is_mc and not isFR_shape_shift:
                     continue
 
-                if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name):
+                if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name, sample_info['has_LHE']):
                   continue
 
                 logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))

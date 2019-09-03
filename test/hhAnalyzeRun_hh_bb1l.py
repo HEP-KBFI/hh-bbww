@@ -64,7 +64,7 @@ lumi = get_lumi(era)
 
 if mode != "sync":
   samples_to_stitch = getattr(
-    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch_{}".format(era)),
+    importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch"),
     "samples_to_stitch_{}".format(era)
   )
 
