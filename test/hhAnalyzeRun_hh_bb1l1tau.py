@@ -25,6 +25,7 @@ parser.add_tau_id_wp()
 parser.add_hlt_filter()
 parser.add_files_per_job()
 parser.add_use_home()
+parser.add_sideband(default_choice = 'enabled')
 args = parser.parse_args()
 
 # Common arguments
@@ -47,6 +48,7 @@ use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
+sideband          = args.sideband
 
 # Use the arguments
 central_or_shifts = []
@@ -83,6 +85,15 @@ else:
 
 hadTau_mva_wp = "dR03mvaMedium"
 
+if sideband == 'disabled':
+  chargeSumSelections = [ "OS" ]
+elif sideband == 'enabled':
+  chargeSumSelections = [ "OS", "SS" ]
+elif sideband == 'only':
+  chargeSumSelections = [ "SS" ]
+else:
+  raise ValueError("Invalid choice for the sideband: %s" % sideband)
+
 if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
@@ -105,7 +116,7 @@ if __name__ == '__main__':
     cfgFile_analyze                       = "analyze_hh_bb1l1tau_cfg.py",
     samples                               = samples,
     hadTau_mva_wp                         = hadTau_mva_wp,
-    chargeSumSelections                   = [ "OS", "SS" ],
+    chargeSumSelections                   = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     evtCategories                         = evtCategories,

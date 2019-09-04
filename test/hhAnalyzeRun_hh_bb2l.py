@@ -26,6 +26,7 @@ parser.add_nonnominal()
 parser.add_hlt_filter()
 parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processed per job, as computation of HH mass with HME algorithm takes considerable time
 parser.add_use_home()
+parser.add_sideband(default_choice = 'enabled')
 args = parser.parse_args()
 
 # Common arguments
@@ -49,6 +50,7 @@ use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
+sideband          = args.sideband
 
 # Use the arguments
 central_or_shifts = []
@@ -157,6 +159,15 @@ else:
     "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_boostedHbb"
   ]
 
+if sideband == 'disabled':
+  chargeSumSelections = [ "OS" ]
+elif sideband == 'enabled':
+  chargeSumSelections = [ "OS", "SS" ]
+elif sideband == 'only':
+  chargeSumSelections = [ "SS" ]
+else:
+  raise ValueError("Invalid choice for the sideband: %s" % sideband)
+
 if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
@@ -174,7 +185,7 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hh_bb2l",
     cfgFile_analyze                       = "analyze_hh_bb2l_cfg.py",
     samples                               = samples,
-    lepton_charge_selections              = [ "OS", "SS" ],
+    lepton_charge_selections              = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     evtCategories                         = evtCategories,
