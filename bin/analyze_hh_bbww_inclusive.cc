@@ -334,7 +334,7 @@ main(int argc,
         // sort AK4 jets by their b-tagging score
         std::sort(selJets.begin(), selJets.end(), isHigherCSV);
         // pick the two AK4 jets with the highest b-tagging score
-        std::vector<const RecoJet *> selJetsAK4_Hbb = { selJets[0], selJets[1] };
+        const std::vector<const RecoJet *> selJetsAK4_Hbb = { selJets[0], selJets[1] };
         const std::vector<const RecoJetAK8 *> cleaned_selFatJetsLS = jetCleanerAK8_dR12(fatJetLS_ptrs, selJetsAK4_Hbb);
         if(isDEBUG)
         {
