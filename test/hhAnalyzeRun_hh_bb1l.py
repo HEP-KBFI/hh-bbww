@@ -27,6 +27,7 @@ parser.add_tau_id_wp()
 parser.add_hlt_filter()
 parser.add_files_per_job() 
 parser.add_use_home()
+parser.add_tau_id()
 args = parser.parse_args()
 
 # Common arguments
@@ -50,6 +51,7 @@ use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
+tau_id            = args.tau_id
 
 # Use the arguments
 central_or_shifts = []
@@ -191,7 +193,11 @@ else:
     "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity"
   ]
 
-hadTau_mva_wp_veto = "dR03mvaMedium"
+hadTauWP_veto_map = {
+  'dR03mva' : 'Medium',
+  'deepVSj' : 'Medium',
+}
+hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
 
 if __name__ == '__main__':
   logging.info(
@@ -205,7 +211,7 @@ if __name__ == '__main__':
     samples = filter_samples(samples, sample_filter)
 
   if args.tau_id_wp:
-    logging.info("Changing tau ID working point: %s -> %s" % (hadTau_mva_wp_veto, args.tau_id_wp))
+    logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection_veto, args.tau_id_wp))
     hadTau_mva_wp_veto = args.tau_id_wp
 
   analysis = analyzeConfig_hh_bb1l(
@@ -215,7 +221,7 @@ if __name__ == '__main__':
     cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
     samples                               = samples,
     apply_hadTauVeto                      = False,
-    hadTau_mva_wp_veto                    = hadTau_mva_wp_veto,
+    hadTau_mva_wp_veto                    = hadTau_selection_veto,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     evtCategories                         = evtCategories,

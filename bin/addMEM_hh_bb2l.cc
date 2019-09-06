@@ -159,13 +159,7 @@ int main(int argc,
   EventInfoReader eventInfoReader(&eventInfo);
   eventInfoReader.setBranchAddresses(inputTree);
 
-  // CV: temporarily disable maxPermutations_branchName, because it requires a new Ntuple production
-  //const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName(
-  //  "hh_bb2l", leptonSelection_string, "", ""
-  //);
-  const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName(
-    "2lss_1tau", "Fakeable", "Loose", "dR03mvaVVLoose"
-  );
+  const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName("hh_bb2l", leptonSelection_string);
 
 //--- declare particle collections
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);

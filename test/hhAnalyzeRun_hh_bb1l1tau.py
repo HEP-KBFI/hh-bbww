@@ -26,6 +26,7 @@ parser.add_hlt_filter()
 parser.add_files_per_job()
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
+parser.add_tau_id()
 args = parser.parse_args()
 
 # Common arguments
@@ -49,6 +50,7 @@ hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
 sideband          = args.sideband
+tau_id            = args.tau_id
 
 # Use the arguments
 central_or_shifts = []
@@ -83,7 +85,11 @@ if mode == "default" and len(central_or_shifts) <= 1:
 else:
   evtCategories = []
 
-hadTau_mva_wp = "dR03mvaMedium"
+hadTauWP_map = {
+  'dR03mva' : 'Medium',
+  'deepVSj' : 'Medium',
+}
+hadTau_selection = tau_id + hadTauWP_map[tau_id]
 
 if sideband == 'disabled':
   chargeSumSelections = [ "OS" ]
@@ -106,7 +112,7 @@ if __name__ == '__main__':
     samples = filter_samples(samples, sample_filter)
 
   if args.tau_id_wp:
-    logging.info("Changing tau ID working point: %s -> %s" % (hadTau_mva_wp , args.tau_id_wp))
+    logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection , args.tau_id_wp))
     hadTau_mva_wp = args.tau_id_wp
 
   analysis = analyzeConfig_hh_bb1l1tau(
@@ -115,7 +121,7 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hh_bb1l1tau",
     cfgFile_analyze                       = "analyze_hh_bb1l1tau_cfg.py",
     samples                               = samples,
-    hadTau_mva_wp                         = hadTau_mva_wp,
+    hadTau_mva_wp                         = hadTau_selection,
     chargeSumSelections                   = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,

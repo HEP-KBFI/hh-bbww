@@ -55,11 +55,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     )
     logging.info("Templates directory is: {templateDir}".format(templateDir = self.template_dir))
     self.cfgFile_addMEM_original = os.path.join(self.template_dir, "addMEM_hh_bb2l_cfg.py")
-    ## CV: temporarily disable maxPermutations_branchName, because it requires a new Ntuple production
-    ##self.maxPermutations_branchName = "maxPermutations_addMEM_%s_lep%s" % ( 
-    ##  self.channel, self.leptonSelection
-    ##)
-    self.maxPermutations_branchName = "maxPermutations_addMEM_2lss_1tau_lepFakeable_tauLoose_dR03mvaVVLoose"
+    self.maxPermutations_branchName = "maxPermutations_addMEM_%s_lep%s" % (self.channel, self.leptonSelection)
     print("WARNING: Temporarily using maxPermutations_branchName = '%s' for DEBUGging purposes. This is not the correct branch !!" % self.maxPermutations_branchName)
     self.isDebug = isDebug
     self.central_or_shift = central_or_shift
