@@ -1297,7 +1297,7 @@ int main(int argc, char* argv[])
     heavyMassEstimator hmeAlgo(
       &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
       PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);
+      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection, isDEBUG ? 5 : 0);
     double m_HH_hme = -1.;
     bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
     if ( hme_isValidSolution ) {
