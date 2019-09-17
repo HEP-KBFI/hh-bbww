@@ -4,7 +4,7 @@ from hhAnalysis.bbww.configs.analyzeConfig_hh_bbWW_DYctrl import analyzeConfig_h
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
-from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
+from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples, load_samples_stitched
 
 import os
 import sys
@@ -25,6 +25,7 @@ parser.add_tau_id_wp()
 parser.add_hlt_filter()
 parser.add_files_per_job()
 parser.add_use_home()
+parser.add_stitched(use_dy = True, use_wj = False)
 args = parser.parse_args()
 
 # Common arguments
@@ -47,6 +48,7 @@ use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
+use_stitched      = args.use_stitched
 
 # Use the arguments
 central_or_shifts = []
@@ -60,6 +62,8 @@ if mode == "default":
   samples = load_samples(era)
 else:
   raise ValueError("Internal logic error")
+
+samples = load_samples_stitched(samples, era, load_dy = 'dy' in use_stitched, load_wjets = 'wjets' in use_stitched)
 
 if __name__ == '__main__':
   logging.info(
