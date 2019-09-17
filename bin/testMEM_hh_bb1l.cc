@@ -1061,7 +1061,8 @@ int main(int argc, char* argv[])
     dataToMCcorrectionInterface->setLeptons(selLepton_type, selLepton->pt(), selLepton->eta());
 
 //--- apply data/MC corrections for trigger efficiency
-    double sf_triggerEff = dataToMCcorrectionInterface->getSF_leptonTriggerEff();
+    const TriggerSFsys triggerSF_option = getTriggerSF_option(central_or_shift);
+    double sf_triggerEff = dataToMCcorrectionInterface->getSF_leptonTriggerEff(triggerSF_option);
     if ( isDEBUG ) {
       std::cout << "sf_triggerEff = " << sf_triggerEff << std::endl;
     }
