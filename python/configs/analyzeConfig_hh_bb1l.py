@@ -412,7 +412,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'apply_hlt_filter'         : self.hlt_filter,
                 'useNonNominal'            : self.use_nonnominal,
                 'fillGenEvtHistograms'     : True,
-                'useObjectMultiplicity'    : False,
+                'useObjectMultiplicity'    : True,
                 'syncOutput'               : syncOutput,
                 'syncTree'                 : syncTree,
                 'syncRLE'                  : syncRLE,
