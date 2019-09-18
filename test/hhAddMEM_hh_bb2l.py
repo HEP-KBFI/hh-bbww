@@ -22,6 +22,7 @@ mode_choices = {
 parser = tthAnalyzeParser(isAddMEM = True)
 parser.add_modes(mode_choices.keys())
 parser.add_sys(sys_choices)
+parser.add_preselect()
 parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_argument('-n', '--max-mem-integrations',
@@ -46,6 +47,7 @@ running_method     = args.running_method
 # Additional arguments
 mode              = args.mode
 systematics_label = args.systematics
+use_preselected   = args.use_preselected
 use_nonnominal    = args.original_central
 use_home          = args.use_home
 
@@ -62,7 +64,16 @@ version = "%s_%s_%s" % (
   version, mode, 'nonNom' if use_nonnominal else 'nom'
 )
 
-samples = load_samples(era, suffix = mode if mode != "default" else "")
+if mode == "default":
+  samples = load_samples(era, suffix = "preselected" if use_preselected else "")
+elif mode == "BDT":
+  if use_preselected:
+    raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
+  samples = load_samples(era, suffix = "BDT")
+elif mode == "sync":
+  samples = load_samples(era, suffix = "sync")
+else:
+  raise ValueError("Invalid mode: %s" % mode)
 
 if __name__ == '__main__':
   logging.basicConfig(
@@ -75,6 +86,8 @@ if __name__ == '__main__':
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
     ', '.join(central_or_shifts)
   )
+  if not use_preselected:
+    logging.warning('Running the analysis on fully inclusive samples!')
 
   if sample_filter:
     samples = filter_samples(samples, sample_filter)

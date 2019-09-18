@@ -59,7 +59,7 @@ for systematic_label in systematics_label:
 lumi = get_lumi(era)
 
 if mode == "default":
-  samples = load_samples(era)
+  samples = load_samples(era, suffix = "preselected" if use_preselected else "")
 else:
   raise ValueError("Internal logic error")
 
