@@ -65,6 +65,17 @@ else:
 
 samples = load_samples_stitched(samples, era, load_dy = 'dy' in use_stitched, load_wjets = 'wjets' in use_stitched)
 
+blacklisted_categories = []
+for sample_name, sample_info in samples.items():
+  if sample_name == 'sum_events':
+    continue
+  if sample_name.startswith(('/MuonEG/', '/Tau/')):
+    sample_info["use_it"] = False
+  if sample_info["process_name_specific"].startswith('signal') and 'hh' in sample_info["process_name_specific"]:
+    sample_info["use_it"] = False
+  if sample_info["sample_category"] in blacklisted_categories:
+    sample_info["use_it"] = False
+
 if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
