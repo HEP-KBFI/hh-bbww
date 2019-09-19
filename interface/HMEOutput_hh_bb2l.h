@@ -21,21 +21,12 @@ public:
    * @brief Funtions to access data-members
    * @return Values of data-members
    */
-<<<<<<< HEAD
-  inline Int_t type()                const { return type_; }
-  inline Float_t m_HH_hme()     const { return m_HH_hme_; }
-  inline Float_t cpuTime()           const { return cpuTime_; }
-  inline Float_t realTime()          const { return realTime_; }
-  inline Int_t isValid()             const { return isValid_; }
-  inline Int_t errorFlag()           const { return errorFlag_; }
-=======
   inline Int_t type()       const { return type_; }
   inline Float_t m_HH_hme() const { return m_HH_hme_; }
   inline Float_t cpuTime()  const { return cpuTime_; }
   inline Float_t realTime() const { return realTime_; }
   inline Int_t isValid()    const { return isValid_; }
   inline Int_t errorFlag()  const { return errorFlag_; }
->>>>>>> c36b464bd8141e4e029b19d7f5b0fd84cfe65f63
 
   inline bool is_initialized() const { return eventInfo_.is_initialized(); }
 
@@ -46,11 +37,7 @@ public:
   fillInputs(const RecoLepton * leadLepton,
              const RecoLepton * subleadLepton,
              const RecoJetBase * bjet1,
-<<<<<<< HEAD
-	     const RecoJetBase * bjet2);
-=======
              const RecoJetBase * bjet2);
->>>>>>> c36b464bd8141e4e029b19d7f5b0fd84cfe65f63
 
   EventInfo eventInfo_;
   Float_t leadLepton_eta_;
