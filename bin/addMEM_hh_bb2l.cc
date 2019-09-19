@@ -120,6 +120,24 @@ int main(int argc,
     throw cms::Exception(argv[0]) << "central_or_shift cannot be empty! provide at least 'central'!";
   }
 
+  std::vector<std::string> central_or_shifts;
+  for(const std::string & central_or_shift_mem: central_or_shifts_mem)
+  {
+    if(std::find(central_or_shifts.begin(), central_or_shifts.end(), central_or_shift_mem) == central_or_shifts.end())
+    {
+      central_or_shifts.push_back(central_or_shift_mem);
+    }
+  }
+  for(const std::string & central_or_shift_hme: central_or_shifts_hme)
+  {
+    if(std::find(central_or_shifts.begin(), central_or_shifts.end(), central_or_shift_hme) == central_or_shifts.end())
+    {
+      central_or_shifts.push_back(central_or_shift_hme);
+    }
+  }
+  const int nof_central_or_shift_mem = central_or_shifts_mem.size();
+  const int nof_central_or_shift_hme = central_or_shifts_hme.size();
+
   MEMInterface_hh_bb2l memInterface_hh_bb2l;
   HMEInterface_hh_bb2l hmeInterface_hh_bb2l;
 
@@ -352,6 +370,7 @@ int main(int argc,
   int analyzedEntries = 0;
   int selectedEntries = 0;
   int memComputations = 0;
+  int hmeComputations = 0;
   cutFlowTableType cutFlowTable;
   for ( int idxEntry = skipEvents; idxEntry < numEntries && (maxEvents == -1 || idxEntry < (skipEvents + maxEvents)); ++idxEntry )
   {
@@ -443,10 +462,10 @@ int main(int argc,
     }
 
     for ( const std::string & central_or_shift: central_or_shifts_hme )
-      {
-        hmeOutputs_hh_bb2l[central_or_shift] = {};
-        hmeOutputs_hh_bb2l_missingBJet[central_or_shift] = {};
-      }
+    {
+      hmeOutputs_hh_bb2l[central_or_shift] = {};
+      hmeOutputs_hh_bb2l_missingBJet[central_or_shift] = {};
+    }
 
 
 //--- fill the branches here since because we want to re-use the readers
@@ -476,7 +495,8 @@ int main(int argc,
     }
     if ( maxPermutations_addMEM_hh_bb2l >= 1 )
     {
-      int idxPermutation = -1;
+      int idxPermutation_mem = 0;
+      int idxPermutation_hme = 0;
       const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons);
       for ( std::size_t selLepton_lead_idx = 0; selLepton_lead_idx < selLeptons.size(); ++selLepton_lead_idx )
       {
@@ -484,233 +504,169 @@ int main(int argc,
         for ( std::size_t selLepton_sublead_idx = selLepton_lead_idx + 1; selLepton_sublead_idx < selLeptons.size(); ++selLepton_sublead_idx )
         {
           const RecoLepton * selLepton_sublead = selLeptons[selLepton_sublead_idx];
-          if ( method_MEM )
+          for ( const std::string & central_or_shift: central_or_shifts )
           {
-            for ( const std::string & central_or_shift: central_or_shifts_mem )
+            checkOptionValidity(central_or_shift, isMC);
+            const int jetPt_option = getJet_option(central_or_shift, isMC);
+            const int met_option   = getMET_option(central_or_shift, isMC);
+
+            if ( jetPt_option == kJetMET_central &&
+                 met_option   == kJetMET_central &&
+                 central_or_shift != "central")
             {
-              checkOptionValidity(central_or_shift, isMC);
-              const int jetPt_option = getJet_option(central_or_shift, isMC);
-              const int met_option   = getMET_option(central_or_shift, isMC);
+              std::cout << "Skipping systematics: " << central_or_shift << '\n';
+              continue;
+            }
+            if(isDEBUG)
+            {
+              std::cout << "Attempting to evaluate the MEM/HME score for systematics: " << central_or_shift << '\n';
+            }
+            const bool is_central_or_shift_mem = std::find(
+                central_or_shifts_mem.begin(), central_or_shifts_mem.end(), central_or_shift
+              ) != central_or_shifts_mem.end()
+            ;
+            const bool is_central_or_shift_hme = std::find(
+                central_or_shifts_hme.begin(), central_or_shifts_hme.end(), central_or_shift
+              ) != central_or_shifts_hme.end()
+            ;
 
-              if ( jetPt_option == kJetMET_central &&
-                   met_option   == kJetMET_central &&
-                   central_or_shift != "central")
+            jetReaderAK4->setPtMass_central_or_shift(jetPt_option);
+            //jetReaderAK8->setPtMass_central_or_shift(jetPt_option);
+            metReader->setMEt_central_or_shift(met_option);
+
+            const std::vector<RecoJet> jets_ak4_mem = jetReaderAK4->read();
+            const std::vector<const RecoJet*> jet_ptrs_ak4_mem = convert_to_ptrs(jets_ak4_mem);
+            const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4_mem, fakeableLeptons);
+            const std::vector<RecoJetAK8> jets_ak8_mem = jetReaderAK8->read();
+            const std::vector<const RecoJetAK8*> jet_ptrs_ak8_mem = convert_to_ptrs(jets_ak8_mem);
+            const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_mem, fakeableLeptons);
+            const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
+            const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+            //-------------------------------------------------------------------
+            // select the two jets from the H->bb decay from either the AK4 (resolved H->bb) or AK8 (boosted H->bb) collection
+            //
+            // WARNING: logic to select the two jets from H->bb decay needs to match the code in analyze_hh_bb2l.cc !!
+            const RecoJetAK8* selJetAK8_Hbb = nullptr;
+            const RecoJetBase* selJet1_Hbb = nullptr;
+            const RecoJetBase* selJet2_Hbb = nullptr;
+            if ( selJetsAK8_Hbb.size() >= 1 )
+            {
+              selJetAK8_Hbb = selJetsAK8_Hbb[0];
+              assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
+              if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
               {
-                std::cout << "Skipping systematics: " << central_or_shift << '\n';
-                continue;
+                selJet1_Hbb = selJetAK8_Hbb->subJet1();
+                selJet2_Hbb = selJetAK8_Hbb->subJet2();
               }
-              if(isDEBUG)
+              else
               {
-                std::cout << "Attempting to evaluate the MEM score for systematics: " << central_or_shift << '\n';
+                selJet1_Hbb = selJetAK8_Hbb->subJet2();
+                selJet2_Hbb = selJetAK8_Hbb->subJet1();
               }
+            }
+            else if ( selJetsAK4_Hbb.size() >= 2 )
+            {
+              selJet1_Hbb = selJetsAK4_Hbb[0];
+              selJet2_Hbb = selJetsAK4_Hbb[1];
+            }
+            //-------------------------------------------------------------------
 
-              jetReaderAK4->setPtMass_central_or_shift(jetPt_option);
-              //jetReaderAK8->setPtMass_central_or_shift(jetPt_option);
-              metReader->setMEt_central_or_shift(met_option);
+            const RecoMEt met_mem = metReader->read();
 
-              const std::vector<RecoJet> jets_ak4_mem = jetReaderAK4->read();
-              const std::vector<const RecoJet*> jet_ptrs_ak4_mem = convert_to_ptrs(jets_ak4_mem);
-              const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4_mem, fakeableLeptons);
-              const std::vector<RecoJetAK8> jets_ak8_mem = jetReaderAK8->read();
-              const std::vector<const RecoJetAK8*> jet_ptrs_ak8_mem = convert_to_ptrs(jets_ak8_mem);
-              const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_mem, fakeableLeptons);
-              const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
-              const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-              //-------------------------------------------------------------------
-              // select the two jets from the H->bb decay from either the AK4 (resolved H->bb) or AK8 (boosted H->bb) collection
-              //
-              // WARNING: logic to select the two jets from H->bb decay needs to match the code in analyze_hh_bb2l.cc !!
-              const RecoJetAK8* selJetAK8_Hbb = nullptr;
-              const RecoJetBase* selJet1_Hbb = nullptr;
-              const RecoJetBase* selJet2_Hbb = nullptr;
-              if ( selJetsAK8_Hbb.size() >= 1 )
+            if ( selJet1_Hbb && selJet2_Hbb )
+            {
+              const bool run_mem = method_MEM && is_central_or_shift_mem &&
+                idxPermutation_mem <=  maxPermutations_addMEM_hh_bb2l * nof_central_or_shift_mem
+              ;
+              const bool run_hme = method_HME && is_central_or_shift_hme &&
+                idxPermutation_hme <=  maxPermutations_addMEM_hh_bb2l * nof_central_or_shift_hme
+              ;
+              if ( run_mem )
               {
-                selJetAK8_Hbb = selJetsAK8_Hbb[0];
-                assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
-                if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
+                ++idxPermutation_mem;
+                std::cout << "computing MEM for " << eventInfo
+                          << " (idxPermutation = " << idxPermutation_mem << "):\n"
+                  "inputs:\n"
+                          << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
+                          << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
+                          << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
+                          << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
+                          << " MET:                " << met << "\n";
+
+                MEMOutput_hh_bb2l memOutput_hh_bb2l;
+                MEMOutput_hh_bb2l memOutput_hh_bb2l_missingBJet;
+                if ( dryRun )
                 {
-                  selJet1_Hbb = selJetAK8_Hbb->subJet1();
-                  selJet2_Hbb = selJetAK8_Hbb->subJet2();
+                  memOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
+                  memOutput_hh_bb2l_missingBJet.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr);
                 }
                 else
                 {
-                  selJet1_Hbb = selJetAK8_Hbb->subJet2();
-                  selJet2_Hbb = selJetAK8_Hbb->subJet1();
+                  memOutput_hh_bb2l = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met_mem);
+                  memOutput_hh_bb2l_missingBJet = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr, met);
                 }
-              }
-              else if ( selJetsAK4_Hbb.size() >= 2 )
-              {
-                selJet1_Hbb = selJetsAK4_Hbb[0];
-                selJet2_Hbb = selJetsAK4_Hbb[1];
-              }
-              //-------------------------------------------------------------------
+                memOutput_hh_bb2l.eventInfo_ = eventInfo;
+                memOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
+                std::cout << "output (" << central_or_shift << "): " << memOutput_hh_bb2l;
+                std::cout << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet;
+                memOutputs_hh_bb2l[central_or_shift].push_back(memOutput_hh_bb2l);
+                memOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(memOutput_hh_bb2l_missingBJet);
 
-              const RecoMEt met_mem = metReader->read();
-
-              if ( selJet1_Hbb && selJet2_Hbb )
-              {
-                ++idxPermutation;
-                if ( idxPermutation <  maxPermutations_addMEM_hh_bb2l * (int) central_or_shifts_mem.size() )
-                {
-                  std::cout << "computing MEM for " << eventInfo
-                            << " (idxPermutation = " << idxPermutation << "):\n"
-                    "inputs:\n"
-                            << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
-                            << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
-                            << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
-                            << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
-                            << " MET:                " << met << "\n";
-
-                  MEMOutput_hh_bb2l memOutput_hh_bb2l;
-                  MEMOutput_hh_bb2l memOutput_hh_bb2l_missingBJet;
-                  if ( dryRun )
-                  {
-                    memOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
-                    memOutput_hh_bb2l_missingBJet.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr);
-                  }
-                  else
-                  {
-                    memOutput_hh_bb2l = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met_mem);
-                    memOutput_hh_bb2l_missingBJet = memInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr, met);
-                  }
-                  memOutput_hh_bb2l.eventInfo_ = eventInfo;
-                  memOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
-                  std::cout << "output (" << central_or_shift << "): " << memOutput_hh_bb2l;
-                  std::cout << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet;
-                  memOutputs_hh_bb2l[central_or_shift].push_back(memOutput_hh_bb2l);
-                  memOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(memOutput_hh_bb2l_missingBJet);
-
-                  ++memComputations;
-                } // idxPermutation < maxPermutations_addMEM_hh_bb2l
-                else if ( idxPermutation == maxPermutations_addMEM_hh_bb2l ) // CV: print warning only once per event
-                {
-                  std::cout << "Warning in " << eventInfo << ":\n"
-                    "Number of permutations exceeds 'maxPermutations_addMEM_hh_bb2l' = "
-                            << maxPermutations_addMEM_hh_bb2l << " --> skipping MEM computation after "
-                            << maxPermutations_addMEM_hh_bb2l << " permutations !!\n";
-                }
-
+                ++memComputations;
                 if ( isDEBUG )
                 {
                   std::cout << "#memOutputs_hh_bb2l = " << memOutputs_hh_bb2l[central_or_shift].size() << '\n';
                 }
-              } // selJet1_Hbb && selJet2_Hbb
-            } // central_or_shift
-          } // method_MEM
-
-          if ( method_HME)
-          {
-            for ( const std::string & central_or_shift: central_or_shifts_hme )
-            {
-              checkOptionValidity(central_or_shift, isMC);
-              const int jetPt_option = getJet_option(central_or_shift, isMC);
-              const int met_option   = getMET_option(central_or_shift, isMC);
-
-              if ( jetPt_option == kJetMET_central &&
-                   met_option   == kJetMET_central &&
-                   central_or_shift != "central")
-              {
-                std::cout << "Skipping systematics: " << central_or_shift << '\n';
-                continue;
               }
-              if(isDEBUG)
+              if ( run_hme )
               {
-                std::cout << "Attempting to evaluate the HME score for systematics: " << central_or_shift << '\n';
-              }
+                ++idxPermutation_hme;
+                std::cout << "computing HME for " << eventInfo
+                          << " (idxPermutation = " << idxPermutation_hme << "):\n"
+                  "inputs:\n"
+                          << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
+                          << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
+                          << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
+                          << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
+                          << " MET:                " << met << "\n";
 
-              jetReaderAK4->setPtMass_central_or_shift(jetPt_option);
-              //jetReaderAK8->setPtMass_central_or_shift(jetPt_option);
-              metReader->setMEt_central_or_shift(met_option);
+                HMEOutput_hh_bb2l hmeOutput_hh_bb2l;
+                HMEOutput_hh_bb2l hmeOutput_hh_bb2l_missingBJet;
 
-              const std::vector<RecoJet> jets_ak4_hme = jetReaderAK4->read();
-              const std::vector<const RecoJet*> jet_ptrs_ak4_hme = convert_to_ptrs(jets_ak4_hme);
-              const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4_hme, fakeableLeptons);
-              const std::vector<RecoJetAK8> jets_ak8_hme = jetReaderAK8->read();
-              const std::vector<const RecoJetAK8*> jet_ptrs_ak8_hme = convert_to_ptrs(jets_ak8_hme);
-              const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_hme, fakeableLeptons);
-              const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
-              const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-              //-------------------------------------------------------------------
-              // select the two jets from the H->bb decay from either the AK4 (resolved H->bb) or AK8 (boosted H->bb) collection
-              //
-              // WARNING: logic to select the two jets from H->bb decay needs to match the code in analyze_hh_bb2l.cc !!
-              const RecoJetAK8* selJetAK8_Hbb = nullptr;
-              const RecoJetBase* selJet1_Hbb = nullptr;
-              const RecoJetBase* selJet2_Hbb = nullptr;
-              if ( selJetsAK8_Hbb.size() >= 1 )
-              {
-                selJetAK8_Hbb = selJetsAK8_Hbb[0];
-                assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
-                if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
+                if ( dryRun )
                 {
-                  selJet1_Hbb = selJetAK8_Hbb->subJet1();
-                  selJet2_Hbb = selJetAK8_Hbb->subJet2();
+                  hmeOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
+                  hmeOutput_hh_bb2l_missingBJet.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr);
                 }
                 else
                 {
-                  selJet1_Hbb = selJetAK8_Hbb->subJet2();
-                  selJet2_Hbb = selJetAK8_Hbb->subJet1();
+                  const int ievent = eventInfo.event;
+                  hmeOutput_hh_bb2l = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met_mem, ievent);
                 }
-              }
-              else if ( selJetsAK4_Hbb.size() >= 2 )
-              {
-                selJet1_Hbb = selJetsAK4_Hbb[0];
-                selJet2_Hbb = selJetsAK4_Hbb[1];
-              }
-              //-------------------------------------------------------------------
-              const RecoMEt met_hme = metReader->read();
+                hmeOutput_hh_bb2l.eventInfo_ = eventInfo;
+                hmeOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
+                std::cout << "output (" << central_or_shift << "): " << hmeOutput_hh_bb2l;
+                std::cout << "output (missing b-jet, " << central_or_shift << "): " << hmeOutput_hh_bb2l_missingBJet;
+                hmeOutputs_hh_bb2l[central_or_shift].push_back(hmeOutput_hh_bb2l);
+                hmeOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(hmeOutput_hh_bb2l_missingBJet);
 
-              if ( selJet1_Hbb && selJet2_Hbb )
-              {
-                ++idxPermutation;
-                if ( idxPermutation <  maxPermutations_addMEM_hh_bb2l * (int) central_or_shifts_hme.size() )
-                {
-                  std::cout << "computing HME for " << eventInfo
-                            << " (idxPermutation = " << idxPermutation << "):\n"
-                    "inputs:\n"
-                            << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
-                            << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
-                            << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
-                            << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
-                            << " MET:                " << met << "\n";
-
-                  HMEOutput_hh_bb2l hmeOutput_hh_bb2l;
-                  HMEOutput_hh_bb2l hmeOutput_hh_bb2l_missingBJet;
-
-                  if ( dryRun )
-                  {
-                    hmeOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
-                    hmeOutput_hh_bb2l_missingBJet.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, nullptr);
-                  }
-                  else
-                  {
-                    const int ievent = eventInfo.event;
-                    hmeOutput_hh_bb2l = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met_hme, ievent);
-                  }
-                  hmeOutput_hh_bb2l.eventInfo_ = eventInfo;
-                  hmeOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
-                  std::cout << "output (" << central_or_shift << "): " << hmeOutput_hh_bb2l;
-                  std::cout << "output (missing b-jet, " << central_or_shift << "): " << hmeOutput_hh_bb2l_missingBJet;
-                  hmeOutputs_hh_bb2l[central_or_shift].push_back(hmeOutput_hh_bb2l);
-                  hmeOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(hmeOutput_hh_bb2l_missingBJet);
-
-                  ++memComputations;
-                } // idxPermutation < maxPermutations_addMEM_hh_bb2l
-                else if ( idxPermutation == maxPermutations_addMEM_hh_bb2l ) // CV: print warning only once per event
-                {
-                  std::cout << "Warning in " << eventInfo << ":\n"
-                    "Number of permutations exceeds 'maxPermutations_addMEM_hh_bb2l' = "
-                            << maxPermutations_addMEM_hh_bb2l << " --> skipping HME computation after "
-                            << maxPermutations_addMEM_hh_bb2l << " permutations !!\n";
-                }
-
+                ++hmeComputations;
                 if ( isDEBUG )
                 {
                   std::cout << "#hmeOutputs_hh_bb2l = " << hmeOutputs_hh_bb2l[central_or_shift].size() << '\n';
                 }
-              } // selJet1_Hbb && selJet2_Hbb
-            } // central_or_shifts_hme
-          } // metod_HME
+              }
+
+              if ( idxPermutation_mem == maxPermutations_addMEM_hh_bb2l || idxPermutation_hme == maxPermutations_addMEM_hh_bb2l )
+              {
+                // CV: print warning only once per event
+                std::cout << "Warning in " << eventInfo << ":\n"
+                  "Number of permutations exceeds 'maxPermutations_addMEM_hh_bb2l' = "
+                          << maxPermutations_addMEM_hh_bb2l << " --> skipping MEM/HME computation after "
+                          << maxPermutations_addMEM_hh_bb2l << " permutations !!\n";
+              }
+            } // selJet1_Hbb && selJet2_Hbb
+          } // central_or_shift
         } // selLepton_sublead_idx
       } // selLepton_lead_idx
     } // maxPermutations_addMEM_hh_bb2l >= 1
@@ -731,11 +687,12 @@ int main(int argc,
     ++selectedEntries;
   } // idxEntry
 
-  std::cout << "num. Entries = "  << numEntries << "\n"
-               " analyzed = "     << analyzedEntries << "\n"
-               " selected = "     << selectedEntries << "\n"
+  std::cout << "num. Entries = "      << numEntries      << "\n"
+               " analyzed = "         << analyzedEntries << "\n"
+               " selected = "         << selectedEntries << "\n"
                "#MEM computations = " << memComputations << "\n"
-               "cut-flow table\n" << cutFlowTable << "\n"
+               "#HME computations = " << memComputations << "\n"
+               "cut-flow table\n"     << cutFlowTable    << "\n"
                "output Tree:\n";
   if(isDEBUG)
   {
