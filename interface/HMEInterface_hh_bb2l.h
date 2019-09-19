@@ -28,9 +28,9 @@ public:
   operator()(const RecoLepton * selLepton_lead,
              const RecoLepton * selLepton_sublead,
              const RecoJetBase * selJet_Hbb_lead,
-	     const RecoJetBase * selJet_Hbb_sublead,
+             const RecoJetBase * selJet_Hbb_sublead,
              const RecoMEt & met,
-	     const int & ievent) const;
+             const int & ievent) const;
 
  private:
   //heavyMassEstimator * hmeAlgo_;

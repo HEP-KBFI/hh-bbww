@@ -3,7 +3,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/BranchAddressInitializer.h" // BranchAddressInitializer, TTree, Form()
 
 HMEOutputWriter_hh_bb2l::HMEOutputWriter_hh_bb2l(const std::string & branchName_num,
-						 const std::string & branchName_obj)
+                                                 const std::string & branchName_obj)
   : max_nHMEOutputs_(100)
   , branchName_num_(branchName_num)
   , branchName_obj_(branchName_obj)

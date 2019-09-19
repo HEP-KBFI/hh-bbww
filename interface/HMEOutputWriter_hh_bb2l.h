@@ -12,7 +12,7 @@ class HMEOutputWriter_hh_bb2l
 {
 public:
   HMEOutputWriter_hh_bb2l(const std::string & branchName_num,
-			  const std::string & branchName_obj);
+                          const std::string & branchName_obj);
   ~HMEOutputWriter_hh_bb2l();
 
   /**

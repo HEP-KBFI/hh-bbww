@@ -9,7 +9,7 @@ std::map<std::string, int> HMEOutputReader_hh_bb2l::numInstances_;
 std::map<std::string, HMEOutputReader_hh_bb2l *> HMEOutputReader_hh_bb2l::instances_;
 
 HMEOutputReader_hh_bb2l::HMEOutputReader_hh_bb2l(const std::string & branchName_num,
-						 const std::string & branchName_obj)
+                                                 const std::string & branchName_obj)
   : max_nHMEOutputs_(100)
   , branchName_num_(branchName_num)
   , branchName_obj_(branchName_obj)
@@ -86,7 +86,7 @@ HMEOutputReader_hh_bb2l::setBranchNames()
     branchName_bjet2_phi_             = Form("%s_%s", branchName_obj_.data(), "bjet2_phi");
     branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
     branchName_type_                  = Form("%s_%s", branchName_obj_.data(), "type");
-    branchName_m_HH_hme_         = Form("%s_%s", branchName_obj_.data(), "m_HH_hme");
+    branchName_m_HH_hme_              = Form("%s_%s", branchName_obj_.data(), "m_HH_hme");
     branchName_cpuTime_               = Form("%s_%s", branchName_obj_.data(), "cpuTime");
     branchName_realTime_              = Form("%s_%s", branchName_obj_.data(), "realTime");
     branchName_isValid_               = Form("%s_%s", branchName_obj_.data(), "isValid");

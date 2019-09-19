@@ -10,19 +10,17 @@ get_hmeBranchName(const std::string & identifier,
                   const std::string & hadTauWorkingPoint)
 {
   if ( hadTauSelection != "" )
-    {
-      return Form(
-		  "%s_%s_lep%s_tau%s_%s",
-		  identifier.data(), channel.data(), lepSelection.data(), hadTauSelection.data(), hadTauWorkingPoint.data()
-		  );
-    }
+  {
+    return Form("%s_%s_lep%s_tau%s_%s",
+      identifier.data(), channel.data(), lepSelection.data(), hadTauSelection.data(), hadTauWorkingPoint.data()
+    );
+  }
   else
-    {
-      return Form(
-		  "%s_%s_lep%s",
-		  identifier.data(), channel.data(), lepSelection.data()
-		  );
-    }
+  {
+    return Form("%s_%s_lep%s",
+      identifier.data(), channel.data(), lepSelection.data()
+    );
+  }
 }
 
 std::string

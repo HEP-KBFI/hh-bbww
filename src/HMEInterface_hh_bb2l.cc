@@ -35,11 +35,11 @@ HMEInterface_hh_bb2l::~HMEInterface_hh_bb2l()
 
 HMEOutput_hh_bb2l
 HMEInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
-				 const RecoLepton * selLepton_sublead,
-				 const RecoJetBase * selJet_Hbb_lead,
-				 const RecoJetBase * selJet_Hbb_sublead,
-				 const RecoMEt & met,
-				 const int & ievent) const
+                                 const RecoLepton * selLepton_sublead,
+                                 const RecoJetBase * selJet_Hbb_lead,
+                                 const RecoJetBase * selJet_Hbb_sublead,
+                                 const RecoMEt & met,
+                                 const int & ievent) const
 {
   HMEOutput_hh_bb2l result;
   if ( !(selJet_Hbb_lead || selJet_Hbb_sublead) )
@@ -62,12 +62,14 @@ HMEInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
   clock_->Reset();
   clock_->Start("<HMEInterface_hh_bb2l::operator()>");
   heavyMassEstimator hmeAlgo(
-			     &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
-			     PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-			     iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection);
+    &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
+    PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
+    iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection
+  );
   double m_HH_hme = -1.;
   bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
-  if ( hme_isValidSolution ) {
+  if ( hme_isValidSolution )
+  {
     TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
     m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
   }

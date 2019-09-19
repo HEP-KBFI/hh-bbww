@@ -24,9 +24,9 @@ HMEOutput_hh_bb2l::HMEOutput_hh_bb2l()
 
 void
 HMEOutput_hh_bb2l::fillInputs(const RecoLepton * leadLepton,
-			      const RecoLepton * subleadLepton,
-			      const RecoJetBase * bjet1,
-			      const RecoJetBase * bjet2)
+                              const RecoLepton * subleadLepton,
+                              const RecoJetBase * bjet1,
+                              const RecoJetBase * bjet2)
 {
   leadLepton_eta_          = leadLepton -> eta();
   leadLepton_phi_          = leadLepton -> phi();
@@ -65,17 +65,23 @@ std::ostream& operator<<(std::ostream& stream,
   {                    
     stream << " eta = "          << hmeOutput.bjet1_eta_          << ","
               " phi = "          << hmeOutput.bjet1_phi_          << "\n";
-  } else {
+  }
+  else
+  {
     stream << " N/A \n";
   }
+
   stream   << " b-jet #2:";
   if ( hmeOutput.bjet2_isReconstructed_ )
   {                    
     stream << " eta = "          << hmeOutput.bjet2_eta_          << ","
               " phi = "          << hmeOutput.bjet2_phi_          << "\n";
-  } else {
+  }
+  else
+  {
     stream << " N/A \n";
   }
+
   stream   << " type = "         << hmeOutput.type()              << "\n"
               " m_HH_hme:\n"
               "  signal = "      << hmeOutput.m_HH_hme()     << "\n"
