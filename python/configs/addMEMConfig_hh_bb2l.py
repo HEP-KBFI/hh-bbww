@@ -21,9 +21,12 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
         num_parallel_jobs,
         isDebug,
         central_or_shift,
+        central_or_shift_hme,
         dry_run,
         use_nonnominal,
         use_home,
+        method_mem,
+        method_hme,
         pool_id = '',
       ):
     addMEMConfig.__init__(self,
@@ -46,6 +49,8 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
       dry_run                  = dry_run,
       use_nonnominal           = use_nonnominal,
       use_home                 = use_home,
+      method_mem               = method_mem,
+      method_hme               = method_hme,
       channel                  = "hh_bb2l",
       pool_id                  = pool_id,
     )
@@ -59,6 +64,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     print("WARNING: Temporarily using maxPermutations_branchName = '%s' for DEBUGging purposes. This is not the correct branch !!" % self.maxPermutations_branchName)
     self.isDebug = isDebug
     self.central_or_shift = central_or_shift
+    self.central_or_shift_hme = central_or_shift_hme
 
   def createCfg_addMEM(self, inputFiles, startRange, endRange, outputFile, era, isMC, cfgFile_modified):
     """Create python configuration file for the addMEM_hh_bb2l executable (MEM code)
@@ -92,8 +98,11 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     lines.append("process.addMEM_hh_bb2l.leptonSelection = cms.string('%s')" % self.leptonSelection)
     lines.append("process.addMEM_hh_bb2l.isMC = cms.bool(%s)" % isMC)
     lines.append("process.addMEM_hh_bb2l.isDEBUG = cms.bool(%s)" % self.isDebug)
-    lines.append("process.addMEM_hh_bb2l.central_or_shift = cms.vstring(%s)" % self.central_or_shift)
+    lines.append("process.addMEM_hh_bb2l.central_or_shift_mem = cms.vstring(%s)" % self.central_or_shift)
+    lines.append("process.addMEM_hh_bb2l.central_or_shift_hme = cms.vstring(%s)" % self.central_or_shift_hme)
     lines.append("process.addMEM_hh_bb2l.dryRun = cms.bool(%s)" % self.dry_run)
     lines.append("process.addMEM_hh_bb2l.use_nonnominal = cms.bool(%s)" % self.use_nonnominal)
+    lines.append("process.addMEM_hh_bb2l.method_mem = cms.bool(%s)" % self.method_mem)
+    lines.append("process.addMEM_hh_bb2l.method_hme = cms.bool(%s)" % self.method_hme)
 
     create_cfg(self.cfgFile_addMEM_original, cfgFile_modified, lines)
