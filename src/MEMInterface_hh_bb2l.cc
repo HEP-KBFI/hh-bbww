@@ -83,7 +83,6 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 				 const RecoMEt & met) const
 {
   MEMOutput_hh_bb2l result;
-
   if ( !(selJet_Hbb_lead || selJet_Hbb_sublead) )
   {
     std::cerr << "Warning in <MEMInterface_hh_bb2l::operator()>: Failed to find at least one b-jet !!\n";

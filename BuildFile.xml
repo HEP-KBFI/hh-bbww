@@ -7,6 +7,7 @@
 <use   name="TauAnalysisTools/TauTriggerSFs"/>
 <use   name="TauAnalysis/ClassicSVfit4tau"/>
 <use   name="hhAnalysis/bbwwMEM"/>
+<use   name="hhAnalysis/Heavymassestimator"/>
 <use   name="root"/>
 <use   name="roottmva"/>
 <use   name="boost" />
