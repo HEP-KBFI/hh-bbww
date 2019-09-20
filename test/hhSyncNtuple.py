@@ -87,6 +87,7 @@ if __name__ == '__main__':
     tau_id_wp          = tau_id_wp,
     use_home           = use_home,
     systematics_label  = systematics_label,
+    use_preselected    = False,
     project_dir        = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww'),
     file_pattern       = 'hhAnalyzeRun_%s.py',
     jet_cleaning       = '',
