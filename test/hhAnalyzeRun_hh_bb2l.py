@@ -27,6 +27,7 @@ parser.add_hlt_filter()
 parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processed per job, as computation of HH mass with HME algorithm takes considerable time
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
+parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 args = parser.parse_args()
 
 # Common arguments
