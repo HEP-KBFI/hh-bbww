@@ -20,6 +20,7 @@ parser.add_sys(sys_choices)
 parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_use_home()
+parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 parser.add_argument('-o', '--output-tree',
   type = str, dest = 'output_tree', metavar = 'name', default = 'syncTree', required = False,
   help = 'R|Output TTree name',
