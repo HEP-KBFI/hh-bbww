@@ -49,8 +49,6 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
       dry_run                  = dry_run,
       use_nonnominal           = use_nonnominal,
       use_home                 = use_home,
-      method_mem               = method_mem,
-      method_hme               = method_hme,
       channel                  = "hh_bb2l",
       pool_id                  = pool_id,
     )
@@ -65,6 +63,8 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     self.isDebug = isDebug
     self.central_or_shift = central_or_shift
     self.central_or_shift_hme = central_or_shift_hme
+    self.method_mem = method_mem
+    self.method_hme = method_hme
 
   def createCfg_addMEM(self, inputFiles, startRange, endRange, outputFile, era, isMC, cfgFile_modified):
     """Create python configuration file for the addMEM_hh_bb2l executable (MEM code)
