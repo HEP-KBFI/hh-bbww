@@ -26,7 +26,7 @@ parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
 parser.add_argument('-shme', '--systematics-hme',
-  type = str, nargs = '+', dest = 'systematics_hme', metavar = 'mode', choices = sys_choices, default = [ sys_choices ],
+  type = str, nargs = '+', dest = 'systematics_hme', metavar = 'mode', choices = sys_choices, default = sys_choices ,
   required = False,
   help = 'R|Systematic uncertainties for HME method (choices: %s)' % tthAnalyzeParser.cat(sys_choices),
 )
