@@ -207,6 +207,8 @@ int main(int argc,
   // CV: apply jet pT cut on JEC upward shift, to make sure pT cut is loose enough
   //     to allow systematic uncertainty on JEC to be estimated on analysis level
   jetReaderAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
+  jetReaderAK4->read_ptMass_systematics(isMC);
+  jetReaderAK4->read_btag_systematics(isMC);
   jetReaderAK4->setBranchAddresses(inputTree);
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
