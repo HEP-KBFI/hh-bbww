@@ -575,7 +575,7 @@ int main(int argc,
 
             const RecoMEt met_mem = metReader->read();
 
-            if ( selJet1_Hbb && selJet2_Hbb )
+            if ( selJet1_Hbb && selJet2_Hbb && (selLepton_lead->charge() * selLepton_sublead->charge() < 0) )
             {
               const bool run_mem = method_MEM && is_central_or_shift_mem &&
                 idxPermutation_mem <=  maxPermutations_addMEM_hh_bb2l * nof_central_or_shift_mem
