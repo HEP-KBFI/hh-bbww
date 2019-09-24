@@ -89,9 +89,9 @@
 
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 
-#include "hhAnalysis/multilepton/interface/EventInfoHH.h" // EventInfoHH
-#include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
-#include "hhAnalysis/multilepton/interface/HHWeightInterface.h" // HHWeightInterface
+#include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
+#include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface.h" // HHWeightInterface
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
@@ -394,13 +394,13 @@ int main(int argc, char* argv[])
   }
 
 //--- declare event-level variables
-  EventInfoHH eventInfo(isMC, isSignal, isMC_HH_nonres);
+  EventInfo eventInfo(isMC, isSignal, isMC_HH_nonres);
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
   if((isMC_tH || isMC_ttH) && ! tHweights.empty())
   {
     eventInfo.loadWeight_tH(tHweights);
   }
-  EventInfoHHReader eventInfoReader(&eventInfo);
+  EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
 
   ObjectMultiplicity objectMultiplicity;

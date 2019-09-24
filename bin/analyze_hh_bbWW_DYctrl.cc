@@ -81,8 +81,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/Higgsness.h" // Higgsness
 #include "tthAnalysis/HiggsToTauTau/interface/Topness.h" // Topness
 
-#include "hhAnalysis/multilepton/interface/EventInfoHH.h" // EventInfoHH
-#include "hhAnalysis/multilepton/interface/EventInfoHHReader.h" // EventInfoHHReader
+#include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
+#include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bbWW_DYctrl.h" // EvtHistManager_hh_bbWW_DYctrl
@@ -359,13 +359,13 @@ int main(int argc, char* argv[])
   std::cout << "Loaded " << inputTree->getFileCount() << " file(s)." << std::endl;
 
 //--- declare event-level variables
-  EventInfoHH eventInfo(isMC);
+  EventInfo eventInfo(isMC);
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
   if((isMC_tH || isMC_ttH) && ! tHweights.empty())
   {
     eventInfo.loadWeight_tH(tHweights);
   }
-  EventInfoHHReader eventInfoReader(&eventInfo);
+  EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
 
   hltPathReader hltPathReader_instance({ triggers_1e, triggers_2e, triggers_1mu, triggers_2mu });
