@@ -26,7 +26,7 @@ parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
 parser.add_argument('-shme', '--systematics-hme',
-  type = str, nargs = '+', dest = 'systematics_hme', metavar = 'mode', choices = sys_choices, default = sys_choices ,
+  type = str, nargs = '+', dest = 'systematics_hme', metavar = 'mode', choices = sys_choices, default = ['central'] ,
   required = False,
   help = 'R|Systematic uncertainties for HME method (choices: %s)' % tthAnalyzeParser.cat(sys_choices),
 )
@@ -36,11 +36,11 @@ parser.add_argument('-n', '--max-mem-integrations',
   help = 'R|Maximum number of input files per one job (default: %i)' % max_mem_integrations
 )
 parser.add_argument('-mem', '--method-mem',
-  type = bool, dest = 'method_mem', metavar = 'MEM method', default = True, required = False,
+  dest = 'method_mem', action='store_false', 
   help = 'R|Run MEM'
 )
 parser.add_argument('-hme', '--method-hme',
-  type = bool, dest = 'method_hme', metavar = 'HME method', default = False, required = False,
+  dest = 'method_hme', action='store_true', 
   help = 'R|Run HME'
 )
 args = parser.parse_args()
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     check_output_files       = check_output_files,
     running_method           = running_method,
     max_files_per_job        = 1, # so that we'd have 1-1 correspondence b/w input and output files
-    mem_integrations_per_job = 50,
+    mem_integrations_per_job = 500,
     max_mem_integrations     = max_mem_integrations, # use -1 if you don't want to limit the nof MEM integrations
     num_parallel_jobs        = num_parallel_jobs,
     leptonSelection          = "Fakeable",
