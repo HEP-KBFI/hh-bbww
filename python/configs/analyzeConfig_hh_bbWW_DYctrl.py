@@ -430,7 +430,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                 'cfgFile_modified' : cfgFile_modified,
                 'outputFile' : outputFile,
                 'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                'categories' : [ category ],
+                'categories' : [ getKey(category, lepton_charge_selection, lepton_selection_and_frWeight) ],
               }
               self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
             #----------------------------------------------------------------------------
