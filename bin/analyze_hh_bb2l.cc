@@ -704,7 +704,7 @@ int main(int argc, char* argv[])
           process_and_genMatch_BM += "_BM";
           process_and_genMatch_BM += std::to_string(bm_list);
           process_and_genMatch_BM += "_";
-          if ( apply_leptonGenMatching ) process_and_genMatch_BM += genMatchDefinition->getName();
+          process_and_genMatch_BM += genMatchDefinition->getName();
           selHistManager->evt_BMs_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
             Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
           selHistManager->evt_BMs_[bm_list]->bookHistograms(fs);
@@ -715,7 +715,7 @@ int main(int argc, char* argv[])
           process_and_genMatch_BM += "_scan";
           process_and_genMatch_BM += std::to_string(bm_list);
           process_and_genMatch_BM += "_";
-          if ( apply_leptonGenMatching ) process_and_genMatch_BM += genMatchDefinition->getName();
+	  process_and_genMatch_BM += genMatchDefinition->getName();
           selHistManager->evt_scan_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
             Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
           selHistManager->evt_scan_[bm_list]->bookHistograms(fs);
