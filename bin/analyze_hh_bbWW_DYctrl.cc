@@ -60,6 +60,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
 #include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_2lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
+#include "tthAnalysis/HiggsToTauTau/interface/GenMatchInterface.h" // GenMatchInterface
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_lep1_conePt
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_isTriggered, hltPaths_delete
@@ -232,8 +233,10 @@ int main(int argc, char* argv[])
   const int muonSelection     = get_selection(muonSelection_string);
 
   bool apply_leptonGenMatching = cfg_analyze.getParameter<bool>("apply_leptonGenMatching");
-  std::vector<leptonGenMatchEntry> leptonGenMatch_definitions = getLeptonGenMatch_definitions_2lepton(apply_leptonGenMatching);
+  std::vector<leptonGenMatchEntry> leptonGenMatch_definitions = getLeptonGenMatch_definitions_2lepton(true);
   std::cout << leptonGenMatch_definitions;
+
+  GenMatchInterface genMatchInterface(2, apply_leptonGenMatching, false);
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
@@ -563,11 +566,13 @@ int main(int argc, char* argv[])
   for(const std::string & central_or_shift: central_or_shifts_local)
   {
     const bool skipBooking = central_or_shift != central_or_shift_main;
-    for(const leptonGenMatchEntry & leptonGenMatch_definition: leptonGenMatch_definitions)
+    std::vector<const GenMatchEntry*> genMatchDefinitions = genMatchInterface.getGenMatchDefinitions();
+    for (const GenMatchEntry * genMatchDefinition : genMatchDefinitions)
     {
       std::string process_and_genMatch = process_string;
-      if ( apply_leptonGenMatching ) process_and_genMatch += leptonGenMatch_definition.name_;
-      int idxLepton = leptonGenMatch_definition.idx_;
+      process_and_genMatch += genMatchDefinition->getName();
+
+      int idxLepton = genMatchDefinition->getIdx();
 
       selHistManagerType* selHistManager = new selHistManagerType();
       if(! skipBooking)
@@ -708,6 +713,8 @@ int main(int argc, char* argv[])
   int analyzedEntries = 0;
   int selectedEntries = 0;
   double selectedEntries_weighted = 0.;
+  std::map<std::string, int> selectedEntries_byGenMatchType;             // key = process_and_genMatch
+  std::map<std::string, double> selectedEntries_weighted_byGenMatchType; // key = process_and_genMatch
   TH1* histogram_analyzedEntries = fs.make<TH1D>("analyzedEntries", "analyzedEntries", 1, -0.5, +0.5);
   TH1* histogram_selectedEntries = fs.make<TH1D>("selectedEntries", "selectedEntries", 1, -0.5, +0.5);
   cutFlowTableType cutFlowTable;
@@ -1044,8 +1051,6 @@ int main(int argc, char* argv[])
     const Particle::LorentzVector& selLeptonP4_sublead = selLepton_sublead->p4();
     int selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
     const leptonGenMatchEntry& selLepton_genMatch = getLeptonGenMatch(leptonGenMatch_definitions, selLepton_lead, selLepton_sublead);
-    int idxSelLepton_genMatch = selLepton_genMatch.idx_;
-    assert(idxSelLepton_genMatch != kGen_LeptonUndefined2);
 
     if ( !(selElectrons.size() >= 2 || selMuons.size() >= 2) ) {
       if ( run_lumi_eventSelector ) {
@@ -1393,117 +1398,125 @@ int main(int argc, char* argv[])
     }
     int numSelJetsAK4_nonVBF = ( isVBF ) ? selJetsAK4_nonVBF.size() : selJetsAK4_nonHbb.size();
 
+//--- retrieve gen-matching flags
+    std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
+
 //--- fill histograms with events passing final selection
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      const bool skipFilling = central_or_shift != central_or_shift_main;
-      selHistManagerType* selHistManager = selHistManagers[central_or_shift][idxSelLepton_genMatch];
-      assert(selHistManager != 0);
       const double evtWeight = evtWeightRecorder.get(central_or_shift);
-
-      selHistManager->electrons_->fillHistograms(selElectrons, evtWeight);
-      if ( selElectrons.size() >= 1 ) {
-        selHistManager->leadElectron_->fillHistograms({ selElectrons[0] }, evtWeight);
-      }
-      if ( selElectrons.size() >= 2 ) {
-        selHistManager->subleadElectron_->fillHistograms({ selElectrons[1] }, evtWeight);
-      }
-      selHistManager->muons_->fillHistograms(selMuons, evtWeight);
-      if ( selMuons.size() >= 1 ) {
-        selHistManager->leadMuon_->fillHistograms({ selMuons[0] }, evtWeight);
-      }
-      if ( selMuons.size() >= 2 ) {
-        selHistManager->subleadMuon_->fillHistograms({ selMuons[1] }, evtWeight);
-      }
-      selHistManager->jetsAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
-      selHistManager->leadJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
-      selHistManager->subleadJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
-      selHistManager->thirdJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
-      selHistManager->fourthJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
-      if ( selJetAK8_Hbb ) {
-        selHistManager->jetsAK8_Hbb_->fillHistograms({ selJetAK8_Hbb }, evtWeight);
-      }
-      selHistManager->BJetsAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
-      selHistManager->leadBJetAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
-      selHistManager->subleadBJetAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
-      selHistManager->BJetsAK4_medium_->fillHistograms(selBJetsAK4_medium, evtWeight);
-      selHistManager->met_->fillHistograms(met, mhtP4, met_LD, evtWeight);
-      selHistManager->metFilters_->fillHistograms(metFilters, evtWeight);
-      selHistManager->triggers_1e_->fillHistograms(triggers_1e, evtWeight);
-      selHistManager->triggers_2e_->fillHistograms(triggers_2e, evtWeight);
-      selHistManager->triggers_1mu_->fillHistograms(triggers_1mu, evtWeight);
-      selHistManager->triggers_2mu_->fillHistograms(triggers_2mu, evtWeight);
-      selHistManager->evt_->fillHistograms(
-        selElectrons.size(),
-        selMuons.size(),
-        numSelJetsAK4_nonVBF,
-        selBJetsAK4_loose.size(),
-        selBJetsAK4_medium.size(),
-        HT,
-        STMET,
-        m_bb, dR_bb, dPhi_bb, pT_bb,
-        m_ll, dR_ll, dPhi_ll, pT_ll,
-        m_bbll, dPhi_bbll, pT_bbll,
-        m_bbllMEt, m_HH_hme, dPhi_bbllMEt, pT_bbllMEt, Smin_bbllMEt,
-        vbf_m_jj, vbf_dEta_jj,
-        evtWeight);
-      if ( isMC ) {
-        selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
-          genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
-        );
-        selHistManager->lheInfoHistManager_afterCuts_->fillHistograms(*lheInfoReader, evtWeight);
-        if(eventWeightManager)
+      const bool skipFilling = central_or_shift != central_or_shift_main;
+      for (const GenMatchEntry* genMatch : genMatches)
+      {
+        selHistManagerType* selHistManager = selHistManagers[central_or_shift][genMatch->getIdx()];
+        assert(selHistManager);
+	if(! skipFilling)
         {
-          selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
-            eventWeightManager, evtWeightRecorder.get_inclusive(central_or_shift)
-          );
-        }
-      }
-      selHistManager->evtYield_->fillHistograms(eventInfo, evtWeight);
-      selHistManager->weights_->fillHistograms("genWeight", eventInfo.genWeight);
-      selHistManager->weights_->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
-      selHistManager->weights_->fillHistograms("triggerWeight", evtWeightRecorder.get_sf_triggerEff(central_or_shift));
-      selHistManager->weights_->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
-      selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
+          selHistManager->electrons_->fillHistograms(selElectrons, evtWeight);
+          if ( selElectrons.size() >= 1 ) {
+            selHistManager->leadElectron_->fillHistograms({ selElectrons[0] }, evtWeight);
+          }
+          if ( selElectrons.size() >= 2 ) {
+            selHistManager->subleadElectron_->fillHistograms({ selElectrons[1] }, evtWeight);
+          }
+          selHistManager->muons_->fillHistograms(selMuons, evtWeight);
+          if ( selMuons.size() >= 1 ) {
+            selHistManager->leadMuon_->fillHistograms({ selMuons[0] }, evtWeight);
+          }
+          if ( selMuons.size() >= 2 ) {
+            selHistManager->subleadMuon_->fillHistograms({ selMuons[1] }, evtWeight);
+          }
+          selHistManager->jetsAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
+          selHistManager->leadJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
+          selHistManager->subleadJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
+          selHistManager->thirdJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
+          selHistManager->fourthJetAK4_->fillHistograms(selJetsAK4_nonHbb, evtWeight);
+          if ( selJetAK8_Hbb ) {
+            selHistManager->jetsAK8_Hbb_->fillHistograms({ selJetAK8_Hbb }, evtWeight);
+          }
+          selHistManager->BJetsAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
+          selHistManager->leadBJetAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
+          selHistManager->subleadBJetAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
+          selHistManager->BJetsAK4_medium_->fillHistograms(selBJetsAK4_medium, evtWeight);
+          selHistManager->met_->fillHistograms(met, mhtP4, met_LD, evtWeight);
+          selHistManager->metFilters_->fillHistograms(metFilters, evtWeight);
+          selHistManager->triggers_1e_->fillHistograms(triggers_1e, evtWeight);
+          selHistManager->triggers_2e_->fillHistograms(triggers_2e, evtWeight);
+          selHistManager->triggers_1mu_->fillHistograms(triggers_1mu, evtWeight);
+          selHistManager->triggers_2mu_->fillHistograms(triggers_2mu, evtWeight);
+          selHistManager->evt_->fillHistograms(
+            selElectrons.size(),
+            selMuons.size(),
+            numSelJetsAK4_nonVBF,
+            selBJetsAK4_loose.size(),
+            selBJetsAK4_medium.size(),
+            HT,
+            STMET,
+            m_bb, dR_bb, dPhi_bb, pT_bb,
+            m_ll, dR_ll, dPhi_ll, pT_ll,
+            m_bbll, dPhi_bbll, pT_bbll,
+            m_bbllMEt, m_HH_hme, dPhi_bbllMEt, pT_bbllMEt, Smin_bbllMEt,
+            vbf_m_jj, vbf_dEta_jj,
+            evtWeight);
+          if ( isMC ) {
+            selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
+              genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
+            );
+            selHistManager->lheInfoHistManager_afterCuts_->fillHistograms(*lheInfoReader, evtWeight);
+            if(eventWeightManager)
+            {
+              selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
+                eventWeightManager, evtWeightRecorder.get_inclusive(central_or_shift)
+              );
+            }
+          }
+          selHistManager->evtYield_->fillHistograms(eventInfo, evtWeight);
+          selHistManager->weights_->fillHistograms("genWeight", eventInfo.genWeight);
+          selHistManager->weights_->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
+          selHistManager->weights_->fillHistograms("triggerWeight", evtWeightRecorder.get_sf_triggerEff(central_or_shift));
+          selHistManager->weights_->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
+          selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
 
-      int numElectrons = 0;
-      if ( selLepton_lead_type    == kElectron ) ++numElectrons;
-      if ( selLepton_sublead_type == kElectron ) ++numElectrons;
-      int numMuons = 0;
-      if ( selLepton_lead_type    == kMuon     ) ++numMuons;
-      if ( selLepton_sublead_type == kMuon     ) ++numMuons;
-      int numJets_forCategorization = ( selJetAK8_Hbb ) ? numJets_nonHbb + 2 : numJets_nonHbb; // CV: add the two subjets of the AK8 "fat" jet
-      int type_Hbb = ( selJetAK8_Hbb ) ? kHbb_boosted : kHbb_resolved;
-      int type_vbf = ( isVBF         ) ?  kVBF_tagged : kVBF_nottagged;
-      for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
-            category != categories_evt.end(); ++category ) {
-        if ( (category->numElectrons_    ==             -1 || numElectrons              == category->numElectrons_)    &&
-             (category->numMuons_        ==             -1 || numMuons                  == category->numMuons_)        &&
-             (category->numBJets_medium_ ==             -1 || numBJets_medium           == category->numBJets_medium_) &&
-             (category->numBJets_loose_  ==             -1 || numBJets_loose            == category->numBJets_loose_)  &&
-             (category->minNumJets_      ==             -1 || numJets_forCategorization >= category->minNumJets_)      &&
-             (category->maxNumJets_      ==             -1 || numJets_forCategorization <= category->maxNumJets_)      &&
-             (category->type_Hbb_        == kHbb_undefined || type_Hbb                  == category->type_Hbb_)        &&
-             (category->type_vbf_        == kVBF_undefined || type_vbf                  == category->type_vbf_)        ) {
-          if ( selHistManager->evt_in_categories_.find(category->name_) != selHistManager->evt_in_categories_.end() ) {
-            selHistManager->evt_in_categories_[category->name_]->fillHistograms(
-              selElectrons.size(),
-              selMuons.size(),
-              numSelJetsAK4_nonVBF,
-              selBJetsAK4_loose.size(),
-              selBJetsAK4_medium.size(),
-              HT,
-              STMET,
-              m_bb, dR_bb, dPhi_bb, pT_bb,
-              m_ll, dR_ll, dPhi_ll, pT_ll,
-              m_bbll, dPhi_bbll, pT_bbll,
-              m_bbllMEt, m_HH_hme, dPhi_bbllMEt, pT_bbllMEt, Smin_bbllMEt,
-              vbf_m_jj, vbf_dEta_jj,
-              evtWeight);
-          }
-          if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
-            selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->fillHistograms(*lheInfoReader, evtWeight);
-          }
+          int numElectrons = 0;
+	  if ( selLepton_lead_type    == kElectron ) ++numElectrons;
+	  if ( selLepton_sublead_type == kElectron ) ++numElectrons;
+	  int numMuons = 0;
+	  if ( selLepton_lead_type    == kMuon     ) ++numMuons;
+	  if ( selLepton_sublead_type == kMuon     ) ++numMuons;
+	  int numJets_forCategorization = ( selJetAK8_Hbb ) ? numJets_nonHbb + 2 : numJets_nonHbb; // CV: add the two subjets of the AK8 "fat" jet
+	  int type_Hbb = ( selJetAK8_Hbb ) ? kHbb_boosted : kHbb_resolved;
+	  int type_vbf = ( isVBF         ) ?  kVBF_tagged : kVBF_nottagged;
+	  for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
+                category != categories_evt.end(); ++category ) {
+            if ( (category->numElectrons_    ==             -1 || numElectrons              == category->numElectrons_)    &&
+                 (category->numMuons_        ==             -1 || numMuons                  == category->numMuons_)        &&
+		 (category->numBJets_medium_ ==             -1 || numBJets_medium           == category->numBJets_medium_) &&
+		 (category->numBJets_loose_  ==             -1 || numBJets_loose            == category->numBJets_loose_)  &&
+		 (category->minNumJets_      ==             -1 || numJets_forCategorization >= category->minNumJets_)      &&
+		 (category->maxNumJets_      ==             -1 || numJets_forCategorization <= category->maxNumJets_)      &&
+		 (category->type_Hbb_        == kHbb_undefined || type_Hbb                  == category->type_Hbb_)        &&
+		 (category->type_vbf_        == kVBF_undefined || type_vbf                  == category->type_vbf_)        ) {
+              if ( selHistManager->evt_in_categories_.find(category->name_) != selHistManager->evt_in_categories_.end() ) {
+                selHistManager->evt_in_categories_[category->name_]->fillHistograms(
+                  selElectrons.size(),
+		  selMuons.size(),
+		  numSelJetsAK4_nonVBF,
+		  selBJetsAK4_loose.size(),
+		  selBJetsAK4_medium.size(),
+		  HT,
+		  STMET,
+		  m_bb, dR_bb, dPhi_bb, pT_bb,
+		  m_ll, dR_ll, dPhi_ll, pT_ll,
+		  m_bbll, dPhi_bbll, pT_bbll,
+		  m_bbllMEt, m_HH_hme, dPhi_bbllMEt, pT_bbllMEt, Smin_bbllMEt,
+		  vbf_m_jj, vbf_dEta_jj,
+		  evtWeight);
+              }
+              if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
+                selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->fillHistograms(*lheInfoReader, evtWeight);
+              }
+	    }
+	  }
         }
       }
     }
@@ -1514,6 +1527,10 @@ int main(int argc, char* argv[])
 
     ++selectedEntries;
     selectedEntries_weighted += evtWeightRecorder.get(central_or_shift_main);
+    std::string process_and_genMatch = process_string;
+    process_and_genMatch += selLepton_genMatch.name_;
+    ++selectedEntries_byGenMatchType[process_and_genMatch]; 
+    selectedEntries_weighted_byGenMatchType[process_and_genMatch] += evtWeightRecorder.get(central_or_shift_main);
     histogram_selectedEntries->Fill(0.);
   }
 
@@ -1534,12 +1551,9 @@ int main(int argc, char* argv[])
     for(const leptonGenMatchEntry & leptonGenMatch_definition: leptonGenMatch_definitions)
     {
       std::string process_and_genMatch = process_string;
-      if ( apply_leptonGenMatching ) process_and_genMatch += leptonGenMatch_definition.name_;
-
-      int idxLepton = leptonGenMatch_definition.idx_;
-
-      const TH1* histogram_EventCounter = selHistManagers[central_or_shift][idxLepton]->evt_->getHistogram_EventCounter();
-      std::cout << " " << process_and_genMatch << " = " << histogram_EventCounter->GetEntries() << " (weighted = " << histogram_EventCounter->Integral() << ")" << std::endl;
+      process_and_genMatch += leptonGenMatch_definition.name_;
+      std::cout << " " << process_and_genMatch << " = " << selectedEntries_byGenMatchType[process_and_genMatch]
+		<< " (weighted = " << selectedEntries_weighted_byGenMatchType[process_and_genMatch] << ")" << std::endl;
     }
   }
   std::cout << std::endl;
