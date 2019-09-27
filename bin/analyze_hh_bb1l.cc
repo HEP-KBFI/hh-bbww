@@ -12,6 +12,7 @@
 #include <TString.h> // TString, Form
 #include <TError.h> // gErrorAbortLevel, kError
 #include <TRandom3.h> // TRandom3
+#include <TROOT.h> // TROOT
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
@@ -292,6 +293,9 @@ int main(int argc, char* argv[])
 {
 //--- throw an exception in case ROOT encounters an error
   gErrorAbortLevel = kError;
+
+//--- stop ROOT from keeping track of all histograms
+  TH1::AddDirectory(false);
 
 //--- parse command-line arguments
   if ( argc < 2 ) {
@@ -2044,6 +2048,13 @@ int main(int argc, char* argv[])
   }
   std::cout << std::endl;
 
+//--- manually write histograms to output file
+  fs.file().cd();
+  //histogram_analyzedEntries->Write();
+  //histogram_selectedEntries->Write();
+  HistManagerBase::writeHistograms();
+
+//--- memory clean-up
   delete dataToMCcorrectionInterface;
 
   delete leptonFakeRateInterface;
