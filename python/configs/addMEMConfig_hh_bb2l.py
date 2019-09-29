@@ -101,7 +101,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     lines.append("process.addMEM_hh_bb2l.central_or_shift_mem = cms.vstring(%s)" % self.central_or_shift)
     lines.append("process.addMEM_hh_bb2l.central_or_shift_hme = cms.vstring(%s)" % self.central_or_shift_hme)
     lines.append("process.addMEM_hh_bb2l.dryRun = cms.bool(%s)" % self.dry_run)
-    lines.append("process.addMEM_hh_bb2l.use_nonnominal = cms.bool(%s)" % self.use_nonnominal)
+    lines.append("process.addMEM_hh_bb2l.useNonNominal = cms.bool(%s)" % self.use_nonnominal)
     lines.append("process.addMEM_hh_bb2l.method_mem = cms.bool(%s)" % self.method_mem)
     lines.append("process.addMEM_hh_bb2l.method_hme = cms.bool(%s)" % self.method_hme)
 

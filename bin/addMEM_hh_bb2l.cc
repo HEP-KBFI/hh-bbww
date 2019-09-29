@@ -270,7 +270,7 @@ int main(int argc,
     muonWriter = new RecoMuonWriter(era, isMC, Form("n%s", branchName_muons.data()), branchName_muons);
     muonWriter->setBranches(outputTree);
     electronWriter = new RecoElectronWriter(era, isMC, Form("n%s", branchName_electrons.data()), branchName_electrons);
-    electronWriter->writeUncorrected(useNonNominal);
+    electronWriter->writeUncorrected(false);
     electronWriter->setBranches(outputTree);
     jetWriterAK4 = new RecoJetWriter(era, isMC, Form("n%s", branchName_jets_ak4.data()), branchName_jets_ak4);
     jetWriterAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
@@ -416,9 +416,9 @@ int main(int argc,
     const std::vector<const RecoMuon *> muon_ptrs = convert_to_ptrs(muons);
     // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
     const std::vector<const RecoMuon *> cleanedMuons  = muon_ptrs;
-    const std::vector<const RecoMuon *> preselMuons   = preselMuonSelector  (cleanedMuons);
-    const std::vector<const RecoMuon *> fakeableMuons = fakeableMuonSelector(preselMuons);
-    const std::vector<const RecoMuon *> tightMuons    = tightMuonSelector   (preselMuons);
+    const std::vector<const RecoMuon *> preselMuons   = preselMuonSelector  (cleanedMuons,  isHigherConePt);
+    const std::vector<const RecoMuon *> fakeableMuons = fakeableMuonSelector(preselMuons,   isHigherConePt);
+    const std::vector<const RecoMuon *> tightMuons    = tightMuonSelector   (fakeableMuons, isHigherConePt);
     const std::vector<const RecoMuon *> selMuons      = selectObjects(
       leptonSelection, preselMuons, fakeableMuons, tightMuons
     );
@@ -430,10 +430,11 @@ int main(int argc,
     const std::vector<RecoElectron> electrons = electronReader->read();
     const std::vector<const RecoElectron *> electron_ptrs     = convert_to_ptrs(electrons);
     const std::vector<const RecoElectron *> cleanedElectrons  = electronCleaner(electron_ptrs, fakeableMuons);
-    const std::vector<const RecoElectron *> preselElectrons   = preselElectronSelector(cleanedElectrons);
-    const std::vector<const RecoElectron *> fakeableElectrons = fakeableElectronSelector(preselElectrons);
-    const std::vector<const RecoElectron *> tightElectrons    = tightElectronSelector(preselElectrons);
-    const std::vector<const RecoElectron *> selElectrons      = selectObjects(
+    const std::vector<const RecoElectron *> preselElectronsUncleaned = preselElectronSelector  (electron_ptrs,     isHigherConePt);
+    const std::vector<const RecoElectron *> preselElectrons          = preselElectronSelector  (cleanedElectrons,  isHigherConePt);
+    const std::vector<const RecoElectron *> fakeableElectrons        = fakeableElectronSelector(preselElectrons,   isHigherConePt);
+    const std::vector<const RecoElectron *> tightElectrons           = tightElectronSelector   (fakeableElectrons, isHigherConePt);
+    const std::vector<const RecoElectron *> selElectrons             = selectObjects(
       leptonSelection, preselElectrons, fakeableElectrons, tightElectrons
     );
     if ( isDEBUG )
@@ -484,7 +485,7 @@ int main(int argc,
     {
       eventInfoWriter->write(eventInfo);
       muonWriter->write(preselMuons);
-      electronWriter->write(preselElectrons);
+      electronWriter->write(preselElectronsUncleaned);
       jetWriterAK4->write(jet_ptrs_ak4); // save central
       jetWriterAK8->write(jet_ptrs_ak8); // save central
       metWriter->write(met); // save central
@@ -505,29 +506,46 @@ int main(int argc,
     {
       int idxPermutation_mem = 0;
       int idxPermutation_hme = 0;
-      const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons);
+      const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons, isHigherConePt);
       for ( std::size_t selLepton_lead_idx = 0; selLepton_lead_idx < selLeptons.size(); ++selLepton_lead_idx )
       {
         const RecoLepton * selLepton_lead = selLeptons[selLepton_lead_idx];
+        if(isDEBUG)
+        {
+          std::cout << "selLepton_lead: " << *selLepton_lead << '\n';
+        }
         for ( std::size_t selLepton_sublead_idx = selLepton_lead_idx + 1; selLepton_sublead_idx < selLeptons.size(); ++selLepton_sublead_idx )
         {
           const RecoLepton * selLepton_sublead = selLeptons[selLepton_sublead_idx];
+          if(isDEBUG)
+          {
+            std::cout << "selLepton_sublead: " << *selLepton_sublead << '\n';
+          }
           for ( const std::string & central_or_shift: central_or_shifts )
           {
             checkOptionValidity(central_or_shift, isMC);
-            const int jetPt_option = getJet_option(central_or_shift, isMC);
-            const int met_option   = getMET_option(central_or_shift, isMC);
+            const int jetPt_option = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift, isMC);
+            const int met_option   = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift, isMC);
 
-            if ( jetPt_option == kJetMET_central &&
-                 met_option   == kJetMET_central &&
-                 central_or_shift != "central")
+            if((
+                 (
+                   jetPt_option    == kJetMET_central &&
+                   met_option      == kJetMET_central &&
+                   ! useNonNominal_jetmet
+                 ) ||
+                useNonNominal_jetmet
+               ) &&
+               central_or_shift != "central")
             {
               std::cout << "Skipping systematics: " << central_or_shift << '\n';
               continue;
             }
-            if(isDEBUG)
+            else if(isDEBUG)
             {
-              std::cout << "Attempting to evaluate the MEM/HME score for systematics: " << central_or_shift << '\n';
+              std::cout << "Attempting to evaluate the MEM score for systematics: " << central_or_shift << "\n"
+                        << "jetPt_option    = " << jetPt_option    << "\n"
+                        << "met_option      = " << met_option      << '\n'
+              ;
             }
             const bool is_central_or_shift_mem = std::find(
                 central_or_shifts_mem.begin(), central_or_shifts_mem.end(), central_or_shift
@@ -594,12 +612,13 @@ int main(int argc,
                 ++idxPermutation_mem;
                 std::cout << "computing MEM for " << eventInfo
                           << " (idxPermutation = " << idxPermutation_mem << "):\n"
-                  "inputs:\n"
-                          << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
-                          << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
-                          << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
-                          << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
-                          << " MET:                " << met << "\n";
+                             "inputs:\n"
+                          << " leading lepton:    " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
+                          << " subleading lepton: " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
+                          << " b-jet #1:          " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
+                          << " b-jet #2:          " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
+                          << " MET:               " << met << '\n'
+                ;
 
                 MEMOutput_hh_bb2l memOutput_hh_bb2l;
                 MEMOutput_hh_bb2l memOutput_hh_bb2l_missingBJet;
@@ -615,8 +634,9 @@ int main(int argc,
                 }
                 memOutput_hh_bb2l.eventInfo_ = eventInfo;
                 memOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
-                std::cout << "output (" << central_or_shift << "): " << memOutput_hh_bb2l;
-                std::cout << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet;
+                std::cout << "output (" << central_or_shift << "): " << memOutput_hh_bb2l
+                          << "output (missing b-jet, " << central_or_shift << "): " << memOutput_hh_bb2l_missingBJet
+                ;
                 memOutputs_hh_bb2l[central_or_shift].push_back(memOutput_hh_bb2l);
                 memOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(memOutput_hh_bb2l_missingBJet);
 
@@ -631,12 +651,13 @@ int main(int argc,
                 ++idxPermutation_hme;
                 std::cout << "computing HME for " << eventInfo
                           << " (idxPermutation = " << idxPermutation_hme << "):\n"
-                  "inputs:\n"
-                          << " leading lepton:     " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
-                          << " subleading lepton:  " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
-                          << " b-jet #1:  " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
-                          << " b-jet #2:  " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
-                          << " MET:                " << met << "\n";
+                             "inputs:\n"
+                          << " leading lepton:    " << *(static_cast<const ChargedParticle *>(selLepton_lead)) << "\n"
+                          << " subleading lepton: " << *(static_cast<const ChargedParticle *>(selLepton_sublead)) << "\n"
+                          << " b-jet #1:          " << *(static_cast<const Particle *>(selJet1_Hbb)) << "\n"
+                          << " b-jet #2:          " << *(static_cast<const Particle *>(selJet2_Hbb)) << "\n"
+                          << " MET:               " << met << '\n'
+                ;
 
                 HMEOutput_hh_bb2l hmeOutput_hh_bb2l;
                 HMEOutput_hh_bb2l hmeOutput_hh_bb2l_missingBJet;
@@ -653,8 +674,9 @@ int main(int argc,
                 }
                 hmeOutput_hh_bb2l.eventInfo_ = eventInfo;
                 hmeOutput_hh_bb2l_missingBJet.eventInfo_ = eventInfo;
-                std::cout << "output (" << central_or_shift << "): " << hmeOutput_hh_bb2l;
-                std::cout << "output (missing b-jet, " << central_or_shift << "): " << hmeOutput_hh_bb2l_missingBJet;
+                std::cout << "output (" << central_or_shift << "): " << hmeOutput_hh_bb2l
+                          << "output (missing b-jet, " << central_or_shift << "): " << hmeOutput_hh_bb2l_missingBJet
+                ;
                 hmeOutputs_hh_bb2l[central_or_shift].push_back(hmeOutput_hh_bb2l);
                 hmeOutputs_hh_bb2l_missingBJet[central_or_shift].push_back(hmeOutput_hh_bb2l_missingBJet);
 
