@@ -54,7 +54,9 @@ protected:
   std::string branchName_bjet2_isReconstructed_;
   std::string branchName_type_;
   std::string branchName_weight_signal_;
+  std::string branchName_weightErr_signal_;
   std::string branchName_weight_background_;
+  std::string branchName_weightErr_background_;
   std::string branchName_LR_;
   std::string branchName_cpuTime_;
   std::string branchName_realTime_;
@@ -77,7 +79,9 @@ protected:
   Bool_t * bjet2_isReconstructed_;
   Int_t * type_;
   Float_t * weight_signal_;
+  Float_t * weightErr_signal_;
   Float_t * weight_background_;
+  Float_t * weightErr_background_;
   Float_t * LR_;
   Float_t * cpuTime_;
   Float_t * realTime_;
