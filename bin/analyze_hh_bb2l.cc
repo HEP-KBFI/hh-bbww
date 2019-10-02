@@ -22,6 +22,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
 #include "tthAnalysis/HiggsToTauTau/interface/GenHadTau.h" // GenHadTau
 #include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicity.h" // ObjectMultiplicity
+#include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
+#include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb2l.h" // MEMOutputReader_hh_bb2l
 #include "tthAnalysis/HiggsToTauTau/interface/LeptonFakeRateInterface.h" // LeptonFakeRateInterface
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
@@ -359,6 +361,7 @@ int main(int argc, char* argv[])
   std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
   std::string branchName_genPhotons = cfg_analyze.getParameter<std::string>("branchName_genPhotons");
   std::string branchName_genJets = cfg_analyze.getParameter<std::string>("branchName_genJets");
+  std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
   bool redoGenMatching = cfg_analyze.getParameter<bool>("redoGenMatching");
 
   std::string branchName_genTauLeptons = cfg_analyze.getParameter<std::string>("branchName_genTauLeptons");
@@ -428,6 +431,13 @@ int main(int argc, char* argv[])
   {
     l1PreFiringWeightReader = new L1PreFiringWeightReader(era);
     inputTree->registerReader(l1PreFiringWeightReader);
+  }
+
+  MEMOutputReader_hh_bb2l * memReader = nullptr;
+  if(! branchName_memOutput.empty())
+  {
+    memReader = new MEMOutputReader_hh_bb2l(Form("n%s", branchName_memOutput.data()), branchName_memOutput);
+    inputTree -> registerReader(memReader);
   }
 
 //--- declare particle collections
@@ -716,7 +726,7 @@ int main(int argc, char* argv[])
           process_and_genMatch_BM += "_scan";
           process_and_genMatch_BM += std::to_string(bm_list);
           process_and_genMatch_BM += "_";
-	  process_and_genMatch_BM += genMatchDefinition->getName();
+          process_and_genMatch_BM += genMatchDefinition->getName();
           selHistManager->evt_scan_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
             Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
           selHistManager->evt_scan_[bm_list]->bookHistograms(fs);
@@ -1472,6 +1482,65 @@ int main(int argc, char* argv[])
     cutFlowTable.update("signal region veto", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("signal region veto", evtWeightRecorder.get(central_or_shift_main));
 
+    MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
+    if(memReader)
+    {
+      const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l = memReader->read();
+      for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l: memOutputs_hh_bb2l)
+      {
+        const double selLepton_lead_dR = deltaR(
+          selLepton_lead->eta(), selLepton_lead->phi(),
+          memOutput_hh_bb2l.leadLepton_eta_, memOutput_hh_bb2l.leadLepton_phi_
+        );
+        if(selLepton_lead_dR > 1.e-2)
+        {
+          continue;
+        }
+        const double selLepton_sublead_dR = deltaR(
+          selLepton_sublead->eta(), selLepton_sublead->phi(),
+          memOutput_hh_bb2l.subleadLepton_eta_, memOutput_hh_bb2l.subleadLepton_phi_
+        );
+        if(selLepton_sublead_dR > 1.e-2)
+        {
+          continue;
+        }
+        memOutput_hh_bb2l_matched = memOutput_hh_bb2l;
+        break;
+      }
+      if(! memOutput_hh_bb2l_matched.is_initialized())
+      {
+        std::cout << "Warning in " << eventInfo << '\n'
+                  << "No MEMOutput_hh_bb2l object found for:\n"
+                  << "\tselLepton_lead: pT = " << selLepton_lead->pt()
+                  << ", eta = "                << selLepton_lead->eta()
+                  << ", phi = "                << selLepton_lead->phi()
+                  << ", pdgId = "              << selLepton_lead->pdgId() << "\n"
+                     "\tselLepton_sublead: pT = " << selLepton_sublead->pt()
+                  << ", eta = "                   << selLepton_sublead->eta()
+                  << ", phi = "                   << selLepton_sublead->phi()
+                  << ", pdgId = "                 << selLepton_sublead->pdgId() << "\n"
+                     "Number of MEM objects read: " << memOutputs_hh_bb2l.size() << '\n'
+        ;
+        if(! memOutputs_hh_bb2l.empty())
+        {
+          for(unsigned mem_idx = 0; mem_idx < memOutputs_hh_bb2l.size(); ++mem_idx)
+          {
+            std::cout << "\t#" << mem_idx << " mem object;\n"
+                      << "\t\tlead lepton eta = "    << memOutputs_hh_bb2l[mem_idx].leadLepton_eta_
+                      << "; phi = "                  << memOutputs_hh_bb2l[mem_idx].leadLepton_phi_ << '\n'
+                      << "\t\tsublead lepton eta = " << memOutputs_hh_bb2l[mem_idx].subleadLepton_eta_
+                      << "; phi = "                  << memOutputs_hh_bb2l[mem_idx].subleadLepton_phi_ << '\n'
+            ;
+          }
+        }
+        else
+        {
+          std::cout << "Event contains no MEM objects whatsoever !!\n";
+        }
+      }
+    }
+    const double memOutput_LR = memOutput_hh_bb2l_matched.isValid() ? memOutput_hh_bb2l_matched.LR() : -1.;
+
     std::vector<double> WeightBM; // weights to do histograms for BMs
     std::vector<double> Weight_klScan; // weights to do histograms for BMs
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
@@ -1785,12 +1854,24 @@ int main(int argc, char* argv[])
           selJetsAK4.size(),
           selBJetsAK4_loose.size(),
           selBJetsAK4_medium.size(),
-          nullptr, -1.,
-          nullptr, -1.,
-          mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-          mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
+          mvaoutput_bb2l300,
+          mvaoutput_bb2l400,
+          mvaoutput_bb2l750,
+          mvaoutputnohiggnessnotopness_bb2l300,
+          mvaoutputnohiggnessnotopness_bb2l400,
+          mvaoutputnohiggnessnotopness_bb2l750,
+          mvaoutput_bb2l_node3,
+          mvaoutput_bb2l_node7,
+          mvaoutput_bb2l_sm,
           evtWeight
         );
+        if(memReader)
+        {
+          selHistManager->evt_->fillHistograms(
+            &memOutput_hh_bb2l_matched,
+            evtWeight
+          );
+        }
         if(! WeightBM.empty())
         {
           for(std::size_t bmIdx = 0; bmIdx < WeightBM.size(); ++bmIdx)
@@ -1802,14 +1883,24 @@ int main(int argc, char* argv[])
               selJetsAK4.size(),
               selBJetsAK4_loose.size(),
               selBJetsAK4_medium.size(),
-              nullptr, -1.,
-              nullptr, -1.,
-              mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-              mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400,
-              mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3,
-              mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
+              mvaoutput_bb2l300,
+              mvaoutput_bb2l400,
+              mvaoutput_bb2l750,
+              mvaoutputnohiggnessnotopness_bb2l300,
+              mvaoutputnohiggnessnotopness_bb2l400,
+              mvaoutputnohiggnessnotopness_bb2l750,
+              mvaoutput_bb2l_node3,
+              mvaoutput_bb2l_node7,
+              mvaoutput_bb2l_sm,
               evtWeight0
             );
+            if(memReader)
+            {
+              selHistManager->evt_BMs_[bmIdx]->fillHistograms(
+                &memOutput_hh_bb2l_matched,
+                evtWeight0
+              );
+            }
           }
         }
         if(! Weight_klScan.empty())
@@ -1823,14 +1914,24 @@ int main(int argc, char* argv[])
               selJetsAK4.size(),
               selBJetsAK4_loose.size(),
               selBJetsAK4_medium.size(),
-              nullptr, -1.,
-              nullptr, -1.,
-              mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-              mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400,
-              mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3,
-              mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
+              mvaoutput_bb2l300,
+              mvaoutput_bb2l400,
+              mvaoutput_bb2l750,
+              mvaoutputnohiggnessnotopness_bb2l300,
+              mvaoutputnohiggnessnotopness_bb2l400,
+              mvaoutputnohiggnessnotopness_bb2l750,
+              mvaoutput_bb2l_node3,
+              mvaoutput_bb2l_node7,
+              mvaoutput_bb2l_sm,
               evtWeight0
             );
+            if(memReader)
+            {
+              selHistManager->evt_scan_[scanIdx]->fillHistograms(
+                &memOutput_hh_bb2l_matched,
+                evtWeight0
+              );
+            }
           }
         }
 
@@ -1873,19 +1974,30 @@ int main(int argc, char* argv[])
                 selJetsAK4.size(),
                 selBJetsAK4_loose.size(),
                 selBJetsAK4_medium.size(),
-                nullptr, -1.,
-                nullptr, -1.,
-                mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-                mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400,
-                mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3,
-                mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
-                evtWeight);
+                mvaoutput_bb2l300,
+                mvaoutput_bb2l400,
+                mvaoutput_bb2l750,
+                mvaoutputnohiggnessnotopness_bb2l300,
+                mvaoutputnohiggnessnotopness_bb2l400,
+                mvaoutputnohiggnessnotopness_bb2l750,
+                mvaoutput_bb2l_node3,
+                mvaoutput_bb2l_node7,
+                mvaoutput_bb2l_sm,
+                evtWeight
+              );
+              if(memReader)
+              {
+                selHistManager->evt_in_categories_[category.name_]->fillHistograms(
+                  &memOutput_hh_bb2l_matched,
+                  evtWeight
+                );
+              }
             }
             if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category.name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
               selHistManager->lheInfoHistManager_afterCuts_in_categories_[category.name_]->fillHistograms(*lheInfoReader, evtWeight);
             }
           }
-	}
+        }
       }
     }
 
@@ -2001,6 +2113,7 @@ int main(int argc, char* argv[])
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
+      snm->read(memOutput_LR,                           FloatVariableType_bbww::MEM_LR);
 
       if(isMC && contains(syncNtuple_genMatch, selLepton_genMatch.name_))
       {
@@ -2016,7 +2129,7 @@ int main(int argc, char* argv[])
     selectedEntries_weighted += evtWeightRecorder.get(central_or_shift_main);
     std::string process_and_genMatch = process_string;
     process_and_genMatch += selLepton_genMatch.name_;
-    ++selectedEntries_byGenMatchType[process_and_genMatch]; 
+    ++selectedEntries_byGenMatchType[process_and_genMatch];
     selectedEntries_weighted_byGenMatchType[process_and_genMatch] += evtWeightRecorder.get(central_or_shift_main);
     histogram_selectedEntries->Fill(0.);
   }
@@ -2045,7 +2158,8 @@ int main(int argc, char* argv[])
       std::string process_and_genMatch = process_string;
       process_and_genMatch += leptonGenMatch_definition.name_;
       std::cout << " " << process_and_genMatch << " = " << selectedEntries_byGenMatchType[process_and_genMatch]
-		<< " (weighted = " << selectedEntries_weighted_byGenMatchType[process_and_genMatch] << ")" << std::endl;
+                << " (weighted = " << selectedEntries_weighted_byGenMatchType[process_and_genMatch] << ")\n"
+      ;
     }
   }
   std::cout << std::endl;
@@ -2077,6 +2191,7 @@ int main(int argc, char* argv[])
   delete genJetReader;
   delete genTauLeptonReader;
   delete lheInfoReader;
+  delete memReader;
 
   for(auto & kv: genEvtHistManager_beforeCuts)
   {

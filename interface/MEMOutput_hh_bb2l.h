@@ -21,19 +21,24 @@ public:
    * @brief Funtions to access data-members
    * @return Values of data-members
    */
-  inline Int_t type()                const { return type_; }
-  inline Float_t weight_signal()     const { return weight_signal_; }
-  inline Float_t weight_background() const { return weight_background_; }
-  inline Float_t LR()                const { return LR_; }
-  inline Float_t cpuTime()           const { return cpuTime_; }
-  inline Float_t realTime()          const { return realTime_; }
-  inline Int_t isValid()             const { return isValid_; }
-  inline Int_t errorFlag()           const { return errorFlag_; }
+  inline Int_t type()                   const { return type_; }
+  inline Float_t weight_signal()        const { return weight_signal_; }
+  inline Float_t weightErr_signal()     const { return weightErr_signal_; }
+  inline Float_t weight_background()    const { return weight_background_; }
+  inline Float_t weightErr_background() const { return weightErr_background_; }
+  inline Float_t LR()                   const { return LR_; }
+  inline Float_t LRErr()                const { return LRErr_; }
+  inline Float_t Score()                const { return Score_; }
+  inline Float_t cpuTime()              const { return cpuTime_; }
+  inline Float_t realTime()             const { return realTime_; }
+  inline Int_t isValid()                const { return isValid_; }
+  inline Int_t errorFlag()              const { return errorFlag_; }
 
   inline bool is_initialized() const { return eventInfo_.is_initialized(); }
 
   friend class MEMInterface_hh_bb2l;
   friend class MEMOutputReader_hh_bb2l;
+  friend class EvtHistManager_hh_bb2l;
 
   void
   fillInputs(const RecoLepton * leadLepton,
@@ -55,8 +60,12 @@ public:
 protected:
   Int_t type_; // either 0 (fully reconstructed H->bb decay) or 1 (one b-jet from H->bb decay not reconstructed)
   Float_t weight_signal_; // HH->bbWW signal
+  Float_t weightErr_signal_; // HH->bbWW signal
   Float_t weight_background_; // tt+jets background (dilepton)
+  Float_t weightErr_background_; // tt+jets background (dilepton)
   Float_t LR_;
+  Float_t LRErr_;
+  Float_t Score_;
   Float_t cpuTime_;
   Float_t realTime_;
   Int_t isValid_;

@@ -1606,11 +1606,23 @@ int main(int argc, char* argv[])
       selJetsAK4.size(),
       selBJetsAK4_loose.size(),
       selBJetsAK4_medium.size(),
-      &memResult, memCpuTime,
-      &memResult_missingBJet, memCpuTime_missingBJet,
-      mvaoutput_bb2l300, mvaoutput_bb2l400, mvaoutput_bb2l750,
-      mvaoutputnohiggnessnotopness_bb2l300, mvaoutputnohiggnessnotopness_bb2l400, mvaoutputnohiggnessnotopness_bb2l750, mvaoutput_bb2l_node3, mvaoutput_bb2l_node7, mvaoutput_bb2l_sm,
-      evtWeight);
+      mvaoutput_bb2l300, mvaoutput_bb2l400,
+      mvaoutput_bb2l750,
+      mvaoutputnohiggnessnotopness_bb2l300,
+      mvaoutputnohiggnessnotopness_bb2l400,
+      mvaoutputnohiggnessnotopness_bb2l750,
+      mvaoutput_bb2l_node3,
+      mvaoutput_bb2l_node7,
+      mvaoutput_bb2l_sm,
+      evtWeight
+    );
+    selHistManager->evt_->fillHistograms(
+      &memResult,
+      memCpuTime,
+      &memResult_missingBJet,
+      memCpuTime_missingBJet,
+      evtWeight
+    );
     selHistManager->genEvtHistManager_afterCuts_->fillHistograms(genElectrons, genMuons, {}, {}, genJets, evtWeight_inclusive);
     selHistManager->lheInfoHistManager_afterCuts_->fillHistograms(*lheInfoReader, evtWeight);
     selHistManager->weights_->fillHistograms("genWeight", eventInfo.genWeight);

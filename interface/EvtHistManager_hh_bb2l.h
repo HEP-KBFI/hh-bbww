@@ -11,8 +11,10 @@
  */
 
 #include "tthAnalysis/HiggsToTauTau/interface/HistManagerBase.h" // HistManagerBase
+#include "hhAnalysis/bbwwMEM/interface/MEMResult.h" // MEMbbwwAlgoDilepton
 
-#include "hhAnalysis/bbwwMEM/interface/MEMResult.h" // MEMbbwwResultDilepton
+// forward declarations
+class MEMOutput_hh_bb2l;
 
 class EvtHistManager_hh_bb2l
   : public HistManagerBase
@@ -31,12 +33,28 @@ public:
                  int numJets,
                  int numBJets_loose,
                  int numBJets_medium,
-		 const MEMbbwwResultDilepton* memResult, double memCpuTime,
-		 const MEMbbwwResultDilepton* memResult_missingBJet, double memCpuTime_missingBJet,
-		 double mvaoutput300, double mvaoutput400, double mvaoutput750,
-		 double mvaoutputnohiggnessnotopness300, double mvaoutputnohiggnessnotopness400, double mvaoutputnohiggnessnotopness750,
-		 double mvaoutput_bb2l_node3, double mvaoutput_bb2l_node7, double mvaoutput_bb2l_sm,
-		 double evtWeight);
+                 double mvaoutput300,
+                 double mvaoutput400,
+                 double mvaoutput750,
+                 double mvaoutputnohiggnessnotopness300,
+                 double mvaoutputnohiggnessnotopness400,
+                 double mvaoutputnohiggnessnotopness750,
+                 double mvaoutput_bb2l_node3,
+                 double mvaoutput_bb2l_node7,
+                 double mvaoutput_bb2l_sm,
+                 double evtWeight);
+
+  void
+  fillHistograms(const MEMOutput_hh_bb2l * const memResult,
+                 //const MEMOutput_hh_bb2l * const memResult_missingBJet,
+                 double evtWeight);
+
+  void
+  fillHistograms(const MEMbbwwResultDilepton * const memResult,
+                 double memCpuTime,
+                 const MEMbbwwResultDilepton * const memResult_missingBJet,
+                 double memCpuTime_missingBJet,
+                 double evtWeight);
 
   const TH1 *
   getHistogram_EventCounter() const;

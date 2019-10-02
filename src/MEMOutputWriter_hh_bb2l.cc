@@ -22,7 +22,9 @@ MEMOutputWriter_hh_bb2l::MEMOutputWriter_hh_bb2l(const std::string & branchName_
   , bjet2_isReconstructed_(nullptr)
   , type_(nullptr)
   , weight_signal_(nullptr)
+  , weightErr_signal_(nullptr)
   , weight_background_(nullptr)
+  , weightErr_background_(nullptr)
   , LR_(nullptr)
   , cpuTime_(nullptr)
   , realTime_(nullptr)
@@ -49,7 +51,9 @@ MEMOutputWriter_hh_bb2l::~MEMOutputWriter_hh_bb2l()
   delete[] bjet2_isReconstructed_;
   delete[] type_;
   delete[] weight_signal_;
+  delete[] weightErr_signal_;
   delete[] weight_background_;
+  delete[] weightErr_background_;
   delete[] LR_;
   delete[] cpuTime_;
   delete[] realTime_;
@@ -74,7 +78,9 @@ void MEMOutputWriter_hh_bb2l::setBranchNames()
   branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
   branchName_type_ = Form("%s_%s", branchName_obj_.data(), "type");
   branchName_weight_signal_ = Form("%s_%s", branchName_obj_.data(), "weight_signal");
+  branchName_weightErr_signal_ = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
   branchName_weight_background_ = Form("%s_%s", branchName_obj_.data(), "weight_background");
+  branchName_weightErr_background_ = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
   branchName_LR_ = Form("%s_%s", branchName_obj_.data(), "LR");
   branchName_cpuTime_ = Form("%s_%s", branchName_obj_.data(), "cpuTime");
   branchName_realTime_ = Form("%s_%s", branchName_obj_.data(), "realTime");
@@ -102,7 +108,9 @@ MEMOutputWriter_hh_bb2l::setBranches(TTree * tree)
   bai.setBranch(bjet2_isReconstructed_, branchName_bjet2_isReconstructed_);
   bai.setBranch(type_, branchName_type_);
   bai.setBranch(weight_signal_, branchName_weight_signal_);
+  bai.setBranch(weightErr_signal_, branchName_weightErr_signal_);
   bai.setBranch(weight_background_, branchName_weight_background_);
+  bai.setBranch(weightErr_background_, branchName_weightErr_background_);
   bai.setBranch(LR_, branchName_LR_);
   bai.setBranch(cpuTime_, branchName_cpuTime_);
   bai.setBranch(realTime_, branchName_realTime_);
@@ -139,7 +147,9 @@ void MEMOutputWriter_hh_bb2l::write(const std::vector<MEMOutput_hh_bb2l> & memOu
     bjet2_isReconstructed_[idxMEMOutput] = memOutput.bjet2_isReconstructed_;
     type_[idxMEMOutput] = memOutput.type();
     weight_signal_[idxMEMOutput] = memOutput.weight_signal();
+    weightErr_signal_[idxMEMOutput] = memOutput.weightErr_signal();
     weight_background_[idxMEMOutput] = memOutput.weight_background();
+    weightErr_background_[idxMEMOutput] = memOutput.weightErr_background();
     LR_[idxMEMOutput] = memOutput.LR();
     cpuTime_[idxMEMOutput] = memOutput.cpuTime();
     realTime_[idxMEMOutput] = memOutput.realTime();

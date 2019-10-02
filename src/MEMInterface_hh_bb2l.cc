@@ -112,8 +112,12 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 
   result.fillInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead);
   result.weight_signal_ = memResult.getProb_signal(); 
+  result.weightErr_signal_ = memResult.getProbErr_signal();
   result.weight_background_ = memResult.getProb_background();
+  result.weightErr_background_ = memResult.getProbErr_background();
   result.LR_ = memResult.getLikelihoodRatio();
+  result.LRErr_ = memResult.getLikelihoodRatioErr();
+  result.Score_ = memResult.getScore();
   result.cpuTime_ = clock_->GetCpuTime("<MEMInterface_hh_bb2l::operator()>");
   result.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
   result.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;

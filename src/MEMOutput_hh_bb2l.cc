@@ -16,8 +16,12 @@ MEMOutput_hh_bb2l::MEMOutput_hh_bb2l()
   , bjet2_isReconstructed_(false)
   , type_(-1)
   , weight_signal_(-1.)
+  , weightErr_signal_(-1.)
   , weight_background_(-1.)
+  , weightErr_background_(-1.)
   , LR_(-1.)
+  , LRErr_(-1.)
+  , Score_(-1.)
   , cpuTime_(-1.)
   , realTime_(-1.)
   , isValid_(0)
@@ -82,7 +86,12 @@ std::ostream& operator<<(std::ostream& stream,
               " weights:\n"
               "  signal = "      << memOutput.weight_signal()     << "\n"
               "  background = "  << memOutput.weight_background() << "\n"
+              " weights_Err:\n"
+              "  signal_Err = "      << memOutput.weightErr_signal()     << "\n"
+              "  background_Err = "  << memOutput.weightErr_background() << "\n"
               " LR = "           << memOutput.LR()                << "\n"
+              " LRErr = "                 << memOutput.LRErr()                << "\n"
+              " Score = "                 << memOutput.Score()                << "\n"
               " isValid = "      << memOutput.isValid()           << "\n"
               " errorFlag = "    << memOutput.errorFlag()         << "\n"
               " cpuTime = "      << memOutput.cpuTime()           << "\n"

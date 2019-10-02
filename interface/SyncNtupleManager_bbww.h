@@ -16,6 +16,7 @@ enum class FloatVariableType_bbww
   PFMET,
   PFMETphi,
   HME,
+  MEM_LR,
   PU_weight,               ///< PU weight
   MC_weight                ///< MC weight
 };
