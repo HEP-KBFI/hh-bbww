@@ -117,7 +117,6 @@ enum { kFR_disabled, kFR_enabled };
 const int hadTauSelection_veto_antiElectron = -1; // not applied
 const int hadTauSelection_veto_antiMuon = -1; // not applied
 
-const double wBosonMass = 80.379; // GeV
 const double higgsBosonMass = 125.;
 
 enum { kHbb_undefined, kHbb_resolved, kHbb_boosted };

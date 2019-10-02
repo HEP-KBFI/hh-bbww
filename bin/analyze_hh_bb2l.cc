@@ -117,8 +117,6 @@ typedef std::vector<double> vdouble;
 
 enum { kFR_disabled, kFR_enabled };
 
-const double wBosonMass = 80.379; // GeV
-
 enum { kHbb_undefined, kHbb_resolved, kHbb_boosted };
 enum { kVBF_undefined, kVBF_nottagged, kVBF_tagged };
 
