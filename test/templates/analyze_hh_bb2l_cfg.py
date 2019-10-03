@@ -85,6 +85,7 @@ process.analyze_hh_bb2l = cms.PSet(
     jetCleaningByIndex = cms.bool(False),
 
     branchName_genTauLeptons = cms.string('GenTau'),
+    branchName_memOutput = cms.string(''),
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
