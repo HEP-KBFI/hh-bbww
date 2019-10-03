@@ -130,18 +130,18 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     self.evtCategories = []
     for type_lepton in [ "2e", "2mu" ]:
       # CV: add categories for "resolved" b-jets without VBF jet selection
-      for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL", "1bL", "nobL" ]:
+      for type_bjet in [ "2bM", "1bM2bL", "1bM", "2bL", "1bL", "nobL" ]:
         for type_jet in [ "0j", "1j", "2j", "3j", "ge4j" ]:
           if (type_jet == "0j" and type_bjet != "nobL") or (type_jet == "1j" and type_bjet not in [ "1bM", "1bL", "nobL" ]):
             continue   
           self.evtCategories.append("hh_bbWW_%s%s%s_DYctrl_resolvedHbb" % (type_bjet, type_jet, type_lepton))
         self.evtCategories.append("hh_bbWW_%s%s_DYctrl_resolvedHbb" % (type_bjet, type_lepton))                                                         
       # CV: add categories for "resolved" b-jets with VBF jet selection
-      for type_bjet in [ "2bM", "1bM1bL", "1bM", "2bL" ]:
+      for type_bjet in [ "2bM", "1bM2bL", "1bM", "2bL" ]:
         category = "hh_bbWW_%s%s_DYctrl_resolvedHbb_vbf" % (type_bjet, type_lepton)
         self.evtCategories.append(category)
       # CV: add categories for "boosted" b-jets (no VBF jet selection)
-      for type_bjet in [ "2bM", "1bM1bL", "1bM" ]:
+      for type_bjet in [ "2bM", "1bM2bL", "1bM" ]:
         category = "hh_bbWW_%s%s_DYctrl_boostedHbb" % (type_bjet, type_lepton)
         self.evtCategories.append(category)
     print("Processing %i categories: %s" % (len(self.evtCategories), self.evtCategories))
