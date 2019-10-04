@@ -399,7 +399,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'syncOutput'               : syncOutput,
                 'syncTree'                 : syncTree,
                 'syncRLE'                  : syncRLE,
-                'syncGenMatch'             : [], # CV: temporarily kept until all channels switch to new gen-matching logic
                 'apply_hlt_filter'         : self.hlt_filter,
                 'useNonNominal'            : self.use_nonnominal,
                 'fillGenEvtHistograms'     : True,

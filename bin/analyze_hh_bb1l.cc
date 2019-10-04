@@ -390,7 +390,6 @@ int main(int argc, char* argv[])
   const edm::ParameterSet syncNtuple_cfg = cfg_analyze.getParameter<edm::ParameterSet>("syncNtuple");
   const std::string syncNtuple_tree = syncNtuple_cfg.getParameter<std::string>("tree");
   const std::string syncNtuple_output = syncNtuple_cfg.getParameter<std::string>("output");
-  const vstring syncNtuple_genMatch = syncNtuple_cfg.getParameter<vstring>("genMatch");
   const bool do_sync = ! syncNtuple_tree.empty() && ! syncNtuple_output.empty();
 
   const edm::ParameterSet additionalEvtWeight = cfg_analyze.getParameter<edm::ParameterSet>("evtWeight");
@@ -1913,6 +1912,19 @@ int main(int argc, char* argv[])
       (*selEventsFile) << eventInfo.run << ':' << eventInfo.lumi << ':' << eventInfo.event << '\n';
     }
 
+    bool isGenMatched = false;
+    if(isMC)
+    {
+      for (const GenMatchEntry * genMatch : genMatches)
+      {
+        if(genMatch->getName().empty())
+        {
+          isGenMatched = true; // non-fake
+          break;
+        }
+      }
+    }
+
     if ( bdt_filler ) {
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep_pt",                        selLepton->pt())
@@ -1998,7 +2010,7 @@ int main(int argc, char* argv[])
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
 
-      if(isMC && contains(syncNtuple_genMatch, selLepton_genMatch.name_))
+      if(isGenMatched)
       {
         snm->fill();
       }
