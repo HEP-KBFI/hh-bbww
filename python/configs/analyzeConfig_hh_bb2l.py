@@ -69,7 +69,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         rle_select        = '',
         use_nonnominal    = False,
         hlt_filter        = False,
-        use_home          = True,
+        use_home          = False,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,

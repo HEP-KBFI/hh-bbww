@@ -21,7 +21,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
         rle_select,
         central_or_shifts,
         use_nonnominal = False,
-        use_home       = True,
+        use_home       = False,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
