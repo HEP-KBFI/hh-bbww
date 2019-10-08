@@ -569,11 +569,11 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
             histogramDir_mcClosure = self.mcClosure_dir[lepton_mcClosure]
             histogramDir_mcClosure = histogramDir_mcClosure.replace(self.evtcategory_inclusive, category)
             self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
-            'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
-            'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-            'histogramName_nominal_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_nominal, histogramToFit),
-            'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
-            'histogramName_mcClosure_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_mcClosure, histogramToFit)
+              'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
+              'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+              'histogramName_nominal_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_nominal, histogramToFit),
+              'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
+              'histogramName_mcClosure_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_mcClosure, histogramToFit)
             })
           self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
 
@@ -582,9 +582,8 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       key_hadd_stage2_job = getKey(self.evtcategory_inclusive, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
       key_makePlots_dir = getKey("makePlots")
       key_makePlots_job_inclusive = getKey(lepton_charge_selection)
-      self.jobOptions_make_plots[key_makePlots_job_inclusive] = {
-    
-    'executable' : self.executable_make_plots,
+      self.jobOptions_make_plots[key_makePlots_job_inclusive] = {    
+        'executable' : self.executable_make_plots,
         'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
         'cfgFile_original' : self.cfgFile_make_plots_inclusive,
         'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_%s_%s_%s_cfg.py" % (self.channel, lepton_charge_selection, self.evtcategory_inclusive)),
@@ -599,25 +598,25 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
         key_makePlots_job_in_categories = getKey(category, lepton_charge_selection)
         key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
         self.jobOptions_make_plots[key_makePlots_job_in_categories] = {
-      'executable' : self.executable_make_plots,
-      'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-      'cfgFile_original' : self.cfgFile_make_plots_in_categories,
-      'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_%s_%s_%s_cfg.py" % (self.channel, lepton_charge_selection, category)),
-      'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_%s_%s_%s.png" % (self.channel, lepton_charge_selection, category)),
-      'categories' : category,
-      'lepton_charge_selection' : lepton_charge_selection,
-      'make_plots_backgrounds' : self.make_plots_backgrounds
-      }
+          'executable' : self.executable_make_plots,
+          'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+          'cfgFile_original' : self.cfgFile_make_plots_in_categories,
+          'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_%s_%s_%s_cfg.py" % (self.channel, lepton_charge_selection, category)),
+          'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_%s_%s_%s.png" % (self.channel, lepton_charge_selection, category)),
+          'categories' : [ category ],
+          'lepton_charge_selection' : lepton_charge_selection,
+          'make_plots_backgrounds' : self.make_plots_backgrounds
+        }
         self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job_in_categories])
         if "Fakeable_mcClosure" in self.lepton_selections: #TODO
           key_makePlots_job_mcClosure = getKey(lepton_charge_selection)
           key_hadd_stage2 = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
           self.jobOptions_make_plots[key_makePlots_job_mcClosure] = {
-        'executable' : self.executable_make_plots_mcClosure,
-        'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-        'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_mcClosure_%s_%s_cfg.py" % (self.channel, lepton_charge_selection)),
-        'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_mcClosure_%s_%s.png" % (self.channel, lepton_charge_selection))
-        }
+            'executable' : self.executable_make_plots_mcClosure,
+            'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+            'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_mcClosure_%s_%s_cfg.py" % (self.channel, lepton_charge_selection)),
+            'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_mcClosure_%s_%s.png" % (self.channel, lepton_charge_selection))
+          }
           self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job_mcClosure])
 
     if self.is_sbatch:
