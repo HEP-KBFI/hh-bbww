@@ -627,16 +627,6 @@ int main(int argc, char* argv[])
       << "Invalid Configuration parameter 'evtCategories'. The following event categories are undefined: " << format_vstring(undefinedEvtCategories) << " !!\n";
   }
 
-  const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
-  const HHWeightInterface * HHWeight_calc = nullptr;
-  std::size_t Nscan = 0;
-  if(eventInfo.is_hh_nonresonant())
-  {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
-    Nscan = HHWeight_calc->get_nof_scans();
-  }
-  std::cout << "Number of points being scanned = " << Nscan << '\n';
-
   std::map<std::string, GenEvtHistManager*> genEvtHistManager_beforeCuts;
   std::map<std::string, LHEInfoHistManager*> lheInfoHistManager_beforeCuts;
   std::map<std::string, std::map<int, selHistManagerType*>> selHistManagers;
@@ -706,31 +696,6 @@ int main(int argc, char* argv[])
       selHistManager->evt_ = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
         Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
       selHistManager->evt_->bookHistograms(fs);
-      if(eventInfo.is_hh_nonresonant())
-      {
-        for(std::size_t bm_list = 0; bm_list < HHWeightInterface::nof_JHEP; bm_list++)
-        {
-          std::string process_and_genMatch_BM = process_string;
-          process_and_genMatch_BM += "_BM";
-          process_and_genMatch_BM += std::to_string(bm_list);
-          process_and_genMatch_BM += "_";
-          process_and_genMatch_BM += genMatchDefinition->getName();
-          selHistManager->evt_BMs_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
-            Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
-          selHistManager->evt_BMs_[bm_list]->bookHistograms(fs);
-        }
-        for(std::size_t bm_list = 0; bm_list < Nscan; bm_list++)
-        {
-          std::string process_and_genMatch_BM = process_string;
-          process_and_genMatch_BM += "_scan";
-          process_and_genMatch_BM += std::to_string(bm_list);
-          process_and_genMatch_BM += "_";
-          process_and_genMatch_BM += genMatchDefinition->getName();
-          selHistManager->evt_scan_[bm_list] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch_BM,
-            Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
-          selHistManager->evt_scan_[bm_list]->bookHistograms(fs);
-        }
-      }
       if(isMC && ! skipBooking)
       {
         selHistManager->genEvtHistManager_afterCuts_ = new GenEvtHistManager(makeHistManager_cfg(process_and_genMatch,
@@ -818,9 +783,6 @@ int main(int argc, char* argv[])
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight",
       "SM_HHWeight",
-      "BM1_HHWeight", "BM2_HHWeight", "BM3_HHWeight", "BM4_HHWeight", "BM5_HHWeight", "BM6_HHWeight", "BM7_HHWeight", "BM8_HHWeight", "BM9_HHWeight", "BM10_HHWeight", "BM11_HHWeight", "BM12_HHWeight",
-      // X: test points -- for now hardcoded the numbers
-      "klm10_HHWeight", "kl1_HHWeight", "kl2p4_HHWeight", "kl10_HHWeight",
       "mhh_gen","costS_gen"
     );
     bdt_filler->register_variable<int_type>(
@@ -1540,48 +1502,6 @@ int main(int argc, char* argv[])
     }
     const double memOutput_LR = memOutput_hh_bb2l_matched.isValid() ? memOutput_hh_bb2l_matched.LR() : -1.;
 
-    std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::vector<double> Weight_klScan; // weights to do histograms for BMs
-    double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
-    if(HHWeight_calc)
-    {
-      if(eventInfo.gen_mHH > 247.)
-      {
-        WeightBM = HHWeight_calc->getJHEPWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-        Weight_klScan = HHWeight_calc->getScanWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-
-        evtWeightRecorder.record_bm(WeightBM[0]); // SM by default
-        HHWeight = WeightBM[0];
-
-        if(isDEBUG)
-        {
-          std::cout << "mhh = "              << eventInfo.gen_mHH          << " : "
-                       "cost "               << eventInfo.gen_cosThetaStar << " : "
-                       "weight = "           << HHWeight                   << '\n'
-          ;
-          std::cout << "Calculated " << WeightBM.size() << "BM weights - SM (BM = 0) + 12 shape benchmarks \n";
-          for(std::size_t bm_list = 0; bm_list < WeightBM.size(); ++bm_list)
-          {
-            std::cout << "BM = " << bm_list << "; Weight = " <<  WeightBM[bm_list] << '\n';
-          }
-          std::cout << "Calculated " << Weight_klScan.size() << " scan weights\n";
-          for(std::size_t bm_list = 0; bm_list < Weight_klScan.size(); ++bm_list)
-          {
-            std::cout << "line = " << bm_list << "; Weight = " <<  Weight_klScan[bm_list] << '\n';
-          }
-          std::cout << "\n";
-        }
-
-      }
-      else
-      {
-        throw cms::Exception("analyze_hh_bb2l")
-          << "mhh_gen = " << eventInfo.gen_mHH << " < 247 GeV; Check that this is really a file for HH production\n"
-        ;
-      }
-    }
-
-
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1871,68 +1791,6 @@ int main(int argc, char* argv[])
             evtWeight
           );
         }
-        if(! WeightBM.empty())
-        {
-          for(std::size_t bmIdx = 0; bmIdx < WeightBM.size(); ++bmIdx)
-          {
-            double evtWeight0 = evtWeight * WeightBM[bmIdx] / HHWeight;
-            selHistManager->evt_BMs_[bmIdx]->fillHistograms(
-              selElectrons.size(),
-              selMuons.size(),
-              selJetsAK4.size(),
-              selBJetsAK4_loose.size(),
-              selBJetsAK4_medium.size(),
-              mvaoutput_bb2l300,
-              mvaoutput_bb2l400,
-              mvaoutput_bb2l750,
-              mvaoutputnohiggnessnotopness_bb2l300,
-              mvaoutputnohiggnessnotopness_bb2l400,
-              mvaoutputnohiggnessnotopness_bb2l750,
-              mvaoutput_bb2l_node3,
-              mvaoutput_bb2l_node7,
-              mvaoutput_bb2l_sm,
-              evtWeight0
-            );
-            if(memReader)
-            {
-              selHistManager->evt_BMs_[bmIdx]->fillHistograms(
-                &memOutput_hh_bb2l_matched,
-                evtWeight0
-              );
-            }
-          }
-        }
-        if(! Weight_klScan.empty())
-        {
-          for(std::size_t scanIdx = 0; scanIdx < Weight_klScan.size(); ++scanIdx)
-          {
-            double evtWeight0 = evtWeight * Weight_klScan[scanIdx] / HHWeight;
-            selHistManager->evt_scan_[scanIdx]->fillHistograms(
-              selElectrons.size(),
-              selMuons.size(),
-              selJetsAK4.size(),
-              selBJetsAK4_loose.size(),
-              selBJetsAK4_medium.size(),
-              mvaoutput_bb2l300,
-              mvaoutput_bb2l400,
-              mvaoutput_bb2l750,
-              mvaoutputnohiggnessnotopness_bb2l300,
-              mvaoutputnohiggnessnotopness_bb2l400,
-              mvaoutputnohiggnessnotopness_bb2l750,
-              mvaoutput_bb2l_node3,
-              mvaoutput_bb2l_node7,
-              mvaoutput_bb2l_sm,
-              evtWeight0
-            );
-            if(memReader)
-            {
-              selHistManager->evt_scan_[scanIdx]->fillHistograms(
-                &memOutput_hh_bb2l_matched,
-                evtWeight0
-              );
-            }
-          }
-        }
 
         if(isMC && ! skipFilling)
         {
@@ -2083,24 +1941,6 @@ int main(int argc, char* argv[])
           ("nJet_vbf",                      selJetsAK4_vbf.size())
 	  ("isHbb_boosted",                 type_Hbb == kHbb_boosted)
           ("isVBF",                         isVBF)
-          ("SM_HHWeight",                   WeightBM[0])
-          ("BM1_HHWeight",                  WeightBM[1])
-          ("BM2_HHWeight",                  WeightBM[2])
-          ("BM3_HHWeight",                  WeightBM[3])
-          ("BM4_HHWeight",                  WeightBM[4])
-          ("BM5_HHWeight",                  WeightBM[5])
-          ("BM6_HHWeight",                  WeightBM[6])
-          ("BM7_HHWeight",                  WeightBM[7])
-          ("BM8_HHWeight",                  WeightBM[8])
-          ("BM9_HHWeight",                  WeightBM[9])
-          ("BM10_HHWeight",                 WeightBM[10])
-          ("BM11_HHWeight",                 WeightBM[11])
-          ("BM12_HHWeight",                 WeightBM[12])
-          // X: test points -- for now hardcoded the numbers
-          ("klm10_HHWeight",                Weight_klScan[5])
-          ("kl1_HHWeight",                  Weight_klScan[11])
-          ("kl2p4_HHWeight",                Weight_klScan[13])
-          ("kl10_HHWeight",                 Weight_klScan[17])
           ("mhh_gen",                       eventInfo.gen_mHH)
           ("costS_gen",                     eventInfo.gen_cosThetaStar)
         .fill()
