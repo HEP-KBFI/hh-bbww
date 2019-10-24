@@ -778,11 +778,11 @@ int main(int argc, char* argv[])
       "m_HHvis", "pT_HHvis", "dPhi_HHvis",
       "m_HH", "pT_HH", "dPhi_HH", "Smin_HH",
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle",
-      "m_HH_hme",
+      "m_HH_hme", "memweight_signal", "memweight_background","memOutput_LR",
       "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight",
-      "SM_HHWeight",
+      //"SM_HHWeight",
       "mhh_gen","costS_gen"
     );
     bdt_filler->register_variable<int_type>(
@@ -1444,6 +1444,7 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("signal region veto", evtWeightRecorder.get(central_or_shift_main));
 
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
+
     if(memReader)
     {
       const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l = memReader->read();
@@ -1461,6 +1462,7 @@ int main(int argc, char* argv[])
           selLepton_sublead->eta(), selLepton_sublead->phi(),
           memOutput_hh_bb2l.subleadLepton_eta_, memOutput_hh_bb2l.subleadLepton_phi_
         );
+
         if(selLepton_sublead_dR > 1.e-2)
         {
           continue;
@@ -1500,8 +1502,9 @@ int main(int argc, char* argv[])
         }
       }
     }
-    const double memOutput_LR = memOutput_hh_bb2l_matched.isValid() ? memOutput_hh_bb2l_matched.LR() : -1.;
-
+    double memOutput_LR = memOutput_hh_bb2l_matched.isValid() ? memOutput_hh_bb2l_matched.LR() : -1.;
+    double memweight_signal = memOutput_hh_bb2l_matched.weight_signal();
+    double memweight_background = memOutput_hh_bb2l_matched.weight_background();
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1876,6 +1879,7 @@ int main(int argc, char* argv[])
     }
 
     if ( bdt_filler ) {
+
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep1_pt",                       selLepton_lead->pt())
           ("lep1_conePt",                   comp_lep1_conePt(*selLepton_lead))
@@ -1923,6 +1927,9 @@ int main(int argc, char* argv[])
           ("mT2_top_2particle",             mT2_top_2particle)
           ("mT2_top_3particle",             mT2_top_3particle)
           ("m_HH_hme",                      m_HH_hme)
+	  ("memweight_signal",              memweight_signal)
+	  ("memweight_background",          memweight_background)
+	  ("memOutput_LR",                  memOutput_LR)
           ("logTopness_publishedChi2",      logTopness_publishedChi2)
           ("logHiggsness_publishedChi2",    logHiggsness_publishedChi2)
           ("logTopness_fixedChi2",          logTopness_fixedChi2)

@@ -95,9 +95,9 @@ MEMOutputReader_hh_bb2l::setBranchNames()
     branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
     branchName_type_                  = Form("%s_%s", branchName_obj_.data(), "type");
     branchName_weight_signal_         = Form("%s_%s", branchName_obj_.data(), "weight_signal");
-    branchName_weightErr_signal_         = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
+    //branchName_weightErr_signal_         = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
     branchName_weight_background_     = Form("%s_%s", branchName_obj_.data(), "weight_background");
-    branchName_weightErr_background_     = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
+    //branchName_weightErr_background_     = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
     branchName_LR_                    = Form("%s_%s", branchName_obj_.data(), "LR");
     branchName_cpuTime_               = Form("%s_%s", branchName_obj_.data(), "cpuTime");
     branchName_realTime_              = Form("%s_%s", branchName_obj_.data(), "realTime");
@@ -141,9 +141,9 @@ MEMOutputReader_hh_bb2l::setBranchAddresses(TTree * tree)
     bai.setBranchAddress(bjet2_isReconstructed_, branchName_bjet2_isReconstructed_);
     bai.setBranchAddress(type_, branchName_type_);
     bai.setBranchAddress(weight_signal_, branchName_weight_signal_);
-    bai.setBranchAddress(weightErr_signal_, branchName_weightErr_signal_);
+    //bai.setBranchAddress(weightErr_signal_, branchName_weightErr_signal_);
     bai.setBranchAddress(weight_background_, branchName_weight_background_);
-    bai.setBranchAddress(weightErr_background_, branchName_weightErr_background_);
+    //bai.setBranchAddress(weightErr_background_, branchName_weightErr_background_);
     bai.setBranchAddress(LR_, branchName_LR_);
     bai.setBranchAddress(cpuTime_, branchName_cpuTime_);
     bai.setBranchAddress(realTime_, branchName_realTime_);
@@ -186,9 +186,9 @@ MEMOutputReader_hh_bb2l::read() const
       memOutput.bjet2_isReconstructed_ = gInstance -> bjet2_isReconstructed_[idxMEMOutput];
       memOutput.type_                  = gInstance -> type_[idxMEMOutput];
       memOutput.weight_signal_         = gInstance -> weight_signal_[idxMEMOutput];
-      memOutput.weightErr_signal_         = gInstance -> weightErr_signal_[idxMEMOutput];
+      //      memOutput.weightErr_signal_         = gInstance -> weightErr_signal_[idxMEMOutput];
       memOutput.weight_background_     = gInstance -> weight_background_[idxMEMOutput];
-      memOutput.weightErr_background_     = gInstance -> weightErr_background_[idxMEMOutput];
+      //memOutput.weightErr_background_     = gInstance -> weightErr_background_[idxMEMOutput];
       memOutput.LR_                    = gInstance -> LR_[idxMEMOutput];
       memOutput.cpuTime_               = gInstance -> cpuTime_[idxMEMOutput];
       memOutput.realTime_              = gInstance -> realTime_[idxMEMOutput];
