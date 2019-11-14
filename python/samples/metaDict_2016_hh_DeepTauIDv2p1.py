@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-10-18 05:34:01 with the following command:
+# file generated at 2019-11-14 14:14:07 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2016_RunIISummer16MiniAODv3.txt -m python/samples/metaDict_2016_hh_DeepTauIDv2p1.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2016_RunIISummer16MiniAODv3.txt -c python/samples/sampleLocations_2016_nanoAOD_hh_bbww_DeepTauIDv2p1.txt
 
 meta_dictionary = OD()
@@ -1042,7 +1042,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/R
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
   ("sample_category",       "signal_ggf_spin2_800_hh_bbtt"),
   ("process_name_specific", "signal_ggf_spin2_800_hh_2b2t"),
   ("nof_db_events",         100000),
@@ -1051,7 +1051,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/R
   ("xsection",              0.073056),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 4.78GB; nevents: 100.00k; release: 9_4_9; last modified: 2019-02-22 00:38:43"),
+  ("comment",               "100.0%; status: VALID; size: 4.78GB; nevents: 100.00k; release: 9_4_9; last modified: 2019-02-22 00:38:43"),
 ])
 
 meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
@@ -1194,7 +1194,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/RunIISummer16MiniAOD
   ("xsection",              0.073056),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "75.0%; status: VALID; size: 12.95GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-05-01 13:30:40"),
+  ("comment",               "100.0%; status: VALID; size: 12.95GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-05-01 13:30:40"),
 ])
 
 meta_dictionary["/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
