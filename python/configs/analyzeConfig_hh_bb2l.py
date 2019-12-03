@@ -152,7 +152,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.lepton_charge_selections = [ "OS" ]
     self.isBDTtraining = True
 
-  def accept_systematics(self, central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_category, sample_name, sample_info):
+  def accept_systematics(self, central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info):
     if central_or_shift != "central":
       isFR_shape_shift = (central_or_shift in self.central_or_shifts_fr)
       if not ((lepton_selection == "Fakeable" and lepton_charge_selection == "OS" and isFR_shape_shift) or
@@ -162,7 +162,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         return False
       if not is_mc and not isFR_shape_shift:
         return False
-      if not self.accept_central_or_shift(central_or_shift, sample_category, sample_name, sample_info['has_LHE']):
+      if not self.accept_central_or_shift(central_or_shift, sample_info):
         return False
     return True
     
@@ -240,7 +240,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   continue
 
                 if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
-                    central_or_shift_or_dummy, is_mc, lepton_selection, lepton_charge_selection, sample_category, sample_name, sample_info
+                    central_or_shift_or_dummy, is_mc, lepton_selection, lepton_charge_selection, sample_info
                 ):
                   continue
 
@@ -330,7 +330,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             central_or_shift_dedicated = self.central_or_shifts if use_th_weights else self.central_or_shifts_external
             for central_or_shift in central_or_shift_dedicated:
               if not self.accept_systematics(
-                  central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_category, sample_name, sample_info
+                  central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info
               ):
                 continue
 
@@ -338,7 +338,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               if central_or_shift == "central" and not use_th_weights:
                 for central_or_shift_local in self.central_or_shifts_internal:
                   if self.accept_systematics(
-                      central_or_shift_local, is_mc, lepton_selection, lepton_charge_selection, sample_category, sample_name, sample_info
+                      central_or_shift_local, is_mc, lepton_selection, lepton_charge_selection, sample_info
                   ):
                     central_or_shifts_local.append(central_or_shift_local)
 
