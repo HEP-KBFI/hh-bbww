@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-11-14 14:48:22 with the following command:
+# file generated at 2019-12-04 17:52:29 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2017_hh_DeepTauIDv2p1.py -p python/samples/sampleLocations_2017_nanoAOD_hh_bbww_DeepTauIDv2p1.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_DeepTauIDv2p1.py -M
 
 samples_2017 = OD()
@@ -2780,13 +2780,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_450_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_450_hh_2b2t"),
-  ("nof_files",                       3),
+  ("nof_files",                       6),
   ("nof_db_files",                    16),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 200000),
+  ("nof_tree_events",                 300000),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     635789685), # 635.79MB, avg file size 211.93MB
+  ("fsize_local",                     963346411), # 963.35MB, avg file size 160.56MB
   ("fsize_db",                        20167217854), # 20.17GB, avg file size 1.26GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -2798,9 +2798,9 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_091033"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_193818"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -2864,13 +2864,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_550_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_550_hh_2b2t"),
-  ("nof_files",                       3),
+  ("nof_files",                       6),
   ("nof_db_files",                    13),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 200000),
+  ("nof_tree_events",                 300000),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     668361306), # 668.36MB, avg file size 222.79MB
+  ("fsize_local",                     1011979350), # 1.01GB, avg file size 168.66MB
   ("fsize_db",                        20644816504), # 20.64GB, avg file size 1.59GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -2882,9 +2882,9 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_091459"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194020"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -2906,13 +2906,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_600_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_600_hh_2b2t"),
-  ("nof_files",                       2),
+  ("nof_files",                       4),
   ("nof_db_files",                    12),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 100000),
+  ("nof_tree_events",                 200000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     340777208), # 340.78MB, avg file size 170.39MB
+  ("fsize_local",                     687261847), # 687.26MB, avg file size 171.82MB
   ("fsize_db",                        13957904944), # 13.96GB, avg file size 1.16GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -2924,9 +2924,9 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_091636"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194254"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -2948,13 +2948,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_650_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_650_hh_2b2t"),
-  ("nof_files",                       2),
+  ("nof_files",                       4),
   ("nof_db_files",                    7),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 100000),
+  ("nof_tree_events",                 200000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     345703181), # 345.70MB, avg file size 172.85MB
+  ("fsize_local",                     697359752), # 697.36MB, avg file size 174.34MB
   ("fsize_db",                        14016331858), # 14.02GB, avg file size 2.00GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -2966,9 +2966,9 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_091822"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194456"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -2990,13 +2990,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_700_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_700_hh_2b2t"),
-  ("nof_files",                       2),
+  ("nof_files",                       4),
   ("nof_db_files",                    13),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 100000),
+  ("nof_tree_events",                 200000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     351130811), # 351.13MB, avg file size 175.57MB
+  ("fsize_local",                     708788263), # 708.79MB, avg file size 177.20MB
   ("fsize_db",                        14253263609), # 14.25GB, avg file size 1.10GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -3008,9 +3008,9 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_092000"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194728"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -3070,17 +3070,59 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/RunIIFall17Mi
   ]),
 ])
 
+samples_2017["/VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_800_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_800_hh_2b2t"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    11),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 200000),
+  ("nof_db_events",                   200000),
+  ("fsize_local",                     725032754), # 725.03MB, avg file size 181.26MB
+  ("fsize_db",                        14420020815), # 14.42GB, avg file size 1.31GB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195234"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
 samples_2017["/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_850_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_850_hh_2b2t"),
-  ("nof_files",                       1),
+  ("nof_files",                       4),
   ("nof_db_files",                    14),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 100000),
+  ("nof_tree_events",                 200000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     362583791), # 362.58MB, avg file size 362.58MB
+  ("fsize_local",                     731082944), # 731.08MB, avg file size 182.77MB
   ("fsize_db",                        14617490096), # 14.62GB, avg file size 1.04GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -3092,7 +3134,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_092632"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195000"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3135,6 +3177,132 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/RunIIFall17Mi
     [
       OD([
         ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_092845"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_1000_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_1000_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    7),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     374154467), # 374.15MB, avg file size 187.08MB
+  ("fsize_db",                        7364574553), # 7.36GB, avg file size 1.05GB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195436"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_1250_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_1250_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    7),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     381956413), # 381.96MB, avg file size 190.98MB
+  ("fsize_db",                        7497237044), # 7.50GB, avg file size 1.07GB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195708"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_1500_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_1500_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     386791723), # 386.79MB, avg file size 193.40MB
+  ("fsize_db",                        7582428905), # 7.58GB, avg file size 1.52GB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_193617"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-11-14 14:29:12 with the following command:
+# file generated at 2019-12-04 17:47:15 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_hh_DeepTauIDv2p1.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2018_RunIIAutumn18MiniAOD.txt -c python/samples/sampleLocations_2018_nanoAOD_hh_bbww_DeepTauIDv2p1.txt
 
 meta_dictionary = OD()
@@ -196,7 +196,7 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_13TeV-m
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           "2018_2019Oct06_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
+  ("crab_string",           "2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
   ("sample_category",       "signal_vbf_spin0_750_hh_bbtt"),
   ("process_name_specific", "signal_vbf_spin0_750_hh_2b2t"),
   ("nof_db_events",         192000),
@@ -205,11 +205,11 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-m
   ("xsection",              0.073056),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "50.0%; status: VALID; size: 13.66GB; nevents: 192.00k; release: 10_2_5; last modified: 2019-05-11 00:07:30"),
+  ("comment",               "75.0%; status: VALID; size: 13.66GB; nevents: 192.00k; release: 10_2_5; last modified: 2019-05-11 00:07:30"),
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           "2018_2019Oct06_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
+  ("crab_string",           "2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
   ("sample_category",       "signal_vbf_spin0_800_hh_bbtt"),
   ("process_name_specific", "signal_vbf_spin0_800_hh_2b2t"),
   ("nof_db_events",         200000),
@@ -218,7 +218,7 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-m
   ("xsection",              0.073056),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "50.0%; status: VALID; size: 14.48GB; nevents: 200.00k; release: 10_2_5; last modified: 2019-04-21 19:51:52"),
+  ("comment",               "75.0%; status: VALID; size: 14.48GB; nevents: 200.00k; release: 10_2_5; last modified: 2019-04-21 19:51:52"),
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -261,7 +261,7 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
   ("sample_category",       "signal_vbf_spin0_1500_hh_bbtt"),
   ("process_name_specific", "signal_vbf_spin0_1500_hh_2b2t"),
   ("nof_db_events",         100000),
@@ -270,11 +270,11 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-
   ("xsection",              0.073056),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 7.69GB; nevents: 100.00k; release: 10_2_5; last modified: 2019-05-29 23:31:29"),
+  ("comment",               "100.0%; status: VALID; size: 7.69GB; nevents: 100.00k; release: 10_2_5; last modified: 2019-05-29 23:31:29"),
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
   ("sample_category",       "signal_vbf_spin0_1750_hh_bbtt"),
   ("process_name_specific", "signal_vbf_spin0_1750_hh_2b2t"),
   ("nof_db_events",         91000),
@@ -283,7 +283,7 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-
   ("xsection",              0.073056),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 7.05GB; nevents: 91.00k; release: 10_2_5; last modified: 2019-05-21 20:57:07"),
+  ("comment",               "50.0%; status: VALID; size: 7.05GB; nevents: 91.00k; release: 10_2_5; last modified: 2019-05-21 20:57:07"),
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
