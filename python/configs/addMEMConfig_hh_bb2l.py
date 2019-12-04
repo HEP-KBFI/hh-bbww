@@ -45,7 +45,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
       leptonSelection          = leptonSelection,
       hadTauSelection          = "undefined|undefined",
       jet_cleaning_by_index    = False,
-      lowIntegrationPoints     = -1,
+      integration_choice       = '',
       dry_run                  = dry_run,
       use_nonnominal           = use_nonnominal,
       use_home                 = use_home,
