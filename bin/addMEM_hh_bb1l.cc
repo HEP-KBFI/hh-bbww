@@ -165,6 +165,7 @@ int main(int argc,
   const bool dryRun                         = cfg_addMEM.getParameter<bool>("dryRun");
   const bool copy_all_branches              = cfg_addMEM.getParameter<bool>("copy_all_branches");
   const bool readGenObjects                 = cfg_addMEM.getParameter<bool>("readGenObjects");
+  const bool jetCleaningByIndex             = cfg_addMEM.getParameter<bool>("jetCleaningByIndex");
   const bool useNonNominal                  = cfg_addMEM.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet           = useNonNominal || ! isMC;
   const bool method_MEM                     = cfg_addMEM.getParameter<bool>("method_mem");
@@ -273,6 +274,7 @@ int main(int argc,
   jetReaderAK4->read_btag_systematics(isMC);
   jetReaderAK4->setBranchAddresses(inputTree);
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
+  RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
@@ -591,7 +593,10 @@ int main(int argc,
 
           const std::vector<RecoJet> jets_ak4_mem = jetReaderAK4->read();
           const std::vector<const RecoJet*> jet_ptrs_ak4_mem = convert_to_ptrs(jets_ak4_mem);
-          const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4_mem, fakeableLeptons);
+          const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleaningByIndex ?
+            jetCleanerAK4_byIndex(jet_ptrs_ak4_mem, fakeableLeptons) :
+            jetCleanerAK4_dR04   (jet_ptrs_ak4_mem, fakeableLeptons)
+          ;
           const std::vector<RecoJetAK8> jets_ak8_mem = jetReaderAK8->read();
           const std::vector<const RecoJetAK8*> jet_ptrs_ak8_mem = convert_to_ptrs(jets_ak8_mem);
           const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_mem, fakeableLeptons);
