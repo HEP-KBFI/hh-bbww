@@ -66,7 +66,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     self.method_mem = method_mem
     self.method_hme = method_hme
 
-  def createCfg_addMEM(self, inputFiles, startRange, endRange, outputFile, era, isMC, cfgFile_modified):
+  def createCfg_addMEM(self, inputFiles, startRange, endRange, outputFile, era, isMC, cfgFile_modified, whitelist = []):
     """Create python configuration file for the addMEM_hh_bb2l executable (MEM code)
 
     Args:
