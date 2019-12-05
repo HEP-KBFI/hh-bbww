@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-11-14 14:50:56 with the following command:
+# file generated at 2019-12-04 17:54:59 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2018_hh_DeepTauIDv2p1.py -p python/samples/sampleLocations_2018_nanoAOD_hh_bbww_DeepTauIDv2p1.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_nanoAOD_DeepTauIDv2p1.py -M
 
 samples_2018 = OD()
@@ -652,13 +652,13 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madg
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_750_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_750_hh_2b2t"),
-  ("nof_files",                       2),
+  ("nof_files",                       4),
   ("nof_db_files",                    10),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 92000),
+  ("nof_tree_events",                 142000),
   ("nof_db_events",                   192000),
-  ("fsize_local",                     325011117), # 325.01MB, avg file size 162.51MB
+  ("fsize_local",                     506532003), # 506.53MB, avg file size 126.63MB
   ("fsize_db",                        13657644591), # 13.66GB, avg file size 1.37GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -670,9 +670,9 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2018_2019Oct06/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Oct06_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191006_134113"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_212904"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", [2]),
       ]),
     ]
   ),
@@ -698,13 +698,13 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madg
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_800_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_800_hh_2b2t"),
-  ("nof_files",                       2),
+  ("nof_files",                       4),
   ("nof_db_files",                    17),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 100000),
+  ("nof_tree_events",                 150000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     357631645), # 357.63MB, avg file size 178.82MB
+  ("fsize_local",                     540775377), # 540.78MB, avg file size 135.19MB
   ("fsize_db",                        14483792512), # 14.48GB, avg file size 851.99MB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -716,7 +716,7 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2018_2019Oct06/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Oct06_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191006_134541"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_213134"),
         ("selection", "*"),
         ("blacklist", [1]),
       ]),
@@ -857,6 +857,98 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-mad
         ("path",      "/hdfs/cms/store/user/snandan/2018_2019Oct06/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Oct06_VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191006_135240"),
         ("selection", "*"),
         ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+    "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+    "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+    "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_1500_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_1500_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    9),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 100000),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     385190063), # 385.19MB, avg file size 192.60MB
+  ("fsize_db",                        7687388828), # 7.69GB, avg file size 854.15MB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_213403"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+    "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+    "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+    "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_vbf_spin0_1750_hh_bbtt"),
+  ("process_name_specific",           "signal_vbf_spin0_1750_hh_2b2t"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    8),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 41000),
+  ("nof_db_events",                   91000),
+  ("fsize_local",                     159877701), # 159.88MB, avg file size 79.94MB
+  ("fsize_db",                        7052793193), # 7.05GB, avg file size 881.60MB
+  ("use_it",                          True),
+  ("xsection",                        0.073056),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_213602"),
+        ("selection", "*"),
+        ("blacklist", [1]),
       ]),
     ]
   ),

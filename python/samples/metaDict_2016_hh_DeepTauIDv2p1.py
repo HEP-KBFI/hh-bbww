@@ -1132,111 +1132,6 @@ meta_dictionary["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_13TeV-madgraph/RunIISummer16Mi
   ("comment",               "100.0%; status: VALID; size: 13.70GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-03-05 02:33:26"),
 ])
 
-meta_dictionary["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_sm_hh_2b2t"),
-  ("nof_db_events",         300000),
-  ("nof_db_files",          3),
-  ("fsize_db",              13013254769),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 13.01GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-05-11 05:06:37"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_box_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_box_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_box_hh_2b2t"),
-  ("nof_db_events",         277140),
-  ("nof_db_files",          3),
-  ("fsize_db",              11969129912),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 11.97GB; nevents: 277.14k; release: 9_4_9; last modified: 2019-05-04 17:00:35"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_2_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_2_hh_2b2t"),
-  ("nof_db_events",         291000),
-  ("nof_db_files",          3),
-  ("fsize_db",              12693181737),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 12.69GB; nevents: 291.00k; release: 9_4_9; last modified: 2019-04-30 00:47:28"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_9_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_9_hh_2b2t"),
-  ("nof_db_events",         300000),
-  ("nof_db_files",          3),
-  ("fsize_db",              12554774019),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 12.55GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-05-02 21:10:53"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_10_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_10_hh_2b2t"),
-  ("nof_db_events",         300000),
-  ("nof_db_files",          4),
-  ("fsize_db",              12953354252),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 12.95GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-05-01 13:30:40"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_11_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_11_hh_2b2t"),
-  ("nof_db_events",         300000),
-  ("nof_db_files",          3),
-  ("fsize_db",              13042878478),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 13.04GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-04-30 16:50:41"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_12_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_12_hh_2b2t"),
-  ("nof_db_events",         298800),
-  ("nof_db_files",          3),
-  ("fsize_db",              13370108309),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 13.37GB; nevents: 298.80k; release: 9_4_9; last modified: 2019-04-30 16:54:09"),
-])
-
-meta_dictionary["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           "2016v3_2019Oct05_GluGluToHHTo2B2Tau_node_13_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1"),
-  ("sample_category",       "signal_ggf_nonresonant_hh_bbtt"),
-  ("process_name_specific", "signal_ggf_nonresonant_node_13_hh_2b2t"),
-  ("nof_db_events",         300000),
-  ("nof_db_files",          3),
-  ("fsize_db",              13600771777),
-  ("xsection",              0.073056),
-  ("use_it",                True),
-  ("genWeight",             True),
-  ("comment",               "100.0%; status: VALID; size: 13.60GB; nevents: 300.00k; release: 9_4_9; last modified: 2019-01-16 19:50:06"),
-])
-
-
 # event statistics by sample category:
 # signal_ggf_spin0_260_hh_bbvv:           300.00k
 # signal_ggf_spin0_270_hh_bbvv:           294.63k
@@ -1311,5 +1206,4 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAOD
 # signal_vbf_nonresonant_1_2_1_hh_bbtt:   300.00k
 # signal_vbf_nonresonant_1p5_1_1_hh_bbtt: 299.32k
 # signal_vbf_nonresonant_0p5_1_1_hh_bbtt: 300.00k
-# signal_ggf_nonresonant_hh_bbtt:         2.37M
 
