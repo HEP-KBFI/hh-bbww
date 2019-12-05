@@ -37,6 +37,7 @@ process.addMEM_hh_bb2l = cms.PSet(
     isForBDTtraining = cms.bool(False),
 
     central_or_shift = cms.vstring(),
+    jetCleaningByIndex = cms.bool(False),
     useNonNominal = cms.bool(False),
     dryRun = cms.bool(False),
 )

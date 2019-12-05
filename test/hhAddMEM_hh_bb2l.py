@@ -25,6 +25,7 @@ parser.add_preselect()
 parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
+parser.add_jet_cleaning()
 parser.add_argument('-shme', '--systematics-hme',
   type = str, nargs = '+', dest = 'systematics_hme', metavar = 'mode', choices = sys_choices, default = ['central'] ,
   required = False,
@@ -64,6 +65,7 @@ systematics_label_hme = args.systematics_hme
 use_preselected       = args.use_preselected
 use_nonnominal        = args.original_central
 use_home              = args.use_home
+jet_cleaning          = args.jet_cleaning
 
 # Custom arguments
 max_mem_integrations = args.max_mem_integrations
@@ -82,6 +84,7 @@ for systematic_label_hme in systematics_label_hme:
     if central_or_shift not in central_or_shifts_hme:
       central_or_shifts_hme.append(central_or_shift)
 
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 version = "%s_%s_%s" % (
   version, mode, 'nonNom' if use_nonnominal else 'nom'
 )
@@ -131,6 +134,7 @@ if __name__ == '__main__':
     isDebug                  = debug,
     central_or_shift         = central_or_shifts,
     central_or_shift_hme     = central_or_shifts_hme,
+    jet_cleaning_by_index    = jet_cleaning_by_index,
     dry_run                  = dry_run,
     use_nonnominal           = use_nonnominal,
     use_home                 = use_home,

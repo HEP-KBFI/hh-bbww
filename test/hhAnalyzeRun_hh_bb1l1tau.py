@@ -27,6 +27,7 @@ parser.add_files_per_job()
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id()
+parser.add_jet_cleaning()
 args = parser.parse_args()
 
 # Common arguments
@@ -51,6 +52,7 @@ files_per_job     = args.files_per_job
 use_home          = args.use_home
 sideband          = args.sideband
 tau_id            = args.tau_id
+jet_cleaning      = args.jet_cleaning
 
 # Use the arguments
 central_or_shifts = []
@@ -59,6 +61,7 @@ for systematic_label in systematics_label:
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 lumi = get_lumi(era)
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 
 if mode == "default":
   samples = load_samples(era)
@@ -125,6 +128,7 @@ if __name__ == '__main__':
     chargeSumSelections                   = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    jet_cleaning_by_index                 = jet_cleaning_by_index,
     evtCategories                         = evtCategories,
     max_files_per_job                     = files_per_job,
     era                                   = era,
