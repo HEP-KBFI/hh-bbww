@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-12-04 17:54:59 with the following command:
+# file generated at 2019-12-06 13:16:36 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2018_hh_DeepTauIDv2p1.py -p python/samples/sampleLocations_2018_nanoAOD_hh_bbww_DeepTauIDv2p1.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_nanoAOD_DeepTauIDv2p1.py -M
 
 samples_2018 = OD()
@@ -656,9 +656,9 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madg
   ("nof_db_files",                    10),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 142000),
+  ("nof_tree_events",                 192000),
   ("nof_db_events",                   192000),
-  ("fsize_local",                     506532003), # 506.53MB, avg file size 126.63MB
+  ("fsize_local",                     684828678), # 684.83MB, avg file size 171.21MB
   ("fsize_db",                        13657644591), # 13.66GB, avg file size 1.37GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -672,7 +672,7 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madg
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_212904"),
         ("selection", "*"),
-        ("blacklist", [2]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -702,9 +702,9 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madg
   ("nof_db_files",                    17),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 150000),
+  ("nof_tree_events",                 200000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     540775377), # 540.78MB, avg file size 135.19MB
+  ("fsize_local",                     721074487), # 721.07MB, avg file size 180.27MB
   ("fsize_db",                        14483792512), # 14.48GB, avg file size 851.99MB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -718,7 +718,7 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madg
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_213134"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -932,9 +932,9 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-mad
   ("nof_db_files",                    8),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 41000),
+  ("nof_tree_events",                 91000),
   ("nof_db_events",                   91000),
-  ("fsize_local",                     159877701), # 159.88MB, avg file size 79.94MB
+  ("fsize_local",                     353634378), # 353.63MB, avg file size 176.82MB
   ("fsize_db",                        7052793193), # 7.05GB, avg file size 881.60MB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -948,7 +948,7 @@ samples_2018["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-mad
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2018_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/191124_213602"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),
