@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-07-10 17:14:20 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_hh_sync.py -p /hdfs/local/karl/sync_ntuples/2016/nanoAODproduction/2019Jul10 -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_sync.py -M
+# file generated at 2019-12-06 12:45:00 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2016_hh_sync.py -p /hdfs/local/karl/sync_ntuples/2016/nanoAODproduction/2019Dec06 -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_sync.py -M
 
 samples_2016 = OD()
 samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
@@ -14,7 +14,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 144981),
   ("nof_db_events",                   298727),
-  ("fsize_local",                     364741000), # 364.74MB, avg file size 364.74MB
+  ("fsize_local",                     361661929), # 361.66MB, avg file size 361.66MB
   ("fsize_db",                        13966996917), # 13.97GB, avg file size 4.66GB
   ("use_it",                          True),
   ("xsection",                        0.026422),
@@ -26,7 +26,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/sync_ntuples/2016/nanoAODproduction/2019Jul10/signal_ggf_spin0_750_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/sync_ntuples/2016/nanoAODproduction/2019Dec06/signal_ggf_spin0_750_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
