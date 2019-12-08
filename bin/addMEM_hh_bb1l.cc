@@ -32,7 +32,6 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "hhAnalysis/bbww/interface/MEMInterface_hh_bb1l.h" // MEMInterface_hh_bb1l
-#include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 #include "hhAnalysis/bbww/interface/MEMOutputWriter_hh_bb1l.h" // MEMOutputWriter_hh_bb1l
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronWriter.h" // RecoElectronWriter
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonWriter.h" // RecoMuonWriter
@@ -44,7 +43,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // selectObjects(), get_selection(), get_era(), kLoose, kFakeable, kTight
 #include "tthAnalysis/HiggsToTauTau/interface/sysUncertOptions.h" // k*_central
 #include "tthAnalysis/HiggsToTauTau/interface/memAuxFunctions.h" // get_memObjectBranchName(), get_memPermutationBranchName()
-#include "hhAnalysis/bbww/interface/hmeAuxFunctions.h" // get_hmeObjectBranchName(),
 #include "tthAnalysis/HiggsToTauTau/interface/cutFlowTable.h" // cutFlowTableType
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // createSubdirectory_recursively()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryTypeAuxFunctions.h" // copyBranches_singleType(), copyBranches_vectorType()
@@ -69,7 +67,8 @@ compMEM(const EventInfo& eventInfo,
 	const std::string& branchName_memOutput, const std::string& central_or_shift, bool isDEBUG)
 {
   MEMOutput_hh_bb1l memOutput;
-  if ( idxPermutation <= maxPermutations )
+  memOutput.eventInfo_ = eventInfo; 
+  if ( maxPermutations == -1 || idxPermutation <= maxPermutations )
   {
     ++idxPermutation;
     if ( isDEBUG )
@@ -109,7 +108,6 @@ compMEM(const EventInfo& eventInfo,
     {
       memOutput = memInterface(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb, met);
     }
-    memOutput.eventInfo_ = eventInfo;
 
     if ( isDEBUG )
     {
@@ -157,7 +155,6 @@ int main(int argc,
   const edm::ParameterSet cfg               = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
   const edm::ParameterSet cfg_addMEM        = cfg.getParameter<edm::ParameterSet>("addMEM_hh_bb1l");
   const vstring central_or_shifts_mem       = cfg_addMEM.getParameter<vstring>("central_or_shift_mem");
-  const vstring central_or_shifts_hme       = cfg_addMEM.getParameter<vstring>("central_or_shift_hme");
   const std::string treeName                = cfg_addMEM.getParameter<std::string>("treeName");
   const std::string selEventsFileName_input = cfg_addMEM.getParameter<std::string>("selEventsFileName_input");
   const bool isMC                           = cfg_addMEM.getParameter<bool>("isMC");
@@ -186,7 +183,7 @@ int main(int argc,
   const std::string era_string = cfg_addMEM.getParameter<std::string>("era");
   const int era = get_era(era_string);
 
-  if ( central_or_shifts_mem.empty() || central_or_shifts_hme.empty())
+  if ( central_or_shifts_mem.empty() )
   {
     throw cms::Exception(argv[0]) << "central_or_shift cannot be empty! provide at least 'central'!";
   }
@@ -393,27 +390,36 @@ int main(int argc,
   for ( const std::string & central_or_shift: central_or_shifts_mem )
   {
     const std::string branchName_memOutput_cos(Form("%s_%s", branchName_memOutput.data(), central_or_shift.data()));
+    std::cout << "writing MEMOutput_hh_bb1l objects for systematic " << central_or_shift
+              << " to branch = '" << branchName_memOutput_cos << "'\n";	
     memWriter[central_or_shift] = new MEMOutputWriter_hh_bb1l(
       Form("n%s", branchName_memOutput_cos.data()), branchName_memOutput_cos
     );
     memWriter[central_or_shift]->setBranches(outputTree);
+
     const std::string branchName_memOutput_missingBJet_cos(Form("%s_%s", branchName_memOutput_missingBJet.data(), central_or_shift.data()));
+    std::cout << "writing MEMOutput_hh_bb1l objects (missingBJet) for systematic " << central_or_shift
+              << " to branch = '" << branchName_memOutput_missingBJet_cos << "'\n";
     memWriter_missingBJet[central_or_shift] = new MEMOutputWriter_hh_bb1l(
       Form("n%s", branchName_memOutput_missingBJet_cos.data()), branchName_memOutput_missingBJet_cos
     );
     memWriter_missingBJet[central_or_shift]->setBranches(outputTree);
+
     const std::string branchName_memOutput_missingHadWJet_cos(Form("%s_%s", branchName_memOutput_missingHadWJet.data(), central_or_shift.data()));
+    std::cout << "writing MEMOutput_hh_bb1l objects (missingHadWJet) for systematic " << central_or_shift
+              << " to branch = '" << branchName_memOutput_missingHadWJet_cos << "'\n";
     memWriter_missingHadWJet[central_or_shift] = new MEMOutputWriter_hh_bb1l(
       Form("n%s", branchName_memOutput_missingHadWJet_cos.data()), branchName_memOutput_missingHadWJet_cos
     );
     memWriter_missingHadWJet[central_or_shift]->setBranches(outputTree);
+
     const std::string branchName_memOutput_missingBJet_and_HadWJet_cos(Form("%s_%s", branchName_memOutput_missingBJet_and_HadWJet.data(), central_or_shift.data()));
+    std::cout << "writing MEMOutput_hh_bb1l objects (missingBJet_and_HadWJet) for systematic " << central_or_shift
+              << " to branch = '" << branchName_memOutput_missingBJet_and_HadWJet_cos << "'\n";
     memWriter_missingBJet_and_HadWJet[central_or_shift] = new MEMOutputWriter_hh_bb1l(
       Form("n%s", branchName_memOutput_missingBJet_and_HadWJet_cos.data()), branchName_memOutput_missingBJet_and_HadWJet_cos
     );
-    memWriter_missingBJet[central_or_shift]->setBranches(outputTree);
-    std::cout << "writing MEMOutput_hh_bb1l objects for systematic " << central_or_shift
-              << " to branch = '" << branchName_memOutput_cos << "'\n";
+    memWriter_missingBJet_and_HadWJet[central_or_shift]->setBranches(outputTree);
   }
 
   const int numEntries = inputTree->GetEntries();
@@ -625,27 +631,43 @@ int main(int argc,
             selJet2_Hbb = selJetsAK4_Hbb[1];
           }
           //-------------------------------------------------------------------
-
+          
 	  //-------------------------------------------------------------------
           // select jets from W->jj decay
           std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
-          std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb_missingBJet;
+          std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb_missingBJet1;
+          std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb_missingBJet2;
           if ( selJetAK8_Hbb ) {
             const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
             cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
-            cleanedJetsAK4_wrtHbb_missingBJet = cleanedJetsAK4_wrtHbb;
+            cleanedJetsAK4_wrtHbb_missingBJet1 = cleanedJetsAK4_wrtHbb;
+            cleanedJetsAK4_wrtHbb_missingBJet2 = cleanedJetsAK4_wrtHbb;
           } else {
-            std::vector<const RecoJetBase*> overlaps = { selJet1_Hbb, selJet2_Hbb };
+            std::vector<const RecoJetBase*> overlaps;
+	    if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
+	    if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
             cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
-	    std::vector<const RecoJetBase*> overlaps_missingBJet = { selJet1_Hbb };
-            cleanedJetsAK4_wrtHbb_missingBJet = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps_missingBJet);
+	    std::vector<const RecoJetBase*> overlaps_missingBJet1;
+            if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
+            cleanedJetsAK4_wrtHbb_missingBJet1 = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps_missingBJet1);
+            std::vector<const RecoJetBase*> overlaps_missingBJet2;
+            if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
+            cleanedJetsAK4_wrtHbb_missingBJet2 = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps_missingBJet2);
           }
           // CV: only consider the first ten jets, in order to avoid too large combinatorics in building W->jj pairs,
           //     which would require many time-consuming MEM computations
           const std::vector<const RecoJet*> selJetsFullAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
+for ( size_t idx = 0; idx < selJetsFullAK4_Wjj.size(); ++idx ) {
+  std::cout << "selJetsFullAK4_Wjj #" << idx << " = " << selJetsFullAK4_Wjj[idx] << std::endl;
+}
           const std::vector<const RecoJet*> selJetsAK4_Wjj = pickFirstNobjects(selJetsFullAK4_Wjj, 10);
-          const std::vector<const RecoJet*> selJetsFullAK4_Wjj_missingBJet = jetSelectorAK4(cleanedJetsAK4_wrtHbb_missingBJet, isHigherPt);
-          const std::vector<const RecoJet*> selJetsAK4_Wjj_missingBJet = pickFirstNobjects(selJetsFullAK4_Wjj_missingBJet, 10);
+for ( size_t idx = 0; idx < selJetsAK4_Wjj.size(); ++idx ) {
+  std::cout << "selJetsAK4_Wjj #" << idx << " = " << selJetsAK4_Wjj[idx] << std::endl;
+}
+          const std::vector<const RecoJet*> selJetsFullAK4_Wjj_missingBJet1 = jetSelectorAK4(cleanedJetsAK4_wrtHbb_missingBJet1, isHigherPt);
+          const std::vector<const RecoJet*> selJetsAK4_Wjj_missingBJet1 = pickFirstNobjects(selJetsFullAK4_Wjj_missingBJet1, 10);
+          const std::vector<const RecoJet*> selJetsFullAK4_Wjj_missingBJet2 = jetSelectorAK4(cleanedJetsAK4_wrtHbb_missingBJet2, isHigherPt);
+          const std::vector<const RecoJet*> selJetsAK4_Wjj_missingBJet2 = pickFirstNobjects(selJetsFullAK4_Wjj_missingBJet2, 10);
           //-------------------------------------------------------------------
            
           const RecoMEt met_mem = metReader->read();
@@ -675,11 +697,12 @@ int main(int argc,
                               << memOutputs_hh_bb1l[central_or_shift].size() << std::endl;
                   }
                 }
-              }
-              for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj_missingBJet.begin();
-	            selJet1_Wjj != selJetsAK4_Wjj_missingBJet.end(); ++selJet1_Wjj ) {
+              }             
+
+              for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj_missingBJet1.begin();
+	            selJet1_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet1_Wjj ) {
 	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
-  	              selJet2_Wjj != selJetsAK4_Wjj_missingBJet.end(); ++selJet2_Wjj ) {
+  	              selJet2_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet2_Wjj ) {
                   MEMOutput_hh_bb1l memOutput = compMEM(
                     eventInfo,
                     selLepton, *selJet1_Wjj, *selJet2_Wjj,
@@ -697,6 +720,28 @@ int main(int argc,
                   }
                 }
               }
+              for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj_missingBJet2.begin();
+	            selJet1_Wjj != selJetsAK4_Wjj_missingBJet2.end(); ++selJet1_Wjj ) {
+	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
+  	              selJet2_Wjj != selJetsAK4_Wjj_missingBJet2.end(); ++selJet2_Wjj ) {
+                  MEMOutput_hh_bb1l memOutput = compMEM(
+                    eventInfo,
+                    selLepton, *selJet1_Wjj, *selJet2_Wjj,
+                    selJet2_Hbb, nullptr, 
+                    met, 
+	            memInterface_hh_bb1l, dryRun, 
+                    idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
+	            branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
+                  memOutputs_hh_bb1l_missingBJet[central_or_shift].push_back(memOutput);
+                  ++memComputations;
+                  if ( isDEBUG )
+                  {
+                    std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
+                              << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
+                  }
+                }
+              }
+
               for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj.begin();
 	            selJet_Wjj != selJetsAK4_Wjj.end(); ++selJet_Wjj ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
@@ -715,12 +760,31 @@ int main(int argc,
 	                    << memOutputs_hh_bb1l_missingHadWJet[central_or_shift].size() << std::endl;
                 }
               }
-              for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj_missingBJet.begin();
-	            selJet_Wjj != selJetsAK4_Wjj_missingBJet.end(); ++selJet_Wjj ) {
+
+              for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj_missingBJet1.begin();
+	            selJet_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet_Wjj ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
                   eventInfo,
                   selLepton, *selJet_Wjj, nullptr,
                   selJet1_Hbb, nullptr, 
+                  met, 
+	          memInterface_hh_bb1l, dryRun,
+                  idxPermutation_mem_missingBJet_and_HadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
+	          branchName_memOutput_missingBJet_and_HadWJet, central_or_shift, isDEBUG);
+                memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].push_back(memOutput);
+                ++memComputations;
+                if ( isDEBUG )
+                {
+                  std::cout << "#memOutputs_hh_bb1l_missingBJet_and_HadWJet = " 
+                            << memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].size() << std::endl;
+                }
+              }
+              for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj_missingBJet2.begin();
+	            selJet_Wjj != selJetsAK4_Wjj_missingBJet2.end(); ++selJet_Wjj ) {
+                MEMOutput_hh_bb1l memOutput = compMEM(
+                  eventInfo,
+                  selLepton, *selJet_Wjj, nullptr,
+                  selJet2_Hbb, nullptr, 
                   met, 
 	          memInterface_hh_bb1l, dryRun,
                   idxPermutation_mem_missingBJet_and_HadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
@@ -744,7 +808,7 @@ int main(int argc,
       memWriter[central_or_shift]->write(memOutputs_hh_bb1l[central_or_shift]);
       memWriter_missingBJet[central_or_shift]->write(memOutputs_hh_bb1l_missingBJet[central_or_shift]);
       memWriter_missingHadWJet[central_or_shift]->write(memOutputs_hh_bb1l_missingHadWJet[central_or_shift]);
-      memWriter_missingBJet_and_HadWJet[central_or_shift]->write(memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift]);      
+      memWriter_missingBJet_and_HadWJet[central_or_shift]->write(memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift]); 
     }
 
     outputTree->Fill();
