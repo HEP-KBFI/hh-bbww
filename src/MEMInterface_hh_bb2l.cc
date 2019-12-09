@@ -14,7 +14,7 @@ MEMInterface_hh_bb2l::MEMInterface_hh_bb2l()
   : memAlgo_(nullptr)
   , clock_(nullptr)
 {
-  std::cout << "<MEMInterface_hh_bb2l>:\n";
+  //std::cout << "<MEMInterface_hh_bb2l>:\n";
   
   const double sqrtS = 13.e+3;
   const std::string pdfName = "MSTW2008lo68cl";
