@@ -598,12 +598,6 @@ int main(int argc,
           const std::vector<RecoJet> jets_ak4_mem = jetReaderAK4->read();
           const std::vector<const RecoJet*> jet_ptrs_ak4_mem = convert_to_ptrs(jets_ak4_mem);
           const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4_mem, fakeableLeptons);
-std::cout << "#cleanedJetsAK4_wrtLeptons = " << cleanedJetsAK4_wrtLeptons.size() << std::endl;
-for ( size_t idx = 0; idx < cleanedJetsAK4_wrtLeptons.size(); ++idx ) {
-  const RecoJet* selJet = cleanedJetsAK4_wrtLeptons[idx];
-  std::cout << "cleanedJetsAK4_wrtLeptons #" << idx << " = " << selJet << ":" 
-	    << "pT = " << selJet->pt() << ", eta = " << selJet->eta() << ", phi = " << selJet->phi() << std::endl;
-}
           const std::vector<RecoJetAK8> jets_ak8_mem = jetReaderAK8->read();
           const std::vector<const RecoJetAK8*> jet_ptrs_ak8_mem = convert_to_ptrs(jets_ak8_mem);
           const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_mem, fakeableLeptons);
@@ -663,7 +657,6 @@ for ( size_t idx = 0; idx < cleanedJetsAK4_wrtLeptons.size(); ++idx ) {
           // CV: only consider the first ten jets, in order to avoid too large combinatorics in building W->jj pairs,
           //     which would require many time-consuming MEM computations
           const std::vector<const RecoJet*> selJetsFullAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
-std::cout << "#selJetsFullAK4_Wjj = " << selJetsFullAK4_Wjj.size() << std::endl;
           const std::vector<const RecoJet*> selJetsAK4_Wjj = pickFirstNobjects(selJetsFullAK4_Wjj, 10);
           const std::vector<const RecoJet*> selJetsFullAK4_Wjj_missingBJet1 = jetSelectorAK4(cleanedJetsAK4_wrtHbb_missingBJet1, isHigherPt);
           const std::vector<const RecoJet*> selJetsAK4_Wjj_missingBJet1 = pickFirstNobjects(selJetsFullAK4_Wjj_missingBJet1, 10);
@@ -672,35 +665,14 @@ std::cout << "#selJetsFullAK4_Wjj = " << selJetsFullAK4_Wjj.size() << std::endl;
           //-------------------------------------------------------------------
            
           const RecoMEt met_mem = metReader->read();
-std::cout << "selJet1_Hbb = " << selJet1_Hbb << std::endl;
-if ( selJet1_Hbb ) std::cout << "pT = " << selJet1_Hbb->pt() << ", eta = " << selJet1_Hbb->eta() << ", phi = " << selJet1_Hbb->phi() << std::endl;
-std::cout << "selJet2_Hbb = " << selJet2_Hbb << std::endl;
-if ( selJet2_Hbb ) std::cout << "pT = " << selJet2_Hbb->pt() << ", eta = " << selJet2_Hbb->eta() << ", phi = " << selJet2_Hbb->phi() << std::endl;
-std::cout << "#selJetsAK4_Wjj = " << selJetsAK4_Wjj.size() << std::endl;
-for ( size_t idx = 0; idx < selJetsAK4_Wjj.size(); ++idx ) {
-  const RecoJet* selJet = selJetsAK4_Wjj[idx];
-  std::cout << "selJetsAK4_Wjj #" << idx << " = " << selJet << ":" 
-	    << "pT = " << selJet->pt() << ", eta = " << selJet->eta() << ", phi = " << selJet->phi() << std::endl;
-}
-std::cout << "#selJetsAK4_Wjj_missingBJet1 = " << selJetsAK4_Wjj_missingBJet1.size() << std::endl;
-for ( size_t idx = 0; idx < selJetsAK4_Wjj_missingBJet1.size(); ++idx ) {
-  const RecoJet* selJet = selJetsAK4_Wjj_missingBJet1[idx];
-  std::cout << "selJetsAK4_Wjj_missingBJet1 #" << idx << " = " << selJet << ":" 
-	    << "pT = " << selJet->pt() << ", eta = " << selJet->eta() << ", phi = " << selJet->phi() << std::endl;
-}
-std::cout << "#selJetsAK4_Wjj_missingBJet2 = " << selJetsAK4_Wjj_missingBJet2.size() << std::endl;
-for ( size_t idx = 0; idx < selJetsAK4_Wjj_missingBJet2.size(); ++idx ) {
-  const RecoJet* selJet = selJetsAK4_Wjj_missingBJet2[idx];
-  std::cout << "selJetsAK4_Wjj_missingBJet2 #" << idx << " = " << selJet << ":" 
-	    << "pT = " << selJet->pt() << ", eta = " << selJet->eta() << ", phi = " << selJet->phi() << std::endl;
-}
+
           if ( selJet1_Hbb && selJet2_Hbb )
           {
             const bool run_mem = method_MEM && is_central_or_shift_mem;
             if ( run_mem )
             {
 	      std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput << "'," 
-	                << " systematic " << central_or_shift << "\n";
+	                << " systematic = '" << central_or_shift << "'\n";
               for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
 	            selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
 	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
@@ -724,7 +696,7 @@ for ( size_t idx = 0; idx < selJetsAK4_Wjj_missingBJet2.size(); ++idx ) {
               }             
 
               std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet << "'," 
-	                << " systematic " << central_or_shift << "\n";
+	                << " systematic = '" << central_or_shift << "'\n";
               for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj_missingBJet1.begin();
 	            selJet1_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet1_Wjj ) {
 	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
@@ -769,7 +741,7 @@ for ( size_t idx = 0; idx < selJetsAK4_Wjj_missingBJet2.size(); ++idx ) {
               }
 
               std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingHadWJet << "'," 
-	                << " systematic " << central_or_shift << "\n";
+	                << " systematic = '" << central_or_shift << "'\n";
               for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj.begin();
 	            selJet_Wjj != selJetsAK4_Wjj.end(); ++selJet_Wjj ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
@@ -790,7 +762,7 @@ for ( size_t idx = 0; idx < selJetsAK4_Wjj_missingBJet2.size(); ++idx ) {
               }
 
               std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet_and_HadWJet << "'," 
-	                << " systematic " << central_or_shift << "\n";
+	                << " systematic = '" << central_or_shift << "'\n";
               for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj_missingBJet1.begin();
 	            selJet_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet_Wjj ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
