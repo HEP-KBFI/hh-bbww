@@ -80,9 +80,14 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_genJets = cms.string('GenJet'),
     branchName_genHiggses = cms.string('GenHiggs'),
 
-    redoGenMatching = cms.bool(True),
+    branchName_muonGenMatch = cms.string('MuonGenMatch'),
+    branchName_electronGenMatch = cms.string('ElectronGenMatch'),
+    branchName_hadTauGenMatch = cms.string('TauGenMatch'),
+    branchName_jetGenMatch = cms.string('JetGenMatch'),
+
+    redoGenMatching = cms.bool(False),
     genMatchingByIndex = cms.bool(True),
-    jetCleaningByIndex = cms.bool(False),
+    jetCleaningByIndex = cms.bool(True),
 
     branchName_genTauLeptons = cms.string('GenTau'),
     branchName_memOutput = cms.string(''),

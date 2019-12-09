@@ -70,14 +70,19 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
+    branchName_muonGenMatch = cms.string('MuonGenMatch'),
+    branchName_electronGenMatch = cms.string('ElectronGenMatch'),
+    branchName_hadTauGenMatch = cms.string('TauGenMatch'),
+    branchName_jetGenMatch = cms.string('JetGenMatch'),
+
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genHadTaus = cms.string('GenVisTau'),
     branchName_genPhotons = cms.string('GenPhoton'),
     branchName_genJets = cms.string('GenJet'),
 
-    redoGenMatching = cms.bool(True),
+    redoGenMatching = cms.bool(False),
     genMatchingByIndex = cms.bool(True),
-    jetCleaningByIndex = cms.bool(False),
+    jetCleaningByIndex = cms.bool(True),
 
     branchName_genTauLeptons = cms.string('GenTau'),
 
