@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-06-10 20:17:15 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_hh_sync.py -p /hdfs/local/karl/sync_ntuples/2017/nanoAODproduction/2019Jun10 -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_sync.py -M
+# file generated at 2019-12-06 12:45:08 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017_hh_sync.py -p /hdfs/local/karl/sync_ntuples/2017/nanoAODproduction/2019Dec06 -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_sync.py -M
 
 samples_2017 = OD()
 samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
@@ -14,7 +14,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_corre
   }),
   ("nof_tree_events",                 52000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     127111653), # 127.11MB, avg file size 127.11MB
+  ("fsize_local",                     127116545), # 127.12MB, avg file size 127.12MB
   ("fsize_db",                        11931037531), # 11.93GB, avg file size 1.08GB
   ("use_it",                          True),
   ("xsection",                        0.026422),
@@ -26,19 +26,22 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/sync_ntuples/2017/nanoAODproduction/2019Jun10/signal_ggf_spin0_750_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/sync_ntuples/2017/nanoAODproduction/2019Dec06/signal_ggf_spin0_750_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
     ]
   ),
-  ("missing_from_superset",           [
+  ("missing_completely",           [
     # not computed
   ]),
-  ("missing_hlt_paths",               [
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
 
   ]),
-  ("hlt_paths",               [
+  ("hlt_paths",                    [
     # not computed
   ]),
 ])

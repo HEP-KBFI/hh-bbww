@@ -21,6 +21,7 @@ parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_use_home()
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
+parser.add_jet_cleaning()
 parser.add_argument('-o', '--output-tree',
   type = str, dest = 'output_tree', metavar = 'name', default = 'syncTree', required = False,
   help = 'R|Output TTree name',
@@ -43,6 +44,7 @@ rle_select         = os.path.expanduser(args.rle_select)
 systematics_label  = args.systematics
 use_nonnominal     = args.original_central
 use_home           = args.use_home
+jet_cleaning       = args.jet_cleaning
 
 # Custom arguments
 output_tree = args.output_tree
@@ -53,6 +55,7 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 
 if use_nonnominal:
   samples = load_samples(era, suffix = "sync")
@@ -91,6 +94,7 @@ if __name__ == '__main__':
     isDebug                 = debug,
     rle_select              = rle_select,
     central_or_shifts       = central_or_shifts,
+    jet_cleaning_by_index   = jet_cleaning_by_index,
     use_nonnominal          = use_nonnominal,
     use_home                = use_home,
   )

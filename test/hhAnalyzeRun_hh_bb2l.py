@@ -28,6 +28,7 @@ parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processe
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
+parser.add_jet_cleaning()
 args = parser.parse_args()
 
 # Common arguments
@@ -52,6 +53,7 @@ hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
 sideband          = args.sideband
+jet_cleaning      = args.jet_cleaning
 
 # Use the arguments
 central_or_shifts = []
@@ -62,6 +64,7 @@ for systematic_label in systematics_label:
 
 do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
@@ -129,6 +132,7 @@ if __name__ == '__main__':
     lepton_charge_selections              = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    jet_cleaning_by_index                 = jet_cleaning_by_index,
     evtCategories                         = evtCategories,
     max_files_per_job                     = files_per_job,
     era                                   = era,

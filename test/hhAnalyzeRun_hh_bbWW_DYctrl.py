@@ -26,6 +26,7 @@ parser.add_hlt_filter()
 parser.add_files_per_job()
 parser.add_use_home()
 parser.add_stitched(use_dy = True, use_wj = False)
+parser.add_jet_cleaning()
 args = parser.parse_args()
 
 # Common arguments
@@ -49,6 +50,7 @@ hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
 use_home          = args.use_home
 use_stitched      = args.use_stitched
+jet_cleaning      = args.jet_cleaning
 
 # Use the arguments
 central_or_shifts = []
@@ -57,6 +59,7 @@ for systematic_label in systematics_label:
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 lumi = get_lumi(era)
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
@@ -96,6 +99,7 @@ if __name__ == '__main__':
     lepton_charge_selections              = [ "OS" ],
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    jet_cleaning_by_index                 = jet_cleaning_by_index,
     max_files_per_job                     = files_per_job,
     era                                   = era,
     use_lumi                              = True,

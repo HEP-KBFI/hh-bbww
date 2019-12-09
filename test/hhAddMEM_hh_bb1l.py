@@ -25,6 +25,7 @@ parser.add_preselect()
 parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
+parser.add_jet_cleaning()
 parser.add_argument('-n', '--max-mem-integrations',
   type = int, dest = 'max_mem_integrations', metavar = 'integer', default = max_mem_integrations,
   required = False,
@@ -59,6 +60,7 @@ systematics_label    = args.systematics
 use_preselected      = args.use_preselected
 use_nonnominal       = args.original_central
 use_home             = args.use_home
+jet_cleaning         = args.jet_cleaning
 
 # Custom arguments
 max_mem_integrations = args.max_mem_integrations
@@ -74,6 +76,7 @@ for systematic_label in systematics_label:
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 version = "%s_%s_%s" % (
   version, mode, 'nonNom' if use_nonnominal else 'nom'
 )
@@ -137,6 +140,7 @@ if __name__ == '__main__':
     leptonSelection          = "Fakeable",
     isDebug                  = debug,
     central_or_shift         = central_or_shifts,
+    jet_cleaning_by_index    = jet_cleaning_by_index,
     dry_run                  = dry_run,
     use_nonnominal           = use_nonnominal,
     use_home                 = use_home,

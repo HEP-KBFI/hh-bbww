@@ -96,6 +96,7 @@ main(int argc,
   std::vector<hltPath*> triggers_1e1mu = create_hltPaths(triggerNames_1e1mu);
 
   const std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
+  const bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
 
   const bool isMC               = cfg_analyze.getParameter<bool>("isMC");
   const bool useNonNominal      = cfg_analyze.getParameter<bool>("useNonNominal");
@@ -182,6 +183,7 @@ main(int argc,
   jetReader->setBranchName_BtagWeight(jetBtagSF_option);
   inputTree->registerReader(jetReader);
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
+  const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
 
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, branchName_fatJets, branchName_subJets);
@@ -282,7 +284,10 @@ main(int argc,
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     const std::vector<RecoJet> jets = jetReader->read();
     const std::vector<const RecoJet *> jet_ptrs = convert_to_ptrs(jets);
-    const std::vector<const RecoJet *> cleanedJets = jetCleaner (jet_ptrs, preselLeptons);
+    const std::vector<const RecoJet*> cleanedJets = jetCleaningByIndex ?
+      jetCleanerByIndex(jet_ptrs, preselLeptons) :
+      jetCleaner       (jet_ptrs, preselLeptons)
+    ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     if(isDEBUG)
     {

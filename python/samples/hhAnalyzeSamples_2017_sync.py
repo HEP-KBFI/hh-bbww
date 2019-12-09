@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-08-24 12:28:35 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2017/2019Aug24_woPresel_nonNom_hh_bbww_sync/ntuples -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_sync.py -M
+# file generated at 2019-12-06 14:13:14 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2017/2019Dec06_woPresel_nonNom_hh_bbww_sync/ntuples -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_sync.py -M
 
 samples_2017 = OD()
 samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
@@ -12,13 +12,13 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_corre
   ("nof_db_files",                    11),
   ("nof_events",                      {
     'Count'                                                      : [        52000, ],
-    'CountWeighted'                                              : [        51972,        51953,        51984, ],
-    'CountWeightedL1PrefireNom'                                  : [        50011,        49988,        50026, ],
-    'CountWeightedL1Prefire'                                     : [        50011,        49562,        50455, ],
+    'CountWeighted'                                              : [        51992,        51990,        51983, ],
+    'CountWeightedL1PrefireNom'                                  : [        50028,        50025,        50025, ],
+    'CountWeightedL1Prefire'                                     : [        50028,        49579,        50472, ],
   }),
   ("nof_tree_events",                 52000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     408359832), # 408.36MB, avg file size 408.36MB
+  ("fsize_local",                     200624896), # 200.62MB, avg file size 200.62MB
   ("fsize_db",                        11931037531), # 11.93GB, avg file size 1.08GB
   ("use_it",                          True),
   ("xsection",                        0.026422),
@@ -30,7 +30,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2019Aug24_woPresel_nonNom_hh_bbww_sync/ntuples/signal_ggf_spin0_750_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec06_woPresel_nonNom_hh_bbww_sync/ntuples/signal_ggf_spin0_750_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
