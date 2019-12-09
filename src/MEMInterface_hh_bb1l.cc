@@ -22,8 +22,8 @@ MEMInterface_hh_bb1l::MEMInterface_hh_bb1l()
   const std::string madgraphFileName_background = "hhAnalysis/bbwwMEM/data/param_ttbar.dat";
   const bool applyOnshellWmassConstraint_signal = false;
   const int memAlgo_verbosity = 0;
-  const int maxObjFunctionCalls_signal = 1000;
-  const int maxObjFunctionCalls_background = 10000;
+  const int maxObjFunctionCalls_signal = 2500;
+  const int maxObjFunctionCalls_background = 25000;
 
   memAlgo_ = new MEMbbwwAlgoSingleLepton(sqrtS, pdfName, findFile(madgraphFileName_signal), findFile(madgraphFileName_background), memAlgo_verbosity);
   memAlgo_->applyOnshellWmassConstraint_signal(applyOnshellWmassConstraint_signal);
