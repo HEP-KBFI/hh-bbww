@@ -1,6 +1,9 @@
 import FWCore.ParameterSet.Config as cms
 import os
 
+from tthAnalysis.HiggsToTauTau.configs.recommendedMEtFilters_cfi import *
+from tthAnalysis.HiggsToTauTau.configs.EvtYieldHistManager_cfi import *
+
 process = cms.PSet()
 
 process.fwliteInput = cms.PSet(
@@ -20,8 +23,7 @@ process.analyze_hadWTagger = cms.PSet(
     histogramDir = cms.string(''),
     era = cms.string(''),
 
-    electronSelection = cms.string(''),
-    muonSelection = cms.string(''),
+    leptonSelection = cms.string(''),
 
     isMC = cms.bool(True),
     lumiScale = cms.VPSet(),

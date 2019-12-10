@@ -26,7 +26,6 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
         samples,
         central_or_shifts,
         jet_cleaning_by_index,
-        evtCategories,              
         max_files_per_job,
         era,
         use_lumi,
@@ -34,7 +33,6 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
-        select_rle_output = False,
         verbose           = False,
         isDebug           = False,
         use_home          = False,
@@ -55,7 +53,10 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       check_output_files    = check_output_files,
       running_method        = running_method,
       num_parallel_jobs     = num_parallel_jobs,
+      histograms_to_fit     = [],
+      triggers              = [],
       verbose               = verbose,
+      dry_run               = False,
       isDebug               = isDebug,
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
@@ -77,9 +78,8 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       lumi_scale: event weight (= xsection * luminosity / number of events)
       central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bb1l.cc
     """
-    lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
-    jobOptions['histogramDir'] = getHistogramDir("hadWTagger")
+    jobOptions['histogramDir'] = "hadWTagger"
     branchName_genBJets = None
     if jobOptions['sample_name'].startswith(('/TTTo2L2Nu', '/TTToSemiLeptonic')):
       branchName_genBJets = "GenBQuarkFromTop"
@@ -107,17 +107,21 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
 
       logging.info("Building dictionaries for sample %s..." % process_name)
       for lepton_selection in self.lepton_selections:
-        process_name_extended = [ process_name, "hadd" ]
-        for process_name_or_dummy in process_name_extended:
-	  key_dir = getKey(process_name_or_dummy, lepton_selection_and_frWeight, central_or_shift_or_dummy)
-          for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT ]:
-            initDict(self.dirs, [ key_dir, dir_type ])
-            if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
-              self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,
-                                                          "_".join([ lepton_selection ]), process_name_or_dummy, central_or_shift)
-            else:
-              self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
-                                                          "_".join([ lepton_selection ]), process_name_or_dummy, central_or_shift)
+        central_or_shifts_extended = self.central_or_shifts + [  "", "hadd" ]
+        for central_or_shift_or_dummy in central_or_shifts_extended:
+          process_name_extended = [ process_name, "hadd" ]
+          for process_name_or_dummy in process_name_extended:
+            if central_or_shift_or_dummy in [ "hadd" ] and process_name_or_dummy in [ "hadd" ]:
+              continue
+	    key_dir = getKey(process_name_or_dummy, lepton_selection, central_or_shift_or_dummy)
+            for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT ]:
+              initDict(self.dirs, [ key_dir, dir_type ])
+              if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
+                self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,
+                                                            "_".join([ lepton_selection ]), process_name_or_dummy, central_or_shift_or_dummy)
+              else:
+                self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
+                                                            "_".join([ lepton_selection ]), process_name_or_dummy, central_or_shift_or_dummy)
 
     for dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_HIST, DKEY_LOGS, DKEY_HADD_RT ]:
       initDict(self.dirs, [ dir_type ])
@@ -156,9 +160,6 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       inputFileLists[sample_name] = generateInputFileList(sample_info, self.max_files_per_job)
 
     for lepton_selection in self.lepton_selections:
-      electron_selection = lepton_selection
-      muon_selection = lepton_selection
-
       for sample_name, sample_info in self.samples.items():
         if not sample_info["use_it"]:
           continue
@@ -190,8 +191,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
             'cfgFile_modified'         : cfgFile_modified_path,
             'histogramFile'            : histogramFile_path,
             'logFile'                  : logFile_path,
-            'electronSelection'        : electron_selection,
-            'muonSelection'            : muon_selection,
+            'leptonSelection'          : lepton_selection,
             'central_or_shift'         : central_or_shift,
           }
           self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
@@ -214,7 +214,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
     lines_makefile = []
     self.addToMakefile_analyze(lines_makefile)
     self.addToMakefile_hadd_stage1(lines_makefile)
-    self.targets.add("phony_hadd_stage1")
+    self.targets.append("phony_hadd_stage1")
     self.createMakefile(lines_makefile)
 
     logging.info("Done")

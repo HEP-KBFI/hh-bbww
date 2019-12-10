@@ -132,9 +132,8 @@ int main(int argc,
   const std::string branchName_electrons    = cfg_analyze.getParameter<std::string>("branchName_electrons");
   const std::string branchName_muons        = cfg_analyze.getParameter<std::string>("branchName_muons");
   const std::string branchName_jets_ak4     = cfg_analyze.getParameter<std::string>("branchName_jets_ak4");
-  const std::string branchName_jets_ak8     = cfg_analyze.getParameter<std::string>("branchName_jets_ak8");
-  const std::string branchName_subjets_ak8  = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8");
-  const std::string branchName_met          = cfg_analyze.getParameter<std::string>("branchName_met");
+  const std::string branchName_jets_ak8     = cfg_analyze.getParameter<std::string>("branchName_jets_ak8_Hbb");
+  const std::string branchName_subjets_ak8  = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8_Hbb");
 
   const std::string branchName_genLeptons   = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   const std::string branchName_genBJets     = cfg_analyze.getParameter<std::string>("branchName_genBJets");
@@ -434,13 +433,13 @@ int main(int argc,
           ("jet1_eta",             selJet1P4_Wjj.eta())
           ("jet1_phi",             selJet1P4_Wjj.phi())
           ("jet1_btagCSV",         (*selJet1_Wjj)->BtagCSV())
-          ("jet1_jet1_qgDiscr",    (*selJet1_Wjj)->QGDiscr())
+          ("jet1_qgDiscr",         (*selJet1_Wjj)->QGDiscr())
           ("dr_jet1_lep",          deltaR(selJet1P4_Wjj, selLepton->p4()))
           ("jet2_pt",              selJet2P4_Wjj.pt())
           ("jet2_eta",             selJet2P4_Wjj.eta())
           ("jet2_phi",             selJet2P4_Wjj.phi())
           ("jet2_btagCSV",         (*selJet2_Wjj)->BtagCSV())
-          ("jet2_jet1_qgDiscr",    (*selJet2_Wjj)->QGDiscr())
+          ("jet2_qgDiscr",         (*selJet2_Wjj)->QGDiscr())
           ("dr_jet2_lep",          deltaR(selJet2P4_Wjj, selLepton->p4()))
           ("HadW_pt",              hadWP4.pt())
           ("HadW_eta",             hadWP4.eta())

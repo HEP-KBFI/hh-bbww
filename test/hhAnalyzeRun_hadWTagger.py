@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from hhAnalysis.bbww.configs.analyzeConfig_hadTopTagger import analyzeConfig_hadTopTagger
+from hhAnalysis.bbww.configs.analyzeConfig_hadWTagger import analyzeConfig_hadWTagger
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
@@ -68,10 +68,6 @@ for sample_name, sample_info in samples.items():
     sample_info["use_it"] = True
 
 if __name__ == '__main__':
-  logging.info(
-    "Running the jobs with the following systematic uncertainties enabled: %s" % \
-    ', '.join(central_or_shifts)
-  )
 
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
@@ -82,7 +78,7 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hadWTagger",
     cfgFile_analyze                       = "analyze_hadWTagger_cfg.py",
     samples                               = samples,
-    central_or_shifts                     = "central",
+    central_or_shifts                     = [ "central" ],
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     max_files_per_job                     = files_per_job,
     era                                   = era,
