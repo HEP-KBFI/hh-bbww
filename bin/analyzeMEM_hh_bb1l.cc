@@ -290,6 +290,88 @@ void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& 
   }
 }
 
+struct HadWJetPair
+{
+  HadWJetPair(const RecoJet* jet1, bool jet1_isGenMatched, const RecoJet* jet2, bool jet2_isGenMatched, double bdtScore)
+    : jet1_(jet1)
+    , jet1_isGenMatched_(jet1_isGenMatched)
+    , jet2_(jet2)
+    , jet2_isGenMatched_(jet2_isGenMatched)
+    , bdtScore_(bdtScore)
+  {
+    assert(jet1 && jet2);
+    p4_ = jet1->p4() + jet2->p4();
+  }
+  ~HadWJetPair() {}
+  Particle::LorentzVector p4_;
+  const RecoJet* jet1_;
+  bool jet1_isGenMatched_;
+  const RecoJet* jet2_;
+  bool jet2_isGenMatched_;
+  double bdtScore_;
+};
+
+struct sortHadWJetPairsByMass
+{
+  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
+  {
+    double deltaMass1 = TMath::Abs(pair1.p4_.mass() - wBosonMass);
+    double deltaMass2 = TMath::Abs(pair2.p4_.mass() - wBosonMass);
+    return ( deltaMass1 < deltaMass2 );
+  }
+};
+struct sortHadWJetPairsByDeltaR
+{
+  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
+  {
+    double deltaR1 = deltaR(pair1.jet1_->p4(), pair1.jet2_->p4());
+    double deltaR2 = deltaR(pair2.jet1_->p4(), pair2.jet2_->p4());
+    return ( deltaR1 < deltaR2 );
+  }
+};
+struct sortHadWJetPairsByPt
+{
+  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
+  {
+    double pt1 = pair1.p4_.pt();
+    double pt2 = pair2.p4_.pt();
+    return ( pt1 > pt2 );
+  }
+};
+struct sortHadWJetPairsByScalarPt
+{
+  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
+  {
+    double sumPt1 = pair1.jet1_->pt() + pair1.jet2_->pt();
+    double sumPt2 = pair2.jet1_->pt() + pair2.jet2_->pt();
+    return ( sumPt1 > sumPt2 );
+  }
+};
+struct sortHadWJetPairsByBDT
+{
+  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
+  {
+    double bdtScore1 = pair1.bdtScore_;
+    double bdtScore2 = pair2.bdtScore_;
+    return ( bdtScore1 > bdtScore2 );
+  }
+};
+
+int
+getIndex(const std::vector<HadWJetPair>& pairs)
+{
+  size_t numPairs = pairs.size();
+  for ( size_t idx = 0; idx < numPairs; ++idx ) 
+  {
+    const HadWJetPair& pair = pairs[idx];
+    if ( pair.jet1_isGenMatched_ && pair.jet2_isGenMatched_ )
+    {
+      return idx;
+    }
+  }
+  return -1;
+}
+
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
  */
@@ -452,30 +534,37 @@ int main(int argc, char* argv[])
   
   jetHistograms* histograms_boostedHbb_bjet1 = new jetHistograms("boostedHbb_bjet1");
   histograms_boostedHbb_bjet1->bookHistograms(fs);
-  TH1* histogram_boostedHbb_bjet1_idx = fs.make<TH1D>("boostedHbb_bjet1_idx", "boostedHbb_bjet1_idx", 25, -0.5, +24.5);
+  TH1* histogram_boostedHbb_bjet1_idx = fs.make<TH1D>("boostedHbb_bjet1_idx", "boostedHbb_bjet1_idx", 26, -1.5, +24.5);
   jetHistograms* histograms_boostedHbb_bjet2 = new jetHistograms("boostedHbb_bjet2");
   histograms_boostedHbb_bjet2->bookHistograms(fs);
-  TH1* histogram_boostedHbb_bjet2_idx = fs.make<TH1D>("boostedHbb_bjet2_idx", "boostedHbb_bjet2_idx", 25, -0.5, +24.5);
+  TH1* histogram_boostedHbb_bjet2_idx = fs.make<TH1D>("boostedHbb_bjet2_idx", "boostedHbb_bjet2_idx", 26, -1.5, +24.5);
   TH1* histogram_boostedHbb_bjet_numIndices = fs.make<TH1D>("boostedHbb_bjet_numIndices", "boostedHbb_bjet_numIndices", 25, -0.5, +24.5);
   TH1* histogram_boostedHbb_bjet_mjj = fs.make<TH1D>("boostedHbb_bjet_mjj", "boostedHbb_bjet_mjj", 50, 0., 250.);
 
   jetHistograms* histograms_resolvedHbb_bjet1 = new jetHistograms("resolvedHbb_bjet1");
   histograms_resolvedHbb_bjet1->bookHistograms(fs);
-  TH1* histogram_resolvedHbb_bjet1_idx = fs.make<TH1D>("resolvedHbb_bjet1_idx", "resolvedHbb_bjet1_idx", 25, -0.5, +24.5);
+  TH1* histogram_resolvedHbb_bjet1_idx = fs.make<TH1D>("resolvedHbb_bjet1_idx", "resolvedHbb_bjet1_idx", 26, -1.5, +24.5);
   jetHistograms* histograms_resolvedHbb_bjet2 = new jetHistograms("resolvedHbb_bjet2");
   histograms_resolvedHbb_bjet2->bookHistograms(fs);
-  TH1* histogram_resolvedHbb_bjet2_idx = fs.make<TH1D>("resolvedHbb_bjet2_idx", "resolvedHbb_bjet2_idx", 25, -0.5, +24.5);
+  TH1* histogram_resolvedHbb_bjet2_idx = fs.make<TH1D>("resolvedHbb_bjet2_idx", "resolvedHbb_bjet2_idx", 26, -1.5, +24.5);
   TH1* histogram_resolvedHbb_bjet_numIndices = fs.make<TH1D>("resolvedHbb_bjet_numIndices", "resolvedHbb_bjet_numIndices", 25, -0.5, +24.5);
   TH1* histogram_resolvedHbb_bjet_mjj = fs.make<TH1D>("resolvedHbb_bjet_mjj", "resolvedHbb_bjet_mjj", 50, 0., 250.);
   
   jetHistograms* histograms_Wjj_jet1 = new jetHistograms("Wjj_jet1");
   histograms_Wjj_jet1->bookHistograms(fs);
-  TH1* histogram_Wjj_jet1_idx = fs.make<TH1D>("Wjj_jet1_idx", "Wjj_jet1_idx", 25, -0.5, +24.5);
+  TH1* histogram_Wjj_jet1_idx = fs.make<TH1D>("Wjj_jet1_idx", "Wjj_jet1_idx", 26, -1.5, +24.5);
   jetHistograms* histograms_Wjj_jet2 = new jetHistograms("Wjj_jet2");
   histograms_Wjj_jet2->bookHistograms(fs);
-  TH1* histogram_Wjj_jet2_idx = fs.make<TH1D>("Wjj_jet2_idx", "Wjj_jet2_idx", 25, -0.5, +24.5);
+  TH1* histogram_Wjj_jet2_idx = fs.make<TH1D>("Wjj_jet2_idx", "Wjj_jet2_idx", 26, -1.5, +24.5);
   TH1* histogram_Wjj_jet_numIndices = fs.make<TH1D>("Wjj_jet_numIndices", "Wjj_jet_numIndices", 25, -0.5, +24.5);
   TH1* histogram_Wjj_jet_mjj = fs.make<TH1D>("Wjj_jet_mjj", "Wjj_jet_mjj", 50, 0., 250.);
+
+  TH1* histogram_hadWJetPair_sortedByMass_idx = fs.make<TH1D>("hadWJetPair_sortedByMass_idx", "hadWJetPair_sortedByMass_idx", 101, -1.5, +99.5);
+  TH1* histogram_hadWJetPair_sortedByDeltaR_idx = fs.make<TH1D>("hadWJetPair_sortedByDeltaR_idx", "hadWJetPair_sortedByDeltaR_idx", 101, -1.5, +99.5);
+  TH1* histogram_hadWJetPair_sortedByPt_idx = fs.make<TH1D>("hadWJetPair_sortedByPt_idx", "hadWJetPair_sortedByPt_idx", 101, -1.5, +99.5);
+  TH1* histogram_hadWJetPair_sortedByScalarPt_idx = fs.make<TH1D>("hadWJetPair_sortedByScalarPt_idx", "hadWJetPair_sortedByScalarPt_idx", 101, -1.5, +99.5);
+  TH1* histogram_hadWJetPair_sortedByBDT_idx = fs.make<TH1D>("hadWJetPair_sortedByBDT_idx", "hadWJetPair_sortedByBDT_idx", 101, -1.5, +99.5);
+  TH1* histogram_hadWJetPair_numIndices = fs.make<TH1D>("hadWJetPair_numIndices", "hadWJetPair_numIndices", 100, -0.5, +99.5);
 
   memHistograms* histograms_memOutput_fullyMatched = new memHistograms("", 0, 0, 0);
   histograms_memOutput_fullyMatched->bookHistograms(fs);
@@ -758,6 +847,36 @@ int main(int argc, char* argv[])
       *histograms_Wjj_jet1, histogram_Wjj_jet1_idx,
       *histograms_Wjj_jet2, histogram_Wjj_jet2_idx,
       histogram_Wjj_jet_numIndices, histogram_Wjj_jet_mjj, evtWeight);
+
+ 
+    std::vector<HadWJetPair> hadWJetPairs;
+    for ( std::vector<const RecoJet*>::const_iterator selJet1 = selJetsAK4_Wjj.begin();
+	  selJet1 != selJetsAK4_Wjj.end(); ++selJet1 ) {
+      for ( std::vector<const RecoJet*>::const_iterator selJet2 = selJet1 + 1;
+	    selJet2 != selJetsAK4_Wjj.end(); ++selJet2 ) {
+        bool selJet1_isGenMatched = isGenMatched((*selJet1)->eta(), (*selJet1)->phi(), genWJets);
+        bool selJet2_isGenMatched = isGenMatched((*selJet2)->eta(), (*selJet2)->phi(), genWJets);
+        double bdtScore = -1; // CV: not implemented yet
+        HadWJetPair hadWJetPair(*selJet1, selJet1_isGenMatched, *selJet2, selJet2_isGenMatched, bdtScore);
+        hadWJetPairs.push_back(hadWJetPair); 
+      }
+    }
+    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByMass());
+    int hadWJetPair_sortedByMass_idx = getIndex(hadWJetPairs);
+    fillWithOverFlow(histogram_hadWJetPair_sortedByMass_idx, hadWJetPair_sortedByMass_idx, evtWeight); 
+    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByDeltaR());
+    int hadWJetPair_sortedByDeltaR_idx = getIndex(hadWJetPairs);
+    fillWithOverFlow(histogram_hadWJetPair_sortedByDeltaR_idx, hadWJetPair_sortedByDeltaR_idx, evtWeight); 
+    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByPt());
+    int hadWJetPair_sortedByPt_idx = getIndex(hadWJetPairs);
+    fillWithOverFlow(histogram_hadWJetPair_sortedByPt_idx, hadWJetPair_sortedByPt_idx, evtWeight); 
+    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByScalarPt());
+    int hadWJetPair_sortedByScalarPt_idx = getIndex(hadWJetPairs);
+    fillWithOverFlow(histogram_hadWJetPair_sortedByScalarPt_idx, hadWJetPair_sortedByScalarPt_idx, evtWeight); 
+    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByBDT());
+    int hadWJetPair_sortedByBDT_idx = getIndex(hadWJetPairs);
+    fillWithOverFlow(histogram_hadWJetPair_sortedByBDT_idx, hadWJetPair_sortedByBDT_idx, evtWeight); 
+    fillWithOverFlow(histogram_hadWJetPair_numIndices, hadWJetPairs.size(), evtWeight); 
 
     std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l = memReader->read();
     for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
