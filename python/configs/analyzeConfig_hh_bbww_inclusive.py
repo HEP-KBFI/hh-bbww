@@ -21,6 +21,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
         rle_select,
         central_or_shifts,
         jet_cleaning_by_index,
+        gen_matching_by_index,
         use_nonnominal = False,
         use_home       = False,
       ):
@@ -31,7 +32,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
       channel               = "hh_bbww_inclusive",
       samples               = samples,
       jet_cleaning_by_index = jet_cleaning_by_index,
-      gen_matching_by_index = False,
+      gen_matching_by_index = gen_matching_by_index,
       central_or_shifts     = central_or_shifts,
       max_files_per_job     = 1,
       era                   = era,

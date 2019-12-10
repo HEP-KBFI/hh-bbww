@@ -29,6 +29,7 @@ parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 parser.add_jet_cleaning()
+parser.add_gen_matching()
 args = parser.parse_args()
 
 # Common arguments
@@ -54,6 +55,7 @@ files_per_job     = args.files_per_job
 use_home          = args.use_home
 sideband          = args.sideband
 jet_cleaning      = args.jet_cleaning
+gen_matching      = args.gen_matching
 
 # Use the arguments
 central_or_shifts = []
@@ -65,6 +67,7 @@ for systematic_label in systematics_label:
 do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
+gen_matching_by_index = (gen_matching == 'by_index')
 
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
@@ -133,6 +136,7 @@ if __name__ == '__main__':
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
+    gen_matching_by_index                 = gen_matching_by_index,
     evtCategories                         = evtCategories,
     max_files_per_job                     = files_per_job,
     era                                   = era,
