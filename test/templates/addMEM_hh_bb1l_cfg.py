@@ -6,7 +6,7 @@ process.fwliteInput = cms.PSet(
     fileNames = cms.vstring(''),
     skipEvents = cms.uint32(0),
     maxEvents = cms.int32(-1),
-    outputEvery = cms.uint32(1000)
+    outputEvery = cms.uint32(1)
 )
 
 process.fwliteOutput = cms.PSet(
