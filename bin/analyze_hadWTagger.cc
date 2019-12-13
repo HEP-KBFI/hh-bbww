@@ -53,11 +53,11 @@
 typedef std::vector<std::string> vstring;
 
 bool 
-isGenMatched(const RecoJet* recJet, const std::vector<GenParticle>& genParticles, double dRmax = 0.3)
+isGenMatched(const RecoJet* recJet, const std::vector<const GenParticle*>& genParticles, double dRmax = 0.3)
 {
-  for ( std::vector<GenParticle>::const_iterator genParticle = genParticles.begin();
+  for ( std::vector<const GenParticle*>::const_iterator genParticle = genParticles.begin();
 	genParticle != genParticles.end(); ++genParticle ) {
-    double dR = deltaR(recJet->p4(), genParticle->p4());
+    double dR = deltaR(recJet->p4(), (*genParticle)->p4());
     if ( dR < dRmax ) return true;
   }
   return false;
@@ -87,6 +87,20 @@ compCosTheta(const Particle::LorentzVector& recWJet1, const Particle::LorentzVec
     cosTheta = PWj2boost.CosTheta();
   }
   return cosTheta;
+}
+
+bool
+isWithinRoundingErrors_abs(double x1, double x2, double epsilon = 2.e-1)
+{
+  if ( std::fabs(x1 - x2) < epsilon ) return true;
+  else return false;	
+}
+
+bool
+isWithinRoundingErrors_rel(double x1, double x2, double epsilon = 5.e-2)
+{
+  if ( std::fabs(x1 - x2) < epsilon*(std::fabs(x1) + std::fabs(x2)) ) return true;
+  else return false;	
 }
 
 /**
@@ -124,6 +138,7 @@ int main(int argc,
   const bool isDEBUG                        = cfg_analyze.getParameter<bool>("isDEBUG");
 
   const bool isMC                           = cfg_analyze.getParameter<bool>("isMC");
+  const bool isMC_HH                        = process_string.find("hh_bbvv") != std::string::npos;
   bool hasLHE                               = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift              = "central";
   edm::VParameterSet lumiScale              = cfg_analyze.getParameter<edm::VParameterSet>("lumiScale");
@@ -136,6 +151,7 @@ int main(int argc,
   const std::string branchName_subjets_ak8  = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8_Hbb");
 
   const std::string branchName_genLeptons   = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
+  const std::string branchName_genJets      = cfg_analyze.getParameter<std::string>("branchName_genJets");
   const std::string branchName_genBJets     = cfg_analyze.getParameter<std::string>("branchName_genBJets");
   const std::string branchName_genWBosons   = cfg_analyze.getParameter<std::string>("branchName_genWBosons");
   const std::string branchName_genWJets     = cfg_analyze.getParameter<std::string>("branchName_genWJets");
@@ -210,6 +226,8 @@ int main(int argc,
 
   GenParticleReader* genLeptonReader = new GenParticleReader(branchName_genLeptons);
   inputTree->registerReader(genLeptonReader);
+  GenParticleReader* genJetReader = new GenParticleReader(branchName_genJets);
+  inputTree->registerReader(genJetReader);
   GenParticleReader* genBJetReader = new GenParticleReader(branchName_genBJets);
   inputTree->registerReader(genBJetReader);
   GenParticleReader* genWBosonReader = new GenParticleReader(branchName_genWBosons);
@@ -236,7 +254,8 @@ int main(int argc,
     "evtWeight"
   );
   bdt_filler->register_variable<int_type>(
-    "nJet", "nBJetLoose", "nBJetMedium", "nLep",
+    "nJet", "nBJetLoose", "nBJetMedium", "nLep", 
+    "nGenHadWJets",
     "jet1_isGenMatched", "jet2_isGenMatched",
     "HadW_isGenMatched"
   );
@@ -411,9 +430,50 @@ int main(int argc,
     cutFlowTable.update(">= 2 jets from W->jj", evtWeight);
 
     std::vector<GenParticle> genLeptons = genLeptonReader->read();
+    std::vector<GenParticle> genJets    = genJetReader->read();
     std::vector<GenParticle> genBJets   = genBJetReader->read();
     std::vector<GenParticle> genWBosons = genWBosonReader->read();
     std::vector<GenParticle> genWJets   = genWJetReader->read();
+
+    std::vector<const GenParticle*> genJets_ptrs = convert_to_ptrs(genJets);
+std::cout << "#genJets = " << genJets.size() << std::endl;
+std::cout << "#genJets_ptrs = " << genJets_ptrs.size() << std::endl;
+std::cout << "#genWBosons = " << genWBosons.size() << std::endl;
+    std::vector<const GenParticle*> genHadWJets;
+    if ( isMC_HH ) 
+    {
+      for ( std::vector<const GenParticle*>::const_iterator genJet = genJets_ptrs.begin();
+            genJet != genJets_ptrs.end(); ++genJet ) {
+        bool genJet_isHadWJet = false;
+        for ( std::vector<const GenParticle*>::const_iterator genJet_2nd = genJets_ptrs.begin();
+              genJet_2nd != genJets_ptrs.end(); ++genJet_2nd ) {
+          if ( (*genJet) == (*genJet_2nd) ) continue;
+          Particle::LorentzVector genDijetP4 = (*genJet)->p4() + (*genJet_2nd)->p4();
+          for ( std::vector<GenParticle>::const_iterator genWBoson = genWBosons.begin();
+                genWBoson != genWBosons.end(); ++genWBoson ) {
+std::cout << "genWBoson: pT = " << genWBoson->pt() << ", eta = " << genWBoson->eta() << ", phi = " << genWBoson->phi() << ", pdgId = " << genWBoson->pdgId() << std::endl;
+            if ( std::abs(genWBoson->pdgId()) != 24 ) continue;
+std::cout << "genDijetP4: pT = " << genDijetP4.pt() << ", eta = " << genDijetP4.eta() << ", phi = " << genDijetP4.phi() << std::endl;
+            if ( isWithinRoundingErrors_rel(genWBoson->pt(),   genDijetP4.pt()  ) &&
+                 isWithinRoundingErrors_abs(genWBoson->eta(),  genDijetP4.eta() ) &&
+                 isWithinRoundingErrors_abs(genWBoson->phi(),  genDijetP4.phi() ) &&
+                 isWithinRoundingErrors_rel(genWBoson->mass(), genDijetP4.mass()) ) {
+              genJet_isHadWJet = true;
+            }
+          }
+        }
+        if ( genJet_isHadWJet ) 
+        {
+          genHadWJets.push_back(*genJet);
+        }
+      }
+std::cout << "isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
+    }
+    else
+    {
+      genHadWJets = genJets_ptrs;
+std::cout << "!isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
+    }
 
     for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
 	  selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
@@ -421,9 +481,9 @@ int main(int argc,
      	    selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
 
         Particle::LorentzVector selJet1P4_Wjj = (*selJet1_Wjj)->p4();
-        bool selJet1_Wjj_isGenMatched = isGenMatched(*selJet1_Wjj, genWJets);
+        bool selJet1_Wjj_isGenMatched = isGenMatched(*selJet1_Wjj, genHadWJets);
         Particle::LorentzVector selJet2P4_Wjj = (*selJet2_Wjj)->p4();
-        bool selJet2_Wjj_isGenMatched = isGenMatched(*selJet2_Wjj, genWJets);
+        bool selJet2_Wjj_isGenMatched = isGenMatched(*selJet2_Wjj, genHadWJets);
         Particle::LorentzVector hadWP4 = selJet1P4_Wjj + selJet2P4_Wjj;     
         double cosTheta = compCosTheta(selJet1P4_Wjj, selJet2P4_Wjj);
 
@@ -454,6 +514,7 @@ int main(int argc,
           ("nBJetLoose",           selBJetsAK4_loose.size())
           ("nBJetMedium",          selBJetsAK4_medium.size())
           ("nLep",                 preselLeptons.size())
+          ("nGenHadWJets",         genHadWJets.size())
           ("jet1_isGenMatched",    selJet1_Wjj_isGenMatched)
           ("jet2_isGenMatched",    selJet2_Wjj_isGenMatched)
           ("HadW_isGenMatched",    selJet1_Wjj_isGenMatched && selJet2_Wjj_isGenMatched)
