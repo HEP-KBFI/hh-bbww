@@ -775,7 +775,8 @@ int main(int argc,
                   selLepton, *selJet_Wjj, nullptr,
                   selJet1_Hbb, nullptr, 
                   met, 
-	          memInterface_hh_bb1l, dryRun,
+	          //memInterface_hh_bb1l, dryRun,
+                  memInterface_hh_bb1l, true,
                   idxPermutation_mem_missingBJet_and_HadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
 	          branchName_memOutput_missingBJet_and_HadWJet, central_or_shift, isDEBUG);
                 memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].push_back(memOutput);
@@ -793,7 +794,8 @@ int main(int argc,
                   selLepton, *selJet_Wjj, nullptr,
                   selJet2_Hbb, nullptr, 
                   met, 
-	          memInterface_hh_bb1l, dryRun,
+	          //memInterface_hh_bb1l, dryRun,
+                  memInterface_hh_bb1l, true,
                   idxPermutation_mem_missingBJet_and_HadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
 	          branchName_memOutput_missingBJet_and_HadWJet, central_or_shift, isDEBUG);
                 memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].push_back(memOutput);
