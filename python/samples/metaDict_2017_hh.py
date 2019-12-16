@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-12-04 17:37:15 with the following command:
+# file generated at 2019-12-16 02:25:59 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -779,6 +779,19 @@ meta_dictionary["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg/Ru
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 21.56GB; nevents: 400.00k; release: 9_4_7; last modified: 2018-10-15 05:25:20"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2019Dec11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1"),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_sm_hh_2b2v_sl"),
+  ("nof_db_events",         779989),
+  ("nof_db_files",          30),
+  ("fsize_db",              43860671206),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 43.86GB; nevents: 779.99k; release: 9_4_7; last modified: 2019-02-15 21:22:09"),
 ])
 
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -2046,6 +2059,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg/RunIIFa
 # signal_ggf_spin2_3000_hh_bbvv:          100.00k
 # signal_vbf_nonresonant_1_1_1_hh_bbvv:   400.00k
 # signal_ggf_nonresonant_hh_bbvv:         2.35M
+# signal_ggf_nonresonant_hh_bbvv_sl:      779.99k
 # signal_vbf_spin0_250_hh_bbtt:           400.00k
 # signal_vbf_spin0_260_hh_bbtt:           388.00k
 # signal_vbf_spin0_270_hh_bbtt:           384.00k

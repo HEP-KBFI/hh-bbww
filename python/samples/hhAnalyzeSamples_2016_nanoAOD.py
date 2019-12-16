@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-12-08 19:28:37 with the following command:
+# file generated at 2019-12-16 02:31:50 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2016_hh.py -p python/samples/sampleLocations_2016_nanoAOD_hh_bbww.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD.py -M
 
 samples_2016 = OD()
@@ -2020,6 +2020,1812 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/RunIISummer16Mi
   ]),
 ])
 
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node_SM_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_sm_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     724801962), # 724.80MB, avg file size 181.20MB
+  ("fsize_db",                        13758086324), # 13.76GB, avg file size 3.44GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node_SM_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node_SM_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_174239"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node_box_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_box_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     701076257), # 701.08MB, avg file size 233.69MB
+  ("fsize_db",                        13554966138), # 13.55GB, avg file size 2.71GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node_box_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node_box_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_174522"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-1_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_1_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299994),
+  ("nof_db_events",                   299994),
+  ("fsize_local",                     744819462), # 744.82MB, avg file size 186.20MB
+  ("fsize_db",                        14226816913), # 14.23GB, avg file size 2.37GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-1_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-1_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_174755"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-2_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_2_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     822492329), # 822.49MB, avg file size 205.62MB
+  ("fsize_db",                        15065193278), # 15.07GB, avg file size 3.01GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-2_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-2_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_174956"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-3_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_3_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299201),
+  ("nof_db_events",                   299201),
+  ("fsize_local",                     734848630), # 734.85MB, avg file size 244.95MB
+  ("fsize_db",                        14042794496), # 14.04GB, avg file size 3.51GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-3_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-3_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_175229"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-4_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_4_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     712395985), # 712.40MB, avg file size 178.10MB
+  ("fsize_db",                        13734345217), # 13.73GB, avg file size 2.75GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-4_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-4_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_175459"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-5_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_5_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     787656824), # 787.66MB, avg file size 196.91MB
+  ("fsize_db",                        14660310040), # 14.66GB, avg file size 2.44GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-5_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-5_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_175700"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-6_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_6_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    3),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     702639088), # 702.64MB, avg file size 234.21MB
+  ("fsize_db",                        13255677867), # 13.26GB, avg file size 4.42GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-6_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-6_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_175906"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-7_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_7_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     645180451), # 645.18MB, avg file size 161.30MB
+  ("fsize_db",                        12941536315), # 12.94GB, avg file size 3.24GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-7_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-7_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_180238"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-8_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_8_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     741465749), # 741.47MB, avg file size 185.37MB
+  ("fsize_db",                        14190505186), # 14.19GB, avg file size 2.84GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-8_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-8_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_180439"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-9_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_9_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299591),
+  ("nof_db_events",                   299591),
+  ("fsize_local",                     769809875), # 769.81MB, avg file size 256.60MB
+  ("fsize_db",                        14339474676), # 14.34GB, avg file size 2.87GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-9_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-9_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_180710"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-10_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_10_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     653226814), # 653.23MB, avg file size 217.74MB
+  ("fsize_db",                        13151222527), # 13.15GB, avg file size 2.63GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-10_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-10_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_180914"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-11_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_11_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299994),
+  ("nof_db_events",                   299994),
+  ("fsize_local",                     702762710), # 702.76MB, avg file size 175.69MB
+  ("fsize_db",                        13676249855), # 13.68GB, avg file size 2.28GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-11_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-11_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181115"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-12_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_12_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299994),
+  ("nof_db_events",                   299994),
+  ("fsize_local",                     673201160), # 673.20MB, avg file size 168.30MB
+  ("fsize_db",                        13168943933), # 13.17GB, avg file size 3.29GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_node-12_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_node-12_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181346"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_250_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_250_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     537758617), # 537.76MB, avg file size 134.44MB
+  ("fsize_db",                        12143344410), # 12.14GB, avg file size 2.43GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181616"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_260_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_260_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299402),
+  ("nof_db_events",                   299402),
+  ("fsize_local",                     542609978), # 542.61MB, avg file size 180.87MB
+  ("fsize_db",                        12033567447), # 12.03GB, avg file size 2.41GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181848"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_270_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_270_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     554397791), # 554.40MB, avg file size 138.60MB
+  ("fsize_db",                        12073887370), # 12.07GB, avg file size 2.41GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182049"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_300_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_300_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     578628381), # 578.63MB, avg file size 144.66MB
+  ("fsize_db",                        12250780111), # 12.25GB, avg file size 3.06GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182251"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_350_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_350_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     615744889), # 615.74MB, avg file size 153.94MB
+  ("fsize_db",                        12822147007), # 12.82GB, avg file size 2.56GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182525"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_400_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_400_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 300000),
+  ("nof_db_events",                   300000),
+  ("fsize_local",                     646830239), # 646.83MB, avg file size 215.61MB
+  ("fsize_db",                        13147855533), # 13.15GB, avg file size 2.63GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182725"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_450_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_450_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 292028),
+  ("nof_db_events",                   292028),
+  ("fsize_local",                     659958990), # 659.96MB, avg file size 219.99MB
+  ("fsize_db",                        13118198421), # 13.12GB, avg file size 3.28GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182929"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_500_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_500_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     706964450), # 706.96MB, avg file size 235.65MB
+  ("fsize_db",                        13799384403), # 13.80GB, avg file size 2.76GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183129"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_550_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_550_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     733551165), # 733.55MB, avg file size 183.39MB
+  ("fsize_db",                        13970691602), # 13.97GB, avg file size 3.49GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183401"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_600_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_600_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     754594804), # 754.59MB, avg file size 188.65MB
+  ("fsize_db",                        14217239886), # 14.22GB, avg file size 2.84GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183632"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_700_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_700_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     783789141), # 783.79MB, avg file size 195.95MB
+  ("fsize_db",                        14467187735), # 14.47GB, avg file size 3.62GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183832"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_800_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_800_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     802817037), # 802.82MB, avg file size 200.70MB
+  ("fsize_db",                        14975865562), # 14.98GB, avg file size 3.00GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184103"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_900_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_900_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 300000),
+  ("nof_db_events",                   300000),
+  ("fsize_local",                     816913376), # 816.91MB, avg file size 204.23MB
+  ("fsize_db",                        15010963358), # 15.01GB, avg file size 3.75GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184336"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_1000_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_1000_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299469),
+  ("nof_db_events",                   299469),
+  ("fsize_local",                     823281069), # 823.28MB, avg file size 274.43MB
+  ("fsize_db",                        15303436616), # 15.30GB, avg file size 3.06GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184607"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_250_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_250_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     548489043), # 548.49MB, avg file size 137.12MB
+  ("fsize_db",                        12270543882), # 12.27GB, avg file size 2.45GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184838"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_260_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_260_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 300000),
+  ("nof_db_events",                   300000),
+  ("fsize_local",                     558234962), # 558.23MB, avg file size 139.56MB
+  ("fsize_db",                        12407686965), # 12.41GB, avg file size 3.10GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185041"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_270_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_270_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299231),
+  ("nof_db_events",                   299231),
+  ("fsize_local",                     564561427), # 564.56MB, avg file size 188.19MB
+  ("fsize_db",                        12387077839), # 12.39GB, avg file size 2.48GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185311"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_300_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_300_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     596759048), # 596.76MB, avg file size 149.19MB
+  ("fsize_db",                        12692339481), # 12.69GB, avg file size 3.17GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185542"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_350_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_350_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299402),
+  ("nof_db_events",                   299402),
+  ("fsize_local",                     635454721), # 635.45MB, avg file size 211.82MB
+  ("fsize_db",                        13215909741), # 13.22GB, avg file size 3.30GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/191211_185812"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_400_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_400_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299993),
+  ("nof_db_events",                   299993),
+  ("fsize_local",                     677447200), # 677.45MB, avg file size 169.36MB
+  ("fsize_db",                        13636388128), # 13.64GB, avg file size 3.41GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190044"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_450_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_450_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     711771060), # 711.77MB, avg file size 177.94MB
+  ("fsize_db",                        13995682190), # 14.00GB, avg file size 2.80GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190315"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_500_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_500_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     743166186), # 743.17MB, avg file size 185.79MB
+  ("fsize_db",                        14208882340), # 14.21GB, avg file size 3.55GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190517"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_550_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_550_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     769195155), # 769.20MB, avg file size 192.30MB
+  ("fsize_db",                        14478664969), # 14.48GB, avg file size 3.62GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190759"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_600_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_600_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     789132777), # 789.13MB, avg file size 197.28MB
+  ("fsize_db",                        14654413374), # 14.65GB, avg file size 3.66GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191031"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_650_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_650_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     804059014), # 804.06MB, avg file size 201.01MB
+  ("fsize_db",                        14989654961), # 14.99GB, avg file size 3.00GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191302"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_700_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_700_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     814988259), # 814.99MB, avg file size 203.75MB
+  ("fsize_db",                        15100949761), # 15.10GB, avg file size 3.02GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191533"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_800_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_800_hh_2b2v_sl"),
+  ("nof_files",                       3),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     826743129), # 826.74MB, avg file size 275.58MB
+  ("fsize_db",                        15643527631), # 15.64GB, avg file size 2.61GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191733"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_900_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_900_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     839505381), # 839.51MB, avg file size 209.88MB
+  ("fsize_db",                        15836490873), # 15.84GB, avg file size 2.64GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_192005"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_1000_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_1000_hh_2b2v_sl"),
+  ("nof_files",                       4),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     846099774), # 846.10MB, avg file size 211.52MB
+  ("fsize_db",                        15848133420), # 15.85GB, avg file size 3.17GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_192238"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
 samples_2016["/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_250_hh_bbtt"),
@@ -3955,5 +5761,6 @@ samples_2016["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAODv3-
 samples_2016["sum_events"] = [
   [ 'signal_ggf_nonresonant_node_sm_hh_2b2t',          'signal_ggf_nonresonant_node_box_hh_2b2t',         'signal_ggf_nonresonant_node_2_hh_2b2t',           'signal_ggf_nonresonant_node_9_hh_2b2t',           'signal_ggf_nonresonant_node_10_hh_2b2t',          'signal_ggf_nonresonant_node_11_hh_2b2t',          'signal_ggf_nonresonant_node_12_hh_2b2t',          'signal_ggf_nonresonant_node_13_hh_2b2t',           ],
   [ 'signal_ggf_nonresonant_node_sm_hh_2b2v',          'signal_ggf_nonresonant_node_box_hh_2b2v',         'signal_ggf_nonresonant_node_1_hh_2b2v',           'signal_ggf_nonresonant_node_2_hh_2b2v',           'signal_ggf_nonresonant_node_3_hh_2b2v',           'signal_ggf_nonresonant_node_4_hh_2b2v',           'signal_ggf_nonresonant_node_5_hh_2b2v',           'signal_ggf_nonresonant_node_6_hh_2b2v',           'signal_ggf_nonresonant_node_7_hh_2b2v',           'signal_ggf_nonresonant_node_8_hh_2b2v',           'signal_ggf_nonresonant_node_9_hh_2b2v',           'signal_ggf_nonresonant_node_10_hh_2b2v',          'signal_ggf_nonresonant_node_11_hh_2b2v',          'signal_ggf_nonresonant_node_12_hh_2b2v',           ],
+  [ 'signal_ggf_nonresonant_node_sm_hh_2b2v_sl',       'signal_ggf_nonresonant_node_box_hh_2b2v_sl',      'signal_ggf_nonresonant_node_1_hh_2b2v_sl',        'signal_ggf_nonresonant_node_2_hh_2b2v_sl',        'signal_ggf_nonresonant_node_3_hh_2b2v_sl',        'signal_ggf_nonresonant_node_4_hh_2b2v_sl',        'signal_ggf_nonresonant_node_5_hh_2b2v_sl',        'signal_ggf_nonresonant_node_6_hh_2b2v_sl',        'signal_ggf_nonresonant_node_7_hh_2b2v_sl',        'signal_ggf_nonresonant_node_8_hh_2b2v_sl',        'signal_ggf_nonresonant_node_9_hh_2b2v_sl',        'signal_ggf_nonresonant_node_10_hh_2b2v_sl',       'signal_ggf_nonresonant_node_11_hh_2b2v_sl',       'signal_ggf_nonresonant_node_12_hh_2b2v_sl',        ],
 ]
 

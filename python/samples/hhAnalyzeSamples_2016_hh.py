@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-12-09 04:47:39 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_hh.py -p /hdfs/local/karl/ttHNtupleProduction/2016/2019Dec08_woPresel_nom_hh_bbww/ntuples -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_hh.py -M
+# file generated at 2019-12-16 14:38:22 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2016_hh.py -p python/samples/sampleLocations_2016_hh_bbww.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_hh.py -M
 
 samples_2016 = OD()
 samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
@@ -2308,6 +2308,2070 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/RunIISummer16Mi
   ]),
 ])
 
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node_SM_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_sm_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299996, ],
+    'CountWeighted'                                              : [       299973,       299945,       299933, ],
+    'CountWeightedLHEWeightScale'                                : [       384329,       362833,       342671,       317803,       299971,       283298,       267179,       252181,       238129, ],
+    'CountWeightedL1PrefireNom'                                  : [       293881,       293857,       293877, ],
+    'CountWeightedL1Prefire'                                     : [       293881,       292339,       295424, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       376449,       355462,       335762,       311283,       293878,       277583,       261692,       247052,       233323, ],
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     1168918102), # 1.17GB, avg file size 1.17GB
+  ("fsize_db",                        13758086324), # 13.76GB, avg file size 3.44GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node_box_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_box_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       300025,       300008,       299989, ],
+    'CountWeightedLHEWeightScale'                                : [       382906,       363726,       345344,       315857,       300022,       284809,       264999,       251669,       238905, ],
+    'CountWeightedL1PrefireNom'                                  : [       294212,       294192,       294196, ],
+    'CountWeightedL1Prefire'                                     : [       294212,       292733,       295690, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       375434,       356698,       338726,       309687,       294209,       279346,       259819,       246798,       234320, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1137876649), # 1.14GB, avg file size 1.14GB
+  ("fsize_db",                        13554966138), # 13.55GB, avg file size 2.71GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_box_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-1_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_1_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+    'Count'                                                      : [       299994, ],
+    'CountWeighted'                                              : [       299978,       299939,       300005, ],
+    'CountWeightedLHEWeightScale'                                : [       385637,       362145,       340580,       319563,       299968,       282047,       269163,       252604,       237438, ],
+    'CountWeightedL1PrefireNom'                                  : [       293771,       293742,       293797, ],
+    'CountWeightedL1Prefire'                                     : [       293771,       292212,       295329, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       377570,       354662,       333614,       312865,       293764,       276266,       263511,       247364,       232562, ],
+  }),
+  ("nof_tree_events",                 299994),
+  ("nof_db_events",                   299994),
+  ("fsize_local",                     1187488906), # 1.19GB, avg file size 1.19GB
+  ("fsize_db",                        14226816913), # 14.23GB, avg file size 2.37GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_1_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-2_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_2_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299996, ],
+    'CountWeighted'                                              : [       299933,       299951,       300041, ],
+    'CountWeightedLHEWeightScale'                                : [       392378,       358371,       329047,       328595,       299933,       275355,       279230,       254841,       233845, ],
+    'CountWeightedL1PrefireNom'                                  : [       293046,       293044,       293118, ],
+    'CountWeightedL1Prefire'                                     : [       293046,       291346,       294742, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       383258,       350124,       321538,       320945,       293044,       269060,       272719,       248961,       228492, ],
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     1276429779), # 1.28GB, avg file size 1.28GB
+  ("fsize_db",                        15065193278), # 15.07GB, avg file size 3.01GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_2_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-3_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_3_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299201, ],
+    'CountWeighted'                                              : [       299174,       299202,       299284, ],
+    'CountWeightedLHEWeightScale'                                : [       384293,       361320,       340088,       318285,       299174,       281574,       267947,       251843,       236973, ],
+    'CountWeightedL1PrefireNom'                                  : [       292998,       293001,       293076, ],
+    'CountWeightedL1Prefire'                                     : [       292998,       291435,       294556, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       376276,       353857,       333122,       311636,       292996,       275799,       262345,       246629,       232110, ],
+  }),
+  ("nof_tree_events",                 299201),
+  ("nof_db_events",                   299201),
+  ("fsize_local",                     1181993544), # 1.18GB, avg file size 1.18GB
+  ("fsize_db",                        14042794496), # 14.04GB, avg file size 3.51GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_3_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-4_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_4_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       299999,       300102,       299972, ],
+    'CountWeightedLHEWeightScale'                                : [       383460,       363429,       344410,       316587,       299991,       284261,       265816,       251845,       238616, ],
+    'CountWeightedL1PrefireNom'                                  : [       294075,       294127,       294064, ],
+    'CountWeightedL1Prefire'                                     : [       294075,       292567,       295579, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       375816,       356258,       337674,       310270,       294069,       278696,       260506,       246869,       233938, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1148510933), # 1.15GB, avg file size 1.15GB
+  ("fsize_db",                        13734345217), # 13.73GB, avg file size 2.75GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_4_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-5_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_5_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+    'Count'                                                      : [       299996, ],
+    'CountWeighted'                                              : [       299940,       299978,       299994, ],
+    'CountWeightedLHEWeightScale'                                : [       389003,       360215,       334692,       324087,       299938,       278656,       274200,       253745,       235637, ],
+    'CountWeightedL1PrefireNom'                                  : [       293316,       293330,       293359, ],
+    'CountWeightedL1Prefire'                                     : [       293316,       291666,       294965, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       380303,       352245,       327354,       316827,       293313,       272537,       268050,       248113,       230455, ],
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     1238707011), # 1.24GB, avg file size 1.24GB
+  ("fsize_db",                        14660310040), # 14.66GB, avg file size 2.44GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_5_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-6_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_6_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    3),
+  ("nof_events",                      {
+    'Count'                                                      : [       299999, ],
+    'CountWeighted'                                              : [       299978,       299944,       299985, ],
+    'CountWeightedLHEWeightScale'                                : [       382838,       363872,       345748,       315737,       299977,       284980,       264878,       251607,       238964, ],
+    'CountWeightedL1PrefireNom'                                  : [       294365,       294338,       294379, ],
+    'CountWeightedL1Prefire'                                     : [       294365,       292934,       295793, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       375589,       357070,       339354,       309743,       294362,       279698,       259842,       246884,       234525, ],
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     1134825307), # 1.13GB, avg file size 1.13GB
+  ("fsize_db",                        13255677867), # 13.26GB, avg file size 4.42GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_6_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-7_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_7_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       299984,       299953,       299921, ],
+    'CountWeightedLHEWeightScale'                                : [       379175,       366134,       352515,       310721,       299977,       288811,       259266,       250295,       240946, ],
+    'CountWeightedL1PrefireNom'                                  : [       294945,       294912,       294920, ],
+    'CountWeightedL1Prefire'                                     : [       294945,       293635,       296247, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       372741,       359981,       346637,       305442,       294939,       283992,       254860,       246083,       236922, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1056332362), # 1.06GB, avg file size 1.06GB
+  ("fsize_db",                        12941536315), # 12.94GB, avg file size 3.24GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_7_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-8_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_8_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299996, ],
+    'CountWeighted'                                              : [       299985,       299970,       299951, ],
+    'CountWeightedLHEWeightScale'                                : [       385526,       362243,       340829,       319384,       299984,       282186,       268944,       252551,       237503, ],
+    'CountWeightedL1PrefireNom'                                  : [       293810,       293797,       293791, ],
+    'CountWeightedL1Prefire'                                     : [       293810,       292255,       295361, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       377501,       354791,       333891,       312722,       293807,       276429,       263325,       247338,       232650, ],
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     1182693964), # 1.18GB, avg file size 1.18GB
+  ("fsize_db",                        14190505186), # 14.19GB, avg file size 2.84GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_8_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-9_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_9_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299591, ],
+    'CountWeighted'                                              : [       299526,       299558,       299612, ],
+    'CountWeightedLHEWeightScale'                                : [       387195,       360412,       336343,       321937,       299525,       279522,       271916,       252987,       235996, ],
+    'CountWeightedL1PrefireNom'                                  : [       293026,       293034,       293080, ],
+    'CountWeightedL1Prefire'                                     : [       293026,       291396,       294647, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       378679,       352565,       329081,       314847,       293024,       273480,       265922,       247464,       230889, ],
+  }),
+  ("nof_tree_events",                 299591),
+  ("nof_db_events",                   299591),
+  ("fsize_local",                     1223162313), # 1.22GB, avg file size 1.22GB
+  ("fsize_db",                        14339474676), # 14.34GB, avg file size 2.87GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_9_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-10_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_10_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299997, ],
+    'CountWeighted'                                              : [       300052,       300009,       299942, ],
+    'CountWeightedLHEWeightScale'                                : [       379838,       365750,       351368,       311636,       300049,       288144,       260296,       250528,       240589, ],
+    'CountWeightedL1PrefireNom'                                  : [       294961,       294930,       294897, ],
+    'CountWeightedL1Prefire'                                     : [       294961,       293646,       296264, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       373351,       359580,       345502,       306302,       294957,       283323,       255833,       246286,       236557, ],
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     1068320109), # 1.07GB, avg file size 1.07GB
+  ("fsize_db",                        13151222527), # 13.15GB, avg file size 2.63GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_10_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-11_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_11_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+    'Count'                                                      : [       299994, ],
+    'CountWeighted'                                              : [       300052,       299968,       299994, ],
+    'CountWeightedLHEWeightScale'                                : [       382925,       363853,       345678,       315830,       300051,       284920,       264976,       251618,       238913, ],
+    'CountWeightedL1PrefireNom'                                  : [       294401,       294351,       294374, ],
+    'CountWeightedL1Prefire'                                     : [       294401,       292973,       295831, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       375670,       357050,       339281,       309830,       294399,       279638,       259934,       246890,       234475, ],
+  }),
+  ("nof_tree_events",                 299994),
+  ("nof_db_events",                   299994),
+  ("fsize_local",                     1129791469), # 1.13GB, avg file size 1.13GB
+  ("fsize_db",                        13676249855), # 13.68GB, avg file size 2.28GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_11_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_node-12_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_12_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299994, ],
+    'CountWeighted'                                              : [       299966,       299991,       299988, ],
+    'CountWeightedLHEWeightScale'                                : [       380877,       365021,       349212,       313069,       299965,       286967,       261892,       250925,       240010, ],
+    'CountWeightedL1PrefireNom'                                  : [       294578,       294579,       294601, ],
+    'CountWeightedL1Prefire'                                     : [       294578,       293184,       295960, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       373958,       358456,       342984,       307377,       294576,       281845,       257125,       246405,       235722, ],
+  }),
+  ("nof_tree_events",                 299994),
+  ("nof_db_events",                   299994),
+  ("fsize_local",                     1094099173), # 1.09GB, avg file size 1.09GB
+  ("fsize_db",                        13168943933), # 13.17GB, avg file size 3.29GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_12_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_250_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_250_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299997, ],
+    'CountWeighted'                                              : [       299987,       300030,       300044, ],
+    'CountWeightedLHEWeightScale'                                : [       304877,       299987,       293426,       304877,       299987,       293426,       304877,       299987,       293426, ],
+    'CountWeightedL1PrefireNom'                                  : [       296017,       296035,       296064, ],
+    'CountWeightedL1Prefire'                                     : [       296017,       294948,       297078, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       300809,       296016,       289563,       300809,       296016,       289563,       300809,       296016,       289563, ],
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     938072433), # 938.07MB, avg file size 938.07MB
+  ("fsize_db",                        12143344410), # 12.14GB, avg file size 2.43GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_250_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_260_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_260_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299402, ],
+    'CountWeighted'                                              : [       299421,       299326,       299384, ],
+    'CountWeightedLHEWeightScale'                                : [       305157,       299420,       292140,       305157,       299420,       292140,       305157,       299420,       292140, ],
+    'CountWeightedL1PrefireNom'                                  : [       295292,       295227,       295271, ],
+    'CountWeightedL1Prefire'                                     : [       295292,       294184,       296381, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       300925,       295289,       288134,       300925,       295289,       288134,       300925,       295289,       288134, ],
+  }),
+  ("nof_tree_events",                 299402),
+  ("nof_db_events",                   299402),
+  ("fsize_local",                     949854267), # 949.85MB, avg file size 949.85MB
+  ("fsize_db",                        12033567447), # 12.03GB, avg file size 2.41GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_260_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_270_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_270_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299995, ],
+    'CountWeighted'                                              : [       299992,       299997,       299974, ],
+    'CountWeightedLHEWeightScale'                                : [       306633,       299991,       291998,       306633,       299991,       291998,       306633,       299991,       291998, ],
+    'CountWeightedL1PrefireNom'                                  : [       295721,       295718,       295713, ],
+    'CountWeightedL1Prefire'                                     : [       295721,       294582,       296852, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       302232,       295719,       287868,       302232,       295719,       287868,       302232,       295719,       287868, ],
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     965227119), # 965.23MB, avg file size 965.23MB
+  ("fsize_db",                        12073887370), # 12.07GB, avg file size 2.41GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_270_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_300_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_300_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299996, ],
+    'CountWeighted'                                              : [       299997,       300016,       299963, ],
+    'CountWeightedLHEWeightScale'                                : [       308979,       299996,       290154,       308979,       299996,       290154,       308979,       299996,       290154, ],
+    'CountWeightedL1PrefireNom'                                  : [       295356,       295367,       295329, ],
+    'CountWeightedL1Prefire'                                     : [       295356,       294133,       296573, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       304159,       295354,       285691,       304159,       295354,       285691,       304159,       295354,       285691, ],
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     1003376827), # 1.00GB, avg file size 1.00GB
+  ("fsize_db",                        12250780111), # 12.25GB, avg file size 3.06GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_300_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_350_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_350_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       299963,       299967,       300028, ],
+    'CountWeightedLHEWeightScale'                                : [       312387,       299963,       287463,       312387,       299963,       287463,       312387,       299963,       287463, ],
+    'CountWeightedL1PrefireNom'                                  : [       294710,       294696,       294771, ],
+    'CountWeightedL1Prefire'                                     : [       294710,       293350,       296071, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       306855,       294709,       282451,       306855,       294709,       282451,       306855,       294709,       282451, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1060588543), # 1.06GB, avg file size 1.06GB
+  ("fsize_db",                        12822147007), # 12.82GB, avg file size 2.56GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_350_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_400_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_400_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       300000, ],
+    'CountWeighted'                                              : [       300043,       300016,       300049, ],
+    'CountWeightedLHEWeightScale'                                : [       315244,       300043,       285256,       315244,       300043,       285256,       315244,       300043,       285256, ],
+    'CountWeightedL1PrefireNom'                                  : [       294366,       294338,       294383, ],
+    'CountWeightedL1Prefire'                                     : [       294366,       292914,       295812, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       309250,       294365,       279908,       309250,       294365,       279908,       309250,       294365,       279908, ],
+  }),
+  ("nof_tree_events",                 300000),
+  ("nof_db_events",                   300000),
+  ("fsize_local",                     1108526435), # 1.11GB, avg file size 1.11GB
+  ("fsize_db",                        13147855533), # 13.15GB, avg file size 2.63GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_400_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_450_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_450_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       292028, ],
+    'CountWeighted'                                              : [       292002,       292031,       292061, ],
+    'CountWeightedLHEWeightScale'                                : [       309283,       292001,       275798,       309283,       292001,       275798,       309283,       292001,       275798, ],
+    'CountWeightedL1PrefireNom'                                  : [       286164,       286170,       286206, ],
+    'CountWeightedL1Prefire'                                     : [       286164,       284680,       287649, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       303034,       286162,       270308,       303034,       286162,       270308,       303034,       286162,       270308, ],
+  }),
+  ("nof_tree_events",                 292028),
+  ("nof_db_events",                   292028),
+  ("fsize_local",                     1119419057), # 1.12GB, avg file size 1.12GB
+  ("fsize_db",                        13118198421), # 13.12GB, avg file size 3.28GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_450_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_500_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_500_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299997, ],
+    'CountWeighted'                                              : [       299986,       300030,       299913, ],
+    'CountWeightedLHEWeightScale'                                : [       319913,       299986,       281668,       319913,       299986,       281668,       319913,       299986,       281668, ],
+    'CountWeightedL1PrefireNom'                                  : [       293638,       293660,       293592, ],
+    'CountWeightedL1Prefire'                                     : [       293638,       292040,       295232, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       313081,       293637,       275737,       313081,       293637,       275737,       313081,       293637,       275737, ],
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     1189067322), # 1.19GB, avg file size 1.19GB
+  ("fsize_db",                        13799384403), # 13.80GB, avg file size 2.76GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_500_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_550_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_550_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299996, ],
+    'CountWeighted'                                              : [       300055,       299982,       299985, ],
+    'CountWeightedLHEWeightScale'                                : [       321848,       300055,       280185,       321848,       300055,       280185,       321848,       300055,       280185, ],
+    'CountWeightedL1PrefireNom'                                  : [       293490,       293447,       293454, ],
+    'CountWeightedL1Prefire'                                     : [       293490,       291852,       295126, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       314777,       293488,       274117,       314777,       293488,       274117,       314777,       293488,       274117, ],
+  }),
+  ("nof_tree_events",                 299996),
+  ("nof_db_events",                   299996),
+  ("fsize_local",                     1220839330), # 1.22GB, avg file size 1.22GB
+  ("fsize_db",                        13970691602), # 13.97GB, avg file size 3.49GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_550_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_600_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_600_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299999, ],
+    'CountWeighted'                                              : [       300036,       300028,       300051, ],
+    'CountWeightedLHEWeightScale'                                : [       323625,       300028,       278845,       323625,       300028,       278845,       323625,       300028,       278845, ],
+    'CountWeightedL1PrefireNom'                                  : [       293189,       293185,       293203, ],
+    'CountWeightedL1Prefire'                                     : [       293189,       291494,       294889, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       316204,       293182,       272542,       316204,       293182,       272542,       316204,       293182,       272542, ],
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     1246682573), # 1.25GB, avg file size 1.25GB
+  ("fsize_db",                        14217239886), # 14.22GB, avg file size 2.84GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_600_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_700_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_700_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       299993,       299940,       300040, ],
+    'CountWeightedLHEWeightScale'                                : [       326693,       299992,       276553,       326693,       299992,       276553,       326693,       299992,       276553, ],
+    'CountWeightedL1PrefireNom'                                  : [       292892,       292858,       292921, ],
+    'CountWeightedL1Prefire'                                     : [       292892,       291138,       294642, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       318912,       292890,       270042,       318912,       292890,       270042,       318912,       292890,       270042, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1281942485), # 1.28GB, avg file size 1.28GB
+  ("fsize_db",                        14467187735), # 14.47GB, avg file size 3.62GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_700_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_800_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_800_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299999, ],
+    'CountWeighted'                                              : [       300039,       299921,       299937, ],
+    'CountWeightedLHEWeightScale'                                : [       329331,       300037,       274610,       329331,       300037,       274610,       329331,       300037,       274610, ],
+    'CountWeightedL1PrefireNom'                                  : [       292684,       292616,       292634, ],
+    'CountWeightedL1Prefire'                                     : [       292684,       290890,       294485, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       321238,       292681,       267932,       321238,       292681,       267932,       321238,       292681,       267932, ],
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     1303748944), # 1.30GB, avg file size 1.30GB
+  ("fsize_db",                        14975865562), # 14.98GB, avg file size 3.00GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_800_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_900_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_900_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       300000, ],
+    'CountWeighted'                                              : [       299926,       299943,       300018, ],
+    'CountWeightedLHEWeightScale'                                : [       331702,       299925,       272913,       331702,       299925,       272913,       331702,       299925,       272913, ],
+    'CountWeightedL1PrefireNom'                                  : [       292413,       292422,       292468, ],
+    'CountWeightedL1Prefire'                                     : [       292413,       290576,       294250, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       323309,       292411,       266087,       323309,       292411,       266087,       323309,       292411,       266087, ],
+  }),
+  ("nof_tree_events",                 300000),
+  ("nof_db_events",                   300000),
+  ("fsize_local",                     1317379391), # 1.32GB, avg file size 1.32GB
+  ("fsize_db",                        15010963358), # 15.01GB, avg file size 3.75GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_900_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_1000_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin0_1000_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299469, ],
+    'CountWeighted'                                              : [       299441,       299493,       299482, ],
+    'CountWeightedLHEWeightScale'                                : [       333192,       299439,       270989,       333192,       299439,       270989,       333192,       299439,       270989, ],
+    'CountWeightedL1PrefireNom'                                  : [       291879,       291901,       291909, ],
+    'CountWeightedL1Prefire'                                     : [       291879,       290038,       293720, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       324710,       291877,       264156,       324710,       291877,       264156,       324710,       291877,       264156, ],
+  }),
+  ("nof_tree_events",                 299469),
+  ("nof_db_events",                   299469),
+  ("fsize_local",                     1322497996), # 1.32GB, avg file size 1.32GB
+  ("fsize_db",                        15303436616), # 15.30GB, avg file size 3.06GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin0_1000_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_250_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_250_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       299982,       300054,       300019, ],
+    'CountWeightedLHEWeightScale'                                : [       304803,       299967,       293479,       304803,       299967,       293479,       304803,       299967,       293479, ],
+    'CountWeightedL1PrefireNom'                                  : [       295870,       295908,       295903, ],
+    'CountWeightedL1Prefire'                                     : [       295870,       294770,       296963, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       300590,       295859,       289472,       300590,       295859,       289472,       300590,       295859,       289472, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     953923927), # 953.92MB, avg file size 953.92MB
+  ("fsize_db",                        12270543882), # 12.27GB, avg file size 2.45GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_250_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_260_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_260_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       300000, ],
+    'CountWeighted'                                              : [       300001,       300019,       300032, ],
+    'CountWeightedLHEWeightScale'                                : [       305778,       299998,       292707,       305778,       299998,       292707,       305778,       299998,       292707, ],
+    'CountWeightedL1PrefireNom'                                  : [       295711,       295717,       295736, ],
+    'CountWeightedL1Prefire'                                     : [       295711,       294571,       296845, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       301375,       295707,       288549,       301375,       295707,       288549,       301375,       295707,       288549, ],
+  }),
+  ("nof_tree_events",                 300000),
+  ("nof_db_events",                   300000),
+  ("fsize_local",                     969921282), # 969.92MB, avg file size 969.92MB
+  ("fsize_db",                        12407686965), # 12.41GB, avg file size 3.10GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_260_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_270_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_270_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299231, ],
+    'CountWeighted'                                              : [       299186,       299234,       299213, ],
+    'CountWeightedLHEWeightScale'                                : [       305822,       299184,       291288,       305822,       299184,       291288,       305822,       299184,       291288, ],
+    'CountWeightedL1PrefireNom'                                  : [       294793,       294811,       294816, ],
+    'CountWeightedL1Prefire'                                     : [       294793,       293624,       295956, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       301279,       294790,       287023,       301279,       294790,       287023,       301279,       294790,       287023, ],
+  }),
+  ("nof_tree_events",                 299231),
+  ("nof_db_events",                   299231),
+  ("fsize_local",                     983739906), # 983.74MB, avg file size 983.74MB
+  ("fsize_db",                        12387077839), # 12.39GB, avg file size 2.48GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_270_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_300_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_300_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       300016,       300023,       300035, ],
+    'CountWeightedLHEWeightScale'                                : [       308977,       300016,       290135,       308977,       300016,       290135,       308977,       300016,       290135, ],
+    'CountWeightedL1PrefireNom'                                  : [       295191,       295190,       295218, ],
+    'CountWeightedL1Prefire'                                     : [       295191,       293934,       296448, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       303980,       295189,       285511,       303980,       295189,       285511,       303980,       295189,       285511, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1028850364), # 1.03GB, avg file size 1.03GB
+  ("fsize_db",                        12692339481), # 12.69GB, avg file size 3.17GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_300_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_350_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_350_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299402, ],
+    'CountWeighted'                                              : [       299391,       299361,       299428, ],
+    'CountWeightedLHEWeightScale'                                : [       311775,       299391,       286878,       311775,       299391,       286878,       311775,       299391,       286878, ],
+    'CountWeightedL1PrefireNom'                                  : [       294081,       294057,       294105, ],
+    'CountWeightedL1Prefire'                                     : [       294081,       292709,       295447, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       306189,       294079,       281823,       306189,       294079,       281823,       306189,       294079,       281823, ],
+  }),
+  ("nof_tree_events",                 299402),
+  ("nof_db_events",                   299402),
+  ("fsize_local",                     1089919915), # 1.09GB, avg file size 1.09GB
+  ("fsize_db",                        13215909741), # 13.22GB, avg file size 3.30GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_350_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_400_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_400_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299993, ],
+    'CountWeighted'                                              : [       300003,       299967,       300004, ],
+    'CountWeightedLHEWeightScale'                                : [       315255,       300003,       285219,       315255,       300003,       285219,       315255,       300003,       285219, ],
+    'CountWeightedL1PrefireNom'                                  : [       294441,       294423,       294439, ],
+    'CountWeightedL1Prefire'                                     : [       294441,       293026,       295853, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       309352,       294439,       279979,       309352,       294439,       279979,       309352,       294439,       279979, ],
+  }),
+  ("nof_tree_events",                 299993),
+  ("nof_db_events",                   299993),
+  ("fsize_local",                     1144400025), # 1.14GB, avg file size 1.14GB
+  ("fsize_db",                        13636388128), # 13.64GB, avg file size 3.41GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_400_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_450_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_450_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       300061,       300090,       300009, ],
+    'CountWeightedLHEWeightScale'                                : [       317722,       300060,       283332,       317722,       300060,       283332,       317722,       300060,       283332, ],
+    'CountWeightedL1PrefireNom'                                  : [       294234,       294247,       294201, ],
+    'CountWeightedL1Prefire'                                     : [       294234,       292772,       295692, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       311517,       294233,       277893,       311517,       294233,       277893,       311517,       294233,       277893, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1191865464), # 1.19GB, avg file size 1.19GB
+  ("fsize_db",                        13995682190), # 14.00GB, avg file size 2.80GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_450_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_500_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_500_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299999, ],
+    'CountWeighted'                                              : [       300073,       299948,       299979, ],
+    'CountWeightedLHEWeightScale'                                : [       319930,       300053,       281658,       319930,       300053,       281658,       319930,       300053,       281658, ],
+    'CountWeightedL1PrefireNom'                                  : [       294142,       294064,       294085, ],
+    'CountWeightedL1Prefire'                                     : [       294142,       292663,       295618, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       313568,       294127,       276158,       313568,       294127,       276158,       313568,       294127,       276158, ],
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     1232301471), # 1.23GB, avg file size 1.23GB
+  ("fsize_db",                        14208882340), # 14.21GB, avg file size 3.55GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_500_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_550_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_550_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299995, ],
+    'CountWeighted'                                              : [       300072,       300042,       300025, ],
+    'CountWeightedLHEWeightScale'                                : [       321860,       300070,       280176,       321860,       300070,       280176,       321860,       300070,       280176, ],
+    'CountWeightedL1PrefireNom'                                  : [       294073,       294048,       294055, ],
+    'CountWeightedL1Prefire'                                     : [       294073,       292592,       295552, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       315398,       294071,       274641,       315398,       294071,       274641,       315398,       294071,       274641, ],
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     1263386803), # 1.26GB, avg file size 1.26GB
+  ("fsize_db",                        14478664969), # 14.48GB, avg file size 3.62GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_550_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_600_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_600_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    4),
+  ("nof_events",                      {
+    'Count'                                                      : [       299995, ],
+    'CountWeighted'                                              : [       299952,       300021,       299984, ],
+    'CountWeightedLHEWeightScale'                                : [       323629,       299949,       278844,       323629,       299949,       278844,       323629,       299949,       278844, ],
+    'CountWeightedL1PrefireNom'                                  : [       294022,       294057,       294044, ],
+    'CountWeightedL1Prefire'                                     : [       294022,       292552,       295488, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       317156,       294019,       273354,       317156,       294019,       273354,       317156,       294019,       273354, ],
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     1287676716), # 1.29GB, avg file size 1.29GB
+  ("fsize_db",                        14654413374), # 14.65GB, avg file size 3.66GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_600_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_650_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_650_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299997, ],
+    'CountWeighted'                                              : [       299999,       299969,       300002, ],
+    'CountWeightedLHEWeightScale'                                : [       325220,       299990,       277678,       325220,       299990,       277678,       325220,       299990,       277678, ],
+    'CountWeightedL1PrefireNom'                                  : [       294116,       294076,       294140, ],
+    'CountWeightedL1Prefire'                                     : [       294116,       292670,       295565, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       318794,       294109,       272263,       318794,       294109,       272263,       318794,       294109,       272263, ],
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     1305415408), # 1.31GB, avg file size 1.31GB
+  ("fsize_db",                        14989654961), # 14.99GB, avg file size 3.00GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_650_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_700_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_700_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299995, ],
+    'CountWeighted'                                              : [       299979,       299990,       299945, ],
+    'CountWeightedLHEWeightScale'                                : [       326709,       299979,       276576,       326709,       299979,       276576,       326709,       299979,       276576, ],
+    'CountWeightedL1PrefireNom'                                  : [       293984,       293986,       293974, ],
+    'CountWeightedL1Prefire'                                     : [       293984,       292512,       295454, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       320129,       293982,       271068,       320129,       293982,       271068,       320129,       293982,       271068, ],
+  }),
+  ("nof_tree_events",                 299995),
+  ("nof_db_events",                   299995),
+  ("fsize_local",                     1317003462), # 1.32GB, avg file size 1.32GB
+  ("fsize_db",                        15100949761), # 15.10GB, avg file size 3.02GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_700_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_800_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_800_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+    'Count'                                                      : [       299998, ],
+    'CountWeighted'                                              : [       299962,       300054,       299991, ],
+    'CountWeightedLHEWeightScale'                                : [       329360,       299961,       274621,       329360,       299961,       274621,       329360,       299961,       274621, ],
+    'CountWeightedL1PrefireNom'                                  : [       294051,       294102,       294072, ],
+    'CountWeightedL1Prefire'                                     : [       294051,       292604,       295495, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       322817,       294049,       269222,       322817,       294049,       269222,       322817,       294049,       269222, ],
+  }),
+  ("nof_tree_events",                 299998),
+  ("nof_db_events",                   299998),
+  ("fsize_local",                     1330482405), # 1.33GB, avg file size 1.33GB
+  ("fsize_db",                        15643527631), # 15.64GB, avg file size 2.61GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_800_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_900_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_900_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+    'Count'                                                      : [       299999, ],
+    'CountWeighted'                                              : [       300047,       299968,       300037, ],
+    'CountWeightedLHEWeightScale'                                : [       331689,       300042,       272952,       331689,       300042,       272952,       331689,       300042,       272952, ],
+    'CountWeightedL1PrefireNom'                                  : [       294209,       294159,       294203, ],
+    'CountWeightedL1Prefire'                                     : [       294209,       292795,       295626, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       325221,       294204,       267671,       325221,       294204,       267671,       325221,       294204,       267671, ],
+  }),
+  ("nof_tree_events",                 299999),
+  ("nof_db_events",                   299999),
+  ("fsize_local",                     1336714385), # 1.34GB, avg file size 1.34GB
+  ("fsize_db",                        15836490873), # 15.84GB, avg file size 2.64GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_900_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_1000_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_spin2_1000_hh_2b2v_sl"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    5),
+  ("nof_events",                      {
+    'Count'                                                      : [       299997, ],
+    'CountWeighted'                                              : [       300052,       299919,       300029, ],
+    'CountWeightedLHEWeightScale'                                : [       333739,       300051,       271429,       333739,       300051,       271429,       333739,       300051,       271429, ],
+    'CountWeightedL1PrefireNom'                                  : [       294227,       294130,       294224, ],
+    'CountWeightedL1Prefire'                                     : [       294227,       292821,       295638, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       327265,       294225,       266194,       327265,       294225,       266194,       327265,       294225,       266194, ],
+  }),
+  ("nof_tree_events",                 299997),
+  ("nof_db_events",                   299997),
+  ("fsize_local",                     1338350397), # 1.34GB, avg file size 1.34GB
+  ("fsize_db",                        15848133420), # 15.85GB, avg file size 3.17GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 262000 - 262100 -> NNPDF30_lo_as_0130 PDF set, expecting 101 weights (counted 101 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_spin2_1000_hh_2b2v_sl"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
 samples_2016["/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_250_hh_bbtt"),
@@ -4519,5 +6583,6 @@ samples_2016["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAODv3-
 samples_2016["sum_events"] = [
   [ 'signal_ggf_nonresonant_node_sm_hh_2b2t',          'signal_ggf_nonresonant_node_box_hh_2b2t',         'signal_ggf_nonresonant_node_2_hh_2b2t',           'signal_ggf_nonresonant_node_9_hh_2b2t',           'signal_ggf_nonresonant_node_10_hh_2b2t',          'signal_ggf_nonresonant_node_11_hh_2b2t',          'signal_ggf_nonresonant_node_12_hh_2b2t',          'signal_ggf_nonresonant_node_13_hh_2b2t',           ],
   [ 'signal_ggf_nonresonant_node_sm_hh_2b2v',          'signal_ggf_nonresonant_node_box_hh_2b2v',         'signal_ggf_nonresonant_node_1_hh_2b2v',           'signal_ggf_nonresonant_node_2_hh_2b2v',           'signal_ggf_nonresonant_node_3_hh_2b2v',           'signal_ggf_nonresonant_node_4_hh_2b2v',           'signal_ggf_nonresonant_node_5_hh_2b2v',           'signal_ggf_nonresonant_node_6_hh_2b2v',           'signal_ggf_nonresonant_node_7_hh_2b2v',           'signal_ggf_nonresonant_node_8_hh_2b2v',           'signal_ggf_nonresonant_node_9_hh_2b2v',           'signal_ggf_nonresonant_node_10_hh_2b2v',          'signal_ggf_nonresonant_node_11_hh_2b2v',          'signal_ggf_nonresonant_node_12_hh_2b2v',           ],
+  [ 'signal_ggf_nonresonant_node_sm_hh_2b2v_sl',       'signal_ggf_nonresonant_node_box_hh_2b2v_sl',      'signal_ggf_nonresonant_node_1_hh_2b2v_sl',        'signal_ggf_nonresonant_node_2_hh_2b2v_sl',        'signal_ggf_nonresonant_node_3_hh_2b2v_sl',        'signal_ggf_nonresonant_node_4_hh_2b2v_sl',        'signal_ggf_nonresonant_node_5_hh_2b2v_sl',        'signal_ggf_nonresonant_node_6_hh_2b2v_sl',        'signal_ggf_nonresonant_node_7_hh_2b2v_sl',        'signal_ggf_nonresonant_node_8_hh_2b2v_sl',        'signal_ggf_nonresonant_node_9_hh_2b2v_sl',        'signal_ggf_nonresonant_node_10_hh_2b2v_sl',       'signal_ggf_nonresonant_node_11_hh_2b2v_sl',       'signal_ggf_nonresonant_node_12_hh_2b2v_sl',        ],
 ]
 

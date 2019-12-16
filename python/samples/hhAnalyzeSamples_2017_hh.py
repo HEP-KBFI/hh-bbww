@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2019-12-09 14:05:23 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_hh.py -p /hdfs/local/karl/ttHNtupleProduction/2017/2019Dec08_woPresel_nom_hh_bbww/ntuples -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_hh.py -M
+# file generated at 2019-12-16 14:36:33 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017_hh.py -p python/samples/sampleLocations_2017_hh_bbww.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_hh.py -M
 
 samples_2017 = OD()
 samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
@@ -2781,6 +2781,54 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg/RunII
     [
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec08_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_12_hh_2b2v"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific",           "signal_ggf_nonresonant_node_sm_hh_2b2v_sl"),
+  ("nof_files",                       2),
+  ("nof_db_files",                    30),
+  ("nof_events",                      {
+    'Count'                                                      : [       779989, ],
+    'CountWeighted'                                              : [       779847,       779874,       779932, ],
+    'CountWeightedLHEWeightScale'                                : [       998358,       942385,       889796,       826468,       779847,       736295,       696016,       656689,       619854, ],
+    'CountWeightedL1PrefireNom'                                  : [       756272,       756264,       756337, ],
+    'CountWeightedL1Prefire'                                     : [       756272,       750653,       761777, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       967859,       913899,       863164,       801173,       756272,       714217,       674680,       636783,       601240, ],
+  }),
+  ("nof_tree_events",                 779989),
+  ("nof_db_events",                   779989),
+  ("fsize_local",                     2981627075), # 2.98GB, avg file size 1.49GB
+  ("fsize_db",                        43860671206), # 43.86GB, avg file size 1.46GB
+  ("use_it",                          True),
+  ("xsection",                        0.109352),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
