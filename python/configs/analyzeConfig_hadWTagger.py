@@ -81,9 +81,9 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
 
     jobOptions['histogramDir'] = "hadWTagger"
     branchName_genBJets = None
-    if jobOptions['sample_name'].startswith(('/TTTo2L2Nu', '/TTToSemiLeptonic')):
+    if jobOptions['sample_name'].startswith(('/TTToSemiLeptonic')):
       branchName_genBJets = "GenBQuarkFromTop"
-    elif jobOptions['sample_name'].startswith(('/GluGluToHHTo2B2VTo2L2Nu_node_SM')):
+    elif jobOptions['sample_name'].startswith(('/GluGluToHHTo2B2WToLNu2J_node_SM')):
       branchName_genBJets = "GenHiggsDaughters"
     else:
       raise ValueError("Invalid Configuration parameter 'sample_name' = '%s' !!" % jobOptions['sample_name'])
