@@ -435,57 +435,17 @@ int main(int argc,
     std::vector<GenParticle> genWBosons = genWBosonReader->read();
     std::vector<GenParticle> genWJets   = genWJetReader->read();
 
-    std::vector<const GenParticle*> genHadWJets = convert_to_ptrs(genWJets);
-/*
-    std::vector<const GenParticle*> genJets_ptrs = convert_to_ptrs(genJets);
-std::cout << "#genJets = " << genJets.size() << std::endl;
-std::cout << "#genJets_ptrs = " << genJets_ptrs.size() << std::endl;
-std::cout << "#genWBosons = " << genWBosons.size() << std::endl;
-    std::vector<const GenParticle*> genHadWJets;
-    if ( isMC_HH ) 
-    {
-      for ( std::vector<const GenParticle*>::const_iterator genJet = genJets_ptrs.begin();
-            genJet != genJets_ptrs.end(); ++genJet ) {
-        bool genJet_isHadWJet = false;
-        for ( std::vector<const GenParticle*>::const_iterator genJet_2nd = genJets_ptrs.begin();
-              genJet_2nd != genJets_ptrs.end(); ++genJet_2nd ) {
-          if ( (*genJet) == (*genJet_2nd) ) continue;
-          Particle::LorentzVector genDijetP4 = (*genJet)->p4() + (*genJet_2nd)->p4();
-          for ( std::vector<GenParticle>::const_iterator genWBoson = genWBosons.begin();
-                genWBoson != genWBosons.end(); ++genWBoson ) {
-std::cout << "genWBoson: pT = " << genWBoson->pt() << ", eta = " << genWBoson->eta() << ", phi = " << genWBoson->phi() << ", pdgId = " << genWBoson->pdgId() << std::endl;
-            if ( std::abs(genWBoson->pdgId()) != 24 ) continue;
-std::cout << "genDijetP4: pT = " << genDijetP4.pt() << ", eta = " << genDijetP4.eta() << ", phi = " << genDijetP4.phi() << std::endl;
-            if ( isWithinRoundingErrors_rel(genWBoson->pt(),   genDijetP4.pt()  ) &&
-                 isWithinRoundingErrors_abs(genWBoson->eta(),  genDijetP4.eta() ) &&
-                 isWithinRoundingErrors_abs(genWBoson->phi(),  genDijetP4.phi() ) &&
-                 isWithinRoundingErrors_rel(genWBoson->mass(), genDijetP4.mass()) ) {
-              genJet_isHadWJet = true;
-            }
-          }
-        }
-        if ( genJet_isHadWJet ) 
-        {
-          genHadWJets.push_back(*genJet);
-        }
-      }
-std::cout << "isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
-    }
-    else
-    {
-      genHadWJets = genJets_ptrs;
-std::cout << "!isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
-    }
- */
+    std::vector<const GenParticle*> genWJets_ptrs = convert_to_ptrs(genWJets);
+
     for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
 	  selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
       for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
      	    selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
 
         Particle::LorentzVector selJet1P4_Wjj = (*selJet1_Wjj)->p4();
-        bool selJet1_Wjj_isGenMatched = isGenMatched(*selJet1_Wjj, genHadWJets);
+        bool selJet1_Wjj_isGenMatched = isGenMatched(*selJet1_Wjj, genWJets_ptrs);
         Particle::LorentzVector selJet2P4_Wjj = (*selJet2_Wjj)->p4();
-        bool selJet2_Wjj_isGenMatched = isGenMatched(*selJet2_Wjj, genHadWJets);
+        bool selJet2_Wjj_isGenMatched = isGenMatched(*selJet2_Wjj, genWJets_ptrs);
         Particle::LorentzVector hadWP4 = selJet1P4_Wjj + selJet2P4_Wjj;     
         double cosTheta = compCosTheta(selJet1P4_Wjj, selJet2P4_Wjj);
 
@@ -516,7 +476,7 @@ std::cout << "!isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
           ("nBJetLoose",           selBJetsAK4_loose.size())
           ("nBJetMedium",          selBJetsAK4_medium.size())
           ("nLep",                 preselLeptons.size())
-          ("nGenHadWJets",         genHadWJets.size())
+          ("nGenHadWJets",         genWJets_ptrs.size())
           ("jet1_isGenMatched",    selJet1_Wjj_isGenMatched)
           ("jet2_isGenMatched",    selJet2_Wjj_isGenMatched)
           ("HadW_isGenMatched",    selJet1_Wjj_isGenMatched && selJet2_Wjj_isGenMatched)
