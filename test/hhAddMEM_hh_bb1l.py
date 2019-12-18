@@ -103,7 +103,7 @@ for sample_name, sample_info in samples.items():
     sample_info["use_it"] = False
   if sample_name.startswith(('/TTTo2L2Nu', '/TTToSemiLeptonic')):
     sample_info["use_it"] = True
-  if sample_name.startswith(('/GluGluToHHTo2B2VTo2L2Nu_node_SM')):
+  if sample_name.startswith(('/GluGluToHHTo2B2VTo2L2Nu_node_SM', '/GluGluToHHTo2B2WToLNu2J_node_SM')):
     sample_info["use_it"] = True
 
 if __name__ == '__main__':
