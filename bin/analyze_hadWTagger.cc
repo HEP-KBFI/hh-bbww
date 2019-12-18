@@ -435,6 +435,8 @@ int main(int argc,
     std::vector<GenParticle> genWBosons = genWBosonReader->read();
     std::vector<GenParticle> genWJets   = genWJetReader->read();
 
+    std::vector<const GenParticle*> genHadWJets = convert_to_ptrs(genWJets);
+/*
     std::vector<const GenParticle*> genJets_ptrs = convert_to_ptrs(genJets);
 std::cout << "#genJets = " << genJets.size() << std::endl;
 std::cout << "#genJets_ptrs = " << genJets_ptrs.size() << std::endl;
@@ -474,7 +476,7 @@ std::cout << "isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
       genHadWJets = genJets_ptrs;
 std::cout << "!isMC_HH: #genHadWJets = " << genHadWJets.size() << std::endl;
     }
-
+ */
     for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
 	  selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
       for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
