@@ -1062,6 +1062,7 @@ int main(int argc, char* argv[])
 
 //--- apply data/MC corrections for trigger efficiency
     const TriggerSFsys triggerSF_option = getTriggerSF_option(central_or_shift);
+    const LeptonIDSFsys leptonIDSF_option = getLeptonIDSFsys_option(central_or_shift);
     double sf_triggerEff = dataToMCcorrectionInterface->getSF_leptonTriggerEff(triggerSF_option);
     if ( isDEBUG ) {
       std::cout << "sf_triggerEff = " << sf_triggerEff << std::endl;
@@ -1082,7 +1083,7 @@ int main(int argc, char* argv[])
       // 2) electron selection is relaxed to fakeable and muon selection is kept as tight -> corresponds to MC closure w/ relaxed e selection
       // 3) muon selection is relaxed to fakeable and electron selection is kept as tight -> corresponds to MC closure w/ relaxed mu selection
       // we allow (2) and (3) so that the MC closure regions would more compatible w/ the SR (1) in comparison
-      leptonSF_weight *= dataToMCcorrectionInterface->getSF_leptonID_and_Iso_tight_to_loose_wTightCharge();
+      leptonSF_weight *= dataToMCcorrectionInterface->getSF_leptonID_and_Iso_tight_to_loose_woTightCharge(leptonIDSF_option);
     }
     weight_data_to_MC_correction *= leptonSF_weight;
     if ( isDEBUG ) {
