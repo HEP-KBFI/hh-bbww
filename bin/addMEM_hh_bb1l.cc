@@ -19,6 +19,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReaderAK8.h" // RecoJetReaderAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtReader.h" // RecoMEtReader, RecoMEt
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader, EventInfo
+#include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionCleaner.h" // RecoElectronCollectionCleaner, RecoMuonCollectionCleaner, RecoJetCollectionCleaner
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronCollectionSelectorLoose.h" // RecoElectronCollectionSelectorLoose
@@ -33,6 +34,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "hhAnalysis/bbww/interface/MEMInterface_hh_bb1l.h" // MEMInterface_hh_bb1l
 #include "hhAnalysis/bbww/interface/MEMOutputWriter_hh_bb1l.h" // MEMOutputWriter_hh_bb1l
+#include "hhAnalysis/bbww/interface/HadWJetPair.h" // HadWJetPair
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronWriter.h" // RecoElectronWriter
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonWriter.h" // RecoMuonWriter
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetWriter.h" // RecoJetWriter
@@ -173,8 +175,11 @@ int main(int argc,
   const std::string branchName_jets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
   const std::string branchName_subjets_ak8  = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
   const std::string branchName_met          = cfg_addMEM.getParameter<std::string>("branchName_met");
-  const vstring copy_histograms             = cfg_addMEM.getParameter<vstring>("copy_histograms");
 
+  const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");
+  const int mem_maxWJets = cfg_addMEM.getParameter<int>("mem_maxWJets");
+
+  const vstring copy_histograms             = cfg_addMEM.getParameter<vstring>("copy_histograms");
   std::vector<std::regex> copy_histograms_regex;
   std::transform(
     copy_histograms.begin(), copy_histograms.end(), std::back_inserter(copy_histograms_regex),
@@ -275,6 +280,7 @@ int main(int argc,
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
+  RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
   // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
@@ -291,6 +297,9 @@ int main(int argc,
   metReader->setMEt_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   metReader->read_ptPhi_systematics(isMC);
   metReader->setBranchAddresses(inputTree);
+
+//--- initialize BDT for ranking of W->jj decays
+  TMVAInterface mva_Wjj = initialize_mva_Wjj();
 
   std::string outputTreeName = treeName;
   std::string outputDirName = "";
@@ -382,12 +391,10 @@ int main(int argc,
   );
   const std::string branchName_memOutput_missingBJet = Form("%s_missingBJet", branchName_memOutput.data());
   const std::string branchName_memOutput_missingHadWJet = Form("%s_missingHadWJet", branchName_memOutput.data());
-  const std::string branchName_memOutput_missingBJet_and_HadWJet = Form("%s_missingBJet_and_HadWJet", branchName_memOutput.data());
   
   std::map<std::string, MEMOutputWriter_hh_bb1l *> memWriter;
   std::map<std::string, MEMOutputWriter_hh_bb1l *> memWriter_missingBJet;
   std::map<std::string, MEMOutputWriter_hh_bb1l *> memWriter_missingHadWJet;
-  std::map<std::string, MEMOutputWriter_hh_bb1l *> memWriter_missingBJet_and_HadWJet;	
 
   for ( const std::string & central_or_shift: central_or_shifts_mem )
   {
@@ -414,14 +421,6 @@ int main(int argc,
       Form("n%s", branchName_memOutput_missingHadWJet_cos.data()), branchName_memOutput_missingHadWJet_cos
     );
     memWriter_missingHadWJet[central_or_shift]->setBranches(outputTree);
-
-    const std::string branchName_memOutput_missingBJet_and_HadWJet_cos(Form("%s_%s", branchName_memOutput_missingBJet_and_HadWJet.data(), central_or_shift.data()));
-    std::cout << "writing MEMOutput_hh_bb1l objects (missingBJet_and_HadWJet) for systematic " << central_or_shift
-              << " to branch = '" << branchName_memOutput_missingBJet_and_HadWJet_cos << "'\n";
-    memWriter_missingBJet_and_HadWJet[central_or_shift] = new MEMOutputWriter_hh_bb1l(
-      Form("n%s", branchName_memOutput_missingBJet_and_HadWJet_cos.data()), branchName_memOutput_missingBJet_and_HadWJet_cos
-    );
-    memWriter_missingBJet_and_HadWJet[central_or_shift]->setBranches(outputTree);
   }
 
   const int numEntries = inputTree->GetEntries();
@@ -510,14 +509,12 @@ int main(int argc,
     std::map<std::string, std::vector<MEMOutput_hh_bb1l>> memOutputs_hh_bb1l;
     std::map<std::string, std::vector<MEMOutput_hh_bb1l>> memOutputs_hh_bb1l_missingBJet;
     std::map<std::string, std::vector<MEMOutput_hh_bb1l>> memOutputs_hh_bb1l_missingHadWJet;	
-    std::map<std::string, std::vector<MEMOutput_hh_bb1l>> memOutputs_hh_bb1l_missingBJet_and_HadWJet;	
 
     for ( const std::string & central_or_shift: central_or_shifts_mem )
     {
       memOutputs_hh_bb1l[central_or_shift] = {};
       memOutputs_hh_bb1l_missingBJet[central_or_shift] = {};
       memOutputs_hh_bb1l_missingHadWJet[central_or_shift] = {};
-      memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift] = {};	
     }
 
 //--- fill the branches here since because we want to re-use the readers
@@ -553,7 +550,6 @@ int main(int argc,
       int idxPermutation_mem = 0;
       int idxPermutation_mem_missingBJet = 0;
       int idxPermutation_mem_missingHadWJet = 0;
-      int idxPermutation_mem_missingBJet_and_HadWJet = 0;
       const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons, isHigherConePt);
       for ( std::size_t selLepton_idx = 0; selLepton_idx < selLeptons.size(); ++selLepton_idx )
       {
@@ -603,6 +599,7 @@ int main(int argc,
             jetCleanerAK4_byIndex(jet_ptrs_ak4_mem, fakeableLeptons) :
             jetCleanerAK4_dR04   (jet_ptrs_ak4_mem, fakeableLeptons)
           ;
+          const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
           const std::vector<RecoJetAK8> jets_ak8_mem = jetReaderAK8->read();
           const std::vector<const RecoJetAK8*> jet_ptrs_ak8_mem = convert_to_ptrs(jets_ak8_mem);
           const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_mem, fakeableLeptons);
@@ -678,80 +675,89 @@ int main(int argc,
             {
 	      std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput << "'," 
 	                << " systematic = '" << central_or_shift << "'\n";
-              for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
-	            selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
-	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
-  	              selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
-                  MEMOutput_hh_bb1l memOutput = compMEM(
-                    eventInfo,
-                    selLepton, *selJet1_Wjj, *selJet2_Wjj,
-                    selJet1_Hbb, selJet2_Hbb, 
-                    met,
-	            memInterface_hh_bb1l, dryRun, 
-	            idxPermutation_mem, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
-	            branchName_memOutput, central_or_shift, isDEBUG);
-                  memOutputs_hh_bb1l[central_or_shift].push_back(memOutput);
-                  ++memComputations;
-                  if ( isDEBUG )
-                  {
-                    std::cout << "#memOutputs_hh_bb1l = " 
-                              << memOutputs_hh_bb1l[central_or_shift].size() << std::endl;
-                  }
+              std::vector<HadWJetPair> hadWJetPairs = makeHadWJetPairs(selJetsAK4_Wjj);
+              rankHadWJetPairs(hadWJetPairs, selJetsAK4_Wjj, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+              size_t numHadWJetPairs = hadWJetPairs.size();
+              if ( mem_maxWJetPairs >= 0 ) numHadWJetPairs = std::min(numHadWJetPairs, (size_t)mem_maxWJetPairs);
+              for ( size_t idxHadWJetPair = 0; idxHadWJetPair < numHadWJetPairs; ++idxHadWJetPair )
+              {
+                const HadWJetPair& hadWJetPair = hadWJetPairs[idxHadWJetPair];
+                MEMOutput_hh_bb1l memOutput = compMEM(
+                  eventInfo,
+                  selLepton, hadWJetPair.jet1_, hadWJetPair.jet2_,
+                  selJet1_Hbb, selJet2_Hbb, 
+                  met,
+	          memInterface_hh_bb1l, dryRun, 
+	          idxPermutation_mem, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
+	          branchName_memOutput, central_or_shift, isDEBUG);
+                memOutputs_hh_bb1l[central_or_shift].push_back(memOutput);
+                ++memComputations;
+                if ( isDEBUG )
+                {
+                  std::cout << "#memOutputs_hh_bb1l = " 
+                            << memOutputs_hh_bb1l[central_or_shift].size() << std::endl;
                 }
               }             
 
               std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet << "'," 
 	                << " systematic = '" << central_or_shift << "'\n";
-              for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj_missingBJet1.begin();
-	            selJet1_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet1_Wjj ) {
-	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
-  	              selJet2_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet2_Wjj ) {
-                  MEMOutput_hh_bb1l memOutput = compMEM(
-                    eventInfo,
-                    selLepton, *selJet1_Wjj, *selJet2_Wjj,
-                    selJet1_Hbb, nullptr, 
-                    met, 
-	            memInterface_hh_bb1l, dryRun, 
-                    idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
-	            branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
-                  memOutputs_hh_bb1l_missingBJet[central_or_shift].push_back(memOutput);
-                  ++memComputations;
-                  if ( isDEBUG )
-                  {
-                    std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
-                              << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
-                  }
+              std::vector<HadWJetPair> hadWJetPairs_missingBJet1 = makeHadWJetPairs(selJetsAK4_Wjj_missingBJet1);
+              rankHadWJetPairs(hadWJetPairs_missingBJet1, selJetsAK4_Wjj_missingBJet1, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+              size_t numHadWJetPairs_missingBJet1 = hadWJetPairs_missingBJet1.size();
+              if ( mem_maxWJetPairs >= 0 ) numHadWJetPairs_missingBJet1 = std::min(numHadWJetPairs_missingBJet1, (size_t)mem_maxWJetPairs);
+              for ( size_t idxHadWJetPair = 0; idxHadWJetPair < numHadWJetPairs_missingBJet1; ++idxHadWJetPair )
+              {
+                const HadWJetPair& hadWJetPair = hadWJetPairs_missingBJet1[idxHadWJetPair];
+                MEMOutput_hh_bb1l memOutput = compMEM(
+                  eventInfo,
+                  selLepton, hadWJetPair.jet1_, hadWJetPair.jet2_,
+                  selJet1_Hbb, nullptr, 
+                  met, 
+	          memInterface_hh_bb1l, dryRun, 
+                  idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
+	          branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
+                memOutputs_hh_bb1l_missingBJet[central_or_shift].push_back(memOutput);
+                ++memComputations;
+                if ( isDEBUG )
+                {
+                  std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
+                            << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
                 }
               }
-              for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj_missingBJet2.begin();
-	            selJet1_Wjj != selJetsAK4_Wjj_missingBJet2.end(); ++selJet1_Wjj ) {
-	        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
-  	              selJet2_Wjj != selJetsAK4_Wjj_missingBJet2.end(); ++selJet2_Wjj ) {
-                  MEMOutput_hh_bb1l memOutput = compMEM(
-                    eventInfo,
-                    selLepton, *selJet1_Wjj, *selJet2_Wjj,
-                    selJet2_Hbb, nullptr, 
-                    met, 
-	            memInterface_hh_bb1l, dryRun, 
-                    idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
-	            branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
+              std::vector<HadWJetPair> hadWJetPairs_missingBJet2 = makeHadWJetPairs(selJetsAK4_Wjj_missingBJet2);
+              rankHadWJetPairs(hadWJetPairs_missingBJet2, selJetsAK4_Wjj_missingBJet2, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+              size_t numHadWJetPairs_missingBJet2 = hadWJetPairs_missingBJet2.size();
+              if ( mem_maxWJetPairs >= 0 ) numHadWJetPairs_missingBJet2 = std::min(numHadWJetPairs_missingBJet2, (size_t)mem_maxWJetPairs);
+              for ( size_t idxHadWJetPair = 0; idxHadWJetPair < numHadWJetPairs_missingBJet2; ++idxHadWJetPair )
+              {
+                const HadWJetPair& hadWJetPair = hadWJetPairs_missingBJet2[idxHadWJetPair];
+                MEMOutput_hh_bb1l memOutput = compMEM(
+                  eventInfo,
+                  selLepton, hadWJetPair.jet1_, hadWJetPair.jet2_,
+                  selJet2_Hbb, nullptr, 
+                  met, 
+	          memInterface_hh_bb1l, dryRun, 
+                  idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
+	          branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
                   memOutputs_hh_bb1l_missingBJet[central_or_shift].push_back(memOutput);
-                  ++memComputations;
-                  if ( isDEBUG )
-                  {
-                    std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
-                              << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
-                  }
+                ++memComputations;
+                if ( isDEBUG )
+                {
+                  std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
+                            << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
                 }
               }
 
               std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingHadWJet << "'," 
 	                << " systematic = '" << central_or_shift << "'\n";
-              for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj.begin();
-	            selJet_Wjj != selJetsAK4_Wjj.end(); ++selJet_Wjj ) {
+              size_t numWJets = selJetsAK4_Wjj.size();
+              if ( mem_maxWJets >= 0 ) numWJets = std::min(numWJets, (size_t)mem_maxWJets);
+              for ( size_t idxWJet = 0; idxWJet < numWJets; ++idxWJet )
+              {
+                const RecoJet* selJet_Wjj = selJetsAK4_Wjj[idxWJet];
                 MEMOutput_hh_bb1l memOutput = compMEM(
                   eventInfo,
-                  selLepton, *selJet_Wjj, nullptr,
+                  selLepton, selJet_Wjj, nullptr,
                   selJet1_Hbb, selJet2_Hbb, 
                   met, 
 	          memInterface_hh_bb1l, dryRun,  
@@ -765,47 +771,6 @@ int main(int argc,
 	                    << memOutputs_hh_bb1l_missingHadWJet[central_or_shift].size() << std::endl;
                 }
               }
-
-              std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet_and_HadWJet << "'," 
-	                << " systematic = '" << central_or_shift << "'\n";
-              for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj_missingBJet1.begin();
-	            selJet_Wjj != selJetsAK4_Wjj_missingBJet1.end(); ++selJet_Wjj ) {
-                MEMOutput_hh_bb1l memOutput = compMEM(
-                  eventInfo,
-                  selLepton, *selJet_Wjj, nullptr,
-                  selJet1_Hbb, nullptr, 
-                  met, 
-	          //memInterface_hh_bb1l, dryRun,
-                  memInterface_hh_bb1l, true,
-                  idxPermutation_mem_missingBJet_and_HadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
-	          branchName_memOutput_missingBJet_and_HadWJet, central_or_shift, isDEBUG);
-                memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].push_back(memOutput);
-                ++memComputations;
-                if ( isDEBUG )
-                {
-                  std::cout << "#memOutputs_hh_bb1l_missingBJet_and_HadWJet = " 
-                            << memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].size() << std::endl;
-                }
-              }
-              for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj_missingBJet2.begin();
-	            selJet_Wjj != selJetsAK4_Wjj_missingBJet2.end(); ++selJet_Wjj ) {
-                MEMOutput_hh_bb1l memOutput = compMEM(
-                  eventInfo,
-                  selLepton, *selJet_Wjj, nullptr,
-                  selJet2_Hbb, nullptr, 
-                  met, 
-	          //memInterface_hh_bb1l, dryRun,
-                  memInterface_hh_bb1l, true,
-                  idxPermutation_mem_missingBJet_and_HadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
-	          branchName_memOutput_missingBJet_and_HadWJet, central_or_shift, isDEBUG);
-                memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].push_back(memOutput);
-                ++memComputations;
-                if ( isDEBUG )
-                {
-                  std::cout << "#memOutputs_hh_bb1l_missingBJet_and_HadWJet = " 
-                            << memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift].size() << std::endl;
-                }
-              }
             }
           } // selJet1_Hbb && selJet2_Hbb
         } // central_or_shift
@@ -817,7 +782,6 @@ int main(int argc,
       memWriter[central_or_shift]->write(memOutputs_hh_bb1l[central_or_shift]);
       memWriter_missingBJet[central_or_shift]->write(memOutputs_hh_bb1l_missingBJet[central_or_shift]);
       memWriter_missingHadWJet[central_or_shift]->write(memOutputs_hh_bb1l_missingHadWJet[central_or_shift]);
-      memWriter_missingBJet_and_HadWJet[central_or_shift]->write(memOutputs_hh_bb1l_missingBJet_and_HadWJet[central_or_shift]); 
     }
 
     outputTree->Fill();
@@ -859,14 +823,6 @@ int main(int argc,
     }
   }
   for ( auto & kv: memWriter_missingHadWJet )
-  {
-    if ( kv.second )
-    {
-      delete kv.second;
-      kv.second = nullptr;
-    }
-  }
-  for ( auto & kv: memWriter_missingBJet_and_HadWJet )
   {
     if ( kv.second )
     {

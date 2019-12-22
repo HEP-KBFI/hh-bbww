@@ -70,6 +70,13 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
+    #branchName_memOutput = cms.string('memObjects_hh_bb1l_lepTight'),
+    #branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet'),
+    #branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingHadWJet'),
+    branchName_memOutput = cms.string(''),
+    branchName_memOutput_missingBJet = cms.string(''),
+    branchName_memOutput_missingHadWJet = cms.string(''),
+
     branchName_muonGenMatch = cms.string('MuonGenMatch'),
     branchName_electronGenMatch = cms.string('ElectronGenMatch'),
     branchName_hadTauGenMatch = cms.string('TauGenMatch'),

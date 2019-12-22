@@ -20,6 +20,7 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     histogramDir = cms.string('background'),
     era = cms.string('2017'),
 
+    hasLHE = cms.bool(True),
     apply_genWeight = cms.bool(True),
 
     branchName_electrons = cms.string('Electron'),
@@ -31,10 +32,14 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
-    branchName_memOutput = cms.string('memObjects_hh_bb1l_lepTight'),
-    branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet'),
-    branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingHadWJet'),
-    branchName_memOutput_missingBJet_and_HadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet_and_HadWJet'),
+    #branchName_memOutput = cms.string('memObjects_hh_bb1l_lepTight'),
+    #branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet'),
+    #branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingHadWJet'),
+    #branchName_memOutput_missingBJet_and_HadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet_and_HadWJet'),
+    branchName_memOutput = cms.string(''),
+    branchName_memOutput_missingBJet = cms.string(''),
+    branchName_memOutput_missingHadWJet = cms.string(''),
+    branchName_memOutput_missingBJet_and_HadWJet = cms.string(''),
 
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genBJets = cms.string('GenBQuarkFromTop'),
@@ -43,8 +48,10 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     isDEBUG = cms.bool(False)
 )
 
-inputFilePath = "/hdfs/local/veelken/addMEM/2017/DEBUG_default_nom/ntuples/hh_bb1l/TTToSemiLeptonic/"
-maxInputFiles = 50
+#inputFilePath = "/hdfs/local/veelken/addMEM/2017/DEBUG_default_nom/ntuples/hh_bb1l/TTToSemiLeptonic/"
+inputFilePath = "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec13_mc_woPresel_nom_all/ntuples/TTToSemiLeptonic/0000"
+#maxInputFiles = 50
+maxInputFiles = 5
 zombie_files = []
 import os
 def getInputFiles(inputFilePath):

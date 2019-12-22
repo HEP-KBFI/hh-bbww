@@ -97,6 +97,8 @@
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb1l.h" // EvtHistManager_hh_bb1l
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
+#include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb1l.h" // MEMOutputReader_hh_bb1l
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
@@ -162,7 +164,7 @@ struct categoryEntryType
   int type_Hbb_; // 0 = either resolved or boosted, 1 = resolved, 2 = boosted
   int type_Wjj_; // 0 = either resolved or boosted (any purity); 1 = resolved; 2 = boosted, low purity; 3 = boosted, high purity
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged
-  };
+};
 
 void addCategory_conditionally(std::vector<categoryEntryType>& categories_evt, const categoryEntryType& category, const std::vector<std::string>& evtCategories)
 {
@@ -286,6 +288,108 @@ void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
     }
     if ( genWjjP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Wjj) !!" << std::endl;
   }
+}
+
+enum { kSignal, kBackground };
+
+double
+comp_mem_avWeight(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l, int signal_or_background)
+{
+  double weightSum = 0.;
+  int numWeights = 0;
+  for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
+  	memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
+    if ( memOutput->isValid() )
+    {
+      if      ( signal_or_background == kSignal     ) weightSum += memOutput->weight_signal();
+      else if ( signal_or_background == kBackground ) weightSum += memOutput->weight_background();
+      else assert(0);
+      ++numWeights;
+    }
+  }
+  if ( numWeights > 0 )
+  {
+    weightSum /= numWeights;
+  }
+  return weightSum;
+}
+
+double
+comp_mem_avLR(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l)
+{
+  double weightSum_signal = 0.;
+  double weightSum_background = 0.;
+  int numWeights = 0;
+  for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
+  	memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
+    if ( memOutput->isValid() )
+    {
+      weightSum_signal += memOutput->weight_signal();
+      weightSum_background += memOutput->weight_background();
+      ++numWeights;
+    }
+  }
+  double memLR = 0.;
+  if ( (weightSum_signal + weightSum_background) > 0. )
+  {
+    memLR = weightSum_signal/weightSum_background;
+  }
+  return memLR;
+}
+
+double
+comp_mem_maxWeight(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l, int signal_or_background)
+{
+  double maxWeight = -1.;
+  for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
+  	memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
+    if ( memOutput->isValid() )
+    {
+      double weight = 0.;
+      if      ( signal_or_background == kSignal     ) weight = memOutput->weight_signal();
+      else if ( signal_or_background == kBackground ) weight = memOutput->weight_background();
+      else assert(0);
+      if ( weight > maxWeight ) 
+      { 
+        maxWeight = weight;
+      }
+    }
+  }
+  return maxWeight;
+}
+
+double
+comp_mem_minLR(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l)
+{
+  double minLR = -1.;
+  for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
+  	memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
+    if ( memOutput->isValid() )
+    {
+      if ( memOutput->LR() < minLR )
+      {
+        minLR = memOutput->LR();
+      }
+    }
+  }
+  return minLR;
+}
+
+double
+comp_mem_maxLR(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l)
+{
+  double maxLR = -1.;
+  for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
+  	memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
+    if ( memOutput->isValid() )
+    {
+      if ( memOutput->LR() > maxLR )
+      {
+        maxLR = memOutput->LR();
+      }
+    }
+  }
+  return maxLR;
 }
 
 /**
@@ -467,6 +571,10 @@ int main(int argc, char* argv[])
   std::string branchName_subjets_ak8_Wjj = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8_Wjj");
   std::string branchName_met = cfg_analyze.getParameter<std::string>("branchName_met");
 
+  std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
+  std::string branchName_memOutput_missingBJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingBJet");
+  std::string branchName_memOutput_missingHadWJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingHadWJet");
+
   std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
   std::string branchName_genPhotons = cfg_analyze.getParameter<std::string>("branchName_genPhotons");
@@ -630,6 +738,28 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
+
+  MEMOutputReader_hh_bb1l* memReader = nullptr;
+  if ( !branchName_memOutput.empty() )
+  {
+    memReader = new MEMOutputReader_hh_bb1l(
+      Form("n%s", branchName_memOutput.data()), branchName_memOutput);
+    inputTree->registerReader(memReader);
+  }
+  MEMOutputReader_hh_bb1l* memReader_missingBJet = nullptr;
+  if ( !branchName_memOutput_missingBJet.empty() )
+  {
+    memReader_missingBJet = new MEMOutputReader_hh_bb1l(
+      Form("n%s", branchName_memOutput_missingBJet.data()), branchName_memOutput_missingBJet);
+    inputTree->registerReader(memReader_missingBJet);
+  }
+  MEMOutputReader_hh_bb1l* memReader_missingHadWJet = nullptr;
+  if ( !branchName_memOutput_missingHadWJet.empty() )
+  {
+    memReader_missingHadWJet = new MEMOutputReader_hh_bb1l(
+      Form("n%s", branchName_memOutput_missingHadWJet.data()), branchName_memOutput_missingHadWJet);
+    inputTree->registerReader(memReader_missingHadWJet);
+  }
 
   GenParticleReader* genTauLeptonReader = nullptr;
   if ( isMC && apply_DYMCReweighting ) {
@@ -985,13 +1115,20 @@ int main(int argc, char* argv[])
       "m_HH_hme",
       "mvaOutput_Hj_tagger", "mvaOutput_Hjj_tagger",
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
+      "mem_maxWeight_signal", "mem_avWeight_signal", "mem_maxWeight_background", "mem_avWeight_background", 
+      "mem_minLR", "mem_maxLR", "mem_avLR", 
+      "mem_maxWeight_signal_missingBJet", "mem_avWeight_signal_missingBJet", "mem_maxWeight_background_missingBJet", "mem_avWeight_background_missingBJet", 
+      "mem_minLR_missingBJet", "mem_maxLR_missingBJet", "mem_avLR_missingBJet", 
+      "mem_maxWeight_signal_missingHadWJet", "mem_avWeight_signal_missingHadWJet", "mem_maxWeight_background_missingHadWJet", "mem_avWeight_background_missingHadWJet", 
+      "mem_minLR_missingHadWJet", "mem_maxLR_missingHadWJet", "mem_avLR_missingHadWJet",  
       "genWeight", "evtWeight"
     );
     bdt_filler->register_variable<int_type>(
       "lep_charge",
       "nJet", "nBJetLoose", "nBJetMedium",
       "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity",
-      "nJet_vbf", "isVBF"
+      "nJet_vbf", "isVBF",
+      "nMEMOutputs", "nMEMOutputs_missingBJet", "nMEMOutputs_missingHadWJet"
     );
     bdt_filler->bookTree(fs);
   }
@@ -1949,6 +2086,22 @@ int main(int argc, char* argv[])
     }
     int type_vbf     = ( isVBF                       ) ?  kVBF_tagged : kVBF_nottagged;
 
+    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l;
+    if ( memReader ) 
+    {
+      memOutputs_hh_bb1l = memReader->read();
+    }
+    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingBJet;
+    if ( memReader_missingBJet )
+    {
+      memOutputs_hh_bb1l_missingBJet = memReader_missingBJet->read();
+    }
+    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingHadWJet; 
+    if ( memReader_missingHadWJet )
+    {
+      memOutputs_hh_bb1l_missingHadWJet = memReader_missingHadWJet->read();
+    }
+
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
@@ -2106,64 +2259,88 @@ int main(int argc, char* argv[])
 
     if ( bdt_filler ) {
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
-          ("lep_pt",                        selLepton->pt())
-          ("lep_conePt",                    comp_lep1_conePt(*selLepton))
-          ("lep_eta",                       selLepton->eta())
-          ("lep_charge",                    selLepton->charge())
-          ("bjet1_pt",                      selJetP4_Hbb_lead.pt())
-          ("bjet1_eta",                     selJetP4_Hbb_lead.eta())
-          ("bjet2_pt",                      selJetP4_Hbb_sublead.pt())
-          ("bjet2_eta",                     selJetP4_Hbb_sublead.eta())
-          ("met",                           metP4.pt())
-          ("mht",                           mhtP4.pt())
-          ("met_LD",                        met_LD)
-          ("HT",                            HT)
-          ("STMET",                         STMET)
-          ("m_Hbb",                         m_Hbb)
-          ("dR_Hbb",                        dR_Hbb)
-          ("dPhi_Hbb",                      dPhi_Hbb)
-          ("pT_Hbb",                        pT_Hbb)
-          ("m_Wjj",                         m_Wjj)
-          ("dR_Wjj",                        dR_Wjj)
-          ("dPhi_Wjj",                      dPhi_Wjj)
-          ("pT_Wjj",                        pT_Wjj)
-	  ("tau21_Wjj",                     tau21_Wjj)
-          ("dR_Hww",                        dR_Hww)
-          ("dPhi_Hww",                      dPhi_Hww)
-          ("Smin_Hww",                      Smin_Hww)
-          ("pT_Hww",                        pT_Hww)
-          ("dR_b1lep",                      dR_b1lep)
-          ("dR_b2lep",                      dR_b2lep)
-          ("m_HHvis",                       m_HHvis)
-          ("pT_HHvis",                      pT_HHvis)
-          ("dPhi_HHvis",                    dPhi_HHvis)
-          ("m_HH",                          m_HH)
-          ("m_HH_B2G_18_008",               m_HH_B2G_18_008)
-          ("pT_HH",                         pT_HH)
-          ("dPhi_HH",                       dPhi_HH)
-  	  ("Smin_HH",                       Smin_HH)
-          ("mT_W",                          mT_W)
-          ("mT_top_2particle",              mT_top_2particle)
-          ("mT_top_3particle",              mT_top_3particle)
-          ("m_HH_hme",                      m_HH_hme)
-	  ("mvaOutput_Hj_tagger",           mvaOutput_Hj_tagger)
-	  ("mvaOutput_Hjj_tagger",          mvaOutput_Hjj_tagger)
-	  ("vbf_jet1_pt",                   vbf_jet1_pt)
-          ("vbf_jet1_eta",                  vbf_jet1_eta)
-          ("vbf_jet2_pt",                   vbf_jet2_pt)
-	  ("vbf_jet2_eta",                  vbf_jet2_eta)
-          ("vbf_dEta_jj",                   vbf_dEta_jj)
-          ("vbf_m_jj",                      vbf_m_jj)
-          ("genWeight",                     eventInfo.genWeight)
-          ("evtWeight",                     evtWeightRecorder.get(central_or_shift_main))
-          ("nJet",                          comp_n_jet25_recl(selJetsAK4))
-          ("nBJetLoose",                    selBJetsAK4_loose.size())
-          ("nBJetMedium",                   selBJetsAK4_medium.size())
-          ("nJet_vbf",                      selJetsAK4_vbf.size())
-	  ("isHbb_boosted",                 type_Hbb == kHbb_boosted)
-          ("isWjj_boosted",                 type_Wjj == kWjj_boosted_lowPurity || type_Wjj == kWjj_boosted_highPurity)
-          ("isWjj_boosted_highPurity",      type_Wjj == kWjj_boosted_highPurity)
-          ("isVBF",                         isVBF)
+          ("lep_pt",                                  selLepton->pt())
+          ("lep_conePt",                              comp_lep1_conePt(*selLepton))
+          ("lep_eta",                                 selLepton->eta())
+          ("lep_charge",                              selLepton->charge())
+          ("bjet1_pt",                                selJetP4_Hbb_lead.pt())
+          ("bjet1_eta",                               selJetP4_Hbb_lead.eta())
+          ("bjet2_pt",                                selJetP4_Hbb_sublead.pt())
+          ("bjet2_eta",                               selJetP4_Hbb_sublead.eta())
+          ("met",                                     metP4.pt())
+          ("mht",                                     mhtP4.pt())
+          ("met_LD",                                  met_LD)
+          ("HT",                                      HT)
+          ("STMET",                                   STMET)
+          ("m_Hbb",                                   m_Hbb)
+          ("dR_Hbb",                                  dR_Hbb)
+          ("dPhi_Hbb",                                dPhi_Hbb)
+          ("pT_Hbb",                                  pT_Hbb)
+          ("m_Wjj",                                   m_Wjj)
+          ("dR_Wjj",                                  dR_Wjj)
+          ("dPhi_Wjj",                                dPhi_Wjj)
+          ("pT_Wjj",                                  pT_Wjj)
+	  ("tau21_Wjj",                               tau21_Wjj)
+          ("dR_Hww",                                  dR_Hww)
+          ("dPhi_Hww",                                dPhi_Hww)
+          ("Smin_Hww",                                Smin_Hww)
+          ("pT_Hww",                                  pT_Hww)
+          ("dR_b1lep",                                dR_b1lep)
+          ("dR_b2lep",                                dR_b2lep)
+          ("m_HHvis",                                 m_HHvis)
+          ("pT_HHvis",                                pT_HHvis)
+          ("dPhi_HHvis",                              dPhi_HHvis)
+          ("m_HH",                                    m_HH)
+          ("m_HH_B2G_18_008",                         m_HH_B2G_18_008)
+          ("pT_HH",                                   pT_HH)
+          ("dPhi_HH",                                 dPhi_HH)
+  	  ("Smin_HH",                                 Smin_HH)
+          ("mT_W",                                    mT_W)
+          ("mT_top_2particle",                        mT_top_2particle)
+          ("mT_top_3particle",                        mT_top_3particle)
+          ("m_HH_hme",                                m_HH_hme)
+	  ("mvaOutput_Hj_tagger",                     mvaOutput_Hj_tagger)
+	  ("mvaOutput_Hjj_tagger",                    mvaOutput_Hjj_tagger)
+	  ("vbf_jet1_pt",                             vbf_jet1_pt)
+          ("vbf_jet1_eta",                            vbf_jet1_eta)
+          ("vbf_jet2_pt",                             vbf_jet2_pt)
+	  ("vbf_jet2_eta",                            vbf_jet2_eta)
+          ("vbf_dEta_jj",                             vbf_dEta_jj)
+          ("vbf_m_jj",                                vbf_m_jj)
+          ("mem_maxWeight_signal",                    comp_mem_maxWeight(memOutputs_hh_bb1l, kSignal))
+          ("mem_avWeight_signal",                     comp_mem_avWeight(memOutputs_hh_bb1l, kSignal))
+          ("mem_maxWeight_background",                comp_mem_maxWeight(memOutputs_hh_bb1l, kBackground))
+          ("mem_avWeight_background",                 comp_mem_avWeight(memOutputs_hh_bb1l, kBackground))
+          ("mem_minLR",                               comp_mem_minLR(memOutputs_hh_bb1l))
+          ("mem_maxLR",                               comp_mem_maxLR(memOutputs_hh_bb1l))
+          ("mem_avLR",                                comp_mem_avLR(memOutputs_hh_bb1l))
+          ("mem_maxWeight_signal_missingBJet",        comp_mem_maxWeight(memOutputs_hh_bb1l_missingBJet, kSignal))
+          ("mem_avWeight_signal_missingBJet",         comp_mem_avWeight(memOutputs_hh_bb1l_missingBJet, kSignal))
+          ("mem_maxWeight_background_missingBJet",    comp_mem_maxWeight(memOutputs_hh_bb1l_missingBJet, kBackground))
+          ("mem_avWeight_background_missingBJet",     comp_mem_avWeight(memOutputs_hh_bb1l_missingBJet, kBackground))
+          ("mem_minLR_missingBJet",                   comp_mem_minLR(memOutputs_hh_bb1l_missingBJet))
+          ("mem_maxLR_missingBJet",                   comp_mem_maxLR(memOutputs_hh_bb1l_missingBJet))
+          ("mem_avLR_missingBJet",                    comp_mem_avLR(memOutputs_hh_bb1l_missingBJet))
+          ("mem_maxWeight_signal_missingHadWJet",     comp_mem_maxWeight(memOutputs_hh_bb1l_missingHadWJet, kSignal))
+          ("mem_avWeight_signal_missingHadWJet",      comp_mem_avWeight(memOutputs_hh_bb1l_missingHadWJet, kSignal))
+          ("mem_maxWeight_background_missingHadWJet", comp_mem_maxWeight(memOutputs_hh_bb1l_missingHadWJet, kBackground))
+          ("mem_avWeight_background_missingHadWJet",  comp_mem_avWeight(memOutputs_hh_bb1l_missingHadWJet, kBackground))
+          ("mem_minLR_missingHadWJet",                comp_mem_minLR(memOutputs_hh_bb1l_missingHadWJet))
+          ("mem_maxLR_missingHadWJet",                comp_mem_maxLR(memOutputs_hh_bb1l_missingHadWJet))
+          ("mem_avLR_missingHadWJet",                 comp_mem_avLR(memOutputs_hh_bb1l_missingHadWJet))
+          ("genWeight",                               eventInfo.genWeight)
+          ("evtWeight",                               evtWeightRecorder.get(central_or_shift_main))
+          ("nJet",                                    comp_n_jet25_recl(selJetsAK4))
+          ("nBJetLoose",                              selBJetsAK4_loose.size())
+          ("nBJetMedium",                             selBJetsAK4_medium.size())
+          ("nJet_vbf",                                selJetsAK4_vbf.size())
+	  ("isHbb_boosted",                           type_Hbb == kHbb_boosted)
+          ("isWjj_boosted",                           type_Wjj == kWjj_boosted_lowPurity || type_Wjj == kWjj_boosted_highPurity)
+          ("isWjj_boosted_highPurity",                type_Wjj == kWjj_boosted_highPurity)
+          ("isVBF",                                   isVBF)
+          ("nMEMOutputs",                             memOutputs_hh_bb1l.size())
+          ("nMEMOutputs_missingBJet",                 memOutputs_hh_bb1l_missingBJet.size())
+          ("nMEMOutputs_missingHadWJet",              memOutputs_hh_bb1l_missingHadWJet.size())
         .fill()
       ;
     }

@@ -16,10 +16,11 @@ process.fwliteOutput = cms.PSet(
 process.analyzeMEM_hh_bb1l = cms.PSet(
     treeName = cms.string('Events'),
 
-    process = cms.string('signal_ggf_nonresonant_node_sm_hh_2b2v'),
+    process = cms.string('signal_ggf_nonresonant_node_sm_hh_2b2v_sl'),
     histogramDir = cms.string('signal'),
     era = cms.string('2017'),
 
+    hasLHE = cms.bool(True),
     apply_genWeight = cms.bool(True),
 
     branchName_electrons = cms.string('Electron'),
@@ -31,10 +32,12 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
-    branchName_memOutput = cms.string('memObjects_hh_bb1l_lepTight'),
-    branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet'),
-    branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingHadWJet'),
-    branchName_memOutput_missingBJet_and_HadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet_and_HadWJet'),
+    #branchName_memOutput = cms.string('memObjects_hh_bb1l_lepTight'),
+    #branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet'),
+    #branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingHadWJet'),
+    branchName_memOutput = cms.string(''),
+    branchName_memOutput_missingBJet = cms.string(''),
+    branchName_memOutput_missingHadWJet = cms.string(''),
 
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genBJets = cms.string('GenHiggsDaughters'), 
@@ -43,7 +46,8 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     isDEBUG = cms.bool(False)
 )
 
-inputFilePath = "/hdfs/local/veelken/addMEM/2017/DEBUG_default_nom/ntuples/hh_bb1l/signal_ggf_nonresonant_node_sm_hh_2b2v"
+#inputFilePath = "/hdfs/local/veelken/addMEM/2017/DEBUG_default_nom/ntuples/hh_bb1l/signal_ggf_nonresonant_node_sm_hh_2b2v"
+inputFilePath = "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000"
 maxInputFiles = 50
 zombie_files = []
 import os

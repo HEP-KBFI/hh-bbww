@@ -28,6 +28,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h" // GenJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenParticleReader.h" // GenParticleReader
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoReader.h" // LHEInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
@@ -54,6 +55,8 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb1l.h" // MEMOutputReader_hh_bb1l
+#include "hhAnalysis/bbww/interface/HadWJetPair.h" // HadWJetPair
+#include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
@@ -71,29 +74,6 @@
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
-
-bool 
-isGenMatched(double eta, double phi, const std::vector<GenParticle>& genParticles, 
-	     const std::vector<int>* pdgIds = nullptr, double dRmax = 0.3)
-{
-  bool isMatched = false;
-  for ( std::vector<GenParticle>::const_iterator genParticle = genParticles.begin();
-	genParticle != genParticles.end(); ++genParticle ) {
-    bool isSelected = false;
-    if ( pdgIds )
-    {
-      int genParticle_pdgId = genParticle->pdgId();
-      for ( std::vector<int>::const_iterator pdgId = pdgIds->begin();
-	    pdgId != pdgIds->end(); ++pdgId ) {
-	if ( genParticle_pdgId == (*pdgId) ) isSelected = true;
-      }
-    }
-    if ( pdgIds && !isSelected ) continue;
-    double dR = deltaR(eta, phi, genParticle->eta(), genParticle->phi());
-    if ( dR < dRmax ) isMatched = true;
-  }
-  return isMatched;
-}
 
 struct jetHistograms
 {
@@ -290,73 +270,6 @@ void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& 
   }
 }
 
-struct HadWJetPair
-{
-  HadWJetPair(const RecoJet* jet1, bool jet1_isGenMatched, const RecoJet* jet2, bool jet2_isGenMatched, double bdtScore)
-    : jet1_(jet1)
-    , jet1_isGenMatched_(jet1_isGenMatched)
-    , jet2_(jet2)
-    , jet2_isGenMatched_(jet2_isGenMatched)
-    , bdtScore_(bdtScore)
-  {
-    assert(jet1 && jet2);
-    p4_ = jet1->p4() + jet2->p4();
-  }
-  ~HadWJetPair() {}
-  Particle::LorentzVector p4_;
-  const RecoJet* jet1_;
-  bool jet1_isGenMatched_;
-  const RecoJet* jet2_;
-  bool jet2_isGenMatched_;
-  double bdtScore_;
-};
-
-struct sortHadWJetPairsByMass
-{
-  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
-  {
-    double deltaMass1 = TMath::Abs(pair1.p4_.mass() - wBosonMass);
-    double deltaMass2 = TMath::Abs(pair2.p4_.mass() - wBosonMass);
-    return ( deltaMass1 < deltaMass2 );
-  }
-};
-struct sortHadWJetPairsByDeltaR
-{
-  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
-  {
-    double deltaR1 = deltaR(pair1.jet1_->p4(), pair1.jet2_->p4());
-    double deltaR2 = deltaR(pair2.jet1_->p4(), pair2.jet2_->p4());
-    return ( deltaR1 < deltaR2 );
-  }
-};
-struct sortHadWJetPairsByPt
-{
-  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
-  {
-    double pt1 = pair1.p4_.pt();
-    double pt2 = pair2.p4_.pt();
-    return ( pt1 > pt2 );
-  }
-};
-struct sortHadWJetPairsByScalarPt
-{
-  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
-  {
-    double sumPt1 = pair1.jet1_->pt() + pair1.jet2_->pt();
-    double sumPt2 = pair2.jet1_->pt() + pair2.jet2_->pt();
-    return ( sumPt1 > sumPt2 );
-  }
-};
-struct sortHadWJetPairsByBDT
-{
-  bool operator() (const HadWJetPair& pair1, const HadWJetPair& pair2)
-  {
-    double bdtScore1 = pair1.bdtScore_;
-    double bdtScore2 = pair2.bdtScore_;
-    return ( bdtScore1 > bdtScore2 );
-  }
-};
-
 int
 getIndex(const std::vector<HadWJetPair>& pairs)
 {
@@ -435,7 +348,6 @@ int main(int argc, char* argv[])
   std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
   std::string branchName_memOutput_missingBJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingBJet");
   std::string branchName_memOutput_missingHadWJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingHadWJet");
-  std::string branchName_memOutput_missingBJet_and_HadWJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingBJet_and_HadWJet");
 
   std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genBJets = cfg_analyze.getParameter<std::string>("branchName_genBJets");
@@ -509,13 +421,6 @@ int main(int argc, char* argv[])
       Form("n%s", branchName_memOutput_missingHadWJet.data()), branchName_memOutput_missingHadWJet);
     inputTree->registerReader(memReader_missingHadWJet);
   }
-  MEMOutputReader_hh_bb1l* memReader_missingBJet_and_HadWJet = nullptr;
-  if ( !branchName_memOutput_missingBJet_and_HadWJet.empty() )
-  {
-    memReader_missingBJet_and_HadWJet = new MEMOutputReader_hh_bb1l(
-      Form("n%s", branchName_memOutput_missingBJet_and_HadWJet.data()), branchName_memOutput_missingBJet_and_HadWJet);
-    inputTree->registerReader(memReader_missingBJet_and_HadWJet);
-  }
 
   GenParticleReader* genLeptonReader = new GenParticleReader(branchName_genLeptons);
   inputTree->registerReader(genLeptonReader);
@@ -532,6 +437,9 @@ int main(int argc, char* argv[])
   LHEInfoReader* lheInfoReader = new LHEInfoReader(hasLHE);
   inputTree->registerReader(lheInfoReader);
   
+//--- initialize BDT for ranking of W->jj decays
+  TMVAInterface mva_Wjj = initialize_mva_Wjj();
+
   jetHistograms* histograms_boostedHbb_bjet1 = new jetHistograms("boostedHbb_bjet1");
   histograms_boostedHbb_bjet1->bookHistograms(fs);
   TH1* histogram_boostedHbb_bjet1_idx = fs.make<TH1D>("boostedHbb_bjet1_idx", "boostedHbb_bjet1_idx", 26, -1.5, +24.5);
@@ -592,15 +500,6 @@ int main(int argc, char* argv[])
   histograms_memOutput_missingHadWJet_unmatchedBJet->bookHistograms(fs);
   memHistograms* histograms_memOutput_missingHadWJet_unmatchedWJet = new memHistograms("missingHadWJet", 0, 0, 1);
   histograms_memOutput_missingHadWJet_unmatchedWJet->bookHistograms(fs);
-
-  memHistograms* histograms_memOutput_missingBJet_and_HadWJet_fullyMatched = new memHistograms("missingBJet_and_HadWJet", 0, 0, 0);
-  histograms_memOutput_missingBJet_and_HadWJet_fullyMatched->bookHistograms(fs);
-  memHistograms* histograms_memOutput_missingBJet_and_HadWJet_unmatchedLepton = new memHistograms("missingBJet_and_HadWJet", 1, 0, 0);
-  histograms_memOutput_missingBJet_and_HadWJet_unmatchedLepton->bookHistograms(fs);
-  memHistograms* histograms_memOutput_missingBJet_and_HadWJet_unmatchedBJet = new memHistograms("missingBJet_and_HadWJet", 0, 1, 0);
-  histograms_memOutput_missingBJet_and_HadWJet_unmatchedBJet->bookHistograms(fs);
-  memHistograms* histograms_memOutput_missingBJet_and_HadWJet_unmatchedWJet = new memHistograms("missingBJet_and_HadWJet", 0, 0, 1);
-  histograms_memOutput_missingBJet_and_HadWJet_unmatchedWJet->bookHistograms(fs);
 
   int analyzedEntries = 0;
   int selectedEntries = 0;
@@ -847,20 +746,10 @@ int main(int argc, char* argv[])
       *histograms_Wjj_jet1, histogram_Wjj_jet1_idx,
       *histograms_Wjj_jet2, histogram_Wjj_jet2_idx,
       histogram_Wjj_jet_numIndices, histogram_Wjj_jet_mjj, evtWeight);
-
  
-    std::vector<HadWJetPair> hadWJetPairs;
-    for ( std::vector<const RecoJet*>::const_iterator selJet1 = selJetsAK4_Wjj.begin();
-	  selJet1 != selJetsAK4_Wjj.end(); ++selJet1 ) {
-      for ( std::vector<const RecoJet*>::const_iterator selJet2 = selJet1 + 1;
-	    selJet2 != selJetsAK4_Wjj.end(); ++selJet2 ) {
-        bool selJet1_isGenMatched = isGenMatched((*selJet1)->eta(), (*selJet1)->phi(), genWJets);
-        bool selJet2_isGenMatched = isGenMatched((*selJet2)->eta(), (*selJet2)->phi(), genWJets);
-        double bdtScore = -1; // CV: not implemented yet
-        HadWJetPair hadWJetPair(*selJet1, selJet1_isGenMatched, *selJet2, selJet2_isGenMatched, bdtScore);
-        hadWJetPairs.push_back(hadWJetPair); 
-      }
-    }
+    std::vector<HadWJetPair> hadWJetPairs = makeHadWJetPairs(selJetsAK4_Wjj, &genWJets);
+    rankHadWJetPairs(hadWJetPairs, selJetsAK4_Wjj, *tightLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+
     std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByMass());
     int hadWJetPair_sortedByMass_idx = getIndex(hadWJetPairs);
     fillWithOverFlow(histogram_hadWJetPair_sortedByMass_idx, hadWJetPair_sortedByMass_idx, evtWeight); 
@@ -878,49 +767,47 @@ int main(int argc, char* argv[])
     fillWithOverFlow(histogram_hadWJetPair_sortedByBDT_idx, hadWJetPair_sortedByBDT_idx, evtWeight); 
     fillWithOverFlow(histogram_hadWJetPair_numIndices, hadWJetPairs.size(), evtWeight); 
 
-    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l = memReader->read();
-    for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
-	  memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
-      fillHistograms_mem(
-        *memOutput, 
-	genLeptons, genBJets, genWJets, 
-	*histograms_memOutput_fullyMatched, 
-	*histograms_memOutput_unmatchedLepton, 
-	*histograms_memOutput_unmatchedBJet, 
-	*histograms_memOutput_unmatchedWJet, evtWeight);
+    if ( memReader ) 
+    {
+      std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l = memReader->read();
+      for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l.begin();
+  	    memOutput != memOutputs_hh_bb1l.end(); ++memOutput ) {
+        fillHistograms_mem(
+          *memOutput, 
+  	  genLeptons, genBJets, genWJets, 
+	  *histograms_memOutput_fullyMatched, 
+	  *histograms_memOutput_unmatchedLepton, 
+	  *histograms_memOutput_unmatchedBJet, 
+	  *histograms_memOutput_unmatchedWJet, evtWeight);
+      }
     }
-    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingBJet = memReader_missingBJet->read();
-    for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l_missingBJet.begin();
-	  memOutput != memOutputs_hh_bb1l_missingBJet.end(); ++memOutput ) {
-      fillHistograms_mem(
-        *memOutput, 
-	genLeptons, genBJets, genWJets, 
-	*histograms_memOutput_missingBJet_fullyMatched, 
-	*histograms_memOutput_missingBJet_unmatchedLepton, 
-	*histograms_memOutput_missingBJet_unmatchedBJet, 
-	*histograms_memOutput_missingBJet_unmatchedWJet, evtWeight);
+    if ( memReader_missingBJet )
+    {
+      std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingBJet = memReader_missingBJet->read();
+      for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l_missingBJet.begin();
+  	    memOutput != memOutputs_hh_bb1l_missingBJet.end(); ++memOutput ) {
+        fillHistograms_mem(
+          *memOutput, 
+	  genLeptons, genBJets, genWJets, 
+	  *histograms_memOutput_missingBJet_fullyMatched, 
+	  *histograms_memOutput_missingBJet_unmatchedLepton, 
+	  *histograms_memOutput_missingBJet_unmatchedBJet, 
+	  *histograms_memOutput_missingBJet_unmatchedWJet, evtWeight);
+      }
     }
-    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingHadWJet = memReader_missingHadWJet->read();
-    for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l_missingHadWJet.begin();
-	  memOutput != memOutputs_hh_bb1l_missingHadWJet.end(); ++memOutput ) {
-      fillHistograms_mem(
-        *memOutput, 
-	genLeptons, genBJets, genWJets, 
-	*histograms_memOutput_missingHadWJet_fullyMatched, 
-	*histograms_memOutput_missingHadWJet_unmatchedLepton, 
-	*histograms_memOutput_missingHadWJet_unmatchedBJet, 
-	*histograms_memOutput_missingHadWJet_unmatchedWJet, evtWeight);
-    }
-    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingBJet_and_HadWJet = memReader_missingBJet_and_HadWJet->read();
-    for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l_missingBJet_and_HadWJet.begin();
-	  memOutput != memOutputs_hh_bb1l_missingBJet_and_HadWJet.end(); ++memOutput ) {
-      fillHistograms_mem(
-        *memOutput, 
-	genLeptons, genBJets, genWJets, 
-	*histograms_memOutput_missingBJet_and_HadWJet_fullyMatched, 
-	*histograms_memOutput_missingBJet_and_HadWJet_unmatchedLepton, 
-	*histograms_memOutput_missingBJet_and_HadWJet_unmatchedBJet, 
-	*histograms_memOutput_missingBJet_and_HadWJet_unmatchedWJet, evtWeight);
+    if ( memReader_missingHadWJet )
+    {
+      std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_missingHadWJet = memReader_missingHadWJet->read();
+      for ( std::vector<MEMOutput_hh_bb1l>::const_iterator memOutput = memOutputs_hh_bb1l_missingHadWJet.begin();
+	    memOutput != memOutputs_hh_bb1l_missingHadWJet.end(); ++memOutput ) {
+        fillHistograms_mem(
+          *memOutput, 
+	  genLeptons, genBJets, genWJets, 
+	  *histograms_memOutput_missingHadWJet_fullyMatched, 
+	  *histograms_memOutput_missingHadWJet_unmatchedLepton, 
+	  *histograms_memOutput_missingHadWJet_unmatchedBJet, 
+	  *histograms_memOutput_missingHadWJet_unmatchedWJet, evtWeight);
+      }
     }
 
     ++selectedEntries;
