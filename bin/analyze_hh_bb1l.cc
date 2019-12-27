@@ -840,17 +840,26 @@ int main(int argc, char* argv[])
   }
 
   // initialize Hj-tagger
-  std::string mvaFileName_Hj_tagger = "tthAnalysis/HiggsToTauTau/data/Hj_deepcsv_BDTG_2017.weights.xml";
+  std::string mvaFileName_Hj_tagger = "tthAnalysis/HiggsToTauTau/data/NN_for_legacy_opt/Hjtagger_legacy_xgboost_v1.weights.xml";
   std::vector<std::string> mvaInputVariables_Hj_tagger = {
-    "Jet25_lepdrmin", "max(Jet25_bDiscriminator,0.)",
-    "max(Jet25_qg,0.)", "Jet25_lepdrmax", "Jet25_pt" };
+    "Jet25_bDiscriminator",
+    "Jet25_pt",
+    "Jet25_lepdrmin",
+    "Jet25_lepdrmax",
+    "Jet25_qg"
+  };
   TMVAInterface mva_Hj_tagger(mvaFileName_Hj_tagger, mvaInputVariables_Hj_tagger);
 
   // initialize Hjj-tagger
   std::string mvaFileName_Hjj_tagger = "tthAnalysis/HiggsToTauTau/data/Hjj_csv_BDTG.weights.xml";
   std::vector<std::string> mvaInputVariables_Hjj_tagger = {
-    "bdtJetPair_minlepmass", "bdtJetPair_sumbdt", "bdtJetPair_dr",
-    "bdtJetPair_minjdr", "bdtJetPair_mass", "bdtJetPair_minjOvermaxjdr"};
+    "bdtJetPair_minlepmass",
+    "bdtJetPair_sumbdt",
+    "bdtJetPair_dr",
+    "bdtJetPair_minjdr",
+    "bdtJetPair_mass",
+    "bdtJetPair_minjOvermaxjdr"
+  };
   TMVAInterface mva_Hjj_tagger(mvaFileName_Hjj_tagger, mvaInputVariables_Hjj_tagger);
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
