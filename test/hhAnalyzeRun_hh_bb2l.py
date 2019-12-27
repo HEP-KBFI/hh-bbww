@@ -157,7 +157,6 @@ if __name__ == '__main__':
       "MVAOutputnohiggnessnotopness_300"  : {},
       "MVAOutputnohiggnessnotopness_400"  : {},
       "MVAOutputnohiggnessnotopness_750"  : {}
-
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
