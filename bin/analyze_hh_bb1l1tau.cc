@@ -1954,7 +1954,7 @@ int main(int argc, char* argv[])
     if ( bdt_filler ) {
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep_pt",                        selLepton->pt())
-          ("lep_conePt",                    comp_lep1_conePt(*selLepton))
+          ("lep_conePt",                    comp_lep_conePt(*selLepton))
           ("lep_eta",                       selLepton->eta())
           ("hadTau_pt",                     selHadTau->pt())
           ("hadTau_eta",                    selHadTau->eta())
