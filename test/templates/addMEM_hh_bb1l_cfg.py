@@ -28,7 +28,7 @@ process.addMEM_hh_bb1l = cms.PSet(
     branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
 
-    mem_maxWJetPairs = cms.int32(5),
+    mem_maxWJetPairs = cms.int32(3),
     mem_maxWJets = cms.int32(5),
 
     copy_all_branches = cms.bool(True),
