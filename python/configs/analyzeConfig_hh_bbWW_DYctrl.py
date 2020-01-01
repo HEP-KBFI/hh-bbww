@@ -131,6 +131,9 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
 
     self.evtCategories = []
     for type_lepton in [ "2e", "2mu" ]:
+      # AN: add inclusive categories
+      category = "hh_bbWW_%s_DYctrl" % (type_lepton)
+      self.evtCategories.append(category)
       # CV: add categories for "resolved" b-jets without VBF jet selection
       for type_bjet in [ "2bM", "1bM2bL", "1bM", "2bL", "1bL", "nobL" ]:
         for type_jet in [ "0j", "1j", "2j", "3j", "ge4j" ]:

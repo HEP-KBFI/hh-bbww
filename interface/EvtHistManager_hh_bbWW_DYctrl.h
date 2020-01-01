@@ -58,6 +58,7 @@ public:
   TH1 * histogram_pT_bb_;
 
   TH1 * histogram_m_ll_;
+  TH1 * histogram_m_ll_high_;
   TH1 * histogram_dR_ll_;
   TH1 * histogram_dPhi_ll_;
   TH1 * histogram_pT_ll_;

@@ -544,6 +544,8 @@ int main(int argc, char* argv[])
   for ( int type_lepton = kDielectron; type_lepton <= kDimuon; ++type_lepton ) {
     int numElectrons = ( type_lepton == kDielectron ) ? 2 : -1;
     int numMuons     = ( type_lepton == kDimuon     ) ? 2 : -1;
+    // AN: add inclusive categories for 2e/2mu
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  -1, -1, -1, -1, kHbb_undefined, kVBF_undefined)); // hh_bbWW_2e_DYctrl,        hh_bbWW_2mu_DYctrl
     // CV: add categories for "resolved" b-jets without VBF jet selection
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1, -1, -1, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2e_DYctrl,        hh_bbWW_2bM2mu_DYctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  2, -1,  2,  2, kHbb_resolved, kVBF_undefined)); // hh_bbWW_2bM2j2e_DYctrl,      hh_bbWW_2bM2j2mu_DYctrl
