@@ -70,7 +70,8 @@ if mode == "default":
 else:
   raise ValueError("Internal logic error")
 
-samples = load_samples_stitched(samples, era, load_dy = 'dy' in use_stitched, load_wjets = 'wjets' in use_stitched)
+if 'dy' in use_stitched or 'wjets' in use_stitched:
+  samples = load_samples_stitched(samples, era, load_dy = 'dy' in use_stitched, load_wjets = 'wjets' in use_stitched)
 
 blacklisted_categories = []
 for sample_name, sample_info in samples.items():
