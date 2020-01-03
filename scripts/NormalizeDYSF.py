@@ -321,8 +321,8 @@ if __name__ == '__main__':
     sf_2e_err = compute_error(results, results_key, '2e')
     emdiff = sf_2mu - sf_2e
     sf_err = math.sqrt(sf_2mu_err**2 + emdiff**2)
-    sf_err_up = sf + sf_err
-    sf_err_down = sf - sf_err
+    sf_err_up = sf_2mu + sf_err
+    sf_err_down = sf_2mu - sf_err
     rows.append([
       results[results_key]['label'],
       '{:.3f}'.format(sf_2mu),
