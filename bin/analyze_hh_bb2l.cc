@@ -854,7 +854,7 @@ int main(int argc, char* argv[])
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight",
       //"SM_HHWeight",
-      "mhh_gen","costS_gen"
+      "mhh_gen", "costS_gen"
     );
     bdt_filler->register_variable<int_type>(
       "nJet", "nBJetLoose", "nBJetMedium",
