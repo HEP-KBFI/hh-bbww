@@ -59,6 +59,7 @@ EvtHistManager_hh_bbWW_DYctrl::bookHistograms(TFileDirectory & dir)
   histogram_pT_bb_                  = book1D(dir, "pT_bb",                  "pT_bb",                  100,  0.,  500.); 
 
   histogram_m_ll_                   = book1D(dir, "m_ll",                   "m_ll",                    30,  60., 120.); 
+  histogram_m_ll_high_              = book1D(dir, "m_ll_high",              "m_ll_high",               30,  50., 500.);
   histogram_dR_ll_                  = book1D(dir, "dR_ll",                  "dR_ll",                  100,  0.,    5.);
   histogram_dPhi_ll_                = book1D(dir, "dPhi_ll",                "dPhi_ll",                 36, -TMath::Pi(), +TMath::Pi());
   histogram_pT_ll_                  = book1D(dir, "pT_ll",                  "pT_ll",                  100,  0.,  500.); 
@@ -111,6 +112,7 @@ EvtHistManager_hh_bbWW_DYctrl::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_pT_bb_,                  pT_bb,                  evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_m_ll_,                   m_ll,                   evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_ll_high_,              m_ll,                   evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_ll_,                  dR_ll,                  evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_ll_,                dPhi_ll,                evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_pT_ll_,                  pT_ll,                  evtWeight, evtWeightErr);

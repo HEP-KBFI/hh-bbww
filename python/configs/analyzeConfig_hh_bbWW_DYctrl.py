@@ -125,12 +125,18 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_DYctrl_in_categories_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_DYctrl_cfg.py")
 
+    self.compSF_executable = "NormalizeDYSF.py"
+    self.jobOptions_hadd_stage2_harvest = {}
+
     self.select_rle_output = select_rle_output
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
 
     self.evtCategories = []
     for type_lepton in [ "2e", "2mu" ]:
+      # AN: add inclusive categories
+      category = "hh_bbWW_%s_DYctrl" % (type_lepton)
+      self.evtCategories.append(category)
       # CV: add categories for "resolved" b-jets without VBF jet selection
       for type_bjet in [ "2bM", "1bM2bL", "1bM", "2bL", "1bL", "nobL" ]:
         for type_jet in [ "0j", "1j", "2j", "3j", "ge4j" ]:
@@ -146,7 +152,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       for type_bjet in [ "2bM", "1bM2bL", "1bM" ]:
         category = "hh_bbWW_%s%s_DYctrl_boostedHbb" % (type_bjet, type_lepton)
         self.evtCategories.append(category)
-    print("Processing %i categories: %s" % (len(self.evtCategories), self.evtCategories))
+    logging.info("Processing %i categories: %s" % (len(self.evtCategories), self.evtCategories))
     self.evtcategory_inclusive = "hh_bbWW_2l_DYctrl"
     if not self.evtcategory_inclusive in self.evtCategories:
       self.evtCategories.append(self.evtcategory_inclusive)
@@ -219,6 +225,11 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       lines.append("  ),")
     lines.append(")")
     lines.append("process.makePlots.intLumiData = cms.double(%.1f)" % (self.lumi / 1000))
+    lines.append("process.makePlots.distributions = cms.VPSet("
+        "distribution for distribution in process.makePlots.distributions "
+        "if not distribution.histogramName.value().startswith(('sel/evtYield',))"
+      ")"
+    )
     create_cfg(jobOptions['cfgFile_original'], jobOptions['cfgFile_modified'], lines)
 
   def addToMakefile_backgrounds_from_data(self, lines_makefile, make_target = "phony_addFakes", make_dependency = "phony_copyHistograms"):
@@ -230,6 +241,22 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       lines_makefile.append("%s: %s" % (make_target, "phony_addFakes"))
       lines_makefile.append("")
     self.make_dependency_hadd_stage2 = " ".join([ "phony_addBackgrounds_sum", make_target ])
+
+  def addToMakefile_harvest_hadd_stage2(self, lines_makefile, make_target = "phony_hadd_stage2_harvest", make_dependency = "phony_hadd_stage2"):
+    inputFiles_hadd_stage2_harvest = { key : self.jobOptions_hadd_stage2_harvest[key]['inputFiles'] for key in self.jobOptions_hadd_stage2_harvest }
+    outputFile_hadd_stage2_harvest = { key : self.jobOptions_hadd_stage2_harvest[key]['outputFile'] for key in self.jobOptions_hadd_stage2_harvest }
+    max_inputFiles_hadd_stage2_harvest = max([ len(inputFiles_hadd_stage2_harvest[key]) for key in inputFiles_hadd_stage2_harvest ])
+    self.addToMakefile_hadd(lines_makefile, make_target, make_dependency, inputFiles_hadd_stage2_harvest, outputFile_hadd_stage2_harvest, max_inputFiles_hadd_stage2_harvest)
+    for key_hadd_stage2_harvest_job in self.jobOptions_hadd_stage2_harvest:
+      outputFile = self.jobOptions_hadd_stage2_harvest[key_hadd_stage2_harvest_job]['outputFile']
+      compSF_target = self.jobOptions_hadd_stage2_harvest[key_hadd_stage2_harvest_job]['compSF_target']
+      lines_makefile.append("")
+      lines_makefile.append("%s: %s" % (outputFile, make_target))
+      lines_makefile.append("")
+      lines_makefile.append("%s: %s" % (compSF_target, outputFile))
+      lines_makefile.append("\t%s -i %s &> %s" % (self.compSF_executable, outputFile, compSF_target))
+      lines_makefile.append("")
+      self.targets.append(compSF_target)
 
   def create(self):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
@@ -621,6 +648,21 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
           }
           self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job_mcClosure])
 
+    logging.info("Creating configuration files to run hadd stage2 harvesting")
+    for lepton_charge_selection in self.lepton_charge_selections:
+      key_hadd_stage2_harvest_job = getKey(lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+      key_hadd_stage2_dir = getKey("hadd", lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+      inputFiles_hadd_stage2_harvest = []
+      for category in self.evtCategories:
+        key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+        inputFiles_hadd_stage2_harvest.append(self.outputFile_hadd_stage2[key_hadd_stage2_job])
+      key_prep_dcard_dir = getKey("prepareDatacards")
+      self.jobOptions_hadd_stage2_harvest[key_hadd_stage2_harvest_job] = {
+        'inputFiles' : inputFiles_hadd_stage2_harvest,
+        'outputFile' : os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST], "hadd_harvested_stage2_%s.root" % key_hadd_stage2_harvest_job),
+        'compSF_target' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "compSF_%s.txt" % key_hadd_stage2_harvest_job),
+      }
+
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
       self.sbatchFile_analyze = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_analyze_%s.py" % self.channel)
@@ -647,6 +689,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)
+    self.addToMakefile_harvest_hadd_stage2(lines_makefile)
     self.createMakefile(lines_makefile)
 
     logging.info("Done")

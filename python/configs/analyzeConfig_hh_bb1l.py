@@ -404,7 +404,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'apply_hlt_filter'         : self.hlt_filter,
                 'useNonNominal'            : self.use_nonnominal,
                 'fillGenEvtHistograms'     : True,
-                'useObjectMultiplicity'    : True,
               }
               self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
