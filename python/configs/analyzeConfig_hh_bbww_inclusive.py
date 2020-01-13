@@ -24,6 +24,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
         gen_matching_by_index,
         use_nonnominal = False,
         use_home       = False,
+        submission_cmd = None,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -52,6 +53,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
       do_sync               = True,
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
+      submission_cmd        = submission_cmd,
     )
 
     self.cfgFile_analyze = cfgFile_analyze

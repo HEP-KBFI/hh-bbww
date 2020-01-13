@@ -36,6 +36,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
         verbose           = False,
         isDebug           = False,
         use_home          = False,
+        submission_cmd    = None,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -59,7 +60,8 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       dry_run               = False,
       isDebug               = isDebug,
       use_home              = use_home,
-      template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
+      template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
+      submission_cmd        = submission_cmd,
     )
 
     self.lepton_selections = [ "Fakeable" ]

@@ -146,6 +146,7 @@ if __name__ == '__main__':
     use_nonnominal           = use_nonnominal,
     use_home                 = use_home,
     method_mem               = method_mem,
+    submission_cmd           = sys.argv,
   )
 
   goodToGo = addMEMProduction.create()

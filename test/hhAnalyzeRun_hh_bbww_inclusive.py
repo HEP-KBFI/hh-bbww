@@ -101,6 +101,7 @@ if __name__ == '__main__':
     gen_matching_by_index   = gen_matching_by_index,
     use_nonnominal          = use_nonnominal,
     use_home                = use_home,
+    submission_cmd          = sys.argv,
   )
 
   job_statistics = analysis.create()

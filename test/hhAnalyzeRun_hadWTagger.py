@@ -89,6 +89,7 @@ if __name__ == '__main__':
     num_parallel_jobs                     = num_parallel_jobs,
     isDebug                               = debug,
     use_home                              = use_home,
+    submission_cmd                        = sys.argv,
   )
 
   job_statistics = analysis.create()

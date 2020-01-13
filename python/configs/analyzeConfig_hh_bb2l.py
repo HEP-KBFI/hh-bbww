@@ -72,6 +72,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         use_nonnominal    = False,
         hlt_filter        = False,
         use_home          = False,
+        submission_cmd    = None,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -96,7 +97,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       do_sync               = do_sync,
       isDebug               = isDebug,
       use_home              = use_home,
-      template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
+      template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
+      submission_cmd        = submission_cmd,
     )
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]

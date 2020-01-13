@@ -27,6 +27,7 @@ class addMEMConfig_hh_bb1l(addMEMConfig):
         use_nonnominal,
         use_home,
         method_mem,
+        submission_cmd = None,
         pool_id = '',
       ):
     addMEMConfig.__init__(self,
@@ -51,6 +52,7 @@ class addMEMConfig_hh_bb1l(addMEMConfig):
       use_nonnominal           = use_nonnominal,
       use_home                 = use_home,
       channel                  = "hh_bb1l",
+      submission_cmd           = submission_cmd,
       pool_id                  = pool_id,
     )
 

@@ -140,6 +140,7 @@ if __name__ == '__main__':
     use_home                 = use_home,
     method_mem               = method_mem,
     method_hme               = method_hme,
+    submission_cmd           = sys.argv,
   )
 
   goodToGo = addMEMProduction.create()
