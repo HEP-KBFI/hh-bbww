@@ -1221,8 +1221,8 @@ int main(int argc, char* argv[])
       evtWeightRecorder.record_btagWeight(selJetsAK4);
 
       dataToMCcorrectionInterface->setLeptons(
-        selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->eta(),
-        selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->eta()
+        selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+        selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
       );
 
 //--- apply data/MC corrections for trigger efficiency
