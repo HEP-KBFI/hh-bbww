@@ -998,8 +998,8 @@ int main(int argc, char* argv[])
     double triggerWeight = 1.;
     double leptonSF_weight = 1.;
     dataToMCcorrectionInterface->setLeptons(
-      selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->eta(),
-      selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->eta());
+      selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+      selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta());
 
 //--- apply data/MC corrections for trigger efficiency
     const TriggerSFsys triggerSF_option = getTriggerSF_option(central_or_shift);
