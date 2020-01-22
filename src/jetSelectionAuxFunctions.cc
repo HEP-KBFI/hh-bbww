@@ -3,7 +3,8 @@
 #include "hhAnalysis/bbww/interface/JetPair.h" // JetPair_Hbb, makeJetPairs_Hbb, rankJetPairs_Hbb, JetPair_Wjj, makeJetPairs_Wjj, rankJetPairs_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // pickFirstNobjects
 
-#include <string> // std::string
+#include <string>   // std::string
+#include <iostream> // std::cout, std::endl
 
 void 
 printJet(const std::string& label, const RecoJetBase* jet, const RecoLepton* selLepton_lead = nullptr, const RecoLepton* selLepton_sublead = nullptr)
