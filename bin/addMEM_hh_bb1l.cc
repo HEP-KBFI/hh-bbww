@@ -41,6 +41,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // createSubdirectory_recursively()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryTypeAuxFunctions.h" // copyBranches_singleType(), copyBranches_vectorType()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryType.h" // branchEntryBaseType
+#include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 
@@ -67,20 +68,6 @@
 #include <regex> // std::regex_match(), std::regex, std::smatch
 
 typedef std::vector<std::string> vstring;
-
-struct genParticlesForMatchingEntryType
-{
-  genParticlesForMatchingEntryType()
-    : genMEtPt_(0.)
-    , genMEtPhi_(0.)
-  {}
-  ~genParticlesForMatchingEntryType() {}
-  std::vector<GenLepton> genLeptons_;
-  std::vector<GenJet> genWJets_;
-  std::vector<GenJet> genBJets_;
-  double genMEtPt_;
-  double genMEtPhi_;
-};
 
 MEMOutput_hh_bb1l 
 compMEM(const EventInfo& eventInfo,
@@ -1044,6 +1031,13 @@ int main(int argc,
       memWriter_missingHadWJet[central_or_shift]->write(memOutputs_hh_bb1l_missingHadWJet[central_or_shift]);
     }
 
+    if ( addMEM_forGenParticles )
+    {
+      memWriter_gen->write(memOutputs_hh_bb1l_gen);
+      memWriter_gen_missingBJet->write(memOutputs_hh_bb1l_gen_missingBJet);
+      memWriter_gen_missingHadWJet->write(memOutputs_hh_bb1l_gen_missingHadWJet);
+    }
+
     outputTree->Fill();
     ++selectedEntries;
   } // idxEntry
@@ -1065,6 +1059,15 @@ int main(int argc,
   delete jetReaderAK4;
   delete jetReaderAK8;
   delete metReader;
+
+  delete genLeptonReader;
+  delete genNeutrinoReader;
+  delete genParticleFromHiggsReader;
+  delete genWJetReader;
+  delete genLeptonFromTopReader;
+  delete genNeutrinoFromTopReader;
+  delete genBJetFromTopReader;
+  delete genWJetFromTopReader;
 
   for ( auto & kv: memWriter )
   {
@@ -1091,74 +1094,14 @@ int main(int argc,
     }
   }
 
+  delete memWriter_gen;
+  delete memWriter_gen_missingBJet;
+  delete memWriter_gen_missingHadWJet;
+
   delete inputTree;
 
 //--- copy histograms keeping track of number of processed events from input files to output file
-  std::cout << "copying histograms:\n";
-  std::map<std::string, TH1*> histograms;
-  std::smatch histogram_match;
-  for ( const std::string & inputFileName: inputFiles.files() )
-  {
-    TFile* inputFile = new TFile(inputFileName.data());
-    if ( !inputFile || inputFile -> IsZombie() )
-    {
-      throw cms::Exception(argv[0]) << "Failed to open input File = '" << inputFileName << "' !!\n";
-    }
-
-    TIter next(inputFile->GetListOfKeys());
-    TKey * key = nullptr;
-    while((key = static_cast<TKey *>(next())))
-    {
-      const std::string histogramName = key->GetName();
-      bool is_match = false;
-      for(const std::regex & copy_histogram_regex: copy_histograms_regex)
-      {
-        if(std::regex_match(histogramName, histogram_match, copy_histogram_regex))
-        {
-          is_match = true;
-          break;
-        }
-      }
-      if(! is_match)
-      {
-        continue;
-      }
-
-      if(inputFiles.files().size() > 1)
-      {
-        std::cout << ' ' << histogramName << " from input File = '" << inputFileName << "'\n";
-      }
-      else
-      {
-        std::cout << ' ' << histogramName << '\n';
-      }
-      TH1 * const histogram_input = dynamic_cast<TH1 *>(inputFile->Get(histogramName.data()));
-      if(! histogram_input)
-      {
-        continue;
-      }
-
-      TH1 * histogram_output = histograms[histogramName];
-      if(histogram_output)
-      {
-        histogram_output->Add(histogram_input);
-      }
-      else
-      {
-        if(dynamic_cast<TH1F *>(histogram_input))
-        {
-          histogram_output = fs.make<TH1F>(*(dynamic_cast<TH1F *>(histogram_input)));
-        }
-        else if(dynamic_cast<TH1D*>(histogram_input))
-        {
-          histogram_output = fs.make<TH1D>(*(dynamic_cast<TH1D *>(histogram_input)));
-        }
-        assert(histogram_output);
-        histograms[histogramName] = histogram_output;
-      }
-    }
-    delete inputFile;
-  } // inputFileName
+  copyHistograms(inputFiles, copy_histograms_regex, fs);
 
   clock.Show("addMEM_hh_bb1l");
 
