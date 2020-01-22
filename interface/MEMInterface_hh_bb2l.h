@@ -28,7 +28,8 @@ public:
              const RecoLepton * selLepton_sublead,
              const RecoJetBase * selJet_Hbb_lead,
 	     const RecoJetBase * selJet_Hbb_sublead,
-             const RecoMEt & met) const;
+             const RecoMEt & met, 
+	     bool switchToGen = false) const;
 
  private:
   MEMbbwwAlgoDilepton * memAlgo_;

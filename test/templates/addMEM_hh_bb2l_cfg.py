@@ -31,6 +31,18 @@ process.addMEM_hh_bb2l = cms.PSet(
     branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
 
+    branchNames_genParticles = cms.PSet(
+        # branches specific to HH->bbWW signal events
+        branchName_genLeptons = cms.string('GenLep'),
+        branchName_genNeutrinos = cms.string('GenNu'),
+        branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
+        
+        # branches specific to tt+jets background events   
+        branchName_genLeptonsFromTop = cms.string('GenLepFromTop'),
+        branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
+        branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
+    ),
+
     copy_all_branches = cms.bool(True),
     copy_histograms = cms.vstring('Count.*'),
 

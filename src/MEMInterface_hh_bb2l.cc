@@ -2,6 +2,8 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetBase.h" // RecoJetBase
+#include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h" // GenLepton
+#include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
 
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // findFile
 #include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
@@ -45,8 +47,18 @@ namespace
 {
 
 void
-addMeasuredLepton(std::vector<mem::MeasuredParticle>& measuredParticles, const RecoLepton * selLepton)
+addMeasuredLepton(std::vector<mem::MeasuredParticle>& measuredParticles, const RecoLepton * selLepton, bool switchToGen)
 {
+  Particle::LorentzVector selLeptonP4;
+  if ( switchToGen ) 
+  {
+    assert(selLepton->genLepton());
+    selLeptonP4 = selLepton->genLepton()->p4();
+  }
+  else 
+  {
+    selLeptonP4 = selLepton->p4();
+  }
   int selLeptonType;   
   double selLeptonMass;   
   if ( selLepton->is_electron() ) 
@@ -66,10 +78,20 @@ addMeasuredLepton(std::vector<mem::MeasuredParticle>& measuredParticles, const R
 }
 
 void
-addMeasuredBJet(std::vector<mem::MeasuredParticle>& measuredParticles, const RecoJetBase * selJet)
+addMeasuredBJet(std::vector<mem::MeasuredParticle>& measuredParticles, const RecoJetBase * selJet, bool switchToGen)
 {
+  Particle::LorentzVector selJetP4;
+  if ( switchToGen ) 
+  {
+    assert(selJet->genJet());
+    selJetP4 = selJet->genJet()->p4();
+  }
+  else 
+  {
+    selJetP4 = selJet->p4();
+  }
   measuredParticles.push_back(mem::MeasuredParticle(mem::MeasuredParticle::kBJet,
-    selJet->pt(), selJet->eta(), selJet->phi(), 
+    selJetP4.pt(), selJetP4.eta(), selJetP4.phi(), 
     mem::bottomQuarkMass));
 }
 
@@ -80,7 +102,8 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 				 const RecoLepton * selLepton_sublead,
 				 const RecoJetBase * selJet_Hbb_lead,
 				 const RecoJetBase * selJet_Hbb_sublead,
-				 const RecoMEt & met) const
+				 const RecoMEt & met, 
+	                         bool switchToGen) const
 {
   MEMOutput_hh_bb2l result;
   if ( !(selJet_Hbb_lead || selJet_Hbb_sublead) )
@@ -90,19 +113,41 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
     return result;
   }
 
+  if ( switchToGen ) 
+  {
+    if ( (selLepton_lead     && !selLepton_lead->genLepton()   ) ||
+         (selLepton_sublead  && !selLepton_sublead->genLepton()) ||
+         (selJet_Hbb_lead    && !selJet_Hbb_lead->genJet()     ) ||
+         (selJet_Hbb_sublead && !selJet_Hbb_sublead->genJet()  ) )
+    {
+      result.errorFlag_ = 1;
+      return result;
+    }
+  }
+
   std::vector<mem::MeasuredParticle> measuredParticles;
-  addMeasuredLepton(measuredParticles, selLepton_lead);
-  addMeasuredLepton(measuredParticles, selLepton_sublead);
+  addMeasuredLepton(measuredParticles, selLepton_lead, switchToGen);
+  addMeasuredLepton(measuredParticles, selLepton_sublead, switchToGen);
   if ( selJet_Hbb_lead ) 
   {
-    addMeasuredBJet(measuredParticles, selJet_Hbb_lead);
+    addMeasuredBJet(measuredParticles, selJet_Hbb_lead, switchToGen);
   }
   if ( selJet_Hbb_sublead ) 
   {
-    addMeasuredBJet(measuredParticles, selJet_Hbb_sublead);
+    addMeasuredBJet(measuredParticles, selJet_Hbb_sublead, switchToGen);
   }
-  double metPx = met.pt()*TMath::Cos(met.phi());
-  double metPy = met.pt()*TMath::Sin(met.phi());
+
+  double metPx, metPy;
+  if ( switchToGen )
+  {
+    metPx = met.genPt()*TMath::Cos(met.genPhi());
+    metPy = met.genPt()*TMath::Sin(met.genPhi());
+  }
+  else
+  {
+    metPx = met.pt()*TMath::Cos(met.phi());
+    metPy = met.pt()*TMath::Sin(met.phi());
+  }
 
   clock_->Reset();
   clock_->Start("<MEMInterface_hh_bb2l::operator()>");
