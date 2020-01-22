@@ -79,10 +79,11 @@
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // findGenJetsFromWBoson
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb1l.h" // EvtHistManager_hh_bb1l
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
-#include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson, findGenJetsFromWBoson
+#include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // bookHistogram1d
 
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoSingleLepton.h"
 #include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
@@ -888,9 +889,9 @@ int main(int argc, char* argv[])
       }
       if ( genWBosonPlus && genWBosonMinus ) {
 	std::pair<const GenLepton*, const GenParticle*> genLepton_and_NeutrinoFromWBosonPlus =
-          findGenLepton_and_NeutrinoFromWBoson(genWBosonPlus, genLeptons, genNeutrinos);
+          findGenLepton_and_NeutrinoFromWBoson(*genWBosonPlus, genLeptons, genNeutrinos);
 	std::pair<const GenLepton*, const GenParticle*> genLepton_and_NeutrinoFromWBosonMinus =
-          findGenLepton_and_NeutrinoFromWBoson(genWBosonMinus, genLeptons, genNeutrinos);
+          findGenLepton_and_NeutrinoFromWBoson(*genWBosonMinus, genLeptons, genNeutrinos);
 	const GenLepton* genLepton = nullptr;
 	const GenParticle* genNeutrino = nullptr;
 	//const GenJet* genJet1_Wjj = nullptr;
@@ -902,9 +903,9 @@ int main(int argc, char* argv[])
 	  genLepton = genLepton_and_NeutrinoFromWBosonPlus.first;
 	  genNeutrino = genLepton_and_NeutrinoFromWBosonPlus.second;
 	  //std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
-          //  findGenJetsFromWBoson(genWBosonMinus, genJets);
+          //  findGenJetsFromWBoson(*genWBosonMinus, genJets);
 	  std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson =
-            findGenJetsFromWBoson(genWBosonMinus, genWJets);
+            findGenJetsFromWBoson(*genWBosonMinus, genWJets);
 	  genJet1_Wjj = genJetsFromWBoson.first;
 	  genJet2_Wjj = genJetsFromWBoson.second;
 	} else if (  (genLepton_and_NeutrinoFromWBosonMinus.first && genLepton_and_NeutrinoFromWBosonMinus.second) &&
@@ -912,9 +913,9 @@ int main(int argc, char* argv[])
 	  genLepton = genLepton_and_NeutrinoFromWBosonMinus.first;
 	  genNeutrino = genLepton_and_NeutrinoFromWBosonMinus.second;
 	  //std::pair<const GenJet*, const GenJet*> genJetsFromWBoson =
-          //  findGenJetsFromWBoson(genWBosonPlus, genJets);
+          //  findGenJetsFromWBoson(*genWBosonPlus, genJets);
 	  std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson =
-            findGenJetsFromWBoson(genWBosonMinus, genWJets);
+            findGenJetsFromWBoson(*genWBosonMinus, genWJets);
 	  genJet1_Wjj = genJetsFromWBoson.first;
 	  genJet2_Wjj = genJetsFromWBoson.second;
 	}
@@ -945,9 +946,9 @@ int main(int argc, char* argv[])
           genBQuark->pt(), genBQuark->eta(), genBQuark->phi(), mem::bottomQuarkMass, genBQuark->pdgId()));
       }
     }
-    //std::sort(genLeptonsForMatching.begin(), genLeptonsForMatching.end(), isHigherPt_GenLepton);
-    std::sort(genJetsFromWBosonForMatching.begin(), genJetsFromWBosonForMatching.end(), isHigherPt_GenJet);
-    std::sort(genBJetsForMatching.begin(), genBJetsForMatching.end(), isHigherPt_GenJet);
+    //std::sort(genLeptonsForMatching.begin(), genLeptonsForMatching.end(), isHigherPtT<GenLepton>);
+    std::sort(genJetsFromWBosonForMatching.begin(), genJetsFromWBosonForMatching.end(), isHigherPtT<GenJet>);
+    std::sort(genBJetsForMatching.begin(), genBJetsForMatching.end(), isHigherPtT<GenJet>);
     if ( !(genLeptonsForMatching.size() == 1 && genJetsFromWBosonForMatching.size() == 2 && genBJetsForMatching.size() == 2) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;

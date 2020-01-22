@@ -55,7 +55,7 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb1l.h" // MEMOutputReader_hh_bb1l
-#include "hhAnalysis/bbww/interface/HadWJetPair.h" // HadWJetPair
+#include "hhAnalysis/bbww/interface/JetPair.h" // JetPair_Wjj
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
@@ -181,11 +181,11 @@ struct memHistograms
     }
     else assert(0);
     std::string histogramName_LR = Form("%s_LR_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_LR_ = fs.make<TH1D>(histogramName_LR.data(), histogramName_LR.data(), 50, 0., 1.);
+    histogram_LR_ = fs.make<TH1D>(histogramName_LR.data(), histogramName_LR.data(), 500, -40., +10.);
     std::string histogramName_weightS = Form("%s_weightS_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_weightS_ = fs.make<TH1D>(histogramName_weightS.data(), histogramName_weightS.data(), 100, -50., 0.);
+    histogram_weightS_ = fs.make<TH1D>(histogramName_weightS.data(), histogramName_weightS.data(), 500, -40., +10.);
     std::string histogramName_weightB = Form("%s_weightB_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_weightB_ = fs.make<TH1D>(histogramName_weightB.data(), histogramName_weightB.data(), 100, -50., 0.);
+    histogram_weightB_ = fs.make<TH1D>(histogramName_weightB.data(), histogramName_weightB.data(), 500, -40., +10.);
     std::string histogramName_isValid = Form("%s_isValid_%s", histogramName_prefix.data(), histogramName_suffix.data());
     histogram_isValid_ = fs.make<TH1D>(histogramName_isValid.data(), histogramName_isValid.data(), 2, -0.5, +1.5);
   }
@@ -193,9 +193,9 @@ struct memHistograms
   {
     if ( memOutput.isValid() )
     { 
-      fillWithOverFlow(histogram_LR_, memOutput.LR(), evtWeight);
-      fillWithOverFlow(histogram_weightS_, memOutput.weight_signal(), evtWeight);
-      fillWithOverFlow(histogram_weightB_, memOutput.weight_background(), evtWeight);
+      fillWithOverFlow(histogram_LR_, TMath::Log10(TMath::Max(1.e-37, 1. - memOutput.LR())), evtWeight);
+      fillWithOverFlow(histogram_weightS_, TMath::Log10(TMath::Max((Float_t)1.e-37, memOutput.weight_signal())), evtWeight);
+      fillWithOverFlow(histogram_weightB_, TMath::Log10(TMath::Max((Float_t)1.e-37, memOutput.weight_background())), evtWeight);
     }
     fillWithOverFlow(histogram_isValid_, memOutput.isValid(), evtWeight);
   }
@@ -271,12 +271,12 @@ void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& 
 }
 
 int
-getIndex(const std::vector<HadWJetPair>& pairs)
+getIndex(const std::vector<JetPair_Wjj>& pairs)
 {
   size_t numPairs = pairs.size();
   for ( size_t idx = 0; idx < numPairs; ++idx ) 
   {
-    const HadWJetPair& pair = pairs[idx];
+    const JetPair_Wjj& pair = pairs[idx];
     if ( pair.jet1_isGenMatched_ && pair.jet2_isGenMatched_ )
     {
       return idx;
@@ -747,25 +747,25 @@ int main(int argc, char* argv[])
       *histograms_Wjj_jet2, histogram_Wjj_jet2_idx,
       histogram_Wjj_jet_numIndices, histogram_Wjj_jet_mjj, evtWeight);
  
-    std::vector<HadWJetPair> hadWJetPairs = makeHadWJetPairs(selJetsAK4_Wjj, &genWJets);
-    rankHadWJetPairs(hadWJetPairs, selJetsAK4_Wjj, *tightLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+    std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets);
+    rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
 
-    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByMass());
-    int hadWJetPair_sortedByMass_idx = getIndex(hadWJetPairs);
+    std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByMass);
+    int hadWJetPair_sortedByMass_idx = getIndex(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByMass_idx, hadWJetPair_sortedByMass_idx, evtWeight); 
-    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByDeltaR());
-    int hadWJetPair_sortedByDeltaR_idx = getIndex(hadWJetPairs);
+    std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByDeltaR);
+    int hadWJetPair_sortedByDeltaR_idx = getIndex(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByDeltaR_idx, hadWJetPair_sortedByDeltaR_idx, evtWeight); 
-    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByPt());
-    int hadWJetPair_sortedByPt_idx = getIndex(hadWJetPairs);
+    std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByPt);
+    int hadWJetPair_sortedByPt_idx = getIndex(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByPt_idx, hadWJetPair_sortedByPt_idx, evtWeight); 
-    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByScalarPt());
-    int hadWJetPair_sortedByScalarPt_idx = getIndex(hadWJetPairs);
+    std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByScalarPt);
+    int hadWJetPair_sortedByScalarPt_idx = getIndex(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByScalarPt_idx, hadWJetPair_sortedByScalarPt_idx, evtWeight); 
-    std::sort(hadWJetPairs.begin(), hadWJetPairs.end(), sortHadWJetPairsByBDT());
-    int hadWJetPair_sortedByBDT_idx = getIndex(hadWJetPairs);
+    std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByBDT);
+    int hadWJetPair_sortedByBDT_idx = getIndex(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByBDT_idx, hadWJetPair_sortedByBDT_idx, evtWeight); 
-    fillWithOverFlow(histogram_hadWJetPair_numIndices, hadWJetPairs.size(), evtWeight); 
+    fillWithOverFlow(histogram_hadWJetPair_numIndices, jetPairs_Wjj.size(), evtWeight); 
 
     if ( memReader ) 
     {

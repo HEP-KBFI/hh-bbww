@@ -17,6 +17,19 @@
 #include <iomanip>
 #include <assert.h>
 
+TFile* openFile(const std::string& inputFilePath, const std::string& inputFileName)
+{
+  TString inputFileName_full = inputFilePath.data();
+  if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
+  inputFileName_full.Append(inputFileName.data());
+  TFile* inputFile = new TFile(inputFileName_full.Data());
+  if ( !inputFile ) {
+    std::cerr << "Failed to open input file = " << inputFileName_full.Data() << " !!" << std::endl;
+    assert(0);
+  }
+  return inputFile;
+}
+  
 TH1* loadHistogram(TFile* inputFile, const std::string& histogramName)
 {  
   TH1* histogram = (TH1*)inputFile->Get(histogramName.data());
@@ -28,7 +41,9 @@ TH1* loadHistogram(TFile* inputFile, const std::string& histogramName)
   return histogram;
 }
 
-TGraph* compGraphEfficiency(const std::string& graphName, const TH1* histogram)
+enum { kUndefined, kLeftToRight, kRightToLeft };
+
+TGraph* compGraphEfficiency(const std::string& graphName, const TH1* histogram, int mode)
 {
   const TAxis* xAxis = histogram->GetXaxis();
   int numPoints = xAxis->GetNbins();
@@ -38,7 +53,12 @@ TGraph* compGraphEfficiency(const std::string& graphName, const TH1* histogram)
   double integral = histogram->Integral(1, histogram->GetNbinsX());
   double sum = 0.;
   for ( int idxPoint = 1; idxPoint <= numPoints; ++idxPoint ) {
-    int idxBin = idxPoint;
+    int idxBin = -1;
+    if ( mode == kLeftToRight ) {
+      idxBin = idxPoint;
+    } else if ( mode == kRightToLeft ) {
+      idxBin = histogram->GetNbinsX() - (idxPoint - 1);
+    } else assert(0);
     double binCenter = xAxis->GetBinCenter(idxBin);
     double binContent = histogram->GetBinContent(idxBin);
     sum += binContent;
@@ -50,8 +70,8 @@ TGraph* compGraphEfficiency(const std::string& graphName, const TH1* histogram)
 
 TGraph* compGraphROC(const std::string& graphName, const TGraph* graphEfficiency_signal, const TGraph* graphEfficiency_background, bool useLogScale)
 {
-  std::cout << "<compGraphROC>:" << std::endl;
-  std::cout << " graphName = " << graphName << std::endl;
+  //std::cout << "<compGraphROC>:" << std::endl;
+  //std::cout << " graphName = " << graphName << std::endl;
   assert(graphEfficiency_signal->GetN() == graphEfficiency_background->GetN());
   int numPoints = graphEfficiency_signal->GetN();
   TGraph* graphROC = new TGraph(numPoints);
@@ -64,7 +84,7 @@ TGraph* compGraphROC(const std::string& graphName, const TGraph* graphEfficiency
     double yROC;
     if ( useLogScale ) yROC = efficiency_background;
     else yROC = 1.0 - efficiency_background;
-    std::cout << "point #" << idxPoint << ": x = " << xROC << ", y = " << yROC << std::endl;
+    //std::cout << "point #" << idxPoint << ": x = " << xROC << ", y = " << yROC << std::endl;
     graphROC->SetPoint(idxPoint, xROC, yROC);
   }
   return graphROC;
@@ -212,210 +232,174 @@ void makeROCforMEM()
   TH1::AddDirectory(false);
   
   std::vector<std::string> channels;
-  channels.push_back("hh_bb2l");
-  channels.push_back("hh_bb2l_missingBJet");
-  //channels.push_back("hh_bb1l");
+  //channels.push_back("hh_bb2l");
+  channels.push_back("hh_bb1l");
+
+  std::map<std::string, std::vector<std::string>> categories; // key = channel
+  //categories["hh_bb2l"].push_back(""); // fully reconstructed case
+  //categories["hh_bb2l"].push_back("missingBJet");
+  categories["hh_bb1l"].push_back(""); // fully reconstructed case
+  categories["hh_bb1l"].push_back("missingBJet");
+  categories["hh_bb1l"].push_back("missingHadWJet");
 
   std::map<std::string, std::string> inputFilePaths; // key = channel
-  inputFilePaths["hh_bb2l"] = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
-  inputFilePaths["hh_bb2l_missingBJet"] = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
-  inputFilePaths["hh_bb1l"] = "/home/veelken/CMSSW_9_4_6_patch1/src/hhAnalysis/bbww/test/";
+  //inputFilePaths["hh_bb2l"] = "";
+  inputFilePaths["hh_bb1l"] = "/home/veelken/CMSSW_10_2_10_centOS/CMSSW_10_2_10/src/hhAnalysis/bbww/test/templates/";
 
-  std::map<std::string, std::string> inputFileNames; // key = channel
-  inputFileNames["hh_bb2l"] = "testMEM_hh_bb2l_sig1k_bgr10kCalls_newCode_all.root";
-  inputFileNames["hh_bb2l_missingBJet"] = "testMEM_hh_bb2l_sig1k_bgr10kCalls_newCode_all.root";
-  inputFileNames["hh_bb1l"] = "testMEM_hh_bb1l_all.root";
+  std::map<std::string, std::string> inputFileNames_signal; // key = channel
+  inputFileNames_signal["hh_bb2l"] = "";
+  inputFileNames_signal["hh_bb1l"] = "analyzeMEM_hh_bb1l_signal.root";
+
+  std::map<std::string, std::string> inputFileNames_background; // key = channel
+  inputFileNames_background["hh_bb2l"] = "";
+  inputFileNames_background["hh_bb1l"] = "analyzeMEM_hh_bb1l_background.root";
 
   std::map<std::string, std::vector<std::string>> plotNames; // key = channel
-  plotNames["hh_bb2l"].push_back("MEM_genMatchOpt1");
-  plotNames["hh_bb2l"].push_back("MEM_genMatchOpt2");
-  plotNames["hh_bb2l"].push_back("MEM_genMatchOpt3");
-  plotNames["hh_bb2l"].push_back("BDT");
-  plotNames["hh_bb2l"].push_back("mHHvis");
-  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt1");
-  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt2");
-  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt3");
-  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt1_missingBJet");
-  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt2_missingBJet");
-  plotNames["hh_bb2l_missingBJet"].push_back("MEM_genMatchOpt3_missingBJet");
-  plotNames["hh_bb1l"].push_back("MEM_genMatchOpt1");
-  plotNames["hh_bb1l"].push_back("MEM_genMatchOpt2");
-  plotNames["hh_bb1l"].push_back("MEM_genMatchOpt3");
-  plotNames["hh_bb1l"].push_back("BDT");
-  plotNames["hh_bb1l"].push_back("mHHvis");
+  //plotNames["hh_bb2l"].push_back("");
+  //plotNames["hh_bb2l"].push_back("");
+  //plotNames["hh_bb2l"].push_back("");
+  plotNames["hh_bb1l"].push_back("LR");
+  plotNames["hh_bb1l"].push_back("weightS");
+  plotNames["hh_bb1l"].push_back("weightB");
 
-  std::map<std::string, std::map<std::string, std::string>> histogramNames_signal; // key = channel, plotName
-  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb2l"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb2l"]["BDT"] = "signal_genMatchOpt3/sel/evt/signal/MVAOutput_400";
-  histogramNames_signal["hh_bb2l"]["mHHvis"] = "signal_genMatchOpt3/sel/evt/signal/m_HHvis";
-  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt1_missingBJet"] = "signal_genMatchOpt1/sel/evt/signal/memScore_missingBJet";
-  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt2_missingBJet"] = "signal_genMatchOpt2/sel/evt/signal/memScore_missingBJet";
-  histogramNames_signal["hh_bb2l_missingBJet"]["MEM_genMatchOpt3_missingBJet"] = "signal_genMatchOpt3/sel/evt/signal/memScore_missingBJet";
-  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt1"] = "signal_genMatchOpt1/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt2"] = "signal_genMatchOpt2/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb1l"]["MEM_genMatchOpt3"] = "signal_genMatchOpt3/sel/evt/signal/memScore";
-  histogramNames_signal["hh_bb1l"]["BDT"] = "signal_genMatchOpt3/sel/evt/signal/MVAOutput_400";
-  histogramNames_signal["hh_bb1l"]["mHHvis"] = "signal_genMatchOpt3/sel/evt/signal/m_HHvis";
+  std::map<std::string, std::map<std::string, std::map<std::string, std::string>>> histogramNames_signal; // key = channel, category, plotName
+  //histogramNames_signal["hh_bb2l"][""][""]                      = "";
+  //histogramNames_signal["hh_bb2l"][""][""]                      = "";
+  //histogramNames_signal["hh_bb2l"][""][""]                      = "";
+  histogramNames_signal["hh_bb1l"][""]["LR"]                    = "mem_LR_fullyMatched";
+  histogramNames_signal["hh_bb1l"][""]["weightS"]               = "mem_weightS_fullyMatched";
+  histogramNames_signal["hh_bb1l"][""]["weightB"]               = "mem_weightB_fullyMatched";
+  histogramNames_signal["hh_bb1l"]["missingBJet"]["LR"]         = "mem_missingBJet_LR_fullyMatched";
+  histogramNames_signal["hh_bb1l"]["missingBJet"]["weightS"]    = "mem_missingBJet_weightS_fullyMatched";
+  histogramNames_signal["hh_bb1l"]["missingBJet"]["weightB"]    = "mem_missingBJet_weightB_fullyMatched";
+  histogramNames_signal["hh_bb1l"]["missingHadWJet"]["LR"]      = "mem_missingHadWJet_LR_fullyMatched";
+  histogramNames_signal["hh_bb1l"]["missingHadWJet"]["weightS"] = "mem_missingHadWJet_weightS_fullyMatched";
+  histogramNames_signal["hh_bb1l"]["missingHadWJet"]["weightB"] = "mem_missingHadWJet_weightB_fullyMatched";
+  
+  std::map<std::string, std::map<std::string, std::map<std::string, std::string>>> histogramNames_background; // key = channel, category, plotName
+  histogramNames_background = histogramNames_signal;
 
-  std::map<std::string, std::map<std::string, std::string>> histogramNames_background; // key = channel, plotName
-  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memScore";
-  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memScore";
-  histogramNames_background["hh_bb2l"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memScore";
-  histogramNames_background["hh_bb2l"]["BDT"] = "background_genMatchOpt3/sel/evt/background/MVAOutput_400";
-  histogramNames_background["hh_bb2l"]["mHHvis"] = "background_genMatchOpt3/sel/evt/background/m_HHvis";
-  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memScore";
-  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memScore";
-  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memScore";
-  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt1_missingBJet"] = "background_genMatchOpt1/sel/evt/background/memScore_missingBJet";
-  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt2_missingBJet"] = "background_genMatchOpt2/sel/evt/background/memScore_missingBJet";
-  histogramNames_background["hh_bb2l_missingBJet"]["MEM_genMatchOpt3_missingBJet"] = "background_genMatchOpt3/sel/evt/background/memScore_missingBJet";
-  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt1"] = "background_genMatchOpt1/sel/evt/background/memScore";
-  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt2"] = "background_genMatchOpt2/sel/evt/background/memScore";
-  histogramNames_background["hh_bb1l"]["MEM_genMatchOpt3"] = "background_genMatchOpt3/sel/evt/background/memScore";
-  histogramNames_background["hh_bb1l"]["BDT"] = "background_genMatchOpt3/sel/evt/background/MVAOutput_400";
-  histogramNames_background["hh_bb1l"]["mHHvis"] = "background_genMatchOpt3/sel/evt/background/m_HHvis";
+  std::map<std::string, std::map<std::string, int>> mode; // key = channel, plotName
+  //mode["hh_bb2l"][""]        = kUndefined;
+  //mode["hh_bb2l"][""]        = kUndefined;
+  //mode["hh_bb2l"][""]        = kUndefined;
+  mode["hh_bb1l"]["LR"]      = kRightToLeft;
+  mode["hh_bb1l"]["weightS"] = kLeftToRight;
+  mode["hh_bb1l"]["weightB"] = kRightToLeft;
 
   std::map<std::string, std::map<std::string, std::string>> legendEntries; // key = channel, plotName
-  legendEntries["hh_bb2l"]["MEM_genMatchOpt1"] = "MEM opt1";
-  legendEntries["hh_bb2l"]["MEM_genMatchOpt2"] = "MEM opt2";
-  legendEntries["hh_bb2l"]["MEM_genMatchOpt3"] = "MEM opt3";
-  legendEntries["hh_bb2l"]["BDT"] = "BDT";
-  legendEntries["hh_bb2l"]["mHHvis"] = "m_{HH}^{vis}";
-  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt1"] = "MEM opt1";
-  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt2"] = "MEM opt2";
-  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt3"] = "MEM opt3";
-  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt1_missingBJet"] = "MEM (missing b-jet) opt1";
-  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt2_missingBJet"] = "MEM (missing b-jet) opt2";
-  legendEntries["hh_bb2l_missingBJet"]["MEM_genMatchOpt3_missingBJet"] = "MEM (missing b-jet) opt3";
-  legendEntries["hh_bb1l"]["MEM_genMatchOpt1"] = "MEM opt1";
-  legendEntries["hh_bb1l"]["MEM_genMatchOpt2"] = "MEM opt2";
-  legendEntries["hh_bb1l"]["MEM_genMatchOpt3"] = "MEM opt3";
-  legendEntries["hh_bb1l"]["BDT"] = "BDT";
-  legendEntries["hh_bb1l"]["mHHvis"] = "m_{HH}^{vis}";
+  //legendEntries["hh_bb2l"][""]        = "";
+  //legendEntries["hh_bb2l"][""]        = "";
+  //legendEntries["hh_bb2l"][""]        = "";
+  legendEntries["hh_bb1l"]["LR"]      = "w_{S}/(w_{S} + w_{B})";
+  legendEntries["hh_bb1l"]["weightS"] = "w_{S}";
+  legendEntries["hh_bb1l"]["weightB"] = "w_{B}";
 
   for ( std::vector<std::string>::const_iterator channel = channels.begin();
 	channel != channels.end(); ++channel ) {
-    TString inputFileName_full = inputFilePaths[*channel].data();
-    if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
-    inputFileName_full.Append(inputFileNames[*channel].data());
-    TFile* inputFile = new TFile(inputFileName_full.Data());
-    if ( !inputFile ) {
-      std::cerr << "Failed to open input file = " << inputFileName_full.Data() << " !!" << std::endl;
-      assert(0);
+    TFile* inputFile_signal = openFile(inputFilePaths[*channel], inputFileNames_signal[*channel]);
+    TFile* inputFile_background = nullptr;
+    if ( inputFileNames_background[*channel] != inputFileNames_signal[*channel] ) {
+      inputFile_background = openFile(inputFilePaths[*channel], inputFileNames_background[*channel]);
+    } else {
+      inputFile_background = inputFile_signal; 
     }
-  
-    std::map<std::string, TGraph*> graphsROC; // key = plotName
-    
-    enum { kStyle_linear, kStyle_log };
-    for ( int iStyle = kStyle_linear; iStyle <= kStyle_log; ++iStyle ) {
-      bool useLogScale;
-      if      ( iStyle == kStyle_linear ) useLogScale = false;
-      else if ( iStyle == kStyle_log    ) useLogScale = true;
-      else assert(0);
+
+    for ( std::vector<std::string>::const_iterator category = categories[*channel].begin();
+	  category != categories[*channel].end(); ++category ) {
+
+      enum { kStyle_linear, kStyle_log };
+      for ( int iStyle = kStyle_linear; iStyle <= kStyle_log; ++iStyle ) {
+        bool useLogScale;
+        if      ( iStyle == kStyle_linear ) useLogScale = false;
+        else if ( iStyle == kStyle_log    ) useLogScale = true;
+        else assert(0);
       
-      for ( std::vector<std::string>::const_iterator plotName = plotNames[*channel].begin();
-	    plotName != plotNames[*channel].end(); ++plotName ) {
-	TH1* histogram_signal = loadHistogram(inputFile, histogramNames_signal[*channel][*plotName]);
-	TGraph* graphEfficiency_signal = compGraphEfficiency(Form("graphEfficiency_%s_signal_%s", channel->data(), plotName->data()), histogram_signal);
-	TH1* histogram_background = loadHistogram(inputFile, histogramNames_background[*channel][*plotName]);
-	TGraph* graphEfficiency_background = compGraphEfficiency(Form("graphEfficiency_%s_background_%s", channel->data(), plotName->data()), histogram_background);
-	graphsROC[*plotName] = compGraphROC(Form("graphROC_%s_%s", channel->data(), plotName->data()), graphEfficiency_signal, graphEfficiency_background, useLogScale);
-	delete graphEfficiency_signal;
-	delete graphEfficiency_background;
-      }
+        std::map<std::string, TGraph*> graphs_roc; // key = plotName
+        for ( std::vector<std::string>::const_iterator plotName = plotNames[*channel].begin();
+	      plotName != plotNames[*channel].end(); ++plotName ) {
+  	  TH1* histogram_signal = loadHistogram(inputFile_signal, histogramNames_signal[*channel][*category][*plotName]);
+          std::string graphName_signal = Form("graph_%s_%s_signal_%s", channel->data(), category->data(), plotName->data());
+ 	  TGraph* graph_signal = compGraphEfficiency(graphName_signal.data(), histogram_signal, mode[*channel][*plotName]);
+	  TH1* histogram_background = loadHistogram(inputFile_background, histogramNames_background[*channel][*category][*plotName]);
+          std::string graphName_background = Form("graph_%s_%s_background_%s", channel->data(), category->data(), plotName->data());
+	  TGraph* graph_background = compGraphEfficiency(graphName_background.data(), histogram_background, mode[*channel][*plotName]);
+          std::string graphName_roc = Form("graphROC_%s_%s_%s", channel->data(), category->data(), plotName->data());
+	  graphs_roc[*plotName] = compGraphROC(graphName_roc.data(), graph_signal, graph_background, useLogScale);
+  	  delete graph_signal;
+	  delete graph_background;
+        }
       
-      int colors[6] = { 1, 2, 8, 4, 6, 7 };
-      int markerStyles[6] = { 22, 32, 20, 24, 21, 25 };
-      double legendPosX, legendPosY;
-      std::vector<std::string> labelTextLines;
-      double yMin, yMax;
-      std::string yAxisTitle;
-      std::string outputFileName;
-      if ( useLogScale ) {
-	legendPosX = 0.16;
-	legendPosY = 0.64;
-	yMin = 4.e-4;
-	yMax = 1.5e0;
-	yAxisTitle = "Background Rate";
-	outputFileName = Form("makeROCforMEM_%s_log.pdf", channel->data());
-      } else {
-	legendPosX = 0.16;
-	legendPosY = 0.17;
-	yMin = 0.;
-	yMax = 1.01;
-	yAxisTitle = "Background Suppression";
-	outputFileName = Form("makeROCforMEM_%s_linear.pdf", channel->data());
-      }
-      TGraph* graphROC1 = nullptr;
-      std::string legendEntry1;
-      TGraph* graphROC2 = nullptr;
-      std::string legendEntry2;
-      TGraph* graphROC3 = nullptr;
-      std::string legendEntry3;
-      TGraph* graphROC4 = nullptr;
-      std::string legendEntry4;
-      TGraph* graphROC5 = nullptr;
-      std::string legendEntry5;
-      TGraph* graphROC6 = nullptr;
-      std::string legendEntry6;
-      double legendSizeX, legendSizeY;
-      if ( (*channel) == "hh_bb2l_missingBJet" ) {
-	graphROC1 = graphsROC["MEM_genMatchOpt1"];
-	legendEntry1 = legendEntries[*channel]["MEM_genMatchOpt1"];
-	graphROC2 = graphsROC["MEM_genMatchOpt2"];
-	legendEntry2 = legendEntries[*channel]["MEM_genMatchOpt2"];
-	graphROC3 = graphsROC["MEM_genMatchOpt3"];
-	legendEntry3 = legendEntries[*channel]["MEM_genMatchOpt3"];
-	graphROC4 = graphsROC["MEM_genMatchOpt1_missingBJet"];
-	legendEntry4 = legendEntries[*channel]["MEM_genMatchOpt1_missingBJet"];
-	graphROC5 = graphsROC["MEM_genMatchOpt2_missingBJet"];
-	legendEntry5 = legendEntries[*channel]["MEM_genMatchOpt2_missingBJet"];
-	graphROC6 = graphsROC["MEM_genMatchOpt3_missingBJet"];
-	legendEntry6 = legendEntries[*channel]["MEM_genMatchOpt3_missingBJet"];
-	if ( legendPosY > 0.60 ) legendPosY = 0.60;
-	legendSizeX = 0.33;
-	legendSizeY = 0.27;	
-      } else {
-	graphROC1 = graphsROC["MEM_genMatchOpt1"];
-	legendEntry1 = legendEntries[*channel]["MEM_genMatchOpt1"];
-	graphROC2 = graphsROC["MEM_genMatchOpt2"];
-	legendEntry2 = legendEntries[*channel]["MEM_genMatchOpt2"];
-	graphROC3 = graphsROC["MEM_genMatchOpt3"];
-	legendEntry3 = legendEntries[*channel]["MEM_genMatchOpt3"];
-	graphROC4 = graphsROC["BDT"];
-	legendEntry4 = legendEntries[*channel]["BDT"];
-	graphROC5 = graphsROC["mHHvis"];
-	legendEntry5 = legendEntries[*channel]["mHHvis"];
-	legendSizeX = 0.23;
-	legendSizeY = 0.23;
-      }
-      showGraphs(
-        800, 600,
-	graphROC1, legendEntry1,
-	graphROC2, legendEntry2,
-	graphROC3, legendEntry3,
-	graphROC4, legendEntry4,
-	graphROC5, legendEntry5,
-	graphROC6, legendEntry6,
-	colors, markerStyles,
-	0.045, legendPosX, legendPosY, legendSizeX, legendSizeY,
-	labelTextLines, 0.045, 
-	0.18, 0.64, 0.31, 0.05, 
-	0., 1.01, "Signal Efficiency", 1.2,
-	useLogScale, yMin, yMax, yAxisTitle, 1.2,
-	outputFileName);
+        int colors[6] = { 1, 2, 8, 4, 6, 7 };
+        int markerStyles[6] = { 22, 32, 20, 24, 21, 25 };
+        double legendPosX, legendPosY;
+        std::vector<std::string> labelTextLines;
+        double yMin, yMax;
+        std::string yAxisTitle;
+        std::string outputFileName;
+        if ( useLogScale ) {
+  	  legendPosX = 0.16;
+	  legendPosY = 0.64;
+  	  yMin = 4.e-4;
+	  yMax = 1.5e0;
+	  yAxisTitle = "Background Rate";
+	  outputFileName = Form("makeROCforMEM_%s_%s_log.pdf", channel->data(), category->data());
+        } else {
+  	  legendPosX = 0.16;
+	  legendPosY = 0.17;
+	  yMin = 0.;
+ 	  yMax = 1.01;
+	  yAxisTitle = "Background Suppression";
+	  outputFileName = Form("makeROCforMEM_%s_%s_linear.pdf", channel->data(), category->data());
+        }
+        TGraph* graph1_roc = nullptr;
+        std::string legendEntry1;
+        TGraph* graph2_roc = nullptr;
+        std::string legendEntry2;
+        TGraph* graph3_roc = nullptr;
+        std::string legendEntry3;
+        TGraph* graph4_roc = nullptr;
+        std::string legendEntry4;
+        TGraph* graph5_roc = nullptr;
+        std::string legendEntry5;
+        TGraph* graph6_roc = nullptr;
+        std::string legendEntry6;
+        double legendSizeX = 0.23;
+	double legendSizeY = 0.23;
+        if ( (*channel) == "hh_bb2l" ) {
+
+        } else if ( (*channel) == "hh_bb1l" ) {
+          graph1_roc = graphs_roc["LR"];
+	  legendEntry1 = legendEntries[*channel]["LR"];
+          graph2_roc = graphs_roc["weightS"];
+	  legendEntry2 = legendEntries[*channel]["weightS"];
+          graph3_roc = graphs_roc["weightB"];
+	  legendEntry3 = legendEntries[*channel]["weightB"];
+        } else assert(0);
+        showGraphs(
+          800, 600,
+	  graph1_roc, legendEntry1,
+	  graph2_roc, legendEntry2,
+  	  graph3_roc, legendEntry3,
+	  graph4_roc, legendEntry4,
+	  graph5_roc, legendEntry5,
+	  graph6_roc, legendEntry6,
+	  colors, markerStyles,
+	  0.045, legendPosX, legendPosY, legendSizeX, legendSizeY,
+	  labelTextLines, 0.045, 
+	  0.18, 0.64, 0.31, 0.05, 
+	  0., 1.01, "Signal Efficiency", 1.2,
+	  useLogScale, yMin, yMax, yAxisTitle, 1.2,
+	  outputFileName);
     
-      for ( std::map<std::string, TGraph*>::iterator it = graphsROC.begin();
-	    it != graphsROC.end(); ++it ) {
-	delete it->second;
+        for ( std::map<std::string, TGraph*>::iterator it = graphs_roc.begin();
+	      it != graphs_roc.end(); ++it ) {
+	  delete it->second;
+        }
       }
     }
 
-    delete inputFile;
+    delete inputFile_signal;
+    if ( inputFile_background != inputFile_signal ) delete inputFile_background;
   }
 }

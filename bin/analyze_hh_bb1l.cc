@@ -1737,6 +1737,8 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
 
     // select jets from W->jj decay
+
+
     std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtHbb;
     std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
     if ( selJetAK8_Hbb ) {

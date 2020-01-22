@@ -69,7 +69,7 @@ class addMEMConfig_hh_bb1l(addMEMConfig):
     self.central_or_shift = central_or_shift
     self.method_mem = method_mem
 
-  def createCfg_addMEM(self, inputFiles, startRange, endRange, outputFile, era, isMC, cfgFile_modified, whitelist = []):
+  def createCfg_addMEM(self, inputFiles, startRange, endRange, outputFile, era, process, isMC, cfgFile_modified, whitelist = []):
     """Create python configuration file for the addMEM_hh_bb1l executable (MEM code)
 
     Args:
@@ -99,6 +99,7 @@ class addMEMConfig_hh_bb1l(addMEMConfig):
     if skipEvents > 0:
       lines.append("process.addMEM_hh_bb1l.copy_histograms = cms.vstring()")
     lines.append("process.addMEM_hh_bb1l.leptonSelection = cms.string('%s')" % self.leptonSelection)
+    lines.append("process.addMEM_hh_bb1l.process = cms.string('%s')" % process)
     lines.append("process.addMEM_hh_bb1l.isMC = cms.bool(%s)" % isMC)
     lines.append("process.addMEM_hh_bb1l.isDEBUG = cms.bool(%s)" % self.isDebug)
     lines.append("process.addMEM_hh_bb1l.central_or_shift_mem = cms.vstring(%s)" % self.central_or_shift)

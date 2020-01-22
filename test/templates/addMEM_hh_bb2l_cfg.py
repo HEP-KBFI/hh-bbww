@@ -16,8 +16,11 @@ process.fwliteOutput = cms.PSet(
 process.addMEM_hh_bb2l = cms.PSet(
     treeName = cms.string('Events'),
 
+    process = cms.string(''),
+
     era = cms.string(''),
     isMC = cms.bool(True),
+    addMEM_forGenParticles = cms.bool(True),
 
     leptonSelection = cms.string(''),
 

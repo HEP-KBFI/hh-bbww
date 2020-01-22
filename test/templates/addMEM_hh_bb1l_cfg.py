@@ -16,8 +16,11 @@ process.fwliteOutput = cms.PSet(
 process.addMEM_hh_bb1l = cms.PSet(
     treeName = cms.string('Events'),
 
+    process = cms.string(''),
+
     era = cms.string(''),
     isMC = cms.bool(True),
+    addMEM_forGenParticles = cms.bool(True),
 
     leptonSelection = cms.string(''),
 
@@ -30,6 +33,20 @@ process.addMEM_hh_bb1l = cms.PSet(
 
     mem_maxWJetPairs = cms.int32(3),
     mem_maxWJets = cms.int32(5),
+
+    branchNames_genParticles = cms.PSet(
+        # branches specific to HH->bbWW signal events
+        branchName_genLeptons = cms.string('GenLep'),
+        branchName_genNeutrinos = cms.string('GenNu'),
+        branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
+        branchName_genWJets = cms.string('GenWZQuark'),
+        
+        # branches specific to tt+jets background events   
+        branchName_genLeptonsFromTop = cms.string('GenLepFromTop'),
+        branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
+        branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
+        branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
+    ),
 
     copy_all_branches = cms.bool(True),
     copy_histograms = cms.vstring('Count.*'),

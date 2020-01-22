@@ -6,19 +6,14 @@
 #include "DataFormats/FWLite/interface/OutputFiles.h" // fwlite::OutputFiles
 #include "DataFormats/Math/interface/LorentzVector.h" // math::PtEtaPhiMLorentzVector
 
-#include <TChain.h> // TChain
-#include <TTree.h> // TTree
-#include <TBenchmark.h> // TBenchmark
-#include <TString.h> // TString, Form
-#include <TError.h> // gErrorAbortLevel, kError
-
-#include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h" // RecoJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetReaderAK8.h" // RecoJetReaderAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtReader.h" // RecoMEtReader, RecoMEt
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader, EventInfo
+#include "tthAnalysis/HiggsToTauTau/interface/GenLeptonReader.h" // GenLeptonReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenParticleReader.h" // GenParticleReader
 #include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionCleaner.h" // RecoElectronCollectionCleaner, RecoMuonCollectionCleaner, RecoJetCollectionCleaner
@@ -30,11 +25,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorTight.h" // RecoMuonCollectionSelectorTight
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
-#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
-#include "hhAnalysis/bbww/interface/MEMInterface_hh_bb1l.h" // MEMInterface_hh_bb1l
-#include "hhAnalysis/bbww/interface/MEMOutputWriter_hh_bb1l.h" // MEMOutputWriter_hh_bb1l
-#include "hhAnalysis/bbww/interface/HadWJetPair.h" // HadWJetPair
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronWriter.h" // RecoElectronWriter
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonWriter.h" // RecoMuonWriter
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetWriter.h" // RecoJetWriter
@@ -42,13 +33,31 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEtWriter.h" // RecoMEtWriter
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoWriter.h" // EventInfoWriter
 #include "tthAnalysis/HiggsToTauTau/interface/MEMPermutationWriter.h" // MEMPermutationWriter::get_maxPermutations_addMEM_pattern()
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // selectObjects(), get_selection(), get_era(), kLoose, kFakeable, kTight
+#include "tthAnalysis/HiggsToTauTau/interface/GenParticleWriter.h" // GenParticleWriter
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // selectObjects(), get_selection(), get_era(), kLoose, kFakeable, kTight, convert_to_genParticles
 #include "tthAnalysis/HiggsToTauTau/interface/sysUncertOptions.h" // k*_central
 #include "tthAnalysis/HiggsToTauTau/interface/memAuxFunctions.h" // get_memObjectBranchName(), get_memPermutationBranchName()
 #include "tthAnalysis/HiggsToTauTau/interface/cutFlowTable.h" // cutFlowTableType
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // createSubdirectory_recursively()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryTypeAuxFunctions.h" // copyBranches_singleType(), copyBranches_vectorType()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryType.h" // branchEntryBaseType
+
+#include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
+
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/MEMInterface_hh_bb1l.h" // MEMInterface_hh_bb1l
+#include "hhAnalysis/bbww/interface/MEMOutputWriter_hh_bb1l.h" // MEMOutputWriter_hh_bb1l
+#include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
+#include "hhAnalysis/bbww/interface/JetPair.h" // initialize_mva_Wjj
+#include "hhAnalysis/bbww/interface/GenParticleMatcherFromHiggs.h" // GenParticleMatcherFromHiggs
+#include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selJetsType_Hbb, selectJets_Hbb, selJetsType_Wjj, selectJets_Wjj
+
+#include <TChain.h> // TChain
+#include <TTree.h> // TTree
+#include <TBenchmark.h> // TBenchmark
+#include <TString.h> // TString, Form
+#include <TError.h> // gErrorAbortLevel, kError
 
 #include <boost/algorithm/string/predicate.hpp> // boost::algorithm::starts_with(), boost::algorithm::ends_with()
 
@@ -59,17 +68,30 @@
 
 typedef std::vector<std::string> vstring;
 
+struct genParticlesForMatchingEntryType
+{
+  genParticlesForMatchingEntryType()
+    : genMEtPt_(0.)
+    , genMEtPhi_(0.)
+  {}
+  ~genParticlesForMatchingEntryType() {}
+  std::vector<GenLepton> genLeptons_;
+  std::vector<GenJet> genWJets_;
+  std::vector<GenJet> genBJets_;
+  double genMEtPt_;
+  double genMEtPhi_;
+};
+
 MEMOutput_hh_bb1l 
 compMEM(const EventInfo& eventInfo,
-        const RecoLepton* selLepton, const RecoJet* selJet1_Wjj, const RecoJet* selJet2_Wjj,
+        const RecoLepton* selLepton, const RecoJetBase* selJet1_Wjj, const RecoJetBase* selJet2_Wjj,
         const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb, 
         const RecoMEt& met, 	
-	MEMInterface_hh_bb1l& memInterface, bool dryRun,
+	MEMInterface_hh_bb1l& memInterface, bool switchToGen, bool dryRun,
         int& idxPermutation, int maxPermutations, 
 	const std::string& branchName_memOutput, const std::string& central_or_shift, bool isDEBUG)
 {
   MEMOutput_hh_bb1l memOutput;
-  memOutput.eventInfo_ = eventInfo; 
   if ( maxPermutations == -1 || idxPermutation <= maxPermutations )
   {
     ++idxPermutation;
@@ -108,7 +130,7 @@ compMEM(const EventInfo& eventInfo,
     }
     else
     {
-      memOutput = memInterface(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb, met);
+      memOutput = memInterface(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb, met, switchToGen);
     }
 
     if ( isDEBUG )
@@ -124,6 +146,7 @@ compMEM(const EventInfo& eventInfo,
 	      << " --> skipping MEM computation for branch " << "'" << branchName_memOutput << "'" 
 	      << " after " << maxPermutations << " permutations !!" << std::endl;
   }
+  memOutput.eventInfo_ = eventInfo; 
   return memOutput;
 }
 
@@ -154,32 +177,68 @@ int main(int argc,
     throw cms::Exception(argv[0])
       << "No ParameterSet 'process' found in configuration file = " << argv[1] << " !!\n";
 
-  const edm::ParameterSet cfg               = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
-  const edm::ParameterSet cfg_addMEM        = cfg.getParameter<edm::ParameterSet>("addMEM_hh_bb1l");
-  const vstring central_or_shifts_mem       = cfg_addMEM.getParameter<vstring>("central_or_shift_mem");
-  const std::string treeName                = cfg_addMEM.getParameter<std::string>("treeName");
-  const std::string selEventsFileName_input = cfg_addMEM.getParameter<std::string>("selEventsFileName_input");
-  const bool isMC                           = cfg_addMEM.getParameter<bool>("isMC");
-  const bool isDEBUG                        = cfg_addMEM.getParameter<bool>("isDEBUG");
-  const bool dryRun                         = cfg_addMEM.getParameter<bool>("dryRun");
-  const bool copy_all_branches              = cfg_addMEM.getParameter<bool>("copy_all_branches");
-  const bool readGenObjects                 = cfg_addMEM.getParameter<bool>("readGenObjects");
-  const bool jetCleaningByIndex             = cfg_addMEM.getParameter<bool>("jetCleaningByIndex");
-  const bool useNonNominal                  = cfg_addMEM.getParameter<bool>("useNonNominal");
-  const bool useNonNominal_jetmet           = useNonNominal || ! isMC;
-  const bool method_MEM                     = cfg_addMEM.getParameter<bool>("method_mem");
+  const edm::ParameterSet cfg                = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
+  const edm::ParameterSet cfg_addMEM         = cfg.getParameter<edm::ParameterSet>("addMEM_hh_bb1l");
+  const vstring central_or_shifts_mem        = cfg_addMEM.getParameter<vstring>("central_or_shift_mem");
+  const std::string treeName                 = cfg_addMEM.getParameter<std::string>("treeName");
+  const std::string selEventsFileName_input  = cfg_addMEM.getParameter<std::string>("selEventsFileName_input");
+  const std::string process_string           = cfg_addMEM.getParameter<std::string>("process");
+  const bool isMC                            = cfg_addMEM.getParameter<bool>("isMC");
+  const bool isMC_HH                         = isMC && process_string.find("hh_bbvv")!= std::string::npos;
+  const bool isMC_TT                         = isMC && process_string.find("TT")     != std::string::npos;
+  const bool addMEM_forGenParticles          = cfg_addMEM.getParameter<bool>("addMEM_forGenParticles");
+  const bool isDEBUG                         = cfg_addMEM.getParameter<bool>("isDEBUG");
+  const bool dryRun                          = cfg_addMEM.getParameter<bool>("dryRun");
+  const bool copy_all_branches               = cfg_addMEM.getParameter<bool>("copy_all_branches");
+  const bool readGenObjects                  = cfg_addMEM.getParameter<bool>("readGenObjects");
+  const bool jetCleaningByIndex              = cfg_addMEM.getParameter<bool>("jetCleaningByIndex");
+  const bool useNonNominal                   = cfg_addMEM.getParameter<bool>("useNonNominal");
+  const bool useNonNominal_jetmet            = useNonNominal || ! isMC;
+  const bool method_MEM                      = cfg_addMEM.getParameter<bool>("method_mem");
 
-  const std::string branchName_electrons    = cfg_addMEM.getParameter<std::string>("branchName_electrons");
-  const std::string branchName_muons        = cfg_addMEM.getParameter<std::string>("branchName_muons");
-  const std::string branchName_jets_ak4     = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
-  const std::string branchName_jets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
-  const std::string branchName_subjets_ak8  = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
-  const std::string branchName_met          = cfg_addMEM.getParameter<std::string>("branchName_met");
+  const std::string branchName_electrons     = cfg_addMEM.getParameter<std::string>("branchName_electrons");
+  const std::string branchName_muons         = cfg_addMEM.getParameter<std::string>("branchName_muons");
+  const std::string branchName_jets_ak4      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
+  const std::string branchName_jets_ak8      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
+  const std::string branchName_subjets_ak8   = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
+  const std::string branchName_met           = cfg_addMEM.getParameter<std::string>("branchName_met");
 
   const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");
   const int mem_maxWJets = cfg_addMEM.getParameter<int>("mem_maxWJets");
 
-  const vstring copy_histograms             = cfg_addMEM.getParameter<vstring>("copy_histograms");
+  // branches specific to HH->bbWW signal events
+  std::string branchName_genLeptons;
+  std::string branchName_genNeutrinos;
+  std::string branchName_genParticlesFromHiggs;
+  std::string branchName_genWJets;
+  // branches specific to tt+jets background events   
+  std::string branchName_genLeptonsFromTop;
+  std::string branchName_genNeutrinosFromTop;
+  std::string branchName_genBJetsFromTop;
+  std::string branchName_genWJetsFromTop;  
+  if ( addMEM_forGenParticles )
+  {
+    edm::ParameterSet cfg_branchNames_genParticles = cfg_addMEM.getParameter<edm::ParameterSet>("branchNames_genParticles");
+    if ( isMC_HH )
+    {
+      branchName_genLeptons = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genLeptons");
+      branchName_genNeutrinos = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genNeutrinos");
+      branchName_genParticlesFromHiggs = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genParticlesFromHiggs");
+      branchName_genWJets = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genWJets");
+    }
+    else if ( isMC_TT )
+    {
+      branchName_genLeptonsFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genLeptonsFromTop");
+      branchName_genNeutrinosFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genNeutrinosFromTop");
+      branchName_genBJetsFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genBJetsFromTop");
+      branchName_genWJetsFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genWJetsFromTop");
+    }
+  }
+
+  GenParticleMatcherFromHiggs genParticleMatcherFromHiggs;
+  GenParticleMatcherFromTop genParticleMatcherFromTop;
+
+  const vstring copy_histograms = cfg_addMEM.getParameter<vstring>("copy_histograms");
   std::vector<std::regex> copy_histograms_regex;
   std::transform(
     copy_histograms.begin(), copy_histograms.end(), std::back_inserter(copy_histograms_regex),
@@ -280,6 +339,7 @@ int main(int argc,
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
+  RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
@@ -290,13 +350,51 @@ int main(int argc,
   //jetReaderAK8->read_BtagWeight_systematics(isMC);
   jetReaderAK8->setBranchAddresses(inputTree);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
+  RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
+  RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
+  RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
 
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
   metReader->setMEt_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   metReader->read_ptPhi_systematics(isMC);
   metReader->setBranchAddresses(inputTree);
+
+//--- declare genParticle readers
+  GenLeptonReader *   genLeptonReader            = nullptr;
+  GenParticleReader * genNeutrinoReader          = nullptr;
+  GenParticleReader * genParticleFromHiggsReader = nullptr;
+  GenParticleReader * genWJetReader              = nullptr;
+  GenLeptonReader *   genLeptonFromTopReader     = nullptr;
+  GenParticleReader * genNeutrinoFromTopReader   = nullptr;
+  GenParticleReader * genBJetFromTopReader       = nullptr;
+  GenParticleReader * genWJetFromTopReader       = nullptr;
+  if ( addMEM_forGenParticles )
+  {
+    if ( isMC_HH )
+    {
+      genLeptonReader = new GenLeptonReader(branchName_genLeptons);
+      genLeptonReader->setBranchAddresses(inputTree);
+      genNeutrinoReader = new GenParticleReader(branchName_genNeutrinos);
+      genNeutrinoReader->setBranchAddresses(inputTree);
+      genParticleFromHiggsReader = new GenParticleReader(branchName_genParticlesFromHiggs);
+      genParticleFromHiggsReader->setBranchAddresses(inputTree);
+      genWJetReader = new GenParticleReader(branchName_genWJets);
+      genWJetReader->setBranchAddresses(inputTree);
+    }
+    else if ( isMC_TT )
+    {
+      genLeptonFromTopReader = new GenLeptonReader(branchName_genLeptonsFromTop);
+      genLeptonFromTopReader->setBranchAddresses(inputTree);
+      genNeutrinoFromTopReader = new GenParticleReader(branchName_genNeutrinosFromTop);
+      genNeutrinoFromTopReader->setBranchAddresses(inputTree);
+      genBJetFromTopReader = new GenParticleReader(branchName_genBJetsFromTop);
+      genBJetFromTopReader->setBranchAddresses(inputTree);
+      genWJetFromTopReader = new GenParticleReader(branchName_genWJetsFromTop);
+      genWJetFromTopReader->setBranchAddresses(inputTree);
+    }
+  }
 
 //--- initialize BDT for ranking of W->jj decays
   TMVAInterface mva_Wjj = initialize_mva_Wjj();
@@ -320,12 +418,21 @@ int main(int argc,
   }
   TTree* outputTree = new TTree(outputTreeName.data(), outputTreeName.data());
 
-  RecoMuonWriter *     muonWriter      = nullptr;
-  RecoElectronWriter * electronWriter  = nullptr;
-  RecoJetWriter *      jetWriterAK4    = nullptr;
-  RecoJetWriterAK8 *   jetWriterAK8    = nullptr;
-  RecoMEtWriter *      metWriter       = nullptr;
-  EventInfoWriter *    eventInfoWriter = nullptr;
+  RecoMuonWriter *      muonWriter                 = nullptr;
+  RecoElectronWriter *  electronWriter             = nullptr;
+  RecoJetWriter *       jetWriterAK4               = nullptr;
+  RecoJetWriterAK8 *    jetWriterAK8               = nullptr;
+  RecoMEtWriter *       metWriter                  = nullptr;
+  EventInfoWriter *     eventInfoWriter            = nullptr;
+
+  GenParticleWriter *   genLeptonWriter            = nullptr;
+  GenParticleWriter *   genNeutrinoWriter          = nullptr;
+  GenParticleWriter *   genParticleFromHiggsWriter = nullptr;
+  GenParticleWriter *   genWJetWriter              = nullptr;
+  GenParticleWriter *   genLeptonFromTopWriter     = nullptr;
+  GenParticleWriter *   genNeutrinoFromTopWriter   = nullptr;
+  GenParticleWriter *   genBJetFromTopWriter       = nullptr;
+  GenParticleWriter *   genWJetFromTopWriter       = nullptr;
 
   std::map<std::string, branchEntryBaseType*> branchesToKeep;
   if ( copy_all_branches )
@@ -352,7 +459,7 @@ int main(int argc,
     metWriter->setPtPhi_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     metWriter->write_ptPhi_systematics(isMC);
     metWriter->setBranches(outputTree);
-
+  
     vstring outputCommands_string = {
       "keep *",
       Form("drop %s", eventInfoWriter->getBranchName_run().data()),
@@ -374,6 +481,43 @@ int main(int argc,
       Form("drop %s_*", branchName_subjets_ak8.data()),
       Form("drop %s_*", branchName_met.data())
     };
+
+    if ( addMEM_forGenParticles )
+    {
+      if ( isMC_HH )
+      {
+        genLeptonWriter = new GenParticleWriter(Form("n%s", branchName_genLeptons.data()), branchName_genLeptons);
+        genLeptonWriter->setBranches(outputTree);
+        genNeutrinoWriter = new GenParticleWriter(Form("n%s", branchName_genNeutrinos.data()), branchName_genNeutrinos);
+        genNeutrinoWriter->setBranches(outputTree);
+        genParticleFromHiggsWriter = new GenParticleWriter(Form("n%s", branchName_genParticlesFromHiggs.data()), branchName_genParticlesFromHiggs);
+        genParticleFromHiggsWriter->setBranches(outputTree);
+        genWJetWriter = new GenParticleWriter(Form("n%s", branchName_genWJets.data()), branchName_genWJets);
+        genWJetWriter->setBranches(outputTree);
+
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genLeptons.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genNeutrinos.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genParticlesFromHiggs.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genWJets.data()));
+      }
+      else if ( isMC_TT )
+      {
+        genLeptonFromTopWriter = new GenParticleWriter(Form("n%s", branchName_genLeptonsFromTop.data()), branchName_genLeptonsFromTop);
+        genLeptonFromTopWriter->setBranches(outputTree);
+        genNeutrinoFromTopWriter = new GenParticleWriter(Form("n%s", branchName_genNeutrinosFromTop.data()), branchName_genNeutrinosFromTop);
+        genNeutrinoFromTopWriter->setBranches(outputTree);
+        genBJetFromTopWriter = new GenParticleWriter(Form("n%s", branchName_genBJetsFromTop.data()), branchName_genBJetsFromTop);
+        genBJetFromTopWriter->setBranches(outputTree);
+        genWJetFromTopWriter = new GenParticleWriter(Form("n%s", branchName_genWJetsFromTop.data()), branchName_genWJetsFromTop);
+        genWJetFromTopWriter->setBranches(outputTree);
+ 
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genLeptonsFromTop.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genNeutrinosFromTop.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genBJetsFromTop.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genWJetsFromTop.data()));
+      }
+    }
+
     std::vector<outputCommandEntry> outputCommands = getOutputCommands(outputCommands_string);
     std::map<std::string, bool> isBranchToKeep = getBranchesToKeep(inputTree, outputCommands);
     copyBranches_singleType(inputTree, outputTree, isBranchToKeep, branchesToKeep);
@@ -386,9 +530,7 @@ int main(int argc,
       << "No such branch: " << branchName_maxPermutations_addMEM;
   }
 
-  const std::string branchName_memOutput = get_memObjectBranchName(
-    "hh_bb1l", leptonSelection_string, "", ""
-  );
+  const std::string branchName_memOutput = get_memObjectBranchName("hh_bb1l", leptonSelection_string, "", "");
   const std::string branchName_memOutput_missingBJet = Form("%s_missingBJet", branchName_memOutput.data());
   const std::string branchName_memOutput_missingHadWJet = Form("%s_missingHadWJet", branchName_memOutput.data());
   
@@ -421,6 +563,23 @@ int main(int argc,
       Form("n%s", branchName_memOutput_missingHadWJet_cos.data()), branchName_memOutput_missingHadWJet_cos
     );
     memWriter_missingHadWJet[central_or_shift]->setBranches(outputTree);
+  }
+
+  const std::string branchName_memOutput_gen = Form("%s_gen", branchName_memOutput.data());
+  const std::string branchName_memOutput_gen_missingBJet = Form("%s_missingBJet", branchName_memOutput_gen.data());
+  const std::string branchName_memOutput_gen_missingHadWJet = Form("%s_missingHadWJet", branchName_memOutput_gen.data());
+
+  MEMOutputWriter_hh_bb1l * memWriter_gen                = nullptr;
+  MEMOutputWriter_hh_bb1l * memWriter_gen_missingBJet    = nullptr;
+  MEMOutputWriter_hh_bb1l * memWriter_gen_missingHadWJet = nullptr;  
+  if ( addMEM_forGenParticles )
+  {
+    memWriter_gen = new MEMOutputWriter_hh_bb1l(Form("n%s", branchName_memOutput_gen.data()), branchName_memOutput_gen);
+    memWriter_gen->setBranches(outputTree);
+    memWriter_gen_missingBJet = new MEMOutputWriter_hh_bb1l(Form("n%s", branchName_memOutput_gen_missingBJet.data()), branchName_memOutput_gen_missingBJet);
+    memWriter_gen_missingBJet->setBranches(outputTree);
+    memWriter_gen_missingHadWJet = new MEMOutputWriter_hh_bb1l(Form("n%s", branchName_memOutput_gen_missingHadWJet.data()), branchName_memOutput_gen_missingHadWJet);
+    memWriter_gen_missingHadWJet->setBranches(outputTree);
   }
 
   const int numEntries = inputTree->GetEntries();
@@ -494,8 +653,8 @@ int main(int argc,
     const std::vector<const RecoLepton*> fakeableLeptonsFull = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
     const std::vector<const RecoLepton*> tightLeptonsFull = mergeLeptonCollections(tightElectrons, tightMuons, isHigherConePt);
 
-    const std::vector<const RecoLepton*> preselLeptons = pickFirstNobjects(preselLeptonsFull, 2);
-    const std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 2);
+    const std::vector<const RecoLepton*> preselLeptons = pickFirstNobjects(preselLeptonsFull, 1);
+    const std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 1);
     const std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
 
 //--- build collections of jets 
@@ -505,6 +664,33 @@ int main(int argc,
     const std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
 
     const RecoMEt met = metReader->read();
+
+//--- build collections of generator level particles 
+    std::vector<GenLepton>   genLeptons;
+    std::vector<GenParticle> genNeutrinos;
+    std::vector<GenParticle> genParticlesFromHiggs;
+    std::vector<GenParticle> genWJets;
+    std::vector<GenLepton>   genLeptonsFromTop;
+    std::vector<GenParticle> genNeutrinosFromTop;
+    std::vector<GenParticle> genBJetsFromTop;
+    std::vector<GenParticle> genWJetsFromTop;
+    if ( addMEM_forGenParticles )
+    {
+      if ( isMC_HH )
+      {
+        genLeptons            = genLeptonReader->read();
+        genNeutrinos          = genNeutrinoReader->read();
+        genParticlesFromHiggs = genParticleFromHiggsReader->read();
+        genWJets              = genWJetReader->read();
+      }
+      else if ( isMC_TT )
+      {
+        genLeptonsFromTop     = genLeptonFromTopReader->read();
+        genNeutrinosFromTop   = genNeutrinoFromTopReader->read();
+        genBJetsFromTop       = genBJetFromTopReader->read();
+        genWJetsFromTop       = genWJetFromTopReader->read();
+      }
+    }
 
     std::map<std::string, std::vector<MEMOutput_hh_bb1l>> memOutputs_hh_bb1l;
     std::map<std::string, std::vector<MEMOutput_hh_bb1l>> memOutputs_hh_bb1l_missingBJet;
@@ -516,6 +702,10 @@ int main(int argc,
       memOutputs_hh_bb1l_missingBJet[central_or_shift] = {};
       memOutputs_hh_bb1l_missingHadWJet[central_or_shift] = {};
     }
+
+    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_gen;
+    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_gen_missingBJet;
+    std::vector<MEMOutput_hh_bb1l> memOutputs_hh_bb1l_gen_missingHadWJet;
 
 //--- fill the branches here since because we want to re-use the readers
 //    however, the readers obtain pointers to gen level objects and pass them to the reco objects
@@ -529,6 +719,24 @@ int main(int argc,
       jetWriterAK4->write(jet_ptrs_ak4); // save central
       jetWriterAK8->write(jet_ptrs_ak8); // save central
       metWriter->write(met); // save central
+
+      if ( addMEM_forGenParticles )
+      {
+        if ( isMC_HH )
+        {
+          genLeptonWriter->write(convert_to_genParticles(genLeptons));
+          genNeutrinoWriter->write(genNeutrinos);
+          genParticleFromHiggsWriter->write(genParticlesFromHiggs);
+          genWJetWriter->write(genWJets);
+        }
+        else if ( isMC_TT )
+        {
+          genLeptonFromTopWriter->write(convert_to_genParticles(genLeptonsFromTop));
+          genNeutrinoFromTopWriter->write(genNeutrinosFromTop);
+          genBJetFromTopWriter->write(genBJetsFromTop);
+          genWJetFromTopWriter->write(genWJetsFromTop);
+        }
+      }
 
       for ( const auto & branchEntry: branchesToKeep )
       {
@@ -550,6 +758,9 @@ int main(int argc,
       int idxPermutation_mem = 0;
       int idxPermutation_mem_missingBJet = 0;
       int idxPermutation_mem_missingHadWJet = 0;
+      int idxPermutation_mem_gen = 0;
+      int idxPermutation_mem_gen_missingBJet = 0;
+      int idxPermutation_mem_gen_missingHadWJet = 0;
       const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons, isHigherConePt);
       for ( std::size_t selLepton_idx = 0; selLepton_idx < selLeptons.size(); ++selLepton_idx )
       {
@@ -605,68 +816,76 @@ int main(int argc,
           const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_mem, fakeableLeptons);
           const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
           const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-          //-------------------------------------------------------------------
-          // select the two jets from the H->bb decay from either the AK4 (resolved H->bb) or AK8 (boosted H->bb) collection
-          //
-          // WARNING: logic to select the two jets from H->bb decay needs to match the code in analyze_hh_bb1l.cc !!
-          const RecoJetAK8* selJetAK8_Hbb = nullptr;
-          const RecoJetBase* selJet1_Hbb = nullptr;
-          const RecoJetBase* selJet2_Hbb = nullptr;
-          if ( selJetsAK8_Hbb.size() >= 1 )
-          {
-            selJetAK8_Hbb = selJetsAK8_Hbb[0];
-            assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
-            if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
-            {
-              selJet1_Hbb = selJetAK8_Hbb->subJet1();
-              selJet2_Hbb = selJetAK8_Hbb->subJet2();
-            }
-            else
-            {
-              selJet1_Hbb = selJetAK8_Hbb->subJet2();
-              selJet2_Hbb = selJetAK8_Hbb->subJet1();
-            }
-          }
-          else if ( selJetsAK4_Hbb.size() >= 2 )
-          {
-            selJet1_Hbb = selJetsAK4_Hbb[0];
-            selJet2_Hbb = selJetsAK4_Hbb[1];
-          }
-          //-------------------------------------------------------------------
-          
-	  //-------------------------------------------------------------------
+
+          // select jets from H->bb decay
+          std::vector<selJetsType_Hbb> selJets_Hbb = selectJets_Hbb(
+            selJetsAK8_Hbb, jetSelectorAK8_Hbb, 
+            selJetsAK4_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium);
+          assert(selJets_Hbb.size() == 1);
+          const selJetsType_Hbb& selJets1_Hbb = selJets_Hbb[0];
+          const RecoJetAK8* selJetAK8_Hbb = selJets1_Hbb.fatjet_;
+          const RecoJetBase* selJet1_Hbb = selJets1_Hbb.jet_or_subjet1_;
+          const RecoJetBase* selJet2_Hbb = selJets1_Hbb.jet_or_subjet2_;
+
           // select jets from W->jj decay
+          std::vector<selJetsType_Wjj> selJets_Wjj = selectJets_Wjj(
+            jet_ptrs_ak8_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+            selJets1_Hbb, 
+            selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
+            mem_maxWJetPairs);
+
+          selJetsType_Hbb selJets1_Hbb_missingBJet1;
+          selJets1_Hbb_missingBJet1.fatjet_ = selJetAK8_Hbb;
+          selJets1_Hbb_missingBJet1.jet_or_subjet1_ = selJet2_Hbb;
+          std::vector<selJetsType_Wjj> selJets_Wjj_missingBJet1 = selectJets_Wjj(
+            jet_ptrs_ak8_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+            selJets1_Hbb_missingBJet1, 
+            selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
+            mem_maxWJetPairs);
+
+          selJetsType_Hbb selJets1_Hbb_missingBJet2;
+          selJets1_Hbb_missingBJet2.fatjet_ = selJets1_Hbb.fatjet_;
+          selJets1_Hbb_missingBJet2.jet_or_subjet1_ = selJets1_Hbb.jet_or_subjet1_;
+          std::vector<selJetsType_Wjj> selJets_Wjj_missingBJet2 = selectJets_Wjj(
+            jet_ptrs_ak8_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+            selJets1_Hbb_missingBJet2, 
+            selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
+            mem_maxWJetPairs);
+
           std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
-          std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb_missingBJet1;
-          std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb_missingBJet2;
           if ( selJetAK8_Hbb ) {
             const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
             cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
-            cleanedJetsAK4_wrtHbb_missingBJet1 = cleanedJetsAK4_wrtHbb;
-            cleanedJetsAK4_wrtHbb_missingBJet2 = cleanedJetsAK4_wrtHbb;
           } else {
             std::vector<const RecoJetBase*> overlaps;
 	    if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
 	    if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
             cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
-	    std::vector<const RecoJetBase*> overlaps_missingBJet1;
-            if ( selJet1_Hbb ) overlaps_missingBJet1.push_back(selJet1_Hbb);
-            cleanedJetsAK4_wrtHbb_missingBJet1 = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps_missingBJet1);
-            std::vector<const RecoJetBase*> overlaps_missingBJet2;
-            if ( selJet2_Hbb ) overlaps_missingBJet2.push_back(selJet2_Hbb);
-            cleanedJetsAK4_wrtHbb_missingBJet2 = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps_missingBJet2);
           }
-          // CV: only consider the first ten jets, in order to avoid too large combinatorics in building W->jj pairs,
-          //     which would require many time-consuming MEM computations
-          const std::vector<const RecoJet*> selJetsFullAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
-          const std::vector<const RecoJet*> selJetsAK4_Wjj = pickFirstNobjects(selJetsFullAK4_Wjj, 10);
-          const std::vector<const RecoJet*> selJetsFullAK4_Wjj_missingBJet1 = jetSelectorAK4(cleanedJetsAK4_wrtHbb_missingBJet1, isHigherPt);
-          const std::vector<const RecoJet*> selJetsAK4_Wjj_missingBJet1 = pickFirstNobjects(selJetsFullAK4_Wjj_missingBJet1, 10);
-          const std::vector<const RecoJet*> selJetsFullAK4_Wjj_missingBJet2 = jetSelectorAK4(cleanedJetsAK4_wrtHbb_missingBJet2, isHigherPt);
-          const std::vector<const RecoJet*> selJetsAK4_Wjj_missingBJet2 = pickFirstNobjects(selJetsFullAK4_Wjj_missingBJet2, 10);
+          const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
           //-------------------------------------------------------------------
            
           const RecoMEt met_mem = metReader->read();
+
+          // match reconstructed to generator-level particles
+          if ( addMEM_forGenParticles )
+          {
+            const std::vector<const RecoJetBase*> selJets_Hbb_base = { selJet1_Hbb, selJet2_Hbb };
+            const std::vector<const RecoJetBase*> selJets_Wjj_base = convert_to_RecoJetBase(selJetsAK4_Wjj);
+            if ( isMC_HH )
+            {
+              genParticleMatcherFromHiggs({ selLepton }, selJets_Hbb_base, selJets_Wjj_base, met, 
+                genParticlesFromHiggs, genLeptons, genNeutrinos);
+            }
+            else if ( isMC_TT )
+            {
+              genParticleMatcherFromTop({ selLepton }, selJets_Hbb_base, selJets_Wjj_base, met, 
+                genLeptonsFromTop, genNeutrinosFromTop, genWJetsFromTop, genBJetsFromTop);
+            }
+          }
 
           if ( selJet1_Hbb && selJet2_Hbb )
           {
@@ -675,19 +894,14 @@ int main(int argc,
             {
 	      std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput << "'," 
 	                << " systematic = '" << central_or_shift << "'\n";
-              std::vector<HadWJetPair> hadWJetPairs = makeHadWJetPairs(selJetsAK4_Wjj);
-              rankHadWJetPairs(hadWJetPairs, selJetsAK4_Wjj, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
-              size_t numHadWJetPairs = hadWJetPairs.size();
-              if ( mem_maxWJetPairs >= 0 ) numHadWJetPairs = std::min(numHadWJetPairs, (size_t)mem_maxWJetPairs);
-              for ( size_t idxHadWJetPair = 0; idxHadWJetPair < numHadWJetPairs; ++idxHadWJetPair )
-              {
-                const HadWJetPair& hadWJetPair = hadWJetPairs[idxHadWJetPair];
+              for ( std::vector<selJetsType_Wjj>::const_iterator jetPair = selJets_Wjj.begin(); 
+                    jetPair != selJets_Wjj.end(); ++jetPair ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
                   eventInfo,
-                  selLepton, hadWJetPair.jet1_, hadWJetPair.jet2_,
+                  selLepton, jetPair->jet_or_subjet1_, jetPair->jet_or_subjet2_,
                   selJet1_Hbb, selJet2_Hbb, 
                   met,
-	          memInterface_hh_bb1l, dryRun, 
+	          memInterface_hh_bb1l, false, dryRun, 
 	          idxPermutation_mem, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
 	          branchName_memOutput, central_or_shift, isDEBUG);
                 memOutputs_hh_bb1l[central_or_shift].push_back(memOutput);
@@ -697,23 +911,32 @@ int main(int argc,
                   std::cout << "#memOutputs_hh_bb1l = " 
                             << memOutputs_hh_bb1l[central_or_shift].size() << std::endl;
                 }
+
+                if ( addMEM_forGenParticles && (central_or_shift == "central" ||  central_or_shift == "") )
+                {
+                  MEMOutput_hh_bb1l memOutput_gen = compMEM(
+                    eventInfo,
+                    selLepton, jetPair->jet_or_subjet1_, jetPair->jet_or_subjet2_,
+                    selJet1_Hbb, selJet2_Hbb, 
+                    met,
+	            memInterface_hh_bb1l, true, dryRun, 
+	            idxPermutation_mem_gen, maxPermutations_addMEM_hh_bb1l,
+	            branchName_memOutput_gen, central_or_shift, isDEBUG);
+                  memOutputs_hh_bb1l_gen.push_back(memOutput_gen);
+                  ++memComputations;
+                }
               }             
 
               std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet << "'," 
 	                << " systematic = '" << central_or_shift << "'\n";
-              std::vector<HadWJetPair> hadWJetPairs_missingBJet1 = makeHadWJetPairs(selJetsAK4_Wjj_missingBJet1);
-              rankHadWJetPairs(hadWJetPairs_missingBJet1, selJetsAK4_Wjj_missingBJet1, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
-              size_t numHadWJetPairs_missingBJet1 = hadWJetPairs_missingBJet1.size();
-              if ( mem_maxWJetPairs >= 0 ) numHadWJetPairs_missingBJet1 = std::min(numHadWJetPairs_missingBJet1, (size_t)mem_maxWJetPairs);
-              for ( size_t idxHadWJetPair = 0; idxHadWJetPair < numHadWJetPairs_missingBJet1; ++idxHadWJetPair )
-              {
-                const HadWJetPair& hadWJetPair = hadWJetPairs_missingBJet1[idxHadWJetPair];
+              for ( std::vector<selJetsType_Wjj>::const_iterator jetPair = selJets_Wjj_missingBJet1.begin(); 
+	            jetPair != selJets_Wjj_missingBJet1.end(); ++jetPair ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
                   eventInfo,
-                  selLepton, hadWJetPair.jet1_, hadWJetPair.jet2_,
-                  selJet1_Hbb, nullptr, 
+                  selLepton, jetPair->jet_or_subjet1_, jetPair->jet_or_subjet2_,
+                  selJet2_Hbb, nullptr, 
                   met, 
-	          memInterface_hh_bb1l, dryRun, 
+	          memInterface_hh_bb1l, false, dryRun, 
                   idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
 	          branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
                 memOutputs_hh_bb1l_missingBJet[central_or_shift].push_back(memOutput);
@@ -723,20 +946,29 @@ int main(int argc,
                   std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
                             << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
                 }
+
+                if ( addMEM_forGenParticles && (central_or_shift == "central" ||  central_or_shift == "") )
+                {
+                  MEMOutput_hh_bb1l memOutput_gen = compMEM(
+                    eventInfo,
+                    selLepton, jetPair->jet_or_subjet1_, jetPair->jet_or_subjet2_,
+                    selJet2_Hbb, nullptr, 
+                    met,
+	            memInterface_hh_bb1l, true, dryRun, 
+	            idxPermutation_mem_gen_missingBJet, maxPermutations_addMEM_hh_bb1l,
+	            branchName_memOutput_gen_missingBJet, central_or_shift, isDEBUG);
+                  memOutputs_hh_bb1l_gen_missingBJet.push_back(memOutput_gen);
+                  ++memComputations;
+                }
               }
-              std::vector<HadWJetPair> hadWJetPairs_missingBJet2 = makeHadWJetPairs(selJetsAK4_Wjj_missingBJet2);
-              rankHadWJetPairs(hadWJetPairs_missingBJet2, selJetsAK4_Wjj_missingBJet2, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
-              size_t numHadWJetPairs_missingBJet2 = hadWJetPairs_missingBJet2.size();
-              if ( mem_maxWJetPairs >= 0 ) numHadWJetPairs_missingBJet2 = std::min(numHadWJetPairs_missingBJet2, (size_t)mem_maxWJetPairs);
-              for ( size_t idxHadWJetPair = 0; idxHadWJetPair < numHadWJetPairs_missingBJet2; ++idxHadWJetPair )
-              {
-                const HadWJetPair& hadWJetPair = hadWJetPairs_missingBJet2[idxHadWJetPair];
+              for ( std::vector<selJetsType_Wjj>::const_iterator jetPair = selJets_Wjj_missingBJet2.begin(); 
+	            jetPair != selJets_Wjj_missingBJet2.end(); ++jetPair ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
                   eventInfo,
-                  selLepton, hadWJetPair.jet1_, hadWJetPair.jet2_,
-                  selJet2_Hbb, nullptr, 
+                  selLepton, jetPair->jet_or_subjet1_, jetPair->jet_or_subjet2_,
+                  selJet1_Hbb, nullptr, 
                   met, 
-	          memInterface_hh_bb1l, dryRun, 
+	          memInterface_hh_bb1l, false, dryRun, 
                   idxPermutation_mem_missingBJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem,
 	          branchName_memOutput_missingBJet, central_or_shift, isDEBUG);
                   memOutputs_hh_bb1l_missingBJet[central_or_shift].push_back(memOutput);
@@ -745,6 +977,20 @@ int main(int argc,
                 {
                   std::cout << "#memOutputs_hh_bb1l_missingBJet = " 
                             << memOutputs_hh_bb1l_missingBJet[central_or_shift].size() << std::endl;
+                }
+
+	        if ( addMEM_forGenParticles && (central_or_shift == "central" ||  central_or_shift == "") )
+                {
+                  MEMOutput_hh_bb1l memOutput_gen = compMEM(
+                    eventInfo,
+                    selLepton, jetPair->jet_or_subjet1_, jetPair->jet_or_subjet2_,
+                    selJet1_Hbb, nullptr, 
+                    met,
+	            memInterface_hh_bb1l, true, dryRun, 
+	            idxPermutation_mem_gen_missingBJet, maxPermutations_addMEM_hh_bb1l,
+	            branchName_memOutput_gen_missingBJet, central_or_shift, isDEBUG);
+                  memOutputs_hh_bb1l_gen_missingBJet.push_back(memOutput_gen);
+                  ++memComputations;
                 }
               }
 
@@ -760,7 +1006,7 @@ int main(int argc,
                   selLepton, selJet_Wjj, nullptr,
                   selJet1_Hbb, selJet2_Hbb, 
                   met, 
-	          memInterface_hh_bb1l, dryRun,  
+	          memInterface_hh_bb1l, false, dryRun,  
                   idxPermutation_mem_missingHadWJet, maxPermutations_addMEM_hh_bb1l*nof_central_or_shift_mem, 
 	          branchName_memOutput_missingHadWJet, central_or_shift, isDEBUG);
                 memOutputs_hh_bb1l_missingHadWJet[central_or_shift].push_back(memOutput);
@@ -769,6 +1015,20 @@ int main(int argc,
                 {
                   std::cout << "#memOutputs_hh_bb1l_missingHadWJet = " 
 	                    << memOutputs_hh_bb1l_missingHadWJet[central_or_shift].size() << std::endl;
+                }
+
+                if ( addMEM_forGenParticles && (central_or_shift == "central" ||  central_or_shift == "") )
+                {
+                  MEMOutput_hh_bb1l memOutput_gen = compMEM(
+                    eventInfo,
+                    selLepton, selJet_Wjj, nullptr,
+                    selJet1_Hbb, selJet2_Hbb, 
+                    met,
+	            memInterface_hh_bb1l, true, dryRun, 
+	            idxPermutation_mem_gen_missingHadWJet, maxPermutations_addMEM_hh_bb1l,
+	            branchName_memOutput_gen_missingHadWJet, central_or_shift, isDEBUG);
+                  memOutputs_hh_bb1l_gen_missingHadWJet.push_back(memOutput_gen);
+                  ++memComputations;
                 }
               }
             }

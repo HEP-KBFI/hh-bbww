@@ -82,7 +82,8 @@
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
-#include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson
+#include "hhAnalysis/bbww/interface/testMEMauxFunctions.h" // bookHistogram1d
+#include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson
 
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoDilepton.h"
 #include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
@@ -828,11 +829,11 @@ int main(int argc, char* argv[])
       }
       if ( genWBosonPlus && genWBosonMinus ) {
 	std::pair<const GenLepton*, const GenParticle*> genLepton_and_NeutrinoFromWBosonPlus =
-          findGenLepton_and_NeutrinoFromWBoson(genWBosonPlus, genLeptons, genNeutrinos);
+          findGenLepton_and_NeutrinoFromWBoson(*genWBosonPlus, genLeptons, genNeutrinos);
 	const GenLepton* genLeptonPlus = genLepton_and_NeutrinoFromWBosonPlus.first;
 	const GenParticle* genNeutrino = genLepton_and_NeutrinoFromWBosonPlus.second;
 	std::pair<const GenLepton*, const GenParticle*> genLepton_and_NeutrinoFromWBosonMinus =
-          findGenLepton_and_NeutrinoFromWBoson(genWBosonMinus, genLeptons, genNeutrinos);
+          findGenLepton_and_NeutrinoFromWBoson(*genWBosonMinus, genLeptons, genNeutrinos);
 	const GenLepton* genLeptonMinus = genLepton_and_NeutrinoFromWBosonMinus.first;
 	const GenParticle* genAntiNeutrino = genLepton_and_NeutrinoFromWBosonMinus.second;
 	if ( !(genLeptonPlus && genNeutrino && genLeptonMinus && genAntiNeutrino) ) continue;
@@ -852,8 +853,8 @@ int main(int argc, char* argv[])
           genBQuark->pt(), genBQuark->eta(), genBQuark->phi(), mem::bottomQuarkMass, genBQuark->pdgId()));
       }
     }
-    std::sort(genLeptonsForMatching.begin(), genLeptonsForMatching.end(), isHigherPt_GenLepton);
-    std::sort(genBJetsForMatching.begin(), genBJetsForMatching.end(), isHigherPt_GenJet);
+    std::sort(genLeptonsForMatching.begin(), genLeptonsForMatching.end(), isHigherPtT<GenLepton>);
+    std::sort(genBJetsForMatching.begin(), genBJetsForMatching.end(), isHigherPtT<GenJet>);
     if ( !(genLeptonsForMatching.size() == 2 && genBJetsForMatching.size() == 2) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;

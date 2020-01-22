@@ -58,9 +58,9 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="hhAnalysis/multilepton"/>
   <use   name="hhAnalysis/Heavymassestimator"/>
-  <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
@@ -76,9 +76,9 @@
   <use   name="PhysicsTools/FWLite"/>
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="hhAnalysis/multilepton"/>
   <use   name="hhAnalysis/Heavymassestimator"/>
-  <use   name="hhAnalysis/bbwwMEM"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>

@@ -32,12 +32,12 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     branchName_subjets_ak8_Wjj = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
-    #branchName_memOutput = cms.string('memObjects_hh_bb1l_lepTight'),
-    #branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepTight_missingBJet'),
-    #branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepTight_missingHadWJet'),
-    branchName_memOutput = cms.string(''),
-    branchName_memOutput_missingBJet = cms.string(''),
-    branchName_memOutput_missingHadWJet = cms.string(''),
+    branchName_memOutput = cms.string('memObjects_hh_bb1l_lepFakeable_central'),
+    branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb1l_lepFakeable_missingBJet_central'),
+    branchName_memOutput_missingHadWJet = cms.string('memObjects_hh_bb1l_lepFakeable_missingHadWJet_central'),
+    #branchName_memOutput = cms.string(''),
+    #branchName_memOutput_missingBJet = cms.string(''),
+    #branchName_memOutput_missingHadWJet = cms.string(''),
 
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genBJets = cms.string('GenHiggsDaughters'), 
@@ -46,24 +46,27 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     isDEBUG = cms.bool(False)
 )
 
-#inputFilePath = "/hdfs/local/veelken/addMEM/2017/DEBUG_default_nom/ntuples/hh_bb1l/signal_ggf_nonresonant_node_sm_hh_2b2v"
-inputFilePath = "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000"
-maxInputFiles = 50
-zombie_files = []
-import os
-def getInputFiles(inputFilePath):
-    inputFiles = []
-    files_and_subdirectories = os.listdir(inputFilePath)
-    for file_or_subdirectory in files_and_subdirectories:
-        if file_or_subdirectory in zombie_files:
-            continue
-        file_or_subdirectory = os.path.join(inputFilePath, file_or_subdirectory)
-        if os.path.isfile(file_or_subdirectory):
-            if file_or_subdirectory.endswith(".root"):
-                inputFiles.append(file_or_subdirectory)
-        if os.path.isdir(file_or_subdirectory):
-            inputFiles.extend(getInputFiles(file_or_subdirectory))
-    return inputFiles
-inputFiles = getInputFiles(inputFilePath)
-process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
+#inputFilePath = "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000"
+#maxInputFiles = 50
+#zombie_files = []
+#import os
+#def getInputFiles(inputFilePath):
+#    inputFiles = []
+#    files_and_subdirectories = os.listdir(inputFilePath)
+#    for file_or_subdirectory in files_and_subdirectories:
+#        if file_or_subdirectory in zombie_files:
+#            continue
+#        file_or_subdirectory = os.path.join(inputFilePath, file_or_subdirectory)
+#        if os.path.isfile(file_or_subdirectory):
+#            if file_or_subdirectory.endswith(".root"):
+#                inputFiles.append(file_or_subdirectory)
+#        if os.path.isdir(file_or_subdirectory):
+#            inputFiles.extend(getInputFiles(file_or_subdirectory))
+#    return inputFiles
+#inputFiles = getInputFiles(inputFilePath)
+#process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
+inputFiles = [ 
+  "/hdfs/local/veelken/addMEM/2017/2019Dec23_default_nom/final_ntuples/hh_bb1l/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000/tree_1.root"
+]
+process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

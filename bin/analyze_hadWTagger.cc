@@ -138,7 +138,6 @@ int main(int argc,
   const bool isDEBUG                        = cfg_analyze.getParameter<bool>("isDEBUG");
 
   const bool isMC                           = cfg_analyze.getParameter<bool>("isMC");
-  const bool isMC_HH                        = process_string.find("hh_bbvv") != std::string::npos;
   bool hasLHE                               = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift              = "central";
   edm::VParameterSet lumiScale              = cfg_analyze.getParameter<edm::VParameterSet>("lumiScale");
@@ -215,7 +214,9 @@ int main(int argc,
   RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
-  RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
+  RecoJetCollectionSelector jetSelectorAK4_Hbb(era, -1, isDEBUG);
+  RecoJetCollectionSelector jetSelectorAK4_Wjj(era, -1, isDEBUG);
+  jetSelectorAK4_Wjj.getSelector().set_max_absEta(4.7);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
@@ -366,7 +367,6 @@ int main(int argc,
       jetCleanerAK4_byIndex(jet_ptrs_ak4, fakeableLeptons) :
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
-    const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
       
@@ -374,7 +374,7 @@ int main(int argc,
     const std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
-    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
     //-------------------------------------------------------------------
     // select the two jets from the H->bb decay from either the AK4 (resolved H->bb) or AK8 (boosted H->bb) collection
     //
@@ -421,7 +421,7 @@ int main(int argc,
       if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
       cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
     }
-    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
+    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
     //-------------------------------------------------------------------
            
     if ( !(selJetsAK4_Wjj.size() >= 2) ) {
@@ -434,8 +434,9 @@ int main(int argc,
     std::vector<GenParticle> genBJets   = genBJetReader->read();
     std::vector<GenParticle> genWBosons = genWBosonReader->read();
     std::vector<GenParticle> genWJets   = genWJetReader->read();
-
+    
     std::vector<const GenParticle*> genWJets_ptrs = convert_to_ptrs(genWJets);
+    std::sort(genWJets_ptrs.begin(), genWJets_ptrs.end(), isHigherPt);
 
     for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
 	  selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
