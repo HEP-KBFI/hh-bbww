@@ -327,7 +327,9 @@ int main(int argc,
   RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
-  RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
+  RecoJetCollectionSelector jetSelectorAK4_Hbb(era, -1, isDEBUG);
+  RecoJetCollectionSelector jetSelectorAK4_Wjj(era, -1, isDEBUG);
+  jetSelectorAK4_Wjj.getSelector().set_max_absEta(4.7);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
@@ -831,7 +833,7 @@ int main(int argc,
           // select jets from H->bb decay
           const std::vector<const RecoJetAK8*> cleanedJetsAK8_Hbb_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_Hbb_mem, fakeableLeptons);
           const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_Hbb_wrtLeptons, isHigherCSV_ak8);
-          const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+          const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
           std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
           const selJetsType_Hbb* selJetT_Hbb = nullptr;
           const RecoJetAK8* selJetAK8_Hbb = nullptr;
@@ -848,7 +850,7 @@ int main(int argc,
           // select jets from W->jj decay
           std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj(
             jet_ptrs_ak8_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
-            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             *selJetT_Hbb, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
             mem_maxWJetPairs);
@@ -858,7 +860,7 @@ int main(int argc,
           selJetT_Hbb_missingBJet1.jet_or_subjet1_ = selJet2_Hbb;
           std::vector<selJetsType_Wjj> selJetsT_Wjj_missingBJet1 = selectJets_Wjj(
             jet_ptrs_ak8_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
-            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             selJetT_Hbb_missingBJet1, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
             mem_maxWJetPairs);
@@ -868,7 +870,7 @@ int main(int argc,
           selJetT_Hbb_missingBJet2.jet_or_subjet1_ = selJet1_Hbb;
           std::vector<selJetsType_Wjj> selJetsT_Wjj_missingBJet2 = selectJets_Wjj(
             jet_ptrs_ak8_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
-            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+            cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             selJetT_Hbb_missingBJet2, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
             mem_maxWJetPairs);
@@ -883,7 +885,7 @@ int main(int argc,
 	    if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
             cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
           }
-          const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
+          const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
           //-------------------------------------------------------------------
            
           const RecoMEt met_mem = metReader->read();
