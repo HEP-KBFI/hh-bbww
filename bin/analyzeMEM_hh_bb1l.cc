@@ -471,8 +471,8 @@ int main(int argc, char* argv[])
 
   // define pT and eta cuts for "resolved" (AK4) jets from W->jj decay
   const double selJetAK4_min_pt_Wjj = 25.;
-  const double selJetAK4_max_absEta_Wjj = 4.7;
-  //const double selJetAK4_max_absEta_Wjj = 2.4;
+  //const double selJetAK4_max_absEta_Wjj = 4.7;
+  const double selJetAK4_max_absEta_Wjj = 2.4;
 
   RecoJetCollectionSelector jetSelectorAK4_Wjj(era, -1, isDEBUG);
   jetSelectorAK4_Wjj.getSelector().set_min_pt(selJetAK4_min_pt_Wjj);
@@ -696,10 +696,6 @@ int main(int argc, char* argv[])
       std::vector<GenParticle> genNeutrinos = genNeutrinoReader->read();
       std::vector<GenParticle> genParticlesFromHiggs = genParticleFromHiggsReader->read();
       std::vector<GenParticle> genWJets = genWJetReader->read();
-dumpGenLeptons("genLepton", genLeptons);      
-dumpGenParticles("genNeutrino", genNeutrinos);
-dumpGenParticles("genParticleFromHiggs", genParticlesFromHiggs);
-dumpGenParticles("genWJet", genWJets);
       genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
       genParticleMatcher = &genParticleMatcherFromHiggs;
     }
@@ -775,14 +771,25 @@ dumpGenParticles("genWJet", genWJets);
       histogram_genBJet1_pt, histogram_genBJet1_absEta, histogram_genBJet2_pt, histogram_genBJet2_absEta, evtWeight);
 
     std::vector<const GenJet*> genWJets_ptrs = convert_to_ptrs(genWJets);
-    std::vector<const GenJet*> cleanedGenWJets_wrtLeptons = genJetCleaner_dR04(genWJets_ptrs, genLeptons_passingEta);
-    std::sort(cleanedGenWJets_wrtLeptons.begin(), cleanedGenWJets_wrtLeptons.end(), isHigherPt);
+    //std::vector<const GenJet*> cleanedGenWJets_wrtLeptons = genJetCleaner_dR04(genWJets_ptrs, genLeptons_passingEta);
+    //std::sort(cleanedGenWJets_wrtLeptons.begin(), cleanedGenWJets_wrtLeptons.end(), isHigherPt);
     genWJetSelector.getSelector().set_max_absEta(1.e+3);
-    std::vector<const GenJet*> genWJets_passingPt = genWJetSelector(cleanedGenWJets_wrtLeptons);
+    //std::vector<const GenJet*> genWJets_passingPt = genWJetSelector(cleanedGenWJets_wrtLeptons);
+    std::vector<const GenJet*> genWJets_passingPt = genWJetSelector(genWJets_ptrs);
+//if ( !(genWJets_passingPt.size() >= 2) ) 
+//{
+//  dumpGenLeptons("genLepton", genLeptons); 
+//  std::vector<GenParticle> genParticlesFromHiggs = genParticleFromHiggsReader->read();
+//  dumpGenParticles("genParticleFromHiggs", genParticlesFromHiggs);
+//  dumpGenJets("genWJet", genWJets);
+//}
     genWJetSelector.getSelector().set_max_absEta(selJetAK4_max_absEta_Wjj);
-    std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(cleanedGenWJets_wrtLeptons);
+    //std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(cleanedGenWJets_wrtLeptons);
+    std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(genWJets_ptrs);
     
-    fillHistograms_genJets(cleanedGenWJets_wrtLeptons, genWJetSelector,
+    //fillHistograms_genJets(cleanedGenWJets_wrtLeptons, genWJetSelector,
+    //  histogram_genWJet1_pt, histogram_genWJet1_absEta, histogram_genWJet2_pt, histogram_genWJet2_absEta, evtWeight);
+    fillHistograms_genJets(genWJets_ptrs, genWJetSelector,
       histogram_genWJet1_pt, histogram_genWJet1_absEta, histogram_genWJet2_pt, histogram_genWJet2_absEta, evtWeight);
     
 //--- build collections of reconstructed electrons and muons
@@ -825,22 +832,26 @@ dumpGenParticles("genWJet", genWJets);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
 
+    bool passesEvtSel_rec         = true;
+    bool passesEvtSel_gen         = true;
+    bool passesEvtSel_rec_and_gen = true;
+
 //--- require exactly one reconstructed lepton passing tight selection criteria
-    bool passesTightLeptonEta_rec                = tightLeptons_passingEta.size() >= 1;
-    bool passesTightLeptonEta_gen                = genLeptons_passingEta.size() >= 1;
-    bool passesTightLeptonEta_rec_and_gen        = selectGenMatchedParticles(tightLeptons_passingEta, genLeptons_passingEta).size() >= 1;
+    passesEvtSel_rec         = passesEvtSel_rec         && tightLeptons_passingEta.size() >= 1;
+    passesEvtSel_gen         = passesEvtSel_gen         && genLeptons_passingEta.size() >= 1;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(tightLeptons_passingEta, genLeptons_passingEta).size() >= 1;
     const std::string cutTightLeptonEta = ">= 1 tight lepton";
-    if ( passesTightLeptonEta_rec                ) cutFlowTable.update(cutTightLeptonEta,        "rec",     evtWeight);
-    if ( passesTightLeptonEta_gen                ) cutFlowTable.update(cutTightLeptonEta,        "gen",     evtWeight);
-    if ( passesTightLeptonEta_rec_and_gen        ) cutFlowTable.update(cutTightLeptonEta,        "gen&rec", evtWeight);
-    
-    bool passesTightLeptonPt_and_Eta_rec         = tightLeptons_passingPt_and_Eta.size() >= 1;
-    bool passesTightLeptonPt_and_Eta_gen         = genLeptons_passingPt_and_Eta.size() >= 1;
-    bool passesTightLeptonPt_and_Eta_rec_and_gen = selectGenMatchedParticles(tightLeptons_passingPt_and_Eta, genLeptons_passingPt_and_Eta).size() >= 1;
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutTightLeptonEta,        "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutTightLeptonEta,        "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutTightLeptonEta,        "gen&rec", evtWeight);
+        
+    passesEvtSel_rec         = passesEvtSel_rec         && tightLeptons_passingPt_and_Eta.size() >= 1;
+    passesEvtSel_gen         = passesEvtSel_gen         && genLeptons_passingPt_and_Eta.size() >= 1;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(tightLeptons_passingPt_and_Eta, genLeptons_passingPt_and_Eta).size() >= 1;
     const std::string cutTightLeptonPt_and_Eta = Form("tight electron (muon) pT > %2.0f (%2.0f) GeV", selElectron_min_pt, selMuon_min_pt);
-    if ( passesTightLeptonPt_and_Eta_rec         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "rec",     evtWeight);
-    if ( passesTightLeptonPt_and_Eta_gen         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "gen",     evtWeight);
-    if ( passesTightLeptonPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "gen&rec", evtWeight);
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "gen&rec", evtWeight);
 
     const RecoLepton* tightLepton = nullptr;
     if ( tightLeptons_passingPt_and_Eta.size() >= 1 ) 
@@ -856,7 +867,7 @@ dumpGenParticles("genWJet", genWJets);
 //--- select jets from H->bb decay
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_Hbb, tightLeptons_passingPt_and_Eta);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
-    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
     const selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
@@ -876,21 +887,21 @@ dumpGenParticles("genWJet", genWJets);
       std::sort(selJets_Hbb.begin(), selJets_Hbb.end(), isHigherPt);
     }
 
-    bool passesBJetPt_rec                = selJets_Hbb.size() >= 2;
-    bool passesBJetPt_gen                = genBJets_passingPt.size() >= 2;
-    bool passesBJetPt_rec_and_gen        = selectGenMatchedParticles(selJets_Hbb, genBJets_passingPt).size() >= 2;
+    passesEvtSel_rec         = passesEvtSel_rec         && selJets_Hbb.size() >= 2;
+    passesEvtSel_gen         = passesEvtSel_gen         && genBJets_passingPt.size() >= 2;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(selJets_Hbb, genBJets_passingPt).size() >= 2;
     const std::string cutBJetPt = ">= 2 jets from H->bb decay, passing pT > 25 GeV";
-    if ( passesBJetPt_rec                 ) cutFlowTable.update(cutBJetPt,         "rec",     evtWeight);
-    if ( passesBJetPt_gen                 ) cutFlowTable.update(cutBJetPt,         "gen",     evtWeight);
-    if ( passesBJetPt_rec_and_gen         ) cutFlowTable.update(cutBJetPt,         "gen&rec", evtWeight);
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutBJetPt,         "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutBJetPt,         "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutBJetPt,         "gen&rec", evtWeight);
 
-    bool passesBJetPt_and_Eta_rec         = selJets_Hbb.size() >= 2;
-    bool passesBJetPt_and_Eta_gen         = genBJets_passingPt_and_Eta.size() >= 2;
-    bool passesBJetPt_and_Eta_rec_and_gen = selectGenMatchedParticles(selJets_Hbb, genBJets_passingPt_and_Eta).size() >= 2;
+    passesEvtSel_rec         = passesEvtSel_rec         && selJets_Hbb.size() >= 2;
+    passesEvtSel_gen         = passesEvtSel_gen         && genBJets_passingPt_and_Eta.size() >= 2;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(selJets_Hbb, genBJets_passingPt_and_Eta).size() >= 2;
     const std::string cutBJetPt_and_Eta = ">= 2 jets from H->bb decay, passing pT > 25 GeV & abs(eta) < 2.4";
-    if ( passesBJetPt_and_Eta_rec         ) cutFlowTable.update(cutBJetPt_and_Eta, "rec",     evtWeight);
-    if ( passesBJetPt_and_Eta_gen         ) cutFlowTable.update(cutBJetPt_and_Eta, "gen",     evtWeight);
-    if ( passesBJetPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutBJetPt_and_Eta, "gen&rec", evtWeight);
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutBJetPt_and_Eta, "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutBJetPt_and_Eta, "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutBJetPt_and_Eta, "gen&rec", evtWeight);
 
     int numBJets_loose  = 0;
     int numBJets_medium = 0;
@@ -899,13 +910,13 @@ dumpGenParticles("genWJet", genWJets);
       countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     }
 
-    bool passesBJetCSV_rec                = numBJets_medium >= 1;
-    bool passesBJetCSV_gen                = passesBJetPt_and_Eta_gen;
-    bool passesBJetCSV_rec_and_gen        = passesBJetPt_and_Eta_rec_and_gen && passesBJetCSV_rec;
+    passesEvtSel_rec         = passesEvtSel_rec         && numBJets_medium >= 1;
+    passesEvtSel_gen         = passesEvtSel_gen         && true;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && numBJets_medium >= 1;
     const std::string cutBJetCSV = ">= 1 medium b-jet";
-    if ( passesBJetCSV_rec                ) cutFlowTable.update(cutBJetCSV,        "rec",     evtWeight);
-    if ( passesBJetCSV_gen                ) cutFlowTable.update(cutBJetCSV,        "gen",     evtWeight);
-    if ( passesBJetCSV_rec_and_gen        ) cutFlowTable.update(cutBJetCSV,        "gen&rec", evtWeight);
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutBJetCSV,        "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutBJetCSV,        "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutBJetCSV,        "gen&rec", evtWeight);
 
 //--- select jets from W->jj decay
     std::vector<selJetsType_Wjj> selJetsT_Wjj;
@@ -913,7 +924,7 @@ dumpGenParticles("genWJet", genWJets);
     {
       selJetsT_Wjj = selectJets_Wjj(
         jet_ptrs_ak8_Wjj, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
-        cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+        cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
         *selJetT_Hbb, 
         tightLepton, selBJetsAK4_medium, mva_Wjj, eventInfo);
     }
@@ -933,21 +944,21 @@ dumpGenParticles("genWJet", genWJets);
     if ( selJet2_Wjj ) selJets_Wjj.push_back(selJet2_Wjj);
     std::sort(selJets_Wjj.begin(), selJets_Wjj.end(), isHigherPt);
 
-    bool passesWJetPt_rec                 = selJets_Wjj.size() >= 2;
-    bool passesWJetPt_gen                 = genWJets_passingPt.size() >= 2;
-    bool passesWJetPt_rec_and_gen         = selectGenMatchedParticles(selJets_Wjj, genWJets_passingPt).size() >= 2;
-    const std::string cutWJetPt = ">= 2 jets from H->bb decay, passing pT > 25 GeV";
-    if ( passesWJetPt_rec                 ) cutFlowTable.update(cutWJetPt,         "rec",     evtWeight);
-    if ( passesWJetPt_gen                 ) cutFlowTable.update(cutWJetPt,         "gen",     evtWeight);
-    if ( passesWJetPt_rec_and_gen         ) cutFlowTable.update(cutWJetPt,         "gen&rec", evtWeight);
+    passesEvtSel_rec         = passesEvtSel_rec         && selJets_Wjj.size() >= 2;
+    passesEvtSel_gen         = passesEvtSel_gen         && genWJets_passingPt.size() >= 2;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(selJets_Wjj, genWJets_passingPt).size() >= 2;
+    const std::string cutWJetPt = ">= 2 jets from W->jj decay, passing pT > 25 GeV";
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutWJetPt,         "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutWJetPt,         "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutWJetPt,         "gen&rec", evtWeight);
 
-    bool passesWJetPt_and_Eta_rec         = selJets_Wjj.size() >= 2;
-    bool passesWJetPt_and_Eta_gen         = genWJets_passingPt_and_Eta.size() >= 2;
-    bool passesWJetPt_and_Eta_rec_and_gen = selectGenMatchedParticles(selJets_Wjj, genWJets_passingPt_and_Eta).size() >= 2;
-    const std::string cutWJetPt_and_Eta = Form(">= 2 jets from H->bb decay, passing pT > 25 GeV & abs(eta) < %1.1f", selJetAK4_max_absEta_Wjj);
-    if ( passesWJetPt_and_Eta_rec         ) cutFlowTable.update(cutWJetPt_and_Eta, "rec",     evtWeight);
-    if ( passesWJetPt_and_Eta_gen         ) cutFlowTable.update(cutWJetPt_and_Eta, "gen",     evtWeight);
-    if ( passesWJetPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutWJetPt_and_Eta, "gen&rec", evtWeight);
+    passesEvtSel_rec         = passesEvtSel_rec         && selJets_Wjj.size() >= 2;
+    passesEvtSel_gen         = passesEvtSel_gen         && genWJets_passingPt_and_Eta.size() >= 2;
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(selJets_Wjj, genWJets_passingPt_and_Eta).size() >= 2;
+    const std::string cutWJetPt_and_Eta = Form(">= 2 jets from W->jj decay, passing pT > 25 GeV & abs(eta) < %1.1f", selJetAK4_max_absEta_Wjj);
+    if ( passesEvtSel_rec         ) cutFlowTable.update(cutWJetPt_and_Eta, "rec",     evtWeight);
+    if ( passesEvtSel_gen         ) cutFlowTable.update(cutWJetPt_and_Eta, "gen",     evtWeight);
+    if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutWJetPt_and_Eta, "gen&rec", evtWeight);
 
 //--- compute MHT and linear MET discriminant (met_LD)
     //RecoMEt met = metReader->read();
@@ -974,36 +985,38 @@ dumpGenParticles("genWJet", genWJets);
     }
 
 //--- fill two-dimensional correlation plot between generator-level and reconstruction-level jets from W->jj vs H->bb decay
-    const std::vector<const RecoJet*> tmpJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-    const std::vector<const RecoJet*> selJetsAK4_Hbb_genMatched = selectGenMatchedParticles(tmpJetsAK4_Hbb, genBJets_ptrs);
+    //const std::vector<const RecoJet*> tmpJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    //const std::vector<const RecoJet*> selJetsAK4_Hbb_genMatched = selectGenMatchedParticles(tmpJetsAK4_Hbb, genBJets_ptrs);
+    const std::vector<const RecoJetBase*> selJets_Hbb_genMatched = selectGenMatchedParticles(selJets_Hbb, genBJets_ptrs);
     int idxHbb = -1;
-    if      ( selJetsAK4_Hbb.size() == 2 && selJetsAK4_Hbb_genMatched.size() == 2 ) idxHbb = k2Rec2Matched;
-    else if ( selJetsAK4_Hbb.size() == 2 && selJetsAK4_Hbb_genMatched.size() == 1 ) idxHbb = k2Rec1Matched;
-    else if ( selJetsAK4_Hbb.size() == 1 && selJetsAK4_Hbb_genMatched.size() == 1 ) idxHbb = k1Rec1Matched;
-    else                                                                            idxHbb = k0Matched;
+    if      ( selJets_Hbb.size() >= 2 && selJets_Hbb_genMatched.size() >= 2 ) idxHbb = k2Rec2Matched;
+    else if ( selJets_Hbb.size() >= 2 && selJets_Hbb_genMatched.size() >= 1 ) idxHbb = k2Rec1Matched;
+    else if ( selJets_Hbb.size() >= 1 && selJets_Hbb_genMatched.size() >= 1 ) idxHbb = k1Rec1Matched;
+    else                                                                      idxHbb = k0Matched;
 
-    const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
-    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
-    std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
-    rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, numBJets_medium, mva_Wjj, eventInfo);
-    std::vector<const RecoJet*> tmpJetsAK4_Wjj;
-    if ( jetPairs_Wjj.size() >= 1 ) 
-    {
-      const JetPair_Wjj& jetPair1_Wjj = jetPairs_Wjj[0];
-      tmpJetsAK4_Wjj.push_back(jetPair1_Wjj.jet1_);
-      tmpJetsAK4_Wjj.push_back(jetPair1_Wjj.jet2_);
-    } 
-    else 
-    {
-      if ( selJetsAK4_Wjj.size() >= 1 ) tmpJetsAK4_Wjj.push_back(selJetsAK4_Wjj[0]);
-      if ( selJetsAK4_Wjj.size() >= 2 ) tmpJetsAK4_Wjj.push_back(selJetsAK4_Wjj[1]);
-    }
-    const std::vector<const RecoJet*> selJetsAK4_Wjj_genMatched = selectGenMatchedParticles(tmpJetsAK4_Wjj, genWJets_ptrs);
+    //const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+    //const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
+    //std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
+    //rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, numBJets_medium, mva_Wjj, eventInfo);
+    //std::vector<const RecoJet*> tmpJetsAK4_Wjj;
+    //if ( jetPairs_Wjj.size() >= 1 ) 
+    //{
+    //  const JetPair_Wjj& jetPair1_Wjj = jetPairs_Wjj[0];
+    //  tmpJetsAK4_Wjj.push_back(jetPair1_Wjj.jet1_);
+    //  tmpJetsAK4_Wjj.push_back(jetPair1_Wjj.jet2_);
+    //} 
+    //else 
+    //{
+    //  if ( selJetsAK4_Wjj.size() >= 1 ) tmpJetsAK4_Wjj.push_back(selJetsAK4_Wjj[0]);
+    //  if ( selJetsAK4_Wjj.size() >= 2 ) tmpJetsAK4_Wjj.push_back(selJetsAK4_Wjj[1]);
+    //}
+    //const std::vector<const RecoJet*> selJetsAK4_Wjj_genMatched = selectGenMatchedParticles(tmpJetsAK4_Wjj, genWJets_ptrs);
+    const std::vector<const RecoJetBase*> selJets_Wjj_genMatched = selectGenMatchedParticles(selJets_Wjj, genWJets_ptrs);
     int idxWjj = -1;
-    if      ( selJetsAK4_Wjj.size() >= 2 && selJetsAK4_Wjj_genMatched.size() >= 2 ) idxWjj = k2Rec2Matched;
-    else if ( selJetsAK4_Wjj.size() >= 2 && selJetsAK4_Wjj_genMatched.size() >= 1 ) idxWjj = k2Rec1Matched;
-    else if ( selJetsAK4_Wjj.size() >= 1 && selJetsAK4_Wjj_genMatched.size() >= 1 ) idxWjj = k1Rec1Matched;
-    else                                                                            idxWjj = k0Matched;
+    if      ( selJets_Wjj.size() >= 2 && selJets_Wjj_genMatched.size() >= 2 ) idxWjj = k2Rec2Matched;
+    else if ( selJets_Wjj.size() >= 2 && selJets_Wjj_genMatched.size() >= 1 ) idxWjj = k2Rec1Matched;
+    else if ( selJets_Wjj.size() >= 1 && selJets_Wjj_genMatched.size() >= 1 ) idxWjj = k1Rec1Matched;
+    else                                                                      idxWjj = k0Matched;
 
     histogram_selJetCorrelation->Fill(idxHbb, idxWjj, evtWeight);
 
@@ -1026,6 +1039,10 @@ dumpGenParticles("genWJet", genWJets);
 	*histograms_resolvedHbb_bjet2, histogram_resolvedHbb_bjet2_idx,
 	histogram_resolvedHbb_bjet_numIndices, histogram_resolvedHbb_bjet_mjj, evtWeight);
     }
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
+    std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
+    rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, numBJets_medium, mva_Wjj, eventInfo);
     fillHistograms_jets(
       selJetsAK4_Wjj,
       genWJets_ptrs, 
