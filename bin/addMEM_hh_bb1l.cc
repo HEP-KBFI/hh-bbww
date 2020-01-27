@@ -329,7 +329,7 @@ int main(int argc,
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4_Hbb(era, -1, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4_Wjj(era, -1, isDEBUG);
-  jetSelectorAK4_Wjj.getSelector().set_max_absEta(4.7);
+  //jetSelectorAK4_Wjj.getSelector().set_max_absEta(4.7);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
