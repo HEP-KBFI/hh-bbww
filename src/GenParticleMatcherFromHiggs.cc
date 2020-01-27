@@ -47,7 +47,6 @@ getGenLeptonsForMatching(const std::vector<GenParticle>& genParticlesFromHiggs,
     if ( genLepton_and_Neutrino1.first && genLepton_and_Neutrino1.second )
     {
       const GenParticle* genLepton1 = genLepton_and_Neutrino1.first;
-std::cout << "genLepton1: pT = " << genLepton1->pt() << ", eta = " << genLepton1->eta() << ", phi = " << genLepton1->phi() << std::endl;
       genLeptonsFromHiggs.push_back(*genLepton1);
     }
     std::pair<const GenLepton*, const GenParticle*> genLepton_and_Neutrino2 =
@@ -55,7 +54,6 @@ std::cout << "genLepton1: pT = " << genLepton1->pt() << ", eta = " << genLepton1
     if ( genLepton_and_Neutrino2.first && genLepton_and_Neutrino2.second )
     {
       const GenParticle* genLepton2 = genLepton_and_Neutrino2.first;
-std::cout << "genLepton2: pT = " << genLepton2->pt() << ", eta = " << genLepton2->eta() << ", phi = " << genLepton2->phi() << std::endl;
       genLeptonsFromHiggs.push_back(*genLepton2);
     }
   }
@@ -79,7 +77,6 @@ getGenMEt(const std::vector<GenParticle>& genParticlesFromHiggs,
     if ( genLepton_and_Neutrino1.first && genLepton_and_Neutrino1.second )
     {
       const GenParticle* genNeutrino1 = genLepton_and_Neutrino1.second;
-std::cout << "genNeutrino1: pT = " << genNeutrino1->pt() << ", eta = " << genNeutrino1->eta() << ", phi = " << genNeutrino1->phi() << std::endl;
       genMEtPx += genNeutrino1->p4().px();
       genMEtPy += genNeutrino1->p4().py();
     }
@@ -88,7 +85,6 @@ std::cout << "genNeutrino1: pT = " << genNeutrino1->pt() << ", eta = " << genNeu
     if ( genLepton_and_Neutrino2.first && genLepton_and_Neutrino2.second )
     {
       const GenParticle* genNeutrino2 = genLepton_and_Neutrino2.second;
-std::cout << "genNeutrino2: pT = " << genNeutrino2->pt() << ", eta = " << genNeutrino2->eta() << ", phi = " << genNeutrino2->phi() << std::endl;
       genMEtPx += genNeutrino2->p4().px();
       genMEtPy += genNeutrino2->p4().py();
     }
@@ -104,34 +100,24 @@ getGenWJetsFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs,
                      const std::vector<GenParticle>& genWJets)
 {  
   std::vector<GenJet> genWJetsFromHiggs;
-std::cout << "break-point A.1 reached" << std::endl;
 
   std::vector<GenParticle> genWBosons = getGenWBosonsFromHiggs(genParticlesFromHiggs);
-std::cout << "break-point A.2 reached" << std::endl;
   if ( genWBosons.size() == 2 ) 
   {
-std::cout << "break-point A.3 reached" << std::endl;
     std::pair<const GenLepton*, const GenParticle*> genLepton_and_Neutrino1 =
       findGenLepton_and_NeutrinoFromWBoson(genWBosons[0], genLeptons, genNeutrinos);
-std::cout << "break-point A.4 reached" << std::endl;
-std::cout << "genWBosons[0]: pT = " << genWBosons[0].pt() << ", eta = " << genWBosons[0].eta() << ", phi = " << genWBosons[0].phi() << std::endl;
     if ( !(genLepton_and_Neutrino1.first && genLepton_and_Neutrino1.second) )
     {
-std::cout << "break-point A.5 reached" << std::endl;
       std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson1 =
         findGenJetsFromWBoson(genWBosons[0], genWJets);
-std::cout << "break-point A.6 reached" << std::endl;
       if ( genJetsFromWBoson1.first && genJetsFromWBoson1.second )
       {
         const GenParticle* genJet1_Wjj = genJetsFromWBoson1.first;
-std::cout << "genJet1_Wjj: pT = " << genJet1_Wjj->pt() << ", eta = " << genJet1_Wjj->eta() << ", phi = " << genJet1_Wjj->phi() << std::endl;
         genWJetsFromHiggs.push_back(GenJet(genJet1_Wjj->pt(), genJet1_Wjj->eta(), genJet1_Wjj->phi(), genJet1_Wjj->mass(), genJet1_Wjj->pdgId()));
         const GenParticle* genJet2_Wjj = genJetsFromWBoson1.second;
-std::cout << "genJet2_Wjj: pT = " << genJet2_Wjj->pt() << ", eta = " << genJet2_Wjj->eta() << ", phi = " << genJet2_Wjj->phi() << std::endl;
         genWJetsFromHiggs.push_back(GenJet(genJet2_Wjj->pt(), genJet2_Wjj->eta(), genJet2_Wjj->phi(), genJet2_Wjj->mass(), genJet2_Wjj->pdgId()));
       }
     }
-std::cout << "genWBosons[1]: pT = " << genWBosons[1].pt() << ", eta = " << genWBosons[1].eta() << ", phi = " << genWBosons[1].phi() << std::endl;
     std::pair<const GenLepton*, const GenParticle*> genLepton_and_Neutrino2 =
       findGenLepton_and_NeutrinoFromWBoson(genWBosons[1], genLeptons, genNeutrinos);
     if ( !(genLepton_and_Neutrino2.first && genLepton_and_Neutrino2.second) )
@@ -141,10 +127,8 @@ std::cout << "genWBosons[1]: pT = " << genWBosons[1].pt() << ", eta = " << genWB
       if ( genJetsFromWBoson2.first && genJetsFromWBoson2.second )
       {
         const GenParticle* genJet1_Wjj = genJetsFromWBoson2.first;
-std::cout << "genJet1_Wjj: pT = " << genJet1_Wjj->pt() << ", eta = " << genJet1_Wjj->eta() << ", phi = " << genJet1_Wjj->phi() << std::endl;
         genWJetsFromHiggs.push_back(GenJet(genJet1_Wjj->pt(), genJet1_Wjj->eta(), genJet1_Wjj->phi(), genJet1_Wjj->mass(), genJet1_Wjj->pdgId()));
         const GenParticle* genJet2_Wjj = genJetsFromWBoson2.second;
-std::cout << "genJet2_Wjj: pT = " << genJet2_Wjj->pt() << ", eta = " << genJet2_Wjj->eta() << ", phi = " << genJet2_Wjj->phi() << std::endl;
         genWJetsFromHiggs.push_back(GenJet(genJet2_Wjj->pt(), genJet2_Wjj->eta(), genJet2_Wjj->phi(), genJet2_Wjj->mass(), genJet2_Wjj->pdgId()));
       }
     }
@@ -186,15 +170,8 @@ GenParticleMatcherFromHiggs::setGenParticles(const std::vector<GenParticle>& gen
                                              const std::vector<GenParticle>& genNeutrinos,
                                              const std::vector<GenParticle>& genWJets)
 {
-std::cout << "break-point 1 reached" << std::endl;
   genLeptonsForMatching_ = getGenLeptonsForMatching(genParticlesFromHiggs, genLeptons, genNeutrinos);
-std::cout << "break-point 2 reached" << std::endl;
   genWJetsForMatching_ = getGenWJetsFromHiggs(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
-std::cout << "break-point 3 reached" << std::endl;
   genBJetsForMatching_ = getGenBJetsFromHiggs(genParticlesFromHiggs);
-std::cout << "break-point 4 reached" << std::endl;
   getGenMEt(genParticlesFromHiggs, genLeptons, genNeutrinos, genMEtPt_, genMEtPhi_);
-std::cout << "break-point 5 reached" << std::endl;
-std::cout << "genMEtPt = " << genMEtPt_ << std::endl;
-std::cout << "genMEtPhi = " << genMEtPhi_ << std::endl;
 }
