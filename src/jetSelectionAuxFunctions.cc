@@ -174,6 +174,7 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8_Wjj,
     {
       std::cerr << "Warning in <selectJets_Wjj>: Cannot select AK8LS jets, as there is no lepton in the event !!" << std::endl;
     }
+    return retVal;
   }
   // CV: only consider the first ten jets, in order to avoid too large combinatorics in building W->jj pairs,
   //     which would require many time-consuming MEM computations

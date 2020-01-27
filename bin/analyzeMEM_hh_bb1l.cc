@@ -299,6 +299,15 @@ void dumpGenLeptons(const std::string& label, const std::vector<GenLepton>& genL
   }
 }
 
+void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& genParticles)
+{
+  for ( size_t idxParticle = 0; idxParticle < genParticles.size(); ++idxParticle ) {
+    std::cout << label << " #" << idxParticle << ":" << " ";
+    std::cout << genParticles[idxParticle];
+    std::cout << std::endl;
+  }
+}
+
 void dumpGenJets(const std::string& label, const std::vector<GenJet>& genJets)
 {
   for ( size_t idxJet = 0; idxJet < genJets.size(); ++idxJet ) {
@@ -687,7 +696,11 @@ int main(int argc, char* argv[])
       std::vector<GenParticle> genNeutrinos = genNeutrinoReader->read();
       std::vector<GenParticle> genParticlesFromHiggs = genParticleFromHiggsReader->read();
       std::vector<GenParticle> genWJets = genWJetReader->read();
-      genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos);
+dumpGenLeptons("genLepton", genLeptons);      
+dumpGenParticles("genNeutrino", genNeutrinos);
+dumpGenParticles("genParticleFromHiggs", genParticlesFromHiggs);
+dumpGenParticles("genWJet", genWJets);
+      genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
       genParticleMatcher = &genParticleMatcherFromHiggs;
     }
     else if ( isMC_TT )
@@ -819,7 +832,7 @@ int main(int argc, char* argv[])
     const std::string cutTightLeptonEta = ">= 1 tight lepton";
     if ( passesTightLeptonEta_rec                ) cutFlowTable.update(cutTightLeptonEta,        "rec",     evtWeight);
     if ( passesTightLeptonEta_gen                ) cutFlowTable.update(cutTightLeptonEta,        "gen",     evtWeight);
-    if ( passesTightLeptonEta_rec_and_gen        ) cutFlowTable.update(cutTightLeptonEta,        "rec&gen", evtWeight);
+    if ( passesTightLeptonEta_rec_and_gen        ) cutFlowTable.update(cutTightLeptonEta,        "gen&rec", evtWeight);
     
     bool passesTightLeptonPt_and_Eta_rec         = tightLeptons_passingPt_and_Eta.size() >= 1;
     bool passesTightLeptonPt_and_Eta_gen         = genLeptons_passingPt_and_Eta.size() >= 1;
@@ -827,7 +840,7 @@ int main(int argc, char* argv[])
     const std::string cutTightLeptonPt_and_Eta = Form("tight electron (muon) pT > %2.0f (%2.0f) GeV", selElectron_min_pt, selMuon_min_pt);
     if ( passesTightLeptonPt_and_Eta_rec         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "rec",     evtWeight);
     if ( passesTightLeptonPt_and_Eta_gen         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "gen",     evtWeight);
-    if ( passesTightLeptonPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "rec&gen", evtWeight);
+    if ( passesTightLeptonPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "gen&rec", evtWeight);
 
     const RecoLepton* tightLepton = nullptr;
     if ( tightLeptons_passingPt_and_Eta.size() >= 1 ) 
@@ -869,7 +882,7 @@ int main(int argc, char* argv[])
     const std::string cutBJetPt = ">= 2 jets from H->bb decay, passing pT > 25 GeV";
     if ( passesBJetPt_rec                 ) cutFlowTable.update(cutBJetPt,         "rec",     evtWeight);
     if ( passesBJetPt_gen                 ) cutFlowTable.update(cutBJetPt,         "gen",     evtWeight);
-    if ( passesBJetPt_rec_and_gen         ) cutFlowTable.update(cutBJetPt,         "rec&gen", evtWeight);
+    if ( passesBJetPt_rec_and_gen         ) cutFlowTable.update(cutBJetPt,         "gen&rec", evtWeight);
 
     bool passesBJetPt_and_Eta_rec         = selJets_Hbb.size() >= 2;
     bool passesBJetPt_and_Eta_gen         = genBJets_passingPt_and_Eta.size() >= 2;
@@ -877,7 +890,7 @@ int main(int argc, char* argv[])
     const std::string cutBJetPt_and_Eta = ">= 2 jets from H->bb decay, passing pT > 25 GeV & abs(eta) < 2.4";
     if ( passesBJetPt_and_Eta_rec         ) cutFlowTable.update(cutBJetPt_and_Eta, "rec",     evtWeight);
     if ( passesBJetPt_and_Eta_gen         ) cutFlowTable.update(cutBJetPt_and_Eta, "gen",     evtWeight);
-    if ( passesBJetPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutBJetPt_and_Eta, "rec&gen", evtWeight);
+    if ( passesBJetPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutBJetPt_and_Eta, "gen&rec", evtWeight);
 
     int numBJets_loose  = 0;
     int numBJets_medium = 0;
@@ -892,7 +905,7 @@ int main(int argc, char* argv[])
     const std::string cutBJetCSV = ">= 1 medium b-jet";
     if ( passesBJetCSV_rec                ) cutFlowTable.update(cutBJetCSV,        "rec",     evtWeight);
     if ( passesBJetCSV_gen                ) cutFlowTable.update(cutBJetCSV,        "gen",     evtWeight);
-    if ( passesBJetCSV_rec_and_gen        ) cutFlowTable.update(cutBJetCSV,        "rec&gen", evtWeight);
+    if ( passesBJetCSV_rec_and_gen        ) cutFlowTable.update(cutBJetCSV,        "gen&rec", evtWeight);
 
 //--- select jets from W->jj decay
     std::vector<selJetsType_Wjj> selJetsT_Wjj;
@@ -926,7 +939,7 @@ int main(int argc, char* argv[])
     const std::string cutWJetPt = ">= 2 jets from H->bb decay, passing pT > 25 GeV";
     if ( passesWJetPt_rec                 ) cutFlowTable.update(cutWJetPt,         "rec",     evtWeight);
     if ( passesWJetPt_gen                 ) cutFlowTable.update(cutWJetPt,         "gen",     evtWeight);
-    if ( passesWJetPt_rec_and_gen         ) cutFlowTable.update(cutWJetPt,         "rec&gen", evtWeight);
+    if ( passesWJetPt_rec_and_gen         ) cutFlowTable.update(cutWJetPt,         "gen&rec", evtWeight);
 
     bool passesWJetPt_and_Eta_rec         = selJets_Wjj.size() >= 2;
     bool passesWJetPt_and_Eta_gen         = genWJets_passingPt_and_Eta.size() >= 2;
@@ -934,7 +947,7 @@ int main(int argc, char* argv[])
     const std::string cutWJetPt_and_Eta = Form(">= 2 jets from H->bb decay, passing pT > 25 GeV & abs(eta) < %1.1f", selJetAK4_max_absEta_Wjj);
     if ( passesWJetPt_and_Eta_rec         ) cutFlowTable.update(cutWJetPt_and_Eta, "rec",     evtWeight);
     if ( passesWJetPt_and_Eta_gen         ) cutFlowTable.update(cutWJetPt_and_Eta, "gen",     evtWeight);
-    if ( passesWJetPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutWJetPt_and_Eta, "rec&gen", evtWeight);
+    if ( passesWJetPt_and_Eta_rec_and_gen ) cutFlowTable.update(cutWJetPt_and_Eta, "gen&rec", evtWeight);
 
 //--- compute MHT and linear MET discriminant (met_LD)
     //RecoMEt met = metReader->read();

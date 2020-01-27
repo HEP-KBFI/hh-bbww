@@ -895,7 +895,7 @@ int main(int argc,
             const std::vector<const RecoJetBase*> selJets_Wjj_base = convert_to_RecoJetBase(selJetsAK4_Wjj);
             if ( isMC_HH )
             {
-              genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos);
+              genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
               genParticleMatcherFromHiggs({ selLepton }, selJets_Hbb_base, selJets_Wjj_base, met);
             }
             else if ( isMC_TT )

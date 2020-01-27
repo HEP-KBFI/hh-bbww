@@ -809,7 +809,7 @@ int main(int argc,
               const std::vector<const RecoJetBase*> selJets_Hbb_base = { selJet1_Hbb, selJet2_Hbb };
               if ( isMC_HH )
               {
-                genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos);
+                genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, {});
                 genParticleMatcherFromHiggs({ selLepton_lead, selLepton_sublead }, selJets_Hbb_base, {}, met);
               }
               else if ( isMC_TT )

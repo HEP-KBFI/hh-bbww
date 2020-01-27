@@ -18,7 +18,8 @@ class GenParticleMatcherFromHiggs : public GenParticleMatcherBase
 
   void setGenParticles(const std::vector<GenParticle>& genParticlesFromHiggs, 
                        const std::vector<GenLepton>& genLeptons, 
-                       const std::vector<GenParticle>& genNeutrinos);
+                       const std::vector<GenParticle>& genNeutrinos,
+                       const std::vector<GenParticle>& genWJets);
 };
 
 #endif // GenParticleMatcherFromHiggs_h

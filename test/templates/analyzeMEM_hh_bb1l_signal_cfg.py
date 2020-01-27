@@ -5,7 +5,8 @@ process = cms.PSet()
 
 process.fwliteInput = cms.PSet(
     fileNames = cms.vstring(),
-    maxEvents = cms.int32(-1),
+    #maxEvents = cms.int32(-1),
+    maxEvents = cms.int32(10),
     outputEvery = cms.uint32(100000)
 )
 
@@ -16,7 +17,7 @@ process.fwliteOutput = cms.PSet(
 process.analyzeMEM_hh_bb1l = cms.PSet(
     treeName = cms.string('Events'),
 
-    process = cms.string('signal_ggf_nonresonant_node_sm_hh_2b2v_sl'),
+    process = cms.string('signal_ggf_nonresonant_hh_bbvv_sl'),
     histogramDir = cms.string('signal'),
     era = cms.string('2017'),
 
