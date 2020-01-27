@@ -151,17 +151,12 @@ GenParticleMatcherFromHiggs::~GenParticleMatcherFromHiggs()
 {}
 
 void 
-GenParticleMatcherFromHiggs::operator()(const std::vector<const RecoLepton*>& selLeptons, 
-                                        const std::vector<const RecoJetBase*>& selJets_Hbb, 
-                                        const std::vector<const RecoJetBase*>& selJets_Wjj, 
-                                        const RecoMEt& met,
-                                        const std::vector<GenParticle>& genParticlesFromHiggs, 
-                                        const std::vector<GenLepton>& genLeptons, 
-                                        const std::vector<GenParticle>& genNeutrinos)
+GenParticleMatcherFromHiggs::setGenParticles(const std::vector<GenParticle>& genParticlesFromHiggs, 
+                                             const std::vector<GenLepton>& genLeptons, 
+                                             const std::vector<GenParticle>& genNeutrinos)
 {
   genLeptonsForMatching_ = getGenLeptonsForMatching(genParticlesFromHiggs, genLeptons, genNeutrinos);
   genWJetsForMatching_ = getGenWJetsFromHiggs(genParticlesFromHiggs, genLeptons, genNeutrinos);
   genBJetsForMatching_ = getGenBJetsFromHiggs(genParticlesFromHiggs);
   getGenMEt(genParticlesFromHiggs, genLeptons, genNeutrinos, genMEtPt_, genMEtPhi_);
-  GenParticleMatcherBase::operator()(selLeptons, selJets_Hbb, selJets_Wjj, met);
 }

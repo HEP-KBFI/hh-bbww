@@ -51,7 +51,7 @@ struct JetPair_Hbb : public JetPairBase
 bool isHigherRankedByCSV(const JetPair_Hbb& pair1, const JetPair_Hbb& pair2);
 
 std::vector<JetPair_Hbb> 
-makeJetPairs_Hbb(const std::vector<const RecoJet*>& selJetsAK4_Hbb, const std::vector<GenParticle>* genWJets = nullptr);
+makeJetPairs_Hbb(const std::vector<const RecoJet*>& selJetsAK4_Hbb, const std::vector<const GenJet*>* genWJets = nullptr);
 
 void
 rankJetPairs_Hbb(std::vector<JetPair_Hbb>& jetPairs_Hbb);
@@ -70,7 +70,7 @@ bool
 isHigherRankedByBDT(const JetPair_Wjj& pair1, const JetPair_Wjj& pair2);
 
 std::vector<JetPair_Wjj> 
-makeJetPairs_Wjj(const std::vector<const RecoJet*>& selJetsAK4_Wjj, const std::vector<GenParticle>* genWJets = nullptr);
+makeJetPairs_Wjj(const std::vector<const RecoJet*>& selJetsAK4_Wjj, const std::vector<const GenJet*>* genWJets = nullptr);
 
 TMVAInterface initialize_mva_Wjj();
 

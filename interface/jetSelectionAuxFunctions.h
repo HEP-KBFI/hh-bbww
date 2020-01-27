@@ -34,14 +34,19 @@ struct selJetsType_Hbb
 
 std::vector<selJetsType_Hbb>
 selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb, 
-               const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
                const std::vector<const RecoJet*> selJetsAK4_Hbb,
-               const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
-               const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
                const RecoLepton* selLepton_lead = nullptr,
 	       const RecoLepton* selLepton_sublead = nullptr,
                int maxJetPairs = 1,
                bool isDEBUG = false);
+
+void
+countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
+                   const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
+                   const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
+                   const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
+                   int& numBJets_loose,
+                   int& numBJets_medium);
 
 struct selJetsType_Wjj
 {

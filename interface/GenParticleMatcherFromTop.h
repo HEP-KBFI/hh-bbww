@@ -16,15 +16,10 @@ class GenParticleMatcherFromTop : public GenParticleMatcherBase
   GenParticleMatcherFromTop();
   ~GenParticleMatcherFromTop();
 
-  void 
-  operator()(const std::vector<const RecoLepton*>& selLeptons, 
-             const std::vector<const RecoJetBase*>& selJets_Hbb, 
-             const std::vector<const RecoJetBase*>& selJets_Wjj, 
-             const RecoMEt& met,
-             const std::vector<GenLepton>& genLeptonsFromTop, 
-	     const std::vector<GenParticle>& genNeutrinosFromTop,
-             const std::vector<GenParticle>& genLightQuarksFromTop, 
-             const std::vector<GenParticle>& genBQuarksFromTop);
+  void setGenParticles(const std::vector<GenLepton>& genLeptonsFromTop, 
+	               const std::vector<GenParticle>& genNeutrinosFromTop,
+                       const std::vector<GenParticle>& genLightQuarksFromTop, 
+                       const std::vector<GenParticle>& genBQuarksFromTop);
 };
 
 #endif // GenParticleMatcherFromTop_h

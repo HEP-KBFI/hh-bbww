@@ -40,15 +40,15 @@ isHigherRankedByScalarPt(const JetPairBase& pair1, const JetPairBase& pair2)
 
 template <typename T>
 std::vector<T> 
-makeJetPairsT(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<GenParticle>* genWJets)
+makeJetPairsT(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>* genWJets)
 {
   std::vector<T> jetPairs;
   for ( std::vector<const RecoJet*>::const_iterator selJet1 = selJetsAK4.begin(); selJet1 != selJetsAK4.end(); ++selJet1 ) 
   {
     for ( std::vector<const RecoJet*>::const_iterator selJet2 = selJet1 + 1; selJet2 != selJetsAK4.end(); ++selJet2 ) 
     {
-      bool selJet1_isGenMatched = ( genWJets ) ? isGenMatched((*selJet1)->eta(), (*selJet1)->phi(), *genWJets) : false;
-      bool selJet2_isGenMatched = ( genWJets ) ? isGenMatched((*selJet2)->eta(), (*selJet2)->phi(), *genWJets) : false;
+      bool selJet1_isGenMatched = ( genWJets ) ? isGenMatchedT<GenJet>((*selJet1)->eta(), (*selJet1)->phi(), *genWJets) : false;
+      bool selJet2_isGenMatched = ( genWJets ) ? isGenMatchedT<GenJet>((*selJet2)->eta(), (*selJet2)->phi(), *genWJets) : false;
       T jetPair(*selJet1, selJet1_isGenMatched, *selJet2, selJet2_isGenMatched);
       jetPairs.push_back(jetPair); 
     }
@@ -68,7 +68,7 @@ isHigherRankedByCSV(const JetPair_Hbb& pair1, const JetPair_Hbb& pair2)
 }
 
 std::vector<JetPair_Hbb> 
-makeJetPairs_Hbb(const std::vector<const RecoJet*>& selJetsAK4_Hbb, const std::vector<GenParticle>* genWJets)
+makeJetPairs_Hbb(const std::vector<const RecoJet*>& selJetsAK4_Hbb, const std::vector<const GenJet*>* genWJets)
 {
   return makeJetPairsT<JetPair_Hbb>(selJetsAK4_Hbb, genWJets);
 }
@@ -91,7 +91,7 @@ isHigherRankedByBDT(const JetPair_Wjj& pair1, const JetPair_Wjj& pair2)
 }
 
 std::vector<JetPair_Wjj> 
-makeJetPairs_Wjj(const std::vector<const RecoJet*>& selJetsAK4_Wjj, const std::vector<GenParticle>* genWJets)
+makeJetPairs_Wjj(const std::vector<const RecoJet*>& selJetsAK4_Wjj, const std::vector<const GenJet*>* genWJets)
 {
   return makeJetPairsT<JetPair_Wjj>(selJetsAK4_Wjj, genWJets);
 }

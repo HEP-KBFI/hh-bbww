@@ -39,9 +39,21 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     #branchName_memOutput_missingBJet = cms.string(''),
     #branchName_memOutput_missingHadWJet = cms.string(''),
 
-    branchName_genLeptons = cms.string('GenLep'),
-    branchName_genBJets = cms.string('GenBQuarkFromTop'),
-    branchName_genWJets = cms.string('GenWZQuark'),
+    branchNames_genParticles = cms.PSet(
+        # branches specific to HH->bbWW signal events
+        branchName_genLeptons = cms.string('GenLep'),
+        branchName_genNeutrinos = cms.string('GenNu'),
+        branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
+        branchName_genWJets = cms.string('GenWZQuark'),
+        
+        # branches specific to tt+jets background events   
+        branchName_genLeptonsFromTop = cms.string('GenLepFromTop'),
+        branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
+        branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
+        branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
+    ),
+
+    jetCleaningByIndex = cms.bool(True),
 
     isDEBUG = cms.bool(False)
 )

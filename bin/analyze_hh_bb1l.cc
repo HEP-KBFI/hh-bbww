@@ -8,12 +8,6 @@
 #include "DataFormats/Math/interface/deltaR.h" // deltaR
 #include "DataFormats/Math/interface/deltaPhi.h" // deltaPhi
 
-#include <TBenchmark.h> // TBenchmark
-#include <TString.h> // TString, Form
-#include <TError.h> // gErrorAbortLevel, kError
-#include <TRandom3.h> // TRandom3
-#include <TROOT.h> // TROOT
-
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEt.h" // RecoMEt
@@ -99,7 +93,15 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb1l.h" // MEMOutputReader_hh_bb1l
+#include "hhAnalysis/bbww/interface/JetPair.h" // initialize_mva_Wjj
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb, selectJets_Wjj
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
+
+#include <TBenchmark.h> // TBenchmark
+#include <TString.h> // TString, Form
+#include <TError.h> // gErrorAbortLevel, kError
+#include <TRandom3.h> // TRandom3
+#include <TROOT.h> // TROOT
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
@@ -863,6 +865,10 @@ int main(int argc, char* argv[])
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
   }
+
+//--- initialize BDT for ranking of W->jj decays
+  TMVAInterface mva_Wjj = initialize_mva_Wjj();
+
 /*
   // initialize Hj-tagger
   std::string mvaFileName_Hj_tagger = "tthAnalysis/HiggsToTauTau/data/NN_for_legacy_opt/Hjtagger_legacy_xgboost_v1.weights.xml";
@@ -1674,42 +1680,17 @@ int main(int argc, char* argv[])
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_Hbb, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
+    const selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
-    int numBJets_loose = 0;
-    int numBJets_medium = 0;
-    if ( selJetsAK8_Hbb.size() >= 1 ) {
-      selJetAK8_Hbb = selJetsAK8_Hbb[0];
-      selJet1_Hbb = selJetAK8_Hbb->subJet1();
-      selJet2_Hbb = selJetAK8_Hbb->subJet2();
-      assert(selJet1_Hbb && selJet2_Hbb);
-      if ( isDEBUG ) {
-	std::cout << "found boosted H->bb decay:" << std::endl;
-	std::cout << "AK8 jet: pT = " << selJetAK8_Hbb->pt() << ", eta = " << selJetAK8_Hbb->eta() << ", phi = " << selJetAK8_Hbb->phi() << ","
-		  << " dR(selLepton) = " << deltaR(selJetAK8_Hbb->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #1: pT = " << selJet1_Hbb->pt() << ", eta = " << selJet1_Hbb->eta() << ", phi = " << selJet1_Hbb->phi() << ","
-		  << " dR(selLepton) = " << deltaR(selJet1_Hbb->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #2: pT = " << selJet2_Hbb->pt() << ", eta = " << selJet2_Hbb->eta() << ", phi = " << selJet2_Hbb->phi() << ","
-		  << " dR(selLepton) = " << deltaR(selJet2_Hbb->p4(), selLepton->p4()) << std::endl;
-      }
-      double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
-      if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
-      if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
-      double min_BtagCSV_medium = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_medium();
-      if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_medium;
-      if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_medium;
-    } else if ( selJetsAK4_Hbb.size() >= 2 ) {
-      selJet1_Hbb = selJetsAK4_Hbb[0];
-      selJet2_Hbb = selJetsAK4_Hbb[1];
-      if ( isDEBUG ) {
-	std::cout << "found resolved H->bb decay:" << std::endl;
-	std::cout << "AK4 jet #1: pT = " << selJet1_Hbb->pt() << ", eta = " << selJet1_Hbb->eta() << ", phi = " << selJet1_Hbb->phi() << std::endl;
-	std::cout << "AK4 jet #2: pT = " << selJet2_Hbb->pt() << ", eta = " << selJet2_Hbb->eta() << ", phi = " << selJet2_Hbb->phi() << std::endl;
-      }
-      const std::vector<const RecoJet*> particles = { selJetsAK4_Hbb[0], selJetsAK4_Hbb[1] };
-      numBJets_loose = jetSelectorAK4_bTagLoose(particles, isHigherPt).size();
-      numBJets_medium = jetSelectorAK4_bTagMedium(particles, isHigherPt).size();
+    if ( selJetsT_Hbb.size() >= 1 ) 
+    {
+      selJetT_Hbb = &selJetsT_Hbb[0];
+      selJetAK8_Hbb = selJetT_Hbb->fatjet_;
+      selJet1_Hbb = selJetT_Hbb->jet_or_subjet1_;
+      selJet2_Hbb = selJetT_Hbb->jet_or_subjet2_;
     }
     if ( !(selJet1_Hbb && selJet2_Hbb) ) {
       if ( run_lumi_eventSelector ) {
@@ -1727,6 +1708,8 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet_Hbb_sublead = selJets_Hbb[1];
     const Particle::LorentzVector& selJetP4_Hbb_sublead = selJet_Hbb_sublead->p4();
 
+    int numBJets_loose, numBJets_medium;
+    countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     if ( !(numBJets_medium >= 1) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection\n";
@@ -1737,66 +1720,21 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
 
     // select jets from W->jj decay
-
-
-    std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtHbb;
-    std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
-    if ( selJetAK8_Hbb ) {
-      const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
-      cleanedJetsAK8_wrtHbb = jetCleanerAK8_dR16(jet_ptrs_ak8_Wjj, overlaps); // CV: do *not* clean W->jj "fat" jet collection with respect to leptons!
-      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
-    } else {
-      cleanedJetsAK8_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8_Wjj, selJets_Hbb);
-      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, selJets_Hbb);
-    }
-    jetSelectorAK8_Wjj.getSelector().set_lepton(selLepton);
-    const std::vector<const RecoJetAK8*> selJetsAK8_Wjj = jetSelectorAK8_Wjj(cleanedJetsAK8_wrtHbb, isHigherPt);
-    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
+    std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj(
+      jet_ptrs_ak8_Wjj, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+      cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+      *selJetT_Hbb, 
+      selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo);
+    const selJetsType_Wjj* selJetT_Wjj = nullptr;
     const RecoJetAK8* selJetAK8_Wjj = nullptr;
     const RecoJetBase* selJet1_Wjj = nullptr;
     const RecoJetBase* selJet2_Wjj = nullptr;
-    if ( selJetsAK8_Wjj.size() >= 1 ) {
-      selJetAK8_Wjj = selJetsAK8_Wjj[0];
-      selJet1_Wjj = selJetAK8_Wjj->subJet1();
-      selJet2_Wjj = selJetAK8_Wjj->subJet2();
-      assert(selJet1_Wjj && selJet2_Wjj);
-      if ( isDEBUG ) {
-	std::cout << "found boosted W->jj decay:" << std::endl;
-	std::cout << "AK8LS jet: pT = " << selJetAK8_Wjj->pt() << ", eta = " << selJetAK8_Wjj->eta() << ", phi = " << selJetAK8_Wjj->phi() << ","
-		  << " dR(selLepton) = " << deltaR(selJetAK8_Wjj->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #1: pT = " << selJet1_Wjj->pt() << ", eta = " << selJet1_Wjj->eta() << ", phi = " << selJet1_Wjj->phi() << ","
-		  << " dR(selLepton) = " << deltaR(selJet1_Wjj->p4(), selLepton->p4()) << std::endl;
-	std::cout << " subjet #2: pT = " << selJet2_Wjj->pt() << ", eta = " << selJet2_Wjj->eta() << ", phi = " << selJet2_Wjj->phi() << ","
-		  << " dR(selLepton) = " << deltaR(selJet2_Wjj->p4(), selLepton->p4()) << std::endl;
-      }
-    } else {
-      double minRank = 1.e+3;
-      for ( std::vector<const RecoJet*>::const_iterator selJet1 = selJetsAK4_Wjj.begin();
-	    selJet1 != selJetsAK4_Wjj.end(); ++selJet1 ) {
-	for ( std::vector<const RecoJet*>::const_iterator selJet2 = selJet1 + 1;
-	      selJet2 != selJetsAK4_Wjj.end(); ++selJet2 ) {
-	  Particle::LorentzVector jjP4 = (*selJet1)->p4() + (*selJet2)->p4();
-	  double m_jj = jjP4.mass();
-	  double pT_jj = jjP4.pt();
-	  double rank = TMath::Abs(m_jj - wBosonMass)/TMath::Sqrt(TMath::Max(10., pT_jj));
-	  if ( rank < minRank ) {
-	    selJet1_Wjj = (*selJet1);
-	    selJet2_Wjj = (*selJet2);
-	    minRank = rank;
-	  }
-	}
-      }
-      if ( !selJet1_Wjj && selJetsAK4_Wjj.size() >= 1 ) selJet1_Wjj = selJetsAK4_Wjj[0];
-      if ( !selJet2_Wjj && selJetsAK4_Wjj.size() >= 2 ) selJet2_Wjj = selJetsAK4_Wjj[1];
-      if ( isDEBUG ) {
-	std::cout << "found resolved W->jj decay:" << std::endl;
-	std::cout << "AK4 jet #1:";
-	if ( selJet1_Wjj ) std::cout << " pT = " << selJet1_Hbb->pt() << ", eta = " << selJet1_Hbb->eta() << ", phi = " << selJet1_Hbb->phi() << std::endl;
-	else std::cout << " N/A" << std::endl;
-	std::cout << "AK4 jet #2:";
-	if ( selJet1_Wjj ) std::cout << " pT = " << selJet2_Hbb->pt() << ", eta = " << selJet2_Hbb->eta() << ", phi = " << selJet2_Hbb->phi() << std::endl;
-	else std::cout << " N/A" << std::endl;
-      }
+    if ( selJetsT_Wjj.size() >= 1 ) 
+    {
+      selJetT_Wjj = &selJetsT_Wjj[0];
+      selJetAK8_Wjj = selJetT_Wjj->fatjet_;
+      selJet1_Wjj = selJetT_Wjj->jet_or_subjet1_;
+      selJet2_Wjj = selJetT_Wjj->jet_or_subjet2_;
     }
     if ( !(selJet1_Wjj || selJet2_Wjj) ) {
       if ( run_lumi_eventSelector ) {
@@ -1822,6 +1760,7 @@ int main(int argc, char* argv[])
     }
 
     // select VBF jet candidates
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
     std::vector<const RecoJet*> cleanedJetsAK4_vbf;
     if ( selJetAK8_Wjj ) {
       std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Wjj };
@@ -2406,8 +2345,12 @@ int main(int argc, char* argv[])
       snm->read(preselMuons, fakeableMuons, tightMuons);
       snm->read(preselElectrons, fakeableElectrons, tightElectrons);
       snm->read(selJetsAK4);
-      snm->read(selJetsAK8_Hbb, false);
-      snm->read(selJetsAK8_Wjj, true);
+      std::vector<const RecoJetAK8*> tmpJetsAK8_Hbb;
+      if ( selJetAK8_Hbb ) tmpJetsAK8_Hbb.push_back(selJetAK8_Hbb);
+      snm->read(tmpJetsAK8_Hbb, false);
+      std::vector<const RecoJetAK8*> tmpJetsAK8_Wjj;
+      if ( selJetAK8_Wjj ) tmpJetsAK8_Wjj.push_back(selJetAK8_Wjj);
+      snm->read(tmpJetsAK8_Wjj, true);
 
       const bool is_boosted = type_Hbb == kHbb_boosted && (type_Wjj == kWjj_resolved || type_Wjj == kWjj_boosted_highPurity);
       const bool is_semiboosted = type_Hbb == kHbb_boosted && type_Wjj == kWjj_resolved;

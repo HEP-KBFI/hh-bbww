@@ -794,9 +794,7 @@ int main(int argc,
             const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
 
 	    // select jets from H->bb decay
-            std::vector<selJetsType_Hbb> selJets_Hbb = selectJets_Hbb(
-              selJetsAK8_Hbb, jetSelectorAK8_Hbb, 
-              selJetsAK4_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium);
+            std::vector<selJetsType_Hbb> selJets_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
             assert(selJets_Hbb.size() == 1);
             const selJetsType_Hbb& selJets1_Hbb = selJets_Hbb[0];
             //const RecoJetAK8* selJetAK8_Hbb = selJets1_Hbb.fatjet_;
@@ -811,13 +809,13 @@ int main(int argc,
               const std::vector<const RecoJetBase*> selJets_Hbb_base = { selJet1_Hbb, selJet2_Hbb };
               if ( isMC_HH )
               {
-                genParticleMatcherFromHiggs({ selLepton_lead, selLepton_sublead }, selJets_Hbb_base, {}, met, 
-                  genParticlesFromHiggs, genLeptons, genNeutrinos);
+                genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos);
+                genParticleMatcherFromHiggs({ selLepton_lead, selLepton_sublead }, selJets_Hbb_base, {}, met);
               }
               else if ( isMC_TT )
               {
-                genParticleMatcherFromTop({ selLepton_lead, selLepton_sublead }, selJets_Hbb_base, {}, met, 
-                  genLeptonsFromTop, genNeutrinosFromTop, {}, genBJetsFromTop);
+                genParticleMatcherFromTop.setGenParticles(genLeptonsFromTop, genNeutrinosFromTop, {}, genBJetsFromTop);
+                genParticleMatcherFromTop({ selLepton_lead, selLepton_sublead }, selJets_Hbb_base, {}, met);
               }
             }
 

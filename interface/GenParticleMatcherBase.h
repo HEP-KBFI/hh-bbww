@@ -16,6 +16,11 @@ class GenParticleMatcherBase
   GenParticleMatcherBase();
   ~GenParticleMatcherBase();
 
+  const std::vector<GenLepton>& getLeptons() const;
+  const std::vector<GenJet>& getWJets() const;
+  const std::vector<GenJet>& getBJets() const;
+  void getMEt(double& genMEtPt, double& genMEtPhi) const;
+
   void 
   operator()(const std::vector<const RecoLepton*>& selLeptons, 
              const std::vector<const RecoJetBase*>& selJets_Hbb, 

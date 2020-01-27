@@ -28,23 +28,14 @@ findGenLepton_and_NeutrinoFromWBoson(const GenParticle& genWBoson, const std::ve
 }
 
 bool 
-isGenMatched(double eta, double phi, const std::vector<GenParticle>& genParticles, 
-	     const std::vector<int>* pdgIds, double dRmax)
+isGenMatched(double eta, double phi, 
+             const std::vector<const GenJet*>& genJets,
+	     double dRmax)
 {
   bool isMatched = false;
-  for ( std::vector<GenParticle>::const_iterator genParticle = genParticles.begin();
-	genParticle != genParticles.end(); ++genParticle ) {
-    bool isSelected = false;
-    if ( pdgIds )
-    {
-      int genParticle_pdgId = genParticle->pdgId();
-      for ( std::vector<int>::const_iterator pdgId = pdgIds->begin();
-	    pdgId != pdgIds->end(); ++pdgId ) {
-	if ( genParticle_pdgId == (*pdgId) ) isSelected = true;
-      }
-    }
-    if ( pdgIds && !isSelected ) continue;
-    double dR = deltaR(eta, phi, genParticle->eta(), genParticle->phi());
+  for ( const GenJet* genJet : genJets )
+  {
+    double dR = deltaR(eta, phi, genJet->eta(), genJet->phi());
     if ( dR < dRmax ) isMatched = true;
   }
   return isMatched;

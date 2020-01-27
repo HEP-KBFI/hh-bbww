@@ -22,8 +22,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
 #include "tthAnalysis/HiggsToTauTau/interface/GenHadTau.h" // GenHadTau
 #include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicity.h" // ObjectMultiplicity
-#include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
-#include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb2l.h" // MEMOutputReader_hh_bb2l
 #include "tthAnalysis/HiggsToTauTau/interface/LeptonFakeRateInterface.h" // LeptonFakeRateInterface
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronReader.h" // RecoElectronReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h" // RecoMuonReader
@@ -98,9 +96,12 @@
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
-#include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bb2l.h" // EvtHistManager_hh_bb2l
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
+#include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb2l.h" // MEMOutputReader_hh_bb2l
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb
+#include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
@@ -1425,28 +1426,17 @@ int main(int argc, char* argv[])
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
+    const selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
-    int numBJets_loose = 0;
-    int numBJets_medium = 0;
-    if ( selJetsAK8_Hbb.size() >= 1 ) {
-      selJetAK8_Hbb = selJetsAK8_Hbb[0];
-      selJet1_Hbb = selJetAK8_Hbb->subJet1();
-      selJet2_Hbb = selJetAK8_Hbb->subJet2();
-      assert(selJet1_Hbb && selJet2_Hbb);
-      double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
-      if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
-      if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
-      double min_BtagCSV_medium = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_medium();
-      if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_medium;
-      if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_medium;
-    } else if ( selJetsAK4_Hbb.size() >= 2 ) {
-      selJet1_Hbb = selJetsAK4_Hbb[0];
-      selJet2_Hbb = selJetsAK4_Hbb[1];
-      const std::vector<const RecoJet*> particles = { selJetsAK4_Hbb[0], selJetsAK4_Hbb[1] };
-      numBJets_loose = jetSelectorAK4_bTagLoose(particles, isHigherPt).size();
-      numBJets_medium = jetSelectorAK4_bTagMedium(particles, isHigherPt).size();
+    if ( selJetsT_Hbb.size() >= 1 ) 
+    {
+      selJetT_Hbb = &selJetsT_Hbb[0];
+      selJetAK8_Hbb = selJetT_Hbb->fatjet_;
+      selJet1_Hbb = selJetT_Hbb->jet_or_subjet1_;
+      selJet2_Hbb = selJetT_Hbb->jet_or_subjet2_;
     }
     if ( !(selJet1_Hbb && selJet2_Hbb) ) {
       if ( run_lumi_eventSelector ) {
@@ -1464,6 +1454,8 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet_Hbb_sublead = selJets_Hbb[1];
     const Particle::LorentzVector& selJetP4_Hbb_sublead = selJet_Hbb_sublead->p4();
 
+    int numBJets_loose, numBJets_medium;
+    countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     if ( !(numBJets_medium >= 1) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection\n";

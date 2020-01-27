@@ -25,10 +25,7 @@ printJet(const std::string& label, const RecoJetBase* jet, const RecoLepton* sel
 
 std::vector<selJetsType_Hbb>
 selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb, 
-               const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
                const std::vector<const RecoJet*> selJetsAK4_Hbb,
-               const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
-               const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
                const RecoLepton* selLepton_lead,
 	       const RecoLepton* selLepton_sublead,
                int maxJetPairs,
@@ -61,12 +58,6 @@ selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
       printJet(" subjet #1", selJets_Hbb.jet_or_subjet1_, selLepton_lead, selLepton_sublead);
       printJet(" subjet #2", selJets_Hbb.jet_or_subjet2_, selLepton_lead, selLepton_sublead);
     }
-    double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
-    if ( selJets_Hbb.fatjet_->subJet1()->BtagCSV() >= min_BtagCSV_loose  ) ++selJets_Hbb.numBJets_loose_;
-    if ( selJets_Hbb.fatjet_->subJet2()->BtagCSV() >= min_BtagCSV_loose  ) ++selJets_Hbb.numBJets_loose_;
-    double min_BtagCSV_medium = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_medium();
-    if ( selJets_Hbb.fatjet_->subJet1()->BtagCSV() >= min_BtagCSV_medium ) ++selJets_Hbb.numBJets_medium_;
-    if ( selJets_Hbb.fatjet_->subJet2()->BtagCSV() >= min_BtagCSV_medium ) ++selJets_Hbb.numBJets_medium_;
     retVal.push_back(selJets_Hbb);
   } 
 
@@ -91,9 +82,6 @@ selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
           printJet("AK4 jet #1", selJets_Hbb.jet_or_subjet1_);
           printJet("AK4 jet #2", selJets_Hbb.jet_or_subjet2_);
         }
-        const std::vector<const RecoJet*> particles = { jetPair.jet1_, jetPair.jet2_ };
-        selJets_Hbb.numBJets_loose_ = jetSelectorAK4_bTagLoose(particles, isHigherPt).size();
-        selJets_Hbb.numBJets_medium_ = jetSelectorAK4_bTagMedium(particles, isHigherPt).size();
         retVal.push_back(selJets_Hbb);
       }
     }
@@ -107,6 +95,37 @@ selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
   }
 
   return retVal;
+}
+
+void
+countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
+                   const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
+                   const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
+                   const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
+                   int& numBJets_loose,
+                   int& numBJets_medium)
+{
+//--- count jets from H->bb decay that pass Loose and Medium b-tagging discriminators
+
+  if ( selJets_Hbb.fatjet_ )
+  {
+    numBJets_loose = 0;
+    double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
+    if ( selJets_Hbb.fatjet_->subJet1()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
+    if ( selJets_Hbb.fatjet_->subJet2()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_loose;
+    numBJets_medium = 0;
+    double min_BtagCSV_medium = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_medium();
+    if ( selJets_Hbb.fatjet_->subJet1()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_medium;
+    if ( selJets_Hbb.fatjet_->subJet2()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_medium;
+  }
+  else
+  {
+    std::vector<const RecoJet*> jets;
+    if ( dynamic_cast<const RecoJet*>(selJets_Hbb.jet_or_subjet1_) ) jets.push_back(dynamic_cast<const RecoJet*>(selJets_Hbb.jet_or_subjet1_));
+    if ( dynamic_cast<const RecoJet*>(selJets_Hbb.jet_or_subjet2_) ) jets.push_back(dynamic_cast<const RecoJet*>(selJets_Hbb.jet_or_subjet2_));
+    numBJets_loose = jetSelectorAK4_bTagLoose(jets, isHigherPt).size();
+    numBJets_medium = jetSelectorAK4_bTagMedium(jets, isHigherPt).size();
+  }
 }
 
 std::vector<selJetsType_Wjj>
@@ -130,8 +149,6 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8_Wjj,
 
   std::vector<selJetsType_Wjj> retVal;
 
-  jetSelectorAK8_Wjj.getSelector().set_lepton(selLepton);
-
   std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtHbb;
   std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
   if ( selJets_Hbb.fatjet_ ) {
@@ -145,7 +162,19 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8_Wjj,
     cleanedJetsAK8_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8_Wjj, overlaps);
     cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
   }
-  const std::vector<const RecoJetAK8*> selJetsAK8_Wjj = jetSelectorAK8_Wjj(cleanedJetsAK8_wrtHbb, isHigherPt);
+  std::vector<const RecoJetAK8*> selJetsAK8_Wjj;
+  if ( selLepton ) 
+  { 
+    jetSelectorAK8_Wjj.getSelector().set_lepton(selLepton);
+    selJetsAK8_Wjj = jetSelectorAK8_Wjj(cleanedJetsAK8_wrtHbb, isHigherPt);
+  } 
+  else 
+  { 
+    if ( isDEBUG ) 
+    {
+      std::cerr << "Warning in <selectJets_Wjj>: Cannot select AK8LS jets, as there is no lepton in the event !!" << std::endl;
+    }
+  }
   // CV: only consider the first ten jets, in order to avoid too large combinatorics in building W->jj pairs,
   //     which would require many time-consuming MEM computations
   const std::vector<const RecoJet*> selJetsFullAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
