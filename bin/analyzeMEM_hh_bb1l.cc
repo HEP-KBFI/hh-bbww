@@ -52,10 +52,14 @@
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb1l.h" // MEMOutputReader_hh_bb1l
 #include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb, selectJets_Wjj
-#include "hhAnalysis/bbww/interface/JetPair.h" // JetPair_Wjj
+#include "hhAnalysis/bbww/interface/JetPair.h" // JetPair_Wjj, makeJetPairs_Wjj, initialize_mva_Wjj, rankJetPairs_Wjj, getIndex_isGenMatched
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched, countGenMatchedParticles
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromHiggs.h" // GenParticleMatcherFromHiggs
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop
+#include "hhAnalysis/bbww/interface/analyzeMEM_genJetHistograms.h" // genJetHistograms, fillHistograms_genJets
+#include "hhAnalysis/bbww/interface/analyzeMEM_jetHistograms.h" // jetHistograms, fillHistograms_jets
+#include "hhAnalysis/bbww/interface/analyzeMEM_memHistograms.h" // memHistograms, fillHistograms_mem
+#include "hhAnalysis/bbww/interface/dumpGenParticles.h" // dumpGenParticles, dumpGenLeptons, dumpGenJets
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -81,256 +85,6 @@
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
-
-void 
-fillHistograms_genJets(const std::vector<const GenJet*>& genJets, const GenJetCollectionSelector& genJetSelector,
-                       TH1* histogram_genJet1_pt, TH1* histogram_genJet1_absEta, 
-	               TH1* histogram_genJet2_pt, TH1* histogram_genJet2_absEta, double evtWeight) 
-{
-  if ( genJets.size() == 2 )
-  {
-    const GenJet* genJet_lead = genJets[0];
-    fillWithOverFlow(histogram_genJet1_pt, genJet_lead->pt(), evtWeight);
-    if ( genJet_lead->pt() > genJetSelector.getSelector().get_min_pt() )
-    {
-      fillWithOverFlow(histogram_genJet1_absEta, genJet_lead->absEta(), evtWeight);
-    }
-
-    const GenJet* genJet_sublead = genJets[1];
-    fillWithOverFlow(histogram_genJet2_pt, genJet_sublead->pt(), evtWeight);
-    if ( genJet_sublead->pt() > genJetSelector.getSelector().get_min_pt() )
-    {
-      fillWithOverFlow(histogram_genJet2_absEta, genJet_sublead->absEta(), evtWeight);
-    }
-  }
-}
-
-struct jetHistograms
-{
-  jetHistograms(const std::string& label)
-    : label_(label)
-    , histogram_pt_(nullptr)
-    , histogram_btagCSV_(nullptr)
-  {}
-  ~jetHistograms() {}
-  void bookHistograms(fwlite::TFileService& fs)
-  {
-    std::string histogramName_pt = Form("%s_pt", label_.data());
-    histogram_pt_ = fs.make<TH1D>(histogramName_pt.data(), histogramName_pt.data(), 50, 0., 250.);
-    std::string histogramName_btagCSV = Form("%s_btagCSV", label_.data());
-    histogram_btagCSV_ = fs.make<TH1D>(histogramName_btagCSV.data(), histogramName_btagCSV.data(), 50, 0., 1.);
-  }
-  void fillHistograms(const RecoJetBase* jet, double evtWeight)
-  {
-    fillWithOverFlow(histogram_pt_, jet->pt(), evtWeight); 
-    if ( dynamic_cast<const RecoJet*>(jet) ) 
-    {
-      fillWithOverFlow(histogram_btagCSV_, (dynamic_cast<const RecoJet*>(jet))->BtagCSV(), evtWeight);
-    }    
-    else if ( dynamic_cast<const RecoSubjetAK8*>(jet) ) 
-    {
-      fillWithOverFlow(histogram_btagCSV_, (dynamic_cast<const RecoSubjetAK8*>(jet))->BtagCSV(), evtWeight);
-    } else assert(0);
-  }	
-  std::string label_;
-  TH1* histogram_pt_;
-  TH1* histogram_btagCSV_;
-};
-
-template<typename T>
-void 
-fillHistograms_jets(const std::vector<const T*>& jets, 
-		    const std::vector<const GenJet*>& genJets, 
-		    jetHistograms& histograms_jet1, TH1* histogram_idx1, 
-		    jetHistograms& histograms_jet2, TH1* histogram_idx2, TH1* histogram_numIndices, TH1* histogram_mjj, double evtWeight)
-{
-  std::vector<int> indices;
-  size_t numJets = jets.size();
-  for ( size_t idxJet = 0; idxJet < numJets; ++idxJet )
-  {
-    const T* jet = jets[idxJet];
-    bool isMatched = isGenMatchedT<GenJet>(jet->eta(), jet->phi(), genJets);
-    if ( isMatched ) indices.push_back(idxJet);
-  }
-  const T* jet1 = nullptr;
-  if ( indices.size() >= 1 ) 
-  {
-    size_t idx1 = indices[0];
-    jet1 = jets[idx1];
-    histograms_jet1.fillHistograms(jet1, evtWeight);
-    fillWithOverFlow(histogram_idx1, idx1, evtWeight);
-  }
-  const T* jet2 = nullptr;
-  if ( indices.size() >= 2 ) 
-  {
-    size_t idx2 = indices[1];
-    jet2 = jets[idx2];
-    histograms_jet2.fillHistograms(jet2, evtWeight);
-    fillWithOverFlow(histogram_idx2, idx2, evtWeight);
-  }
-  fillWithOverFlow(histogram_numIndices, indices.size(), evtWeight);
-  if ( jet1 && jet2 ) 
-  {
-    fillWithOverFlow(histogram_mjj, (jet1->p4() + jet2->p4()).mass(), evtWeight); 
-  }
-}
-
-struct memHistograms
-{ 
-  memHistograms(const std::string& label, int numUnmatchedLeptons, int numUnmatchedBJets, int numUnmatchedWJets)
-    : label_(label)
-    , numUnmatchedLeptons_(numUnmatchedLeptons)
-    , numUnmatchedBJets_(numUnmatchedBJets)
-    , numUnmatchedWJets_(numUnmatchedWJets)
-    , histogram_LR_(nullptr)
-    , histogram_weightS_(nullptr)
-    , histogram_weightB_(nullptr)
-    , histogram_isValid_(nullptr) 
-  {}
-  ~memHistograms() {}
-  void bookHistograms(fwlite::TFileService& fs)
-  {
-    std::string histogramName_prefix = "mem";
-    if ( label_ != "" ) histogramName_prefix.append("_").append(label_);
-    std::string histogramName_suffix;
-    if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ == 0 ) 
-    {
-      histogramName_suffix = "fullyMatched";
-    }
-    else if ( numUnmatchedLeptons_ >= 1 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ == 0 ) 
-    {
-      histogramName_suffix = "unmatchedLepton";
-    }
-    else if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ >= 1 && numUnmatchedWJets_ == 0 ) 
-    {
-      histogramName_suffix = "unmatchedBJet";
-    }
-    else if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ >= 1 ) 
-    {
-      histogramName_suffix = "unmatchedWJet";
-    }
-    else assert(0);
-    std::string histogramName_LR = Form("%s_LR_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_LR_ = fs.make<TH1D>(histogramName_LR.data(), histogramName_LR.data(), 500, -40., +10.);
-    std::string histogramName_weightS = Form("%s_weightS_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_weightS_ = fs.make<TH1D>(histogramName_weightS.data(), histogramName_weightS.data(), 500, -40., +10.);
-    std::string histogramName_weightB = Form("%s_weightB_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_weightB_ = fs.make<TH1D>(histogramName_weightB.data(), histogramName_weightB.data(), 500, -40., +10.);
-    std::string histogramName_isValid = Form("%s_isValid_%s", histogramName_prefix.data(), histogramName_suffix.data());
-    histogram_isValid_ = fs.make<TH1D>(histogramName_isValid.data(), histogramName_isValid.data(), 2, -0.5, +1.5);
-  }
-  void fillHistograms(const MEMOutput_hh_bb1l& memOutput, double evtWeight)
-  {
-    if ( memOutput.isValid() )
-    { 
-      fillWithOverFlow(histogram_LR_, TMath::Log10(TMath::Max(1.e-37, 1. - memOutput.LR())), evtWeight);
-      fillWithOverFlow(histogram_weightS_, TMath::Log10(TMath::Max((Float_t)1.e-37, memOutput.weight_signal())), evtWeight);
-      fillWithOverFlow(histogram_weightB_, TMath::Log10(TMath::Max((Float_t)1.e-37, memOutput.weight_background())), evtWeight);
-    }
-    fillWithOverFlow(histogram_isValid_, memOutput.isValid(), evtWeight);
-  }
-  std::string label_;
-  int numUnmatchedLeptons_;
-  int numUnmatchedBJets_;
-  int numUnmatchedWJets_;
-  TH1* histogram_LR_;
-  TH1* histogram_weightS_;
-  TH1* histogram_weightB_;
-  TH1* histogram_isValid_; 
-};
-
-void 
-fillHistograms_mem(const MEMOutput_hh_bb1l& memOutput, 
-		   const std::vector<const GenLepton*>& genLeptons, 
-		   const std::vector<const GenJet*>& genBJets, 
-		   const std::vector<const GenJet*>& genWJets, 
-		   memHistograms& histograms_fullyMatched, 
-		   memHistograms& histograms_unmatchedLepton, 
-		   memHistograms& histograms_unmatchedBJet, 
-		   memHistograms& histograms_unmatchedWJet, double evtWeight)
-{
-  int numUnmatchedLeptons = 0;
-  if ( !isGenMatchedT<GenLepton>(memOutput.lepton_eta_, memOutput.lepton_phi_, genLeptons) ) 
-  {
-    ++numUnmatchedLeptons;
-  }
-  int numUnmatchedBJets = 0;
-  if ( memOutput.bjet1_isReconstructed_ && !isGenMatchedT<GenJet>(memOutput.bjet1_eta_, memOutput.bjet1_phi_, genBJets) )
-  { 
-    ++numUnmatchedBJets;
-  }
-  if ( memOutput.bjet2_isReconstructed_ && !isGenMatchedT<GenJet>(memOutput.bjet2_eta_, memOutput.bjet2_phi_, genBJets) )
-  { 
-    ++numUnmatchedBJets;
-  }
-  int numUnmatchedWJets = 0;
-  if ( memOutput.wjet1_isReconstructed_ && !isGenMatchedT<GenJet>(memOutput.wjet1_eta_, memOutput.wjet1_phi_, genWJets) )
-  { 
-    ++numUnmatchedWJets;
-  }
-  if ( memOutput.wjet2_isReconstructed_ && !isGenMatchedT<GenJet>(memOutput.wjet2_eta_, memOutput.wjet2_phi_, genWJets) )
-  { 
-    ++numUnmatchedWJets;
-  }
-  if      ( numUnmatchedLeptons == 0 && numUnmatchedBJets == 0 && numUnmatchedWJets == 0 ) 
-  {
-    histograms_fullyMatched.fillHistograms(memOutput, evtWeight);
-  }
-  else if ( numUnmatchedLeptons >= 1 && numUnmatchedBJets == 0 && numUnmatchedWJets == 0 ) 
-  {
-    histograms_unmatchedLepton.fillHistograms(memOutput, evtWeight);
-  }
-  else if ( numUnmatchedLeptons == 0 && numUnmatchedBJets >= 1 && numUnmatchedWJets == 0 ) 
-  {
-    histograms_unmatchedBJet.fillHistograms(memOutput, evtWeight);
-  }
-  else if ( numUnmatchedLeptons == 0 && numUnmatchedBJets == 0 && numUnmatchedWJets >= 1 ) 
-  {
-    histograms_unmatchedWJet.fillHistograms(memOutput, evtWeight);
-  }
-}
-
-void dumpGenLeptons(const std::string& label, const std::vector<GenLepton>& genLeptons)
-{
-  for ( size_t idxLepton = 0; idxLepton < genLeptons.size(); ++idxLepton ) {
-    std::cout << label << " #" << idxLepton << ":" << " ";
-    std::cout << genLeptons[idxLepton];
-    std::cout << std::endl;
-  }
-}
-
-void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& genParticles)
-{
-  for ( size_t idxParticle = 0; idxParticle < genParticles.size(); ++idxParticle ) {
-    std::cout << label << " #" << idxParticle << ":" << " ";
-    std::cout << genParticles[idxParticle];
-    std::cout << std::endl;
-  }
-}
-
-void dumpGenJets(const std::string& label, const std::vector<GenJet>& genJets)
-{
-  for ( size_t idxJet = 0; idxJet < genJets.size(); ++idxJet ) {
-    std::cout << label << " #" << idxJet << ":" << " ";
-    std::cout << genJets[idxJet];
-    std::cout << std::endl;
-  }
-}
-
-int
-getIndex(const std::vector<JetPair_Wjj>& pairs)
-{
-  size_t numPairs = pairs.size();
-  for ( size_t idx = 0; idx < numPairs; ++idx ) 
-  {
-    const JetPair_Wjj& pair = pairs[idx];
-    if ( pair.jet1_isGenMatched_ && pair.jet2_isGenMatched_ )
-    {
-      return idx;
-    }
-  }
-  return -1;
-}
 
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
@@ -572,15 +326,8 @@ int main(int argc, char* argv[])
   TH1* histogram_genLepton_pt = fs.make<TH1D>("histogram_genLepton_pt", "histogram_genLepton_pt", 50, 0., 250.);
   TH1* histogram_genLepton_absEta = fs.make<TH1D>("histogram_genLepton_absEta", "histogram_genLepton_absEta", 100, 0., 10.);
 
-  TH1* histogram_genBJet1_pt = fs.make<TH1D>("histogram_genBJet1_pt", "histogram_genBJet1_pt", 50, 0., 250.);
-  TH1* histogram_genBJet1_absEta = fs.make<TH1D>("histogram_genBJet1_absEta", "histogram_genBJet1_absEta", 100, 0., 10.);
-  TH1* histogram_genBJet2_pt = fs.make<TH1D>("histogram_genBJet2_pt", "histogram_genBJet2_pt", 50, 0., 250.);
-  TH1* histogram_genBJet2_absEta = fs.make<TH1D>("histogram_genBJet2_absEta", "histogram_genBJet2_absEta", 100, 0., 10.);
-
-  TH1* histogram_genWJet1_pt = fs.make<TH1D>("histogram_genWJet1_pt", "histogram_genWJet1_pt", 50, 0., 250.);
-  TH1* histogram_genWJet1_absEta = fs.make<TH1D>("histogram_genWJet1_absEta", "histogram_genWJet1_absEta", 100, 0., 10.);
-  TH1* histogram_genWJet2_pt = fs.make<TH1D>("histogram_genWJet2_pt", "histogram_genWJet2_pt", 50, 0., 250.);
-  TH1* histogram_genWJet2_absEta = fs.make<TH1D>("histogram_genWJet2_absEta", "histogram_genWJet2_absEta", 100, 0., 10.);
+  genJetHistograms* histograms_genBJet = new genJetHistograms("genBJet");
+  genJetHistograms* histograms_genWJet = new genJetHistograms("genWJet");
 
   TH2* histogram_selJetCorrelation = fs.make<TH2D>("selJetCorrelation", "selJetCorrelation", 4, -0.5, 3.5, 4, -0.5, 3.5);
   enum { k2Rec2Matched, k2Rec1Matched, k1Rec1Matched, k0Matched };
@@ -767,8 +514,7 @@ int main(int argc, char* argv[])
     genBJetSelector.getSelector().set_max_absEta(selJetAK4_max_absEta_Hbb);
     std::vector<const GenJet*> genBJets_passingPt_and_Eta = genBJetSelector(cleanedGenBJets_wrtLeptons);
 
-    fillHistograms_genJets(cleanedGenBJets_wrtLeptons, genBJetSelector,
-      histogram_genBJet1_pt, histogram_genBJet1_absEta, histogram_genBJet2_pt, histogram_genBJet2_absEta, evtWeight);
+    fillHistograms_genJets(cleanedGenBJets_wrtLeptons, genBJetSelector, *histograms_genBJet, evtWeight);
 
     std::vector<const GenJet*> genWJets_ptrs = convert_to_ptrs(genWJets);
     //std::vector<const GenJet*> cleanedGenWJets_wrtLeptons = genJetCleaner_dR04(genWJets_ptrs, genLeptons_passingEta);
@@ -787,10 +533,8 @@ int main(int argc, char* argv[])
     //std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(cleanedGenWJets_wrtLeptons);
     std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(genWJets_ptrs);
     
-    //fillHistograms_genJets(cleanedGenWJets_wrtLeptons, genWJetSelector,
-    //  histogram_genWJet1_pt, histogram_genWJet1_absEta, histogram_genWJet2_pt, histogram_genWJet2_absEta, evtWeight);
-    fillHistograms_genJets(genWJets_ptrs, genWJetSelector,
-      histogram_genWJet1_pt, histogram_genWJet1_absEta, histogram_genWJet2_pt, histogram_genWJet2_absEta, evtWeight);
+    //fillHistograms_genJets(cleanedGenWJets_wrtLeptons, genWJetSelector, *histograms_genWJet, evtWeight);
+    fillHistograms_genJets(genWJets_ptrs, genWJetSelector, *histograms_genWJet, evtWeight);
     
 //--- build collections of reconstructed electrons and muons
 //    resolve overlaps in order of priority: muon, electron
@@ -1051,19 +795,19 @@ int main(int argc, char* argv[])
       histogram_Wjj_jet_numIndices, histogram_Wjj_jet_mjj, evtWeight);
  
     std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByMass);
-    int hadWJetPair_sortedByMass_idx = getIndex(jetPairs_Wjj);
+    int hadWJetPair_sortedByMass_idx = getIndex_isGenMatched(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByMass_idx, hadWJetPair_sortedByMass_idx, evtWeight); 
     std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByDeltaR);
-    int hadWJetPair_sortedByDeltaR_idx = getIndex(jetPairs_Wjj);
+    int hadWJetPair_sortedByDeltaR_idx = getIndex_isGenMatched(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByDeltaR_idx, hadWJetPair_sortedByDeltaR_idx, evtWeight); 
     std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByPt);
-    int hadWJetPair_sortedByPt_idx = getIndex(jetPairs_Wjj);
+    int hadWJetPair_sortedByPt_idx = getIndex_isGenMatched(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByPt_idx, hadWJetPair_sortedByPt_idx, evtWeight); 
     std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByScalarPt);
-    int hadWJetPair_sortedByScalarPt_idx = getIndex(jetPairs_Wjj);
+    int hadWJetPair_sortedByScalarPt_idx = getIndex_isGenMatched(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByScalarPt_idx, hadWJetPair_sortedByScalarPt_idx, evtWeight); 
     std::sort(jetPairs_Wjj.begin(), jetPairs_Wjj.end(), isHigherRankedByBDT);
-    int hadWJetPair_sortedByBDT_idx = getIndex(jetPairs_Wjj);
+    int hadWJetPair_sortedByBDT_idx = getIndex_isGenMatched(jetPairs_Wjj);
     fillWithOverFlow(histogram_hadWJetPair_sortedByBDT_idx, hadWJetPair_sortedByBDT_idx, evtWeight); 
     fillWithOverFlow(histogram_hadWJetPair_numIndices, jetPairs_Wjj.size(), evtWeight); 
 
