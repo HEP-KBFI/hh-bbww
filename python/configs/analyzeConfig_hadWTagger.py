@@ -116,7 +116,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
             if central_or_shift_or_dummy in [ "hadd" ] and process_name_or_dummy in [ "hadd" ]:
               continue
 	    key_dir = getKey(process_name_or_dummy, lepton_selection, central_or_shift_or_dummy)
-            for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT ]:
+            for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS ]:
               initDict(self.dirs, [ key_dir, dir_type ])
               if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
                 self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,

@@ -299,7 +299,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                   continue
 
                 key_dir = getKey(process_name_or_dummy, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift_or_dummy)
-                for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT, DKEY_RLES, DKEY_SYNC ]:
+                for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_RLES, DKEY_SYNC ]:
                   initDict(self.dirs, [ key_dir, dir_type ])
                   if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
                     self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,
@@ -310,7 +310,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
   
     for subdirectory in [ "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
       key_dir = getKey(subdirectory)
-      for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_ROOT, DKEY_DCRD, DKEY_PLOT ]:
+      for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
         if dir_type in [ DKEY_CFGS, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
           self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel, subdirectory)
