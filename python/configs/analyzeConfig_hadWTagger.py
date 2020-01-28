@@ -123,7 +123,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
                                                             "_".join([ lepton_selection ]), process_name_or_dummy, central_or_shift_or_dummy)
               else:
                 self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
-                                                            "_".join([ lepton_selection ]), process_name_or_dummy, central_or_shift_or_dummy)
+                                                            "_".join([ lepton_selection ]), process_name_or_dummy)
 
     for dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_HIST, DKEY_LOGS, DKEY_HADD_RT ]:
       initDict(self.dirs, [ dir_type ])
