@@ -327,22 +327,24 @@ int main(int argc, char* argv[])
   TH1* histogram_genLepton_absEta = fs.make<TH1D>("histogram_genLepton_absEta", "histogram_genLepton_absEta", 100, 0., 10.);
 
   genJetHistograms* histograms_genBJet = new genJetHistograms("genBJet");
+  histograms_genBJet->bookHistograms(fs);
   genJetHistograms* histograms_genWJet = new genJetHistograms("genWJet");
+  histograms_genWJet->bookHistograms(fs);
 
   TH2* histogram_selJetCorrelation = fs.make<TH2D>("selJetCorrelation", "selJetCorrelation", 4, -0.5, 3.5, 4, -0.5, 3.5);
-  enum { k2Rec2Matched, k2Rec1Matched, k1Rec1Matched, k0Matched };
+  enum { k2Rec2Sel, k2Rec1Sel, k1Rec1Sel, k0Sel };
   TAxis* xAxis_selJetCorrelation = histogram_selJetCorrelation->GetXaxis();
   xAxis_selJetCorrelation->SetTitle("H->bb");
-  xAxis_selJetCorrelation->SetBinLabel(1, "2Rec2Matched");
-  xAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Matched");
-  xAxis_selJetCorrelation->SetBinLabel(3, "1Rec1Matched");
-  xAxis_selJetCorrelation->SetBinLabel(4, "0Matched");
+  xAxis_selJetCorrelation->SetBinLabel(1, "2Rec2Sel");
+  xAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Sel");
+  xAxis_selJetCorrelation->SetBinLabel(3, "1Rec1Sel");
+  xAxis_selJetCorrelation->SetBinLabel(4, "0Sel");
   TAxis* yAxis_selJetCorrelation = histogram_selJetCorrelation->GetYaxis();
   yAxis_selJetCorrelation->SetTitle("W->jj");
-  yAxis_selJetCorrelation->SetBinLabel(1, "2Rec2Matched");
-  yAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Matched");
-  yAxis_selJetCorrelation->SetBinLabel(3, "1Rec1Matched");
-  yAxis_selJetCorrelation->SetBinLabel(4, "0Matched");
+  yAxis_selJetCorrelation->SetBinLabel(1, "2Rec2Sel");
+  yAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Sel");
+  yAxis_selJetCorrelation->SetBinLabel(3, "1Rec1Sel");
+  yAxis_selJetCorrelation->SetBinLabel(4, "0Sel");
 
   jetHistograms* histograms_boostedHbb_bjet1 = new jetHistograms("boostedHbb_bjet1");
   histograms_boostedHbb_bjet1->bookHistograms(fs);
@@ -717,19 +719,23 @@ int main(int argc, char* argv[])
     }
 
 //--- fill two-dimensional correlation plot between generator-level and reconstruction-level jets from W->jj vs H->bb decay
+    int numRec_Hbb = TMath::Max(selJets_Hbb.size(), selectGenMatchedParticles(jet_ptrs_ak4, genBJets_ptrs).size());
     const std::vector<const RecoJetBase*> selJets_Hbb_genMatched = selectGenMatchedParticles(selJets_Hbb, genBJets_ptrs);
+    int numMatched_Hbb = selJets_Hbb_genMatched.size();
     int idxHbb = -1;
-    if      ( selJets_Hbb.size() >= 2 && selJets_Hbb_genMatched.size() >= 2 ) idxHbb = k2Rec2Matched;
-    else if ( selJets_Hbb.size() >= 2 && selJets_Hbb_genMatched.size() >= 1 ) idxHbb = k2Rec1Matched;
-    else if ( selJets_Hbb.size() >= 1 && selJets_Hbb_genMatched.size() >= 1 ) idxHbb = k1Rec1Matched;
-    else                                                                      idxHbb = k0Matched;
+    if      ( numRec_Hbb >= 2 && numMatched_Hbb >= 2 ) idxHbb = k2Rec2Sel;
+    else if ( numRec_Hbb >= 2 && numMatched_Hbb >= 1 ) idxHbb = k2Rec1Sel;
+    else if ( numRec_Hbb >= 1 && numMatched_Hbb >= 1 ) idxHbb = k1Rec1Sel;
+    else                                               idxHbb = k0Sel;
 
+    int numRec_Wjj = TMath::Max(selJets_Wjj.size(), selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs).size());
     const std::vector<const RecoJetBase*> selJets_Wjj_genMatched = selectGenMatchedParticles(selJets_Wjj, genWJets_ptrs);
+    int numMatched_Wjj = selJets_Wjj_genMatched.size();
     int idxWjj = -1;
-    if      ( selJets_Wjj.size() >= 2 && selJets_Wjj_genMatched.size() >= 2 ) idxWjj = k2Rec2Matched;
-    else if ( selJets_Wjj.size() >= 2 && selJets_Wjj_genMatched.size() >= 1 ) idxWjj = k2Rec1Matched;
-    else if ( selJets_Wjj.size() >= 1 && selJets_Wjj_genMatched.size() >= 1 ) idxWjj = k1Rec1Matched;
-    else                                                                      idxWjj = k0Matched;
+    if      ( numRec_Wjj >= 2 && numMatched_Wjj >= 2 ) idxWjj = k2Rec2Sel;
+    else if ( numRec_Wjj >= 2 && numMatched_Wjj >= 1 ) idxWjj = k2Rec1Sel;
+    else if ( numRec_Wjj >= 1 && numMatched_Wjj >= 1 ) idxWjj = k1Rec1Sel;
+    else                                               idxWjj = k0Sel;
 
     histogram_selJetCorrelation->Fill(idxHbb, idxWjj, evtWeight);
 
