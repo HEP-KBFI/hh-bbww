@@ -517,23 +517,11 @@ int main(int argc, char* argv[])
     fillHistograms_genJets(cleanedGenBJets_wrtLeptons, genBJetSelector, *histograms_genBJet, evtWeight);
 
     std::vector<const GenJet*> genWJets_ptrs = convert_to_ptrs(genWJets);
-    //std::vector<const GenJet*> cleanedGenWJets_wrtLeptons = genJetCleaner_dR04(genWJets_ptrs, genLeptons_passingEta);
-    //std::sort(cleanedGenWJets_wrtLeptons.begin(), cleanedGenWJets_wrtLeptons.end(), isHigherPt);
     genWJetSelector.getSelector().set_max_absEta(1.e+3);
-    //std::vector<const GenJet*> genWJets_passingPt = genWJetSelector(cleanedGenWJets_wrtLeptons);
     std::vector<const GenJet*> genWJets_passingPt = genWJetSelector(genWJets_ptrs);
-//if ( !(genWJets_passingPt.size() >= 2) ) 
-//{
-//  dumpGenLeptons("genLepton", genLeptons); 
-//  std::vector<GenParticle> genParticlesFromHiggs = genParticleFromHiggsReader->read();
-//  dumpGenParticles("genParticleFromHiggs", genParticlesFromHiggs);
-//  dumpGenJets("genWJet", genWJets);
-//}
     genWJetSelector.getSelector().set_max_absEta(selJetAK4_max_absEta_Wjj);
-    //std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(cleanedGenWJets_wrtLeptons);
     std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(genWJets_ptrs);
     
-    //fillHistograms_genJets(cleanedGenWJets_wrtLeptons, genWJetSelector, *histograms_genWJet, evtWeight);
     fillHistograms_genJets(genWJets_ptrs, genWJetSelector, *histograms_genWJet, evtWeight);
     
 //--- build collections of reconstructed electrons and muons
@@ -729,8 +717,6 @@ int main(int argc, char* argv[])
     }
 
 //--- fill two-dimensional correlation plot between generator-level and reconstruction-level jets from W->jj vs H->bb decay
-    //const std::vector<const RecoJet*> tmpJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-    //const std::vector<const RecoJet*> selJetsAK4_Hbb_genMatched = selectGenMatchedParticles(tmpJetsAK4_Hbb, genBJets_ptrs);
     const std::vector<const RecoJetBase*> selJets_Hbb_genMatched = selectGenMatchedParticles(selJets_Hbb, genBJets_ptrs);
     int idxHbb = -1;
     if      ( selJets_Hbb.size() >= 2 && selJets_Hbb_genMatched.size() >= 2 ) idxHbb = k2Rec2Matched;
@@ -738,23 +724,6 @@ int main(int argc, char* argv[])
     else if ( selJets_Hbb.size() >= 1 && selJets_Hbb_genMatched.size() >= 1 ) idxHbb = k1Rec1Matched;
     else                                                                      idxHbb = k0Matched;
 
-    //const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
-    //const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
-    //std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
-    //rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, numBJets_medium, mva_Wjj, eventInfo);
-    //std::vector<const RecoJet*> tmpJetsAK4_Wjj;
-    //if ( jetPairs_Wjj.size() >= 1 ) 
-    //{
-    //  const JetPair_Wjj& jetPair1_Wjj = jetPairs_Wjj[0];
-    //  tmpJetsAK4_Wjj.push_back(jetPair1_Wjj.jet1_);
-    //  tmpJetsAK4_Wjj.push_back(jetPair1_Wjj.jet2_);
-    //} 
-    //else 
-    //{
-    //  if ( selJetsAK4_Wjj.size() >= 1 ) tmpJetsAK4_Wjj.push_back(selJetsAK4_Wjj[0]);
-    //  if ( selJetsAK4_Wjj.size() >= 2 ) tmpJetsAK4_Wjj.push_back(selJetsAK4_Wjj[1]);
-    //}
-    //const std::vector<const RecoJet*> selJetsAK4_Wjj_genMatched = selectGenMatchedParticles(tmpJetsAK4_Wjj, genWJets_ptrs);
     const std::vector<const RecoJetBase*> selJets_Wjj_genMatched = selectGenMatchedParticles(selJets_Wjj, genWJets_ptrs);
     int idxWjj = -1;
     if      ( selJets_Wjj.size() >= 2 && selJets_Wjj_genMatched.size() >= 2 ) idxWjj = k2Rec2Matched;
