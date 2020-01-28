@@ -86,6 +86,48 @@ typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
 
+void 
+fillHistograms_numGenWJets(const std::vector<const RecoJet*>& jet_ptrs_ak4,
+                           const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
+                           const RecoJetCollectionCleaner& jetCleanerAK4_dR04, 
+                           const RecoJetCollectionSelector& jetSelectorAK4_Wjj
+                           const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb, 
+                           const RecoLepton* selLepton,
+                           int nBJetMedium, 
+                           const TMVAInterface& mva_Wjj,
+                           const EventInfo& eventInfo,
+                           const std::vector<const GenJet*>& genWJets_ptrs,
+                           TH1* histogram_numGenWJets_ak4,
+                           TH1* histogram_numGenWJets_ak4cleanedWrtLeptons,
+                           TH1* histogram_numGenWJets_ak4cleanedWrtHbb,
+                           TH1* histogram_numGenWJets_ak4selected,
+                           TH1* histogram_numGenWJets_ak4byWjjPairs,
+                           double evtWeight)
+{
+  int numGenWJets_ak4 = selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs).size();
+  fillWithOverFlow(histogram_numGenWJets_ak4, numGenWJets_ak4, evtWeight);
+  int numGenWJets_ak4cleanedWrtLeptons = selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets_ptrs).size();
+  fillWithOverFlow(histogram_numGenWJets_, numGenWJets_ak4cleanedWrtLeptons, evtWeight);
+  assert(selJet1_Hbb && selJet2_Hbb);
+  const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+  int numGenWJets_ak4cleanedWrtHbb = selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets_ptrs).size();
+  fillWithOverFlow(histogram_numGenWJets_ak4cleanedWrtHbb, numGenWJets_ak4cleanedWrtHbb, evtWeight);
+  const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
+  int numGenWJets_ak4selected = selectGenMatchedParticles(selJetsAK4_Wjj, genWJets_ptrs).size();
+  fillWithOverFlow(histogram_numGenWJets_ak4selected, numGenWJets_ak4selected, evtWeight);
+  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
+  assert(selLepton);
+  rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *selLepton, nBJetMedium, mva_Wjj, eventInfo);
+  std::vector<const RecoJet*> selJetsAK4_byWjjPairs;
+  if ( jetPairs_Wjj.size() >= 1 )
+  {
+    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet1_);
+    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet2_);
+  }
+  int numGenWJets_ak4byWjjPairs = selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets_ptrs).size();
+  fillWithOverFlow(histogram_numGenWJets_ak4byWjjPairs, numGenWJets_ak4byWjjPairs, evtWeight);
+}
+
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
  */
@@ -331,20 +373,57 @@ int main(int argc, char* argv[])
   genJetHistograms* histograms_genWJet = new genJetHistograms("genWJet");
   histograms_genWJet->bookHistograms(fs);
 
-  TH2* histogram_selJetCorrelation = fs.make<TH2D>("selJetCorrelation", "selJetCorrelation", 4, -0.5, 3.5, 4, -0.5, 3.5);
-  enum { k2Rec2Sel, k2Rec1Sel, k1Rec1Sel, k0Sel };
+  TH2* histogram_selJetCorrelation = fs.make<TH2D>("selJetCorrelation", "selJetCorrelation", 6, -0.5, 5.5, 6, -0.5, 5.5);
+  enum { k2Rec2Sel, k2Rec1Sel, k2Rec0Sel, k1Rec1Sel, k1Rec0Sel, k0Rec };
   TAxis* xAxis_selJetCorrelation = histogram_selJetCorrelation->GetXaxis();
   xAxis_selJetCorrelation->SetTitle("H->bb");
   xAxis_selJetCorrelation->SetBinLabel(1, "2Rec2Sel");
   xAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Sel");
-  xAxis_selJetCorrelation->SetBinLabel(3, "1Rec1Sel");
-  xAxis_selJetCorrelation->SetBinLabel(4, "0Sel");
+  xAxis_selJetCorrelation->SetBinLabel(3, "2Rec0Sel");
+  xAxis_selJetCorrelation->SetBinLabel(4, "1Rec1Sel");
+  xAxis_selJetCorrelation->SetBinLabel(5, "1Rec0Sel");	
+  xAxis_selJetCorrelation->SetBinLabel(6, "0Rec");
   TAxis* yAxis_selJetCorrelation = histogram_selJetCorrelation->GetYaxis();
   yAxis_selJetCorrelation->SetTitle("W->jj");
   yAxis_selJetCorrelation->SetBinLabel(1, "2Rec2Sel");
   yAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Sel");
-  yAxis_selJetCorrelation->SetBinLabel(3, "1Rec1Sel");
-  yAxis_selJetCorrelation->SetBinLabel(4, "0Sel");
+  yAxis_selJetCorrelation->SetBinLabel(3, "2Rec0Sel");
+  yAxis_selJetCorrelation->SetBinLabel(4, "1Rec1Sel");
+  yAxis_selJetCorrelation->SetBinLabel(5, "1Rec0Sel");
+  yAxis_selJetCorrelation->SetBinLabel(6, "0Rec");
+
+  TH1* histogram_numGenWJets_ak4                  = fs.make<TH1D>("numGenWJets_ak4",                  "numGenWJets_ak4",                  4, -0.5, +3.5);
+  TH1* histogram_numGenWJets_ak4cleanedWrtLeptons = fs.make<TH1D>("numGenWJets_ak4cleanedWrtLeptons", "numGenWJets_ak4cleanedWrtLeptons", 4, -0.5, +3.5);
+  TH1* histogram_numGenWJets_ak4cleanedWrtHbb     = fs.make<TH1D>("numGenWJets_ak4cleanedWrtHbb",     "numGenWJets_ak4cleanedWrtHbb",     4, -0.5, +3.5);
+  TH1* histogram_numGenWJets_ak4selected          = fs.make<TH1D>("numGenWJets_ak4selected",          "numGenWJets_ak4selected",          4, -0.5, +3.5);
+  TH1* histogram_numGenWJets_ak4byWjjPairs        = fs.make<TH1D>("numGenWJets_ak4byWjjPairs",        "numGenWJets_ak4byWjjPairs",        4, -0.5, +3.5);
+
+  TH1* histogram_numJetsAK4_genWjj = fs.make<TH1D>("", "", 4, -0.5, +3.5);
+
+dumpGenLeptons("genLepton", genLeptons);      
+  dumpGenJets("genWJet", genWJets); 
+  printCollection("jet_ptrs_ak4", selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs));
+  printCollection("cleanedJetsAK4_wrtLeptons", selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets_ptrs));
+  const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+  printCollection("cleanedJetsAK4_wrtHbb", selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets_ptrs));
+  const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
+  printCollection("selJetsAK4_Wjj", selectGenMatchedParticles(selJetsAK4_Wjj, genWJets_ptrs));
+  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
+  rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, numBJets_medium, mva_Wjj, eventInfo);
+  std::vector<const RecoJet*> selJetsAK4_byWjjPairs;
+  if ( jetPairs_Wjj.size() >= 1 )
+  {
+    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet1_);
+    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet2_);
+  }
+  printCollection("selJetsAK4_byWjjPairs", selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets_ptrs));
+  std::cout << std::endl;
+TO-DO: FILL NUMBERS OF JETS AT EACH STAGE INTO HISTOGRM(S)
+
+add plot of dR(ak4 jet, tightLepton) -> do for gen -> plot dR_min and dR_max separately for 2 genJets from W
+loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if dR > 0.4 then ak4jetp4.pt
+
+
 
   jetHistograms* histograms_boostedHbb_bjet1 = new jetHistograms("boostedHbb_bjet1");
   histograms_boostedHbb_bjet1->bookHistograms(fs);
@@ -719,24 +798,49 @@ int main(int argc, char* argv[])
     }
 
 //--- fill two-dimensional correlation plot between generator-level and reconstruction-level jets from W->jj vs H->bb decay
-    int numRec_Hbb = TMath::Max(selJets_Hbb.size(), selectGenMatchedParticles(jet_ptrs_ak4, genBJets_ptrs).size());
     const std::vector<const RecoJetBase*> selJets_Hbb_genMatched = selectGenMatchedParticles(selJets_Hbb, genBJets_ptrs);
-    int numMatched_Hbb = selJets_Hbb_genMatched.size();
+    int numSel_Hbb = selJets_Hbb_genMatched.size();
+    int numRec_Hbb = TMath::Max(numSel_Hbb, (int)selectGenMatchedParticles(jet_ptrs_ak4, genBJets_ptrs).size());
     int idxHbb = -1;
-    if      ( numRec_Hbb >= 2 && numMatched_Hbb >= 2 ) idxHbb = k2Rec2Sel;
-    else if ( numRec_Hbb >= 2 && numMatched_Hbb >= 1 ) idxHbb = k2Rec1Sel;
-    else if ( numRec_Hbb >= 1 && numMatched_Hbb >= 1 ) idxHbb = k1Rec1Sel;
-    else                                               idxHbb = k0Sel;
+    if      ( numRec_Hbb >= 2 && numSel_Hbb >= 2 ) idxHbb = k2Rec2Sel;
+    else if ( numRec_Hbb >= 2 && numSel_Hbb >= 1 ) idxHbb = k2Rec1Sel;
+    else if ( numRec_Hbb >= 2                    ) idxHbb = k2Rec0Sel;
+    else if ( numRec_Hbb >= 1 && numSel_Hbb >= 1 ) idxHbb = k1Rec1Sel;
+    else if ( numRec_Hbb >= 1                    ) idxHbb = k1Rec0Sel;
+    else                                           idxHbb = k0Rec;
 
-    int numRec_Wjj = TMath::Max(selJets_Wjj.size(), selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs).size());
     const std::vector<const RecoJetBase*> selJets_Wjj_genMatched = selectGenMatchedParticles(selJets_Wjj, genWJets_ptrs);
-    int numMatched_Wjj = selJets_Wjj_genMatched.size();
+    int numSel_Wjj = selJets_Wjj_genMatched.size();
+    int numRec_Wjj = TMath::Max(numSel_Wjj, (int)selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs).size());
     int idxWjj = -1;
-    if      ( numRec_Wjj >= 2 && numMatched_Wjj >= 2 ) idxWjj = k2Rec2Sel;
-    else if ( numRec_Wjj >= 2 && numMatched_Wjj >= 1 ) idxWjj = k2Rec1Sel;
-    else if ( numRec_Wjj >= 1 && numMatched_Wjj >= 1 ) idxWjj = k1Rec1Sel;
-    else                                               idxWjj = k0Sel;
-
+    if      ( numRec_Wjj >= 2 && numSel_Wjj >= 2 ) idxWjj = k2Rec2Sel;
+    else if ( numRec_Wjj >= 2 && numSel_Wjj >= 1 ) idxWjj = k2Rec1Sel;
+    else if ( numRec_Wjj >= 2                    ) idxWjj = k2Rec0Sel;
+    else if ( numRec_Wjj >= 1 && numSel_Wjj >= 1 ) idxWjj = k1Rec1Sel;
+    else if ( numRec_Wjj >= 1                    ) idxWjj = k1Rec0Sel;
+    else                                           idxWjj = k0Rec;
+if ( numRec_Wjj >= 2 && numSel_Wjj <= 1 )
+{
+  dumpGenLeptons("genLepton", genLeptons);      
+  dumpGenJets("genWJet", genWJets); 
+  printCollection("jet_ptrs_ak4", selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs));
+  printCollection("cleanedJetsAK4_wrtLeptons", selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets_ptrs));
+  const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+  printCollection("cleanedJetsAK4_wrtHbb", selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets_ptrs));
+  const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
+  printCollection("selJetsAK4_Wjj", selectGenMatchedParticles(selJetsAK4_Wjj, genWJets_ptrs));
+  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
+  rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+  std::vector<const RecoJet*> selJetsAK4_byWjjPairs;
+  if ( jetPairs_Wjj.size() >= 1 )
+  {
+    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet1_);
+    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet2_);
+  }
+  printCollection("selJetsAK4_byWjjPairs", selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets_ptrs));
+  std::cout << std::endl;
+TO-DO: FILL NUMBERS OF JETS AT EACH STAGE INTO HISTOGRM(S)
+}
     histogram_selJetCorrelation->Fill(idxHbb, idxWjj, evtWeight);
 
 //--- fill histograms with events passing final selection
