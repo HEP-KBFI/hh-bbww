@@ -79,4 +79,20 @@ rankJetPairs_Wjj(std::vector<JetPair_Wjj>& jetPairs_Wjj,
 	         const std::vector<const RecoJet*>& selJetsAK4_Wjj, const RecoLepton& selLepton, int nBJetMedium, 
                  const TMVAInterface& mva_Wjj, const EventInfo& eventInfo);
 
+template<typename T>
+int
+getIndex_isGenMatched(const std::vector<T>& pairs)
+{
+  size_t numPairs = pairs.size();
+  for ( size_t idx = 0; idx < numPairs; ++idx ) 
+  {
+    const T& pair = pairs[idx];
+    if ( pair.jet1_isGenMatched_ && pair.jet2_isGenMatched_ )
+    {
+      return idx;
+    }
+  }
+  return -1;
+}
+
 #endif // JetPair_h
