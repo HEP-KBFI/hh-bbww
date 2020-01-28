@@ -1,8 +1,10 @@
 #ifndef hhAnalysis_bbww_genMatchingAuxFunctions_h
 #define hhAnalysis_bbww_genMatchingAuxFunctions_h
 
-#include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h" // GenLepton
-#include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
+#include "DataFormats/Math/interface/deltaR.h" // deltaR
+
+#include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h"   // GenLepton
+#include "tthAnalysis/HiggsToTauTau/interface/GenJet.h"      // GenJet
 #include "tthAnalysis/HiggsToTauTau/interface/GenParticle.h" // GenParticle
 
 #include <string> // std::string
