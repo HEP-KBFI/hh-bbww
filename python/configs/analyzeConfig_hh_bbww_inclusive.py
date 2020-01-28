@@ -88,6 +88,8 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
             continue
           key_dir = getKey(process_name_or_dummy, central_or_shift_or_dummy)
           for dir_type in [ DKEY_CFGS, DKEY_LOGS, DKEY_RLES, DKEY_SYNC ]:
+            if dir_type == DKEY_SYNC and not self.do_sync:
+              continue
             initDict(self.dirs, [ key_dir, dir_type ])
             if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
               self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel, process_name_or_dummy, central_or_shift_or_dummy)
@@ -103,6 +105,8 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
         else:
           self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel, subdirectory)
     for dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_LOGS, DKEY_SYNC, DKEY_HADD_RT ]:
+      if dir_type == DKEY_SYNC and not self.do_sync:
+        continue
       initDict(self.dirs, [ dir_type ])
       if dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_LOGS, DKEY_HADD_RT ]:
         self.dirs[dir_type] = os.path.join(self.configDir, dir_type, self.channel)
