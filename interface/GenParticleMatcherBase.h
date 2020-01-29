@@ -17,7 +17,9 @@ class GenParticleMatcherBase
   ~GenParticleMatcherBase();
 
   const std::vector<GenLepton>& getLeptons() const;
+  const std::vector<GenParticle>& getWQuarks() const;
   const std::vector<GenJet>& getWJets() const;
+  const std::vector<GenParticle>& getBQuarks() const;
   const std::vector<GenJet>& getBJets() const;
   void getMEt(double& genMEtPt, double& genMEtPhi) const;
 
@@ -28,8 +30,12 @@ class GenParticleMatcherBase
              const RecoMEt& met);
 
  protected:
+  std::vector<GenJet> convert_genQuarks_to_genJets(const std::vector<GenParticle>& genQuarks, double mass = -1.);
+
   std::vector<GenLepton> genLeptonsForMatching_;
+  std::vector<GenParticle> genWQuarksForMatching_;
   std::vector<GenJet> genWJetsForMatching_;
+  std::vector<GenParticle> genBQuarksForMatching_;
   std::vector<GenJet> genBJetsForMatching_;
   double genMEtPt_;
   double genMEtPhi_;

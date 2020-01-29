@@ -35,28 +35,20 @@ getGenMEt(const std::vector<GenParticle>& genNeutrinosFromTop,
   genMEtPhi = TMath::ATan2(genMEtPy, genMEtPx);
 }
 
-std::vector<GenJet> 
-getGenWJetsForMatching(const std::vector<GenParticle>& genLightQuarksFromTop)
+std::vector<GenParticle> 
+getGenWQuarksForMatching(const std::vector<GenParticle>& genLightQuarksFromTop)
 {
-  std::vector<GenJet> genWJets;
-  for ( auto genLightQuark : genLightQuarksFromTop )
-  {
-    genWJets.push_back(GenJet(genLightQuark.pt(), genLightQuark.eta(), genLightQuark.phi(), genLightQuark.mass(), genLightQuark.pdgId()));
-  }
-  std::sort(genWJets.begin(), genWJets.end(), isHigherPtT<GenJet>);
-  return genWJets;
+  std::vector<GenParticle> genWQuarks = genLightQuarksFromTop;
+  std::sort(genWQuarks.begin(), genWQuarks.end(), isHigherPtT<GenParticle>);
+  return genWQuarks;
 }
 
-std::vector<GenJet> 
-getGenBJetsForMatching(const std::vector<GenParticle>& genBQuarksFromTop)
+std::vector<GenParticle> 
+getGenBQuarksForMatching(const std::vector<GenParticle>& genBQuarksFromTop)
 {
-  std::vector<GenJet> genBJets;
-  for ( auto genBQuark : genBQuarksFromTop )
-  {
-    genBJets.push_back(GenJet(genBQuark.pt(), genBQuark.eta(), genBQuark.phi(), mem::bottomQuarkMass, genBQuark.pdgId()));
-  }
-  std::sort(genBJets.begin(), genBJets.end(), isHigherPtT<GenJet>);
-  return genBJets;
+  std::vector<GenParticle> genBQuarks = genBQuarksFromTop;
+  std::sort(genBQuarks.begin(), genBQuarks.end(), isHigherPtT<GenParticle>);
+  return genBQuarks;
 }
 //---------------------------------------------------------------------------------------------------
 
@@ -73,7 +65,9 @@ GenParticleMatcherFromTop::setGenParticles(const std::vector<GenLepton>& genLept
                                            const std::vector<GenParticle>& genBQuarksFromTop)
 {
   genLeptonsForMatching_ = getGenLeptonsForMatching(genLeptonsFromTop);
-  genWJetsForMatching_ = getGenWJetsForMatching(genLightQuarksFromTop);
-  genBJetsForMatching_ = getGenBJetsForMatching(genBQuarksFromTop);
+  genWQuarksForMatching_ = getGenWQuarksForMatching(genLightQuarksFromTop);
+  genWJetsForMatching_ = convert_genQuarks_to_genJets(genWQuarksForMatching_);
+  genBQuarksForMatching_ = getGenBQuarksForMatching(genBQuarksFromTop);
+  genBJetsForMatching_ = convert_genQuarks_to_genJets(genBQuarksForMatching_, mem::bottomQuarkMass);
   getGenMEt(genNeutrinosFromTop, genMEtPt_, genMEtPhi_);
 }

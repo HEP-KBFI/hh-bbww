@@ -93,13 +93,13 @@ getGenMEt(const std::vector<GenParticle>& genParticlesFromHiggs,
   genMEtPhi = TMath::ATan2(genMEtPy, genMEtPx);
 }
 
-std::vector<GenJet> 
-getGenWJetsFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs, 
+std::vector<GenParticle> 
+getGenWQuarksFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs, 
                      const std::vector<GenLepton>& genLeptons, 
                      const std::vector<GenParticle>& genNeutrinos, 
                      const std::vector<GenParticle>& genWJets)
 {  
-  std::vector<GenJet> genWJetsFromHiggs;
+  std::vector<GenParticle> genWQuarksFromHiggs;
 
   std::vector<GenParticle> genWBosons = getGenWBosonsFromHiggs(genParticlesFromHiggs);
   if ( genWBosons.size() == 2 ) 
@@ -112,10 +112,8 @@ getGenWJetsFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs,
         findGenJetsFromWBoson(genWBosons[0], genWJets);
       if ( genJetsFromWBoson1.first && genJetsFromWBoson1.second )
       {
-        const GenParticle* genJet1_Wjj = genJetsFromWBoson1.first;
-        genWJetsFromHiggs.push_back(GenJet(genJet1_Wjj->pt(), genJet1_Wjj->eta(), genJet1_Wjj->phi(), genJet1_Wjj->mass(), genJet1_Wjj->pdgId()));
-        const GenParticle* genJet2_Wjj = genJetsFromWBoson1.second;
-        genWJetsFromHiggs.push_back(GenJet(genJet2_Wjj->pt(), genJet2_Wjj->eta(), genJet2_Wjj->phi(), genJet2_Wjj->mass(), genJet2_Wjj->pdgId()));
+        genWQuarksFromHiggs.push_back(*genJetsFromWBoson1.first);
+        genWQuarksFromHiggs.push_back(*genJetsFromWBoson1.second);
       }
     }
     std::pair<const GenLepton*, const GenParticle*> genLepton_and_Neutrino2 =
@@ -126,21 +124,19 @@ getGenWJetsFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs,
         findGenJetsFromWBoson(genWBosons[1], genWJets);
       if ( genJetsFromWBoson2.first && genJetsFromWBoson2.second )
       {
-        const GenParticle* genJet1_Wjj = genJetsFromWBoson2.first;
-        genWJetsFromHiggs.push_back(GenJet(genJet1_Wjj->pt(), genJet1_Wjj->eta(), genJet1_Wjj->phi(), genJet1_Wjj->mass(), genJet1_Wjj->pdgId()));
-        const GenParticle* genJet2_Wjj = genJetsFromWBoson2.second;
-        genWJetsFromHiggs.push_back(GenJet(genJet2_Wjj->pt(), genJet2_Wjj->eta(), genJet2_Wjj->phi(), genJet2_Wjj->mass(), genJet2_Wjj->pdgId()));
+        genWQuarksFromHiggs.push_back(*genJetsFromWBoson2.first);
+        genWQuarksFromHiggs.push_back(*genJetsFromWBoson2.second);
       }
     }
   }
-  std::sort(genWJetsFromHiggs.begin(), genWJetsFromHiggs.end(), isHigherPtT<GenJet>);
-  return genWJetsFromHiggs;
+  std::sort(genWQuarksFromHiggs.begin(), genWQuarksFromHiggs.end(), isHigherPtT<GenParticle>);
+  return genWQuarksFromHiggs;
 }
 
-std::vector<GenJet> 
-getGenBJetsFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs)
+std::vector<GenParticle> 
+getGenBQuarksFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs)
 {
-  std::vector<GenJet> genBJetsFromHiggs;
+  std::vector<GenParticle> genBQuarksFromHiggs;
   const GenParticle* genBQuark     = nullptr;
   const GenParticle* genAntiBQuark = nullptr;
   for ( std::vector<GenParticle>::const_iterator genParticle = genParticlesFromHiggs.begin(); genParticle != genParticlesFromHiggs.end(); ++genParticle )
@@ -150,11 +146,12 @@ getGenBJetsFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs)
   }
   if ( genBQuark && genAntiBQuark ) 
   { 
-    genBJetsFromHiggs.push_back(GenJet(genBQuark->pt(), genBQuark->eta(), genBQuark->phi(), mem::bottomQuarkMass, genBQuark->pdgId()));
-    genBJetsFromHiggs.push_back(GenJet(genAntiBQuark->pt(), genAntiBQuark->eta(), genAntiBQuark->phi(), mem::bottomQuarkMass, genAntiBQuark->pdgId()));
+    genBQuarksFromHiggs.push_back(*genBQuark);
+    genBQuarksFromHiggs.push_back(*genAntiBQuark);
+    
   }
-  std::sort(genBJetsFromHiggs.begin(), genBJetsFromHiggs.end(), isHigherPtT<GenJet>);
-  return genBJetsFromHiggs;
+  std::sort(genBQuarksFromHiggs.begin(), genBQuarksFromHiggs.end(), isHigherPtT<GenParticle>);
+  return genBQuarksFromHiggs;
 }
 //---------------------------------------------------------------------------------------------------
 
@@ -171,7 +168,9 @@ GenParticleMatcherFromHiggs::setGenParticles(const std::vector<GenParticle>& gen
                                              const std::vector<GenParticle>& genWJets)
 {
   genLeptonsForMatching_ = getGenLeptonsForMatching(genParticlesFromHiggs, genLeptons, genNeutrinos);
-  genWJetsForMatching_ = getGenWJetsFromHiggs(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
-  genBJetsForMatching_ = getGenBJetsFromHiggs(genParticlesFromHiggs);
+  genWQuarksForMatching_ = getGenWQuarksFromHiggs(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
+  genWJetsForMatching_ = convert_genQuarks_to_genJets(genWQuarksForMatching_);
+  genBQuarksForMatching_ = getGenBQuarksFromHiggs(genParticlesFromHiggs);
+  genBJetsForMatching_ = convert_genQuarks_to_genJets(genBQuarksForMatching_, mem::bottomQuarkMass);
   getGenMEt(genParticlesFromHiggs, genLeptons, genNeutrinos, genMEtPt_, genMEtPhi_);
 }

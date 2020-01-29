@@ -14,10 +14,22 @@ GenParticleMatcherBase::getLeptons() const
   return genLeptonsForMatching_;
 }
 
+const std::vector<GenParticle>& 
+GenParticleMatcherBase::getWQuarks() const
+{
+  return genWQuarksForMatching_;
+}
+
 const std::vector<GenJet>& 
 GenParticleMatcherBase::getWJets() const
 {
   return genWJetsForMatching_;
+}
+
+const std::vector<GenParticle>& 
+GenParticleMatcherBase::getBQuarks() const
+{
+  return genBQuarksForMatching_;
 }
 
 const std::vector<GenJet>& 
@@ -31,6 +43,18 @@ GenParticleMatcherBase::getMEt(double& genMEtPt, double& genMEtPhi) const
 {
   genMEtPt = genMEtPt_;
   genMEtPhi = genMEtPhi_;
+}
+
+std::vector<GenJet> 
+GenParticleMatcherBase::convert_genQuarks_to_genJets(const std::vector<GenParticle>& genQuarks, double mass)
+{
+  std::vector<GenJet> genJets;
+  for ( std::vector<GenParticle>::const_iterator genQuark = genQuarks.begin(); genQuark != genQuarks.end(); ++genQuark )
+  {
+    double genJet_mass = ( mass >= 0. ) ? mass : genQuark->mass();
+    genJets.push_back(GenJet(genQuark->pt(), genQuark->eta(), genQuark->phi(), genJet_mass, genQuark->pdgId()));
+  }
+  return genJets;
 }
 
 void 
