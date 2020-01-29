@@ -62,10 +62,10 @@ struct selJetsType_Wjj
 };
 
 std::vector<selJetsType_Wjj>
-selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8_Wjj, 
+selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS, 
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR12,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR16,
-               const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8_Wjj,
+               const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8LS_Wjj,
                const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR12,
