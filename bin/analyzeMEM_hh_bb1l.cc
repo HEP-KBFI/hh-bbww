@@ -90,32 +90,41 @@ void
 fillHistograms_numGenWJets(const std::vector<const RecoJet*>& jet_ptrs_ak4,
                            const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
                            const RecoJetCollectionCleaner& jetCleanerAK4_dR04, 
-                           const RecoJetCollectionSelector& jetSelectorAK4_Wjj
+                           const RecoJetCollectionSelector& jetSelectorAK4_Wjj,
                            const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb, 
                            const RecoLepton* selLepton,
                            int nBJetMedium, 
                            const TMVAInterface& mva_Wjj,
                            const EventInfo& eventInfo,
-                           const std::vector<const GenJet*>& genWJets_ptrs,
+                           const std::vector<const GenJet*>& genWJets, const std::vector<const GenJet*>& genBJets, 
                            TH1* histogram_numGenWJets_ak4,
                            TH1* histogram_numGenWJets_ak4cleanedWrtLeptons,
+                           TH1* histogram_numGenWJets_ak4cleanedWrtGenHbb,
                            TH1* histogram_numGenWJets_ak4cleanedWrtHbb,
                            TH1* histogram_numGenWJets_ak4selected,
                            TH1* histogram_numGenWJets_ak4byWjjPairs,
                            double evtWeight)
 {
-  int numGenWJets_ak4 = selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs).size();
+  int numGenWJets_ak4 = selectGenMatchedParticles(jet_ptrs_ak4, genWJets).size();
   fillWithOverFlow(histogram_numGenWJets_ak4, numGenWJets_ak4, evtWeight);
-  int numGenWJets_ak4cleanedWrtLeptons = selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets_ptrs).size();
-  fillWithOverFlow(histogram_numGenWJets_, numGenWJets_ak4cleanedWrtLeptons, evtWeight);
+
+  int numGenWJets_ak4cleanedWrtLeptons = selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets).size();
+  fillWithOverFlow(histogram_numGenWJets_ak4cleanedWrtLeptons, numGenWJets_ak4cleanedWrtLeptons, evtWeight);
+
+  const std::vector<const RecoJet*> cleanedJetsAK4_wrtGenHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, genBJets);
+  int numGenWJets_ak4cleanedWrtGenHbb = selectGenMatchedParticles(cleanedJetsAK4_wrtGenHbb, genWJets).size();
+  fillWithOverFlow(histogram_numGenWJets_ak4cleanedWrtGenHbb, numGenWJets_ak4cleanedWrtGenHbb, evtWeight);
+
   assert(selJet1_Hbb && selJet2_Hbb);
   const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
-  int numGenWJets_ak4cleanedWrtHbb = selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets_ptrs).size();
+  int numGenWJets_ak4cleanedWrtHbb = selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets).size();
   fillWithOverFlow(histogram_numGenWJets_ak4cleanedWrtHbb, numGenWJets_ak4cleanedWrtHbb, evtWeight);
+
   const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
-  int numGenWJets_ak4selected = selectGenMatchedParticles(selJetsAK4_Wjj, genWJets_ptrs).size();
+  int numGenWJets_ak4selected = selectGenMatchedParticles(selJetsAK4_Wjj, genWJets).size();
   fillWithOverFlow(histogram_numGenWJets_ak4selected, numGenWJets_ak4selected, evtWeight);
-  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
+
+  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets);
   assert(selLepton);
   rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *selLepton, nBJetMedium, mva_Wjj, eventInfo);
   std::vector<const RecoJet*> selJetsAK4_byWjjPairs;
@@ -124,8 +133,24 @@ fillHistograms_numGenWJets(const std::vector<const RecoJet*>& jet_ptrs_ak4,
     selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet1_);
     selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet2_);
   }
-  int numGenWJets_ak4byWjjPairs = selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets_ptrs).size();
+  int numGenWJets_ak4byWjjPairs = selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets).size();
   fillWithOverFlow(histogram_numGenWJets_ak4byWjjPairs, numGenWJets_ak4byWjjPairs, evtWeight);
+}
+
+int getGenJet_charge(const GenJet& genJet, const std::vector<GenParticle>& genQuarks)
+{
+  int genJet_charge = 0;
+  double min_dR = 1.e+3;
+  for ( auto genQuark : genQuarks )
+  {
+    double dR = deltaR(genJet.p4(), genQuark.p4());
+    if ( dR < 0.1 && dR < min_dR )
+    {
+      genJet_charge = genQuark.charge();
+      min_dR = dR;
+    } 
+  }
+  return genJet_charge;
 }
 
 /**
@@ -184,10 +209,10 @@ int main(int argc, char* argv[])
   std::string branchName_electrons = cfg_analyze.getParameter<std::string>("branchName_electrons");
   std::string branchName_muons = cfg_analyze.getParameter<std::string>("branchName_muons");
   std::string branchName_jets_ak4 = cfg_analyze.getParameter<std::string>("branchName_jets_ak4");
-  std::string branchName_jets_ak8_Hbb = cfg_analyze.getParameter<std::string>("branchName_jets_ak8_Hbb");
-  std::string branchName_subjets_ak8_Hbb = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8_Hbb");
-  std::string branchName_jets_ak8_Wjj = cfg_analyze.getParameter<std::string>("branchName_jets_ak8_Wjj");
-  std::string branchName_subjets_ak8_Wjj = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8_Wjj");
+  std::string branchName_jets_ak8 = cfg_analyze.getParameter<std::string>("branchName_jets_ak8");
+  std::string branchName_subjets_ak8 = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8");
+  std::string branchName_jets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_jets_ak8LS");
+  std::string branchName_subjets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8LS");
   std::string branchName_met = cfg_analyze.getParameter<std::string>("branchName_met");
 
   std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
@@ -274,15 +299,15 @@ int main(int argc, char* argv[])
   jetSelectorAK4_Wjj.getSelector().set_min_pt(selJetAK4_min_pt_Wjj);
   jetSelectorAK4_Wjj.getSelector().set_max_absEta(selJetAK4_max_absEta_Wjj);
 
-  RecoJetReaderAK8* jetReaderAK8_Hbb = new RecoJetReaderAK8(era, branchName_jets_ak8_Hbb, branchName_subjets_ak8_Hbb); 
-  inputTree->registerReader(jetReaderAK8_Hbb);
-  RecoJetReaderAK8* jetReaderAK8_Wjj = new RecoJetReaderAK8(era, branchName_jets_ak8_Wjj, branchName_subjets_ak8_Wjj); 
-  inputTree->registerReader(jetReaderAK8_Wjj);
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
+  inputTree->registerReader(jetReaderAK8);
+  RecoJetReaderAK8* jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_jets_ak8LS, branchName_subjets_ak8LS); 
+  inputTree->registerReader(jetReaderAK8LS);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
-  RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
+  RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8LS_Wjj(era, -1, isDEBUG);
  
   MEMOutputReader_hh_bb1l* memReader = nullptr;
   if ( !branchName_memOutput.empty() )
@@ -365,13 +390,24 @@ int main(int argc, char* argv[])
 //--- initialize BDT for ranking of W->jj decays
   TMVAInterface mva_Wjj = initialize_mva_Wjj();
  
-  TH1* histogram_genLepton_pt = fs.make<TH1D>("histogram_genLepton_pt", "histogram_genLepton_pt", 50, 0., 250.);
-  TH1* histogram_genLepton_absEta = fs.make<TH1D>("histogram_genLepton_absEta", "histogram_genLepton_absEta", 100, 0., 10.);
+  TH1* histogram_genLepton_pt = fs.make<TH1D>("genLepton_pt", "genLepton_pt", 50, 0., 250.);
+  TH1* histogram_genLepton_absEta = fs.make<TH1D>("genLepton_absEta", "genLepton_absEta", 100, 0., 10.);
 
   genJetHistograms* histograms_genBJet = new genJetHistograms("genBJet");
   histograms_genBJet->bookHistograms(fs);
   genJetHistograms* histograms_genWJet = new genJetHistograms("genWJet");
   histograms_genWJet->bookHistograms(fs);
+
+  TH1* histograms_dRmin_genWJets_to_genLepton = fs.make<TH1D>("dRmin_genWJets_to_genLepton", "dRmin_genWJets_to_genLepton", 50, 0., 5.);
+  TH1* histograms_dRmax_genWJets_to_genLepton = fs.make<TH1D>("dRmax_genWJets_to_genLepton", "dRmax_genWJets_to_genLepton", 50, 0., 5.);
+  TH1* histograms_genLepton_times_genJetCharge_dRmin = fs.make<TH1D>("genLepton_times_genJetCharge_dRmin", "genLepton_times_genJetCharge_dRmin", 22, -1.1, +1.1);
+  TH1* histograms_genAntiLepton_times_genJetCharge_dRmin = fs.make<TH1D>("genAntiLepton_times_genJetCharge_dRmin", "genAntiLepton_times_genJetCharge_dRmin", 22, -1.1, +1.1);
+  TH2* histograms_dRmax_vs_dRmin_genWJets_to_genLepton = fs.make<TH2D>("dRmax_vs_dRmin_genWJets_to_genLepton", "dRmax_vs_dRmin_genWJets_to_genLepton", 50, 0., 5., 50, 0., 5.);
+  TH1* histograms_dR_genWJets = fs.make<TH1D>("dR_genWJets", "dR_genWJets", 50, 0., 5.);
+  TH2* histograms_dR_genWJets_vs_ptWjj = fs.make<TH2D>("dR_genWJets_vs_ptWjj", "dR_genWJets_vs_ptWjj", 50, 0., 250., 50, 0., 5.);
+  TH2* histograms_dR_genWJets_vs_ptH = fs.make<TH2D>("dR_genWJets_vs_ptH", "dR_genWJets_vs_ptH", 50, 0., 250., 50, 0., 5.);
+  TH2* histograms_dRmin_genWJets_to_genLepton_vs_dR_genWJets = fs.make<TH2D>("dRmin_genWJets_to_genLepton_vs_dR_genWJets", "dRmin_genWJets_to_genLepton_vs_dR_genWJets", 50, 0., 5., 50, 0., 5.);
+  TH2* histograms_dRmax_genWJets_to_genLepton_vs_dR_genWJets = fs.make<TH2D>("dRmax_genWJets_to_genLepton_vs_dR_genWJets", "dRmax_genWJets_to_genLepton_vs_dR_genWJets", 50, 0., 5., 50, 0., 5.);
 
   TH2* histogram_selJetCorrelation = fs.make<TH2D>("selJetCorrelation", "selJetCorrelation", 6, -0.5, 5.5, 6, -0.5, 5.5);
   enum { k2Rec2Sel, k2Rec1Sel, k2Rec0Sel, k1Rec1Sel, k1Rec0Sel, k0Rec };
@@ -394,36 +430,16 @@ int main(int argc, char* argv[])
 
   TH1* histogram_numGenWJets_ak4                  = fs.make<TH1D>("numGenWJets_ak4",                  "numGenWJets_ak4",                  4, -0.5, +3.5);
   TH1* histogram_numGenWJets_ak4cleanedWrtLeptons = fs.make<TH1D>("numGenWJets_ak4cleanedWrtLeptons", "numGenWJets_ak4cleanedWrtLeptons", 4, -0.5, +3.5);
+  TH1* histogram_numGenWJets_ak4cleanedWrtGenHbb  = fs.make<TH1D>("numGenWJets_ak4cleanedWrtGenHbb",  "numGenWJets_ak4cleanedWrtGenHbb",  4, -0.5, +3.5);
   TH1* histogram_numGenWJets_ak4cleanedWrtHbb     = fs.make<TH1D>("numGenWJets_ak4cleanedWrtHbb",     "numGenWJets_ak4cleanedWrtHbb",     4, -0.5, +3.5);
   TH1* histogram_numGenWJets_ak4selected          = fs.make<TH1D>("numGenWJets_ak4selected",          "numGenWJets_ak4selected",          4, -0.5, +3.5);
   TH1* histogram_numGenWJets_ak4byWjjPairs        = fs.make<TH1D>("numGenWJets_ak4byWjjPairs",        "numGenWJets_ak4byWjjPairs",        4, -0.5, +3.5);
 
-  TH1* histogram_numJetsAK4_genWjj = fs.make<TH1D>("", "", 4, -0.5, +3.5);
-
-dumpGenLeptons("genLepton", genLeptons);      
-  dumpGenJets("genWJet", genWJets); 
-  printCollection("jet_ptrs_ak4", selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs));
-  printCollection("cleanedJetsAK4_wrtLeptons", selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets_ptrs));
-  const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
-  printCollection("cleanedJetsAK4_wrtHbb", selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets_ptrs));
-  const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
-  printCollection("selJetsAK4_Wjj", selectGenMatchedParticles(selJetsAK4_Wjj, genWJets_ptrs));
-  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
-  rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, numBJets_medium, mva_Wjj, eventInfo);
-  std::vector<const RecoJet*> selJetsAK4_byWjjPairs;
-  if ( jetPairs_Wjj.size() >= 1 )
-  {
-    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet1_);
-    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet2_);
-  }
-  printCollection("selJetsAK4_byWjjPairs", selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets_ptrs));
-  std::cout << std::endl;
-TO-DO: FILL NUMBERS OF JETS AT EACH STAGE INTO HISTOGRM(S)
-
-add plot of dR(ak4 jet, tightLepton) -> do for gen -> plot dR_min and dR_max separately for 2 genJets from W
-loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if dR > 0.4 then ak4jetp4.pt
-
-
+  TH1* histogram_ak4_genTimesRecJetCharge_upTypeQuarks = fs.make<TH1D>("histogram_ak4_genTimesRececJetCharge_upTypeQuarks", "histogram_ak4_genTimesRecJetCharge_upTypeQuarks", 22, -1.1, +1.1);
+  TH1* histogram_ak4_genTimesRecJetCharge_downTypeQuarks = fs.make<TH1D>("histogram_ak4_genTimesRecJetCharge_downTypeQuarks", "histogram_ak4_genTimesRecJetCharge_downTypeQuarks", 22, -1.1, +1.1);
+  
+  TH1* histogram_ak8_ptWjj_fullyMatched = fs.make<TH1D>("ak8_ptWjj_fullyMatched", "ak8_ptWjj_fullyMatched", 50, 0., 250.);
+  TH1* histogram_ak8_ptH_fullyMatched = fs.make<TH1D>("ak8_ptH_fullyMatched", "ak8_ptH_fullyMatched", 50, 0., 250.);
 
   jetHistograms* histograms_boostedHbb_bjet1 = new jetHistograms("boostedHbb_bjet1");
   histograms_boostedHbb_bjet1->bookHistograms(fs);
@@ -538,7 +554,9 @@ loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if 
     }
     else assert(0);
     std::vector<GenLepton> genLeptons = genParticleMatcher->getLeptons();
+    std::vector<GenParticle> genBQuarks = genParticleMatcher->getBQuarks();
     std::vector<GenJet> genBJets = genParticleMatcher->getBJets();
+    std::vector<GenParticle> genWQuarks = genParticleMatcher->getWQuarks();
     std::vector<GenJet> genWJets = genParticleMatcher->getWJets();
     if ( isDEBUG ) {
       dumpGenLeptons("genLepton", genLeptons);      
@@ -605,6 +623,39 @@ loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if 
     
     fillHistograms_genJets(genWJets_ptrs, genWJetSelector, *histograms_genWJet, evtWeight);
     
+    if ( genLeptons_passingPt_and_Eta.size() == 1 )
+    {
+      const GenLepton* genLepton = genLeptons_passingPt_and_Eta[0];
+      if ( genWJets_passingPt_and_Eta.size() == 2 )
+      {
+        const GenJet* genWJet1 = genWJets_passingPt_and_Eta[0];
+        const GenJet* genWJet2 = genWJets_passingPt_and_Eta[1];
+        double dR_genWJet1_to_genLepton = deltaR(genLepton->p4(), genWJet1->p4());
+        double dR_genWJet2_to_genLepton = deltaR(genLepton->p4(), genWJet2->p4());
+        double dRmin_genWJets_to_genLepton = TMath::Min(dR_genWJet1_to_genLepton, dR_genWJet2_to_genLepton);
+        double dRmax_genWJets_to_genLepton = TMath::Max(dR_genWJet1_to_genLepton, dR_genWJet2_to_genLepton);
+        fillWithOverFlow(histograms_dRmin_genWJets_to_genLepton, dRmin_genWJets_to_genLepton, evtWeight);
+        fillWithOverFlow(histograms_dRmax_genWJets_to_genLepton, dRmax_genWJets_to_genLepton, evtWeight);
+        const GenJet* genWJet_dRmin = nullptr;
+        if ( dR_genWJet1_to_genLepton < dR_genWJet2_to_genLepton ) genWJet_dRmin = genWJet1;
+        else                                                       genWJet_dRmin = genWJet2;
+        assert(genLepton->charge() != 0.);
+        TH1* histogram = nullptr;
+        if ( genLepton->charge() < 0. ) histogram = histograms_genLepton_times_genJetCharge_dRmin;
+        else                            histogram = histograms_genAntiLepton_times_genJetCharge_dRmin;
+        fillWithOverFlow(histogram, genLepton->charge()*genWJet_dRmin->charge(), evtWeight);
+        fillWithOverFlow2d(histograms_dRmax_vs_dRmin_genWJets_to_genLepton, dRmin_genWJets_to_genLepton, dRmax_genWJets_to_genLepton, evtWeight);
+        double dR_genWJets = deltaR(genWJet1->p4(), genWJet2->p4());
+        fillWithOverFlow(histograms_dR_genWJets, dR_genWJets, evtWeight);
+        Particle::LorentzVector genWjjP4 = genWJet1->p4() + genWJet2->p4();
+        Particle::LorentzVector genMEtP4(genMEtPt, 0., genMEtPhi, 0.);
+        fillWithOverFlow2d(histograms_dR_genWJets_vs_ptWjj, genWjjP4.pt(), dR_genWJets, evtWeight);
+        fillWithOverFlow2d(histograms_dR_genWJets_vs_ptH, (genWjjP4 + genLepton->p4() + genMEtP4).pt(), dR_genWJets, evtWeight);
+        fillWithOverFlow2d(histograms_dRmin_genWJets_to_genLepton_vs_dR_genWJets, dR_genWJets, dRmin_genWJets_to_genLepton, evtWeight);
+        fillWithOverFlow2d(histograms_dRmax_genWJets_to_genLepton_vs_dR_genWJets, dR_genWJets, dRmax_genWJets_to_genLepton, evtWeight);
+      }
+    }
+
 //--- build collections of reconstructed electrons and muons
 //    resolve overlaps in order of priority: muon, electron
     const std::vector<RecoMuon> muons = muonReader->read();
@@ -672,13 +723,13 @@ loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if 
       tightLepton = tightLeptons_passingPt_and_Eta[0];
     }
 
-    const std::vector<RecoJetAK8> jets_ak8_Hbb = jetReaderAK8_Hbb->read();
-    const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Hbb = convert_to_ptrs(jets_ak8_Hbb);
-    const std::vector<RecoJetAK8> jets_ak8_Wjj = jetReaderAK8_Wjj->read();
-    const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Wjj = convert_to_ptrs(jets_ak8_Wjj);
+    const std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
+    const std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
+    const std::vector<RecoJetAK8> jets_ak8LS = jetReaderAK8LS->read();
+    const std::vector<const RecoJetAK8*> jet_ptrs_ak8LS = convert_to_ptrs(jets_ak8LS);
 
 //--- select jets from H->bb decay
-    const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_Hbb, tightLeptons_passingPt_and_Eta);
+    const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, tightLeptons_passingPt_and_Eta);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
@@ -736,7 +787,7 @@ loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if 
     if ( selJetT_Hbb )
     {
       selJetsT_Wjj = selectJets_Wjj(
-        jet_ptrs_ak8_Wjj, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+        jet_ptrs_ak8LS, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, 
         cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
         *selJetT_Hbb, 
         tightLepton, selBJetsAK4_medium, mva_Wjj, eventInfo);
@@ -774,8 +825,8 @@ loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if 
     if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutWJetPt_and_Eta, "gen&rec", evtWeight);
 
 //--- compute MHT and linear MET discriminant (met_LD)
-    //RecoMEt met = metReader->read();
-    //const Particle::LorentzVector& metP4 = met.p4();
+    RecoMEt met = metReader->read();
+    const Particle::LorentzVector& metP4 = met.p4();
     //const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
     //Particle::LorentzVector mhtP4 = compMHT(tightLeptons, {}, selJetsAK4_mht);
     //double met_LD = compMEt_LD(metP4, mhtP4);
@@ -819,29 +870,48 @@ loop over ak4jetptrs compute jet pt = (ak4jetp4 - leptonp4).pt if dR < 0.4 : if 
     else if ( numRec_Wjj >= 1 && numSel_Wjj >= 1 ) idxWjj = k1Rec1Sel;
     else if ( numRec_Wjj >= 1                    ) idxWjj = k1Rec0Sel;
     else                                           idxWjj = k0Rec;
-if ( numRec_Wjj >= 2 && numSel_Wjj <= 1 )
-{
-  dumpGenLeptons("genLepton", genLeptons);      
-  dumpGenJets("genWJet", genWJets); 
-  printCollection("jet_ptrs_ak4", selectGenMatchedParticles(jet_ptrs_ak4, genWJets_ptrs));
-  printCollection("cleanedJetsAK4_wrtLeptons", selectGenMatchedParticles(cleanedJetsAK4_wrtLeptons, genWJets_ptrs));
-  const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
-  printCollection("cleanedJetsAK4_wrtHbb", selectGenMatchedParticles(cleanedJetsAK4_wrtHbb, genWJets_ptrs));
-  const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
-  printCollection("selJetsAK4_Wjj", selectGenMatchedParticles(selJetsAK4_Wjj, genWJets_ptrs));
-  std::vector<JetPair_Wjj> jetPairs_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj, &genWJets_ptrs);
-  rankJetPairs_Wjj(jetPairs_Wjj, selJetsAK4_Wjj, *tightLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
-  std::vector<const RecoJet*> selJetsAK4_byWjjPairs;
-  if ( jetPairs_Wjj.size() >= 1 )
-  {
-    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet1_);
-    selJetsAK4_byWjjPairs.push_back(jetPairs_Wjj[0].jet2_);
-  }
-  printCollection("selJetsAK4_byWjjPairs", selectGenMatchedParticles(selJetsAK4_byWjjPairs, genWJets_ptrs));
-  std::cout << std::endl;
-TO-DO: FILL NUMBERS OF JETS AT EACH STAGE INTO HISTOGRM(S)
-}
+
     histogram_selJetCorrelation->Fill(idxHbb, idxWjj, evtWeight);
+
+    fillHistograms_numGenWJets(
+      jet_ptrs_ak4, cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR04, jetSelectorAK4_Wjj, selJet1_Hbb, selJet2_Hbb,  
+      tightLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo, 
+      genWJets_ptrs, genBJets_passingPt_and_Eta,
+      histogram_numGenWJets_ak4, 
+      histogram_numGenWJets_ak4cleanedWrtLeptons, 
+      histogram_numGenWJets_ak4cleanedWrtGenHbb, 
+      histogram_numGenWJets_ak4cleanedWrtHbb, 
+      histogram_numGenWJets_ak4selected, 
+      histogram_numGenWJets_ak4byWjjPairs, evtWeight);
+
+    for ( const RecoJetBase* recJet : selJets_Wjj_genMatched )
+    {
+      for ( const GenJet* genJet : genWJets_passingPt_and_Eta )
+      {
+        double dR = deltaR(recJet->p4(), genJet->p4());
+        if ( dR < 0.1 ) 
+        {
+          double genJet_charge = 0.33*getGenJet_charge(*genJet, genWQuarks);
+std::cout << "genJet_charge = " << genJet_charge << ", pdgId = " << genJet->pdgId() << std::endl;
+          double genTimesRecJetCharge = recJet->charge()*genJet_charge;
+          TH1* histogram = nullptr;
+          if ( TMath::Abs(genJet_charge) > 0.5 ) histogram = histogram_ak4_genTimesRecJetCharge_upTypeQuarks;
+          else                                   histogram = histogram_ak4_genTimesRecJetCharge_downTypeQuarks;
+          fillWithOverFlow(histogram, genTimesRecJetCharge, evtWeight);
+        }
+      }
+    }
+
+    for ( const RecoJetAK8* fatjet : jet_ptrs_ak8LS )
+    {
+      if ( fatjet->subJet1() && fatjet->subJet1()->pt() > 20. && fatjet->subJet1()->absEta() < 2.4 &&
+           isGenMatchedT<GenJet>(fatjet->subJet1()->eta(), fatjet->subJet1()->phi(), genWJets_ptrs, nullptr, 0.1) &&
+           fatjet->subJet2() && fatjet->subJet2()->pt() > 20. && fatjet->subJet2()->absEta() < 2.4 &&
+           isGenMatchedT<GenJet>(fatjet->subJet1()->eta(), fatjet->subJet1()->phi(), genWJets_ptrs, nullptr, 0.1) ) {
+        fillWithOverFlow(histogram_ak8_ptWjj_fullyMatched, fatjet->pt(), evtWeight);
+        fillWithOverFlow(histogram_ak8_ptH_fullyMatched, (fatjet->p4() + tightLepton->p4() + metP4).pt(), evtWeight);
+      }
+    }
 
 //--- fill histograms with events passing final selection
     if ( selJetAK8_Hbb )
@@ -952,8 +1022,8 @@ TO-DO: FILL NUMBERS OF JETS AT EACH STAGE INTO HISTOGRM(S)
   delete muonReader;
   delete electronReader;
   delete jetReaderAK4;
-  delete jetReaderAK8_Hbb;
-  delete jetReaderAK8_Wjj;
+  delete jetReaderAK8;
+  delete jetReaderAK8LS;
   delete metReader;
   delete genLeptonReader;
   delete genNeutrinoReader;
