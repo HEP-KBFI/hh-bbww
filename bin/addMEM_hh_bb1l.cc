@@ -186,10 +186,10 @@ int main(int argc,
   const std::string branchName_electrons       = cfg_addMEM.getParameter<std::string>("branchName_electrons");
   const std::string branchName_muons           = cfg_addMEM.getParameter<std::string>("branchName_muons");
   const std::string branchName_jets_ak4        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
-  const std::string branchName_jets_ak8_Hbb    = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8_Hbb");
-  const std::string branchName_subjets_ak8_Hbb = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8_Hbb");
-  const std::string branchName_jets_ak8_Wjj    = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8_Wjj");
-  const std::string branchName_subjets_ak8_Wjj = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8_Wjj");
+  const std::string branchName_jets_ak8        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
+  const std::string branchName_subjets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
+  const std::string branchName_jets_ak8LS      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8LS");
+  const std::string branchName_subjets_ak8LS   = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8LS");
   const std::string branchName_met             = cfg_addMEM.getParameter<std::string>("branchName_met");
 
   const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");
@@ -333,18 +333,18 @@ int main(int argc,
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8_Hbb = new RecoJetReaderAK8(era, branchName_jets_ak8_Hbb, branchName_subjets_ak8_Hbb); 
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
   // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
   //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-  //jetReaderAK8_Hbb->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
-  //jetReaderAK8_Hbb->read_ptMass_systematics(isMC);
-  //jetReaderAK8_Hbb->read_BtagWeight_systematics(isMC);
-  jetReaderAK8_Hbb->setBranchAddresses(inputTree);
-  RecoJetReaderAK8* jetReaderAK8_Wjj = new RecoJetReaderAK8(era, branchName_jets_ak8_Wjj, branchName_subjets_ak8_Wjj); 
-  //jetReaderAK8_Wjj->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
-  //jetReaderAK8_Wjj->read_ptMass_systematics(isMC);
-  //jetReaderAK8_Wjj->read_BtagWeight_systematics(isMC);
-  jetReaderAK8_Wjj->setBranchAddresses(inputTree);
+  //jetReaderAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
+  //jetReaderAK8->read_ptMass_systematics(isMC);
+  //jetReaderAK8->read_BtagWeight_systematics(isMC);
+  jetReaderAK8->setBranchAddresses(inputTree);
+  RecoJetReaderAK8* jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_jets_ak8LS, branchName_subjets_ak8LS); 
+  //jetReaderAK8LS->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
+  //jetReaderAK8LS->read_ptMass_systematics(isMC);
+  //jetReaderAK8LS->read_BtagWeight_systematics(isMC);
+  jetReaderAK8LS->setBranchAddresses(inputTree);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
@@ -417,8 +417,8 @@ int main(int argc,
   RecoMuonWriter *      muonWriter                 = nullptr;
   RecoElectronWriter *  electronWriter             = nullptr;
   RecoJetWriter *       jetWriterAK4               = nullptr;
-  RecoJetWriterAK8 *    jetWriterAK8_Hbb           = nullptr;
-  RecoJetWriterAK8 *    jetWriterAK8_Wjj           = nullptr;
+  RecoJetWriterAK8 *    jetWriterAK8               = nullptr;
+  RecoJetWriterAK8 *    jetWriterAK8LS             = nullptr;
   RecoMEtWriter *       metWriter                  = nullptr;
   EventInfoWriter *     eventInfoWriter            = nullptr;
 
@@ -445,22 +445,22 @@ int main(int argc,
     jetWriterAK4 = new RecoJetWriter(era, isMC, Form("n%s", branchName_jets_ak4.data()), branchName_jets_ak4);
     jetWriterAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     jetWriterAK4->setBranches(outputTree);
-    jetWriterAK8_Hbb = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8_Hbb.data()), branchName_jets_ak8_Hbb, 
-      Form("n%s", branchName_subjets_ak8_Hbb.data()), branchName_subjets_ak8_Hbb);
+    jetWriterAK8 = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8.data()), branchName_jets_ak8, 
+      Form("n%s", branchName_subjets_ak8.data()), branchName_subjets_ak8);
     // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
     //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-    //jetWriterAK8_Hbb->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
-    //jetWriterAK8_Hbb->write_ptMass_systematics(isMC);
-    //jetWriterAK8_Hbb->write_BtagWeight_systematics(isMC);
-    jetWriterAK8_Hbb->setBranches(outputTree);
-    jetWriterAK8_Wjj = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8_Wjj.data()), branchName_jets_ak8_Wjj, 
-      Form("n%s", branchName_subjets_ak8_Wjj.data()), branchName_subjets_ak8_Wjj);
+    //jetWriterAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
+    //jetWriterAK8->write_ptMass_systematics(isMC);
+    //jetWriterAK8->write_BtagWeight_systematics(isMC);
+    jetWriterAK8->setBranches(outputTree);
+    jetWriterAK8LS = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8LS.data()), branchName_jets_ak8LS, 
+      Form("n%s", branchName_subjets_ak8LS.data()), branchName_subjets_ak8LS);
     // TO-DO: implement jet energy scale uncertainties, b-tag weights,  
     //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-    //jetWriterAK8_Wjj->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
-    //jetWriterAK8_Wjj->write_ptMass_systematics(isMC);
-    //jetWriterAK8_Wjj->write_BtagWeight_systematics(isMC);
-    jetWriterAK8_Wjj->setBranches(outputTree);
+    //jetWriterAK8LS->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
+    //jetWriterAK8LS->write_ptMass_systematics(isMC);
+    //jetWriterAK8LS->write_BtagWeight_systematics(isMC);
+    jetWriterAK8LS->setBranches(outputTree);
     metWriter = new RecoMEtWriter(era, isMC, branchName_met);
     metWriter->setPtPhi_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     metWriter->write_ptPhi_systematics(isMC);
@@ -481,14 +481,14 @@ int main(int argc,
       Form("drop n%s", branchName_jets_ak4.data()),
       Form("drop n%s_*", branchName_jets_ak4.data()),
       Form("drop %s_*", branchName_jets_ak4.data()),
-      Form("drop n%s", branchName_jets_ak8_Hbb.data()),
-      Form("drop %s_*", branchName_jets_ak8_Hbb.data()),
-      Form("drop n%s", branchName_subjets_ak8_Hbb.data()),
-      Form("drop %s_*", branchName_subjets_ak8_Hbb.data()),
-      Form("drop n%s", branchName_jets_ak8_Wjj.data()),
-      Form("drop %s_*", branchName_jets_ak8_Wjj.data()),
-      Form("drop n%s", branchName_subjets_ak8_Wjj.data()),
-      Form("drop %s_*", branchName_subjets_ak8_Wjj.data()),
+      Form("drop n%s", branchName_jets_ak8.data()),
+      Form("drop %s_*", branchName_jets_ak8.data()),
+      Form("drop n%s", branchName_subjets_ak8.data()),
+      Form("drop %s_*", branchName_subjets_ak8.data()),
+      Form("drop n%s", branchName_jets_ak8LS.data()),
+      Form("drop %s_*", branchName_jets_ak8LS.data()),
+      Form("drop n%s", branchName_subjets_ak8LS.data()),
+      Form("drop %s_*", branchName_subjets_ak8LS.data()),
       Form("drop %s_*", branchName_met.data())
     };
 
@@ -670,10 +670,10 @@ int main(int argc,
 //--- build collections of jets 
     const std::vector<RecoJet> jets_ak4 = jetReaderAK4->read();
     const std::vector<const RecoJet*> jet_ptrs_ak4 = convert_to_ptrs(jets_ak4);
-    const std::vector<RecoJetAK8> jets_ak8_Hbb = jetReaderAK8_Hbb->read();
-    const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Hbb = convert_to_ptrs(jets_ak8_Hbb);
-    const std::vector<RecoJetAK8> jets_ak8_Wjj = jetReaderAK8_Wjj->read();
-    const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Wjj = convert_to_ptrs(jets_ak8_Wjj);
+    const std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
+    const std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
+    const std::vector<RecoJetAK8> jets_ak8LS = jetReaderAK8LS->read();
+    const std::vector<const RecoJetAK8*> jet_ptrs_ak8LS = convert_to_ptrs(jets_ak8LS);
 
     const RecoMEt met = metReader->read();
 
@@ -729,8 +729,8 @@ int main(int argc,
       muonWriter->write(preselMuons);
       electronWriter->write(preselElectronsUncleaned);
       jetWriterAK4->write(jet_ptrs_ak4); // save central
-      jetWriterAK8_Hbb->write(jet_ptrs_ak8_Hbb); // save central
-      jetWriterAK8_Wjj->write(jet_ptrs_ak8_Wjj); // save central
+      jetWriterAK8->write(jet_ptrs_ak8); // save central
+      jetWriterAK8LS->write(jet_ptrs_ak8LS); // save central
       metWriter->write(met); // save central
 
       if ( addMEM_forGenParticles )
@@ -814,8 +814,8 @@ int main(int argc,
           ;
 
           jetReaderAK4->setPtMass_central_or_shift(jetPt_option);
-          //jetReaderAK8_Hbb->setPtMass_central_or_shift(jetPt_option);
-          //jetReaderAK8_Wjj->setPtMass_central_or_shift(jetPt_option);
+          //jetReaderAK8->setPtMass_central_or_shift(jetPt_option);
+          //jetReaderAK8LS->setPtMass_central_or_shift(jetPt_option);
           metReader->setMEt_central_or_shift(met_option);
 
           const std::vector<RecoJet> jets_ak4_mem = jetReaderAK4->read();
@@ -825,10 +825,10 @@ int main(int argc,
             jetCleanerAK4_dR04   (jet_ptrs_ak4_mem, fakeableLeptons)
           ;
           const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
-          const std::vector<RecoJetAK8> jets_ak8_Hbb_mem = jetReaderAK8_Hbb->read();
+          const std::vector<RecoJetAK8> jets_ak8_Hbb_mem = jetReaderAK8->read();
           const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Hbb_mem = convert_to_ptrs(jets_ak8_Hbb_mem);
-          const std::vector<RecoJetAK8> jets_ak8_Wjj_mem = jetReaderAK8_Wjj->read();
-          const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Wjj_mem = convert_to_ptrs(jets_ak8_Wjj_mem);
+          const std::vector<RecoJetAK8> jets_ak8LS_Wjj_mem = jetReaderAK8LS->read();
+          const std::vector<const RecoJetAK8*> jet_ptrs_ak8LS_Wjj_mem = convert_to_ptrs(jets_ak8LS_Wjj_mem);
           
           // select jets from H->bb decay
           const std::vector<const RecoJetAK8*> cleanedJetsAK8_Hbb_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8_Hbb_mem, fakeableLeptons);
@@ -849,7 +849,7 @@ int main(int argc,
 
           // select jets from W->jj decay
           std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj(
-            jet_ptrs_ak8_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+            jet_ptrs_ak8LS_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
             cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             *selJetT_Hbb, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
@@ -859,7 +859,7 @@ int main(int argc,
           selJetT_Hbb_missingBJet1.fatjet_ = selJetAK8_Hbb;
           selJetT_Hbb_missingBJet1.jet_or_subjet1_ = selJet2_Hbb;
           std::vector<selJetsType_Wjj> selJetsT_Wjj_missingBJet1 = selectJets_Wjj(
-            jet_ptrs_ak8_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+            jet_ptrs_ak8LS_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
             cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             selJetT_Hbb_missingBJet1, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
@@ -869,7 +869,7 @@ int main(int argc,
           selJetT_Hbb_missingBJet2.fatjet_ = selJetAK8_Hbb;
           selJetT_Hbb_missingBJet2.jet_or_subjet1_ = selJet1_Hbb;
           std::vector<selJetsType_Wjj> selJetsT_Wjj_missingBJet2 = selectJets_Wjj(
-            jet_ptrs_ak8_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
+            jet_ptrs_ak8LS_Wjj_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
             cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             selJetT_Hbb_missingBJet2, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
@@ -1090,8 +1090,8 @@ int main(int argc,
   delete muonReader;
   delete electronReader;
   delete jetReaderAK4;
-  delete jetReaderAK8_Hbb;
-  delete jetReaderAK8_Wjj;
+  delete jetReaderAK8;
+  delete jetReaderAK8LS;
   delete metReader;
 
   delete genLeptonReader;
