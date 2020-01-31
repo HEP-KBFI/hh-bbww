@@ -17,11 +17,11 @@ void
 genJetHistograms::bookHistograms(fwlite::TFileService& fs)
 {
   std::string histogramName_genJet1_pt = Form("%s1_pt", label_.data());
-  histogram_genJet1_pt_ = fs.make<TH1D>(histogramName_genJet1_pt.data(), histogramName_genJet1_pt.data(), 50, 0., 250.);
+  histogram_genJet1_pt_ = fs.make<TH1D>(histogramName_genJet1_pt.data(), histogramName_genJet1_pt.data(), 70, 0., 350.);
   std::string histogramName_genJet1_absEta = Form("%s1_absEta", label_.data());
   histogram_genJet1_absEta_ = fs.make<TH1D>(histogramName_genJet1_absEta.data(), histogramName_genJet1_absEta.data(), 50, 0., 5.);
   std::string histogramName_genJet2_pt = Form("%s2_pt", label_.data());
-  histogram_genJet2_pt_ = fs.make<TH1D>(histogramName_genJet2_pt.data(), histogramName_genJet2_pt.data(), 50, 0., 250.);
+  histogram_genJet2_pt_ = fs.make<TH1D>(histogramName_genJet2_pt.data(), histogramName_genJet2_pt.data(), 70, 0., 350.);
   std::string histogramName_genJet2_absEta = Form("%s2_absEta", label_.data());
   histogram_genJet2_absEta_ = fs.make<TH1D>(histogramName_genJet2_absEta.data(), histogramName_genJet2_absEta.data(), 50, 0., 5.);
 }

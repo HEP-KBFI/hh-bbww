@@ -16,7 +16,7 @@ void
 jetHistograms::bookHistograms(fwlite::TFileService& fs)
 {
   std::string histogramName_pt = Form("%s_pt", label_.data());
-  histogram_pt_ = fs.make<TH1D>(histogramName_pt.data(), histogramName_pt.data(), 50, 0., 250.);
+  histogram_pt_ = fs.make<TH1D>(histogramName_pt.data(), histogramName_pt.data(), 70, 0., 350.);
   std::string histogramName_absEta = Form("%s_absEta", label_.data());
   histogram_absEta_ = fs.make<TH1D>(histogramName_absEta.data(), histogramName_absEta.data(), 50, 0., 5.0);
   std::string histogramName_btagCSV = Form("%s_btagCSV", label_.data());
