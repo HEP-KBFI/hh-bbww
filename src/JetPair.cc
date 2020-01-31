@@ -117,6 +117,29 @@ TMVAInterface initialize_mva_Wjj()
   return mva_Wjj;
 }
 
+const RecoJet* getSelJetAK4(const RecoJetBase* jet_or_subjet, const std::vector<const RecoJet*>& selJetsAK4)
+{
+  const RecoJet* jet = nullptr;
+  if ( dynamic_cast<const RecoJet*>(jet_or_subjet) )
+  {
+    jet = dynamic_cast<const RecoJet*>(jet_or_subjet);
+  } 
+  else 
+  {
+    double dRmin = 1.e+3;
+    for ( const RecoJet* selJetAK4 : selJetsAK4 )
+    {
+      double dR = deltaR(jet_or_subjet->p4(), selJetAK4->p4());
+      if ( dR < 0.2 && dR < dRmin )
+      {
+        jet = selJetAK4;
+        dRmin = dR;
+      }
+    }
+  }
+  return jet;
+}
+
 void
 rankJetPairs_Wjj(std::vector<JetPair_Wjj>& jetPairs_Wjj, 
                  const std::vector<const RecoJet*>& selJetsAK4_Wjj, const RecoLepton& selLepton, int nBJetMedium, 
@@ -124,22 +147,33 @@ rankJetPairs_Wjj(std::vector<JetPair_Wjj>& jetPairs_Wjj,
 {
   for ( std::vector<JetPair_Wjj>::iterator jetPair = jetPairs_Wjj.begin(); jetPair != jetPairs_Wjj.end(); ++jetPair )
   {
-    const RecoJet* selJet1 = jetPair->jet1_;
-    assert(selJet1);
-    Particle::LorentzVector selJet1P4 = selJet1->p4();
-    const RecoJet* selJet2 = jetPair->jet2_;
-    assert(selJet2);
-    Particle::LorentzVector selJet2P4 = selJet2->p4();
+    assert(jetPair->jet1_ && jetPair->jet2_);
+    double selJet1_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
+    double selJet1_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
+    const RecoJet* selJet1 = getSelJetAK4(jetPair->jet1_, selJetsAK4_Wjj);
+    if ( selJet1 )
+    {
+      selJet1_BtagCSV = selJet1->BtagCSV();
+      selJet1_QGDiscr = selJet1->QGDiscr();
+    }
+    Particle::LorentzVector selJet1P4 = jetPair->jet1_->p4();
+    double selJet2_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
+    const RecoJet* selJet2 = getSelJetAK4(jetPair->jet2_, selJetsAK4_Wjj);
+    if ( selJet2 )
+    {
+      selJet2_QGDiscr = selJet2->QGDiscr();
+    }
+    Particle::LorentzVector selJet2P4 = jetPair->jet2_->p4();
     Particle::LorentzVector jetPairP4 = selJet1P4 + selJet2P4; 
     std::map<std::string, double> mvaInputVariables_Wjj = {
       { "HadW_mass",    jetPairP4.mass()                  },
-      { "jet1_btagCSV", selJet1->BtagCSV()                },
+      { "jet1_btagCSV", selJet1_BtagCSV                   },
       { "dr_HadW_lep",  deltaR(jetPairP4, selLepton.p4()) },
       { "dR_jj",        deltaR(selJet1P4, selJet2P4)      },
       { "jet1_pt",      selJet1P4.pt()                    },
-      { "jet1_qgDiscr", selJet1->QGDiscr()                },
+      { "jet1_qgDiscr", selJet1_QGDiscr                   },
       { "jet2_pt",      selJet2P4.pt()                    },
-      { "jet2_qgDiscr", selJet2->QGDiscr()                },
+      { "jet2_qgDiscr", selJet2_QGDiscr                   },
       { "nBJetMedium",  nBJetMedium                       },
       { "nJet",         selJetsAK4_Wjj.size()             }
     };

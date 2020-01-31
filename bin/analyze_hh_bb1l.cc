@@ -1720,11 +1720,14 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
 
     // select jets from W->jj decay
+/*
     std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj(
       jet_ptrs_ak8_Wjj, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj, 
       cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
       *selJetT_Hbb, 
       selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo);
+ */
+    std::vector<selJetsType_Wjj> selJetsT_Wjj;
     const selJetsType_Wjj* selJetT_Wjj = nullptr;
     const RecoJetAK8* selJetAK8_Wjj = nullptr;
     const RecoJetBase* selJet1_Wjj = nullptr;

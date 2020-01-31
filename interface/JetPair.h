@@ -14,7 +14,7 @@
 
 struct JetPairBase
 {
-  JetPairBase(const RecoJet* jet1, bool jet1_isGenMatched, const RecoJet* jet2, bool jet2_isGenMatched)
+  JetPairBase(const RecoJetBase* jet1, bool jet1_isGenMatched, const RecoJetBase* jet2, bool jet2_isGenMatched)
     : jet1_(jet1)
     , jet1_isGenMatched_(jet1_isGenMatched)
     , jet2_(jet2)
@@ -25,9 +25,9 @@ struct JetPairBase
   }
   ~JetPairBase() {}
   Particle::LorentzVector p4_;
-  const RecoJet* jet1_;
+  const RecoJetBase* jet1_;
   bool jet1_isGenMatched_;
-  const RecoJet* jet2_;
+  const RecoJetBase* jet2_;
   bool jet2_isGenMatched_;
 };
 
@@ -58,7 +58,7 @@ rankJetPairs_Hbb(std::vector<JetPair_Hbb>& jetPairs_Hbb);
 
 struct JetPair_Wjj : public JetPairBase
 {
-  JetPair_Wjj(const RecoJet* jet1, bool jet1_isGenMatched, const RecoJet* jet2, bool jet2_isGenMatched, double bdtScore = -1.)
+  JetPair_Wjj(const RecoJetBase* jet1, bool jet1_isGenMatched, const RecoJetBase* jet2, bool jet2_isGenMatched, double bdtScore = -1.)
     : JetPairBase(jet1, jet1_isGenMatched, jet2, jet2_isGenMatched)
     , bdtScore_(bdtScore)
   {}

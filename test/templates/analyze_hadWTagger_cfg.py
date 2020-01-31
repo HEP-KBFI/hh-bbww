@@ -32,8 +32,9 @@ process.analyze_hadWTagger = cms.PSet(
     branchName_electrons = cms.string('Electron'),
     branchName_muons = cms.string('Muon'),
     branchName_jets_ak4 = cms.string('Jet'),
-    branchName_jets_ak8_Hbb = cms.string('FatJet'),
-    branchName_subjets_ak8_Hbb = cms.string('SubJet'),
+    branchName_jets_ak8 = cms.string('FatJet'),
+    branchName_subjets_ak8 = cms.string('SubJet'),
+    branchName_met = cms.string('MET'),
 
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genJets = cms.string('GenJet'),

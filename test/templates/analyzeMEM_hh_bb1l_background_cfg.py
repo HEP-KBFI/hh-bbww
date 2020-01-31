@@ -53,7 +53,7 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
         branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
     ),
 
-    jetCleaningByIndex = cms.bool(True),
+    jetCleaningByIndex = cms.bool(False),
 
     isDEBUG = cms.bool(False)
 )
