@@ -23,6 +23,7 @@ parser.add_use_home()
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 parser.add_jet_cleaning()
 parser.add_gen_matching()
+parser.enable_regrouped_jec()
 parser.add_argument('-o', '--output-tree',
   type = str, dest = 'output_tree', metavar = 'name', default = 'syncTree', required = False,
   help = 'R|Output TTree name',
@@ -41,12 +42,18 @@ sample_filter      = args.filter
 running_method     = args.running_method
 
 # Additional arguments
-rle_select         = os.path.expanduser(args.rle_select)
-systematics_label  = args.systematics
-use_nonnominal     = args.original_central
-use_home           = args.use_home
-jet_cleaning       = args.jet_cleaning
+rle_select        = os.path.expanduser(args.rle_select)
+systematics_label = args.systematics
+use_nonnominal    = args.original_central
+use_home          = args.use_home
+jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
+regroup_jec       = args.enable_regrouped_jec
+
+if regroup_jec:
+  if 'full' not in systematics_label:
+    raise RuntimeError("Regrouped JEC was enabled but not running with full systematics")
+  systematics.full.extend(systematics.JEC_regrouped)
 
 # Custom arguments
 output_tree = args.output_tree
