@@ -806,7 +806,9 @@ int main(int argc,
             // match reconstructed to generator-level particles
             if ( addMEM_forGenParticles )
             {
-              const std::vector<const RecoJetBase*> selJets_Hbb_base = { selJet1_Hbb, selJet2_Hbb };
+              std::vector<const RecoJetBase*> selJets_Hbb_base;
+              if ( selJet1_Hbb ) selJets_Hbb_base.push_back(selJet1_Hbb);
+              if ( selJet2_Hbb ) selJets_Hbb_base.push_back(selJet2_Hbb);
               if ( isMC_HH )
               {
                 genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, {});

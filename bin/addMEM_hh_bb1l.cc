@@ -898,7 +898,9 @@ int main(int argc,
           // match reconstructed to generator-level particles
           if ( addMEM_forGenParticles )
           {
-            const std::vector<const RecoJetBase*> selJets_Hbb_base = { selJet1_Hbb, selJet2_Hbb };
+            std::vector<const RecoJetBase*> selJets_Hbb_base;
+            if ( selJet1_Hbb ) selJets_Hbb_base.push_back(selJet1_Hbb);
+            if ( selJet2_Hbb ) selJets_Hbb_base.push_back(selJet2_Hbb);
             const std::vector<const RecoJetBase*> selJets_Wjj_base = convert_to_RecoJetBase(selJetsAK4_Wjj);
             if ( isMC_HH )
             {
