@@ -15,7 +15,7 @@
 
 struct memHistograms
 { 
-  memHistograms(const std::string& label, int numUnmatchedLeptons, int numUnmatchedBJets, int numUnmatchedWJets);
+  memHistograms(const std::string& label, int numUnmatchedLeptons, int numUnmatchedBJets, int numUnmatchedWJets = -1);
   ~memHistograms();
   void bookHistograms(fwlite::TFileService& fs);
   template<typename T>

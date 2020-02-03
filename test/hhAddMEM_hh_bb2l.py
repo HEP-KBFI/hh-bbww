@@ -31,6 +31,11 @@ parser.add_argument('-shme', '--systematics-hme',
   required = False,
   help = 'R|Systematic uncertainties for HME method (choices: %s)' % tthAnalyzeParser.cat(sys_choices),
 )
+parser.add_argument('-jps', '--max_jobs-per-sample',
+  type = int, dest = 'max_jobs_per_sample', metavar = 'integer', default = -1,
+  required = False,
+  help = 'R|Maximum number of jobs per sample (default: disabled)'
+)
 parser.add_argument('-n', '--max-mem-integrations',
   type = int, dest = 'max_mem_integrations', metavar = 'integer', default = max_mem_integrations,
   required = False,
@@ -47,16 +52,16 @@ parser.add_argument('-hme', '--method-hme',
 args = parser.parse_args()
 
 # Common arguments
-era                = args.era
-version            = args.version
-dry_run            = args.dry_run
-no_exec            = args.no_exec
-auto_exec          = args.auto_exec
-check_output_files = not args.not_check_input_files
-debug              = args.debug
-sample_filter      = args.filter
-num_parallel_jobs  = args.num_parallel_jobs
-running_method     = args.running_method
+era                   = args.era
+version               = args.version
+dry_run               = args.dry_run
+no_exec               = args.no_exec
+auto_exec             = args.auto_exec
+check_output_files    = not args.not_check_input_files
+debug                 = args.debug
+sample_filter         = args.filter
+num_parallel_jobs     = args.num_parallel_jobs
+running_method        = args.running_method
 
 # Additional arguments
 mode                  = args.mode
@@ -68,9 +73,12 @@ use_home              = args.use_home
 jet_cleaning          = args.jet_cleaning
 
 # Custom arguments
-max_mem_integrations = args.max_mem_integrations
-method_mem           = args.method_mem
-method_hme           = args.method_hme
+max_mem_integrations  = args.max_mem_integrations
+print("max_mem_integrations = %i" % max_mem_integrations)
+method_mem            = args.method_mem
+method_hme            = args.method_hme
+max_jobs_per_sample  = args.max_jobs_per_sample
+print("max_jobs_per_sample = %i" % max_jobs_per_sample)
 
 # Use the arguments
 central_or_shifts = []
@@ -129,6 +137,7 @@ if __name__ == '__main__':
     max_files_per_job        = 1, # so that we'd have 1-1 correspondence b/w input and output files
     mem_integrations_per_job = 500,
     max_mem_integrations     = max_mem_integrations, # use -1 if you don't want to limit the nof MEM integrations
+    max_jobs_per_sample      = max_jobs_per_sample,  # use -1 if you don't want to limit the nof jobs per sample
     num_parallel_jobs        = num_parallel_jobs,
     leptonSelection          = "Fakeable",
     isDebug                  = debug,

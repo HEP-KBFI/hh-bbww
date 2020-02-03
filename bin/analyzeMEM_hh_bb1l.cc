@@ -229,7 +229,7 @@ int main(int argc, char* argv[])
   GenParticleMatcherFromHiggs genParticleMatcherFromHiggs;
   GenParticleMatcherFromTop genParticleMatcherFromTop;
 
-  bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
+  //bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
 
   fwlite::InputSource inputFiles(cfg);
   int maxEvents = inputFiles.maxEvents();
@@ -273,7 +273,7 @@ int main(int argc, char* argv[])
   inputTree->registerReader(jetReaderAK4);
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
   //RecoJetCollectionCleaner jetCleanerAK4_dR04(0.2, isDEBUG); // CV: ONLY FOR TESTING !!
-  RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
+  //RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
@@ -404,11 +404,12 @@ int main(int argc, char* argv[])
   TH1* histograms_genAntiLepton_times_genJetCharge_dRmin = fs.make<TH1D>("genAntiLepton_times_genJetCharge_dRmin", "genAntiLepton_times_genJetCharge_dRmin", 22, -1.1, +1.1);
   TH2* histograms_dRmax_vs_dRmin_genWJets_to_genLepton = fs.make<TH2D>("dRmax_vs_dRmin_genWJets_to_genLepton", "dRmax_vs_dRmin_genWJets_to_genLepton", 50, 0., 5., 50, 0., 5.);
   TH1* histograms_dR_genWJets = fs.make<TH1D>("dR_genWJets", "dR_genWJets", 50, 0., 5.);
-  TH1* histograms_dR_genBJets = fs.make<TH1D>("dR_genBJets", "dR_genBJets", 50, 0., 5.);
   TH2* histograms_dR_genWJets_vs_ptWjj = fs.make<TH2D>("dR_genWJets_vs_ptWjj", "dR_genWJets_vs_ptWjj", 50, 0., 500., 50, 0., 5.);
   TH2* histograms_dR_genWJets_vs_ptH = fs.make<TH2D>("dR_genWJets_vs_ptH", "dR_genWJets_vs_ptH", 50, 0., 500., 50, 0., 5.);
   TH2* histograms_dRmin_genWJets_to_genLepton_vs_dR_genWJets = fs.make<TH2D>("dRmin_genWJets_to_genLepton_vs_dR_genWJets", "dRmin_genWJets_to_genLepton_vs_dR_genWJets", 50, 0., 5., 50, 0., 5.);
   TH2* histograms_dRmax_genWJets_to_genLepton_vs_dR_genWJets = fs.make<TH2D>("dRmax_genWJets_to_genLepton_vs_dR_genWJets", "dRmax_genWJets_to_genLepton_vs_dR_genWJets", 50, 0., 5., 50, 0., 5.);
+  TH1* histograms_dR_genBJets = fs.make<TH1D>("dR_genBJets", "dR_genBJets", 50, 0., 5.);
+  TH2* histograms_dR_genBJets_vs_ptHbb = fs.make<TH2D>("dR_genBJets_vs_ptWjj", "dR_genBJets_vs_ptWHbb", 50, 0., 500., 50, 0., 5.);
 
   TH2* histogram_selJetCorrelation = fs.make<TH2D>("selJetCorrelation", "selJetCorrelation", 6, -0.5, 5.5, 6, -0.5, 5.5);
   enum { k2Rec2Sel, k2Rec1Sel, k2Rec0Sel, k1Rec1Sel, k1Rec0Sel, k0Rec };
@@ -659,12 +660,14 @@ int main(int argc, char* argv[])
         fillWithOverFlow2d(histograms_dRmin_genWJets_to_genLepton_vs_dR_genWJets, dR_genWJets, dRmin_genWJets_to_genLepton, evtWeight);
         fillWithOverFlow2d(histograms_dRmax_genWJets_to_genLepton_vs_dR_genWJets, dR_genWJets, dRmax_genWJets_to_genLepton, evtWeight);
       }
-      if ( genBJets_passingPt_and_Eta.size() == 2 )
-      {
-        const GenJet* genBJet1 = genBJets_passingPt_and_Eta[0];
-        const GenJet* genBJet2 = genBJets_passingPt_and_Eta[1];
-        fillWithOverFlow(histograms_dR_genBJets, deltaR(genBJet1->p4(), genBJet2->p4()), evtWeight);
-      }
+    }
+    if ( genBJets_passingPt_and_Eta.size() == 2 )
+    {
+      const GenJet* genBJet1 = genBJets_passingPt_and_Eta[0];
+      const GenJet* genBJet2 = genBJets_passingPt_and_Eta[1];
+      double dR_genBJets = deltaR(genBJet1->p4(), genBJet2->p4());
+      fillWithOverFlow(histograms_dR_genBJets, dR_genBJets, evtWeight);
+      fillWithOverFlow2d(histograms_dR_genBJets_vs_ptHbb, (genBJet1->p4() + genBJet2->p4()).pt(), dR_genBJets, evtWeight);
     }
 
 //--- build collections of reconstructed electrons and muons

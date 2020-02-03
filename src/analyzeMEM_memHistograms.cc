@@ -23,15 +23,15 @@ memHistograms::bookHistograms(fwlite::TFileService& fs)
   std::string histogramName_prefix = "mem";
   if ( label_ != "" ) histogramName_prefix.append("_").append(label_);
   std::string histogramName_suffix;
-  if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ == 0 ) 
+  if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ <= 0 ) 
   {
     histogramName_suffix = "fullyMatched";
   }
-  else if ( numUnmatchedLeptons_ >= 1 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ == 0 ) 
+  else if ( numUnmatchedLeptons_ >= 1 && numUnmatchedBJets_ == 0 && numUnmatchedWJets_ <= 0 ) 
   {
     histogramName_suffix = "unmatchedLepton";
   }
-  else if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ >= 1 && numUnmatchedWJets_ == 0 ) 
+  else if ( numUnmatchedLeptons_ == 0 && numUnmatchedBJets_ >= 1 && numUnmatchedWJets_ <= 0 ) 
   {
     histogramName_suffix = "unmatchedBJet";
   }
