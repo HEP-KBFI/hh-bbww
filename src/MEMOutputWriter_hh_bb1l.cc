@@ -7,6 +7,7 @@ MEMOutputWriter_hh_bb1l::MEMOutputWriter_hh_bb1l(const std::string & branchName_
   : max_nMEMOutputs_(100)
   , branchName_num_(branchName_num)
   , branchName_obj_(branchName_obj)
+  , nMEMOutputs_(0)
   , run_(nullptr)
   , lumi_(nullptr)
   , evt_(nullptr)
