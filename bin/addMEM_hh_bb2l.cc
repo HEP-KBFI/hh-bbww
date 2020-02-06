@@ -167,6 +167,7 @@ int main(int argc,
   const bool isMC                           = cfg_addMEM.getParameter<bool>("isMC");
   const bool isMC_HH                        = isMC && process_string.find("hh_bbvv")!= std::string::npos;
   const bool isMC_TT                        = isMC && process_string.find("TT")     != std::string::npos;
+std::cout << "isMC_HH = " << isMC_HH << ", isMC_TT = " << isMC_TT << std::endl;
   const bool addMEM_forGenParticles         = cfg_addMEM.getParameter<bool>("addMEM_forGenParticles");
   const bool isDEBUG                        = cfg_addMEM.getParameter<bool>("isDEBUG");
   const bool dryRun                         = cfg_addMEM.getParameter<bool>("dryRun");
@@ -528,10 +529,8 @@ int main(int argc,
   }
 
   const std::string branchName_hmeOutput = get_hmeObjectBranchName("hh_bb2l", leptonSelection_string, "", "");
-  const std::string branchName_hmeOutput_missingBJet = Form("%s_missingBJet", branchName_hmeOutput.data());
 
   std::map<std::string, HMEOutputWriter_hh_bb2l *> hmeWriter;
-  std::map<std::string, HMEOutputWriter_hh_bb2l *> hmeWriter_missingBJet;
 
   for ( const std::string & central_or_shift: central_or_shifts_hme )
   {
@@ -542,13 +541,6 @@ int main(int argc,
       Form("n%s", branchName_hmeOutput_cos.data()), branchName_hmeOutput_cos
     );
     hmeWriter[central_or_shift]->setBranches(outputTree);
-    const std::string branchName_hmeOutput_missingBJet_cos(
-      Form("%s_%s", branchName_hmeOutput_missingBJet.data(), central_or_shift.data())
-    );
-    hmeWriter_missingBJet[central_or_shift] = new HMEOutputWriter_hh_bb2l(
-      Form("n%s", branchName_hmeOutput_missingBJet_cos.data()), branchName_hmeOutput_missingBJet_cos
-    );
-    hmeWriter_missingBJet[central_or_shift]->setBranches(outputTree);
     std::cout << "writing HMEOutput_hh_bb2l objects for systematic " << central_or_shift
               << " to branch = '" << branchName_hmeOutput_cos << "'\n";
   }
@@ -720,6 +712,7 @@ int main(int argc,
     {
       std::cout << "Found " << maxPermutations_addMEM_hh_bb2l << " possible combination(s) to compute MEM\n";
     }
+std::cout << "maxPermutations_addMEM_hh_bb2l = " << maxPermutations_addMEM_hh_bb2l << std::endl;
     if ( maxPermutations_addMEM_hh_bb2l >= 1 )
     {
       int idxPermutation_mem = 0;
@@ -728,6 +721,7 @@ int main(int argc,
       int idxPermutation_mem_gen_missingBJet = 0;
       int idxPermutation_hme = 0;
       const std::vector<const RecoLepton*> selLeptons = mergeLeptonCollections(selElectrons, selMuons, isHigherConePt);
+std::cout << "#selLeptons = " << selLeptons.size() << std::endl;
       for ( std::size_t selLepton_lead_idx = 0; selLepton_lead_idx < selLeptons.size(); ++selLepton_lead_idx )
       {
         const RecoLepton * selLepton_lead = selLeptons[selLepton_lead_idx];
@@ -821,7 +815,7 @@ int main(int argc,
               }
             }
 
-            if ( selJet1_Hbb && selJet2_Hbb && (selLepton_lead->charge() * selLepton_sublead->charge() < 0) )
+            if ( selJet1_Hbb && selJet2_Hbb && (selLepton_lead->charge()*selLepton_sublead->charge() < 0) )
             {
               const bool run_mem = method_MEM && is_central_or_shift_mem;
               if ( run_mem )
@@ -889,6 +883,7 @@ int main(int argc,
                   memOutputs_hh_bb2l_gen_missingBJet.push_back(memOutput_gen_missingBJet1);
                   ++memComputations;
                 }
+
                 MEMOutput_hh_bb2l memOutput_missingBJet2 = compMEM(
                   eventInfo,
                   selLepton_lead, selLepton_sublead, 
@@ -918,7 +913,7 @@ int main(int argc,
                   memOutputs_hh_bb2l_gen_missingBJet.push_back(memOutput_gen_missingBJet2);
                   ++memComputations;
                 }
-              }
+              } // run_mem
 
 	      const bool run_hme = method_HME && is_central_or_shift_hme;
               if ( run_hme )
@@ -937,7 +932,6 @@ int main(int argc,
                   ;
  
                   HMEOutput_hh_bb2l hmeOutput_hh_bb2l;
-
                   if ( dryRun )
                   {
                     hmeOutput_hh_bb2l.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
@@ -966,13 +960,13 @@ int main(int argc,
                             << maxPermutations_addMEM_hh_bb2l << " --> skipping HME computation after "
                             << maxPermutations_addMEM_hh_bb2l << " permutations !!\n";
 		}
-	      }
+	      } // run_hme
             } // selJet1_Hbb && selJet2_Hbb
           } // central_or_shift
         } // selLepton_sublead_idx
       } // selLepton_lead_idx
     } // maxPermutations_addMEM_hh_bb2l >= 1
-    
+
     for ( const std::string & central_or_shift: central_or_shifts_mem )
     {
       memWriter[central_or_shift]->write(memOutputs_hh_bb2l[central_or_shift]);
@@ -998,7 +992,7 @@ int main(int argc,
                " analyzed = "         << analyzedEntries << "\n"
                " selected = "         << selectedEntries << "\n"
                "#MEM computations = " << memComputations << "\n"
-               "#HME computations = " << memComputations << "\n"
+               "#HME computations = " << hmeComputations << "\n"
                "cut-flow table\n"     << cutFlowTable    << "\n"
                "output Tree:\n";
   if(isDEBUG)
