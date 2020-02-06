@@ -1058,7 +1058,7 @@ int main(int argc,
                   ++memComputations;
                 }
               }
-            }
+            } // run_mem
           } // selJet1_Hbb && selJet2_Hbb
         } // central_or_shift
       } // selLepton_idx
