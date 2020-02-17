@@ -52,7 +52,8 @@ process.analyze_hh_bb1l1tau = cms.PSet(
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
         histogramName_e = cms.string(""),
-        histogramName_mu = cms.string("")
+        histogramName_mu = cms.string(""),
+        era = cms.string(""),
     ),
     hadTauFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),

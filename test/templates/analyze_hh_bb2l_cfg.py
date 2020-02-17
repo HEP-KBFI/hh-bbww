@@ -50,7 +50,8 @@ process.analyze_hh_bb2l = cms.PSet(
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
         histogramName_e = cms.string(""),
-        histogramName_mu = cms.string("")
+        histogramName_mu = cms.string(""),
+        era = cms.string(""),
     ),
 
     evtCategories = cms.vstring(), # CV: "inclusive" event category is added automatically
