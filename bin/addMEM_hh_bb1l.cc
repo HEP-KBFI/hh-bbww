@@ -44,7 +44,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
-#include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_WjPlusLepton.h" // RecoJetSelectorAK8_hh_WjPlusLepton
 
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMInterface_hh_bb1l.h" // MEMInterface_hh_bb1l
@@ -112,18 +111,21 @@ compMEM(const EventInfo& eventInfo,
       std::cout << " MET:               " << met << std::endl;
     }
 
-    if ( dryRun )
+    if ( selLepton && (selJet1_Wjj || selJet2_Wjj) && (selJet1_Hbb || selJet2_Hbb) )
     {
-      memOutput.fillInputs(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb);
-    }
-    else
-    {
-      memOutput = memInterface(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb, met, switchToGen);
-    }
+      if ( dryRun )
+      {
+        memOutput.fillInputs(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb);
+      }
+      else
+      {
+        memOutput = memInterface(selLepton, selJet1_Wjj, selJet2_Wjj, selJet1_Hbb, selJet2_Hbb, met, switchToGen);
+      }
 
-    if ( isDEBUG )
-    {
-      std::cout << "output (" << central_or_shift << "): " << memOutput << std::endl;
+      if ( isDEBUG )
+      {
+        std::cout << "output (" << central_or_shift << "): " << memOutput << std::endl;
+      }
     }
   } 
   else 
@@ -351,7 +353,6 @@ int main(int argc,
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR16(1.6, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8LS_Wjj(era, -1, isDEBUG);
-  RecoJetCollectionSelectorAK8_hh_WjPlusLepton jetSelectorAK8_WjPlusLepton(era, -1, isDEBUG);
 
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
@@ -507,10 +508,18 @@ int main(int argc,
         genWJetWriter = new GenParticleWriter(Form("n%s", branchName_genWJets.data()), branchName_genWJets);
         genWJetWriter->setBranches(outputTree);
 
+        outputCommands_string.push_back(Form("drop n%s", branchName_genLeptons.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genLeptons.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genLeptons.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genNeutrinos.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genNeutrinos.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genNeutrinos.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genParticlesFromHiggs.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genParticlesFromHiggs.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genParticlesFromHiggs.data()));
-        outputCommands_string.push_back(Form("drop %s_*", branchName_genWJets.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genWJets.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genWJets.data()));
+        outputCommands_string.push_back(Form("drop %s_*", branchName_genWJets.data())); 
       }
       else if ( isMC_TT )
       {
@@ -523,9 +532,17 @@ int main(int argc,
         genWJetFromTopWriter = new GenParticleWriter(Form("n%s", branchName_genWJetsFromTop.data()), branchName_genWJetsFromTop);
         genWJetFromTopWriter->setBranches(outputTree);
  
+        outputCommands_string.push_back(Form("drop n%s", branchName_genLeptonsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genLeptonsFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genLeptonsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genNeutrinosFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genNeutrinosFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genNeutrinosFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genBJetsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genBJetsFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genBJetsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genWJetsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genWJetsFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genWJetsFromTop.data()));
       }
     }
@@ -730,10 +747,10 @@ int main(int argc,
       eventInfoWriter->write(eventInfo);
       muonWriter->write(preselMuons);
       electronWriter->write(preselElectronsUncleaned);
-      jetWriterAK4->write(jet_ptrs_ak4); // save central
-      jetWriterAK8->write(jet_ptrs_ak8); // save central
+      jetWriterAK4->write(jet_ptrs_ak4);     // save central
+      jetWriterAK8->write(jet_ptrs_ak8);     // save central
       jetWriterAK8LS->write(jet_ptrs_ak8LS); // save central
-      metWriter->write(met); // save central
+      metWriter->write(met);                 // save central
 
       if ( addMEM_forGenParticles )
       {
@@ -851,7 +868,7 @@ int main(int argc,
 
           // select jets from W->jj decay
           std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj(
-            jet_ptrs_ak8LS_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, jet_ptrs_ak8_mem, jetSelectorAK8_WjPlusLepton, 
+            jet_ptrs_ak8LS_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, 
             cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             *selJetT_Hbb, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
@@ -862,7 +879,7 @@ int main(int argc,
           selJetT_Hbb_missingBJet1.fatjet_ = selJetAK8_Hbb;
           selJetT_Hbb_missingBJet1.jet_or_subjet1_ = selJet2_Hbb;
           std::vector<selJetsType_Wjj> selJetsT_Wjj_missingBJet1 = selectJets_Wjj(
-            jet_ptrs_ak8LS_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, jet_ptrs_ak8_mem, jetSelectorAK8_WjPlusLepton, 
+            jet_ptrs_ak8LS_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, 
             cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             selJetT_Hbb_missingBJet1, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 
@@ -873,7 +890,7 @@ int main(int argc,
           selJetT_Hbb_missingBJet2.fatjet_ = selJetAK8_Hbb;
           selJetT_Hbb_missingBJet2.jet_or_subjet1_ = selJet1_Hbb;
           std::vector<selJetsType_Wjj> selJetsT_Wjj_missingBJet2 = selectJets_Wjj(
-            jet_ptrs_ak8LS_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, jet_ptrs_ak8_mem, jetSelectorAK8_WjPlusLepton, 
+            jet_ptrs_ak8LS_mem, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj, 
             cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
             selJetT_Hbb_missingBJet2, 
             selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo, 

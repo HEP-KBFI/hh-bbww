@@ -134,7 +134,7 @@ if __name__ == '__main__':
     running_method           = running_method,
     max_files_per_job        = 1, # so that we'd have 1-1 correspondence b/w input and output files
     #mem_integrations_per_job = 500,
-    mem_integrations_per_job = 100,
+    mem_integrations_per_job = 50,
     max_mem_integrations     = max_mem_integrations, # use -1 if you don't want to limit the nof MEM integrations
     max_jobs_per_sample      = max_jobs_per_sample,  # use -1 if you don't want to limit the nof jobs per sample
     num_parallel_jobs        = num_parallel_jobs,

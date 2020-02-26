@@ -615,6 +615,10 @@ void makePlots_analyzeMEM_hh_bb1l()
   int markerStyles[6] = { 22, 32, 20, 24, 21, 25 };
 
   std::vector<std::string> histograms1d;
+genLepton_pt
+genLepton_absEta
+", "genLepton_pt", 70, 0., 350.);
+  TH1* histogram_genLepton_absEta = fs.make<TH1D>("genLepton_absEta
   histograms1d.push_back("genWJet1_pt");
   histograms1d.push_back("genWJet1_absEta");
   histograms1d.push_back("genWJet2_pt");

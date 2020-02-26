@@ -72,7 +72,7 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
 #inputFiles = getInputFiles(inputFilePath)
 #process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
 inputFiles = [ 
-  ""
+  "/hdfs/local/veelken/addMEM/2017/2020Feb11_default_nom/final_ntuples/hh_bb2l/signal_ggf_nonresonant_node_sm_hh_2b2v/0000/signal_ggf_nonresonant_node_sm_hh_2b2v_final.root"
 ]
 process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

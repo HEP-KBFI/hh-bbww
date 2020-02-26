@@ -11,7 +11,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
-#include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_WjPlusLepton.h" // RecoJetSelectorAK8_hh_WjPlusLepton
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 
 #include <vector> // std::vector<>
@@ -67,8 +66,6 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR12,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR16,
                const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8LS_Wjj,
-               const std::vector<const RecoJetAK8*>& jet_ptrs_ak8,
-               const RecoJetCollectionSelectorAK8_hh_WjPlusLepton& jetSelectorAK8_WjPlusLepton,
                const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR12,

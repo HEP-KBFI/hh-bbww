@@ -104,18 +104,21 @@ compMEM(const EventInfo& eventInfo,
       std::cout << " MET:               " << met << std::endl;
     }
 
-    if ( dryRun )
+    if ( selLepton_lead && selLepton_sublead && (selJet1_Hbb || selJet2_Hbb) )
     {
-      memOutput.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
-    }
-    else
-    {
-      memOutput = memInterface(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met, switchToGen);
-    }
+      if ( dryRun )
+      {
+        memOutput.fillInputs(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb);
+      }
+      else
+      {
+        memOutput = memInterface(selLepton_lead, selLepton_sublead, selJet1_Hbb, selJet2_Hbb, met, switchToGen);
+      }
 
-    if ( isDEBUG )
-    {
-      std::cout << "output (" << central_or_shift << "): " << memOutput << std::endl;
+      if ( isDEBUG )
+      {
+        std::cout << "output (" << central_or_shift << "): " << memOutput << std::endl;
+      }
     }
   } 
   else 
@@ -461,8 +464,14 @@ std::cout << "isMC_HH = " << isMC_HH << ", isMC_TT = " << isMC_TT << std::endl;
         genParticleFromHiggsWriter = new GenParticleWriter(Form("n%s", branchName_genParticlesFromHiggs.data()), branchName_genParticlesFromHiggs);
         genParticleFromHiggsWriter->setBranches(outputTree);
 
+        outputCommands_string.push_back(Form("drop n%s", branchName_genLeptons.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genLeptons.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genLeptons.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genNeutrinos.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genNeutrinos.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genNeutrinos.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genParticlesFromHiggs.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genParticlesFromHiggs.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genParticlesFromHiggs.data()));
       }
       else if ( isMC_TT )
@@ -474,8 +483,14 @@ std::cout << "isMC_HH = " << isMC_HH << ", isMC_TT = " << isMC_TT << std::endl;
         genBJetFromTopWriter = new GenParticleWriter(Form("n%s", branchName_genBJetsFromTop.data()), branchName_genBJetsFromTop);
         genBJetFromTopWriter->setBranches(outputTree);
  
+        outputCommands_string.push_back(Form("drop n%s", branchName_genLeptonsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genLeptonsFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genLeptonsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genNeutrinosFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genNeutrinosFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genNeutrinosFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s", branchName_genBJetsFromTop.data()));
+        outputCommands_string.push_back(Form("drop n%s_*", branchName_genBJetsFromTop.data()));
         outputCommands_string.push_back(Form("drop %s_*", branchName_genBJetsFromTop.data()));
       }
     }

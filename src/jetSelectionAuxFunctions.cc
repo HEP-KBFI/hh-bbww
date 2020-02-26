@@ -132,32 +132,10 @@ countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
 }
 
 std::vector<selJetsType_Wjj>
-selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS, 
-               const std::vector<const RecoJetAK8*>& jet_ptrs_ak8,
-               const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR12,
-               const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR16,
-               const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8LS_Wjj,
-               const RecoJetCollectionSelectorAK8_hh_WjPlusLepton& jetSelectorAK8_WjPlusLepton,
-               const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
-               const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
-               const RecoJetCollectionCleaner& jetCleanerAK4_dR12,
-               const RecoJetCollectionSelector& jetSelectorAK4,
-               const selJetsType_Hbb& selJets_Hbb,
-               const RecoLepton* selLepton,
-               const std::vector<const RecoJet*>& selBJetsAK4_medium,
-               const TMVAInterface& mva_Wjj,
-               const EventInfo& eventInfo,
-               int maxJetPairs = 1,
-	       bool isDEBUG = false);
-
-
-std::vector<selJetsType_Wjj>
 selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,                
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR12,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR16,
                const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8LS_Wjj,
-               const std::vector<const RecoJetAK8*>& jet_ptrs_ak8,
-               const RecoJetCollectionSelectorAK8_hh_WjPlusLepton& jetSelectorAK8_WjPlusLepton,
                const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR12, 
@@ -181,24 +159,19 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
   if ( selJets_Hbb.fatjet_ ) {
     const std::vector<const RecoJetAK8*> overlaps = { selJets_Hbb.fatjet_ };
     cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR16(jet_ptrs_ak8LS, overlaps); // CV: do *not* clean W->jj "fat" jet collection with respect to leptons!
-    cleanedJetsAK8_wrtHbb   = jetCleanerAK8_dR16(jet_ptrs_ak8,   overlaps); // CV: do *not* clean W->jj "fat" jet collection with respect to leptons!
     cleanedJetsAK4_wrtHbb   = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
   } else {
     std::vector<const RecoJetBase*> overlaps;
     if ( selJets_Hbb.jet_or_subjet1_ ) overlaps.push_back(selJets_Hbb.jet_or_subjet1_);
     if ( selJets_Hbb.jet_or_subjet2_ ) overlaps.push_back(selJets_Hbb.jet_or_subjet2_);
     cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8LS, overlaps);
-    cleanedJetsAK8_wrtHbb   = jetCleanerAK8_dR12(jet_ptrs_ak8,   overlaps);
     cleanedJetsAK4_wrtHbb   = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
   }
   std::vector<const RecoJetAK8*> selJetsAK8LS_Wjj;
-  std::vector<const RecoJetAK8*> selJetsAK8_WjPlusLepton;
   if ( selLepton ) 
   { 
     jetSelectorAK8LS_Wjj.getSelector().set_lepton(selLepton);
     selJetsAK8LS_Wjj = jetSelectorAK8LS_Wjj(cleanedJetsAK8LS_wrtHbb, isHigherPt);
-    jetSelectorAK8_WjPlusLepton.getSelector().set_lepton(selLepton);
-    selJetsAK8_WjPlusLepton = jetSelectorAK8_WjPlusLepton(cleanedJetsAK8_wrtHbb, isHigherPt);
   } 
   else 
   { 
@@ -230,58 +203,7 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
     }
     retVal.push_back(selJets_Wjj);
   }
-/*
-  if ( (int)retVal.size() < maxJetPairs || maxJetPairs == -1 )
-  {
-    std::vector<JetPair_Wjj> jetPairs;
-    for ( const RecoJetAK8* selJetAK8 : selJetsAK8_WjPlusLepton ) 
-    {
-      for ( const RecoJet* selJetAK4 : selJetsAK4_Wjj )
-      { 
-        assert(selLepton);
-        const RecoJetBase* subjet_Wj = nullptr;
-        if ( deltaR(selJetAK8->subJet1()->p4(), selLepton->p4()) > deltaR(selJetAK8->subJet2()->p4(), selLepton->p4()) )
-        {
-          subjet_Wj = selJetAK8->subJet1();
-        }
-        else
-        {
-          subjet_Wj = selJetAK8->subJet2();
-        }
-        assert(subjet_Wj);
-        if ( deltaR(subjet_Wj->p4(), selJetAK4->p4()) < 0.4 ) continue;
-        std::vector<const RecoJetBase*> selJets = { subjet_Wj, selJetAK4 };
-        std::sort(selJets.begin(), selJets.end(), isHigherPt);
-        const RecoJetBase* selJet1 = selJets[0];
-        bool selJet1_isGenMatched = ( genWJets ) ? isGenMatchedT<GenJet>(selJet1->eta(), selJet1->phi(), *genWJets) : false;
-        const RecoJetBase* selJet2 = selJets[1];
-        bool selJet2_isGenMatched = ( genWJets ) ? isGenMatchedT<GenJet>(selJet2->eta(), selJet2->phi(), *genWJets) : false;
-        JetPair_Wjj jetPair(selJet1, selJet1_isGenMatched, selJet2, selJet2_isGenMatched);
-        jetPairs.push_back(jetPair);
-      }
-    }
-    assert(selLepton);
-    rankJetPairs_Wjj(jetPairs, selJetsAK4_Wjj, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
 
-    size_t numJetPairs = jetPairs.size();
-    if ( maxJetPairs >= 0 ) numJetPairs = std::min((int)numJetPairs, std::max(0, maxJetPairs - (int)retVal.size()));
-    for ( size_t idx = 0; idx < numJetPairs; ++idx )
-    {
-      selJetsType_Wjj selJets_Wjj;
-      const JetPair_Wjj& jetPair = jetPairs[idx];
-      assert(jetPair.jet1_ && jetPair.jet2_);
-      selJets_Wjj.jet_or_subjet1_ = jetPair.jet1_;
-      selJets_Wjj.jet_or_subjet2_ = jetPair.jet2_; 
-      if ( isDEBUG ) 
-      {
-        std::cout << "found boosted AK8 W->jj decay:" << std::endl;
-        printJet("jet #1", selJets_Wjj.jet_or_subjet1_);
-        printJet("jet #2", selJets_Wjj.jet_or_subjet2_);
-      }
-      retVal.push_back(selJets_Wjj);
-    }
-  }
- */
   if ( (int)retVal.size() < maxJetPairs || maxJetPairs == -1 )
   {
     if ( selJetsAK4_Wjj.size() >= 2 ) 

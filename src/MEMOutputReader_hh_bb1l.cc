@@ -91,10 +91,8 @@ MEMOutputReader_hh_bb1l::setBranchNames()
     branchName_run_                   = Form("%s_%s", branchName_obj_.data(), "run");
     branchName_lumi_                  = Form("%s_%s", branchName_obj_.data(), "lumi");
     branchName_evt_                   = Form("%s_%s", branchName_obj_.data(), "evt");
-    //branchName_lepton_eta_            = Form("%s_%s", branchName_obj_.data(), "lepton_eta");
-    //branchName_lepton_phi_            = Form("%s_%s", branchName_obj_.data(), "lepton_phi");
-    branchName_lepton_eta_            = Form("%s_%s", branchName_obj_.data(), "leadLepton_eta");
-    branchName_lepton_phi_            = Form("%s_%s", branchName_obj_.data(), "leadLepton_phi");
+    branchName_lepton_eta_            = Form("%s_%s", branchName_obj_.data(), "lepton_eta");
+    branchName_lepton_phi_            = Form("%s_%s", branchName_obj_.data(), "lepton_phi");
     branchName_wjet1_eta_             = Form("%s_%s", branchName_obj_.data(), "wjet1_eta");
     branchName_wjet1_phi_             = Form("%s_%s", branchName_obj_.data(), "wjet1_phi");
     branchName_wjet1_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "wjet1_isReconstructed");

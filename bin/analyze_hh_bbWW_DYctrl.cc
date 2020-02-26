@@ -158,7 +158,7 @@ struct categoryEntryType
 };
 
 /**
- * @brief Produce datacard and control plots for Drell-Yan (DY) control region of the HH->bbWW analysis.
+ * @brief Produce control plots for Drell-Yan (DY) background in the HH->bbWW analysis.
  */
 int main(int argc, char* argv[])
 {
