@@ -112,11 +112,11 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  std::cout << "<analyzeMEM_hh_bb1l>:" << std::endl;
+  std::cout << "<analyzeMEM_hh_bb2l>:" << std::endl;
 
 //--- keep track of time it takes the macro to execute
   TBenchmark clock;
-  clock.Start("analyzeMEM_hh_bb1l");
+  clock.Start("analyzeMEM_hh_bb2l");
 
 //--- read python configuration parameters
   if ( !edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process") )
@@ -412,8 +412,7 @@ int main(int argc, char* argv[])
       dumpGenLeptons("genLepton", genLeptons);      
       dumpGenJets("genBJet", genBJets);
     }
-    double genMEtPt, genMEtPhi;
-    genParticleMatcher->getMEt(genMEtPt, genMEtPhi);
+    const Particle::LorentzVector& genMEtP4 = genParticleMatcher->getMEt();
 
     if ( !(genLeptons.size() == 2) ) {
       continue;
@@ -460,7 +459,6 @@ int main(int argc, char* argv[])
       fillWithOverFlow(histograms_dEta_genLeptons, dEta_genLeptons, evtWeight);
       double dPhi_genLeptons = TMath::Abs(deltaPhi(genLepton_lead->phi(), genLepton_sublead->phi())); // CV: map dPhi into interval [0..pi]
       fillWithOverFlow(histograms_dPhi_genLeptons, dPhi_genLeptons, evtWeight);
-      Particle::LorentzVector genMEtP4(genMEtPt, 0., genMEtPhi, 0.);
       Particle::LorentzVector genHlnulnuP4 = genLepton_lead->p4() + genLepton_sublead->p4() + genMEtP4;
       double dPhi_rf_genLeptons = TMath::Abs(deltaPhi_rf(genLepton_lead->p4(), genLepton_sublead->p4(), genHlnulnuP4));
       fillWithOverFlow(histograms_dPhi_rf_genLeptons, dPhi_rf_genLeptons, evtWeight);
@@ -587,7 +585,7 @@ int main(int argc, char* argv[])
 
     const RecoLepton* tightLepton_lead    = nullptr;
     const RecoLepton* tightLepton_sublead = nullptr;
-    if ( tightLeptons_passingSubleadPt_and_Eta.size() >= 1 ) 
+    if ( tightLeptons_passingSubleadPt_and_Eta.size() >= 2 ) 
     {
       tightLepton_lead    = tightLeptons_passingSubleadPt_and_Eta[0];
       tightLepton_sublead = tightLeptons_passingSubleadPt_and_Eta[1];

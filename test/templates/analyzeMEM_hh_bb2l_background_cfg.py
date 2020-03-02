@@ -13,7 +13,7 @@ process.fwliteOutput = cms.PSet(
     fileName = cms.string('analyzeMEM_hh_bb2l_background.root')
 )
 
-process.analyzeMEM_hh_bb1l = cms.PSet(
+process.analyzeMEM_hh_bb2l = cms.PSet(
     treeName = cms.string('Events'),
 
     process = cms.string('TTTo2L2Nu'),
@@ -74,8 +74,8 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
 #inputFiles = getInputFiles(inputFilePath)
 #process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
 inputFiles = [
-  "/hdfs/local/veelken/addMEM/2017/2020Feb11_default_nom/final_ntuples/hh_bb2l/TTTo2L2Nu/0000/TTTo2L2Nu_final.root",
-  "/hdfs/local/veelken/addMEM/2017/2020Feb11_default_nom/final_ntuples/hh_bb2l/TTTo2L2Nu_PSweights/0000/TTTo2L2Nu_PSweights_final.root"
+  "/hdfs/local/veelken/addMEM/2017/2020Feb19_default_nom/final_ntuples/hh_bb2l/TTTo2L2Nu/0000/TTTo2L2Nu_final.root",
+  "/hdfs/local/veelken/addMEM/2017/2020Feb19_default_nom/final_ntuples/hh_bb2l/TTTo2L2Nu_PSweights/0000/TTTo2L2Nu_PSweights_final.root"
 ]
 process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

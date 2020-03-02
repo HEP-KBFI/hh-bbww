@@ -61,14 +61,12 @@ getGenLeptonsForMatching(const std::vector<GenParticle>& genParticlesFromHiggs,
   return genLeptonsFromHiggs;
 }
 
-void
+Particle::LorentzVector
 getGenMEt(const std::vector<GenParticle>& genParticlesFromHiggs, 
           const std::vector<GenLepton>& genLeptons, 
-          const std::vector<GenParticle>& genNeutrinos, 
-	  double& genMEtPt, double& genMEtPhi)
+          const std::vector<GenParticle>& genNeutrinos)
 {
-  double genMEtPx = 0.;
-  double genMEtPy = 0.;
+  Particle::LorentzVector genMEtP4;
   std::vector<GenParticle> genWBosons = getGenWBosonsFromHiggs(genParticlesFromHiggs);
   if ( genWBosons.size() == 2 ) 
   {
@@ -77,20 +75,17 @@ getGenMEt(const std::vector<GenParticle>& genParticlesFromHiggs,
     if ( genLepton_and_Neutrino1.first && genLepton_and_Neutrino1.second )
     {
       const GenParticle* genNeutrino1 = genLepton_and_Neutrino1.second;
-      genMEtPx += genNeutrino1->p4().px();
-      genMEtPy += genNeutrino1->p4().py();
+      genMEtP4 += genNeutrino1->p4();
     }
     std::pair<const GenLepton*, const GenParticle*> genLepton_and_Neutrino2 =
       findGenLepton_and_NeutrinoFromWBoson(genWBosons[1], genLeptons, genNeutrinos);
     if ( genLepton_and_Neutrino2.first && genLepton_and_Neutrino2.second )
     {
       const GenParticle* genNeutrino2 = genLepton_and_Neutrino2.second;
-      genMEtPx += genNeutrino2->p4().px();
-      genMEtPy += genNeutrino2->p4().py();
+      genMEtP4 += genNeutrino2->p4();
     }
   }
-  genMEtPt = TMath::Sqrt(genMEtPx*genMEtPx + genMEtPy*genMEtPy);
-  genMEtPhi = TMath::ATan2(genMEtPy, genMEtPx);
+  return genMEtP4;
 }
 
 std::vector<GenParticle> 
@@ -172,5 +167,5 @@ GenParticleMatcherFromHiggs::setGenParticles(const std::vector<GenParticle>& gen
   genWJetsForMatching_ = convert_genQuarks_to_genJets(genWQuarksForMatching_);
   genBQuarksForMatching_ = getGenBQuarksFromHiggs(genParticlesFromHiggs);
   genBJetsForMatching_ = convert_genQuarks_to_genJets(genBQuarksForMatching_, mem::bottomQuarkMass);
-  getGenMEt(genParticlesFromHiggs, genLeptons, genNeutrinos, genMEtPt_, genMEtPhi_);
+  genMEtP4_ = getGenMEt(genParticlesFromHiggs, genLeptons, genNeutrinos);
 }

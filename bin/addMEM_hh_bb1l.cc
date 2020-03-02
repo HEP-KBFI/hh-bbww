@@ -191,8 +191,10 @@ int main(int argc,
   const std::string branchName_jets_ak4        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
   const std::string branchName_jets_ak8        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
   const std::string branchName_subjets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
+  std::cout << "branchName (AK8): jets = '" << branchName_jets_ak8 << "', subjets = '" << branchName_subjets_ak8 << "'" << std::endl;
   const std::string branchName_jets_ak8LS      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8LS");
   const std::string branchName_subjets_ak8LS   = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8LS");
+  std::cout << "branchName (AK8LS): jets = '" << branchName_jets_ak8LS << "', subjets = '" << branchName_subjets_ak8LS << "'" << std::endl;  	
   const std::string branchName_met             = cfg_addMEM.getParameter<std::string>("branchName_met");
 
   const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");

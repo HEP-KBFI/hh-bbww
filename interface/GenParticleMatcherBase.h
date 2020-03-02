@@ -4,6 +4,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetBase.h" // RecoJetBase
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEt.h" // RecoMEt
+#include "tthAnalysis/HiggsToTauTau/interface/Particle.h" // Particle::LorentzVector
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionGenMatcher.h" // RecoLeptonCollectionGenMatcher, RecoJetBaseCollectionGenMatcher
 #include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h" // GenLepton
 #include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
@@ -21,7 +22,7 @@ class GenParticleMatcherBase
   const std::vector<GenJet>& getWJets() const;
   const std::vector<GenParticle>& getBQuarks() const;
   const std::vector<GenJet>& getBJets() const;
-  void getMEt(double& genMEtPt, double& genMEtPhi) const;
+  const Particle::LorentzVector& getMEt() const;
 
   void 
   operator()(const std::vector<const RecoLepton*>& selLeptons, 
@@ -37,8 +38,7 @@ class GenParticleMatcherBase
   std::vector<GenJet> genWJetsForMatching_;
   std::vector<GenParticle> genBQuarksForMatching_;
   std::vector<GenJet> genBJetsForMatching_;
-  double genMEtPt_;
-  double genMEtPhi_;
+  Particle::LorentzVector genMEtP4_;
 
  private:
   RecoLeptonCollectionGenMatcher leptonGenMatcher_;

@@ -1,8 +1,6 @@
 #include "hhAnalysis/bbww/interface/GenParticleMatcherBase.h"
 
 GenParticleMatcherBase::GenParticleMatcherBase()
- : genMEtPt_(0.)
- , genMEtPhi_(0)
 {}
 
 GenParticleMatcherBase::~GenParticleMatcherBase()
@@ -38,11 +36,10 @@ GenParticleMatcherBase::getBJets() const
   return genBJetsForMatching_;
 }
 
-void 
-GenParticleMatcherBase::getMEt(double& genMEtPt, double& genMEtPhi) const
+const Particle::LorentzVector&
+GenParticleMatcherBase::getMEt() const
 {
-  genMEtPt = genMEtPt_;
-  genMEtPhi = genMEtPhi_;
+  return genMEtP4_;
 }
 
 std::vector<GenJet> 
@@ -67,6 +64,6 @@ GenParticleMatcherBase::operator()(const std::vector<const RecoLepton*>& selLept
   jet_or_subjetGenMatcher_.addGenJetMatch(selJets_Hbb, genBJetsForMatching_, 0.2);
   jet_or_subjetGenMatcher_.addGenJetMatch(selJets_Wjj, genWJetsForMatching_, 0.2);
   RecoMEt* met_ptr = const_cast<RecoMEt*>(&met);
-  met_ptr->set_genPt(genMEtPt_);
-  met_ptr->set_genPhi(genMEtPhi_);
+  met_ptr->set_genPt(genMEtP4_.pt());
+  met_ptr->set_genPhi(genMEtP4_.phi());
 }

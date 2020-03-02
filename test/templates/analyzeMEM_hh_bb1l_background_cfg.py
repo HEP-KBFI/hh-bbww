@@ -78,8 +78,8 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
 #inputFiles = getInputFiles(inputFilePath)
 #process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
 inputFiles = [
-  "/hdfs/local/veelken/addMEM/2017/2020Feb11sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic/0000/TTTo2L2Nu_final.root",
-  "/hdfs/local/veelken/addMEM/2017/2020Feb11sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic_PSweights/0000/TTToSemiLeptonic_PSweights_final.root"
+  "/hdfs/local/veelken/addMEM/2017/2020Feb19sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic/0000/TTTo2L2Nu_final.root",
+  "/hdfs/local/veelken/addMEM/2017/2020Feb19sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic_PSweights/0000/TTToSemiLeptonic_PSweights_final.root"
 ]
 process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

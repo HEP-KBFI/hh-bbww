@@ -20,19 +20,15 @@ getGenLeptonsForMatching(const std::vector<GenLepton>& genLeptonsFromTop)
   return genLeptons;
 }
 
-void
-getGenMEt(const std::vector<GenParticle>& genNeutrinosFromTop, 
-	  double& genMEtPt, double& genMEtPhi)
+Particle::LorentzVector
+getGenMEt(const std::vector<GenParticle>& genNeutrinosFromTop)
 {
-  double genMEtPx = 0.;
-  double genMEtPy = 0.;
+  Particle::LorentzVector genMEtP4;
   for ( auto genNeutrino : genNeutrinosFromTop )
   {
-    genMEtPx += genNeutrino.p4().px();
-    genMEtPy += genNeutrino.p4().py();
+    genMEtP4 += genNeutrino.p4();
   }
-  genMEtPt = TMath::Sqrt(genMEtPx*genMEtPx + genMEtPy*genMEtPy);
-  genMEtPhi = TMath::ATan2(genMEtPy, genMEtPx);
+  return genMEtP4;
 }
 
 std::vector<GenParticle> 
@@ -69,5 +65,67 @@ GenParticleMatcherFromTop::setGenParticles(const std::vector<GenLepton>& genLept
   genWJetsForMatching_ = convert_genQuarks_to_genJets(genWQuarksForMatching_);
   genBQuarksForMatching_ = getGenBQuarksForMatching(genBQuarksFromTop);
   genBJetsForMatching_ = convert_genQuarks_to_genJets(genBQuarksForMatching_, mem::bottomQuarkMass);
-  getGenMEt(genNeutrinosFromTop, genMEtPt_, genMEtPhi_);
+  genMEtP4_ = getGenMEt(genNeutrinosFromTop);
 }
+
+//---------------------------------------------------------------------------------------------------
+const GenLepton* 
+getLeptonFromTop(const std::vector<GenLepton>& genLeptons)
+{
+  const GenLepton* genLeptonFromTop = nullptr;
+  for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin(); 
+        genLepton != genLeptons.end(); ++genLepton ) {
+    if ( genLepton->charge() > 0. ) 
+    {
+      genLeptonFromTop = &(*genLepton);
+      break;
+    }
+  }
+  return genLeptonFromTop;
+}
+
+const GenLepton* 
+getLeptonFromAntiTop(const std::vector<GenLepton>& genLeptons)
+{
+  const GenLepton* genLeptonFromAntiTop = nullptr;
+  for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin(); 
+        genLepton != genLeptons.end(); ++genLepton ) {
+    if ( genLepton->charge() < 0. ) 
+    {
+      genLeptonFromAntiTop = &(*genLepton);
+      break;
+    }
+  }
+  return genLeptonFromAntiTop;
+}
+
+const GenParticle* 
+getBQuarkFromTop(const std::vector<GenParticle>& genBQuarks)
+{
+  const GenParticle* genBQuarkFromTop = nullptr;
+  for ( std::vector<GenParticle>::const_iterator genBQuark = genBQuarks.begin(); 
+        genBQuark != genBQuarks.end(); ++genBQuark ) {
+    if ( genBQuark->pdgId() == +5 )
+    {
+      genBQuarkFromTop = &(*genBQuark);
+      break;
+    }
+  }
+  return genBQuarkFromTop;
+}
+
+const GenParticle* 
+getBQuarkFromAntiTop(const std::vector<GenParticle>& genBQuarks)
+{
+  const GenParticle* genBQuarkFromAntiTop = nullptr;
+  for ( std::vector<GenParticle>::const_iterator genBQuark = genBQuarks.begin(); 
+        genBQuark != genBQuarks.end(); ++genBQuark ) {
+    if ( genBQuark->pdgId() == -5 )
+    {
+      genBQuarkFromAntiTop = &(*genBQuark);
+      break;
+    }
+  }
+  return genBQuarkFromAntiTop;
+}
+//---------------------------------------------------------------------------------------------------

@@ -35,29 +35,29 @@ EvtHistManager_hh_bbWW_Wctrl::getHistogram_EventCounter() const
 void
 EvtHistManager_hh_bbWW_Wctrl::bookHistograms(TFileDirectory & dir)
 {
-  histogram_numElectrons_           = book1D(dir, "numElectrons",           "numElectrons",             5, -0.5,  +4.5);
-  histogram_numMuons_               = book1D(dir, "numMuons",               "numMuons",                 5, -0.5,  +4.5);
-  histogram_numJets_                = book1D(dir, "numJets",                "numJets",                 20, -0.5, +19.5);
-  histogram_numBJets_loose_         = book1D(dir, "numBJets_loose",         "numBJets_loose",          10, -0.5,  +9.5);
-  histogram_numBJets_medium_        = book1D(dir, "numBJets_medium",        "numBJets_medium",         10, -0.5,  +9.5);
-  histogram_numJetsAK8_Hbb_         = book1D(dir, "numJetsAK8_Hbb",         "numJetsAK8_Hbb",           4, -0.5,  +3.5);
-  histogram_numJetsAK8_Wjj_         = book1D(dir, "numJetsAK8_Wjj",         "numJetsAK8_Wjj",           4, -0.5,  +3.5);
+  histogram_numElectrons_         = book1D(dir, "numElectrons",         "numElectrons",           5, -0.5,  +4.5);
+  histogram_numMuons_             = book1D(dir, "numMuons",             "numMuons",               5, -0.5,  +4.5);
+  histogram_numJets_              = book1D(dir, "numJets",              "numJets",               20, -0.5, +19.5);
+  histogram_numBJets_loose_       = book1D(dir, "numBJets_loose",       "numBJets_loose",        10, -0.5,  +9.5);
+  histogram_numBJets_medium_      = book1D(dir, "numBJets_medium",      "numBJets_medium",       10, -0.5,  +9.5);
+  histogram_numJetsAK8_Hbb_       = book1D(dir, "numJetsAK8_Hbb",       "numJetsAK8_Hbb",         4, -0.5,  +3.5);
+  histogram_numJetsAK8_Wjj_       = book1D(dir, "numJetsAK8_Wjj",       "numJetsAK8_Wjj",         4, -0.5,  +3.5);
  
-  histogram_HT_                     = book1D(dir, "HT",                     "HT",                     150,  0., 1500.);
-  histogram_STMET_                  = book1D(dir, "STMET",                  "STMET",                  150,  0., 1500.);
+  histogram_HT_                   = book1D(dir, "HT",                   "HT",                   150,  0., 1500.);
+  histogram_STMET_                = book1D(dir, "STMET",                "STMET",                150,  0., 1500.);
 
-  histogram_mT_                     = book1D(dir, "mT",                     "mT",                      30,  0.,  150.); 
-  histogram_dPhi_lnu_               = book1D(dir, "dPhi_lnu",               "dPhi_lnu",                36, -TMath::Pi(), +TMath::Pi());
-  histogram_pT_lnu_                 = book1D(dir, "pT_lnu",                 "pT_lnu",                 100,  0.,  500.); 
+  histogram_mT_                   = book1D(dir, "mT",                   "mT",                    30,  0.,  150.); 
+  histogram_dPhi_lnu_             = book1D(dir, "dPhi_lnu",             "dPhi_lnu",              36, -TMath::Pi(), +TMath::Pi());
+  histogram_pT_lnu_               = book1D(dir, "pT_lnu",               "pT_lnu",               100,  0.,  500.); 
 
-  histogram_m_HH_hme_               = book1D(dir, "m_HH_hme",               "m_HH_hme",               150,  0., 1500.);
+  histogram_m_HH_hme_             = book1D(dir, "m_HH_hme",             "m_HH_hme",             150,  0., 1500.);
 
-  histogram_jetAK8_Wjj_dR_lepton_   = book1D(dir, "jetAK8_Wjj_dR_lepton",   "jetAK8_Wjj_dR_lepton",    50., 0.,    5.);
+  histogram_jetAK8_Wjj_dR_lepton_ = book1D(dir, "jetAK8_Wjj_dR_lepton", "jetAK8_Wjj_dR_lepton",  50., 0.,    5.);
 
-  histogram_vbf_m_jj_               = book1D(dir, "vbf_m_jj",               "vbf_m_jj",               150,  0., 1500.);
-  histogram_vbf_dEta_jj_            = book1D(dir, "vbf_dEta_jj",            "vbf_dEta_jj",            100,  0.,   10.);
+  histogram_vbf_m_jj_             = book1D(dir, "vbf_m_jj",             "vbf_m_jj",             150,  0., 1500.);
+  histogram_vbf_dEta_jj_          = book1D(dir, "vbf_dEta_jj",          "vbf_dEta_jj",          100,  0.,   10.);
 
-  histogram_EventCounter_           = book1D(dir, "EventCounter",           "EventCounter",             1, -0.5,  +0.5);
+  histogram_EventCounter_         = book1D(dir, "EventCounter",         "EventCounter",           1, -0.5,  +0.5);
 }
 
 void

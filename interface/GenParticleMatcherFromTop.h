@@ -22,5 +22,10 @@ class GenParticleMatcherFromTop : public GenParticleMatcherBase
                        const std::vector<GenParticle>& genBQuarksFromTop);
 };
 
+const GenLepton* getLeptonFromTop(const std::vector<GenLepton>& genLeptons);
+const GenLepton* getLeptonFromAntiTop(const std::vector<GenLepton>& genLeptons);
+const GenParticle* getBQuarkFromTop(const std::vector<GenParticle>& genBQuarks);
+const GenParticle* getBQuarkFromAntiTop(const std::vector<GenParticle>& genBQuarks);
+
 #endif // GenParticleMatcherFromTop_h
 

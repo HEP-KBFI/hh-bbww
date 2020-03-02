@@ -561,8 +561,7 @@ int main(int argc, char* argv[])
       dumpGenJets("genBJet", genBJets);
       dumpGenJets("genWJet", genWJets);
     }
-    double genMEtPt, genMEtPhi;
-    genParticleMatcher->getMEt(genMEtPt, genMEtPhi);
+    const Particle::LorentzVector& genMEtP4 = genParticleMatcher->getMEt();
 
     if ( !(genLeptons.size() == 1) ) {
       continue;
@@ -652,7 +651,6 @@ int main(int argc, char* argv[])
         double dR_genWJets = deltaR(genWJet1->p4(), genWJet2->p4());
         fillWithOverFlow(histograms_dR_genWJets, dR_genWJets, evtWeight);
         Particle::LorentzVector genWjjP4 = genWJet1->p4() + genWJet2->p4();
-        Particle::LorentzVector genMEtP4(genMEtPt, 0., genMEtPhi, 0.);
         fillWithOverFlow2d(histograms_dR_genWJets_vs_ptWjj, genWjjP4.pt(), dR_genWJets, evtWeight);
         fillWithOverFlow2d(histograms_dR_genWJets_vs_ptH, (genWjjP4 + genLepton->p4() + genMEtP4).pt(), dR_genWJets, evtWeight);
         fillWithOverFlow2d(histograms_dRmin_genWJets_to_genLepton_vs_dR_genWJets, dR_genWJets, dRmin_genWJets_to_genLepton, evtWeight);
