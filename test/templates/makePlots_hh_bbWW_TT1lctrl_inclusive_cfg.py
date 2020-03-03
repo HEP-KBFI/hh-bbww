@@ -5,7 +5,7 @@ from hhAnalysis.bbww.configs.makePlots_cfi import process
 process.makePlots.processSignal = cms.string("")
 
 process.makePlots.distributions = cms.VPSet(
-    cms.PSet(
+        cms.PSet(
         histogramName = cms.string('sel/electron/$PROCESS/pt'),
         xMin = cms.double(25.),
         xMax = cms.double(200.),
