@@ -3,6 +3,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow(), fillWithOverFlow2d()
 
 #include <TMath.h> // TMath::Pi(), TMath::Sqrt
+#include <TH2.h> // TH2->Fill
 
 EvtHistManager_hh_bbWW_TT1lctrl::EvtHistManager_hh_bbWW_TT1lctrl(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
@@ -31,6 +32,7 @@ EvtHistManager_hh_bbWW_TT1lctrl::EvtHistManager_hh_bbWW_TT1lctrl(const edm::Para
   central_or_shiftOptions_["hadTop_pt"] = { "*" };
   central_or_shiftOptions_["hadTop_eta"] = { "central" };
   central_or_shiftOptions_["hadTop_phi"] = { "central" };
+  central_or_shiftOptions_["genHadTop_pt_vs_hadTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaHadTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaHadTop_pt_vs_genHadTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaHadTop_parl"] = { "central" };
@@ -45,6 +47,7 @@ EvtHistManager_hh_bbWW_TT1lctrl::EvtHistManager_hh_bbWW_TT1lctrl(const edm::Para
   central_or_shiftOptions_["lepTop_pt"] = { "*" };
   central_or_shiftOptions_["lepTop_eta"] = { "central" };
   central_or_shiftOptions_["lepTop_phi"] = { "central" };
+  central_or_shiftOptions_["genLepTop_pt_vs_lepTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaLepTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaLepTop_pt_vs_genLepTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaLepTop_parl"] = { "central" };
@@ -97,12 +100,17 @@ EvtHistManager_hh_bbWW_TT1lctrl::bookHistograms(TFileDirectory & dir)
   histogram_deltaMEt_px_          = book1D(dir, "deltaMEt_px",          "deltaMEt_px",             40, -100., +100.);
   histogram_deltaMEt_py_          = book1D(dir, "deltaMEt_py",          "deltaMEt_py",             40, -100., +100.);
 
+  // CV: binning in top quark pT taken from AN-2015/309 (TOP-16-001)
+  int numBins_pt = 6;
+  float binning_pt[numBins_pt + 1] = { 0., 65., 125., 200., 290., 400., 550. } ;
+
   histogram_genHadTop_pt_         = book1D(dir, "genHadTop_pt",         "genHadTop_pt",           100,    0.,  500.);
   histogram_genHadTop_eta_        = book1D(dir, "genHadTop_eta",        "genHadTop_eta",          100,   -5.,   +5.);
   histogram_genHadTop_phi_        = book1D(dir, "genHadTop_phi",        "genHadTop_phi",           36, -TMath::Pi(), +TMath::Pi());
   histogram_hadTop_pt_            = book1D(dir, "hadTop_pt",            "hadTopQuark_pt",         100,    0.,  500.);
   histogram_hadTop_eta_           = book1D(dir, "hadTop_eta",           "hadTopQuark_eta",        100,   -5.,   +5.);
   histogram_hadTop_phi_           = book1D(dir, "hadTop_phi",           "hadTopQuark_phi",         36, -TMath::Pi(), +TMath::Pi());
+  histogram_genHadTop_pt_vs_hadTop_pt_        = book2D(dir, "genHadTop_pt_vs_hadTop_pt",        "genHadTop_pt_vs_hadTop_pt", numBins_pt, binning_pt, numBins_pt, binning_pt);
   histogram_deltaHadTop_pt_       = book1D(dir, "deltaHadTop_pt",       "deltaHadTop_pt",          40, -100., +100.);
   histogram_deltaHadTop_pt_vs_genHadTop_pt_   = book2D(dir, "deltaHadTop_pt_vs_genHadTop_pt",   "deltaHadTop_pt_vs_genHadTop_pt",   10, 0., 250., 30, -75., +75.);
   histogram_deltaHadTop_parl_     = book1D(dir, "deltaHadTop_parl",     "deltaHadTop_parl",        40, -100., +100.);
@@ -118,6 +126,7 @@ EvtHistManager_hh_bbWW_TT1lctrl::bookHistograms(TFileDirectory & dir)
   histogram_lepTop_pt_            = book1D(dir, "lepTop_pt",            "lepTopQuark_pt",         100,    0.,  500.);
   histogram_lepTop_eta_           = book1D(dir, "lepTop_eta",           "lepTopQuark_eta",        100,   -5.,   +5.);
   histogram_lepTop_phi_           = book1D(dir, "lepTop_phi",           "lepTopQuark_phi",         36, -TMath::Pi(), +TMath::Pi());
+  histogram_genLepTop_pt_vs_lepTop_pt_        = book2D(dir, "genLepTop_pt_vs_lepTop_pt",        "genLepTop_pt_vs_lepTop_pt", numBins_pt, binning_pt, numBins_pt, binning_pt);
   histogram_deltaLepTop_pt_       = book1D(dir, "deltaLepTop_pt",       "deltaLepTop_pt",          40, -100., +100.);
   histogram_deltaLepTop_pt_vs_genLepTop_pt_   = book2D(dir, "deltaLepTop_pt_vs_genLepTop_pt",   "deltaLepTop_pt_vs_genLepTop_pt",   10, 0., 250., 30, -75., +75.);
   histogram_deltaLepTop_parl_     = book1D(dir, "deltaLepTop_parl",     "deltaLepTop_parl",        40, -100., +100.);
@@ -222,9 +231,10 @@ EvtHistManager_hh_bbWW_TT1lctrl::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_genHadTop_phi_,          genTopQuarkP4_hadTop.phi(),   evtWeight, evtWeightErr);        
   fillWithOverFlow(histogram_hadTop_pt_,              topQuarkP4_hadTop.pt(),       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_hadTop_eta_,             topQuarkP4_hadTop.eta(),      evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_hadTop_phi_,             topQuarkP4_hadTop.phi(),      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_hadTop_phi_,             topQuarkP4_hadTop.phi(),      evtWeight, evtWeightErr);  
   if ( isGenMatched_hadTop )
   {
+    histogram_genHadTop_pt_vs_hadTop_pt_->Fill(topQuarkP4_hadTop.pt(), genTopQuarkP4_hadTop.pt(), evtWeight);
     double deltaHadTop_pt = topQuarkP4_hadTop.pt() - genTopQuarkP4_hadTop.pt();
     fillWithOverFlow(histogram_deltaHadTop_pt_, deltaHadTop_pt, evtWeight, evtWeightErr);
     fillWithOverFlow2d(histogram_deltaHadTop_pt_vs_genHadTop_pt_, genTopQuarkP4_hadTop.pt(), deltaHadTop_pt, evtWeight, evtWeightErr);
@@ -248,6 +258,7 @@ EvtHistManager_hh_bbWW_TT1lctrl::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_lepTop_phi_,             topQuarkP4_lepTop.phi(),      evtWeight, evtWeightErr);
   if ( isGenMatched_lepTop )
   {
+    histogram_genLepTop_pt_vs_lepTop_pt_->Fill(topQuarkP4_lepTop.pt(), genTopQuarkP4_lepTop.pt(), evtWeight);
     double deltaLepTop_pt = topQuarkP4_lepTop.pt() - genTopQuarkP4_lepTop.pt();
     fillWithOverFlow(histogram_deltaLepTop_pt_,       deltaLepTop_pt,               evtWeight, evtWeightErr);
     fillWithOverFlow2d(histogram_deltaLepTop_pt_vs_genLepTop_pt_, genTopQuarkP4_lepTop.pt(), deltaLepTop_pt, evtWeight, evtWeightErr);

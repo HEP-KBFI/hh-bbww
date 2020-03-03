@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from hhAnalysis.bbww.configs.analyzeConfig_hh_bbWW_Wctrl import analyzeConfig_hh_bbWW_Wctrl
+from hhAnalysis.bbww.configs.analyzeConfig_hh_bbWW_TT1lctrl import analyzeConfig_hh_bbWW_TT1lctrl
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
@@ -10,7 +10,7 @@ import os
 import sys
 import getpass
 
-# E.g.: ./test/tthAnalyzeRun_hh_bbWW_Wctrl.py -v 2017Dec13 -m default -e 2017
+# E.g.: ./test/tthAnalyzeRun_hh_bbWW_TT1lctrl.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default' ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_extended_opts_hh
@@ -111,11 +111,11 @@ if __name__ == '__main__':
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
 
-  analysis = analyzeConfig_hh_bbWW_Wctrl(
+  analysis = analyzeConfig_hh_bbWW_TT1lctrl(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
-    executable_analyze                    = "analyze_hh_bbWW_Wctrl",
-    cfgFile_analyze                       = "analyze_hh_bbWW_Wctrl_cfg.py",
+    executable_analyze                    = "analyze_hh_bbWW_TT1lctrl",
+    cfgFile_analyze                       = "analyze_hh_bbWW_TT1lctrl_cfg.py",
     samples                               = samples,
     lepton_charge_selections              = [ "OS" ],
     applyFakeRateWeights                  = "enabled",

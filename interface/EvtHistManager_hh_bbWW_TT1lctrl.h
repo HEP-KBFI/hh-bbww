@@ -75,6 +75,7 @@ public:
   TH1 * histogram_hadTop_pt_;
   TH1 * histogram_hadTop_eta_;
   TH1 * histogram_hadTop_phi_;
+  TH2 * histogram_genHadTop_pt_vs_hadTop_pt_;
   TH1 * histogram_deltaHadTop_pt_;
   TH2 * histogram_deltaHadTop_pt_vs_genHadTop_pt_;
   TH1 * histogram_deltaHadTop_parl_;
@@ -90,6 +91,7 @@ public:
   TH1 * histogram_lepTop_pt_;
   TH1 * histogram_lepTop_eta_;
   TH1 * histogram_lepTop_phi_;
+  TH2 * histogram_genLepTop_pt_vs_lepTop_pt_;
   TH1 * histogram_deltaLepTop_pt_;
   TH2 * histogram_deltaLepTop_pt_vs_genLepTop_pt_;
   TH1 * histogram_deltaLepTop_parl_;

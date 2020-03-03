@@ -27,12 +27,12 @@ def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_s
       histogramDir += "_woFakeRateWeights"
   return histogramDir
 
-class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
+class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
   """Configuration metadata needed to run analysis in a single go.
 
   Sets up a folder structure by defining full path names; no directory creation is delegated here.
 
-  Args specific to analyzeConfig_hh_bbWW_Wctrl:
+  Args specific to analyzeConfig_hh_bbWW_TT1lctrl:
     None.
 
   See $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau/python/analyzeConfig.py
@@ -73,7 +73,7 @@ class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
       configDir             = configDir,
       outputDir             = outputDir,
       executable_analyze    = executable_analyze,
-      channel               = "hh_bbWW_Wctrl",
+      channel               = "hh_bbWW_TT1lctrl",
       samples               = samples,
       jet_cleaning_by_index = jet_cleaning_by_index,
       gen_matching_by_index = gen_matching_by_index,
@@ -123,9 +123,9 @@ class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
     self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ] + [ "Convs", "data_fakes" ]
-    self.cfgFile_make_plots_inclusive = os.path.join(self.template_dir, "makePlots_hh_bbWW_Wctrl_inclusive_cfg.py")
-    self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_Wctrl_in_categories_cfg.py")
-    self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_Wctrl_cfg.py")
+    self.cfgFile_make_plots_inclusive = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT1lctrl_inclusive_cfg.py")
+    self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT1lctrl_in_categories_cfg.py")
+    self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_TT1lctrl_cfg.py")
 
     self.compSF_executable = "NormalizeDYSF.py"
     self.jobOptions_hadd_stage2_harvest = {}
@@ -137,29 +137,19 @@ class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
     self.evtCategories = []
     for type_lepton in [ "1e", "1mu" ]:
       # AN: add inclusive categories
-      category = "hh_bbWW_%s_Wctrl" % (type_lepton)
+      category = "hh_bbWW_%s_TT1lctrl" % type_lepton
       self.evtCategories.append(category)
-      # CV: add categories for "resolved" b-jets without VBF jet selection
-      for type_bjet in [ "1bL", "nobL" ]:
-        for type_jet in [ "0j", "1j", "2j", "3j", "ge4j" ]:
-          if type_jet == "0j" and type_bjet != "nobL":
-            continue   
-          self.evtCategories.append("hh_bbWW_%s%s%s_Wctrl_resolvedHbb" % (type_bjet, type_jet, type_lepton))
-        self.evtCategories.append("hh_bbWW_%s%s_Wctrl_resolvedHbb" % (type_bjet, type_lepton))                                                         
-      # CV: add categories for "resolved" b-jets with VBF jet selection
-      for type_bjet in [ "1bL", "nobL" ]:
-        category = "hh_bbWW_%s%s_Wctrl_resolvedHbb_vbf" % (type_bjet, type_lepton)
-        self.evtCategories.append(category)
+      # CV: add categories for "resolved" AK4 jets without VBF jet selection
+      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_resolvedHbb_resolvedWjj" % type_lepton)                                                        
+      # CV: add categories for "resolved" AK4 jets with VBF jet selection
+      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_resolvedHbb_resolvedWjj_vbf" % type_lepton)
       # CV: add categories for "boosted" AK8 jets passing H->bb selection (no VBF jet selection)
-      for type_bjet in [ "1bL", "nobL" ]:
-        category = "hh_bbWW_%s%s_Wctrl_boostedHbb" % (type_bjet, type_lepton)
-        self.evtCategories.append(category)
+      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_boostedHbb" % type_lepton)
       # CV: add categories for "boosted" AK8LS jets passing W->jj selection (no VBF jet selection)
-      for type_bjet in [ "1bL", "nobL"]:
-        category = "hh_bbWW_%s%s_Wctrl_boostedWjj" % (type_bjet, type_lepton)
-        self.evtCategories.append(category)
+      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_boostedWjj_lowPurity" % type_lepton)
+      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_boostedWjj_highPurity" % type_lepton)
     logging.info("Processing %i categories: %s" % (len(self.evtCategories), self.evtCategories))
-    self.evtcategory_inclusive = "hh_bbWW_1l_Wctrl"
+    self.evtcategory_inclusive = "hh_bbWW_1l_TT1lctrl"
     if not self.evtcategory_inclusive in self.evtCategories:
       self.evtCategories.append(self.evtcategory_inclusive)
 
@@ -177,7 +167,7 @@ class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
     return True
 
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
-    """Create python configuration file for the analyze_hh_bbWW_Wctrl executable (analysis code)
+    """Create python configuration file for the analyze_hh_bbWW_TT1lctrl executable (analysis code)
 
     Args:
       inputFiles: list of input files (Ntuples)
@@ -185,7 +175,7 @@ class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
       process: either `TT`, `TTW`, `TTZ`, `EWK`, `Rares`, `data_obs`, or `signal`
       is_mc: flag indicating whether job runs on MC (True) or data (False)
       lumi_scale: event weight (= xsection * luminosity / number of events)
-      central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bbWW_Wctrl.cc
+      central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bbWW_TT1lctrl.cc
     """
     lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
@@ -198,7 +188,7 @@ class analyzeConfig_hh_bbWW_Wctrl(analyzeConfig_hh):
     jobOptions['leptonFakeRateWeight.histogramName_e'] = self.leptonFakeRateWeight_histogramName_e
     jobOptions['leptonFakeRateWeight.histogramName_mu'] = self.leptonFakeRateWeight_histogramName_mu
 
-    lines = super(analyzeConfig_hh_bbWW_Wctrl, self).createCfg_analyze(jobOptions, sample_info)
+    lines = super(analyzeConfig_hh_bbWW_TT1lctrl, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
   def createCfg_makePlots(self, jobOptions):

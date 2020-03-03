@@ -6,8 +6,7 @@ process = cms.PSet()
 process.fwliteInput = cms.PSet(
     fileNames = cms.vstring(),
     maxEvents = cms.int32(-1),
-    #outputEvery = cms.uint32(100000)
-    outputEvery = cms.uint32(1)
+    outputEvery = cms.uint32(100000)
 )
 
 process.fwliteOutput = cms.PSet(
@@ -73,7 +72,7 @@ process.analyzeMEM_hh_bb2l = cms.PSet(
 #inputFiles = getInputFiles(inputFilePath)
 #process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
 inputFiles = [ 
-  "/hdfs/local/veelken/addMEM/2017/2020Feb19_default_nom/final_ntuples/hh_bb2l/signal_ggf_nonresonant_node_sm_hh_2b2v/0000/signal_ggf_nonresonant_node_sm_hh_2b2v_final.root"
+  "/hdfs/local/veelken/addMEM/2017/2020Feb27_default_nom/final_ntuples/hh_bb2l/signal_ggf_nonresonant_node_sm_hh_2b2v/0000/signal_ggf_nonresonant_node_sm_hh_2b2v_final.root"
 ]
 process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

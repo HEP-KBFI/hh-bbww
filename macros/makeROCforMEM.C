@@ -232,40 +232,43 @@ void makeROCforMEM()
   TH1::AddDirectory(false);
   
   std::vector<std::string> channels;
-  //channels.push_back("hh_bb2l");
+  channels.push_back("hh_bb2l");
   channels.push_back("hh_bb1l");
 
   std::map<std::string, std::vector<std::string>> categories; // key = channel
-  //categories["hh_bb2l"].push_back(""); // fully reconstructed case
-  //categories["hh_bb2l"].push_back("missingBJet");
+  categories["hh_bb2l"].push_back(""); // fully reconstructed case
+  categories["hh_bb2l"].push_back("missingBJet");
   categories["hh_bb1l"].push_back(""); // fully reconstructed case
   categories["hh_bb1l"].push_back("missingBJet");
   categories["hh_bb1l"].push_back("missingHadWJet");
 
   std::map<std::string, std::string> inputFilePaths; // key = channel
-  //inputFilePaths["hh_bb2l"] = "";
+  inputFilePaths["hh_bb2l"] = "/home/veelken/CMSSW_10_2_10_centOS/CMSSW_10_2_10/src/hhAnalysis/bbww/test/templates/";
   inputFilePaths["hh_bb1l"] = "/home/veelken/CMSSW_10_2_10_centOS/CMSSW_10_2_10/src/hhAnalysis/bbww/test/templates/";
 
   std::map<std::string, std::string> inputFileNames_signal; // key = channel
-  inputFileNames_signal["hh_bb2l"] = "";
+  inputFileNames_signal["hh_bb2l"] = "analyzeMEM_hh_bb2l_signal.root";
   inputFileNames_signal["hh_bb1l"] = "analyzeMEM_hh_bb1l_signal.root";
 
   std::map<std::string, std::string> inputFileNames_background; // key = channel
-  inputFileNames_background["hh_bb2l"] = "";
+  inputFileNames_background["hh_bb2l"] = "analyzeMEM_hh_bb2l_background.root";
   inputFileNames_background["hh_bb1l"] = "analyzeMEM_hh_bb1l_background.root";
 
   std::map<std::string, std::vector<std::string>> plotNames; // key = channel
-  //plotNames["hh_bb2l"].push_back("");
-  //plotNames["hh_bb2l"].push_back("");
-  //plotNames["hh_bb2l"].push_back("");
+  plotNames["hh_bb2l"].push_back("LR");
+  plotNames["hh_bb2l"].push_back("weightS");
+  plotNames["hh_bb2l"].push_back("weightB");
   plotNames["hh_bb1l"].push_back("LR");
   plotNames["hh_bb1l"].push_back("weightS");
   plotNames["hh_bb1l"].push_back("weightB");
 
   std::map<std::string, std::map<std::string, std::map<std::string, std::string>>> histogramNames_signal; // key = channel, category, plotName
-  //histogramNames_signal["hh_bb2l"][""][""]                      = "";
-  //histogramNames_signal["hh_bb2l"][""][""]                      = "";
-  //histogramNames_signal["hh_bb2l"][""][""]                      = "";
+  histogramNames_signal["hh_bb2l"][""]["LR"]                    = "mem_LR_fullyMatched";
+  histogramNames_signal["hh_bb2l"][""]["weightS"]               = "mem_weightS_fullyMatched";
+  histogramNames_signal["hh_bb2l"][""]["weightB"]               = "mem_weightB_fullyMatched";
+  histogramNames_signal["hh_bb2l"]["missingBJet"]["LR"]         = "mem_missingBJet_LR_fullyMatched";
+  histogramNames_signal["hh_bb2l"]["missingBJet"]["weightS"]    = "mem_missingBJet_weightS_fullyMatched";
+  histogramNames_signal["hh_bb2l"]["missingBJet"]["weightB"]    = "mem_missingBJet_weightB_fullyMatched";
   histogramNames_signal["hh_bb1l"][""]["LR"]                    = "mem_LR_fullyMatched";
   histogramNames_signal["hh_bb1l"][""]["weightS"]               = "mem_weightS_fullyMatched";
   histogramNames_signal["hh_bb1l"][""]["weightB"]               = "mem_weightB_fullyMatched";
@@ -280,17 +283,17 @@ void makeROCforMEM()
   histogramNames_background = histogramNames_signal;
 
   std::map<std::string, std::map<std::string, int>> mode; // key = channel, plotName
-  //mode["hh_bb2l"][""]        = kUndefined;
-  //mode["hh_bb2l"][""]        = kUndefined;
-  //mode["hh_bb2l"][""]        = kUndefined;
+  mode["hh_bb2l"]["LR"]      = kRightToLeft;
+  mode["hh_bb2l"]["weightS"] = kLeftToRight;
+  mode["hh_bb2l"]["weightB"] = kRightToLeft;
   mode["hh_bb1l"]["LR"]      = kRightToLeft;
   mode["hh_bb1l"]["weightS"] = kLeftToRight;
   mode["hh_bb1l"]["weightB"] = kRightToLeft;
 
   std::map<std::string, std::map<std::string, std::string>> legendEntries; // key = channel, plotName
-  //legendEntries["hh_bb2l"][""]        = "";
-  //legendEntries["hh_bb2l"][""]        = "";
-  //legendEntries["hh_bb2l"][""]        = "";
+  legendEntries["hh_bb2l"]["LR"]      = "w_{S}/(w_{S} + w_{B})";
+  legendEntries["hh_bb2l"]["weightS"] = "w_{S}";
+  legendEntries["hh_bb2l"]["weightB"] = "w_{B}";
   legendEntries["hh_bb1l"]["LR"]      = "w_{S}/(w_{S} + w_{B})";
   legendEntries["hh_bb1l"]["weightS"] = "w_{S}";
   legendEntries["hh_bb1l"]["weightB"] = "w_{B}";
@@ -336,7 +339,7 @@ void makeROCforMEM()
         std::vector<std::string> labelTextLines;
         double yMin, yMax;
         std::string yAxisTitle;
-        std::string outputFileName;
+        TString outputFileName;
         if ( useLogScale ) {
   	  legendPosX = 0.16;
 	  legendPosY = 0.64;
@@ -352,6 +355,7 @@ void makeROCforMEM()
 	  yAxisTitle = "Background Suppression";
 	  outputFileName = Form("makeROCforMEM_%s_%s_linear.pdf", channel->data(), category->data());
         }
+        outputFileName = outputFileName.ReplaceAll("__", "_");
         TGraph* graph1_roc = nullptr;
         std::string legendEntry1;
         TGraph* graph2_roc = nullptr;
@@ -366,9 +370,7 @@ void makeROCforMEM()
         std::string legendEntry6;
         double legendSizeX = 0.23;
 	double legendSizeY = 0.23;
-        if ( (*channel) == "hh_bb2l" ) {
-
-        } else if ( (*channel) == "hh_bb1l" ) {
+        if ( (*channel) == "hh_bb1l" || (*channel) == "hh_bb2l" ) {
           graph1_roc = graphs_roc["LR"];
 	  legendEntry1 = legendEntries[*channel]["LR"];
           graph2_roc = graphs_roc["weightS"];
@@ -390,7 +392,7 @@ void makeROCforMEM()
 	  0.18, 0.64, 0.31, 0.05, 
 	  0., 1.01, "Signal Efficiency", 1.2,
 	  useLogScale, yMin, yMax, yAxisTitle, 1.2,
-	  outputFileName);
+	  outputFileName.Data());
     
         for ( std::map<std::string, TGraph*>::iterator it = graphs_roc.begin();
 	      it != graphs_roc.end(); ++it ) {

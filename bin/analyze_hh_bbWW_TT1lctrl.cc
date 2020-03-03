@@ -276,7 +276,7 @@ int main(int argc, char* argv[])
 
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
-  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bb1l");
+  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbWW_TT1lctrl");
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
@@ -321,9 +321,6 @@ int main(int argc, char* argv[])
 
   bool apply_hadTauVeto = cfg_analyze.getParameter<bool>("apply_hadTauVeto");
   const std::string hadTauSelection_veto = cfg_analyze.getParameter<std::string>("hadTauSelection_veto");
-
-  vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
-  std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
   bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
@@ -429,10 +426,6 @@ int main(int argc, char* argv[])
   std::string branchName_jets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_jets_ak8LS");
   std::string branchName_subjets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8LS");
   std::string branchName_met = cfg_analyze.getParameter<std::string>("branchName_met");
-
-  std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
-  std::string branchName_memOutput_missingBJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingBJet");
-  std::string branchName_memOutput_missingHadWJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingHadWJet");
 
   std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
@@ -714,10 +707,10 @@ int main(int argc, char* argv[])
     // CV: add categories for "resolved" AK4 jets with VBF jet selection
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1, -1, -1, -1, kHbb_resolved,  kWjj_resolved,           kVBF_tagged));    // hh_bbWW_1l_TT1lctrl
     // CV: add categories for "boosted" AK8 jets passing H->bb selection (no VBF jet selection)
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1, -1, -1, -1, kHbb_boosted,   kWjj_resolved,           kVBF_undefined)); // hh_bbWW_1l_TT1lctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1, -1, -1, -1, kHbb_boosted,   kWjj_undefined,          kVBF_undefined)); // hh_bbWW_1l_TT1lctrl
     // CV: add categories for "boosted" AK8LS jets passing W->jj selection (no VBF jet selection)
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1, -1, -1, -1, kHbb_resolved,  kWjj_boosted_lowPurity,  kVBF_undefined)); // hh_bbWW_1l_TT1lctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved,  kWjj_boosted_highPurity, kVBF_undefined)); // hh_bbWW_1l_TT1lctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1, -1, -1, -1, kHbb_undefined, kWjj_boosted_lowPurity,  kVBF_undefined)); // hh_bbWW_1l_TT1lctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_undefined, kWjj_boosted_highPurity, kVBF_undefined)); // hh_bbWW_1l_TT1lctrl
   }
   vstring categoryNames_evt;
   for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();

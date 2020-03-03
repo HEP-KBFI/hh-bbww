@@ -603,9 +603,9 @@ void makePlots_analyzeMEM_hh_bb1l()
   gROOT->SetBatch(true);
 
   std::string inputFilePath = "/home/veelken/CMSSW_10_2_10_centOS/CMSSW_10_2_10/src/hhAnalysis/bbww/test/templates";
-  std::string inputFileName_signal = "analyzeMEM_hh_bb1l_signal_absEtaLt2p4.root";
+  std::string inputFileName_signal = "analyzeMEM_hh_bb1l_signal.root";
   TFile* inputFile_signal = openFile(inputFilePath, inputFileName_signal);
-  std::string inputFileName_background = "analyzeMEM_hh_bb1l_background_absEtaLt2p4.root";
+  std::string inputFileName_background = "analyzeMEM_hh_bb1l_background.root";
   TFile* inputFile_background = openFile(inputFilePath, inputFileName_background);
 
   std::vector<std::string> labelTextLines;
@@ -615,10 +615,11 @@ void makePlots_analyzeMEM_hh_bb1l()
   int markerStyles[6] = { 22, 32, 20, 24, 21, 25 };
 
   std::vector<std::string> histograms1d;
-genLepton_pt
-genLepton_absEta
-", "genLepton_pt", 70, 0., 350.);
-  TH1* histogram_genLepton_absEta = fs.make<TH1D>("genLepton_absEta
+  histograms1d.push_back("mem_LR_fullyMatched");
+  histograms1d.push_back("mem_missingBJet_LR_fullyMatched");
+  histograms1d.push_back("mem_missingHadWJet_LR_fullyMatched");
+  histograms1d.push_back("genLepton_pt");
+  histograms1d.push_back("genLepton_absEta");
   histograms1d.push_back("genWJet1_pt");
   histograms1d.push_back("genWJet1_absEta");
   histograms1d.push_back("genWJet2_pt");
@@ -630,26 +631,76 @@ genLepton_absEta
   histograms1d.push_back("genBJet1_absEta");
   histograms1d.push_back("genBJet2_pt");
   histograms1d.push_back("genBJet2_absEta");
-  //histograms1d.push_back("dR_genBJets");
+  histograms1d.push_back("dR_genBJets");
   
+  std::map<std::string, double> xMin; // key = histograms1d
+  xMin["mem_LR_fullyMatched"]                = -9.;
+  xMin["mem_missingBJet_LR_fullyMatched"]    = -1.;
+  xMin["mem_missingHadWJet_LR_fullyMatched"] = -1.;
+  xMin["genLepton_pt"]                       = -1.;
+  xMin["genLepton_absEta"]                   = -1.;
+  xMin["genWJet1_pt"]                        = -1.;
+  xMin["genWJet1_absEta"]                    = -1.;
+  xMin["genWJet2_pt"]                        = -1.;
+  xMin["genWJet2_absEta"]                    = -1.;
+  xMin["dR_genWJets"]                        = -1.;
+  xMin["dRmin_genWJets_to_genLepton"]        = -1.;
+  xMin["dRmax_genWJets_to_genLepton"]        = -1.;
+  xMin["genBJet1_pt"]                        = -1.;
+  xMin["genBJet1_absEta"]                    = -1.;
+  xMin["genBJet2_pt"]                        = -1.;
+  xMin["genBJet2_absEta"]                    = -1.;
+  xMin["dR_genBJets"]                        = -1.;
+  
+  std::map<std::string, double> xMax; // key = histograms1d
+  xMax["mem_LR_fullyMatched"]                = +1.;
+  xMax["mem_missingBJet_LR_fullyMatched"]    = -1.;
+  xMax["mem_missingHadWJet_LR_fullyMatched"] = -1.;
+  xMax["genLepton_pt"]                       = -1.;
+  xMax["genLepton_absEta"]                   = -1.;
+  xMax["genWJet1_pt"]                        = -1.;
+  xMax["genWJet1_absEta"]                    = -1.;
+  xMax["genWJet2_pt"]                        = -1.;
+  xMax["genWJet2_absEta"]                    = -1.;
+  xMax["dR_genWJets"]                        = -1.;
+  xMax["dRmin_genWJets_to_genLepton"]        = -1.;
+  xMax["dRmax_genWJets_to_genLepton"]        = -1.;
+  xMax["genBJet1_pt"]                        = -1.;
+  xMax["genBJet1_absEta"]                    = -1.;
+  xMax["genBJet2_pt"]                        = -1.;
+  xMax["genBJet2_absEta"]                    = -1.;
+  xMax["dR_genBJets"]                        = -1.;
+
   std::map<std::string, std::string> xAxisTitles1d; // key = histograms1d
-  xAxisTitles1d["genWJet1_pt"]                 = "p_{T} [GeV]";
-  xAxisTitles1d["genWJet1_absEta"]             = "#eta";
-  xAxisTitles1d["genWJet2_pt"]                 = "p_{T} [GeV]";
-  xAxisTitles1d["genWJet2_absEta"]             = "#eta";
-  xAxisTitles1d["dR_genWJets"]                 = "#Delta R";
-  xAxisTitles1d["dRmin_genWJets_to_genLepton"] = "min #Delta R";
-  xAxisTitles1d["dRmax_genWJets_to_genLepton"] = "max #Delta R";
-  xAxisTitles1d["genBJet1_pt"]                 = "p_{T} [GeV]";
-  xAxisTitles1d["genBJet1_absEta"]             = "#eta";
-  xAxisTitles1d["genBJet2_pt"]                 = "p_{T} [GeV]";
-  xAxisTitles1d["genBJet2_absEta"]             = "#eta";
-  xAxisTitles1d["dR_genBJets"]                 = "#Delta R";
+  xAxisTitles1d["mem_LR_fullyMatched"]                = "w_{S}/(w_{S} + w_{B})";
+  xAxisTitles1d["mem_missingBJet_LR_fullyMatched"]    = "w_{S}/(w_{S} + w_{B})";
+  xAxisTitles1d["mem_missingHadWJet_LR_fullyMatched"] = "w_{S}/(w_{S} + w_{B})";
+  xAxisTitles1d["genLepton_pt"]                       = "p_{T} [GeV]";
+  xAxisTitles1d["genLepton_absEta"]                   = "#eta";
+  xAxisTitles1d["genWJet1_pt"]                        = "p_{T} [GeV]";
+  xAxisTitles1d["genWJet1_absEta"]                    = "#eta";
+  xAxisTitles1d["genWJet2_pt"]                        = "p_{T} [GeV]";
+  xAxisTitles1d["genWJet2_absEta"]                    = "#eta";
+  xAxisTitles1d["dR_genWJets"]                        = "#Delta R";
+  xAxisTitles1d["dRmin_genWJets_to_genLepton"]        = "min #Delta R";
+  xAxisTitles1d["dRmax_genWJets_to_genLepton"]        = "max #Delta R";
+  xAxisTitles1d["genBJet1_pt"]                        = "p_{T} [GeV]";
+  xAxisTitles1d["genBJet1_absEta"]                    = "#eta";
+  xAxisTitles1d["genBJet2_pt"]                        = "p_{T} [GeV]";
+  xAxisTitles1d["genBJet2_absEta"]                    = "#eta";
+  xAxisTitles1d["dR_genBJets"]                        = "#Delta R";
   
   for ( std::vector<std::string>::const_iterator histogramName = histograms1d.begin();
 	histogramName != histograms1d.end(); ++histogramName ) {
     TH1* histogram_signal = loadHistogram1d(inputFile_signal, *histogramName);
     TH1* histogram_background = loadHistogram1d(inputFile_background, *histogramName);
+
+    double legendPosX;
+    if ( histogramName->find("_LR_") != std::string::npos ) {
+      legendPosX = 0.23;
+    } else {
+      legendPosX = 0.63;
+    }
 
     std::string outputFileName = Form("makePlots_analyzeMEM_hh_bb1l_%s.png", histogramName->data());
     showHistograms1d(1150, 800,
@@ -660,10 +711,10 @@ genLepton_absEta
 		     0, "",
 		     0, "",
 		     colors, lineStyles, 
-		     0.050, 0.63, 0.72, 0.26, 0.17, 
+		     0.050, legendPosX, 0.72, 0.26, 0.17, 
 		     labelTextLines, 0.050,
 		     0.63, 0.65, 0.26, 0.07, 
-		     -1., -1., xAxisTitles1d[*histogramName], 1.2, 
+		     xMin[*histogramName], xMax[*histogramName], xAxisTitles1d[*histogramName], 1.2, 
 		     true, 1.e-4, 1.e0, "Events", 1.2, 
 		     outputFileName);
   }

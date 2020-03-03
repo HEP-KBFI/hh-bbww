@@ -301,8 +301,8 @@ int main(int argc, char* argv[])
    
   TH1* histogram_genLepton_lead_pt = fs.make<TH1D>("genLepton_lead_pt", "genLepton_lead_pt", 70, 0., 350.);
   TH1* histogram_genLepton_lead_absEta = fs.make<TH1D>("genLepton_lead_absEta", "genLepton_lead_absEta", 100, 0., 10.);
-  TH1* histogram_genLepton_sublead_pt = fs.make<TH1D>("genLepton_sublead__pt", "genLepton_sublead__pt", 70, 0., 350.);
-  TH1* histogram_genLepton_sublead_absEta = fs.make<TH1D>("genLepton_sublead__absEta", "genLepton_sublead__absEta", 100, 0., 10.);
+  TH1* histogram_genLepton_sublead_pt = fs.make<TH1D>("genLepton_sublead_pt", "genLepton_sublead_pt", 70, 0., 350.);
+  TH1* histogram_genLepton_sublead_absEta = fs.make<TH1D>("genLepton_sublead_absEta", "genLepton_sublead_absEta", 100, 0., 10.);
   TH1* histograms_dR_genLeptons = fs.make<TH1D>("dR_genLeptons", "dR_genLeptons", 50, 0., 5.);
   TH1* histograms_dEta_genLeptons = fs.make<TH1D>("dEta_genLeptons", "dEta_genLeptons", 50, 0., 5.);
   TH1* histograms_dPhi_genLeptons = fs.make<TH1D>("dPhi_genLeptons", "dPhi_genLeptons", 36, 0., TMath::Pi());
