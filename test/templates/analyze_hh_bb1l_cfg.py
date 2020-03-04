@@ -114,6 +114,8 @@ process.analyze_hh_bb1l = cms.PSet(
     useNonNominal = cms.bool(False),
     isDEBUG = cms.bool(False),
     hasLHE = cms.bool(True),
+    hasPS = cms.bool(False),
+    apply_LHE_nom = cms.bool(False),
     useObjectMultiplicity = cms.bool(False),
 
     evtWeight = cms.PSet(

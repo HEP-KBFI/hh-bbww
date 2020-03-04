@@ -95,6 +95,8 @@ process.analyze_hh_bbWW_DYctrl = cms.PSet(
     useNonNominal = cms.bool(False),
     isDEBUG = cms.bool(False),
     hasLHE = cms.bool(True),
+    hasPS = cms.bool(False),
+    apply_LHE_nom = cms.bool(False),
 
     evtWeight = cms.PSet(
         apply = cms.bool(False),
