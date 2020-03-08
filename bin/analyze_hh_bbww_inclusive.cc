@@ -417,7 +417,8 @@ main(int argc,
     }
 
 //--- compute MHT and linear MET discriminant (met_LD)
-    RecoMEt met = metReader->read();
+    const RecoMEt met_uncorr = metReader->read();
+    const RecoMEt met = recompute_met(met_uncorr, jets, met_option, isDEBUG);
 
     if(isMC && ! readGenObjects)
     {
