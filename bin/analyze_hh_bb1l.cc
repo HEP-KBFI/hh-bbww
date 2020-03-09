@@ -1659,6 +1659,8 @@ int main(int argc, char* argv[])
       }
     }
 
+    bool passesTight_lepton = isMatched(*selLepton, tightElectrons) || isMatched(*selLepton, tightMuons);
+
     if ( leptonFakeRateInterface )
     {
       evtWeightRecorder.record_jetToLepton_FR_lead(leptonFakeRateInterface, selLepton);
@@ -1666,7 +1668,7 @@ int main(int argc, char* argv[])
 
     if(applyFakeRateWeights == kFR_enabled)
     {
-      evtWeightRecorder.compute_FR_1l();
+      evtWeightRecorder.compute_FR_1l(passesTight_lepton);
     }
 
     const std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();

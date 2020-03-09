@@ -1269,6 +1269,8 @@ int main(int argc, char* argv[])
       }
     }
 
+    bool passesTight_lepton = isMatched(*selLepton, tightElectrons) || isMatched(*selLepton, tightMuons);
+
     if ( leptonFakeRateInterface )
     {
       evtWeightRecorder.record_jetToLepton_FR_lead(leptonFakeRateInterface, selLepton);
@@ -1276,7 +1278,7 @@ int main(int argc, char* argv[])
 
     if(applyFakeRateWeights == kFR_enabled)
     {
-      evtWeightRecorder.compute_FR_1l();
+      evtWeightRecorder.compute_FR_1l(passesTight_lepton);
     }
 
     if ( !(selBJetsAK4_loose.size() <= 1 && selBJetsAK4_medium.size() == 0) ) {
