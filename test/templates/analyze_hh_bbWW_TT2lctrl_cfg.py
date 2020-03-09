@@ -17,7 +17,7 @@ process.fwliteOutput = cms.PSet(
     fileName = cms.string('')
 )
 
-process.analyze_hh_bbWW_Wctrl = cms.PSet(
+process.analyze_hh_bbWW_TT1lctrl = cms.PSet(
     treeName = cms.string('Events'),
 
     process = cms.string(''),
@@ -26,18 +26,27 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
 
     triggers_1e = cms.vstring(),
     use_triggers_1e = cms.bool(True),
+    triggers_2e = cms.vstring(),
+    use_triggers_2e = cms.bool(True),
     triggers_1mu = cms.vstring(),
     use_triggers_1mu = cms.bool(True),
+    triggers_2mu = cms.vstring(),
+    use_triggers_2mu = cms.bool(True),
+    triggers_1e1mu = cms.vstring(),
+    use_triggers_1e1mu = cms.bool(True),
 
     apply_offline_e_trigger_cuts_1e = cms.bool(True),
+    apply_offline_e_trigger_cuts_2e = cms.bool(True),
     apply_offline_e_trigger_cuts_1mu = cms.bool(True),
+    apply_offline_e_trigger_cuts_2mu = cms.bool(True),
+    apply_offline_e_trigger_cuts_1e1mu = cms.bool(True),
 
     electronSelection = cms.string(''),
     muonSelection = cms.string(''),
     apply_leptonGenMatching = cms.bool(True),
 
     apply_hadTauVeto = cms.bool(False),
-    hadTauSelection_veto = cms.string(''),
+    hadTauSelection_veto = cms.string('deepVSjMedium'),
 
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
@@ -63,12 +72,11 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
     cfgEvtYieldHistManager = cms.PSet(),
 
     branchName_electrons = cms.string('Electron'),
-    branchName_muons = cms.string('Muon'),
+    branchName_muons = cms.string('Muon'), 
+    branchName_hadTaus = cms.string('Tau'),
     branchName_jets_ak4 = cms.string('Jet'),
     branchName_jets_ak8 = cms.string('FatJet'),
     branchName_subjets_ak8 = cms.string('SubJet'),
-    branchName_jets_ak8LS = cms.string('FatJetAK8LSLoose'),
-    branchName_subjets_ak8LS = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
     branchName_muonGenMatch = cms.string('MuonGenMatch'),
@@ -87,14 +95,18 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
 
     branchName_genTauLeptons = cms.string('GenTau'),
 
+    # generator-level information specific to tt+jets background events   
+    branchName_genLeptonsFromTop = cms.string('GenLepFromTop'),
+    branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
+    branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
+    branchName_genTopQuarks = cms.string('GenTop'),
+
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
 
     useNonNominal = cms.bool(False),
     isDEBUG = cms.bool(False),
     hasLHE = cms.bool(True),
-    hasPS = cms.bool(False),
-    apply_LHE_nom = cms.bool(False),
 
     evtWeight = cms.PSet(
         apply = cms.bool(False),
@@ -106,4 +118,15 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
         branchTypeYaxis = cms.string(''),
     ),
     tHweights = cms.VPSet(),
+    hhWeight_cfg = cms.PSet(
+        denominator_file = cms.string(''),
+        klScan_file = cms.string('hhAnalysis/multilepton/data/kl_scan.dat'),
+        ktScan_file = cms.string(''),
+        coefFile = cms.string('HHStatAnalysis/AnalyticalModels/data/coefficientsByBin_extended_3M_costHHSim_19-4.txt'),
+        histtitle = cms.string(''),
+        isDEBUG = cms.bool(False),
+        do_scan = cms.bool(True),
+        do_ktscan = cms.bool(False),
+        apply_rwgt = cms.bool(False),
+    ),
 )

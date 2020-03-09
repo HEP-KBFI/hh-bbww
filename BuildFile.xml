@@ -9,6 +9,7 @@
 <use   name="hhAnalysis/bbwwMEM"/>
 <use   name="hhAnalysis/multilepton"/>
 <use   name="hhAnalysis/Heavymassestimator"/>
+<use   name="TopAnalysis/KinematicReconstruction"/>
 <use   name="root"/>
 <use   name="roottmva"/>
 <use   name="boost" />

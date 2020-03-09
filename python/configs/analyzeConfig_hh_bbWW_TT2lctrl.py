@@ -27,12 +27,12 @@ def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_s
       histogramDir += "_woFakeRateWeights"
   return histogramDir
 
-class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
+class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
   """Configuration metadata needed to run analysis in a single go.
 
   Sets up a folder structure by defining full path names; no directory creation is delegated here.
 
-  Args specific to analyzeConfig_hh_bbWW_TT1lctrl:
+  Args specific to analyzeConfig_hh_bbWW_TT2lctrl:
     None.
 
   See $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau/python/analyzeConfig.py
@@ -73,7 +73,7 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
       configDir             = configDir,
       outputDir             = outputDir,
       executable_analyze    = executable_analyze,
-      channel               = "hh_bbWW_TT1lctrl",
+      channel               = "hh_bbWW_TT2lctrl",
       samples               = samples,
       jet_cleaning_by_index = jet_cleaning_by_index,
       gen_matching_by_index = gen_matching_by_index,
@@ -86,7 +86,7 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
       running_method        = running_method,
       num_parallel_jobs     = num_parallel_jobs,
       histograms_to_fit     = histograms_to_fit,
-      triggers              = [ '1e', '1mu' ],
+      triggers              = [ '1e', '1mu', '2e', '2mu', '1e1mu' ],
       verbose               = verbose,
       dry_run               = dry_run,
       isDebug               = isDebug,
@@ -123,9 +123,9 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
     self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ] + [ "Convs", "data_fakes" ]
-    self.cfgFile_make_plots_inclusive = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT1lctrl_inclusive_cfg.py")
-    self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT1lctrl_in_categories_cfg.py")
-    self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_TT1lctrl_cfg.py")
+    self.cfgFile_make_plots_inclusive = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT2lctrl_inclusive_cfg.py")
+    self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT2lctrl_in_categories_cfg.py")
+    self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_TT2lctrl_cfg.py")
 
     self.compSF_executable = "NormalizeDYSF.py"
     self.jobOptions_hadd_stage2_harvest = {}
@@ -135,21 +135,18 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
     self.hlt_filter = hlt_filter
 
     self.evtCategories = []
-    for type_lepton in [ "1e", "1mu" ]:
+    for type_lepton in [ "2e", "1e1mu", "2mu" ]:
       # AN: add inclusive categories
-      category = "hh_bbWW_%s_TT1lctrl" % type_lepton
+      category = "hh_bbWW_%s_TT2lctrl" % type_lepton
       self.evtCategories.append(category)
       # CV: add categories for "resolved" AK4 jets without VBF jet selection
-      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_resolvedHbb_resolvedWjj" % type_lepton)                                                        
+      self.evtCategories.append("hh_bbWW_%s_TT2lctrl_resolvedHbb" % type_lepton)                                                        
       # CV: add categories for "resolved" AK4 jets with VBF jet selection
-      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_resolvedHbb_resolvedWjj_vbf" % type_lepton)
+      self.evtCategories.append("hh_bbWW_%s_TT2lctrl_resolvedHbb_vbf" % type_lepton)
       # CV: add categories for "boosted" AK8 jets passing H->bb selection (no VBF jet selection)
-      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_boostedHbb" % type_lepton)
-      # CV: add categories for "boosted" AK8LS jets passing W->jj selection (no VBF jet selection)
-      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_boostedWjj_lowPurity" % type_lepton)
-      self.evtCategories.append("hh_bbWW_%s_TT1lctrl_boostedWjj_highPurity" % type_lepton)
+      self.evtCategories.append("hh_bbWW_%s_TT2lctrl_boostedHbb" % type_lepton)
     logging.info("Processing %i categories: %s" % (len(self.evtCategories), self.evtCategories))
-    self.evtcategory_inclusive = "hh_bbWW_1l_TT1lctrl"
+    self.evtcategory_inclusive = "hh_bbWW_2l_TT2lctrl"
     if not self.evtcategory_inclusive in self.evtCategories:
       self.evtCategories.append(self.evtcategory_inclusive)
 
@@ -167,7 +164,7 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
     return True
 
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
-    """Create python configuration file for the analyze_hh_bbWW_TT1lctrl executable (analysis code)
+    """Create python configuration file for the analyze_hh_bbWW_TT2lctrl executable (analysis code)
 
     Args:
       inputFiles: list of input files (Ntuples)
@@ -175,7 +172,7 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
       process: either `TT`, `TTW`, `TTZ`, `EWK`, `Rares`, `data_obs`, or `signal`
       is_mc: flag indicating whether job runs on MC (True) or data (False)
       lumi_scale: event weight (= xsection * luminosity / number of events)
-      central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bbWW_TT1lctrl.cc
+      central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bbWW_TT2lctrl.cc
     """
     lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
@@ -188,7 +185,7 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
     jobOptions['leptonFakeRateWeight.histogramName_e'] = self.leptonFakeRateWeight_histogramName_e
     jobOptions['leptonFakeRateWeight.histogramName_mu'] = self.leptonFakeRateWeight_histogramName_mu
 
-    lines = super(analyzeConfig_hh_bbWW_TT1lctrl, self).createCfg_analyze(jobOptions, sample_info)
+    lines = super(analyzeConfig_hh_bbWW_TT2lctrl, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
   def createCfg_makePlots(self, jobOptions):
@@ -205,7 +202,7 @@ class analyzeConfig_hh_bbWW_TT1lctrl(analyzeConfig_hh):
     for category in jobOptions['categories']:
       lines.append("  cms.PSet(")
       lines.append("    name = cms.string('%s')," % getHistogramDir(category, "Tight", "disabled", jobOptions['lepton_charge_selection']))
-      lines.append("    label = cms.string('TT1l CR')")
+      lines.append("    label = cms.string('TT2l CR')")
       lines.append("  ),")
     lines.append(")")
     lines.append("process.makePlots.intLumiData = cms.double(%.1f)" % (self.lumi / 1000))

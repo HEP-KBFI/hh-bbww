@@ -32,6 +32,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonReader.h" // GenPhotonReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h" // GenJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoReader.h" // LHEInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/PSWeightReader.h" // PSWeightReader
 #include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicityReader.h" // ObjectMultiplicityReader
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
@@ -473,6 +474,8 @@ int main(int argc, char* argv[])
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
   bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
+  bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
+  bool apply_LHE_nom = cfg_analyze.getParameter<bool>("apply_LHE_nom");
   bool useObjectMultiplicity = cfg_analyze.getParameter<bool>("useObjectMultiplicity");
   std::string central_or_shift_main = cfg_analyze.getParameter<std::string>("central_or_shift");
   std::vector<std::string> central_or_shifts_local = cfg_analyze.getParameter<std::vector<std::string>>("central_or_shifts_local");
@@ -480,7 +483,8 @@ int main(int argc, char* argv[])
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
   bool apply_l1PreFireWeight = cfg_analyze.getParameter<bool>("apply_l1PreFireWeight");
   bool apply_DYMCReweighting = cfg_analyze.getParameter<bool>("apply_DYMCReweighting");
-  bool apply_topPtReweighting = cfg_analyze.getParameter<bool>("apply_topPtReweighting");
+  std::string apply_topPtReweighting_str = cfg_analyze.getParameter<std::string>("apply_topPtReweighting");
+  bool apply_topPtReweighting = ! apply_topPtReweighting_str.empty();
   bool apply_hlt_filter = cfg_analyze.getParameter<bool>("apply_hlt_filter");
   bool apply_met_filters = cfg_analyze.getParameter<bool>("apply_met_filters");
   edm::ParameterSet cfgMEtFilter = cfg_analyze.getParameter<edm::ParameterSet>("cfgMEtFilter");
@@ -662,6 +666,10 @@ int main(int argc, char* argv[])
     eventInfo.loadWeight_tH(tHweights);
   }
   EventInfoReader eventInfoReader(&eventInfo);
+  if(apply_topPtReweighting)
+  {
+    eventInfoReader.setTopPtRwgtBranchName(apply_topPtReweighting_str);
+  }
   inputTree->registerReader(&eventInfoReader);
 
   ObjectMultiplicity objectMultiplicity;
@@ -803,6 +811,7 @@ int main(int argc, char* argv[])
   GenPhotonReader * genPhotonReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
+  PSWeightReader * psWeightReader = nullptr;
 
   GenParticleReader * genMatchToMuonReader     = nullptr;
   GenParticleReader * genMatchToElectronReader = nullptr;
@@ -846,6 +855,8 @@ int main(int argc, char* argv[])
     }
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
+    psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
+    inputTree -> registerReader(psWeightReader);
   }
 
 //--- initialize BDT for ranking of W->jj decays
@@ -1308,7 +1319,9 @@ int main(int argc, char* argv[])
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
       lheInfoReader->read();
+      psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
+      evtWeightRecorder.record_psWeight(psWeightReader);
       evtWeightRecorder.record_puWeight(&eventInfo);
       evtWeightRecorder.record_nom_tH_weight(&eventInfo);
       evtWeightRecorder.record_lumiScale(lumiScale);
@@ -1796,7 +1809,8 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("Z-boson mass veto", evtWeightRecorder.get(central_or_shift_main));
 
 //--- compute MHT and linear MET discriminant (met_LD)
-    RecoMEt met = metReader->read();
+    const RecoMEt met_uncorr = metReader->read();
+    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
     const Particle::LorentzVector& metP4 = met.p4();
     const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
     Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, {}, selJetsAK4_mht);
@@ -2435,6 +2449,7 @@ int main(int argc, char* argv[])
   delete genJetReader;
   delete genTauLeptonReader;
   delete lheInfoReader;
+  delete psWeightReader;
 
   for(auto & kv: genEvtHistManager_beforeCuts)
   {

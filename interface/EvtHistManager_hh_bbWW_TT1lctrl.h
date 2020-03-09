@@ -3,7 +3,7 @@
 
 /** \class EvtHistManager_hh_bbWW_TT1lctrl
  *
- * Book and fill histograms for event-level quantities in the Drell-Yan (DY) control region 
+ * Book and fill histograms for event-level quantities in the tt+jets (TT) single lepton control region
  * of the HH->bbWW analysis
  *
  * \author Christian Veelken, Tallinn

@@ -3,7 +3,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow(), fillWithOverFlow2d()
 
 #include <TMath.h> // TMath::Pi(), TMath::Sqrt
-#include <TH2.h> // TH2->Fill
+#include <TH2.h>   // TH2->Fill
 
 EvtHistManager_hh_bbWW_TT1lctrl::EvtHistManager_hh_bbWW_TT1lctrl(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
@@ -107,9 +107,9 @@ EvtHistManager_hh_bbWW_TT1lctrl::bookHistograms(TFileDirectory & dir)
   histogram_genHadTop_pt_         = book1D(dir, "genHadTop_pt",         "genHadTop_pt",           100,    0.,  500.);
   histogram_genHadTop_eta_        = book1D(dir, "genHadTop_eta",        "genHadTop_eta",          100,   -5.,   +5.);
   histogram_genHadTop_phi_        = book1D(dir, "genHadTop_phi",        "genHadTop_phi",           36, -TMath::Pi(), +TMath::Pi());
-  histogram_hadTop_pt_            = book1D(dir, "hadTop_pt",            "hadTopQuark_pt",         100,    0.,  500.);
-  histogram_hadTop_eta_           = book1D(dir, "hadTop_eta",           "hadTopQuark_eta",        100,   -5.,   +5.);
-  histogram_hadTop_phi_           = book1D(dir, "hadTop_phi",           "hadTopQuark_phi",         36, -TMath::Pi(), +TMath::Pi());
+  histogram_hadTop_pt_            = book1D(dir, "hadTop_pt",            "hadTop_pt",              100,    0.,  500.);
+  histogram_hadTop_eta_           = book1D(dir, "hadTop_eta",           "hadTop_eta",             100,   -5.,   +5.);
+  histogram_hadTop_phi_           = book1D(dir, "hadTop_phi",           "hadTop_phi",              36, -TMath::Pi(), +TMath::Pi());
   histogram_genHadTop_pt_vs_hadTop_pt_        = book2D(dir, "genHadTop_pt_vs_hadTop_pt",        "genHadTop_pt_vs_hadTop_pt", numBins_pt, binning_pt, numBins_pt, binning_pt);
   histogram_deltaHadTop_pt_       = book1D(dir, "deltaHadTop_pt",       "deltaHadTop_pt",          40, -100., +100.);
   histogram_deltaHadTop_pt_vs_genHadTop_pt_   = book2D(dir, "deltaHadTop_pt_vs_genHadTop_pt",   "deltaHadTop_pt_vs_genHadTop_pt",   10, 0., 250., 30, -75., +75.);
@@ -123,9 +123,9 @@ EvtHistManager_hh_bbWW_TT1lctrl::bookHistograms(TFileDirectory & dir)
   histogram_genLepTop_pt_         = book1D(dir, "genLepTop_pt",         "genLepTop_pt",           100,    0.,  500.);
   histogram_genLepTop_eta_        = book1D(dir, "genLepTop_eta",        "genLepTop_eta",          100,   -5.,   +5.);
   histogram_genLepTop_phi_        = book1D(dir, "genLepTop_phi",        "genLepTop_phi",           36, -TMath::Pi(), +TMath::Pi());
-  histogram_lepTop_pt_            = book1D(dir, "lepTop_pt",            "lepTopQuark_pt",         100,    0.,  500.);
-  histogram_lepTop_eta_           = book1D(dir, "lepTop_eta",           "lepTopQuark_eta",        100,   -5.,   +5.);
-  histogram_lepTop_phi_           = book1D(dir, "lepTop_phi",           "lepTopQuark_phi",         36, -TMath::Pi(), +TMath::Pi());
+  histogram_lepTop_pt_            = book1D(dir, "lepTop_pt",            "lepTop_pt",              100,    0.,  500.);
+  histogram_lepTop_eta_           = book1D(dir, "lepTop_eta",           "lepTop_eta",             100,   -5.,   +5.);
+  histogram_lepTop_phi_           = book1D(dir, "lepTop_phi",           "lepTop_phi",              36, -TMath::Pi(), +TMath::Pi());
   histogram_genLepTop_pt_vs_lepTop_pt_        = book2D(dir, "genLepTop_pt_vs_lepTop_pt",        "genLepTop_pt_vs_lepTop_pt", numBins_pt, binning_pt, numBins_pt, binning_pt);
   histogram_deltaLepTop_pt_       = book1D(dir, "deltaLepTop_pt",       "deltaLepTop_pt",          40, -100., +100.);
   histogram_deltaLepTop_pt_vs_genLepTop_pt_   = book2D(dir, "deltaLepTop_pt_vs_genLepTop_pt",   "deltaLepTop_pt_vs_genLepTop_pt",   10, 0., 250., 30, -75., +75.);
