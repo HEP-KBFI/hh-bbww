@@ -136,7 +136,7 @@ struct categoryEntryType
     else if ( maxNumJets >  minNumJets                      ) name_ += Form("%ito%ij", minNumJets, maxNumJets);
     else assert(0);
     if      ( numElectrons_ >= 2                            ) name_ += "2e";
-    else if ( numMuons_ >= 2                                ) name_ += "2mu";
+    else if ( numMuons_     >= 2                            ) name_ += "2mu";
     else                                                      name_ += "2l";
     name_ += "_DYctrl";
     if      ( type_Hbb_ == kHbb_resolved                    ) name_ += "_resolvedHbb";
@@ -1183,8 +1183,8 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("<= 2 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
-    if ( !((fakeableElectrons.size() >= 2 &&                              (selTrigger_2e    || selTrigger_1e  )) ||
-           (                                 fakeableMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu ))) ) {
+    if ( !((fakeableElectrons.size() >= 2 &&                              (selTrigger_2e  || selTrigger_1e )) ||
+           (                                 fakeableMuons.size() >= 2 && (selTrigger_2mu || selTrigger_1mu))) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
         std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
