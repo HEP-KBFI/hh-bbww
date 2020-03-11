@@ -20,7 +20,6 @@ systematics.internal = systematics.an_internal_no_mem
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
-parser.add_preselect()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
@@ -48,7 +47,6 @@ running_method     = args.running_method
 # Additional arguments
 mode              = args.mode
 systematics_label = args.systematics
-use_preselected   = args.use_preselected
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
 files_per_job     = args.files_per_job
@@ -82,7 +80,7 @@ jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
 if mode == "default":
-  samples = load_samples(era, suffix = "preselected" if use_preselected else "")
+  samples = load_samples(era)
 else:
   raise ValueError("Internal logic error")
 
@@ -105,8 +103,6 @@ if __name__ == '__main__':
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
     ', '.join(central_or_shifts)
   )
-  if not use_preselected:
-    logging.warning('Running the analysis on fully inclusive samples!')
 
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
