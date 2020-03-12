@@ -47,25 +47,33 @@ SyncNtupleManager_bbww::initializeBranches()
   const char * jstrAk8 = "ak8Jet";
   const char * jstrAk8Ls = "ak8lsJet";
 
-  const std::string n_sel_lep_str         = Form("n_%s",             lstr);
-  const std::string n_presel_mu_str       = Form("n_presel_%s",      mstr);
-  const std::string n_presel_ele_str      = Form("n_presel_%s",      estr);
-  const std::string n_presel_jet_str      = Form("n_presel_%s",      jstr);
-  const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
-  const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
+  const std::string n_sel_lep_str              = Form("n_%s",             lstr);
+  const std::string n_presel_mu_str            = Form("n_presel_%s",      mstr);
+  const std::string n_fakeablesel_mu_str       = Form("n_fakeablesel_%s",      mstr);
+  const std::string n_mvasel_mu_str            = Form("n_mvasel_%s",      mstr);
+  const std::string n_presel_ele_str           = Form("n_presel_%s",      estr);
+  const std::string n_fakeablesel_ele_str      = Form("n_fakeablesel_%s",      estr);
+  const std::string n_mvasel_ele_str           = Form("n_mvasel_%s",      estr);
+  const std::string n_presel_jet_str           = Form("n_presel_%s",      jstr);
+  const std::string n_presel_jetAK8_str        = Form("n_presel_%s",      jstrAk8);
+  const std::string n_presel_jetAK8LS_str      = Form("n_presel_%s",      jstrAk8Ls);
 
   setBranches(
-    nEvent,            "event",
-    ls,                "ls",
-    run,               "run",
-    flag_boosted,      "is_boosted",
-    flag_semiboosted,  "is_semiboosted",
-    flag_resolved,     "is_resolved",
-    n_presel_mu,       n_presel_mu_str,
-    n_presel_ele,      n_presel_ele_str,
-    n_presel_jet,      n_presel_jet_str,
-    n_presel_jetAK8,   n_presel_jetAK8_str,
-    n_presel_jetAK8LS, n_presel_jetAK8LS_str,
+    nEvent,                 "event",
+    ls,                     "ls",
+    run,                    "run",
+    flag_boosted,           "is_boosted",
+    flag_semiboosted,       "is_semiboosted",
+    flag_resolved,          "is_resolved",
+    n_presel_mu,             n_presel_mu_str,
+    n_fakeablesel_mu,        n_fakeablesel_mu_str,
+    n_mvasel_mu,             n_mvasel_mu_str,
+    n_presel_ele,            n_presel_ele_str,
+    n_fakeablesel_ele,       n_fakeablesel_ele_str,
+    n_mvasel_ele,            n_mvasel_ele_str,
+    n_presel_jet,            n_presel_jet_str,
+    n_presel_jetAK8,         n_presel_jetAK8_str,
+    n_presel_jetAK8LS,       n_presel_jetAK8LS_str,
 
 //--- MET/MHT
     floatMap[FloatVariableType_bbww::PFMET],                    "PFMET",
