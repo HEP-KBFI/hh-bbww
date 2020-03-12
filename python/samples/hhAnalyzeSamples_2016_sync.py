@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-03-03 10:45:19 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2016/2020Jan28_woPresel_nonNom_hh_bbww_sync/ntuples -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_sync.py -M
+# file generated at 2020-03-12 18:32:01 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2016_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2016/2020Mar12_woPresel_nonNom_hh_bbww_sync/ntuples -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_sync.py -M
 
 samples_2016 = OD()
 samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
@@ -11,18 +11,18 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   ("nof_files",                       1),
   ("nof_db_files",                    3),
   ("nof_events",                      {
-    'Count'                                                      : [       144981, ],
-    'CountWeighted'                                              : [       144965,       144991,       144983, ],
-    'CountWeightedLHEWeightScale'                                : [       158551,       144964,       133141,       158551,       144964,       133141,       158551,       144964,       133141, ],
-    'CountWeightedLHEEnvelope'                                   : [       158551,       133141, ],
-    'CountWeightedL1PrefireNom'                                  : [       141520,       141532,       141529, ],
-    'CountWeightedL1Prefire'                                     : [       141520,       140677,       142365, ],
-    'CountWeightedLHEWeightScaleL1PrefireNom'                    : [       154751,       141519,       129993,       154751,       141519,       129993,       154751,       141519,       129993, ],
-    'CountWeightedLHEEnvelopeL1PrefireNom'                       : [       154751,       129993, ],
+    'Count'                                                                          : [       144981, ],
+    'CountWeighted'                                                                  : [       144965,       144991,       144983, ],
+    'CountWeightedLHEWeightScale'                                                    : [       158551,       144964,       133141,       158551,       144964,       133141,       158551,       144964,       133141, ],
+    'CountWeightedLHEEnvelope'                                                       : [       158551,       133141, ],
+    'CountWeightedL1PrefireNom'                                                      : [       141520,       141532,       141529, ],
+    'CountWeightedL1Prefire'                                                         : [       141520,       140677,       142365, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                                        : [       154751,       141519,       129993,       154751,       141519,       129993,       154751,       141519,       129993, ],
+    'CountWeightedLHEEnvelopeL1PrefireNom'                                           : [       154751,       129993, ],
   }),
   ("nof_tree_events",                 144981),
   ("nof_db_events",                   298727),
-  ("fsize_local",                     600707214), # 600.71MB, avg file size 600.71MB
+  ("fsize_local",                     600707677), # 600.71MB, avg file size 600.71MB
   ("fsize_db",                        13966996917), # 13.97GB, avg file size 4.66GB
   ("use_it",                          True),
   ("xsection",                        0.026422),
@@ -35,7 +35,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020Jan28_woPresel_nonNom_hh_bbww_sync/ntuples/signal_ggf_spin0_750_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020Mar12_woPresel_nonNom_hh_bbww_sync/ntuples/signal_ggf_spin0_750_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
