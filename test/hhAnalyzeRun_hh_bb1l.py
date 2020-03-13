@@ -21,7 +21,7 @@ systematics.internal = systematics.an_internal_no_mem
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
-parser.add_preselect()
+parser.add_preselect() # effectively ignored, but needed by sync Ntuple workflow
 parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
