@@ -1542,28 +1542,35 @@ int main(int argc, char* argv[])
     // reconstruct the two top decays, using the algorithm detailed in Section 6 of CMS AN-2015/309 v7
     topKinRecoInterface.setInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met);
     bool isValid_topKinReco = topKinRecoInterface.isValid();
+    int numSolutions_topKinReco = topKinRecoInterface.getNumSolutions();
     Particle::LorentzVector selLeptonP4_top_assoc1, selBJetP4_top_assoc1, topQuarkP4_top_assoc1;    
     Particle::LorentzVector selLeptonP4_antitop_assoc1, selBJetP4_antitop_assoc1, topQuarkP4_antitop_assoc1;
-    //Particle::LorentzVector metP4_topKinReco_assoc1;
+    double weight_topKinReco_assoc1 = -1.;
     Particle::LorentzVector selLeptonP4_top_assoc2, selBJetP4_top_assoc2, topQuarkP4_top_assoc2;    
     Particle::LorentzVector selLeptonP4_antitop_assoc2, selBJetP4_antitop_assoc2, topQuarkP4_antitop_assoc2;
-    //Particle::LorentzVector metP4_topKinReco_assoc2;
+    double weight_topKinReco_assoc2 = -1.;
     if ( isValid_topKinReco ) 
     {
-      selLeptonP4_top_assoc1     = topKinRecoInterface.getLeptonP4_top(0);
-      selBJetP4_top_assoc1       = topKinRecoInterface.getBJetP4_top(0);
-      topQuarkP4_top_assoc1      = topKinRecoInterface.getTopQuarkP4_top(0);
-      selLeptonP4_antitop_assoc1 = topKinRecoInterface.getLeptonP4_antitop(0);
-      selBJetP4_antitop_assoc1   = topKinRecoInterface.getBJetP4_antitop(0);
-      topQuarkP4_antitop_assoc1  = topKinRecoInterface.getTopQuarkP4_antitop(0);  
-      //metP4_topKinReco_assoc1    = topKinRecoInterface.getMEtP4(0);
-      selLeptonP4_top_assoc2     = topKinRecoInterface.getLeptonP4_top(1);
-      selBJetP4_top_assoc2       = topKinRecoInterface.getBJetP4_top(1);
-      topQuarkP4_top_assoc2      = topKinRecoInterface.getTopQuarkP4_top(1);
-      selLeptonP4_antitop_assoc2 = topKinRecoInterface.getLeptonP4_antitop(1);
-      selBJetP4_antitop_assoc2   = topKinRecoInterface.getBJetP4_antitop(1);
-      topQuarkP4_antitop_assoc2  = topKinRecoInterface.getTopQuarkP4_antitop(1);  
-      //metP4_topKinReco_assoc2    = topKinRecoInterface.getMEtP4(1);
+      if ( numSolutions_topKinReco >= 1 )
+      {
+        selLeptonP4_top_assoc1     = topKinRecoInterface.getLeptonP4_top(0);
+        selBJetP4_top_assoc1       = topKinRecoInterface.getBJetP4_top(0);
+        topQuarkP4_top_assoc1      = topKinRecoInterface.getTopQuarkP4_top(0);
+        selLeptonP4_antitop_assoc1 = topKinRecoInterface.getLeptonP4_antitop(0);
+        selBJetP4_antitop_assoc1   = topKinRecoInterface.getBJetP4_antitop(0);
+        topQuarkP4_antitop_assoc1  = topKinRecoInterface.getTopQuarkP4_antitop(0);  
+        weight_topKinReco_assoc1   = topKinRecoInterface.getWeight(0);
+      }
+      if ( numSolutions_topKinReco >= 2 )
+      {
+        selLeptonP4_top_assoc2     = topKinRecoInterface.getLeptonP4_top(1);
+        selBJetP4_top_assoc2       = topKinRecoInterface.getBJetP4_top(1);
+        topQuarkP4_top_assoc2      = topKinRecoInterface.getTopQuarkP4_top(1);
+        selLeptonP4_antitop_assoc2 = topKinRecoInterface.getLeptonP4_antitop(1);
+        selBJetP4_antitop_assoc2   = topKinRecoInterface.getBJetP4_antitop(1);
+        topQuarkP4_antitop_assoc2  = topKinRecoInterface.getTopQuarkP4_antitop(1);  
+        weight_topKinReco_assoc2   = topKinRecoInterface.getWeight(1);
+      }
     }
     
     // build collections of generator level particles 
@@ -1583,19 +1590,25 @@ int main(int argc, char* argv[])
       genParticleMatcherFromTop.setGenParticles(genLeptonsFromTop, genNeutrinosFromTop, {}, genBJetsFromTop);
       const std::vector<GenLepton>& genLeptonsForMatching = genParticleMatcherFromTop.getLeptons();
       const std::vector<GenParticle>& genBQuarksForMatching = genParticleMatcherFromTop.getBQuarks();
-      printCollection("genLeptonsFromTop", genLeptonsFromTop);
-      printCollection("genNeutrinosFromTop", genNeutrinosFromTop);
-      printCollection("genBJetsFromTop", genBJetsFromTop);
-      printCollection("genTopQuarks", genTopQuarks);
+      //printCollection("genLeptonsFromTop", genLeptonsFromTop);
+      //printCollection("genNeutrinosFromTop", genNeutrinosFromTop);
+      //printCollection("genBJetsFromTop", genBJetsFromTop);
+      //printCollection("genTopQuarks", genTopQuarks);
       genMEtP4 = genParticleMatcherFromTop.getMEt();
-      isGenMatched_top_assoc1 = isMatchedLepTop(selLeptonP4_top_assoc1, +1, selBJetP4_top_assoc1, 
-        genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
-      isGenMatched_top_assoc2 = isMatchedLepTop(selLeptonP4_top_assoc2, +1, selBJetP4_top_assoc2, 
-        genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
-      isGenMatched_antitop_assoc1 = isMatchedLepTop(selLeptonP4_antitop_assoc1, -1, selBJetP4_antitop_assoc1, 
+      if ( numSolutions_topKinReco >= 1 )
+      {
+        isGenMatched_top_assoc1 = isMatchedLepTop(selLeptonP4_top_assoc1, +1, selBJetP4_top_assoc1, 
+          genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
+        isGenMatched_antitop_assoc1 = isMatchedLepTop(selLeptonP4_antitop_assoc1, -1, selBJetP4_antitop_assoc1, 
         genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_antitop);
-      isGenMatched_antitop_assoc2 = isMatchedLepTop(selLeptonP4_antitop_assoc2, -1, selBJetP4_antitop_assoc2, 
-        genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_antitop);
+      }
+      if ( numSolutions_topKinReco >= 2 )
+      {
+        isGenMatched_top_assoc2 = isMatchedLepTop(selLeptonP4_top_assoc2, +1, selBJetP4_top_assoc2, 
+          genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
+        isGenMatched_antitop_assoc2 = isMatchedLepTop(selLeptonP4_antitop_assoc2, -1, selBJetP4_antitop_assoc2, 
+          genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_antitop);
+      }
     }
 
     std::vector<double> WeightBM; // weights to do histograms for BMs
@@ -1771,8 +1784,8 @@ int main(int argc, char* argv[])
           selJetsAK8_Hbb.size(),
           HT,
           STMET,
-          isValid_topKinReco, 
           genMEtP4, metP4,
+          isValid_topKinReco, numSolutions_topKinReco, weight_topKinReco_assoc1, weight_topKinReco_assoc2, 
           genTopQuarkP4_top, isGenMatched_top_assoc1, topQuarkP4_top_assoc1, isGenMatched_top_assoc2, topQuarkP4_top_assoc2,
           genTopQuarkP4_antitop, isGenMatched_antitop_assoc1, topQuarkP4_antitop_assoc1, isGenMatched_antitop_assoc2, topQuarkP4_antitop_assoc2,
           selLeptonP4_lead, selLeptonP4_sublead,
@@ -1825,8 +1838,8 @@ int main(int argc, char* argv[])
                 selJetsAK8_Hbb.size(),
                 HT,
                 STMET,
-                isValid_topKinReco, 
                 genMEtP4, metP4,
+                isValid_topKinReco, numSolutions_topKinReco, weight_topKinReco_assoc1, weight_topKinReco_assoc2,
                 genTopQuarkP4_top, isGenMatched_top_assoc1, topQuarkP4_top_assoc1, isGenMatched_top_assoc2, topQuarkP4_top_assoc2,
                 genTopQuarkP4_antitop, isGenMatched_antitop_assoc1, topQuarkP4_antitop_assoc1, isGenMatched_antitop_assoc2, topQuarkP4_antitop_assoc2,
                 selLeptonP4_lead, selLeptonP4_sublead,

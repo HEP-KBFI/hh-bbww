@@ -20,6 +20,7 @@ const Particle::LorentzVector dummyLV;
 
 TopKinRecoInterface::TopKinRecoInterface(double btag_wp, bool considerOnlyBJets)
   : algo_(nullptr)
+  , numSolutions_(0)
   , clock_(nullptr)
 {
   algo_ = new KinematicReconstruction(1, btag_wp, considerOnlyBJets);
@@ -152,6 +153,7 @@ TopKinRecoInterface::setInputs(const RecoLepton * selLepton_lead,
     bJetP4_antitop_.clear();
     topQuarkP4_antitop_.clear();
     sumNeutrinoP4_.clear();
+    weights_.clear();
 
     resetP4(leptonP4_top_maxWeight_);
     resetP4(bJetP4_top_maxWeight_);
@@ -162,15 +164,15 @@ TopKinRecoInterface::setInputs(const RecoLepton * selLepton_lead,
     resetP4(topQuarkP4_antitop_maxWeight_);
     resetP4(neutrinoP4_antitop_maxWeight_);	
     resetP4(sumNeutrinoP4_maxWeight_);
+    max_weight_ = -1.;
 
-    double max_weight = -1.;
-    size_t numSolutions = solutions.numberOfSolutions();
-    for ( size_t idxSolution = 0; idxSolution < numSolutions; ++idxSolution )
+    numSolutions_ = solutions.numberOfSolutions();
+    for ( int idxSolution = 0; idxSolution < numSolutions_; ++idxSolution )
     {
       const KinematicReconstructionSolution& solution = solutions.solution(KinematicReconstructionSolution::defaultForMethod, idxSolution);
-      double solution_weight = solution.weight(KinematicReconstructionSolution::defaultForMethod);
-      std::cout << "Solution #" << idxSolution << ": weight = " << solution_weight << std::endl;
-      solution.print();
+      double weight = solution.weight(KinematicReconstructionSolution::defaultForMethod);
+      //std::cout << "Solution #" << idxSolution << ": weight = " << weight << std::endl;
+      //solution.print();
 
       Particle::LorentzVector leptonP4_top = convert_to_P4(solution.antiLepton());
       leptonP4_top_.push_back(leptonP4_top);
@@ -190,8 +192,9 @@ TopKinRecoInterface::setInputs(const RecoLepton * selLepton_lead,
       topQuarkP4_antitop_.push_back(topQuarkP4_antitop);
       Particle::LorentzVector sumNeutrinoP4 = neutrinoP4_top + neutrinoP4_antitop;
       sumNeutrinoP4_.push_back(sumNeutrinoP4);
+      weights_.push_back(weight);
 
-      if ( solution_weight > max_weight )
+      if ( weight > max_weight_ )
       {
         leptonP4_top_maxWeight_ = leptonP4_top;
         neutrinoP4_top_maxWeight_ = neutrinoP4_top;
@@ -203,7 +206,7 @@ TopKinRecoInterface::setInputs(const RecoLepton * selLepton_lead,
         topQuarkP4_antitop_maxWeight_ = topQuarkP4_antitop;
         sumNeutrinoP4_maxWeight_ = sumNeutrinoP4;
         isValid_ = true;
-        max_weight = solution_weight;
+        max_weight_ = weight;
       }
     }
   }
@@ -281,4 +284,19 @@ TopKinRecoInterface::getMEtP4(int idx) const
   else if ( idx >=  0 && idx < (int)sumNeutrinoP4_.size() ) return sumNeutrinoP4_[idx];
   else throw cms::Exception("TopKinRecoInterface::getMEtP4") << "Invalid index = " << idx << ", #solutions = " << sumNeutrinoP4_.size() << " !!\n";
   return dummyLV;
+}
+
+double
+TopKinRecoInterface::getWeight(int idx) const
+{
+  if      ( idx == -1                               ) return max_weight_;
+  else if ( idx >=  0 && idx < (int)weights_.size() ) return weights_[idx];
+  else throw cms::Exception("TopKinRecoInterface::getWeight") << "Invalid index = " << idx << ", #solutions = " << weights_.size() << " !!\n";
+  return -1.;
+}
+
+int
+TopKinRecoInterface::getNumSolutions() const
+{
+  return numSolutions_;
 }

@@ -38,8 +38,8 @@ public:
                  int numJetsAK8_Hbb,
 		 double HT,
 		 double STMET,
-                 bool isValid_topKinReco, 
                  const Particle::LorentzVector& genMEtP4, const Particle::LorentzVector& metP4,
+                 bool isValid_topKinReco, int numSolutions_topKinReco, double weight_topKinReco_assoc1, double weight_topKinReco_assoc2,
                  const Particle::LorentzVector& genTopQuarkP4_top, 
                  bool isGenMatched_top_assoc1, const Particle::LorentzVector& topQuarkP4_top_assoc1,
                  bool isGenMatched_top_assoc2, const Particle::LorentzVector& topQuarkP4_top_assoc2,
@@ -87,6 +87,9 @@ public:
   TH1 * histogram_genTopPair_mass_;
   TH1 * histogram_genTopPair_pt_;
 
+  TH1 * histogram_isValid_topKinReco_;
+  TH1 * histogram_numSolutions_topKinReco_;
+
   struct histogramEntryType
   {
     histogramEntryType(const std::string& association, std::map<std::string, std::vector<std::string>>& central_or_shiftOptions)
@@ -120,7 +123,7 @@ public:
     {
       // CV: binning in top quark pT taken from AN-2015/309 (TOP-16-001)
       int numBins_pt = 6;
-      float binning_pt[numBins_pt + 1] = { 0., 65., 125., 200., 290., 400., 550. } ;
+      const float binning_pt[numBins_pt + 1] = { 0., 65., 125., 200., 290., 400., 550. } ;
 
       histogram_top_pt_               = histManager->book1D(dir, Form("top_pt_%s", association_.data()),            100,    0.,  500.);
       histogram_top_eta_              = histManager->book1D(dir, Form("top_eta_%s", association_.data()),           100,   -5.,   +5.);
@@ -235,6 +238,9 @@ public:
   };
   std::vector<std::string> associations_; // { "correctAssoc", "incorrectAssoc" }
   std::map<std::string, histogramEntryType*> histograms_top_and_antiTop_; // key = "correctAssoc" or "incorrectAssoc"
+
+  TH2 * histogram_topPair_pt_incorrectAssoc_vs_topPair_pt_correctAssoc_;
+  TH2 * histogram_logWeight_incorrectAssoc_vs_logWeight_correctAssoc_;
 
   TH1 * histogram_m_ll_;
   TH1 * histogram_dR_ll_;

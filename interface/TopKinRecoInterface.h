@@ -50,6 +50,12 @@ public:
   const Particle::LorentzVector&
   getMEtP4(int idx = -1) const;
 
+  double
+  getWeight(int idx = -1) const;
+
+  int
+  getNumSolutions() const;
+
  private:
   KinematicReconstruction * algo_;
 
@@ -59,25 +65,25 @@ public:
   std::vector<Particle::LorentzVector> neutrinoP4_top_;
   std::vector<Particle::LorentzVector> bJetP4_top_;
   std::vector<Particle::LorentzVector> topQuarkP4_top_;
-
   std::vector<Particle::LorentzVector> leptonP4_antitop_;
   std::vector<Particle::LorentzVector> neutrinoP4_antitop_;
   std::vector<Particle::LorentzVector> bJetP4_antitop_;
   std::vector<Particle::LorentzVector> topQuarkP4_antitop_;
-
   std::vector<Particle::LorentzVector> sumNeutrinoP4_;
+  std::vector<double> weights_;
+
+  int numSolutions_;
 
   Particle::LorentzVector leptonP4_top_maxWeight_;
   Particle::LorentzVector neutrinoP4_top_maxWeight_;
   Particle::LorentzVector bJetP4_top_maxWeight_;
   Particle::LorentzVector topQuarkP4_top_maxWeight_;
-
   Particle::LorentzVector leptonP4_antitop_maxWeight_;
   Particle::LorentzVector neutrinoP4_antitop_maxWeight_;
   Particle::LorentzVector bJetP4_antitop_maxWeight_;
   Particle::LorentzVector topQuarkP4_antitop_maxWeight_;
-
   Particle::LorentzVector sumNeutrinoP4_maxWeight_;
+  double max_weight_;
 
   TBenchmark * clock_;
   double cpuTime_;
