@@ -101,9 +101,12 @@ public:
   TH1 * histogram_deltaLepTop_eta_;
   TH1 * histogram_deltaLepTop_phi_;
 
-  TH1 * histogram_genMtt_;
-  TH1 * histogram_mtt_;
-  TH2 * histogram_deltaMtt_vs_genMtt_;
+  TH1 * histogram_genTopPair_mass_;
+  TH1 * histogram_topPair_mass_;
+  TH2 * histogram_deltaTopPair_mass_vs_genTopPair_mass_;
+  TH1 * histogram_genTopPair_pt_;
+  TH1 * histogram_topPair_pt_;
+  TH2 * histogram_deltaTopPair_pt_vs_genTopPair_pt_;
 
   TH1 * histogram_mT_;
   TH1 * histogram_m_lnu_;

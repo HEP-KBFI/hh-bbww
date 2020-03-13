@@ -37,7 +37,7 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
     apply_leptonGenMatching = cms.bool(True),
 
     apply_hadTauVeto = cms.bool(False),
-    hadTauSelection_veto = cms.string(''),
+    hadTauSelection_veto = cms.string('deepVSjMedium'),
 
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
@@ -64,6 +64,7 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
 
     branchName_electrons = cms.string('Electron'),
     branchName_muons = cms.string('Muon'),
+    branchName_hadTaus = cms.string('Tau'),
     branchName_jets_ak4 = cms.string('Jet'),
     branchName_jets_ak8 = cms.string('FatJet'),
     branchName_subjets_ak8 = cms.string('SubJet'),
@@ -106,4 +107,15 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
         branchTypeYaxis = cms.string(''),
     ),
     tHweights = cms.VPSet(),
+    hhWeight_cfg = cms.PSet(
+        denominator_file = cms.string(''),
+        klScan_file = cms.string('hhAnalysis/multilepton/data/kl_scan.dat'),
+        ktScan_file = cms.string(''),
+        coefFile = cms.string('HHStatAnalysis/AnalyticalModels/data/coefficientsByBin_extended_3M_costHHSim_19-4.txt'),
+        histtitle = cms.string(''),
+        isDEBUG = cms.bool(False),
+        do_scan = cms.bool(True),
+        do_ktscan = cms.bool(False),
+        apply_rwgt = cms.bool(False),
+    ),
 )

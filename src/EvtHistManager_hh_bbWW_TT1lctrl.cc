@@ -56,9 +56,12 @@ EvtHistManager_hh_bbWW_TT1lctrl::EvtHistManager_hh_bbWW_TT1lctrl(const edm::Para
   central_or_shiftOptions_["deltaLepTop_perp_vs_genLepTop_pt"] = { "central" };
   central_or_shiftOptions_["deltaLepTop_eta"] = { "central" };
   central_or_shiftOptions_["deltaLepTop_phi"] = { "central" };
-  central_or_shiftOptions_["genMtt"] = { "central" };
-  central_or_shiftOptions_["mtt"] = { "central" };
-  central_or_shiftOptions_["deltaMtt_vs_genMtt"] = { "central" };
+  central_or_shiftOptions_["genTopPair_mass"] = { "central" };
+  central_or_shiftOptions_["topPair_mass"] = { "central" };
+  central_or_shiftOptions_["deltaTopPair_mass_vs_genTopPair_mass"] = { "central" };
+  central_or_shiftOptions_["genTopPair_pt"] = { "central" };
+  central_or_shiftOptions_["topPair_pt"] = { "central" };
+  central_or_shiftOptions_["deltaTopPair_pt_vs_genTopPair_pt"] = { "central" };
   central_or_shiftOptions_["mT"] = { "*" };
   central_or_shiftOptions_["m_lnu"] = { "central" };
   central_or_shiftOptions_["dPhi_lnu"] = { "central" };
@@ -136,9 +139,12 @@ EvtHistManager_hh_bbWW_TT1lctrl::bookHistograms(TFileDirectory & dir)
   histogram_deltaLepTop_eta_      = book1D(dir, "deltaLepTop_eta",      "deltaLepTop_eta",        100,   -5.,   +5.);
   histogram_deltaLepTop_phi_      = book1D(dir, "deltaLepTop_phi",      "deltaLepTop_phi",         36,    0., 0.2*TMath::Pi());
 
-  histogram_genMtt_               = book1D(dir, "genMtt",               "genMtt",                 100,    0., 1000.);
-  histogram_mtt_                  = book1D(dir, "mtt",                  "mtt",                    100,    0., 1000.);
-  histogram_deltaMtt_vs_genMtt_   = book2D(dir, "deltaMtt_vs_genMtt", "deltaMtt_vs_genMtt", 10, 0., 500., 30, -150, +150.);
+  histogram_genTopPair_mass_      = book1D(dir, "genTopPair_mass",      "genTopPair_mass",        100,    0., 1000.);
+  histogram_topPair_mass_         = book1D(dir, "topPair_mass",         "topPair_mass",           100,    0., 1000.);
+  histogram_deltaTopPair_mass_vs_genTopPair_mass_ = book2D(dir, "deltaTopPair_mass_vs_genTopPair_mass", "deltaTopPair_mass_vs_genTopPair_mass", 10, 0., 500., 30, -150, +150.);
+  histogram_genTopPair_pt_        = book1D(dir, "genTopPair_pt",        "genTopPair_pt",          100,    0., 1000.);
+  histogram_topPair_pt_           = book1D(dir, "topPair_pt",           "topPair_pt",             100,    0., 1000.);
+  histogram_deltaTopPair_pt_vs_genTopPair_pt_ = book2D(dir, "deltaTopPair_pt_vs_genTopPair_pt", "deltaTopPair_pt_vs_genTopPair_pt", 10, 0., 500., 30, -150, +150.);
 
   histogram_mT_                   = book1D(dir, "mT",                   "mT",                      30,  0.,  150.); 
   histogram_m_lnu_                = book1D(dir, "m_lnu",                "m_lnu",                   50,  0.,  250.); 
@@ -276,12 +282,15 @@ EvtHistManager_hh_bbWW_TT1lctrl::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_deltaLepTop_phi_,      deltaLepTop_phi,              evtWeight, evtWeightErr);
   }
 
-  double genMtt = (genTopQuarkP4_hadTop + genTopQuarkP4_lepTop).mass();
-  fillWithOverFlow(histogram_genMtt_,                 genMtt,                       evtWeight, evtWeightErr);
-  double mtt = (topQuarkP4_hadTop + topQuarkP4_lepTop).mass();
-  fillWithOverFlow(histogram_mtt_,                    mtt,                          evtWeight, evtWeightErr);
-  fillWithOverFlow2d(histogram_deltaMtt_vs_genMtt_, genMtt, mtt - genMtt, evtWeight, evtWeightErr);
-
+  Particle::LorentzVector genTopPairP4 = genTopQuarkP4_hadTop + genTopQuarkP4_lepTop;
+  Particle::LorentzVector topPairP4 = topQuarkP4_hadTop + topQuarkP4_lepTop;
+  fillWithOverFlow(histogram_genTopPair_mass_,        genTopPairP4.mass(),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_topPair_mass_,           topPairP4.mass(),             evtWeight, evtWeightErr);
+  fillWithOverFlow2d(histogram_deltaTopPair_mass_vs_genTopPair_mass_, genTopPairP4.mass(), topPairP4.mass() - genTopPairP4.mass(), evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_genTopPair_pt_,          genTopPairP4.pt(),            evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_topPair_pt_,             topPairP4.pt(),               evtWeight, evtWeightErr);
+  fillWithOverFlow2d(histogram_deltaTopPair_pt_vs_genTopPair_pt_, genTopPairP4.pt(), topPairP4.pt() - genTopPairP4.pt(), evtWeight, evtWeightErr);
+  
   fillWithOverFlow(histogram_mT_,                     mT,                           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_lnu_,                  m_lnu,                        evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_lnu_,               dPhi_lnu,                     evtWeight, evtWeightErr);
