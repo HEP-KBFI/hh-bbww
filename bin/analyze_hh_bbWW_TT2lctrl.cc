@@ -92,6 +92,8 @@
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop, getLeptonFrom(Anti)Top, getBQuarksFrom(Anti)Top
 #include "hhAnalysis/bbww/interface/genBoostedAuxFunctions.h" // compSumP4
 #include "hhAnalysis/bbww/interface/TopKinRecoInterface.h" // TopKinRecoInterface
+#include "hhAnalysis/bbww/interface/HMEInterface_hh_bb2l.h" // HMEInterface_hh_bb2l // CV: switcht to HMEOutputReader_hh_bb2l in the future !!
+#include "hhAnalysis/bbww/interface/HMEOutput_hh_bb2l.h" // HMEOutput_hh_bb2l
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -649,6 +651,10 @@ int main(int argc, char* argv[])
     genTopQuarkReader = new GenParticleReader(branchName_genTopQuarks);
     inputTree->registerReader(genTopQuarkReader);
   }
+
+//--- initialize algorithm for reconstruction of H boson pair mass in HH->bbWW dilepton events 
+//   (as described in arXiv:1701.04442)
+  HMEInterface_hh_bb2l hmeInterface_hh_bb2l;
 
 //--- initialize algorithm for kinematic reconstruction of top quarks in tt+jets dilepton events 
 //   (as described in Section 6 of CMS AN-2015/309 v7)
@@ -1572,7 +1578,7 @@ int main(int argc, char* argv[])
         weight_topKinReco_assoc2   = topKinRecoInterface.getWeight(1);
       }
     }
-    
+
     // build collections of generator level particles 
     bool isGenMatched_top_assoc1 = false;
     bool isGenMatched_top_assoc2 = false;
@@ -1639,44 +1645,17 @@ int main(int argc, char* argv[])
     }
 
     //---------------------------------------------------------------------------
-    // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm    
-    TLorentzVector hmeLepton1P4(selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.pz(), selLeptonP4_lead.energy());
-    TLorentzVector hmeLepton2P4(selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.pz(), selLeptonP4_sublead.energy());
-    TLorentzVector hmeBJet1P4(selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.energy());
-    TLorentzVector hmeBJet2P4(selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.energy());
-    TLorentzVector hmeMEtP4(metP4.px(), metP4.py(), 0., metP4.pt());
-    double hmeSumJetsPx = -(selLeptonP4_lead.px() + selLeptonP4_sublead.px() + selJetP4_Hbb_lead.px() + selJetP4_Hbb_sublead.px() + metP4.px());
-    double hmeSumJetsPy = -(selLeptonP4_lead.py() + selLeptonP4_sublead.py() + selJetP4_Hbb_lead.py() + selJetP4_Hbb_sublead.py() + metP4.py());
-    double hmeSumJetsPz = 0.;
-    double hmeSumJetsEn = TMath::Sqrt(hmeSumJetsPx*hmeSumJetsPx + hmeSumJetsPy*hmeSumJetsPy);
-    TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
-    const bool PUSample = true;
+    // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm 
+    //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
     const int ievent = eventInfo.event;
-    const int iterations = 100000;
-    //const int iterations = 20000;
-    const int bjetrescaleAlgo = 2;
-    const int metcorrection = 5;
-    const bool weightfromonshellnupt_func = false;
-    const bool weightfromonshellnupt_hist = true;
-    const bool weightfromonoffshellWmass_hist = true;
-    const bool useMET = true;
-    LocalFileInPath RefPDFfile = LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root");
-    if( RefPDFfile.fullPath().empty() )
-      throw cms::Exception("analyze_hh_bb2l") << "Failed to find file = 'REFPDFPU40.root'\n";
-    clock.Reset();
-    clock.Start("hmeAlgo");
-    heavyMassEstimator hmeAlgo(
-      &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
-      PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection, isDEBUG ? 5 : 0);
+    HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
+    hmeOutput.eventInfo_ = eventInfo;
     double m_HH_hme = -1.;
-    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    bool hme_isValidSolution = hmeOutput.isValid();
     if ( hme_isValidSolution ) {
-      TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
-      m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
+      m_HH_hme = hmeOutput.m_HH_hme();
     }
-    clock.Stop("hmeAlgo");
-    //double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
+    //double hmeCpuTime = hmeOutput.cpuTime();
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 

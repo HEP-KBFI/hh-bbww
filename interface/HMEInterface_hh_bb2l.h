@@ -34,15 +34,15 @@ public:
 
  private:
   //heavyMassEstimator * hmeAlgo_;
-  const bool PUSample;
-  const int iterations;
-  const int bjetrescaleAlgo;
-  const int metcorrection;
-  const bool weightfromonshellnupt_func;
-  const bool weightfromonshellnupt_hist;
-  const bool weightfromonoffshellWmass_hist;
-  const bool useMET;
-  LocalFileInPath RefPDFfile;
+  const bool PUSample_;
+  const int iterations_;
+  const int bjetrescaleAlgo_;
+  const int metcorrection_;
+  const bool weightfromonshellnupt_func_;
+  const bool weightfromonshellnupt_hist_;
+  const bool weightfromonoffshellWmass_hist_;
+  const bool useMET_;
+  LocalFileInPath RefPDFfile_;
   
   TBenchmark * clock_;
 };
