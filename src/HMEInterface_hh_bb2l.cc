@@ -9,7 +9,8 @@
 #include <TMath.h> // TMath::Cos, TMath::Sin
 
 HMEInterface_hh_bb2l::HMEInterface_hh_bb2l()
-  : PUSample_(true)
+  : hmeAlgo_(nullptr)
+  , PUSample_(true)
   , iterations_(100000)
   , bjetrescaleAlgo_(2)
   , metcorrection_(5)
@@ -24,12 +25,19 @@ HMEInterface_hh_bb2l::HMEInterface_hh_bb2l()
   
   if( RefPDFfile_.fullPath().empty() )
     throw cms::Exception("analyze_hh_bb2l") << "Failed to find file = 'REFPDFPU40.root'\n";
+  
+  hmeAlgo_ = new heavyMassEstimator(
+    PUSample_, weightfromonshellnupt_func_, weightfromonshellnupt_hist_, weightfromonoffshellWmass_hist_,
+    iterations_, RefPDFfile_.fullPath(), useMET_, bjetrescaleAlgo_, metcorrection_
+  );
 
   clock_ = new TBenchmark();
 }
 
 HMEInterface_hh_bb2l::~HMEInterface_hh_bb2l()
 {
+  delete hmeAlgo_;
+
   delete clock_;
 }
 
@@ -61,16 +69,15 @@ HMEInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
   
   clock_->Reset();
   clock_->Start("<HMEInterface_hh_bb2l::operator()>");
-  heavyMassEstimator hmeAlgo(
+  hmeAlgo_->set_inputs(
     hmeLepton1P4, hmeLepton2P4, hmeBJet1P4, hmeBJet2P4, hmeSumJetsP4, hmeMEtP4,
-    PUSample_, ievent, weightfromonshellnupt_func_, weightfromonshellnupt_hist_, weightfromonoffshellWmass_hist_,
-    iterations_, RefPDFfile_.fullPath(), useMET_, bjetrescaleAlgo_, metcorrection_
+    ievent
   );
   double m_HH_hme = -1.;
-  bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+  bool hme_isValidSolution = hmeAlgo_->runheavyMassEstimator();
   if ( hme_isValidSolution )
   {
-    const TH1F& hmeHist = hmeAlgo.getheavyMassEstimatorh2();
+    const TH1F& hmeHist = hmeAlgo_->getheavyMassEstimatorh2();
     m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
   }
 

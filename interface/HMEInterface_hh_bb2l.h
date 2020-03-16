@@ -33,7 +33,7 @@ public:
              const int & ievent) const;
 
  private:
-  //heavyMassEstimator * hmeAlgo_;
+  heavyMassEstimator * hmeAlgo_;
   const bool PUSample_;
   const int iterations_;
   const int bjetrescaleAlgo_;
