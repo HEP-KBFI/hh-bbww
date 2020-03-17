@@ -62,6 +62,9 @@
 #include "hhAnalysis/bbww/interface/analyzeMEM_memHistograms.h" // memHistograms, fillHistograms_mem
 #include "hhAnalysis/bbww/interface/dumpGenParticles.h" // dumpGenParticles, dumpGenLeptons, dumpGenJets
 #include "hhAnalysis/bbww/interface/genBoostedAuxFunctions.h" // isBoosted_genHb
+#include "hhAnalysis/bbww/interface/BM_list.h" // BMS
+
+
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -163,7 +166,7 @@ int main(int argc, char* argv[])
   std::string branchName_genLeptons = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genNeutrinos = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genNeutrinos");
   std::string branchName_genParticlesFromHiggs = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genParticlesFromHiggs");
-  // branches specific to tt+jets background events   
+  // branches specific to tt+jets background events
   std::string branchName_genLeptonsFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genLeptonsFromTop");
   std::string branchName_genNeutrinosFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genNeutrinosFromTop");
   std::string branchName_genBJetsFromTop = cfg_branchNames_genParticles.getParameter<std::string>("branchName_genBJetsFromTop");
@@ -211,7 +214,7 @@ int main(int argc, char* argv[])
   const double selElectron_max_absEta = 2.5;
   const double selMuon_lead_min_pt = 25.;
   const double selMuon_sublead_min_pt = 15.;
-  const double selMuon_max_absEta = 2.4;  
+  const double selMuon_max_absEta = 2.4;
 
   RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, false);
   inputTree->registerReader(jetReaderAK4);
@@ -223,7 +226,7 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
-  
+
   // define pT and eta cuts for "resolved" (AK4) jets from H->bb decay
   const double selJetAK4_min_pt_Hbb = 25.;
   const double selJetAK4_max_absEta_Hbb = 2.4;
@@ -232,24 +235,25 @@ int main(int argc, char* argv[])
   jetSelectorAK4_Hbb.getSelector().set_min_pt(selJetAK4_min_pt_Hbb);
   jetSelectorAK4_Hbb.getSelector().set_max_absEta(selJetAK4_max_absEta_Hbb);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
- 
+
   MEMOutputReader_hh_bb2l* memReader = nullptr;
+  const std::string BM = "SM"; // BMS
   if ( !branchName_memOutput.empty() )
   {
     memReader = new MEMOutputReader_hh_bb2l(
-      Form("n%s", branchName_memOutput.data()), branchName_memOutput);
+      Form("n%s", branchName_memOutput.data()), branchName_memOutput, BM);
     inputTree->registerReader(memReader);
   }
   MEMOutputReader_hh_bb2l* memReader_missingBJet = nullptr;
   if ( !branchName_memOutput_missingBJet.empty() )
   {
     memReader_missingBJet = new MEMOutputReader_hh_bb2l(
-      Form("n%s", branchName_memOutput_missingBJet.data()), branchName_memOutput_missingBJet);
+      Form("n%s", branchName_memOutput_missingBJet.data()), branchName_memOutput_missingBJet, BM);
     inputTree->registerReader(memReader_missingBJet);
   }
 
@@ -278,7 +282,7 @@ int main(int argc, char* argv[])
     genBJetFromTopReader = new GenParticleReader(branchName_genBJetsFromTop);
     inputTree->registerReader(genBJetFromTopReader);
   }
-  
+
   GenLeptonCollectionSelector genLeptonSelector(era, -1, isDEBUG);
   genLeptonSelector.getSelector().set_min_pt_muon(selMuon_sublead_min_pt);
   genLeptonSelector.getSelector().set_max_absEta_muon(selMuon_max_absEta);
@@ -290,7 +294,7 @@ int main(int argc, char* argv[])
   genBJetSelector.getSelector().set_max_absEta(selJetAK4_max_absEta_Hbb);
 
   GenJetCollectionCleaner genJetCleaner_dR04(0.4);
-  
+
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
   inputTree->registerReader(metReader);
@@ -298,7 +302,7 @@ int main(int argc, char* argv[])
 //--- declare generator level information
   LHEInfoReader* lheInfoReader = new LHEInfoReader(hasLHE);
   inputTree->registerReader(lheInfoReader);
-   
+
   TH1* histogram_genLepton_lead_pt = fs.make<TH1D>("genLepton_lead_pt", "genLepton_lead_pt", 70, 0., 350.);
   TH1* histogram_genLepton_lead_absEta = fs.make<TH1D>("genLepton_lead_absEta", "genLepton_lead_absEta", 100, 0., 10.);
   TH1* histogram_genLepton_sublead_pt = fs.make<TH1D>("genLepton_sublead_pt", "genLepton_sublead_pt", 70, 0., 350.);
@@ -322,7 +326,7 @@ int main(int argc, char* argv[])
   xAxis_selJetCorrelation->SetBinLabel(2, "2Rec1Sel");
   xAxis_selJetCorrelation->SetBinLabel(3, "2Rec0Sel");
   xAxis_selJetCorrelation->SetBinLabel(4, "1Rec1Sel");
-  xAxis_selJetCorrelation->SetBinLabel(5, "1Rec0Sel");	
+  xAxis_selJetCorrelation->SetBinLabel(5, "1Rec0Sel");
   xAxis_selJetCorrelation->SetBinLabel(6, "0Rec");
 
   jetHistograms* histograms_boostedHbb_bjet1 = new jetHistograms("boostedHbb_bjet1");
@@ -342,7 +346,7 @@ int main(int argc, char* argv[])
   TH1* histogram_resolvedHbb_bjet2_idx = fs.make<TH1D>("resolvedHbb_bjet2_idx", "resolvedHbb_bjet2_idx", 26, -1.5, +24.5);
   TH1* histogram_resolvedHbb_bjet_numIndices = fs.make<TH1D>("resolvedHbb_bjet_numIndices", "resolvedHbb_bjet_numIndices", 25, -0.5, +24.5);
   TH1* histogram_resolvedHbb_bjet_mjj = fs.make<TH1D>("resolvedHbb_bjet_mjj", "resolvedHbb_bjet_mjj", 50, 0., 250.);
-  
+
   memHistograms* histograms_memOutput_fullyMatched = new memHistograms("", 0, 0);
   histograms_memOutput_fullyMatched->bookHistograms(fs);
   memHistograms* histograms_memOutput_unmatchedLepton = new memHistograms("", 1, 0);
@@ -387,7 +391,7 @@ int main(int argc, char* argv[])
 
     double evtWeight = evtWeightRecorder.get(central_or_shift);
 
-//--- build collections of generator level particles 
+//--- build collections of generator level particles
     GenParticleMatcherBase* genParticleMatcher = nullptr;
     if ( isMC_HH )
     {
@@ -409,7 +413,7 @@ int main(int argc, char* argv[])
     std::vector<GenLepton> genLeptons = genParticleMatcher->getLeptons();
     std::vector<GenJet> genBJets = genParticleMatcher->getBJets();
     if ( isDEBUG ) {
-      dumpGenLeptons("genLepton", genLeptons);      
+      dumpGenLeptons("genLepton", genLeptons);
       dumpGenJets("genBJet", genBJets);
     }
     const Particle::LorentzVector& genMEtP4 = genParticleMatcher->getMEt();
@@ -427,7 +431,7 @@ int main(int argc, char* argv[])
     for ( std::string column : { "gen", "rec", "gen&rec" } ) {
       cutFlowTable.update("exactly 2 gen-jets from H->bb decay", column, evtWeight);
     }
-    
+
     std::vector<const GenLepton*> genLeptons_ptrs = convert_to_ptrs(genLeptons);
     genLeptonSelector.getSelector().set_min_pt_muon(-1.);
     genLeptonSelector.getSelector().set_min_pt_electron(-1.);
@@ -474,7 +478,7 @@ int main(int argc, char* argv[])
     std::vector<const GenJet*> cleanedGenBJets_wrtLeptons = genJetCleaner_dR04(genBJets_passingPt_and_Eta, genLeptons_passingEta);
 
     fillHistograms_genJets(genBJets_ptrs, genBJetSelector, *histograms_genBJet, evtWeight);
-    
+
     if ( genBJets_passingPt_and_Eta.size() == 2 )
     {
       const GenJet* genBJet1 = genBJets_passingPt_and_Eta[0];
@@ -488,7 +492,7 @@ int main(int argc, char* argv[])
 //    resolve overlaps in order of priority: muon, electron
     const std::vector<RecoMuon> muons = muonReader->read();
     const std::vector<const RecoMuon*> muon_ptrs = convert_to_ptrs(muons);
-    const std::vector<const RecoMuon*> cleanedMuons = muon_ptrs; 
+    const std::vector<const RecoMuon*> cleanedMuons = muon_ptrs;
     preselMuonSelector.getSelector().set_min_pt(10.);
     const std::vector<const RecoMuon*> looseMuons_passingEta = preselMuonSelector(cleanedMuons, isHigherConePt);
     preselMuonSelector.getSelector().set_min_pt(selMuon_sublead_min_pt);
@@ -539,7 +543,7 @@ int main(int argc, char* argv[])
     //  jetCleanerAK4_byIndex(jet_ptrs_ak4, tightLeptons_passingPt_and_Eta) :
     //  jetCleanerAK4_dR04   (jet_ptrs_ak4, tightLeptons_passingPt_and_Eta)
     //;
-    const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4, tightLeptons_passingSubleadPt_and_Eta); 
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleanerAK4_dR04(jet_ptrs_ak4, tightLeptons_passingSubleadPt_and_Eta);
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -556,7 +560,7 @@ int main(int argc, char* argv[])
     if ( passesEvtSel_rec         ) cutFlowTable.update(cutLooseLeptonEta,        "rec",     evtWeight);
     if ( passesEvtSel_gen         ) cutFlowTable.update(cutLooseLeptonEta,        "gen",     evtWeight);
     if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutLooseLeptonEta,        "gen&rec", evtWeight);
-        
+
     passesEvtSel_rec         = passesEvtSel_rec         && looseLeptons_passingLeadPt_and_Eta.size() >= 1;
     passesEvtSel_gen         = passesEvtSel_gen         && genLeptons_passingLeadPt_and_Eta.size() >= 1;
     passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(looseLeptons_passingLeadPt_and_Eta, genLeptons_passingLeadPt_and_Eta).size() >= 1;
@@ -573,10 +577,10 @@ int main(int argc, char* argv[])
     if ( passesEvtSel_gen         ) cutFlowTable.update(cutLooseSubleadLeptonPt_and_Eta, "gen",     evtWeight);
     if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutLooseSubleadLeptonPt_and_Eta, "gen&rec", evtWeight);
 
-    passesEvtSel_rec         = passesEvtSel_rec         && tightLeptons_passingSubleadPt_and_Eta.size() >= 2 && 
+    passesEvtSel_rec         = passesEvtSel_rec         && tightLeptons_passingSubleadPt_and_Eta.size() >= 2 &&
                                                            tightLeptons_passingLeadPt_and_Eta.size()    >= 1;
     passesEvtSel_gen         = passesEvtSel_gen         && true;
-    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(tightLeptons_passingSubleadPt_and_Eta, genLeptons_passingSubleadPt_and_Eta).size() >= 2 && 
+    passesEvtSel_rec_and_gen = passesEvtSel_rec_and_gen && selectGenMatchedParticles(tightLeptons_passingSubleadPt_and_Eta, genLeptons_passingSubleadPt_and_Eta).size() >= 2 &&
                                                            selectGenMatchedParticles(tightLeptons_passingLeadPt_and_Eta,    genLeptons_passingLeadPt_and_Eta).size()    >= 1;
     const std::string cutTightLeptonPt_and_Eta = ">= 2 tight leptons";
     if ( passesEvtSel_rec         ) cutFlowTable.update(cutTightLeptonPt_and_Eta, "rec",     evtWeight);
@@ -585,7 +589,7 @@ int main(int argc, char* argv[])
 
     const RecoLepton* tightLepton_lead    = nullptr;
     const RecoLepton* tightLepton_sublead = nullptr;
-    if ( tightLeptons_passingSubleadPt_and_Eta.size() >= 2 ) 
+    if ( tightLeptons_passingSubleadPt_and_Eta.size() >= 2 )
     {
       tightLepton_lead    = tightLeptons_passingSubleadPt_and_Eta[0];
       tightLepton_sublead = tightLeptons_passingSubleadPt_and_Eta[1];
@@ -603,7 +607,7 @@ int main(int argc, char* argv[])
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
-    if ( selJetsT_Hbb.size() >= 1 ) 
+    if ( selJetsT_Hbb.size() >= 1 )
     {
       selJetT_Hbb = &selJetsT_Hbb[0];
       selJetAK8_Hbb = selJetT_Hbb->fatjet_;
@@ -612,7 +616,7 @@ int main(int argc, char* argv[])
     }
     std::vector<const RecoJetBase*> selJets_Hbb;
     if ( selJet1_Hbb && selJet2_Hbb )
-    {  
+    {
       selJets_Hbb = { selJet1_Hbb, selJet2_Hbb };
       std::sort(selJets_Hbb.begin(), selJets_Hbb.end(), isHigherPt);
     }
@@ -643,7 +647,7 @@ int main(int argc, char* argv[])
 
     int numBJets_loose  = 0;
     int numBJets_medium = 0;
-    if ( selJetT_Hbb ) 
+    if ( selJetT_Hbb )
     {
       countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     }
@@ -673,9 +677,9 @@ int main(int argc, char* argv[])
 //--- apply final selection
     bool isSelected = false;
     if ( tightLepton_lead && tightLepton_sublead ) {
-      if ( ((tightLepton_lead->is_electron()    && tightLepton_lead->cone_pt()    > selElectron_lead_min_pt   ) || 
+      if ( ((tightLepton_lead->is_electron()    && tightLepton_lead->cone_pt()    > selElectron_lead_min_pt   ) ||
             (tightLepton_lead->is_muon()        && tightLepton_lead->cone_pt()    > selMuon_lead_min_pt       )) &&
-           ((tightLepton_sublead->is_electron() && tightLepton_sublead->cone_pt() > selElectron_sublead_min_pt) || 
+           ((tightLepton_sublead->is_electron() && tightLepton_sublead->cone_pt() > selElectron_sublead_min_pt) ||
             (tightLepton_sublead->is_muon()     && tightLepton_sublead->cone_pt() > selMuon_sublead_min_pt    )) ) {
         if ( selJet1_Hbb && selJet2_Hbb   &&
              numBJets_medium >= 1         ) {
@@ -707,12 +711,12 @@ int main(int argc, char* argv[])
     {
       fillHistograms_jets(
         selJets_Hbb,
-	genBJets_ptrs, 
+	genBJets_ptrs,
 	*histograms_boostedHbb_bjet1, histogram_boostedHbb_bjet1_idx,
 	*histograms_boostedHbb_bjet2, histogram_boostedHbb_bjet2_idx,
 	histogram_boostedHbb_bjet_numIndices, histogram_boostedHbb_bjet_mjj, evtWeight);
     }
-    else 
+    else
     {
       fillHistograms_jets(
         selJetsAK4_Hbb,
@@ -722,16 +726,16 @@ int main(int argc, char* argv[])
 	histogram_resolvedHbb_bjet_numIndices, histogram_resolvedHbb_bjet_mjj, evtWeight);
     }
 
-    if ( memReader ) 
+    if ( memReader )
     {
       std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l = memReader->read();
       for ( std::vector<MEMOutput_hh_bb2l>::const_iterator memOutput = memOutputs_hh_bb2l.begin();
   	    memOutput != memOutputs_hh_bb2l.end(); ++memOutput ) {
         fillHistograms_mem(
-          *memOutput, 
-  	  genLeptons_ptrs, genBJets_ptrs, 
-	  *histograms_memOutput_fullyMatched, 
-	  *histograms_memOutput_unmatchedLepton, 
+          *memOutput,
+  	  genLeptons_ptrs, genBJets_ptrs,
+	  *histograms_memOutput_fullyMatched,
+	  *histograms_memOutput_unmatchedLepton,
 	  *histograms_memOutput_unmatchedBJet, evtWeight);
       }
     }
@@ -741,10 +745,10 @@ int main(int argc, char* argv[])
       for ( std::vector<MEMOutput_hh_bb2l>::const_iterator memOutput = memOutputs_hh_bb2l_missingBJet.begin();
   	    memOutput != memOutputs_hh_bb2l_missingBJet.end(); ++memOutput ) {
         fillHistograms_mem(
-          *memOutput, 
-	  genLeptons_ptrs, genBJets_ptrs, 
-	  *histograms_memOutput_missingBJet_fullyMatched, 
-	  *histograms_memOutput_missingBJet_unmatchedLepton, 
+          *memOutput,
+	  genLeptons_ptrs, genBJets_ptrs,
+	  *histograms_memOutput_missingBJet_fullyMatched,
+	  *histograms_memOutput_missingBJet_unmatchedLepton,
 	  *histograms_memOutput_missingBJet_unmatchedBJet, evtWeight);
       }
     }

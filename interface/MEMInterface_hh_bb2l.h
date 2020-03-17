@@ -28,11 +28,13 @@ public:
              const RecoLepton * selLepton_sublead,
              const RecoJetBase * selJet_Hbb_lead,
 	     const RecoJetBase * selJet_Hbb_sublead,
-             const RecoMEt & met, 
+             const RecoMEt & met,
+             std::string BM = "SM",
 	     bool switchToGen = false) const;
 
  private:
-  MEMbbwwAlgoDilepton * memAlgo_;
+  map<std::string, MEMbbwwAlgoDilepton *> memAlgo_;
+  //MEMbbwwAlgoDilepton * memAlgo_;
 
   TBenchmark * clock_;
 };

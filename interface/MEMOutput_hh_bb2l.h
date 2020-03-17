@@ -6,6 +6,7 @@
 #include <Rtypes.h> // Int_t, Float_t
 
 #include <iostream>
+typedef std::vector<std::string> vstring;
 
 // forward declarations
 class RecoLepton;

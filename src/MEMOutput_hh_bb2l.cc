@@ -38,14 +38,14 @@ MEMOutput_hh_bb2l::fillInputs(const RecoLepton * leadLepton,
   leadLepton_phi_          = leadLepton -> phi();
   subleadLepton_eta_       = subleadLepton -> eta();
   subleadLepton_phi_       = subleadLepton -> phi();
-  if ( bjet1 ) 
+  if ( bjet1 )
   {
     bjet1_eta_             = bjet1 -> eta();
     bjet1_phi_             = bjet1 -> phi();
     bjet1_isReconstructed_ = true;
   }
-  if ( bjet2 ) 
-  {    
+  if ( bjet2 )
+  {
     bjet2_eta_             = bjet2 -> eta();
     bjet2_phi_             = bjet2 -> phi();
     bjet2_isReconstructed_ = true;
@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream& stream,
               " phi = "          << memOutput.subleadLepton_phi_  << "\n"
               " b-jet #1:";
   if ( memOutput.bjet1_isReconstructed_ )
-  {                    
+  {
     stream << " eta = "          << memOutput.bjet1_eta_          << ","
               " phi = "          << memOutput.bjet1_phi_          << "\n";
   } else {
@@ -76,7 +76,7 @@ std::ostream& operator<<(std::ostream& stream,
   }
   stream   << " b-jet #2:";
   if ( memOutput.bjet2_isReconstructed_ )
-  {                    
+  {
     stream << " eta = "          << memOutput.bjet2_eta_          << ","
               " phi = "          << memOutput.bjet2_phi_          << "\n";
   } else {

@@ -2,8 +2,17 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/BranchAddressInitializer.h" // BranchAddressInitializer, TTree, Form()
 
+void MEMOutputWriter_hh_bb2l::deleteMap(const std::map<std::string, auto> & map) {
+  for (auto BM : map)
+  {
+    delete (BM.second);
+  }
+  //map.clear();
+};
+
 MEMOutputWriter_hh_bb2l::MEMOutputWriter_hh_bb2l(const std::string & branchName_num,
-						 const std::string & branchName_obj)
+						 const std::string & branchName_obj, const std::string & BM //, vstring BMS
+					 )
   : max_nMEMOutputs_(100)
   , branchName_num_(branchName_num)
   , branchName_obj_(branchName_obj)
@@ -32,6 +41,7 @@ MEMOutputWriter_hh_bb2l::MEMOutputWriter_hh_bb2l(const std::string & branchName_
   , isValid_(nullptr)
   , errorFlag_(nullptr)
 {
+	BM_ = BM;
   setBranchNames();
 }
 
@@ -64,29 +74,58 @@ MEMOutputWriter_hh_bb2l::~MEMOutputWriter_hh_bb2l()
 
 void MEMOutputWriter_hh_bb2l::setBranchNames()
 {
-  branchName_run_ = Form("%s_%s", branchName_obj_.data(), "run");
-  branchName_lumi_ = Form("%s_%s", branchName_obj_.data(), "lumi");
-  branchName_evt_ = Form("%s_%s", branchName_obj_.data(), "evt");
-  branchName_leadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_eta");
-  branchName_leadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_phi");
-  branchName_subleadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_eta");
-  branchName_subleadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_phi");
-  branchName_bjet1_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet1_eta");
-  branchName_bjet1_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet1_phi");
-  branchName_bjet1_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet1_isReconstructed");
-  branchName_bjet2_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet2_eta");
-  branchName_bjet2_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet2_phi");
-  branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
-  branchName_type_ = Form("%s_%s", branchName_obj_.data(), "type");
-  branchName_weight_signal_ = Form("%s_%s", branchName_obj_.data(), "weight_signal");
-  branchName_weightErr_signal_ = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
-  branchName_weight_background_ = Form("%s_%s", branchName_obj_.data(), "weight_background");
-  branchName_weightErr_background_ = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
-  branchName_LR_ = Form("%s_%s", branchName_obj_.data(), "LR");
-  branchName_cpuTime_ = Form("%s_%s", branchName_obj_.data(), "cpuTime");
-  branchName_realTime_ = Form("%s_%s", branchName_obj_.data(), "realTime");
-  branchName_isValid_ = Form("%s_%s", branchName_obj_.data(), "isValid");
-  branchName_errorFlag_ = Form("%s_%s", branchName_obj_.data(), "errorFlag");
+		if (BM_ == "SM")
+		{
+			branchName_run_ = Form("%s_%s", branchName_obj_.data(), "run");
+		  branchName_lumi_ = Form("%s_%s", branchName_obj_.data(), "lumi");
+		  branchName_evt_ = Form("%s_%s", branchName_obj_.data(), "evt");
+		  branchName_leadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_eta");
+		  branchName_leadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_phi");
+		  branchName_subleadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_eta");
+		  branchName_subleadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_phi");
+		  branchName_bjet1_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet1_eta");
+		  branchName_bjet1_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet1_phi");
+		  branchName_bjet1_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet1_isReconstructed");
+		  branchName_bjet2_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet2_eta");
+		  branchName_bjet2_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet2_phi");
+		  branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
+		  branchName_type_ = Form("%s_%s", branchName_obj_.data(), "type");
+			///
+			branchName_weight_signal_ = Form("%s_%s", branchName_obj_.data(), "weight_signal");
+		  branchName_weightErr_signal_ = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
+		  branchName_weight_background_ = Form("%s_%s", branchName_obj_.data(), "weight_background");
+		  branchName_weightErr_background_ = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
+		  branchName_LR_ = Form("%s_%s", branchName_obj_.data(), "LR");
+		  branchName_cpuTime_ = Form("%s_%s", branchName_obj_.data(), "cpuTime");
+		  branchName_realTime_ = Form("%s_%s", branchName_obj_.data(), "realTime");
+		  branchName_isValid_ = Form("%s_%s", branchName_obj_.data(), "isValid");
+		  branchName_errorFlag_ = Form("%s_%s", branchName_obj_.data(), "errorFlag");
+		} else {
+			branchName_run_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "run");
+		  branchName_lumi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "lumi");
+		  branchName_evt_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "evt");
+		  branchName_leadLepton_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "leadLepton_eta");
+		  branchName_leadLepton_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "leadLepton_phi");
+		  branchName_subleadLepton_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "subleadLepton_eta");
+		  branchName_subleadLepton_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "subleadLepton_phi");
+		  branchName_bjet1_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_eta");
+		  branchName_bjet1_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_phi");
+		  branchName_bjet1_isReconstructed_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_isReconstructed");
+		  branchName_bjet2_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_eta");
+		  branchName_bjet2_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_phi");
+		  branchName_bjet2_isReconstructed_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_isReconstructed");
+		  branchName_type_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "type");
+			///
+		  branchName_weight_signal_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weight_signal");
+		  branchName_weightErr_signal_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weightErr_signal");
+		  branchName_weight_background_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weight_background");
+		  branchName_weightErr_background_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weightErr_background");
+		  branchName_LR_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "LR");
+		  branchName_cpuTime_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "cpuTime");
+		  branchName_realTime_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "realTime");
+		  branchName_isValid_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "isValid");
+		  branchName_errorFlag_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "errorFlag");
+		}
 }
 
 void
@@ -108,53 +147,56 @@ MEMOutputWriter_hh_bb2l::setBranches(TTree * tree)
   bai.setBranch(bjet2_phi_, branchName_bjet2_phi_);
   bai.setBranch(bjet2_isReconstructed_, branchName_bjet2_isReconstructed_);
   bai.setBranch(type_, branchName_type_);
-  bai.setBranch(weight_signal_, branchName_weight_signal_);
-  bai.setBranch(weightErr_signal_, branchName_weightErr_signal_);
-  bai.setBranch(weight_background_, branchName_weight_background_);
-  bai.setBranch(weightErr_background_, branchName_weightErr_background_);
-  bai.setBranch(LR_, branchName_LR_);
-  bai.setBranch(cpuTime_, branchName_cpuTime_);
-  bai.setBranch(realTime_, branchName_realTime_);
-  bai.setBranch(isValid_, branchName_isValid_);
-  bai.setBranch(errorFlag_, branchName_errorFlag_);
+	bai.setBranch(weight_signal_, branchName_weight_signal_);
+	bai.setBranch(weightErr_signal_, branchName_weightErr_signal_);
+	bai.setBranch(weight_background_, branchName_weight_background_);
+	bai.setBranch(weightErr_background_, branchName_weightErr_background_);
+	bai.setBranch(LR_, branchName_LR_);
+	bai.setBranch(cpuTime_, branchName_cpuTime_);
+	bai.setBranch(realTime_, branchName_realTime_);
+	bai.setBranch(isValid_, branchName_isValid_);
+	bai.setBranch(errorFlag_, branchName_errorFlag_);
+
 }
 
 void MEMOutputWriter_hh_bb2l::write(const std::vector<MEMOutput_hh_bb2l> & memOutputs)
 {
-  nMEMOutputs_ = memOutputs.size();
-  if(nMEMOutputs_ > max_nMEMOutputs_)
-  {
-    std::cout << "Warning: Number of MEMOutputs computed = " << nMEMOutputs_ << ", exceeds max_nMEMOutputs = "
-              << max_nMEMOutputs_ << " that can be stored in Ntuple --> truncating the collection after "
-              << max_nMEMOutputs_ << " objects !!\n";
-    nMEMOutputs_ = max_nMEMOutputs_;
-  }
+	std::cout<<"MEMOutputWriter_hh_bb2l::write \n";
+		nMEMOutputs_ = memOutputs.size();
+		std::cout<<"number of read MEM: " << nMEMOutputs_ << " " << branchName_num_ << "\n";
+	  if(nMEMOutputs_ > max_nMEMOutputs_)
+	  {
+	    std::cout << "Warning: Number of MEMOutputs computed = " << nMEMOutputs_ << ", exceeds max_nMEMOutputs = "
+	              << max_nMEMOutputs_ << " that can be stored in Ntuple --> truncating the collection after "
+	              << max_nMEMOutputs_ << " objects !!\n";
+	    nMEMOutputs_ = max_nMEMOutputs_;
+	  }
 
-  for(Int_t idxMEMOutput = 0; idxMEMOutput < nMEMOutputs_; ++idxMEMOutput)
-  {
-    const MEMOutput_hh_bb2l & memOutput = memOutputs[idxMEMOutput];
-    run_[idxMEMOutput] = memOutput.eventInfo_.run;
-    lumi_[idxMEMOutput] = memOutput.eventInfo_.lumi;
-    evt_[idxMEMOutput] = memOutput.eventInfo_.event;
-    leadLepton_eta_[idxMEMOutput] = memOutput.leadLepton_eta_;
-    leadLepton_phi_[idxMEMOutput] = memOutput.leadLepton_phi_;
-    subleadLepton_eta_[idxMEMOutput] = memOutput.subleadLepton_eta_;
-    subleadLepton_phi_[idxMEMOutput] = memOutput.subleadLepton_phi_;
-    bjet1_eta_[idxMEMOutput] = memOutput.bjet1_eta_;
-    bjet1_phi_[idxMEMOutput] = memOutput.bjet1_phi_;
-    bjet1_isReconstructed_[idxMEMOutput] = memOutput.bjet1_isReconstructed_;
-    bjet2_eta_[idxMEMOutput] = memOutput.bjet2_eta_;
-    bjet2_phi_[idxMEMOutput] = memOutput.bjet2_phi_;
-    bjet2_isReconstructed_[idxMEMOutput] = memOutput.bjet2_isReconstructed_;
-    type_[idxMEMOutput] = memOutput.type();
-    weight_signal_[idxMEMOutput] = memOutput.weight_signal();
-    weightErr_signal_[idxMEMOutput] = memOutput.weightErr_signal();
-    weight_background_[idxMEMOutput] = memOutput.weight_background();
-    weightErr_background_[idxMEMOutput] = memOutput.weightErr_background();
-    LR_[idxMEMOutput] = memOutput.LR();
-    cpuTime_[idxMEMOutput] = memOutput.cpuTime();
-    realTime_[idxMEMOutput] = memOutput.realTime();
-    isValid_[idxMEMOutput] = memOutput.isValid();
-    errorFlag_[idxMEMOutput] = memOutput.errorFlag();
-  }
+	  for(Int_t idxMEMOutput = 0; idxMEMOutput < nMEMOutputs_; ++idxMEMOutput)
+	  {
+			const MEMOutput_hh_bb2l & memOutput = memOutputs[idxMEMOutput];
+		    run_[idxMEMOutput] = memOutput.eventInfo_.run;
+		    lumi_[idxMEMOutput] = memOutput.eventInfo_.lumi;
+		    evt_[idxMEMOutput] = memOutput.eventInfo_.event;
+		    leadLepton_eta_[idxMEMOutput] = memOutput.leadLepton_eta_;
+		    leadLepton_phi_[idxMEMOutput] = memOutput.leadLepton_phi_;
+		    subleadLepton_eta_[idxMEMOutput] = memOutput.subleadLepton_eta_;
+		    subleadLepton_phi_[idxMEMOutput] = memOutput.subleadLepton_phi_;
+		    bjet1_eta_[idxMEMOutput] = memOutput.bjet1_eta_;
+		    bjet1_phi_[idxMEMOutput] = memOutput.bjet1_phi_;
+		    bjet1_isReconstructed_[idxMEMOutput] = memOutput.bjet1_isReconstructed_;
+		    bjet2_eta_[idxMEMOutput] = memOutput.bjet2_eta_;
+		    bjet2_phi_[idxMEMOutput] = memOutput.bjet2_phi_;
+		    bjet2_isReconstructed_[idxMEMOutput] = memOutput.bjet2_isReconstructed_;
+		    type_[idxMEMOutput] = memOutput.type();
+				weight_signal_[idxMEMOutput] = memOutput.weight_signal();
+		    weightErr_signal_[idxMEMOutput] = memOutput.weightErr_signal();
+		    weight_background_[idxMEMOutput] = memOutput.weight_background();
+		    weightErr_background_[idxMEMOutput] = memOutput.weightErr_background();
+		    LR_[idxMEMOutput] = memOutput.LR();
+		    cpuTime_[idxMEMOutput] = memOutput.cpuTime();
+		    realTime_[idxMEMOutput] = memOutput.realTime();
+		    isValid_[idxMEMOutput] = memOutput.isValid();
+		    errorFlag_[idxMEMOutput] = memOutput.errorFlag();
+		}
 }
