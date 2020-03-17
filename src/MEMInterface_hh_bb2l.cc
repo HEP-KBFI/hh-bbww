@@ -133,7 +133,6 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 	       bool switchToGen
         ) const
 {
-  //std::string BM = "SM";
   //map<std::string, MEMOutput_hh_bb2l> result;
   MEMOutput_hh_bb2l result;
   if ( !(selJet_Hbb_lead || selJet_Hbb_sublead) )
