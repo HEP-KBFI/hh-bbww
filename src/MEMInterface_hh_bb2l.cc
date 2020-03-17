@@ -192,17 +192,18 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
     //memAlgo_[BM]->integrate(measuredParticles, metPx, metPy, met.cov());
     //MEMbbwwResultDilepton memResult = memAlgo_[BM]->getResult();
     clock_->Stop("<MEMInterface_hh_bb2l::operator()>");
-    result.fillInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead);
-    result.weight_signal_ = memResult.getProb_signal();
-    result.weightErr_signal_ = memResult.getProbErr_signal();
-    result.weight_background_ = memResult.getProb_background();
-    result.weightErr_background_ = memResult.getProbErr_background();
-    result.LR_ = memResult.getLikelihoodRatio();
-    result.LRErr_ = memResult.getLikelihoodRatioErr();
-    result.Score_ = memResult.getScore();
-    result.cpuTime_ = clock_->GetCpuTime("<MEMInterface_hh_bb2l::operator()>");
-    result.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
-    result.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;
+    MEMOutput_hh_bb2l result_local;
+    result_local.fillInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead);
+    result_local.weight_signal_ = memResult.getProb_signal();
+    result_local.weightErr_signal_ = memResult.getProbErr_signal();
+    result_local.weight_background_ = memResult.getProb_background();
+    result_local.weightErr_background_ = memResult.getProbErr_background();
+    result_local.LR_ = memResult.getLikelihoodRatio();
+    result_local.LRErr_ = memResult.getLikelihoodRatioErr();
+    result_local.Score_ = memResult.getScore();
+    result_local.cpuTime_ = clock_->GetCpuTime("<MEMInterface_hh_bb2l::operator()>");
+    result_local.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
+    result_local.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;
     result = result_local;
   }
 
