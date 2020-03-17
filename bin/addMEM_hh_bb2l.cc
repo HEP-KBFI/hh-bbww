@@ -1090,7 +1090,7 @@ std::cout << "maxPermutations_addMEM_hh_bb2l = " << maxPermutations_addMEM_hh_bb
   }*/
 
   //delete memWriter_gen;
-  for (auto BM : memWriter_gen)
+  /*for (auto BM : memWriter_gen)
   {
     delete (BM.second);
   }
@@ -1098,7 +1098,7 @@ std::cout << "maxPermutations_addMEM_hh_bb2l = " << maxPermutations_addMEM_hh_bb
   for (auto BM : memWriter_gen_missingBJet)
   {
     delete (BM.second);
-  }
+  }*/
   for ( auto & kv: memWriter_gen )
   {
     if ( kv.second )
