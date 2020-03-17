@@ -92,6 +92,8 @@
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop, getLeptonFrom(Anti)Top, getBQuarksFrom(Anti)Top
 #include "hhAnalysis/bbww/interface/genBoostedAuxFunctions.h" // compSumP4
 #include "hhAnalysis/bbww/interface/TopKinRecoInterface.h" // TopKinRecoInterface
+#include "hhAnalysis/bbww/interface/HMEInterface_hh_bb2l.h" // HMEInterface_hh_bb2l // CV: switcht to HMEOutputReader_hh_bb2l in the future !!
+#include "hhAnalysis/bbww/interface/HMEOutput_hh_bb2l.h" // HMEOutput_hh_bb2l
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -650,9 +652,13 @@ int main(int argc, char* argv[])
     inputTree->registerReader(genTopQuarkReader);
   }
 
+//--- initialize algorithm for reconstruction of H boson pair mass in HH->bbWW dilepton events 
+//   (as described in arXiv:1701.04442)
+  HMEInterface_hh_bb2l hmeInterface_hh_bb2l;
+
 //--- initialize algorithm for kinematic reconstruction of top quarks in tt+jets dilepton events 
 //   (as described in Section 6 of CMS AN-2015/309 v7)
-  TopKinRecoInterface topKinRecoInterface(jetSelectorAK4_bTagMedium.getSelector().get_min_BtagCSV());
+  TopKinRecoInterface topKinRecoInterface(jetSelectorAK4_bTagMedium.getSelector().get_min_BtagCSV(), true);
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
   std::ostream* selEventsFile = ( selEventsFileName_output != "" ) ? new std::ofstream(selEventsFileName_output.data(), std::ios::out) : 0;
@@ -868,6 +874,7 @@ int main(int argc, char* argv[])
     ">= 2 presel leptons",
     ">= 2 sel leptons",
     "lead lepton pT > 25 GeV && sublead lepton pT > 15 GeV",
+    "sel lepton-pair OS charge",
     "<= 2 tight leptons",
     "fakeable lepton trigger match",
     "HLT filter matching",
@@ -1290,7 +1297,19 @@ int main(int argc, char* argv[])
     cutFlowTable.update("lead lepton pT > 25 GeV && sublead lepton pT > 15 GeV", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("lead lepton pT > 25 GeV && sublead lepton pT > 15 GeV", evtWeightRecorder.get(central_or_shift_main));
 
-    // require exactly one lepton passing tight selection criteria, to avoid overlap with other channels
+    bool isLeptonCharge_SS = selLepton_lead->charge()*selLepton_sublead->charge() > 0;
+    if ( isLeptonCharge_SS ) {
+      if ( run_lumi_eventSelector ) {
+	std::cout << "event " << eventInfo.str() << " FAILS lepton charge selection." << std::endl;
+        std::cout << " (leading selLepton charge = " << selLepton_lead->charge()
+                  << ", subleading selLepton charge = " << selLepton_sublead->charge() << ", leptonChargeSelection = OS)" << std::endl;
+      }
+      continue;
+    }
+    cutFlowTable.update("sel lepton-pair OS charge", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("sel lepton-pair OS charge", evtWeightRecorder.get(central_or_shift_main));
+
+    // require exactly two leptons passing tight selection criteria, to avoid overlap with other channels
     if ( !(tightLeptonsFull.size() <= 2) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS tightLeptons selection." << std::endl;
@@ -1529,24 +1548,43 @@ int main(int argc, char* argv[])
     // reconstruct the two top decays, using the algorithm detailed in Section 6 of CMS AN-2015/309 v7
     topKinRecoInterface.setInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met);
     bool isValid_topKinReco = topKinRecoInterface.isValid();
-    Particle::LorentzVector selLeptonP4_top, selBJetP4_top, topQuarkP4_top;
-    Particle::LorentzVector selLeptonP4_antitop, selBJetP4_antitop, topQuarkP4_antitop;
-    Particle::LorentzVector metP4_topKinReco;
+    int numSolutions_topKinReco = topKinRecoInterface.getNumSolutions();
+    Particle::LorentzVector selLeptonP4_top_assoc1, selBJetP4_top_assoc1, topQuarkP4_top_assoc1;    
+    Particle::LorentzVector selLeptonP4_antitop_assoc1, selBJetP4_antitop_assoc1, topQuarkP4_antitop_assoc1;
+    double weight_topKinReco_assoc1 = -1.;
+    Particle::LorentzVector selLeptonP4_top_assoc2, selBJetP4_top_assoc2, topQuarkP4_top_assoc2;    
+    Particle::LorentzVector selLeptonP4_antitop_assoc2, selBJetP4_antitop_assoc2, topQuarkP4_antitop_assoc2;
+    double weight_topKinReco_assoc2 = -1.;
     if ( isValid_topKinReco ) 
     {
-      selLeptonP4_top     = topKinRecoInterface.getLeptonP4_top();
-      selBJetP4_top       = topKinRecoInterface.getBJetP4_top();
-      topQuarkP4_top      = topKinRecoInterface.getTopQuarkP4_top();
-      selLeptonP4_antitop = topKinRecoInterface.getLeptonP4_antitop();
-      selBJetP4_antitop   = topKinRecoInterface.getBJetP4_antitop();
-      topQuarkP4_antitop  = topKinRecoInterface.getTopQuarkP4_antitop();  
-      metP4_topKinReco    = topKinRecoInterface.getMEtP4();
+      if ( numSolutions_topKinReco >= 1 )
+      {
+        selLeptonP4_top_assoc1     = topKinRecoInterface.getLeptonP4_top(0);
+        selBJetP4_top_assoc1       = topKinRecoInterface.getBJetP4_top(0);
+        topQuarkP4_top_assoc1      = topKinRecoInterface.getTopQuarkP4_top(0);
+        selLeptonP4_antitop_assoc1 = topKinRecoInterface.getLeptonP4_antitop(0);
+        selBJetP4_antitop_assoc1   = topKinRecoInterface.getBJetP4_antitop(0);
+        topQuarkP4_antitop_assoc1  = topKinRecoInterface.getTopQuarkP4_antitop(0);  
+        weight_topKinReco_assoc1   = topKinRecoInterface.getWeight(0);
+      }
+      if ( numSolutions_topKinReco >= 2 )
+      {
+        selLeptonP4_top_assoc2     = topKinRecoInterface.getLeptonP4_top(1);
+        selBJetP4_top_assoc2       = topKinRecoInterface.getBJetP4_top(1);
+        topQuarkP4_top_assoc2      = topKinRecoInterface.getTopQuarkP4_top(1);
+        selLeptonP4_antitop_assoc2 = topKinRecoInterface.getLeptonP4_antitop(1);
+        selBJetP4_antitop_assoc2   = topKinRecoInterface.getBJetP4_antitop(1);
+        topQuarkP4_antitop_assoc2  = topKinRecoInterface.getTopQuarkP4_antitop(1);  
+        weight_topKinReco_assoc2   = topKinRecoInterface.getWeight(1);
+      }
     }
-    
+
     // build collections of generator level particles 
-    bool isGenMatched_top = false;
+    bool isGenMatched_top_assoc1 = false;
+    bool isGenMatched_top_assoc2 = false;
     Particle::LorentzVector genTopQuarkP4_top;
-    bool isGenMatched_antitop = false;
+    bool isGenMatched_antitop_assoc1 = false;
+    bool isGenMatched_antitop_assoc2 = false;
     Particle::LorentzVector genTopQuarkP4_antitop;
     Particle::LorentzVector genMEtP4;
     if ( isMC_TT )
@@ -1558,11 +1596,25 @@ int main(int argc, char* argv[])
       genParticleMatcherFromTop.setGenParticles(genLeptonsFromTop, genNeutrinosFromTop, {}, genBJetsFromTop);
       const std::vector<GenLepton>& genLeptonsForMatching = genParticleMatcherFromTop.getLeptons();
       const std::vector<GenParticle>& genBQuarksForMatching = genParticleMatcherFromTop.getBQuarks();
+      //printCollection("genLeptonsFromTop", genLeptonsFromTop);
+      //printCollection("genNeutrinosFromTop", genNeutrinosFromTop);
+      //printCollection("genBJetsFromTop", genBJetsFromTop);
+      //printCollection("genTopQuarks", genTopQuarks);
       genMEtP4 = genParticleMatcherFromTop.getMEt();
-      isGenMatched_top = isMatchedLepTop(selLeptonP4_top, +1, selBJetP4_top, 
-        genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
-      isGenMatched_antitop = isMatchedLepTop(selLeptonP4_antitop, -1, selBJetP4_antitop, 
+      if ( numSolutions_topKinReco >= 1 )
+      {
+        isGenMatched_top_assoc1 = isMatchedLepTop(selLeptonP4_top_assoc1, +1, selBJetP4_top_assoc1, 
+          genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
+        isGenMatched_antitop_assoc1 = isMatchedLepTop(selLeptonP4_antitop_assoc1, -1, selBJetP4_antitop_assoc1, 
         genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_antitop);
+      }
+      if ( numSolutions_topKinReco >= 2 )
+      {
+        isGenMatched_top_assoc2 = isMatchedLepTop(selLeptonP4_top_assoc2, +1, selBJetP4_top_assoc2, 
+          genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_top);
+        isGenMatched_antitop_assoc2 = isMatchedLepTop(selLeptonP4_antitop_assoc2, -1, selBJetP4_antitop_assoc2, 
+          genLeptonsForMatching, genBQuarksForMatching, genTopQuarks, genTopQuarkP4_antitop);
+      }
     }
 
     std::vector<double> WeightBM; // weights to do histograms for BMs
@@ -1593,44 +1645,17 @@ int main(int argc, char* argv[])
     }
 
     //---------------------------------------------------------------------------
-    // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm    
-    TLorentzVector hmeLepton1P4(selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.pz(), selLeptonP4_lead.energy());
-    TLorentzVector hmeLepton2P4(selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.pz(), selLeptonP4_sublead.energy());
-    TLorentzVector hmeBJet1P4(selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.energy());
-    TLorentzVector hmeBJet2P4(selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.energy());
-    TLorentzVector hmeMEtP4(metP4.px(), metP4.py(), 0., metP4.pt());
-    double hmeSumJetsPx = -(selLeptonP4_lead.px() + selLeptonP4_sublead.px() + selJetP4_Hbb_lead.px() + selJetP4_Hbb_sublead.px() + metP4.px());
-    double hmeSumJetsPy = -(selLeptonP4_lead.py() + selLeptonP4_sublead.py() + selJetP4_Hbb_lead.py() + selJetP4_Hbb_sublead.py() + metP4.py());
-    double hmeSumJetsPz = 0.;
-    double hmeSumJetsEn = TMath::Sqrt(hmeSumJetsPx*hmeSumJetsPx + hmeSumJetsPy*hmeSumJetsPy);
-    TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
-    const bool PUSample = true;
+    // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm 
+    //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
     const int ievent = eventInfo.event;
-    const int iterations = 100000;
-    //const int iterations = 20000;
-    const int bjetrescaleAlgo = 2;
-    const int metcorrection = 5;
-    const bool weightfromonshellnupt_func = false;
-    const bool weightfromonshellnupt_hist = true;
-    const bool weightfromonoffshellWmass_hist = true;
-    const bool useMET = true;
-    LocalFileInPath RefPDFfile = LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root");
-    if( RefPDFfile.fullPath().empty() )
-      throw cms::Exception("analyze_hh_bb2l") << "Failed to find file = 'REFPDFPU40.root'\n";
-    clock.Reset();
-    clock.Start("hmeAlgo");
-    heavyMassEstimator hmeAlgo(
-      &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
-      PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection, isDEBUG ? 5 : 0);
+    HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
+    hmeOutput.eventInfo_ = eventInfo;
     double m_HH_hme = -1.;
-    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    bool hme_isValidSolution = hmeOutput.isValid();
     if ( hme_isValidSolution ) {
-      TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
-      m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
+      m_HH_hme = hmeOutput.m_HH_hme();
     }
-    clock.Stop("hmeAlgo");
-    //double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
+    //double hmeCpuTime = hmeOutput.cpuTime();
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
@@ -1738,10 +1763,10 @@ int main(int argc, char* argv[])
           selJetsAK8_Hbb.size(),
           HT,
           STMET,
-          isValid_topKinReco, 
-          genMEtP4, metP4_topKinReco,
-          genTopQuarkP4_top, isGenMatched_top, topQuarkP4_top,
-          genTopQuarkP4_antitop, isGenMatched_antitop, topQuarkP4_antitop,
+          genMEtP4, metP4,
+          isValid_topKinReco, numSolutions_topKinReco, weight_topKinReco_assoc1, weight_topKinReco_assoc2, 
+          genTopQuarkP4_top, isGenMatched_top_assoc1, topQuarkP4_top_assoc1, isGenMatched_top_assoc2, topQuarkP4_top_assoc2,
+          genTopQuarkP4_antitop, isGenMatched_antitop_assoc1, topQuarkP4_antitop_assoc1, isGenMatched_antitop_assoc2, topQuarkP4_antitop_assoc2,
           selLeptonP4_lead, selLeptonP4_sublead,
           m_HH_hme,
           vbf_m_jj, vbf_dEta_jj,
@@ -1792,10 +1817,10 @@ int main(int argc, char* argv[])
                 selJetsAK8_Hbb.size(),
                 HT,
                 STMET,
-                isValid_topKinReco, 
-                genMEtP4, metP4_topKinReco,
-                genTopQuarkP4_top, isGenMatched_top, topQuarkP4_top,
-                genTopQuarkP4_antitop, isGenMatched_antitop, topQuarkP4_antitop,
+                genMEtP4, metP4,
+                isValid_topKinReco, numSolutions_topKinReco, weight_topKinReco_assoc1, weight_topKinReco_assoc2,
+                genTopQuarkP4_top, isGenMatched_top_assoc1, topQuarkP4_top_assoc1, isGenMatched_top_assoc2, topQuarkP4_top_assoc2,
+                genTopQuarkP4_antitop, isGenMatched_antitop_assoc1, topQuarkP4_antitop_assoc1, isGenMatched_antitop_assoc2, topQuarkP4_antitop_assoc2,
                 selLeptonP4_lead, selLeptonP4_sublead,
                 m_HH_hme,
                 vbf_m_jj, vbf_dEta_jj,

@@ -205,7 +205,7 @@ int main(int argc, char* argv[])
 
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
-  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bb1l");
+  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbWW_Wctrl");
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
@@ -248,9 +248,6 @@ int main(int argc, char* argv[])
 
   bool apply_hadTauVeto = cfg_analyze.getParameter<bool>("apply_hadTauVeto");
   const std::string hadTauSelection_veto = cfg_analyze.getParameter<std::string>("hadTauSelection_veto");
-
-  vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
-  std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
@@ -360,10 +357,6 @@ int main(int argc, char* argv[])
   std::string branchName_jets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_jets_ak8LS");
   std::string branchName_subjets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8LS");
   std::string branchName_met = cfg_analyze.getParameter<std::string>("branchName_met");
-
-  std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
-  std::string branchName_memOutput_missingBJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingBJet");
-  std::string branchName_memOutput_missingHadWJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingHadWJet");
 
   std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
@@ -641,10 +634,10 @@ int main(int argc, char* argv[])
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1, -1, -1, kHbb_boosted,   kWjj_resolved,           kVBF_undefined)); // hh_bbWW_1bL1l_Wctrl
     categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0, -1, -1, kHbb_boosted,   kWjj_resolved,           kVBF_undefined)); // hh_bbWW_nobL1l_Wctrl
     // CV: add categories for "boosted" AK8LS jets passing W->jj selection (no VBF jet selection)
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved,  kWjj_boosted_lowPurity,  kVBF_undefined)); // hh_bbWW_1bL1l_Wctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  1, -1, -1, kHbb_resolved,  kWjj_boosted_highPurity, kVBF_undefined)); // hh_bbWW_1bL1l_Wctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  0, -1, -1, kHbb_resolved,  kWjj_boosted_lowPurity,  kVBF_undefined)); // hh_bbWW_nobL1l_Wctrl
-    categories_evt.push_back(categoryEntryType(numElectrons, numMuons,  1,  0, -1, -1, kHbb_resolved,  kWjj_boosted_highPurity, kVBF_undefined)); // hh_bbWW_nobL1l_Wctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1, -1, -1, kHbb_resolved,  kWjj_boosted_lowPurity,  kVBF_undefined)); // hh_bbWW_1bL1l_Wctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  1, -1, -1, kHbb_resolved,  kWjj_boosted_highPurity, kVBF_undefined)); // hh_bbWW_1bL1l_Wctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0, -1, -1, kHbb_resolved,  kWjj_boosted_lowPurity,  kVBF_undefined)); // hh_bbWW_nobL1l_Wctrl
+    categories_evt.push_back(categoryEntryType(numElectrons, numMuons, -1,  0, -1, -1, kHbb_resolved,  kWjj_boosted_highPurity, kVBF_undefined)); // hh_bbWW_nobL1l_Wctrl
   }
   vstring categoryNames_evt;
   for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
@@ -1375,6 +1368,7 @@ int main(int argc, char* argv[])
     // select AK8LS jets from W->jj decay
     const std::vector<RecoJetAK8> jets_ak8_Wjj = jetReaderAK8LS->read();
     const std::vector<const RecoJetAK8*> jet_ptrs_ak8_Wjj = convert_to_ptrs(jets_ak8_Wjj);
+    jetSelectorAK8_Wjj.getSelector().set_lepton(selLepton);
     const std::vector<const RecoJetAK8*> preselJetsAK8_Wjj = jetSelectorAK8_Wjj(jet_ptrs_ak8_Wjj, isHigherPt);
     std::vector<const RecoJetAK8*> selJetsAK8_Wjj;
     for ( const RecoJetAK8* fatjet : preselJetsAK8_Wjj ) 

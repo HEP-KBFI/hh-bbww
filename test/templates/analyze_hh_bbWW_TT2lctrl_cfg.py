@@ -17,7 +17,7 @@ process.fwliteOutput = cms.PSet(
     fileName = cms.string('')
 )
 
-process.analyze_hh_bbWW_TT1lctrl = cms.PSet(
+process.analyze_hh_bbWW_TT2lctrl = cms.PSet(
     treeName = cms.string('Events'),
 
     process = cms.string(''),

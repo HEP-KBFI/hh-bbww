@@ -15,7 +15,7 @@ class RecoJetBase;
 class TopKinRecoInterface
 {
 public:
-  TopKinRecoInterface(double btag_wp);
+  TopKinRecoInterface(double btag_wp, bool considerOnlyBJets);
   ~TopKinRecoInterface();
 
   void
@@ -30,42 +30,60 @@ public:
   isValid() const;
 
   const Particle::LorentzVector&
-  getLeptonP4_top() const;
+  getLeptonP4_top(int idx = -1) const;
 
   const Particle::LorentzVector&
-  getBJetP4_top() const;
+  getBJetP4_top(int idx = -1) const;
 
   const Particle::LorentzVector&
-  getTopQuarkP4_top() const;
+  getTopQuarkP4_top(int idx = -1) const;
 
   const Particle::LorentzVector&
-  getLeptonP4_antitop() const;
+  getLeptonP4_antitop(int idx = -1) const;
 
   const Particle::LorentzVector&
-  getBJetP4_antitop() const;
+  getBJetP4_antitop(int idx = -1) const;
 
   const Particle::LorentzVector&
-  getTopQuarkP4_antitop() const;
+  getTopQuarkP4_antitop(int idx = -1) const;
 
   const Particle::LorentzVector&
-  getMEtP4() const;
+  getMEtP4(int idx = -1) const;
+
+  double
+  getWeight(int idx = -1) const;
+
+  int
+  getNumSolutions() const;
 
  private:
   KinematicReconstruction * algo_;
 
   bool isValid_;
 
-  Particle::LorentzVector leptonP4_top_;
-  Particle::LorentzVector neutrinoP4_top_;
-  Particle::LorentzVector bJetP4_top_;
-  Particle::LorentzVector topQuarkP4_top_;
+  std::vector<Particle::LorentzVector> leptonP4_top_;
+  std::vector<Particle::LorentzVector> neutrinoP4_top_;
+  std::vector<Particle::LorentzVector> bJetP4_top_;
+  std::vector<Particle::LorentzVector> topQuarkP4_top_;
+  std::vector<Particle::LorentzVector> leptonP4_antitop_;
+  std::vector<Particle::LorentzVector> neutrinoP4_antitop_;
+  std::vector<Particle::LorentzVector> bJetP4_antitop_;
+  std::vector<Particle::LorentzVector> topQuarkP4_antitop_;
+  std::vector<Particle::LorentzVector> sumNeutrinoP4_;
+  std::vector<double> weights_;
 
-  Particle::LorentzVector leptonP4_antitop_;
-  Particle::LorentzVector neutrinoP4_antitop_;
-  Particle::LorentzVector bJetP4_antitop_;
-  Particle::LorentzVector topQuarkP4_antitop_;
+  int numSolutions_;
 
-  Particle::LorentzVector metP4_;
+  Particle::LorentzVector leptonP4_top_maxWeight_;
+  Particle::LorentzVector neutrinoP4_top_maxWeight_;
+  Particle::LorentzVector bJetP4_top_maxWeight_;
+  Particle::LorentzVector topQuarkP4_top_maxWeight_;
+  Particle::LorentzVector leptonP4_antitop_maxWeight_;
+  Particle::LorentzVector neutrinoP4_antitop_maxWeight_;
+  Particle::LorentzVector bJetP4_antitop_maxWeight_;
+  Particle::LorentzVector topQuarkP4_antitop_maxWeight_;
+  Particle::LorentzVector sumNeutrinoP4_maxWeight_;
+  double max_weight_;
 
   TBenchmark * clock_;
   double cpuTime_;
