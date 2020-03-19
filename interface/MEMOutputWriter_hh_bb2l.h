@@ -36,8 +36,7 @@ protected:
   void setBranchNames();
 
   const int max_nMEMOutputs_;
-  //vstring BMS_;
-  std::string BM_; //,
+  std::string BM_; 
   std::string branchName_num_;
   std::string branchName_obj_;
 

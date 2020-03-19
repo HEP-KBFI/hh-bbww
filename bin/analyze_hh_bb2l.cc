@@ -1814,12 +1814,12 @@ int main(int argc, char* argv[])
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
     //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
     const int ievent = eventInfo.event;
-    HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
-    hmeOutput.eventInfo_ = eventInfo;
+    //HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
+    //hmeOutput.eventInfo_ = eventInfo;
     double m_HH_hme = -1.;
-    bool hme_isValidSolution = hmeOutput.isValid();
+    bool hme_isValidSolution = false; //hmeOutput.isValid();
     if ( hme_isValidSolution ) {
-      m_HH_hme = hmeOutput.m_HH_hme();
+      m_HH_hme = -1.;// hmeOutput.m_HH_hme();
     }
     //double hmeCpuTime = hmeOutput.cpuTime();
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
@@ -2254,6 +2254,10 @@ int main(int argc, char* argv[])
   delete lheInfoReader;
   delete psWeightReader;
   //delete memReader;
+  for (auto BM : memReader)
+  {
+    delete (BM.second);
+  }
 
   for(auto & kv: genEvtHistManager_beforeCuts)
   {

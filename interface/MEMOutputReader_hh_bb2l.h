@@ -59,15 +59,6 @@ protected:
   std::string branchName_bjet2_isReconstructed_;
   std::string branchName_type_;
 
-  /*std::map<std::string, std::string> branchName_weight_signal_;
-  std::map<std::string, std::string> branchName_weightErr_signal_;
-  std::map<std::string, std::string> branchName_weight_background_;
-  std::map<std::string, std::string> branchName_weightErr_background_;
-  std::map<std::string, std::string> branchName_LR_;
-  std::map<std::string, std::string> branchName_cpuTime_;
-  std::map<std::string, std::string> branchName_realTime_;
-  std::map<std::string, std::string> branchName_isValid_;
-  std::map<std::string, std::string> branchName_errorFlag_;*/
   std::string branchName_weight_signal_;
   std::string branchName_weightErr_signal_;
   std::string branchName_weight_background_;
@@ -93,15 +84,6 @@ protected:
   Float_t * bjet2_phi_;
   Float_t * bjet2_isReconstructed_;
   Int_t * type_;
-  /*std::map<std::string, Float_t *> weight_signal_;
-  std::map<std::string, Float_t *> weightErr_signal_;
-  std::map<std::string, Float_t *> weight_background_;
-  std::map<std::string, Float_t *> weightErr_background_;
-  std::map<std::string, Float_t *> LR_;
-  std::map<std::string, Float_t *> cpuTime_;
-  std::map<std::string, Float_t *> realTime_;
-  std::map<std::string, Int_t *> isValid_;
-  std::map<std::string, Int_t *> errorFlag_;*/
   Float_t * weight_signal_;
   Float_t * weightErr_signal_;
   Float_t * weight_background_;
