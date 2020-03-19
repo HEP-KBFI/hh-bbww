@@ -27,14 +27,16 @@ public:
   operator()(const RecoLepton * selLepton_lead,
              const RecoLepton * selLepton_sublead,
              const RecoJetBase * selJet_Hbb_lead,
-	     const RecoJetBase * selJet_Hbb_sublead,
+	           const RecoJetBase * selJet_Hbb_sublead,
              const RecoMEt & met,
              std::string BM = "SM",
-	     bool switchToGen = false) const;
+	     bool switchToGen = false,
+       bool isDebug = false) const;
 
  private:
-  map<std::string, MEMbbwwAlgoDilepton *> memAlgo_;
+  map<std::string, MEMbbwwAlgoDilepton *> memAlgo_;// = {{"None", nullptr}};
   //MEMbbwwAlgoDilepton * memAlgo_;
+  //map<std::string, std::string> madgraphFileName_signal;
 
   TBenchmark * clock_;
 };

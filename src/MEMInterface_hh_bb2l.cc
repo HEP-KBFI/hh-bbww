@@ -13,28 +13,29 @@
 #include <TMath.h> // TMath::Cos, TMath::Sin
 
 MEMInterface_hh_bb2l::MEMInterface_hh_bb2l()
-  : //memAlgo_({{nullptr, nullptr}}),
+  : memAlgo_({{"None", nullptr}}),
   clock_(nullptr)
 {
   std::cout << "<MEMInterface_hh_bb2l>:\n";
 
   const double sqrtS = 13.e+3;
   const std::string pdfName = "MSTW2008lo68cl";
-  map<std::string, std::string> madgraphFileName_signal     =
+  map<std::string, std::string>
+  madgraphFileName_signal     =
   {
-    {"SM",  "hhAnalysis/bbwwMEM/data/param_hh_SM.dat"},
-    {"BM1",  "hhAnalysis/bbwwMEM/data/param_hh_BM1.dat"},
+    //{"SM",  "hhAnalysis/bbwwMEM/data/param_hh_SM.dat"},
+    //{"BM1",  "hhAnalysis/bbwwMEM/data/param_hh_BM1.dat"},
     {"BM2",  "hhAnalysis/bbwwMEM/data/param_hh_BM2.dat"},
-    {"BM3",  "hhAnalysis/bbwwMEM/data/param_hh_BM3.dat"},
-    {"BM4",  "hhAnalysis/bbwwMEM/data/param_hh_BM4.dat"},
-    {"BM5",  "hhAnalysis/bbwwMEM/data/param_hh_BM5.dat"},
-    {"BM6",  "hhAnalysis/bbwwMEM/data/param_hh_BM6.dat"},
-    {"BM7",  "hhAnalysis/bbwwMEM/data/param_hh_BM7.dat"},
-    {"BM8",  "hhAnalysis/bbwwMEM/data/param_hh_BM8.dat"},
-    {"BM9",  "hhAnalysis/bbwwMEM/data/param_hh_BM9.dat"},
-    {"BM10", "hhAnalysis/bbwwMEM/data/param_hh_BM10.dat"},
-    {"BM11", "hhAnalysis/bbwwMEM/data/param_hh_BM11.dat"},
-    {"BM12", "hhAnalysis/bbwwMEM/data/param_hh_BM12.dat"}
+    //{"BM3",  "hhAnalysis/bbwwMEM/data/param_hh_BM3.dat"},
+    //{"BM4",  "hhAnalysis/bbwwMEM/data/param_hh_BM4.dat"},
+    //{"BM5",  "hhAnalysis/bbwwMEM/data/param_hh_BM5.dat"},
+    //{"BM6",  "hhAnalysis/bbwwMEM/data/param_hh_BM6.dat"},
+    //{"BM7",  "hhAnalysis/bbwwMEM/data/param_hh_BM7.dat"},
+    //{"BM8",  "hhAnalysis/bbwwMEM/data/param_hh_BM8.dat"},
+    {"BM9",  "hhAnalysis/bbwwMEM/data/param_hh_BM9.dat"}
+    //{"BM10", "hhAnalysis/bbwwMEM/data/param_hh_BM10.dat"},
+    //{"BM11", "hhAnalysis/bbwwMEM/data/param_hh_BM11.dat"},
+    //{"BM12", "hhAnalysis/bbwwMEM/data/param_hh_BM12.dat"}
     };
 
   const std::string madgraphFileName_background = "hhAnalysis/bbwwMEM/data/param_ttbar.dat";
@@ -70,6 +71,10 @@ MEMInterface_hh_bb2l::~MEMInterface_hh_bb2l()
 
 namespace
 {
+
+/*void
+LoadMEMInterface_hh_bb2l(const std::string & BM)
+{}*/
 
 void
 addMeasuredLepton(std::vector<mem::MeasuredParticle>& measuredParticles, const RecoLepton * selLepton, bool switchToGen)
@@ -130,7 +135,8 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 				 const RecoJetBase * selJet_Hbb_sublead,
 				 const RecoMEt & met,
          std::string BM,
-	       bool switchToGen
+	       bool switchToGen,
+         bool isDebug
         ) const
 {
   //map<std::string, MEMOutput_hh_bb2l> result;
@@ -180,10 +186,10 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 
   for(auto iter: memAlgo_)
   {
-    std::string key = iter.first;
-    if (!(key == BM) ) continue;
-    std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << key << " " << BM << "\n";
-    //std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << BM << "\n";
+    //std::string key = iter.first;
+    if ( !(iter.first == BM) ) continue;
+    std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << iter.first << " " << BM << "\n";
+    //std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << madgraphFileName_signal[iter.first] << "\n";
     clock_->Reset();
     clock_->Start("<MEMInterface_hh_bb2l::operator()>");
     iter.second->integrate(measuredParticles, metPx, metPy, met.cov());
@@ -204,7 +210,11 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
     result_local.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
     result_local.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;
     result = result_local;
+    if (isDebug) std::cout << "#memOutputs_hh_bb2l inside = " << result_local << std::endl;
+    break;
   }
+
+
 
   return result;
 }
