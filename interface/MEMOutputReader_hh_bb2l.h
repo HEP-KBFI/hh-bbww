@@ -13,8 +13,7 @@ class MEMOutputReader_hh_bb2l
 {
 public:
   MEMOutputReader_hh_bb2l(const std::string & branchName_num,
-                          const std::string & branchName_obj,
-                          const std::string & BM
+                          const std::string & branchName_obj
                         );
   ~MEMOutputReader_hh_bb2l();
 
@@ -36,10 +35,9 @@ protected:
    * @brief Initialize names of branches to be read from tree
    */
   void
-  setBranchNames(); // const std::string & BM
+  setBranchNames();
 
   const int max_nMEMOutputs_;
-  //vstring BMS1_;
   std::string branchName_num_;
   std::string branchName_obj_;
   std::string BM_;

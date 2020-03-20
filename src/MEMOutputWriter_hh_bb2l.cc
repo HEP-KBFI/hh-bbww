@@ -2,16 +2,8 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/BranchAddressInitializer.h" // BranchAddressInitializer, TTree, Form()
 
-void MEMOutputWriter_hh_bb2l::deleteMap(const std::map<std::string, auto> & map) {
-  for (auto BM : map)
-  {
-    delete (BM.second);
-  }
-  //map.clear();
-};
-
 MEMOutputWriter_hh_bb2l::MEMOutputWriter_hh_bb2l(const std::string & branchName_num,
-						 const std::string & branchName_obj, const std::string & BM //, vstring BMS
+						 const std::string & branchName_obj
 					 )
   : max_nMEMOutputs_(100)
   , branchName_num_(branchName_num)
@@ -41,7 +33,6 @@ MEMOutputWriter_hh_bb2l::MEMOutputWriter_hh_bb2l(const std::string & branchName_
   , isValid_(nullptr)
   , errorFlag_(nullptr)
 {
-	BM_ = BM;
   setBranchNames();
 }
 
@@ -74,58 +65,29 @@ MEMOutputWriter_hh_bb2l::~MEMOutputWriter_hh_bb2l()
 
 void MEMOutputWriter_hh_bb2l::setBranchNames()
 {
-		if (BM_ == "SM")
-		{
-			branchName_run_ = Form("%s_%s", branchName_obj_.data(), "run");
-		  branchName_lumi_ = Form("%s_%s", branchName_obj_.data(), "lumi");
-		  branchName_evt_ = Form("%s_%s", branchName_obj_.data(), "evt");
-		  branchName_leadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_eta");
-		  branchName_leadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_phi");
-		  branchName_subleadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_eta");
-		  branchName_subleadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_phi");
-		  branchName_bjet1_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet1_eta");
-		  branchName_bjet1_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet1_phi");
-		  branchName_bjet1_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet1_isReconstructed");
-		  branchName_bjet2_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet2_eta");
-		  branchName_bjet2_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet2_phi");
-		  branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
-		  branchName_type_ = Form("%s_%s", branchName_obj_.data(), "type");
-			///
-			branchName_weight_signal_ = Form("%s_%s", branchName_obj_.data(), "weight_signal");
-		  branchName_weightErr_signal_ = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
-		  branchName_weight_background_ = Form("%s_%s", branchName_obj_.data(), "weight_background");
-		  branchName_weightErr_background_ = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
-		  branchName_LR_ = Form("%s_%s", branchName_obj_.data(), "LR");
-		  branchName_cpuTime_ = Form("%s_%s", branchName_obj_.data(), "cpuTime");
-		  branchName_realTime_ = Form("%s_%s", branchName_obj_.data(), "realTime");
-		  branchName_isValid_ = Form("%s_%s", branchName_obj_.data(), "isValid");
-		  branchName_errorFlag_ = Form("%s_%s", branchName_obj_.data(), "errorFlag");
-		} else {
-			branchName_run_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "run");
-		  branchName_lumi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "lumi");
-		  branchName_evt_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "evt");
-		  branchName_leadLepton_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "leadLepton_eta");
-		  branchName_leadLepton_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "leadLepton_phi");
-		  branchName_subleadLepton_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "subleadLepton_eta");
-		  branchName_subleadLepton_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "subleadLepton_phi");
-		  branchName_bjet1_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_eta");
-		  branchName_bjet1_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_phi");
-		  branchName_bjet1_isReconstructed_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_isReconstructed");
-		  branchName_bjet2_eta_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_eta");
-		  branchName_bjet2_phi_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_phi");
-		  branchName_bjet2_isReconstructed_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_isReconstructed");
-		  branchName_type_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "type");
-			///
-		  branchName_weight_signal_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weight_signal");
-		  branchName_weightErr_signal_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weightErr_signal");
-		  branchName_weight_background_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weight_background");
-		  branchName_weightErr_background_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weightErr_background");
-		  branchName_LR_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "LR");
-		  branchName_cpuTime_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "cpuTime");
-		  branchName_realTime_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "realTime");
-		  branchName_isValid_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "isValid");
-		  branchName_errorFlag_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "errorFlag");
-		}
+	branchName_run_ = Form("%s_%s", branchName_obj_.data(), "run");
+  branchName_lumi_ = Form("%s_%s", branchName_obj_.data(), "lumi");
+  branchName_evt_ = Form("%s_%s", branchName_obj_.data(), "evt");
+  branchName_leadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_eta");
+  branchName_leadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "leadLepton_phi");
+  branchName_subleadLepton_eta_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_eta");
+  branchName_subleadLepton_phi_ = Form("%s_%s", branchName_obj_.data(), "subleadLepton_phi");
+  branchName_bjet1_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet1_eta");
+  branchName_bjet1_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet1_phi");
+  branchName_bjet1_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet1_isReconstructed");
+  branchName_bjet2_eta_ = Form("%s_%s", branchName_obj_.data(), "bjet2_eta");
+  branchName_bjet2_phi_ = Form("%s_%s", branchName_obj_.data(), "bjet2_phi");
+  branchName_bjet2_isReconstructed_ = Form("%s_%s", branchName_obj_.data(), "bjet2_isReconstructed");
+  branchName_type_ = Form("%s_%s", branchName_obj_.data(), "type");
+	branchName_weight_signal_ = Form("%s_%s", branchName_obj_.data(), "weight_signal");
+  branchName_weightErr_signal_ = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
+  branchName_weight_background_ = Form("%s_%s", branchName_obj_.data(), "weight_background");
+  branchName_weightErr_background_ = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
+  branchName_LR_ = Form("%s_%s", branchName_obj_.data(), "LR");
+  branchName_cpuTime_ = Form("%s_%s", branchName_obj_.data(), "cpuTime");
+  branchName_realTime_ = Form("%s_%s", branchName_obj_.data(), "realTime");
+  branchName_isValid_ = Form("%s_%s", branchName_obj_.data(), "isValid");
+  branchName_errorFlag_ = Form("%s_%s", branchName_obj_.data(), "errorFlag");
 }
 
 void
@@ -161,9 +123,7 @@ MEMOutputWriter_hh_bb2l::setBranches(TTree * tree)
 
 void MEMOutputWriter_hh_bb2l::write(const std::vector<MEMOutput_hh_bb2l> & memOutputs)
 {
-	std::cout<<"MEMOutputWriter_hh_bb2l::write \n";
 		nMEMOutputs_ = memOutputs.size();
-		std::cout<<"number of read MEM: " << nMEMOutputs_ << " " << branchName_num_ << "\n";
 	  if(nMEMOutputs_ > max_nMEMOutputs_)
 	  {
 	    std::cout << "Warning: Number of MEMOutputs computed = " << nMEMOutputs_ << ", exceeds max_nMEMOutputs = "
