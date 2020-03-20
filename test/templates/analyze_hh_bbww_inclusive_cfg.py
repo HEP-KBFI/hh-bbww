@@ -51,6 +51,10 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
     branchName_subJetsLS = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
 
+    branchName_genLeptons = cms.string('GenLep'),
+    branchName_genHadTaus = cms.string('GenVisTau'),
+    branchName_genPhotons = cms.string('GenPhoton'),
+    branchName_genJets = cms.string('GenJet'),
     branchName_muonGenMatch = cms.string('MuonGenMatch'),
     branchName_electronGenMatch = cms.string('ElectronGenMatch'),
     branchName_hadTauGenMatch = cms.string('TauGenMatch'),
