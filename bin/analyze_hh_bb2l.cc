@@ -1703,7 +1703,7 @@ int main(int argc, char* argv[])
         memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.isValid() ? memOutput_hh_bb2l_matched_BM.LR() : -1.;
         memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
         memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
-        std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
+        if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
       }
     }
     // compute signal extraction observables
