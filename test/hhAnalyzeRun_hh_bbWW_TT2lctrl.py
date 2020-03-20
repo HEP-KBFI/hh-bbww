@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from hhAnalysis.bbww.configs.analyzeConfig_hh_bbWW_TT1lctrl import analyzeConfig_hh_bbWW_TT1lctrl
+from hhAnalysis.bbww.configs.analyzeConfig_hh_bbWW_TT2lctrl import analyzeConfig_hh_bbWW_TT2lctrl
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
@@ -10,7 +10,7 @@ import os
 import sys
 import getpass
 
-# E.g.: ./test/tthAnalyzeRun_hh_bbWW_TT1lctrl.py -v 2017Dec13 -m default -e 2017
+# E.g.: ./test/tthAnalyzeRun_hh_bbWW_TT2lctrl.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default' ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_extended_opts_hh
@@ -29,7 +29,7 @@ parser.add_use_home()
 parser.add_stitched(use_dy = False, use_wj = False)
 parser.add_jet_cleaning()
 parser.add_gen_matching()
-parser.enable_regrouped_jec()
+parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
 args = parser.parse_args()
 
@@ -56,13 +56,13 @@ use_home          = args.use_home
 use_stitched      = args.use_stitched
 jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
-regroup_jec       = args.enable_regrouped_jec
+regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 
-if regroup_jec:
+if regroup_jerc:
   if 'full' not in systematics_label:
-    raise RuntimeError("Regrouped JEC was enabled but not running with full systematics")
-  systematics.full.extend(systematics.JEC_regrouped)
+    raise RuntimeError("Regrouped JEC or split JER was enabled but not running with full systematics")
+  systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
 if split_trigger_sys == 'yes':
   for trigger_sys in systematics.triggerSF:
     del systematics.internal[systematics.internal.index(trigger_sys)]
@@ -111,11 +111,11 @@ if __name__ == '__main__':
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
 
-  analysis = analyzeConfig_hh_bbWW_TT1lctrl(
+  analysis = analyzeConfig_hh_bbWW_TT2lctrl(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
-    executable_analyze                    = "analyze_hh_bbWW_TT1lctrl",
-    cfgFile_analyze                       = "analyze_hh_bbWW_TT1lctrl_cfg.py",
+    executable_analyze                    = "analyze_hh_bbWW_TT2lctrl",
+    cfgFile_analyze                       = "analyze_hh_bbWW_TT2lctrl_cfg.py",
     samples                               = samples,
     lepton_charge_selections              = [ "OS" ],
     applyFakeRateWeights                  = "enabled",

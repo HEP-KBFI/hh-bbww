@@ -9,27 +9,35 @@
 #include <TMath.h> // TMath::Cos, TMath::Sin
 
 HMEInterface_hh_bb2l::HMEInterface_hh_bb2l()
-  : PUSample (true)
-  , iterations (100000)
-  , bjetrescaleAlgo (2)
-  , metcorrection (5)
-  , weightfromonshellnupt_func (false)
-  , weightfromonshellnupt_hist (true)
-  , weightfromonoffshellWmass_hist (true)
-  , useMET (true)
-  , RefPDFfile (LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root"))
+  : hmeAlgo_(nullptr)
+  , PUSample_(true)
+  , iterations_(100000)
+  , bjetrescaleAlgo_(2)
+  , metcorrection_(5)
+  , weightfromonshellnupt_func_(false)
+  , weightfromonshellnupt_hist_(true)
+  , weightfromonoffshellWmass_hist_(true)
+  , useMET_(true)
+  , RefPDFfile_(LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root"))
   , clock_(nullptr) 
 {
   std::cout << "<HMEInterface_hh_bb2l>:\n";
   
-  if( RefPDFfile.fullPath().empty() )
+  if( RefPDFfile_.fullPath().empty() )
     throw cms::Exception("analyze_hh_bb2l") << "Failed to find file = 'REFPDFPU40.root'\n";
+  
+  hmeAlgo_ = new heavyMassEstimator(
+    PUSample_, weightfromonshellnupt_func_, weightfromonshellnupt_hist_, weightfromonoffshellWmass_hist_,
+    iterations_, RefPDFfile_.fullPath(), useMET_, bjetrescaleAlgo_, metcorrection_
+  );
 
   clock_ = new TBenchmark();
 }
 
 HMEInterface_hh_bb2l::~HMEInterface_hh_bb2l()
 {
+  delete hmeAlgo_;
+
   delete clock_;
 }
 
@@ -61,16 +69,15 @@ HMEInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
   
   clock_->Reset();
   clock_->Start("<HMEInterface_hh_bb2l::operator()>");
-  heavyMassEstimator hmeAlgo(
-    &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
-    PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-    iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection
+  hmeAlgo_->set_inputs(
+    hmeLepton1P4, hmeLepton2P4, hmeBJet1P4, hmeBJet2P4, hmeSumJetsP4, hmeMEtP4,
+    ievent
   );
   double m_HH_hme = -1.;
-  bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+  bool hme_isValidSolution = hmeAlgo_->runheavyMassEstimator();
   if ( hme_isValidSolution )
   {
-    TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
+    const TH1F& hmeHist = hmeAlgo_->getheavyMassEstimatorh2();
     m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
   }
 

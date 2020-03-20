@@ -113,7 +113,6 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hh_bbWW_TT1lctrl",
     cfgFile_analyze                       = "analyze_hh_bbWW_TT1lctrl_cfg.py",
     samples                               = samples,
-    lepton_charge_selections              = [ "OS" ],
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     jet_cleaning_by_index                 = jet_cleaning_by_index,

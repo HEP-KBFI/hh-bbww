@@ -101,8 +101,11 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb2l.h" // MEMOutputReader_hh_bb2l
+#include "hhAnalysis/bbww/interface/HMEInterface_hh_bb2l.h" // HMEInterface_hh_bb2l // CV: switcht to HMEOutputReader_hh_bb2l in the future !!
+#include "hhAnalysis/bbww/interface/HMEOutput_hh_bb2l.h" // HMEOutput_hh_bb2l
 #include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
+#include "hhAnalysis/bbww/interface/BM_list.h" // BMS
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
@@ -473,11 +476,16 @@ int main(int argc, char* argv[])
     inputTree->registerReader(l1PreFiringWeightReader);
   }
 
-  MEMOutputReader_hh_bb2l * memReader = nullptr;
+  std::map<std::string, MEMOutputReader_hh_bb2l *> memReader;
+  for(auto BMlocal : memReader) BMlocal.second = nullptr;
+  //const std::string BM = "SM"; // BMS
   if(! branchName_memOutput.empty())
   {
-    memReader = new MEMOutputReader_hh_bb2l(Form("n%s", branchName_memOutput.data()), branchName_memOutput);
-    inputTree -> registerReader(memReader);
+    for(auto BMlocal : BMS)
+    {
+      memReader[BMlocal] = new MEMOutputReader_hh_bb2l(Form("n%s", branchName_memOutput.data()), branchName_memOutput, BMlocal);
+      inputTree -> registerReader(memReader[BMlocal]);
+    }
   }
 
 //--- declare particle collections
@@ -584,6 +592,10 @@ int main(int argc, char* argv[])
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
     inputTree -> registerReader(psWeightReader);
   }
+
+//--- initialize algorithm for reconstruction of H boson pair mass in HH->bbWW dilepton events
+//   (as described in arXiv:1701.04442)
+  HMEInterface_hh_bb2l hmeInterface_hh_bb2l;
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
   std::ostream* selEventsFile = ( selEventsFileName_output != "" ) ? new std::ofstream(selEventsFileName_output.data(), std::ios::out) : 0;
@@ -854,6 +866,17 @@ int main(int argc, char* argv[])
     bdt_filler = new std::remove_pointer<decltype(bdt_filler)>::type(
       makeHistManager_cfg(process_string, Form("%s/sel/evtntuple", histogramDir.data()), era_string, central_or_shift_main)
     );
+    for(const std::string & evt_cat_str: evt_cat_strs)
+    {
+      bdt_filler->register_variable<float_type>(evt_cat_str);
+    }
+    //Xanda "memweight_signal", "memweight_background","memOutput_LR",
+    for(const std::string & evt_cat_str: BMS)
+    {
+      bdt_filler->register_variable<float_type>( Form("memweight_signal_%s", evt_cat_str.c_str()) );
+      bdt_filler->register_variable<float_type>( Form("memweight_background_%s", evt_cat_str.c_str()) );
+      bdt_filler->register_variable<float_type>( Form("memOutput_LR_%s", evt_cat_str.c_str()) );
+    }
     bdt_filler->register_variable<float_type>(
       "lep1_pt", "lep1_conePt", "lep1_eta",
       "lep2_pt", "lep2_conePt", "lep2_eta",
@@ -870,7 +893,7 @@ int main(int argc, char* argv[])
       "m_HHvis", "pT_HHvis", "dPhi_HHvis",
       "m_HH", "pT_HH", "dPhi_HH", "Smin_HH",
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle",
-      "m_HH_hme", "memweight_signal", "memweight_background","memOutput_LR",
+      "m_HH_hme",
       "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
       "genWeight", "evtWeight",
@@ -928,7 +951,7 @@ int main(int argc, char* argv[])
     }
     ++analyzedEntries;
     histogram_analyzedEntries->Fill(0.);
-    //if ( analyzedEntries > 100 ) break;
+    if ( analyzedEntries > 100 ) break;
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
@@ -1454,7 +1477,7 @@ int main(int argc, char* argv[])
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
-    if ( selJetsT_Hbb.size() >= 1 ) 
+    if ( selJetsT_Hbb.size() >= 1 )
     {
       selJetT_Hbb = &selJetsT_Hbb[0];
       selJetAK8_Hbb = selJetT_Hbb->fatjet_;
@@ -1598,12 +1621,17 @@ int main(int argc, char* argv[])
       }
     }
 
+    std::cout<<"before Reading MEM \n";
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
-    if(memReader)
+    if(memReader.size() > 0)
     {
-      const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l = memReader->read();
+      const std::string BM = "SM"; // BMS
+      std::cout<<" Reading MEM -- for the basic variables read only to SM \n";
+      const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l = memReader[BM]->read();
+      std::cout<<"number of read: " << memOutputs_hh_bb2l.size() << "\n";
       for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l: memOutputs_hh_bb2l)
       {
+        std::cout<<" Reading MEM -- " << memOutput_hh_bb2l.leadLepton_eta_ << " " << memOutput_hh_bb2l.leadLepton_phi_<< "\n";
         const double selLepton_lead_dR = deltaR(
           selLepton_lead->eta(), selLepton_lead->phi(),
           memOutput_hh_bb2l.leadLepton_eta_, memOutput_hh_bb2l.leadLepton_phi_
@@ -1656,9 +1684,22 @@ int main(int argc, char* argv[])
         }
       }
     }
-    double memOutput_LR = memOutput_hh_bb2l_matched.isValid() ? memOutput_hh_bb2l_matched.LR() : -1.;
-    double memweight_signal = memOutput_hh_bb2l_matched.weight_signal();
-    double memweight_background = memOutput_hh_bb2l_matched.weight_background();
+    //read MEM result by BM
+    std::map<std::string, double> memOutput_LR;
+    std::map<std::string, double> memweight_signal;
+    std::map<std::string, double> memweight_background;
+    for(auto BMlocal : BMS)
+    {
+      const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l_BM = memReader[BMlocal]->read();
+      for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l_BM: memOutputs_hh_bb2l_BM)
+      {
+        MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
+        memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.isValid() ? memOutput_hh_bb2l_matched_BM.LR() : -1.;
+        memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
+        memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
+        std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
+      }
+    }
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1768,45 +1809,19 @@ int main(int argc, char* argv[])
 //    if ( algoTopness_fixedChi2.isValidSolution() ) {
 //      logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
 //    }
+
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
-    TLorentzVector hmeLepton1P4(selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.pz(), selLeptonP4_lead.energy());
-    TLorentzVector hmeLepton2P4(selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.pz(), selLeptonP4_sublead.energy());
-    TLorentzVector hmeBJet1P4(selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.energy());
-    TLorentzVector hmeBJet2P4(selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.energy());
-    TLorentzVector hmeMEtP4(metP4.px(), metP4.py(), 0., metP4.pt());
-    double hmeSumJetsPx = -(selLeptonP4_lead.px() + selLeptonP4_sublead.px() + selJetP4_Hbb_lead.px() + selJetP4_Hbb_sublead.px() + metP4.px());
-    double hmeSumJetsPy = -(selLeptonP4_lead.py() + selLeptonP4_sublead.py() + selJetP4_Hbb_lead.py() + selJetP4_Hbb_sublead.py() + metP4.py());
-    double hmeSumJetsPz = 0.;
-    double hmeSumJetsEn = TMath::Sqrt(hmeSumJetsPx*hmeSumJetsPx + hmeSumJetsPy*hmeSumJetsPy);
-    TLorentzVector hmeSumJetsP4(hmeSumJetsPx, hmeSumJetsPy, hmeSumJetsPz, hmeSumJetsEn);
-    const bool PUSample = true;
+    //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
     const int ievent = eventInfo.event;
-    const int iterations = 100000;
-    //const int iterations = 20000;
-    const int bjetrescaleAlgo = 2;
-    const int metcorrection = 5;
-    const bool weightfromonshellnupt_func = false;
-    const bool weightfromonshellnupt_hist = true;
-    const bool weightfromonoffshellWmass_hist = true;
-    const bool useMET = true;
-    LocalFileInPath RefPDFfile = LocalFileInPath("hhAnalysis/Heavymassestimator/data/REFPDFPU40.root");
-    if( RefPDFfile.fullPath().empty() )
-      throw cms::Exception("analyze_hh_bb2l") << "Failed to find file = 'REFPDFPU40.root'\n";
-    clock.Reset();
-    clock.Start("hmeAlgo");
-    heavyMassEstimator hmeAlgo(
-      &hmeLepton1P4, &hmeLepton2P4, &hmeBJet1P4, &hmeBJet2P4, &hmeSumJetsP4, &hmeMEtP4,
-      PUSample, ievent, weightfromonshellnupt_func, weightfromonshellnupt_hist, weightfromonoffshellWmass_hist,
-      iterations, RefPDFfile.fullPath(), useMET, bjetrescaleAlgo, metcorrection, isDEBUG ? 5 : 0);
+    //HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
+    //hmeOutput.eventInfo_ = eventInfo;
     double m_HH_hme = -1.;
-    bool hme_isValidSolution = hmeAlgo.runheavyMassEstimator();
+    bool hme_isValidSolution = false; //hmeOutput.isValid();
     if ( hme_isValidSolution ) {
-      TH1F hmeHist = hmeAlgo.getheavyMassEstimatorh2();
-      m_HH_hme = hmeHist.GetXaxis()->GetBinCenter(hmeHist.GetMaximumBin());
+      m_HH_hme = -1.;// hmeOutput.m_HH_hme();
     }
-    clock.Stop("hmeAlgo");
-    //double hmeCpuTime = clock.GetCpuTime("hmeAlgo");
+    //double hmeCpuTime = hmeOutput.cpuTime();
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
@@ -1844,6 +1859,8 @@ int main(int argc, char* argv[])
       vbf_jet2_pt = selJet_vbf_sublead->pt();
       vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
+
+    std::cout << "Filling BDT\n";
     mvaInputs_XGB["mht"] = mhtP4.pt();
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["m_ll"] = m_ll;
@@ -1856,18 +1873,18 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["logHiggsness_fixedChi2"] = logHiggsness_fixedChi2;
     mvaInputs_XGB["nBJetLoose"] = selBJetsAK4_loose.size();
     mvaInputs_XGB["gen_mHH"] = 300;
-    double mvaoutput_bb2l300 = mva_xgb_bb2l_res(mvaInputs_XGB);
+    double mvaoutput_bb2l300 = 1.;//mva_xgb_bb2l_res(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 400;
-    double mvaoutput_bb2l400 = mva_xgb_bb2l_res(mvaInputs_XGB);
+    double mvaoutput_bb2l400 = 1.;//mva_xgb_bb2l_res(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 750;
-    double mvaoutput_bb2l750 = mva_xgb_bb2l_res(mvaInputs_XGB);
+    double mvaoutput_bb2l750 = 1.;//mva_xgb_bb2l_res(mvaInputs_XGB);
 
-    double mvaoutputnohiggnessnotopness_bb2l300 = mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
+    double mvaoutputnohiggnessnotopness_bb2l300 = 1.0;// mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 400;
-    double mvaoutputnohiggnessnotopness_bb2l400 = mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
+    double mvaoutputnohiggnessnotopness_bb2l400 = 1.0;// mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
     mvaInputs_XGB["gen_mHH"] = 750;
-    double mvaoutputnohiggnessnotopness_bb2l750 = mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
-    mvaInputs_XGB.clear();
+    double mvaoutputnohiggnessnotopness_bb2l750 = 1.0;// mva_xgbnohiggnessnotopness_bb2l(mvaInputs_XGB);
+    //mvaInputs_XGB.clear();
 
     double mvaoutput_bb2l_node3 = 1.0; //mva_xgb_bb2l_nonres(mvaInputs_XGB);
     double mvaoutput_bb2l_node7 = 1.0; //mva_xgb_bb2l_nonres(mvaInputs_XGB);
@@ -1886,11 +1903,12 @@ int main(int argc, char* argv[])
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
 //--- fill histograms with events passing final selection
+    std::map<std::string, double> rwgt_map;
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
       const double evtWeight = evtWeightRecorder.get(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
-      std::map<std::string, double> rwgt_map;
+
       for(const std::string & evt_cat_str: evt_cat_strs)
       {
         if(skipFilling && evt_cat_str != default_cat_str)
@@ -1959,7 +1977,7 @@ int main(int argc, char* argv[])
             mvaoutput_bb2l_sm,
             kv.second
           );
-          if(memReader)
+          if(memReader.size() > 0)
           {
             selHistManager->evt_[kv.first]->fillHistograms(
               &memOutput_hh_bb2l_matched,
@@ -2021,7 +2039,7 @@ int main(int argc, char* argv[])
                   mvaoutput_bb2l_sm,
                   kv.second
                 );
-                if(memReader)
+                if(memReader.size() > 0)
                 {
                   selHistManager->evt_in_categories_[kv.first][category.name_]->fillHistograms(
                     &memOutput_hh_bb2l_matched,
@@ -2104,9 +2122,9 @@ int main(int argc, char* argv[])
           ("mT2_top_2particle",             mT2_top_2particle)
           ("mT2_top_3particle",             mT2_top_3particle)
           ("m_HH_hme",                      m_HH_hme)
-	  ("memweight_signal",              memweight_signal)
-	  ("memweight_background",          memweight_background)
-	  ("memOutput_LR",                  memOutput_LR)
+	  //("memweight_signal",              memweight_signal)
+	  //("memweight_background",          memweight_background)
+	  //("memOutput_LR",                  memOutput_LR)
           ("logTopness_publishedChi2",      logTopness_publishedChi2)
           ("logHiggsness_publishedChi2",    logHiggsness_publishedChi2)
           ("logTopness_fixedChi2",          logTopness_fixedChi2)
@@ -2127,6 +2145,10 @@ int main(int argc, char* argv[])
           ("isVBF",                         isVBF)
           ("mhh_gen",                       eventInfo.gen_mHH)
           ("costS_gen",                     eventInfo.gen_cosThetaStar)
+          (rwgt_map)
+          (memweight_signal, "memweight_signal")
+          (memweight_background, "memweight_background")
+          (memOutput_LR, "memOutput_LR")
         .fill()
       ;
     }
@@ -2149,7 +2171,7 @@ int main(int argc, char* argv[])
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
-      snm->read(memOutput_LR,                           FloatVariableType_bbww::MEM_LR);
+      snm->read(memOutput_LR["SM"],                     FloatVariableType_bbww::MEM_LR);
 
       if(isGenMatched)
       {
@@ -2231,7 +2253,11 @@ int main(int argc, char* argv[])
   delete genTauLeptonReader;
   delete lheInfoReader;
   delete psWeightReader;
-  delete memReader;
+  //delete memReader;
+  for (auto BM : memReader)
+  {
+    delete (BM.second);
+  }
 
   for(auto & kv: genEvtHistManager_beforeCuts)
   {

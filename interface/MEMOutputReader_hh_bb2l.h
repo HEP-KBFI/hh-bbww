@@ -3,6 +3,7 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/ReaderBase.h" // ReaderBase
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
+typedef std::vector<std::string> vstring;
 
 // forward declarations
 class TTree;
@@ -12,7 +13,9 @@ class MEMOutputReader_hh_bb2l
 {
 public:
   MEMOutputReader_hh_bb2l(const std::string & branchName_num,
-                          const std::string & branchName_obj);
+                          const std::string & branchName_obj,
+                          const std::string & BM
+                        );
   ~MEMOutputReader_hh_bb2l();
 
   /**
@@ -26,18 +29,20 @@ public:
    * @return Collection of MEMOutput_hh_bb2l objects
    */
   std::vector<MEMOutput_hh_bb2l>
-  read() const;
+  read( ) const; // const std::string BM
 
 protected:
  /**
    * @brief Initialize names of branches to be read from tree
    */
   void
-  setBranchNames();
+  setBranchNames(); // const std::string & BM
 
   const int max_nMEMOutputs_;
+  //vstring BMS1_;
   std::string branchName_num_;
   std::string branchName_obj_;
+  std::string BM_;
 
   std::string branchName_run_;
   std::string branchName_lumi_;
@@ -53,6 +58,7 @@ protected:
   std::string branchName_bjet2_phi_;
   std::string branchName_bjet2_isReconstructed_;
   std::string branchName_type_;
+
   std::string branchName_weight_signal_;
   std::string branchName_weightErr_signal_;
   std::string branchName_weight_background_;
@@ -95,4 +101,3 @@ protected:
 };
 
 #endif // hhAnalysis_bbww_MEMOutputReader_hh_bb2l_h
-
