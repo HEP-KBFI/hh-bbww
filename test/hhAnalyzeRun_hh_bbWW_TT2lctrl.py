@@ -93,7 +93,7 @@ blacklisted_categories = []
 for sample_name, sample_info in samples.items():
   if sample_name == 'sum_events':
     continue
-  if sample_name.startswith(('/DoubleMuon/', '/DoubleEG/', '/MuonEG/', '/Tau/')):
+  if sample_name.startswith('/Tau/'):
     sample_info["use_it"] = False
   if sample_info["process_name_specific"].startswith('signal') and 'hh' in sample_info["process_name_specific"]:
     sample_info["use_it"] = False

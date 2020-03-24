@@ -127,5 +127,10 @@ process.makePlots.distributions.extend([
 ##         histogramName = cms.string("sel/evt/$PROCESS/vbf_dEta_jj"),
 ##         xAxisTitle = cms.string("VBF jet #Delta#eta_{jj} [GeV]"),
 ##         yAxisTitle = cms.string("dN/d#Delta#eta_{jj}")
-##     )
+##     ),
+    cms.PSet(
+           histogramName = cms.string("sel/evtYield/$PROCESS/evtYield"),
+           xAxisTitle = cms.string("Run Period"),
+           yAxisTitle = cms.string("Events / 1 fb^{-1}")
+    )
 ])

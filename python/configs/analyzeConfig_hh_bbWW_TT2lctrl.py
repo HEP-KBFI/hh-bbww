@@ -206,11 +206,6 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
       lines.append("  ),")
     lines.append(")")
     lines.append("process.makePlots.intLumiData = cms.double(%.1f)" % (self.lumi / 1000))
-    lines.append("process.makePlots.distributions = cms.VPSet("
-        "distribution for distribution in process.makePlots.distributions "
-        "if not distribution.histogramName.value().startswith(('sel/evtYield',))"
-      ")"
-    )
     create_cfg(jobOptions['cfgFile_original'], jobOptions['cfgFile_modified'], lines)
 
   def addToMakefile_backgrounds_from_data(self, lines_makefile, make_target = "phony_addFakes", make_dependency = "phony_copyHistograms"):

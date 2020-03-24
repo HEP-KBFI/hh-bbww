@@ -1813,7 +1813,7 @@ int main(int argc, char* argv[])
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
     //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
-    const int ievent = eventInfo.event;
+    //const int ievent = eventInfo.event;
     //HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
     //hmeOutput.eventInfo_ = eventInfo;
     double m_HH_hme = -1.;
