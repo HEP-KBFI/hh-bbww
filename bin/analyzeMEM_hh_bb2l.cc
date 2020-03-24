@@ -245,15 +245,35 @@ int main(int argc, char* argv[])
   const std::string BM = "SM"; // BMS
   if ( !branchName_memOutput.empty() )
   {
-    memReader = new MEMOutputReader_hh_bb2l(
-      Form("n%s", branchName_memOutput.data()), branchName_memOutput, BM);
+    std::string namebranchN;
+    std::string namebranch;
+    if ( BM == "SM")
+    {
+      namebranch = branchName_memOutput.data();
+      namebranchN = Form("n%s", branchName_memOutput.data());
+    }
+    else {
+      namebranch = Form("%s_%s", branchName_memOutput.data(), BM.c_str());
+      namebranchN = Form("n%s_%s", branchName_memOutput.data(), BM.c_str());
+    }
+    memReader = new MEMOutputReader_hh_bb2l(namebranchN , branchName_memOutput);
     inputTree->registerReader(memReader);
   }
   MEMOutputReader_hh_bb2l* memReader_missingBJet = nullptr;
   if ( !branchName_memOutput_missingBJet.empty() )
   {
-    memReader_missingBJet = new MEMOutputReader_hh_bb2l(
-      Form("n%s", branchName_memOutput_missingBJet.data()), branchName_memOutput_missingBJet, BM);
+    std::string namebranchN_missingBJet;
+    std::string namebranch_missingBJet;
+    if ( BM == "SM")
+    {
+      namebranch_missingBJet = branchName_memOutput.data();
+      namebranchN_missingBJet = Form("n%s", branchName_memOutput.data());
+    }
+    else {
+      namebranch_missingBJet = Form("%s_%s", branchName_memOutput.data(), BM.c_str());
+      namebranchN_missingBJet = Form("n%s_%s", branchName_memOutput.data(), BM.c_str());
+    }
+    memReader_missingBJet = new MEMOutputReader_hh_bb2l(namebranchN_missingBJet , branchName_memOutput_missingBJet);
     inputTree->registerReader(memReader_missingBJet);
   }
 

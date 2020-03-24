@@ -9,12 +9,11 @@ std::map<std::string, int> MEMOutputReader_hh_bb2l::numInstances_;
 std::map<std::string, MEMOutputReader_hh_bb2l *> MEMOutputReader_hh_bb2l::instances_;
 
 MEMOutputReader_hh_bb2l::MEMOutputReader_hh_bb2l(const std::string & branchName_num,
-						 const std::string & branchName_obj, const std::string & BM //, vstring BMS
+						 const std::string & branchName_obj
 					 )
   : max_nMEMOutputs_(100)
   , branchName_num_(branchName_num)
   , branchName_obj_(branchName_obj)
-	, BM_(BM)
   , run_(nullptr)
   , lumi_(nullptr)
   , evt_(nullptr)
@@ -80,10 +79,9 @@ MEMOutputReader_hh_bb2l::~MEMOutputReader_hh_bb2l()
 void
 MEMOutputReader_hh_bb2l::setBranchNames() // const std::string & BM
 {
+	std::cout<<" first set branches MEM to BM: " << branchName_obj_ << "\n";
   if(numInstances_[branchName_obj_] == 0)
   {
-		if ( BM_ == "SM")
-		{
 		branchName_run_                   = Form("%s_%s", branchName_obj_.data(), "run");
     branchName_lumi_                  = Form("%s_%s", branchName_obj_.data(), "lumi");
     branchName_evt_                   = Form("%s_%s", branchName_obj_.data(), "evt");
@@ -107,31 +105,6 @@ MEMOutputReader_hh_bb2l::setBranchNames() // const std::string & BM
     branchName_realTime_              = Form("%s_%s", branchName_obj_.data(), "realTime");
     branchName_isValid_               = Form("%s_%s", branchName_obj_.data(), "isValid");
     branchName_errorFlag_             = Form("%s_%s", branchName_obj_.data(), "errorFlag");
-	} else {
-		branchName_run_                   = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "run");
-		branchName_lumi_                  = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "lumi");
-		branchName_evt_                   = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "evt");
-		branchName_leadLepton_eta_        = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "leadLepton_eta");
-		branchName_leadLepton_phi_        = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "leadLepton_phi");
-		branchName_subleadLepton_eta_     = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "subleadLepton_eta");
-		branchName_subleadLepton_phi_     = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "subleadLepton_phi");
-		branchName_bjet1_eta_             = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_eta");
-		branchName_bjet1_phi_             = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_phi");
-		branchName_bjet1_isReconstructed_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet1_isReconstructed");
-		branchName_bjet2_eta_             = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_eta");
-		branchName_bjet2_phi_             = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_phi");
-		branchName_bjet2_isReconstructed_ = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "bjet2_isReconstructed");
-		branchName_type_                  = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "type");
-		branchName_weight_signal_         = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weight_signal");
-		//branchName_weightErr_signal_         = Form("%s_%s", branchName_obj_.data(), "weightErr_signal");
-		branchName_weight_background_     = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "weight_background");
-		//branchName_weightErr_background_     = Form("%s_%s", branchName_obj_.data(), "weightErr_background");
-		branchName_LR_                    = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "LR");
-		branchName_cpuTime_               = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "cpuTime");
-		branchName_realTime_              = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "realTime");
-		branchName_isValid_               = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "isValid");
-		branchName_errorFlag_             = Form("%s_%s_%s", branchName_obj_.data(), BM_.c_str(), "errorFlag");
-		}
     instances_[branchName_obj_] = this;
   }
   else
@@ -181,12 +154,11 @@ MEMOutputReader_hh_bb2l::setBranchAddresses(TTree * tree)
 }
 
 std::vector<MEMOutput_hh_bb2l>
-MEMOutputReader_hh_bb2l::read( ) const // const std::string BM
+MEMOutputReader_hh_bb2l::read(  ) const // const std::string BM
 {
   MEMOutputReader_hh_bb2l* gInstance = instances_[branchName_obj_];
   assert(gInstance);
-  Int_t nMEMOutputs = 1;//gInstance -> nMEMOutputs_;
-	std::cout<<" Reading inside MEM " << BM_ << " " << nMEMOutputs << " " << branchName_num_ << " " << branchName_obj_ << "\n" ;
+  Int_t nMEMOutputs = gInstance -> nMEMOutputs_;
   if(nMEMOutputs > max_nMEMOutputs_)
   {
     throw cmsException(this)
