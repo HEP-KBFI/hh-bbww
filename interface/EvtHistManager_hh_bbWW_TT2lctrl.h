@@ -170,7 +170,7 @@ public:
       {
         histogram_genTop_pt_vs_top_pt_ = histManager->book2D(
           dir, Form("genTop_pt_vs_top_pt%s", histogramName_suffix_.data()), numBins_pt, binning_pt, numBins_pt, binning_pt);
-        histogram_deltaTop_pt_         = histManager->book1D(dir, Form("deltaTop_pt%s", histogramName_suffix_.data()),       40, -100., +100.);
+        histogram_deltaTop_pt_         = histManager->book1D(dir, Form("deltaTop_pt%s", histogramName_suffix_.data()),       60, -300., +300.);
         histogram_deltaTop_pt_vs_genTop_pt_ = histManager->book2D(
           dir, Form("deltaTop_pt_vs_genTop_pt%s", histogramName_suffix_.data()), 10, 0., 250., 30, -75., +75.);
         histogram_deltaTop_eta_        = histManager->book1D(dir, Form("deltaTop_eta%s", histogramName_suffix_.data()),     100,   -5.,   +5.);
@@ -178,7 +178,7 @@ public:
 
         histogram_genAntiTop_pt_vs_antiTop_pt_ = histManager->book2D(
           dir, Form("genAntiTop_pt_vs_antiTop_pt%s", histogramName_suffix_.data()), numBins_pt, binning_pt, numBins_pt, binning_pt);
-        histogram_deltaAntiTop_pt_     = histManager->book1D(dir, Form("deltaAntiTop_pt%s", histogramName_suffix_.data()),   40, -100., +100.);
+        histogram_deltaAntiTop_pt_     = histManager->book1D(dir, Form("deltaAntiTop_pt%s", histogramName_suffix_.data()),   60, -300., +300.);
         histogram_deltaAntiTop_pt_vs_genAntiTop_pt_ = histManager->book2D(
           dir, Form("deltaAntiTop_pt_vs_genAntiTop_pt%s", histogramName_suffix_.data()), 10, 0., 250., 30, -75., +75.);
         histogram_deltaAntiTop_eta_    = histManager->book1D(dir, Form("deltaAntiTop_eta%s", histogramName_suffix_.data()), 100,   -5.,   +5.);
