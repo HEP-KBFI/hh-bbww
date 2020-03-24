@@ -92,6 +92,7 @@ protected:
   Float_t * mu_dz;
   Float_t * mu_segmentCompatibility;
   Float_t * mu_leptonMVA;
+  Float_t * mu_dpt_div_pt;
   Int_t * mu_mediumID;
   Int_t * mu_isfakeablesel;
   Int_t * mu_ismvasel;
