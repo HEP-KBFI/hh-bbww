@@ -192,7 +192,8 @@ int main(int argc, char* argv[])
   bool isMC_HH = isMC && process_string.find("hh_bbvv")!= std::string::npos;
   bool isMC_TT = isMC && process_string.find("TT")     != std::string::npos;
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
+  //bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
+  bool isMC_HH_nonres = false; // CV: temporary work-around, as branch "mHH_lhe" is missing in Ntuple containing AK4LS jets produced by Karl
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift = "central";
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
@@ -203,6 +204,7 @@ int main(int argc, char* argv[])
   std::string branchName_electrons = cfg_analyze.getParameter<std::string>("branchName_electrons");
   std::string branchName_muons = cfg_analyze.getParameter<std::string>("branchName_muons");
   std::string branchName_jets_ak4 = cfg_analyze.getParameter<std::string>("branchName_jets_ak4");
+  std::string branchName_jets_ak4LS = cfg_analyze.getParameter<std::string>("branchName_jets_ak4LS");
   std::string branchName_jets_ak8 = cfg_analyze.getParameter<std::string>("branchName_jets_ak8");
   std::string branchName_subjets_ak8 = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8");
   std::string branchName_jets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_jets_ak8LS");
@@ -270,6 +272,12 @@ int main(int argc, char* argv[])
 
   RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, false);
   inputTree->registerReader(jetReaderAK4);
+  RecoJetReader* jetReaderAK4LS = nullptr;
+  if ( branchName_jets_ak4LS != branchName_jets_ak4 )
+  {
+    jetReaderAK4LS = new RecoJetReader(era, isMC, branchName_jets_ak4LS, false);
+    inputTree->registerReader(jetReaderAK4LS); 
+  }
   RecoJetCollectionCleaner jetCleanerAK4_dR04(0.4, isDEBUG);
   //RecoJetCollectionCleaner jetCleanerAK4_dR04(0.2, isDEBUG); // CV: ONLY FOR TESTING !!
   //RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
@@ -618,7 +626,15 @@ int main(int argc, char* argv[])
     std::vector<const GenJet*> genWJets_passingPt = genWJetSelector(genWJets_ptrs);
     genWJetSelector.getSelector().set_max_absEta(selJetAK4_max_absEta_Wjj);
     std::vector<const GenJet*> genWJets_passingPt_and_Eta = genWJetSelector(genWJets_ptrs);
-    std::vector<const GenJet*> cleanedGenWJets_wrtLeptons = genJetCleaner_dR04(genWJets_passingPt_and_Eta, genLeptons_passingEta);
+    std::vector<const GenJet*> cleanedGenWJets_wrtLeptons;
+    if ( jetReaderAK4LS )
+    {
+      cleanedGenWJets_wrtLeptons = genWJets_passingPt_and_Eta; // CV: disable jet cleaning wrt leptons if using ak4LS jets for W->jj decay
+    }
+    else
+    { 
+      cleanedGenWJets_wrtLeptons = genJetCleaner_dR04(genWJets_passingPt_and_Eta, genLeptons_passingEta);
+    }
     genBJetSelector.getSelector().set_min_pt(10.);
     genBJetSelector.getSelector().set_max_absEta(selJetAK4_max_absEta_Hbb);  
     std::vector<const GenJet*> genBJets_passingEta = genBJetSelector(genBJets_ptrs);
@@ -710,6 +726,15 @@ int main(int argc, char* argv[])
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    std::vector<RecoJet> jets_ak4LS;
+    std::vector<const RecoJet*> jet_ptrs_ak4LS;
+    std::vector<const RecoJet*> selJetsAK4LS;
+    if ( jetReaderAK4LS )
+    {
+      jets_ak4LS = jetReaderAK4LS->read();
+      jet_ptrs_ak4LS = convert_to_ptrs(jets_ak4LS);
+      selJetsAK4LS = jetSelectorAK4(jet_ptrs_ak4LS, isHigherPt);
+    }
 
     bool passesEvtSel_rec         = true;
     bool passesEvtSel_gen         = true;
@@ -814,12 +839,21 @@ int main(int argc, char* argv[])
     if ( passesEvtSel_rec_and_gen ) cutFlowTable.update(cutBJetCSV,        "gen&rec", evtWeight);
 
 //--- select jets from W->jj decay
+    std::vector<const RecoJet*> selJetsAK4_or_AK4LS_Wjj;
+    if ( jetReaderAK4LS )
+    {
+      selJetsAK4_or_AK4LS_Wjj = selJetsAK4LS;
+    }
+    else
+    {
+      selJetsAK4_or_AK4LS_Wjj = cleanedJetsAK4_wrtLeptons;
+    }
     std::vector<selJetsType_Wjj> selJetsT_Wjj;
     if ( selJetT_Hbb )
     {
       selJetsT_Wjj = selectJets_Wjj(
         jet_ptrs_ak8LS, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8LS_Wjj,
-        cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
+        selJetsAK4_or_AK4LS_Wjj, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_Wjj,
         *selJetT_Hbb, 
         tightLepton, selBJetsAK4_medium, mva_Wjj, eventInfo,
         &genWJets_ptrs);
