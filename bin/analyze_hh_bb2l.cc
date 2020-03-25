@@ -103,6 +103,7 @@
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb2l.h" // MEMOutputReader_hh_bb2l
 #include "hhAnalysis/bbww/interface/HMEInterface_hh_bb2l.h" // HMEInterface_hh_bb2l // CV: switcht to HMEOutputReader_hh_bb2l in the future !!
 #include "hhAnalysis/bbww/interface/HMEOutput_hh_bb2l.h" // HMEOutput_hh_bb2l
+#include "hhAnalysis/bbww/interface/HMEOutputReader_hh_bb2l.h" // HMEOutputReader_hh_bb2l
 #include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/BM_list.h" // BMS
@@ -286,6 +287,8 @@ int main(int argc, char* argv[])
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
 
+  bool run_hme = cfg_analyze.getParameter<bool>("run_hme");
+
   if(! central_or_shifts_local.empty())
   {
     assert(central_or_shift_main == "central");
@@ -379,6 +382,7 @@ int main(int argc, char* argv[])
   std::string branchName_genPhotons = cfg_analyze.getParameter<std::string>("branchName_genPhotons");
   std::string branchName_genJets = cfg_analyze.getParameter<std::string>("branchName_genJets");
   std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
+  std::string branchName_hmeOutput = cfg_analyze.getParameter<std::string>("branchName_hmeOutput");
 
   std::string branchName_muonGenMatch     = cfg_analyze.getParameter<std::string>("branchName_muonGenMatch");
   std::string branchName_electronGenMatch = cfg_analyze.getParameter<std::string>("branchName_electronGenMatch");
@@ -487,6 +491,9 @@ int main(int argc, char* argv[])
       inputTree -> registerReader(memReader[BMlocal]);
     }
   }
+
+  HMEOutputReader_hh_bb2l* hmeReader;
+  hmeReader = new HMEOutputReader_hh_bb2l(Form("n%s", branchName_hmeOutput.data()), branchName_hmeOutput);
 
 //--- declare particle collections
   const bool readGenObjects = isMC && !redoGenMatching;
@@ -1813,13 +1820,81 @@ int main(int argc, char* argv[])
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
     //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
-    const int ievent = eventInfo.event;
-    //HMEOutput_hh_bb2l hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
-    //hmeOutput.eventInfo_ = eventInfo;
-    double m_HH_hme = -1.;
-    bool hme_isValidSolution = false; //hmeOutput.isValid();
+
+    HMEOutput_hh_bb2l hmeOutput;
+    double m_HH_hme(-1);
+    if(run_hme)
+    {
+      const int ievent = eventInfo.event;
+      hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
+      hmeOutput.eventInfo_ = eventInfo;
+    }
+    else 
+    {
+      if(hmeReader)
+	{
+	  const std::vector<HMEOutput_hh_bb2l> hmeOutputs_hh_bb2l = hmeReader->read();
+	  std::cout<<"number of read: " << hmeOutputs_hh_bb2l.size() << "\n";
+	  for(const HMEOutput_hh_bb2l & hmeOutput_hh_bb2l: hmeOutputs_hh_bb2l)
+	    {
+	      std::cout<<" Reading HME -- " << hmeOutput_hh_bb2l.leadLepton_eta_ << " " << hmeOutput_hh_bb2l.leadLepton_phi_<< "\n";
+	      const double selLepton_lead_dR = deltaR(
+						      selLepton_lead->eta(), selLepton_lead->phi(),
+						      hmeOutput_hh_bb2l.leadLepton_eta_, hmeOutput_hh_bb2l.leadLepton_phi_
+						      );
+	      if(selLepton_lead_dR > 1.e-2)
+		{
+		  continue;
+		}
+	      const double selLepton_sublead_dR = deltaR(
+							 selLepton_sublead->eta(), selLepton_sublead->phi(),
+							 hmeOutput_hh_bb2l.subleadLepton_eta_, hmeOutput_hh_bb2l.subleadLepton_phi_
+							 );
+
+	      if(selLepton_sublead_dR > 1.e-2)
+		{
+		  continue;
+		}
+	      hmeOutput = hmeOutput_hh_bb2l;
+	      break;
+	    }
+	  if(! hmeOutput.is_initialized())
+	    {
+	      std::cout << "Warning in " << eventInfo << '\n'
+			<< "No HMEOutput_hh_bb2l object found for:\n"
+			<< "\tselLepton_lead: pT = " << selLepton_lead->pt()
+			<< ", eta = "                << selLepton_lead->eta()
+			<< ", phi = "                << selLepton_lead->phi()
+			<< ", pdgId = "              << selLepton_lead->pdgId() << "\n"
+		"\tselLepton_sublead: pT = " << selLepton_sublead->pt()
+			<< ", eta = "                   << selLepton_sublead->eta()
+			<< ", phi = "                   << selLepton_sublead->phi()
+			<< ", pdgId = "                 << selLepton_sublead->pdgId() << "\n"
+		"Number of HME objects read: " << hmeOutputs_hh_bb2l.size() << '\n'
+		;
+	      if(! hmeOutputs_hh_bb2l.empty())
+		{
+		  for(unsigned hme_idx = 0; hme_idx < hmeOutputs_hh_bb2l.size(); ++hme_idx)
+		    {
+		      std::cout << "\t#" << hme_idx << " hme object;\n"
+				<< "\t\tlead lepton eta = "    << hmeOutputs_hh_bb2l[hme_idx].leadLepton_eta_
+				<< "; phi = "                  << hmeOutputs_hh_bb2l[hme_idx].leadLepton_phi_ << '\n'
+				<< "\t\tsublead lepton eta = " << hmeOutputs_hh_bb2l[hme_idx].subleadLepton_eta_
+				<< "; phi = "                  << hmeOutputs_hh_bb2l[hme_idx].subleadLepton_phi_ << '\n'
+			;
+		    }
+		}
+	      else
+		{
+		  std::cout << "Event contains no HME objects whatsoever !!\n";
+		}
+	    }
+	}
+    }
+
+    bool hme_isValidSolution = hmeOutput.isValid();
     if ( hme_isValidSolution ) {
-      m_HH_hme = -1.;// hmeOutput.m_HH_hme();
+      m_HH_hme = hmeOutput.m_HH_hme();
     }
     //double hmeCpuTime = hmeOutput.cpuTime();
     //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
