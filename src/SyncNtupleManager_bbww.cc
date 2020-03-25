@@ -40,74 +40,75 @@ SyncNtupleManager_bbww::~SyncNtupleManager_bbww()
 void
 SyncNtupleManager_bbww::initializeBranches()
 {
-  const char * lstr = "lep";
-  const char * mstr = "mu";
-  const char * estr = "ele";
-  const char * jstr = "ak4Jet";
-  const char * jstrAk8 = "ak8Jet";
+  const char * lstr      = "lep";
+  const char * mstr      = "mu";
+  const char * estr      = "ele";
+  const char * jstr      = "ak4Jet";
+  const char * jstrAk8   = "ak8Jet";
   const char * jstrAk8Ls = "ak8lsJet";
 
-  const std::string n_sel_lep_str              = Form("n_%s",             lstr);
-  const std::string n_presel_mu_str            = Form("n_presel_%s",      mstr);
-  const std::string n_fakeablesel_mu_str       = Form("n_fakeablesel_%s",      mstr);
-  const std::string n_mvasel_mu_str            = Form("n_mvasel_%s",      mstr);
-  const std::string n_presel_ele_str           = Form("n_presel_%s",      estr);
-  const std::string n_fakeablesel_ele_str      = Form("n_fakeablesel_%s",      estr);
-  const std::string n_mvasel_ele_str           = Form("n_mvasel_%s",      estr);
-  const std::string n_presel_jet_str           = Form("n_presel_%s",      jstr);
-  const std::string n_presel_jetAK8_str        = Form("n_presel_%s",      jstrAk8);
-  const std::string n_presel_jetAK8LS_str      = Form("n_presel_%s",      jstrAk8Ls);
+  const std::string n_sel_lep_str         = Form("n_%s",             lstr);
+  const std::string n_presel_mu_str       = Form("n_presel_%s",      mstr);
+  const std::string n_fakeablesel_mu_str  = Form("n_fakeablesel_%s", mstr);
+  const std::string n_mvasel_mu_str       = Form("n_mvasel_%s",      mstr);
+  const std::string n_presel_ele_str      = Form("n_presel_%s",      estr);
+  const std::string n_fakeablesel_ele_str = Form("n_fakeablesel_%s", estr);
+  const std::string n_mvasel_ele_str      = Form("n_mvasel_%s",      estr);
+  const std::string n_presel_jet_str      = Form("n_presel_%s",      jstr);
+  const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
+  const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
 
   setBranches(
-    nEvent,                 "event",
-    ls,                     "ls",
-    run,                    "run",
-    flag_boosted,           "is_boosted",
-    flag_semiboosted,       "is_semiboosted",
-    flag_resolved,          "is_resolved",
-    n_presel_mu,             n_presel_mu_str,
-    n_fakeablesel_mu,        n_fakeablesel_mu_str,
-    n_mvasel_mu,             n_mvasel_mu_str,
-    n_presel_ele,            n_presel_ele_str,
-    n_fakeablesel_ele,       n_fakeablesel_ele_str,
-    n_mvasel_ele,            n_mvasel_ele_str,
-    n_presel_jet,            n_presel_jet_str,
-    n_presel_jetAK8,         n_presel_jetAK8_str,
-    n_presel_jetAK8LS,       n_presel_jetAK8LS_str,
+    nEvent,                   "event",
+    ls,                       "ls",
+    run,                      "run",
+    flag_boosted,             "is_boosted",
+    flag_semiboosted,         "is_semiboosted",
+    flag_resolved,            "is_resolved",
+    n_presel_mu,              n_presel_mu_str,
+    n_fakeablesel_mu,         n_fakeablesel_mu_str,
+    n_mvasel_mu,              n_mvasel_mu_str,
+    n_presel_ele,             n_presel_ele_str,
+    n_fakeablesel_ele,        n_fakeablesel_ele_str,
+    n_mvasel_ele,             n_mvasel_ele_str,
+    n_presel_jet,             n_presel_jet_str,
+    n_presel_jetAK8,          n_presel_jetAK8_str,
+    n_presel_jetAK8LS,        n_presel_jetAK8LS_str,
 
 //--- MET/MHT
-    floatMap[FloatVariableType_bbww::PFMET],                    "PFMET",
-    floatMap[FloatVariableType_bbww::PFMETphi],                 "PFMETphi",
-    floatMap[FloatVariableType_bbww::HME],                      "HME",
-    floatMap[FloatVariableType_bbww::MEM_LR],                   "MEM_LR",
-    floatMap[FloatVariableType_bbww::PU_weight],                "PU_weight",
-    floatMap[FloatVariableType_bbww::MC_weight],                "MC_weight"
+    floatMap[FloatVariableType_bbww::PFMET],     "PFMET",
+    floatMap[FloatVariableType_bbww::PFMETphi],  "PFMETphi",
+    floatMap[FloatVariableType_bbww::HME],       "HME",
+    floatMap[FloatVariableType_bbww::MEM_LR],    "MEM_LR",
+    floatMap[FloatVariableType_bbww::PU_weight], "PU_weight",
+    floatMap[FloatVariableType_bbww::MC_weight], "MC_weight"
   );
 
   setBranches(
-    mstr, nof_mus,
-    mu_pt,                   "pt",
-    mu_conept,               "conept",
-    mu_eta,                  "eta",
-    mu_phi,                  "phi",
-    mu_E,                    "E",
-    mu_charge,               "charge",
-    mu_miniRelIso,           "miniRelIso",
-    mu_pfRelIso04All,        "PFRelIso04",
-    mu_jetNDauChargedMVASel, "jetNDauChargedMVASel",
-    mu_jetPtRel,             "jetPtRel",
-    mu_jetRelIso,            "jetRelIso",
-    mu_jetDeepJet,           "jetDeepJet",
-    mu_sip3D,                "sip3D",
-    mu_dxy,                  "dxy",
-    mu_dxyAbs,               "dxyAbs",
-    mu_dz,                   "dz",
-    mu_segmentCompatibility, "segmentCompatibility",
-    mu_leptonMVA,            "leptonMVA",
-    mu_mediumID,             "mediumID",
-    mu_isfakeablesel,        "isfakeablesel",
-    mu_ismvasel,             "ismvasel",
-    mu_isGenMatched,         "isGenMatched"
+    mstr,                     nof_mus,
+    mu_pt,                    "pt",
+    mu_conept,                "conept",
+    mu_eta,                   "eta",
+    mu_phi,                   "phi",
+    mu_E,                     "E",
+    mu_charge,                "charge",
+    mu_miniRelIso,            "miniRelIso",
+    mu_pfRelIso04All,         "PFRelIso04",
+    mu_jetNDauChargedMVASel,  "jetNDauChargedMVASel",
+    mu_jetPtRel,              "jetPtRel",
+    mu_jetRelIso,             "jetRelIso",
+    mu_jetDeepJet,            "jetDeepJet",
+    mu_sip3D,                 "sip3D",
+    mu_dxy,                   "dxy",
+    mu_dxyAbs,                "dxyAbs",
+    mu_dz,                    "dz",
+    mu_segmentCompatibility,  "segmentCompatibility",
+    mu_leptonMVA,             "leptonMVA",
+    mu_dpt_div_pt,            "dpt_div_pt",
+    mu_mediumID,              "mediumID",
+    mu_isfakeablesel,         "isfakeablesel",
+    mu_ismvasel,              "ismvasel",
+    mu_isGenMatched,          "isGenMatched"
   );
 
   setBranches(
@@ -142,49 +143,49 @@ SyncNtupleManager_bbww::initializeBranches()
 
   setBranches(
     jstr, nof_jets,
-    jet_pt,           "pt",
-    jet_eta,          "eta",
-    jet_phi,          "phi",
-    jet_E,            "E",
-    jet_CSV,          "CSV"
+    jet_pt,                   "pt",
+    jet_eta,                  "eta",
+    jet_phi,                  "phi",
+    jet_E,                    "E",
+    jet_CSV,                  "CSV"
   );
 
   setBranches(
-    jstrAk8, nof_jetsAk8,
-    jetAk8_pt,          "pt",
-    jetAk8_eta,         "eta",
-    jetAk8_phi,         "phi",
-    jetAk8_E,           "E",
-    jetAk8_msoftdrop,   "msoftdrop",
-    jetAk8_tau1,        "tau1",
-    jetAk8_tau2,        "tau2",
-    jetAk8_subjet0_pt,  "subjet0_pt",
-    jetAk8_subjet0_eta, "subjet0_eta",
-    jetAk8_subjet0_phi, "subjet0_phi",
-    jetAk8_subjet0_CSV, "subjet0_CSV",
-    jetAk8_subjet1_pt,  "subjet1_pt",
-    jetAk8_subjet1_eta, "subjet1_eta",
-    jetAk8_subjet1_phi, "subjet1_phi",
-    jetAk8_subjet1_CSV, "subjet1_CSV"
+    jstrAk8,                  nof_jetsAk8,
+    jetAk8_pt,                "pt",
+    jetAk8_eta,               "eta",
+    jetAk8_phi,               "phi",
+    jetAk8_E,                 "E",
+    jetAk8_msoftdrop,         "msoftdrop",
+    jetAk8_tau1,              "tau1",
+    jetAk8_tau2,              "tau2",
+    jetAk8_subjet0_pt,        "subjet0_pt",
+    jetAk8_subjet0_eta,       "subjet0_eta",
+    jetAk8_subjet0_phi,       "subjet0_phi",
+    jetAk8_subjet0_CSV,       "subjet0_CSV",
+    jetAk8_subjet1_pt,        "subjet1_pt",
+    jetAk8_subjet1_eta,       "subjet1_eta",
+    jetAk8_subjet1_phi,       "subjet1_phi",
+    jetAk8_subjet1_CSV,       "subjet1_CSV"
   );
 
   setBranches(
-    jstrAk8Ls, nof_jetsAk8,
-    jetAk8Ls_pt,          "pt",
-    jetAk8Ls_eta,         "eta",
-    jetAk8Ls_phi,         "phi",
-    jetAk8Ls_E,           "E",
-    jetAk8Ls_msoftdrop,   "msoftdrop",
-    jetAk8Ls_tau1,        "tau1",
-    jetAk8Ls_tau2,        "tau2",
-    jetAk8Ls_subjet0_pt,  "subjet0_pt",
-    jetAk8Ls_subjet0_eta, "subjet0_eta",
-    jetAk8Ls_subjet0_phi, "subjet0_phi",
-    jetAk8Ls_subjet0_CSV, "subjet0_CSV",
-    jetAk8Ls_subjet1_pt,  "subjet1_pt",
-    jetAk8Ls_subjet1_eta, "subjet1_eta",
-    jetAk8Ls_subjet1_phi, "subjet1_phi",
-    jetAk8Ls_subjet1_CSV, "subjet1_CSV"
+    jstrAk8Ls,                nof_jetsAk8,
+    jetAk8Ls_pt,              "pt",
+    jetAk8Ls_eta,             "eta",
+    jetAk8Ls_phi,             "phi",
+    jetAk8Ls_E,               "E",
+    jetAk8Ls_msoftdrop,       "msoftdrop",
+    jetAk8Ls_tau1,            "tau1",
+    jetAk8Ls_tau2,            "tau2",
+    jetAk8Ls_subjet0_pt,      "subjet0_pt",
+    jetAk8Ls_subjet0_eta,     "subjet0_eta",
+    jetAk8Ls_subjet0_phi,     "subjet0_phi",
+    jetAk8Ls_subjet0_CSV,     "subjet0_CSV",
+    jetAk8Ls_subjet1_pt,      "subjet1_pt",
+    jetAk8Ls_subjet1_eta,     "subjet1_eta",
+    jetAk8Ls_subjet1_phi,     "subjet1_phi",
+    jetAk8Ls_subjet1_CSV,     "subjet1_CSV"
   );
 
   resetBranches();
@@ -245,6 +246,7 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoMuon *> & muons,
     mu_dz[i] = muon -> dz();
     mu_segmentCompatibility[i] = muon -> segmentCompatibility();
     mu_leptonMVA[i] = muon -> mvaRawTTH();
+    mu_dpt_div_pt[i] = muon -> dpt_div_pt();
     mu_mediumID[i] = muon -> passesMediumIdPOG();
 
     mu_isfakeablesel[i] = 0;
@@ -493,6 +495,7 @@ SyncNtupleManager_bbww::resetBranches()
     mu_dz,
     mu_segmentCompatibility,
     mu_leptonMVA,
+    mu_dpt_div_pt,
     mu_mediumID,
     mu_isfakeablesel,
     mu_ismvasel,

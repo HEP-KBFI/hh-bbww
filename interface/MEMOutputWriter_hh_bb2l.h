@@ -12,7 +12,7 @@ class MEMOutputWriter_hh_bb2l
 {
 public:
   MEMOutputWriter_hh_bb2l(const std::string & branchName_num,
-			  const std::string & branchName_obj, const std::string & BM //, vstring BMS
+			  const std::string & branchName_obj
       );
   ~MEMOutputWriter_hh_bb2l();
 
@@ -36,7 +36,6 @@ protected:
   void setBranchNames();
 
   const int max_nMEMOutputs_;
-  std::string BM_; 
   std::string branchName_num_;
   std::string branchName_obj_;
 

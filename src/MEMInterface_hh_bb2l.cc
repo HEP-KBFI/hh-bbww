@@ -16,34 +16,62 @@ MEMInterface_hh_bb2l::MEMInterface_hh_bb2l()
   : memAlgo_({{"None", nullptr}}),
   clock_(nullptr)
 {
-  std::cout << "<MEMInterface_hh_bb2l>:\n";
-
+  //std::cout << "<MEMInterface_hh_bb2l>:\n";
   const double sqrtS = 13.e+3;
   const std::string pdfName = "MSTW2008lo68cl";
+  // Creates and initializes a OrderedDictionary.
+  //OrderedDictionary madgraphFileName_signal = new OrderedDictionary();
+  /*map<std::string, std::string, std::greater<std::string>> madgraphFileName_signal;
+  madgraphFileName_signal["SM"]  = "hhAnalysis/bbwwMEM/data/param_hh_SM.dat";
+  madgraphFileName_signal["BM1"] = "hhAnalysis/bbwwMEM/data/param_hh_BM1.dat";
+  madgraphFileName_signal["BM2"] = "hhAnalysis/bbwwMEM/data/param_hh_BM2.dat";
+  madgraphFileName_signal["BM3"] = "hhAnalysis/bbwwMEM/data/param_hh_BM3.dat";
+  madgraphFileName_signal["BM4"] = "hhAnalysis/bbwwMEM/data/param_hh_BM4.dat";
+  madgraphFileName_signal["BM5"] = "hhAnalysis/bbwwMEM/data/param_hh_BM5.dat";
+  madgraphFileName_signal["BM6"] = "hhAnalysis/bbwwMEM/data/param_hh_BM6.dat";
+  madgraphFileName_signal["BM7"] = "hhAnalysis/bbwwMEM/data/param_hh_BM7.dat";
+  madgraphFileName_signal["BM8"] = "hhAnalysis/bbwwMEM/data/param_hh_BM8.dat";
+  madgraphFileName_signal["BM9"] = "hhAnalysis/bbwwMEM/data/param_hh_BM9.dat";
+  madgraphFileName_signal["BM10"] = "hhAnalysis/bbwwMEM/data/param_hh_BM10.dat";
+  madgraphFileName_signal["BM11"] = "hhAnalysis/bbwwMEM/data/param_hh_BM11.dat";
+  madgraphFileName_signal["BM12"] = "hhAnalysis/bbwwMEM/data/param_hh_BM12.dat";*/
+  /*madgraphFileName_signal.Add("SM",  "hhAnalysis/bbwwMEM/data/param_hh_SM.dat");
+  madgraphFileName_signal.Add("BM1",  "hhAnalysis/bbwwMEM/data/param_hh_BM1.dat");
+  madgraphFileName_signal.Add("BM2",  "hhAnalysis/bbwwMEM/data/param_hh_BM2.dat");
+  madgraphFileName_signal.Add("BM3",  "hhAnalysis/bbwwMEM/data/param_hh_BM3.dat");
+  madgraphFileName_signal.Add("BM4",  "hhAnalysis/bbwwMEM/data/param_hh_BM4.dat");
+  madgraphFileName_signal.Add("BM5",  "hhAnalysis/bbwwMEM/data/param_hh_BM5.dat");
+  madgraphFileName_signal.Add("BM6",  "hhAnalysis/bbwwMEM/data/param_hh_BM6.dat");
+  madgraphFileName_signal.Add("BM7",  "hhAnalysis/bbwwMEM/data/param_hh_BM7.dat");
+  madgraphFileName_signal.Add("BM8",  "hhAnalysis/bbwwMEM/data/param_hh_BM8.dat");
+  madgraphFileName_signal.Add("BM9",  "hhAnalysis/bbwwMEM/data/param_hh_BM9.dat");
+  madgraphFileName_signal.Add("BM10",  "hhAnalysis/bbwwMEM/data/param_hh_BM10.dat");
+  madgraphFileName_signal.Add("BM11",  "hhAnalysis/bbwwMEM/data/param_hh_BM11.dat");
+  madgraphFileName_signal.Add("BM12",  "hhAnalysis/bbwwMEM/data/param_hh_BM12.dat");*/
+
   map<std::string, std::string>
   madgraphFileName_signal     =
   {
-    //{"SM",  "hhAnalysis/bbwwMEM/data/param_hh_SM.dat"},
-    //{"BM1",  "hhAnalysis/bbwwMEM/data/param_hh_BM1.dat"},
+    {"SM",  "hhAnalysis/bbwwMEM/data/param_hh_SM.dat"},
+    {"BM1",  "hhAnalysis/bbwwMEM/data/param_hh_BM1.dat"},
     {"BM2",  "hhAnalysis/bbwwMEM/data/param_hh_BM2.dat"},
-    //{"BM3",  "hhAnalysis/bbwwMEM/data/param_hh_BM3.dat"},
-    //{"BM4",  "hhAnalysis/bbwwMEM/data/param_hh_BM4.dat"},
-    //{"BM5",  "hhAnalysis/bbwwMEM/data/param_hh_BM5.dat"},
-    //{"BM6",  "hhAnalysis/bbwwMEM/data/param_hh_BM6.dat"},
-    //{"BM7",  "hhAnalysis/bbwwMEM/data/param_hh_BM7.dat"},
-    //{"BM8",  "hhAnalysis/bbwwMEM/data/param_hh_BM8.dat"},
-    {"BM9",  "hhAnalysis/bbwwMEM/data/param_hh_BM9.dat"}
-    //{"BM10", "hhAnalysis/bbwwMEM/data/param_hh_BM10.dat"},
-    //{"BM11", "hhAnalysis/bbwwMEM/data/param_hh_BM11.dat"},
-    //{"BM12", "hhAnalysis/bbwwMEM/data/param_hh_BM12.dat"}
-    };
+    {"BM3",  "hhAnalysis/bbwwMEM/data/param_hh_BM3.dat"},
+    {"BM4",  "hhAnalysis/bbwwMEM/data/param_hh_BM4.dat"},
+    {"BM5",  "hhAnalysis/bbwwMEM/data/param_hh_BM5.dat"},
+    {"BM6",  "hhAnalysis/bbwwMEM/data/param_hh_BM6.dat"},
+    {"BM7",  "hhAnalysis/bbwwMEM/data/param_hh_BM7.dat"},
+    {"BM8",  "hhAnalysis/bbwwMEM/data/param_hh_BM8.dat"},
+    {"BM9",  "hhAnalysis/bbwwMEM/data/param_hh_BM9.dat"},
+    {"BM10", "hhAnalysis/bbwwMEM/data/param_hh_BM10.dat"},
+    {"BM11", "hhAnalysis/bbwwMEM/data/param_hh_BM11.dat"},
+    {"BM12", "hhAnalysis/bbwwMEM/data/param_hh_BM12.dat"}
+  };
 
   const std::string madgraphFileName_background = "hhAnalysis/bbwwMEM/data/param_ttbar.dat";
   const bool applyOnshellWmassConstraint_signal = false;
   const int memAlgo_verbosity = 0;
   const int maxObjFunctionCalls_signal = 2500;
   const int maxObjFunctionCalls_background = 25000;
-  std::cout<< "Size of dictionary: " << madgraphFileName_signal.size() << "\n";
 
   for(auto iter: madgraphFileName_signal)
   {
@@ -60,7 +88,6 @@ MEMInterface_hh_bb2l::MEMInterface_hh_bb2l()
 
 MEMInterface_hh_bb2l::~MEMInterface_hh_bb2l()
 {
-  //delete memAlgo_;
   for (auto BM : memAlgo_)
   {
     delete (BM.second);
@@ -71,10 +98,6 @@ MEMInterface_hh_bb2l::~MEMInterface_hh_bb2l()
 
 namespace
 {
-
-/*void
-LoadMEMInterface_hh_bb2l(const std::string & BM)
-{}*/
 
 void
 addMeasuredLepton(std::vector<mem::MeasuredParticle>& measuredParticles, const RecoLepton * selLepton, bool switchToGen)
@@ -127,7 +150,6 @@ addMeasuredBJet(std::vector<mem::MeasuredParticle>& measuredParticles, const Rec
 
 }
 
-//map<std::string, MEMOutput_hh_bb2l>
 MEMOutput_hh_bb2l
 MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 				 const RecoLepton * selLepton_sublead,
@@ -139,7 +161,6 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
          bool isDebug
         ) const
 {
-  //map<std::string, MEMOutput_hh_bb2l> result;
   MEMOutput_hh_bb2l result;
   if ( !(selJet_Hbb_lead || selJet_Hbb_sublead) )
   {
@@ -186,31 +207,25 @@ MEMInterface_hh_bb2l::operator()(const RecoLepton * selLepton_lead,
 
   for(auto iter: memAlgo_)
   {
-    //std::string key = iter.first;
     if ( !(iter.first == BM) ) continue;
-    std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << iter.first << " " << BM << "\n";
-    //std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << madgraphFileName_signal[iter.first] << "\n";
+    if (isDebug) std::cout<<"<MEMInterface_hh_bb2l::operator()> Doing BM:" << iter.first << " " << BM << "\n";
     clock_->Reset();
     clock_->Start("<MEMInterface_hh_bb2l::operator()>");
     iter.second->integrate(measuredParticles, metPx, metPy, met.cov());
     MEMbbwwResultDilepton memResult = iter.second->getResult();
-    //memAlgo_[BM]->integrate(measuredParticles, metPx, metPy, met.cov());
-    //MEMbbwwResultDilepton memResult = memAlgo_[BM]->getResult();
     clock_->Stop("<MEMInterface_hh_bb2l::operator()>");
-    MEMOutput_hh_bb2l result_local;
-    result_local.fillInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead);
-    result_local.weight_signal_ = memResult.getProb_signal();
-    result_local.weightErr_signal_ = memResult.getProbErr_signal();
-    result_local.weight_background_ = memResult.getProb_background();
-    result_local.weightErr_background_ = memResult.getProbErr_background();
-    result_local.LR_ = memResult.getLikelihoodRatio();
-    result_local.LRErr_ = memResult.getLikelihoodRatioErr();
-    result_local.Score_ = memResult.getScore();
-    result_local.cpuTime_ = clock_->GetCpuTime("<MEMInterface_hh_bb2l::operator()>");
-    result_local.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
-    result_local.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;
-    result = result_local;
-    if (isDebug) std::cout << "#memOutputs_hh_bb2l inside = " << result_local << std::endl;
+    result.fillInputs(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead);
+    result.weight_signal_ = memResult.getProb_signal();
+    result.weightErr_signal_ = memResult.getProbErr_signal();
+    result.weight_background_ = memResult.getProb_background();
+    result.weightErr_background_ = memResult.getProbErr_background();
+    result.LR_ = memResult.getLikelihoodRatio();
+    result.LRErr_ = memResult.getLikelihoodRatioErr();
+    result.Score_ = memResult.getScore();
+    result.cpuTime_ = clock_->GetCpuTime("<MEMInterface_hh_bb2l::operator()>");
+    result.realTime_ = clock_->GetRealTime("<MEMInterface_hh_bb2l::operator()>");
+    result.isValid_ = (memResult.getProb_signal() + memResult.getProb_background()) > 0.;
+    if (isDebug) std::cout << "#memOutputs_hh_bb2l inside = " << result << std::endl;
     break;
   }
 

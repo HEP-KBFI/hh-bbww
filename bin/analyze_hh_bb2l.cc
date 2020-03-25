@@ -482,12 +482,22 @@ int main(int argc, char* argv[])
 
   std::map<std::string, MEMOutputReader_hh_bb2l *> memReader;
   for(auto BMlocal : memReader) BMlocal.second = nullptr;
-  //const std::string BM = "SM"; // BMS
   if(! branchName_memOutput.empty())
   {
     for(auto BMlocal : BMS)
     {
-      memReader[BMlocal] = new MEMOutputReader_hh_bb2l(Form("n%s", branchName_memOutput.data()), branchName_memOutput, BMlocal);
+      std::string namebranchN;
+      std::string namebranch;
+      if ( BMlocal == "SM")
+      {
+        namebranch = branchName_memOutput.data();
+        namebranchN = Form("n%s", branchName_memOutput.data());
+      }
+      else {
+        namebranch = Form("%s_%s", branchName_memOutput.data(), BMlocal.c_str());
+        namebranchN = Form("n%s_%s", branchName_memOutput.data(), BMlocal.c_str());
+      }
+      memReader[BMlocal] = new MEMOutputReader_hh_bb2l(namebranchN, namebranch);
       inputTree -> registerReader(memReader[BMlocal]);
     }
   }
@@ -1627,18 +1637,14 @@ int main(int argc, char* argv[])
         std::cout << '\n';
       }
     }
-
-    std::cout<<"before Reading MEM \n";
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
     if(memReader.size() > 0)
     {
       const std::string BM = "SM"; // BMS
-      std::cout<<" Reading MEM -- for the basic variables read only to SM \n";
+      //std::cout<<" Reading MEM -- for the basic variables read only to SM \n";
       const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l = memReader[BM]->read();
-      std::cout<<"number of read: " << memOutputs_hh_bb2l.size() << "\n";
       for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l: memOutputs_hh_bb2l)
       {
-        std::cout<<" Reading MEM -- " << memOutput_hh_bb2l.leadLepton_eta_ << " " << memOutput_hh_bb2l.leadLepton_phi_<< "\n";
         const double selLepton_lead_dR = deltaR(
           selLepton_lead->eta(), selLepton_lead->phi(),
           memOutput_hh_bb2l.leadLepton_eta_, memOutput_hh_bb2l.leadLepton_phi_
@@ -1704,7 +1710,7 @@ int main(int argc, char* argv[])
         memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.isValid() ? memOutput_hh_bb2l_matched_BM.LR() : -1.;
         memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
         memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
-        std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
+        if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
       }
     }
     // compute signal extraction observables
@@ -1820,6 +1826,7 @@ int main(int argc, char* argv[])
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
     //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
+<<<<<<< HEAD
 
     HMEOutput_hh_bb2l hmeOutput;
     double m_HH_hme(-1);
@@ -1935,7 +1942,6 @@ int main(int argc, char* argv[])
       vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
 
-    std::cout << "Filling BDT\n";
     mvaInputs_XGB["mht"] = mhtP4.pt();
     mvaInputs_XGB["m_Hbb"] = m_Hbb;
     mvaInputs_XGB["m_ll"] = m_ll;
@@ -2197,9 +2203,6 @@ int main(int argc, char* argv[])
           ("mT2_top_2particle",             mT2_top_2particle)
           ("mT2_top_3particle",             mT2_top_3particle)
           ("m_HH_hme",                      m_HH_hme)
-	  //("memweight_signal",              memweight_signal)
-	  //("memweight_background",          memweight_background)
-	  //("memOutput_LR",                  memOutput_LR)
           ("logTopness_publishedChi2",      logTopness_publishedChi2)
           ("logHiggsness_publishedChi2",    logHiggsness_publishedChi2)
           ("logTopness_fixedChi2",          logTopness_fixedChi2)

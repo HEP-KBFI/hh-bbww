@@ -6,12 +6,12 @@ process.makePlots.processSignal = cms.string("")
 
 process.makePlots.distributions.extend([
     cms.PSet(
-        histogramName = cms.string('sel/evt/$PROCESS/hadTop_pt'),
+        histogramName = cms.string('sel/evt/$PROCESS/top_pt'),
         xAxisTitle = cms.string('p_{T} [GeV]'),
         yAxisTitle = cms.string('dN/dp_{T} [1/GeV]')
     ),
     cms.PSet(
-        histogramName = cms.string('sel/evt/$PROCESS/lepTop_pt'),
+        histogramName = cms.string('sel/evt/$PROCESS/antiTop_pt'),
         xAxisTitle = cms.string('p_{T} [GeV]'),
         yAxisTitle = cms.string('dN/dp_{T} [1/GeV]')
     ),

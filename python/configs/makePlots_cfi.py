@@ -48,12 +48,7 @@ process.makePlots = cms.PSet(
             histogramName = cms.string("sel/evt/$PROCESS/numMuons"),
             xAxisTitle = cms.string("muon Multiplicity"),
             yAxisTitle = cms.string("Events")
-        ),
-        cms.PSet(
-            histogramName = cms.string("sel/evtYield/$PROCESS/evtYield"),
-            xAxisTitle = cms.string("Run Period"),
-            yAxisTitle = cms.string("Events / 1 fb^{-1}")
-        ),
+        ),        
         cms.PSet(
             histogramName = cms.string('sel/evt/$PROCESS/HT'),
             xAxisTitle = cms.string('H_{T} [GeV]'),

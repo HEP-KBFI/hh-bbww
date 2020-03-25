@@ -8,7 +8,7 @@
 
 EvtHistManager_hh_bbWW_TT2lctrl::EvtHistManager_hh_bbWW_TT2lctrl(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
-  , associations_({ "correctAssoc", "incorrectAssoc" })
+  , associations_({ "all", "correctAssoc", "incorrectAssoc", })
 {
   central_or_shiftOptions_["numElectrons"] = { "central" };
   central_or_shiftOptions_["numMuons"] = { "central" };
@@ -186,7 +186,7 @@ EvtHistManager_hh_bbWW_TT2lctrl::fillHistograms(int numElectrons,
   for ( const std::string& association : associations_ )
   {
     histograms_top_and_antiTop_[association]->fillHistograms(
-      isValid_topKinReco, 
+      isValid_topKinReco, numSolutions_topKinReco, weight_topKinReco_assoc1, weight_topKinReco_assoc2,
       genTopQuarkP4_top, isGenMatched_top_assoc1, topQuarkP4_top_assoc1, isGenMatched_top_assoc2, topQuarkP4_top_assoc2,
       genTopQuarkP4_antitop, isGenMatched_antitop_assoc1, topQuarkP4_antitop_assoc1, isGenMatched_antitop_assoc2, topQuarkP4_antitop_assoc2,
       evtWeight);

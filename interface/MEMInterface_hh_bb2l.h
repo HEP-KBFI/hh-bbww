@@ -34,9 +34,7 @@ public:
        bool isDebug = false) const;
 
  private:
-  map<std::string, MEMbbwwAlgoDilepton *> memAlgo_;// = {{"None", nullptr}};
-  //MEMbbwwAlgoDilepton * memAlgo_;
-  //map<std::string, std::string> madgraphFileName_signal;
+  map<std::string, MEMbbwwAlgoDilepton *> memAlgo_;
 
   TBenchmark * clock_;
 };
