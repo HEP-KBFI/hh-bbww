@@ -29,7 +29,7 @@ parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processe
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
@@ -83,7 +83,7 @@ for systematic_label in systematics_label:
 
 do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
-jet_cleaning_by_index = not (jet_cleaning == 'by_index')
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
 if mode == "default":
