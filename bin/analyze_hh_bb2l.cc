@@ -502,8 +502,11 @@ int main(int argc, char* argv[])
     }
   }
 
-  HMEOutputReader_hh_bb2l* hmeReader;
-  hmeReader = new HMEOutputReader_hh_bb2l(Form("n%s", branchName_hmeOutput.data()), branchName_hmeOutput);
+  HMEOutputReader_hh_bb2l* hmeReader = nullptr;
+  if ( branchName_hmeOutput.length() > 0 )
+  {
+    hmeReader = new HMEOutputReader_hh_bb2l(Form("n%s", branchName_hmeOutput.data()), branchName_hmeOutput);
+  }
 
 //--- declare particle collections
   const bool readGenObjects = isMC && !redoGenMatching;
@@ -887,7 +890,6 @@ int main(int argc, char* argv[])
     {
       bdt_filler->register_variable<float_type>(evt_cat_str);
     }
-    //Xanda "memweight_signal", "memweight_background","memOutput_LR",
     for(const std::string & evt_cat_str: BMS)
     {
       bdt_filler->register_variable<float_type>( Form("memweight_signal_%s", evt_cat_str.c_str()) );
@@ -1701,18 +1703,30 @@ int main(int argc, char* argv[])
     std::map<std::string, double> memOutput_LR;
     std::map<std::string, double> memweight_signal;
     std::map<std::string, double> memweight_background;
+    //if(memReader.size() > 0)
+    //{
     for(auto BMlocal : BMS)
     {
-      const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l_BM = memReader[BMlocal]->read();
-      for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l_BM: memOutputs_hh_bb2l_BM)
+      if( memReader.size() > 0 )
       {
-        MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
-        memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.isValid() ? memOutput_hh_bb2l_matched_BM.LR() : -1.;
-        memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
-        memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
-        if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
+        const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l_BM = memReader[BMlocal]->read(); // Xanda crashing here
+        for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l_BM: memOutputs_hh_bb2l_BM)
+        {
+          MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
+          memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.isValid() ? memOutput_hh_bb2l_matched_BM.LR() : -1.;
+          memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
+          memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
+          if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
+        }
+      } else {
+        memOutput_LR[BMlocal] = -1.;
+        memweight_signal[BMlocal] = -1.;
+        memweight_background[BMlocal] = -1.;
       }
     }
+  //} //else {
+
+    //}
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1835,7 +1849,7 @@ int main(int argc, char* argv[])
       hmeOutput = hmeInterface_hh_bb2l(selLepton_lead, selLepton_sublead, selJet_Hbb_lead, selJet_Hbb_sublead, met, ievent);
       hmeOutput.eventInfo_ = eventInfo;
     }
-    else 
+    else
     {
       if(hmeReader)
 	{
