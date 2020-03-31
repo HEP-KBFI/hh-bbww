@@ -332,6 +332,8 @@ main(int argc,
     }
 
     const std::vector<const RecoLepton *> preselLeptons = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
+    const std::vector<const RecoLepton*> fakeableLeptons = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
+
     if(isDEBUG)
     {
       printCollection("preselLeptons", preselLeptons);
@@ -341,8 +343,8 @@ main(int argc,
     const std::vector<RecoJet> jets = jetReader->read();
     const std::vector<const RecoJet *> jet_ptrs = convert_to_ptrs(jets);
     const std::vector<const RecoJet*> cleanedJets = jetCleaningByIndex ?
-      jetCleanerByIndex(jet_ptrs, preselLeptons) :
-      jetCleaner       (jet_ptrs, preselLeptons)
+      jetCleanerByIndex(jet_ptrs, fakeableLeptons) :
+      jetCleaner       (jet_ptrs, fakeableLeptons)
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     if(isDEBUG)
@@ -353,7 +355,7 @@ main(int argc,
 
     const std::vector<RecoJetAK8> fatJets = jetReaderAK8->read();
     const std::vector<const RecoJetAK8 *> fatJet_ptrs = convert_to_ptrs(fatJets);
-    const std::vector<const RecoJetAK8 *> cleanedFatJets = jetCleanerAK8_dR08(fatJet_ptrs, preselLeptons);
+    const std::vector<const RecoJetAK8 *> cleanedFatJets = jetCleanerAK8_dR08(fatJet_ptrs, fakeableLeptons);
     std::vector<const RecoJetAK8 *> selFatJets = jetSelectorAK8_Hbb(cleanedFatJets, isHigherPt);
     if(isDEBUG)
     {
@@ -416,6 +418,7 @@ main(int argc,
       printCollection("selFatJetsLS", selFatJetsLS);
     }
 
+    std::sort(selJets.begin(), selJets.end(), isHigherPt);
 //--- compute MHT and linear MET discriminant (met_LD)
     const RecoMEt met_uncorr = metReader->read();
     const RecoMEt met = recompute_met(met_uncorr, jets, met_option, isDEBUG);

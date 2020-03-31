@@ -84,7 +84,7 @@ for systematic_label in systematics_label:
 
 do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
-jet_cleaning_by_index = (jet_cleaning == 'by_index')
+jet_cleaning_by_index = not (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
 if mode != "sync":

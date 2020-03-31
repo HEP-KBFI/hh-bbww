@@ -1826,7 +1826,6 @@ int main(int argc, char* argv[])
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
     //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
-<<<<<<< HEAD
 
     HMEOutput_hh_bb2l hmeOutput;
     double m_HH_hme(-1);

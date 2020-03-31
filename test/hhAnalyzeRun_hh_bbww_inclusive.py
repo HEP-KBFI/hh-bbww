@@ -64,7 +64,7 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
-jet_cleaning_by_index = (jet_cleaning == 'by_index')
+jet_cleaning_by_index = not (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
 if use_nonnominal:
