@@ -22,7 +22,7 @@ parser.add_sys(sys_choices)
 parser.add_rle_select()
 parser.add_files_per_job() 
 parser.add_use_home()
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 args = parser.parse_args()
 
 # Common arguments

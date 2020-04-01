@@ -25,7 +25,7 @@ parser.add_preselect()
 parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 parser.add_argument('-shme', '--systematics-hme',
   type = str, nargs = '+', dest = 'systematics_hme', metavar = 'mode', choices = sys_choices, default = ['central'] ,
   required = False,

@@ -28,7 +28,7 @@ parser.add_files_per_job()
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id()
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
@@ -80,7 +80,7 @@ for systematic_label in systematics_label:
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 lumi = get_lumi(era)
-jet_cleaning_by_index = not (jet_cleaning == 'by_index')
+jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
 if mode == "default":
