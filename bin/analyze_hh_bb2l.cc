@@ -506,6 +506,7 @@ int main(int argc, char* argv[])
   if ( branchName_hmeOutput.length() > 0 )
   {
     hmeReader = new HMEOutputReader_hh_bb2l(Form("n%s", branchName_hmeOutput.data()), branchName_hmeOutput);
+    inputTree->registerReader(hmeReader);
   }
 
 //--- declare particle collections

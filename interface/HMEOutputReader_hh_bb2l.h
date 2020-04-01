@@ -69,10 +69,10 @@ protected:
   Float_t * subleadLepton_phi_;
   Float_t * bjet1_eta_;
   Float_t * bjet1_phi_;
-  Bool_t * bjet1_isReconstructed_;
+  Float_t * bjet1_isReconstructed_;
   Float_t * bjet2_eta_;
   Float_t * bjet2_phi_;
-  Bool_t * bjet2_isReconstructed_;
+  Float_t * bjet2_isReconstructed_;
   Int_t * type_;
   Float_t * m_HH_hme_;
   Float_t * cpuTime_;
