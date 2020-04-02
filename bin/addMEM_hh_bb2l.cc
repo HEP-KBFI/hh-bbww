@@ -330,12 +330,9 @@ int main(int argc,
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
-  // TO-DO: implement jet energy scale uncertainties, b-tag weights,
-  //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-  //jetReaderAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
-  //jetReaderAK8->read_ptMass_systematics(isMC);
-  //jetReaderAK8->read_BtagWeight_systematics(isMC);
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
+  jetReaderAK8->set_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
+  jetReaderAK8->read_sys(isMC);
   jetReaderAK8->setBranchAddresses(inputTree);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
@@ -422,12 +419,8 @@ int main(int argc,
     jetWriterAK4 = new RecoJetWriter(era, isMC, Form("n%s", branchName_jets_ak4.data()), branchName_jets_ak4);
     jetWriterAK4->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     jetWriterAK4->setBranches(outputTree);
-    jetWriterAK8 = new RecoJetWriterAK8(era, Form("n%s", branchName_jets_ak8.data()), branchName_jets_ak8, Form("n%s", branchName_subjets_ak8.data()), branchName_subjets_ak8);
-    // TO-DO: implement jet energy scale uncertainties, b-tag weights,
-    //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
-    //jetWriterAK8->setPtMass_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
-    //jetWriterAK8->write_ptMass_systematics(isMC);
-    //jetWriterAK8->write_BtagWeight_systematics(isMC);
+    jetWriterAK8 = new RecoJetWriterAK8(era, isMC, Form("n%s", branchName_jets_ak8.data()), branchName_jets_ak8, Form("n%s", branchName_subjets_ak8.data()), branchName_subjets_ak8);
+    jetWriterAK8->set_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
     jetWriterAK8->setBranches(outputTree);
     metWriter = new RecoMEtWriter(era, isMC, branchName_met);
     metWriter->setPtPhi_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
@@ -799,11 +792,13 @@ std::cout << "maxPermutations_addMEM_hh_bb2l = " << maxPermutations_addMEM_hh_bb
             checkOptionValidity(central_or_shift, isMC);
             const int jetPt_option = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift, isMC);
             const int met_option   = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift, isMC);
+            const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift, isMC);
 
             if((
                  (
                    jetPt_option    == kJetMET_central &&
                    met_option      == kJetMET_central &&
+                   fatJetPt_option == kFatJet_central &&
                    ! useNonNominal_jetmet
                  ) ||
                 useNonNominal_jetmet
@@ -817,6 +812,7 @@ std::cout << "maxPermutations_addMEM_hh_bb2l = " << maxPermutations_addMEM_hh_bb
             {
               std::cout << "Attempting to evaluate the MEM score for systematics: " << central_or_shift << "\n"
                         << "jetPt_option    = " << jetPt_option    << "\n"
+                        << "fatJetPt_option = " << fatJetPt_option << "\n"
                         << "met_option      = " << met_option      << '\n'
               ;
             }
@@ -830,7 +826,7 @@ std::cout << "maxPermutations_addMEM_hh_bb2l = " << maxPermutations_addMEM_hh_bb
             ;
 
             jetReaderAK4->setPtMass_central_or_shift(jetPt_option);
-            //jetReaderAK8->setPtMass_central_or_shift(jetPt_option);
+            jetReaderAK8->set_central_or_shift(fatJetPt_option);
             metReader->setMEt_central_or_shift(met_option);
 
             const std::vector<RecoJet> jets_ak4_mem = jetReaderAK4->read();

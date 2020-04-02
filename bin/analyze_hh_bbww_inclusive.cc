@@ -117,6 +117,7 @@ main(int argc,
 
   const int met_option   = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift, isMC);
   const int jetPt_option = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift, isMC);
+  const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift, isMC);
 
   const bool isDEBUG = cfg_analyze.getParameter<bool>("isDEBUG");
 
@@ -212,13 +213,13 @@ main(int argc,
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
 
-  RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, branchName_fatJets, branchName_subJets);
+  RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
-  RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_fatJetsLS, branchName_subJetsLS);
+  RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_fatJetsLS, branchName_subJetsLS);
   inputTree->registerReader(jetReaderAK8LS);
   const RecoJetCollectionSelectorAK8 jetSelectorAK8LS(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
