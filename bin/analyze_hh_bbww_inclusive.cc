@@ -105,7 +105,8 @@ main(int argc,
   const bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
   const bool genMatchingByIndex = cfg_analyze.getParameter<bool>("genMatchingByIndex");
 
-  const bool redoGenMatching     = cfg_analyze.getParameter<bool>("redoGenMatching");
+  const bool useAssocJetBtag      = cfg_analyze.getParameter<bool>("useAssocJetBtag");
+  const bool redoGenMatching      = cfg_analyze.getParameter<bool>("redoGenMatching");
   const bool isMC                 = cfg_analyze.getParameter<bool>("isMC");
   const bool useNonNominal        = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
@@ -187,16 +188,20 @@ main(int argc,
   inputTree->registerReader(muonReader);
   const RecoMuonCollectionGenMatcher muonGenMatcher;
   const RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
-  const RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era, -1, isDEBUG);
-  const RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
+  RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era, -1, isDEBUG);
+  RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
+  fakeableMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
+  tightMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
   RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, isMC, false);
   inputTree->registerReader(electronReader);
   const RecoElectronCollectionGenMatcher electronGenMatcher;
   const RecoElectronCollectionCleaner electronCleaner(0.3, isDEBUG);
   const RecoElectronCollectionSelectorLoose preselElectronSelector(era, -1, isDEBUG);
-  const RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
-  const RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
+  RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
+  RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
+  fakeableElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
+  tightElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
   RecoJetReader * const jetReader = new RecoJetReader(era, isMC, branchName_jets, false);
   jetReader->setPtMass_central_or_shift(jetPt_option);

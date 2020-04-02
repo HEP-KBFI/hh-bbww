@@ -179,6 +179,7 @@ class analyzeConfig_hh_bbww_inclusive(analyzeConfig_hh):
             'syncOutput'              : syncOutput,
             'syncRLE'                 : self.rle_select if self.rle_select and '%s' not in self.rle_select else '',
             'useNonNominal'           : self.use_nonnominal,
+            'useAssocJetBtag'         : self.do_sync,
           }
           self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info)
 
