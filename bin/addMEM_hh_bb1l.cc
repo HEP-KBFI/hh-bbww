@@ -191,10 +191,8 @@ int main(int argc,
   const std::string branchName_jets_ak4        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
   const std::string branchName_jets_ak8        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
   const std::string branchName_subjets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
-  std::cout << "branchName (AK8): jets = '" << branchName_jets_ak8 << "', subjets = '" << branchName_subjets_ak8 << "'" << std::endl;
   const std::string branchName_jets_ak8LS      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8LS");
   const std::string branchName_subjets_ak8LS   = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8LS");
-  std::cout << "branchName (AK8LS): jets = '" << branchName_jets_ak8LS << "', subjets = '" << branchName_subjets_ak8LS << "'" << std::endl;  	
   const std::string branchName_met             = cfg_addMEM.getParameter<std::string>("branchName_met");
 
   const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");
@@ -963,9 +961,11 @@ int main(int argc,
                   ++memComputations;
                 }
               }             
-
-              std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet << "'," 
-	                << " systematic = '" << central_or_shift << "'\n";
+              if ( isDEBUG )
+              {
+                std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingBJet << "',"
+                          << " systematic = '" << central_or_shift << "'\n";
+              }
               for ( std::vector<selJetsType_Wjj>::const_iterator jetPair = selJetsT_Wjj_missingBJet1.begin(); 
 	            jetPair != selJetsT_Wjj_missingBJet1.end(); ++jetPair ) {
                 MEMOutput_hh_bb1l memOutput = compMEM(
@@ -1030,9 +1030,11 @@ int main(int argc,
                   ++memComputations;
                 }
               }
-
-              std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingHadWJet << "'," 
-	                << " systematic = '" << central_or_shift << "'\n";
+              if ( isDEBUG )
+              {
+                std::cout << "computing MEMOutput_hh_bb1l objects for branch = '" << branchName_memOutput_missingHadWJet << "',"
+                          << " systematic = '" << central_or_shift << "'\n";
+              }
               size_t numWJets = selJetsAK4_Wjj.size();
               if ( mem_maxWJets >= 0 ) numWJets = std::min(numWJets, (size_t)mem_maxWJets);
               for ( size_t idxWJet = 0; idxWJet < numWJets; ++idxWJet )
