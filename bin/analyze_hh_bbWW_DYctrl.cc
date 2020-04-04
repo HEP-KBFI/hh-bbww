@@ -957,10 +957,10 @@ int main(int argc, char* argv[])
     cutFlowTable.update("trigger", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("trigger", evtWeightRecorder.get(central_or_shift_main));
 
-    if ( (selTrigger_2e    && !apply_offline_e_trigger_cuts_2e)    ||
-         (selTrigger_1e    && !apply_offline_e_trigger_cuts_1e)    ||
-         (selTrigger_1mu   && !apply_offline_e_trigger_cuts_1mu)   ||
-         (selTrigger_2mu   && !apply_offline_e_trigger_cuts_2mu)  ) {
+    if ( (selTrigger_2e  && !apply_offline_e_trigger_cuts_2e)  ||
+         (selTrigger_1e  && !apply_offline_e_trigger_cuts_1e)  ||
+         (selTrigger_1mu && !apply_offline_e_trigger_cuts_1mu) ||
+         (selTrigger_2mu && !apply_offline_e_trigger_cuts_2mu) ) {
       fakeableElectronSelector.disable_offline_e_trigger_cuts();
       tightElectronSelector.disable_offline_e_trigger_cuts();
     } else {
