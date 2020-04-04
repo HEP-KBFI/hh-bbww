@@ -21,7 +21,7 @@ parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_use_home()
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_argument('-o', '--output-tree',

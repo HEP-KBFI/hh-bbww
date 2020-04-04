@@ -13,8 +13,8 @@ import getpass
 # E.g.: ./test/tthAnalyzeRun_hadTopTagger.py -v 2019Dec09 -m default -e 2017
 
 mode_choices     = [ 'default', 'forBDTtraining' ]
-sys_choices      = [ 'full' ] + systematics.an_extended_opts_hh
-systematics.full = systematics.an_extended_hh
+sys_choices      = [ 'full' ] + systematics.an_opts_hh_bbww
+systematics.full = systematics.an_hh_bbww
 
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
@@ -22,7 +22,7 @@ parser.add_sys(sys_choices)
 parser.add_rle_select()
 parser.add_files_per_job() 
 parser.add_use_home()
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 args = parser.parse_args()
 
 # Common arguments

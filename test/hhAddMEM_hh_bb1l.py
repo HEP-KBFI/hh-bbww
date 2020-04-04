@@ -24,7 +24,7 @@ parser.add_modes(mode_choices.keys())
 parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 parser.add_argument('-n', '--max-mem-integrations',
   type = int, dest = 'max_mem_integrations', metavar = 'integer', default = max_mem_integrations,
   required = False,

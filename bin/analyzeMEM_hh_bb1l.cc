@@ -304,9 +304,9 @@ int main(int argc, char* argv[])
   jetSelectorAK4_Wjj.getSelector().set_min_pt(selJetAK4_min_pt_Wjj);
   jetSelectorAK4_Wjj.getSelector().set_max_absEta(selJetAK4_max_absEta_Wjj);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   inputTree->registerReader(jetReaderAK8);
-  RecoJetReaderAK8* jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_jets_ak8LS, branchName_subjets_ak8LS); 
+  RecoJetReaderAK8* jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8LS, branchName_subjets_ak8LS);
   inputTree->registerReader(jetReaderAK8LS);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);

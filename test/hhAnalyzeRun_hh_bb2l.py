@@ -14,8 +14,8 @@ import importlib
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default', 'forBDTtraining', 'sync' ]
-sys_choices      = [ 'full', 'internal' ] + systematics.an_extended_opts_hh
-systematics.full = systematics.an_extended_hh
+sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
+systematics.full = systematics.an_hh_bbww
 systematics.internal = systematics.an_internal_no_mem
 
 parser = tthAnalyzeParser()
@@ -29,7 +29,7 @@ parser.add_files_per_job(5) # CV: need to reduce number of Ntuple files processe
 parser.add_use_home()
 parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
-parser.add_jet_cleaning()
+parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()

@@ -475,6 +475,7 @@ int main(int argc, char* argv[])
   bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
+  bool useAssocJetBtag = cfg_analyze.getParameter<bool>("useAssocJetBtag");
   bool apply_LHE_nom = cfg_analyze.getParameter<bool>("apply_LHE_nom");
   bool useObjectMultiplicity = cfg_analyze.getParameter<bool>("useObjectMultiplicity");
   std::string central_or_shift_main = cfg_analyze.getParameter<std::string>("central_or_shift");
@@ -528,13 +529,14 @@ int main(int argc, char* argv[])
   checkOptionValidity(central_or_shift_main, isMC);
   const int met_option      = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift_main, isMC);
   const int jetPt_option    = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift_main, isMC);
+  const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift_main, isMC);
   const int hadTauPt_option = useNonNominal_jetmet ? kHadTauPt_uncorrected      : getHadTauPt_option(central_or_shift_main);
 
   std::cout
     << "central_or_shift = "    << central_or_shift_main << "\n"
        " -> hadTauPt_option = " << hadTauPt_option       << "\n"
-       " -> met_option      = " << met_option            << "\n"
-       " -> jetPt_option    = " << jetPt_option          << '\n'
+       " -> jetPt_option    = " << jetPt_option          << "\n"
+       "--> fatJetPt_option = " << fatJetPt_option       << '\n'
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
@@ -703,6 +705,8 @@ int main(int argc, char* argv[])
   RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
   RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era, -1, isDEBUG);
   RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
+  fakeableMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
+  tightMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
   RecoElectronReader* electronReader = new RecoElectronReader(era, branchName_electrons, isMC, readGenObjects);
   inputTree->registerReader(electronReader);
@@ -711,6 +715,8 @@ int main(int argc, char* argv[])
   RecoElectronCollectionSelectorLoose preselElectronSelector(era, -1, isDEBUG);
   RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
   RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
+  fakeableElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
+  tightElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
   RecoHadTauReader* hadTauReader = new RecoHadTauReader(era, branchName_hadTaus, isMC, readGenObjects);
   hadTauReader->setHadTauPt_central_or_shift(hadTauPt_option);
@@ -739,15 +745,15 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   RecoJetReaderAK8* jetReaderAK8LS = nullptr;
   if ( branchName_jets_ak8LS != branchName_jets_ak8 ) {
-    jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_jets_ak8LS, branchName_subjets_ak8LS);
+    jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8LS, branchName_subjets_ak8LS);
+    jetReaderAK8LS->set_central_or_shift(fatJetPt_option);
   } else {
     jetReaderAK8LS = jetReaderAK8;
   }
-  // TO-DO: implement jet energy scale uncertainties, b-tag weights,
-  //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
   inputTree->registerReader(jetReaderAK8);
   inputTree->registerReader(jetReaderAK8LS);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);

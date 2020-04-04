@@ -329,13 +329,15 @@ int main(int argc, char* argv[])
   checkOptionValidity(central_or_shift_main, isMC);
   const int met_option      = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift_main, isMC);
   const int jetPt_option    = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift_main, isMC);
+  const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift_main, isMC);
   const int hadTauPt_option = useNonNominal_jetmet ? kHadTauPt_uncorrected      : getHadTauPt_option(central_or_shift_main);
 
   std::cout
     << "central_or_shift = "    << central_or_shift_main << "\n"
        " -> hadTauPt_option = " << hadTauPt_option       << "\n"
        " -> met_option      = " << met_option            << "\n"
-       " -> jetPt_option    = " << jetPt_option          << '\n'
+       " -> jetPt_option    = " << jetPt_option          << "\n"
+       "--> fatJetPt_option = " << fatJetPt_option       << '\n'
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
@@ -542,9 +544,8 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
-  // TO-DO: implement jet energy scale uncertainties, b-tag weights,
-  //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
