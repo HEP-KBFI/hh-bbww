@@ -238,7 +238,7 @@ int main(int argc,
   );
 
   const std::string era_string = cfg_addMEM.getParameter<std::string>("era");
-  const int era = get_era(era_string);
+  const Era era = get_era(era_string);
 
   if ( central_or_shifts_mem.empty() )
   {

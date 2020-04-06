@@ -2,12 +2,13 @@
 #define hhAnalysis_bbww_RecoJetCollectionSelectorAK8_hh_bbWW_Hbb_h
 
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionSelector.h" // ParticleCollectionSelector
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJetAK8.h" // RecoJet
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetAK8.h"                 // RecoJet
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h"       // Era
 
 class RecoJetSelectorAK8_hh_bbWW_Hbb
 {
 public:
-  explicit RecoJetSelectorAK8_hh_bbWW_Hbb(int era,
+  explicit RecoJetSelectorAK8_hh_bbWW_Hbb(Era era,
                                           int index = -1,
                                           bool debug = false);
   ~RecoJetSelectorAK8_hh_bbWW_Hbb() {}
