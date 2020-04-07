@@ -185,7 +185,7 @@ main(int argc,
   inputTree -> registerReader(&hltPathReader_instance);
 
 //--- declare particle collections
-  RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, isMC, false);
+  RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
   inputTree->registerReader(muonReader);
   const RecoMuonCollectionGenMatcher muonGenMatcher;
   const RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
@@ -194,7 +194,7 @@ main(int argc,
   fakeableMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
   tightMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
-  RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, isMC, false);
+  RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, isMC, readGenObjects);
   inputTree->registerReader(electronReader);
   const RecoElectronCollectionGenMatcher electronGenMatcher;
   const RecoElectronCollectionCleaner electronCleaner(0.3, isDEBUG);
@@ -204,7 +204,7 @@ main(int argc,
   fakeableElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
   tightElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
-  RecoJetReader * const jetReader = new RecoJetReader(era, isMC, branchName_jets, false);
+  RecoJetReader * const jetReader = new RecoJetReader(era, isMC, branchName_jets, readGenObjects);
   jetReader->setPtMass_central_or_shift(jetPt_option);
   jetReader->setBranchName_BtagWeight(jetBtagSF_option);
   inputTree->registerReader(jetReader);
