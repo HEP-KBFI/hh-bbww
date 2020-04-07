@@ -276,6 +276,7 @@ main(int argc,
                 << " (" << eventInfo
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
+    //if(! (eventInfo.run ==1 && eventInfo.lumi == 536 && eventInfo.event== 85157) ) continue;
     ++analyzedEntries;
 
     if(run_lumi_eventSelector && ! (*run_lumi_eventSelector)(eventInfo))
@@ -419,6 +420,7 @@ main(int argc,
     }
 
     std::sort(selJets.begin(), selJets.end(), isHigherPt);
+    std::sort(selFatJets.begin(), selFatJets.end(), isHigherPt);
 //--- compute MHT and linear MET discriminant (met_LD)
     const RecoMEt met_uncorr = metReader->read();
     const RecoMEt met = recompute_met(met_uncorr, jets, met_option, isDEBUG);
