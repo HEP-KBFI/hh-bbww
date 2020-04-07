@@ -88,7 +88,7 @@ main(int argc,
   const std::string process_string = cfg_analyze.getParameter<std::string>("process");
 
   const std::string era_string = cfg_analyze.getParameter<std::string>("era");
-  const int era = get_era(era_string);
+  const Era era = get_era(era_string);
 
   vstring triggerNames_1e = cfg_analyze.getParameter<vstring>("triggers_1e");
   std::vector<hltPath*> triggers_1e = create_hltPaths(triggerNames_1e);
@@ -105,7 +105,8 @@ main(int argc,
   const bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
   const bool genMatchingByIndex = cfg_analyze.getParameter<bool>("genMatchingByIndex");
 
-  const bool redoGenMatching     = cfg_analyze.getParameter<bool>("redoGenMatching");
+  const bool useAssocJetBtag      = cfg_analyze.getParameter<bool>("useAssocJetBtag");
+  const bool redoGenMatching      = cfg_analyze.getParameter<bool>("redoGenMatching");
   const bool isMC                 = cfg_analyze.getParameter<bool>("isMC");
   const bool useNonNominal        = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
@@ -116,6 +117,7 @@ main(int argc,
 
   const int met_option   = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift, isMC);
   const int jetPt_option = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift, isMC);
+  const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift, isMC);
 
   const bool isDEBUG = cfg_analyze.getParameter<bool>("isDEBUG");
 
@@ -183,22 +185,26 @@ main(int argc,
   inputTree -> registerReader(&hltPathReader_instance);
 
 //--- declare particle collections
-  RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, isMC, false);
+  RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
   inputTree->registerReader(muonReader);
   const RecoMuonCollectionGenMatcher muonGenMatcher;
   const RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
-  const RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era, -1, isDEBUG);
-  const RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
+  RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era, -1, isDEBUG);
+  RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
+  fakeableMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
+  tightMuonSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
-  RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, isMC, false);
+  RecoElectronReader * const electronReader = new RecoElectronReader(era, branchName_electrons, isMC, readGenObjects);
   inputTree->registerReader(electronReader);
   const RecoElectronCollectionGenMatcher electronGenMatcher;
   const RecoElectronCollectionCleaner electronCleaner(0.3, isDEBUG);
   const RecoElectronCollectionSelectorLoose preselElectronSelector(era, -1, isDEBUG);
-  const RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
-  const RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
+  RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era, -1, isDEBUG);
+  RecoElectronCollectionSelectorTight tightElectronSelector(era, -1, isDEBUG);
+  fakeableElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
+  tightElectronSelector.getSelector().set_assocJetBtag(useAssocJetBtag);
 
-  RecoJetReader * const jetReader = new RecoJetReader(era, isMC, branchName_jets, false);
+  RecoJetReader * const jetReader = new RecoJetReader(era, isMC, branchName_jets, readGenObjects);
   jetReader->setPtMass_central_or_shift(jetPt_option);
   jetReader->setBranchName_BtagWeight(jetBtagSF_option);
   inputTree->registerReader(jetReader);
@@ -207,13 +213,13 @@ main(int argc,
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
 
-  RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, branchName_fatJets, branchName_subJets);
+  RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
-  RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_fatJetsLS, branchName_subJetsLS);
+  RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_fatJetsLS, branchName_subJetsLS);
   inputTree->registerReader(jetReaderAK8LS);
   const RecoJetCollectionSelectorAK8 jetSelectorAK8LS(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);

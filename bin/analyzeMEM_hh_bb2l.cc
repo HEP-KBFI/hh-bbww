@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
 
   std::string era_string = cfg_analyze.getParameter<std::string>("era");
-  const int era = get_era(era_string);
+  const Era era = get_era(era_string);
 
   bool isMC = true;
   bool isMC_HH = isMC && process_string.find("hh_bbvv")!= std::string::npos;
@@ -235,7 +235,7 @@ int main(int argc, char* argv[])
   jetSelectorAK4_Hbb.getSelector().set_min_pt(selJetAK4_min_pt_Hbb);
   jetSelectorAK4_Hbb.getSelector().set_max_absEta(selJetAK4_max_absEta_Hbb);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);

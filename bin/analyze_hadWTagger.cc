@@ -165,7 +165,7 @@ int main(int argc,
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");	
 
   const std::string era_string = cfg_analyze.getParameter<std::string>("era");
-  const int era = get_era(era_string);
+  const Era era = get_era(era_string);
 
   const std::string leptonSelection_string = cfg_analyze.getParameter<std::string>("leptonSelection");
   const int leptonSelection = get_selection(leptonSelection_string);
@@ -227,7 +227,7 @@ int main(int argc,
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  //RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8); 
+  //RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   //inputTree->registerReader(jetReaderAK8);
   //RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   //RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);

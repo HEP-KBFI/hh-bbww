@@ -13,8 +13,8 @@ import getpass
 # E.g.: ./test/tthAnalyzeRun_hh_bbWW_Wctrl.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [ 'default' ]
-sys_choices      = [ 'full', 'internal' ] + systematics.an_extended_opts_hh
-systematics.full = systematics.an_extended_hh
+sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
+systematics.full = systematics.an_hh_bbww
 systematics.internal = systematics.an_internal_no_mem
 
 parser = tthAnalyzeParser()

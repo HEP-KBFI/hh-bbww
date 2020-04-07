@@ -2,7 +2,7 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // get_BtagWP()
 
-RecoJetSelectorAK8_hh_bbWW_Hbb::RecoJetSelectorAK8_hh_bbWW_Hbb(int era,
+RecoJetSelectorAK8_hh_bbWW_Hbb::RecoJetSelectorAK8_hh_bbWW_Hbb(Era era,
                                                                int index,
                                                                bool debug)
   : min_pt_(200.)
@@ -24,9 +24,9 @@ RecoJetSelectorAK8_hh_bbWW_Hbb::RecoJetSelectorAK8_hh_bbWW_Hbb(int era,
 {
   switch(era)
   {
-    case kEra_2016: min_jetId_ = 1; break; // 1 means loose
-    case kEra_2018:
-    case kEra_2017: min_jetId_ = 2; break; // 2 means tight (loose jet ID deprecated since 94x)
+    case Era::k2016: min_jetId_ = 1; break; // 1 means loose
+    case Era::k2018:
+    case Era::k2017: min_jetId_ = 2; break; // 2 means tight (loose jet ID deprecated since 94x)
     default: throw cmsException(this) << "Implement me!";
   }
 }

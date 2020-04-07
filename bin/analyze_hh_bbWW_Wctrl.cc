@@ -219,7 +219,7 @@ int main(int argc, char* argv[])
   bool isMCClosure_m = histogramDir.find("mcClosure_m") != std::string::npos;
 
   std::string era_string = cfg_analyze.getParameter<std::string>("era");
-  const int era = get_era(era_string);
+  const Era era = get_era(era_string);
 
   vstring triggerNames_1e = cfg_analyze.getParameter<vstring>("triggers_1e");
   std::vector<hltPath*> triggers_1e = create_hltPaths(triggerNames_1e);
@@ -302,13 +302,15 @@ int main(int argc, char* argv[])
   checkOptionValidity(central_or_shift_main, isMC);
   const int met_option      = useNonNominal_jetmet ? kJetMET_central_nonNominal : getMET_option(central_or_shift_main, isMC);
   const int jetPt_option    = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift_main, isMC);
+  const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift_main, isMC);
   const int hadTauPt_option = useNonNominal_jetmet ? kHadTauPt_uncorrected      : getHadTauPt_option(central_or_shift_main);
 
   std::cout
     << "central_or_shift = "    << central_or_shift_main << "\n"
        " -> hadTauPt_option = " << hadTauPt_option       << "\n"
        " -> met_option      = " << met_option            << "\n"
-       " -> jetPt_option    = " << jetPt_option          << '\n'
+       " -> jetPt_option    = " << jetPt_option          << "\n"
+       "--> fatJetPt_option = " << fatJetPt_option       << '\n'
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
@@ -325,10 +327,10 @@ int main(int argc, char* argv[])
   Data_to_MC_CorrectionInterface_Base * dataToMCcorrectionInterface = nullptr;
   switch(era)
   {
-    case kEra_2016: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2016(cfg_dataToMCcorrectionInterface); break;
-    case kEra_2017: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2017(cfg_dataToMCcorrectionInterface); break;
-    case kEra_2018: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2018(cfg_dataToMCcorrectionInterface); break;
-    default: throw cmsException("analyze_hh_bb1l", __LINE__) << "Invalid era = " << era;
+    case Era::k2016: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2016(cfg_dataToMCcorrectionInterface); break;
+    case Era::k2017: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2017(cfg_dataToMCcorrectionInterface); break;
+    case Era::k2018: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2018(cfg_dataToMCcorrectionInterface); break;
+    default: throw cmsException("analyze_hh_bb1l", __LINE__) << "Invalid era = " << static_cast<int>(era);
   }
 
   std::string applyFakeRateWeights_string = cfg_analyze.getParameter<std::string>("applyFakeRateWeights");
@@ -494,15 +496,15 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, branchName_jets_ak8, branchName_subjets_ak8);
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   RecoJetReaderAK8* jetReaderAK8LS = nullptr;
   if ( branchName_jets_ak8LS != branchName_jets_ak8 ) {
-    jetReaderAK8LS = new RecoJetReaderAK8(era, branchName_jets_ak8LS, branchName_subjets_ak8LS);
+    jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8LS, branchName_subjets_ak8LS);
+    jetReaderAK8LS->set_central_or_shift(fatJetPt_option);
   } else {
     jetReaderAK8LS = jetReaderAK8;
   }
-  // TO-DO: implement jet energy scale uncertainties, b-tag weights,
-  //        and jet  pT and (softdrop) mass corrections described in Section 3.4.3 of AN-2018/058 (v4)
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8);
   inputTree->registerReader(jetReaderAK8LS);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
