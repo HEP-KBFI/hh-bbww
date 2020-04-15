@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-04-05 17:11:30 with the following command:
+# file generated at 2020-04-15 15:12:17 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2016_RunIISummer16MiniAODv3.txt -m python/samples/metaDict_2016_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2016_RunIISummer16MiniAODv3.txt -c python/samples/sampleLocations_2016_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -27,7 +27,7 @@ meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "99.0%; status: VALID; size: 440.50GB; nevents: 9.96M; release: 9_4_9; last modified: 2020-01-09 12:35:35"),
+  ("comment",               "100.0%; status: VALID; size: 440.50GB; nevents: 9.96M; release: 9_4_9; last modified: 2020-01-09 12:35:35"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM"] =  OD([
@@ -53,7 +53,7 @@ meta_dictionary["/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pyth
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "69.9%; status: VALID; size: 1.35TB; nevents: 29.82M; release: 9_4_9; last modified: 2020-02-08 10:12:20"),
+  ("comment",               "100.0%; status: VALID; size: 1.35TB; nevents: 29.82M; release: 9_4_9; last modified: 2020-02-08 10:12:20"),
 ])
 
 meta_dictionary["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] =  OD([
@@ -66,7 +66,7 @@ meta_dictionary["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "71.62%; status: VALID; size: 1.34TB; nevents: 28.90M; release: 9_4_9; last modified: 2020-03-18 13:51:40"),
+  ("comment",               "99.67%; status: VALID; size: 1.34TB; nevents: 28.90M; release: 9_4_9; last modified: 2020-03-18 13:51:40"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -92,7 +92,7 @@ meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "36.0%; status: VALID; size: 220.08GB; nevents: 4.97M; release: 9_4_9; last modified: 2020-02-28 23:21:34"),
+  ("comment",               "100.0%; status: VALID; size: 220.08GB; nevents: 4.97M; release: 9_4_9; last modified: 2020-02-28 23:21:34"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -105,7 +105,7 @@ meta_dictionary["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "2.35%; status: VALID; size: 1.35TB; nevents: 29.67M; release: 9_4_9; last modified: 2020-02-07 13:32:59"),
+  ("comment",               "78.52%; status: VALID; size: 1.35TB; nevents: 29.67M; release: 9_4_9; last modified: 2020-02-07 13:32:59"),
 ])
 
 meta_dictionary["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -118,7 +118,7 @@ meta_dictionary["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/Ru
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "40.28%; status: VALID; size: 1.34TB; nevents: 28.70M; release: 9_4_9; last modified: 2020-01-16 21:45:00"),
+  ("comment",               "79.17%; status: VALID; size: 1.34TB; nevents: 28.70M; release: 9_4_9; last modified: 2020-01-16 21:45:00"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -157,7 +157,7 @@ meta_dictionary["/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/Ru
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "5.86%; status: VALID; size: 1.31TB; nevents: 28.95M; release: 9_4_9; last modified: 2020-03-19 01:45:07"),
+  ("comment",               "100.0%; status: VALID; size: 1.31TB; nevents: 28.95M; release: 9_4_9; last modified: 2020-03-19 01:45:07"),
 ])
 
 meta_dictionary["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -170,7 +170,7 @@ meta_dictionary["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIIS
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "66.1%; status: VALID; size: 1.29TB; nevents: 27.92M; release: 9_4_9; last modified: 2020-03-18 15:55:46"),
+  ("comment",               "100.0%; status: VALID; size: 1.29TB; nevents: 27.92M; release: 9_4_9; last modified: 2020-03-18 15:55:46"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -183,7 +183,7 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "54.55%; status: VALID; size: 436.40GB; nevents: 9.85M; release: 9_4_9; last modified: 2020-02-27 02:29:17"),
+  ("comment",               "100.0%; status: VALID; size: 436.40GB; nevents: 9.85M; release: 9_4_9; last modified: 2020-02-27 02:29:17"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM"] =  OD([
@@ -200,7 +200,7 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer
 ])
 
 meta_dictionary["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1"),
   ("sample_category",       "TT_ueUp"),
   ("process_name_specific", "TTToSemiLeptonic_ueUp"),
   ("nof_db_events",         29239200),
@@ -209,7 +209,7 @@ meta_dictionary["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunI
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 1.33TB; nevents: 29.24M; release: 9_4_9; last modified: 2020-03-03 17:41:30"),
+  ("comment",               "51.54%; status: VALID; size: 1.33TB; nevents: 29.24M; release: 9_4_9; last modified: 2020-03-03 17:41:30"),
 ])
 
 meta_dictionary["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -222,7 +222,7 @@ meta_dictionary["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISum
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "41.28%; status: VALID; size: 1.30TB; nevents: 27.94M; release: 9_4_9; last modified: 2020-03-19 01:45:22"),
+  ("comment",               "100.0%; status: VALID; size: 1.30TB; nevents: 27.94M; release: 9_4_9; last modified: 2020-03-19 01:45:22"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -261,7 +261,7 @@ meta_dictionary["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "98.98%; status: VALID; size: 1.29TB; nevents: 27.45M; release: 9_4_9; last modified: 2020-03-31 22:01:04"),
+  ("comment",               "100.0%; status: VALID; size: 1.29TB; nevents: 27.45M; release: 9_4_9; last modified: 2020-03-31 22:01:04"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -287,7 +287,7 @@ meta_dictionary["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-p
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "98.2%; status: VALID; size: 1.20TB; nevents: 26.47M; release: 9_4_9; last modified: 2020-03-27 13:00:04"),
+  ("comment",               "100.0%; status: VALID; size: 1.20TB; nevents: 26.47M; release: 9_4_9; last modified: 2020-03-27 13:00:04"),
 ])
 
 meta_dictionary["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -300,7 +300,7 @@ meta_dictionary["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythi
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "97.12%; status: VALID; size: 1.34TB; nevents: 28.88M; release: 9_4_9; last modified: 2020-04-01 03:52:25"),
+  ("comment",               "100.0%; status: VALID; size: 1.34TB; nevents: 28.88M; release: 9_4_9; last modified: 2020-04-01 03:52:25"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -313,7 +313,7 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "88.78%; status: VALID; size: 432.56GB; nevents: 9.73M; release: 9_4_9; last modified: 2020-03-03 17:42:14"),
+  ("comment",               "100.0%; status: VALID; size: 432.56GB; nevents: 9.73M; release: 9_4_9; last modified: 2020-03-03 17:42:14"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM"] =  OD([
@@ -339,7 +339,7 @@ meta_dictionary["/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "23.03%; status: VALID; size: 1.32TB; nevents: 28.97M; release: 9_4_9; last modified: 2020-03-18 13:51:28"),
+  ("comment",               "58.88%; status: VALID; size: 1.32TB; nevents: 28.97M; release: 9_4_9; last modified: 2020-03-18 13:51:28"),
 ])
 
 meta_dictionary["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -352,33 +352,33 @@ meta_dictionary["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunI
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "97.56%; status: VALID; size: 1.27TB; nevents: 27.34M; release: 9_4_9; last modified: 2020-03-27 12:58:49"),
+  ("comment",               "100.0%; status: VALID; size: 1.27TB; nevents: 27.34M; release: 9_4_9; last modified: 2020-03-27 12:58:49"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2016v3_2020Mar31_TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1"),
   ("sample_category",       "TT_mtop169p5"),
   ("process_name_specific", "TTTo2L2Nu_mtop169p5_PSweights_backup"),
-  ("nof_db_events",         989200),
-  ("nof_db_files",          9),
-  ("fsize_db",              43359624747),
+  ("nof_db_events",         1294000),
+  ("nof_db_files",          12),
+  ("fsize_db",              56723913520),
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "100.0%; status: PRODUCTION; size: 43.36GB; nevents: 989.20k; release: 9_4_9; last modified: 2020-02-25 19:42:34"),
+  ("comment",               "100.0%; status: PRODUCTION; size: 56.72GB; nevents: 1.29M; release: 9_4_9; last modified: 2020-02-25 19:42:34"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1"),
   ("sample_category",       "TT_mtop169p5"),
   ("process_name_specific", "TTToSemiLeptonic_mtop169p5_PSweights_backup"),
-  ("nof_db_events",         2042800),
-  ("nof_db_files",          21),
-  ("fsize_db",              91708676625),
+  ("nof_db_events",         3197800),
+  ("nof_db_files",          32),
+  ("fsize_db",              143556579755),
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "95.45%; status: PRODUCTION; size: 91.71GB; nevents: 2.04M; release: 9_4_9; last modified: 2020-02-24 22:19:47"),
+  ("comment",               "100.0%; status: PRODUCTION; size: 143.56GB; nevents: 3.20M; release: 9_4_9; last modified: 2020-02-24 22:19:47"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -391,7 +391,7 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunI
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "95.24%; status: PRODUCTION; size: 108.21GB; nevents: 2.43M; release: 9_4_9; last modified: 2020-03-02 18:59:19"),
+  ("comment",               "100.0%; status: PRODUCTION; size: 108.21GB; nevents: 2.43M; release: 9_4_9; last modified: 2020-03-02 18:59:19"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -404,7 +404,7 @@ meta_dictionary["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythi
   ("xsection",              365.52),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "83.33%; status: PRODUCTION; size: 122.24GB; nevents: 2.70M; release: 9_4_9; last modified: 2020-03-07 19:40:08"),
+  ("comment",               "100.0%; status: PRODUCTION; size: 122.24GB; nevents: 2.70M; release: 9_4_9; last modified: 2020-03-07 19:40:08"),
 ])
 
 
@@ -416,6 +416,6 @@ meta_dictionary["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythi
 # TT_QCDbased:  71.50M
 # TT_GluonMove: 68.89M
 # TT_erdON:     70.87M
-# TT_mtop169p5: 3.03M
+# TT_mtop169p5: 4.49M
 # TT_mtop175p5: 5.14M
 
