@@ -95,8 +95,8 @@ process.analyze_hh_bb2l = cms.PSet(
     jetCleaningByIndex = cms.bool(True),
 
     branchName_genTauLeptons = cms.string('GenTau'),
-    branchName_memOutput = cms.string(''),
-    branchName_hmeOutput = cms.string(''),
+    branchName_memOutput = cms.string('memObjects_hh_bb2l_lepFakeable_central_BM1'),
+    branchName_hmeOutput = cms.string('hmeObjects_hh_bb2l_lepFakeable_central'),
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
