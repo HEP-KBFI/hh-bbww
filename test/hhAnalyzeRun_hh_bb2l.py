@@ -13,7 +13,7 @@ import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
-mode_choices     = [ 'default', 'forBDTtraining', 'sync' ]
+mode_choices     = [ 'default', 'forBDTtraining', 'sync', 'MEMforBDTtraining' ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
 systematics.full = systematics.an_hh_bbww
 systematics.internal = systematics.an_internal_no_mem
@@ -93,6 +93,11 @@ elif mode == "forBDTtraining":
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "BDT")
   samples = load_samples_stitched(samples, era, load_dy = True, load_wjets = True)
+elif mode == "MEMforBDTtraining":
+  if use_preselected:
+    raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
+  samples = load_samples(era, suffix = "MEM_bb2l_BDT")
+  #TODO: specify MEM branch & pass it to the ctor below
 elif mode == "sync":
   samples = load_samples(era, suffix = "sync")
 else:

@@ -1,0 +1,5 @@
+from hhAnalysis.bbww.samples.tthAnalyzeSamples_2017_hh_MEM_bb2l_BDT import samples_2017 as samples_2017_bkg
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_hh_MEM_bb2l_BDT import samples_2017 as samples_2017_hh
+
+from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples
+samples_2017 = reclassifySamples(samples_2017_hh, samples_2017_bkg)
