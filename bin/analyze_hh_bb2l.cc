@@ -327,13 +327,17 @@ int main(int argc, char* argv[])
   const int jetPt_option    = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift_main, isMC);
   const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift_main, isMC);
   const int hadTauPt_option = useNonNominal_jetmet ? kHadTauPt_uncorrected      : getHadTauPt_option(central_or_shift_main);
+  
+  const MEMsys mem_option_main = getMEMsys_option(central_or_shift_main);
+  assert(mem_option_main == MEMsys::nominal);
 
   std::cout
     << "central_or_shift = "    << central_or_shift_main << "\n"
        " -> hadTauPt_option = " << hadTauPt_option       << "\n"
        " -> met_option      = " << met_option            << "\n"
        " -> jetPt_option    = " << jetPt_option          << "\n"
-       "--> fatJetPt_option = " << fatJetPt_option       << '\n'
+       "--> fatJetPt_option = " << fatJetPt_option       << "\n"
+       " -> MEMsys option   = " << as_integer(mem_option_main) << '\n'
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
@@ -1688,6 +1692,7 @@ int main(int argc, char* argv[])
                   << ", pdgId = "                 << selLepton_sublead->pdgId() << "\n"
                      "Number of MEM objects read: " << memOutputs_hh_bb2l.size() << '\n'
         ;
+	bool memSkipError = false;
         if(! memOutputs_hh_bb2l.empty())
         {
           for(unsigned mem_idx = 0; mem_idx < memOutputs_hh_bb2l.size(); ++mem_idx)
@@ -1707,11 +1712,13 @@ int main(int argc, char* argv[])
       }
     }
     //read MEM result by BM
-    std::map<std::string, double> memOutput_LR;
+    std::map<std::string, std::map<MEMsys, double>> memOutput_LR;
     std::map<std::string, double> memweight_signal;
     std::map<std::string, double> memweight_background;
+    
     //if(memReader.size() > 0)
     //{
+    MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM;
     for(auto BMlocal : BMS)
     {
       if( memReader.size() > 0 )
@@ -1719,14 +1726,14 @@ int main(int argc, char* argv[])
         const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l_BM = memReader[BMlocal]->read(); // Xanda crashing here
         for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l_BM: memOutputs_hh_bb2l_BM)
         {
-          MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
-          memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.isValid() ? memOutput_hh_bb2l_matched_BM.LR() : -1.;
+	  memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
+          memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.get_LR_map();
           memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
           memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
-          if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
+          if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal][MEMsys::nominal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
         }
       } else {
-        memOutput_LR[BMlocal] = -1.;
+        memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.get_LR_map();
         memweight_signal[BMlocal] = -1.;
         memweight_background[BMlocal] = -1.;
       }
@@ -2029,7 +2036,6 @@ int main(int argc, char* argv[])
       {
         selHistManagerType* selHistManager = selHistManagers[central_or_shift][genMatch->getIdx()];
         assert(selHistManager);
-
         if(! skipFilling)
         {
           selHistManager->electrons_->fillHistograms(selElectrons, evtWeight);
@@ -2246,7 +2252,7 @@ int main(int argc, char* argv[])
           (rwgt_map)
           (memweight_signal, "memweight_signal")
           (memweight_background, "memweight_background")
-          (memOutput_LR, "memOutput_LR")
+	("memOutput_LR", memOutput_LR["SM"][MEMsys::nominal])
         .fill()
       ;
     }
@@ -2269,7 +2275,9 @@ int main(int argc, char* argv[])
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
-      snm->read(memOutput_LR["SM"],                     FloatVariableType_bbww::MEM_LR);
+      snm->read(memOutput_LR["SM"][MEMsys::nominal],    FloatVariableType_bbww::MEM_LR);
+      snm->read(memOutput_LR["SM"][MEMsys::up],    FloatVariableType_bbww::MEM_LR_up);
+      snm->read(memOutput_LR["SM"][MEMsys::down],    FloatVariableType_bbww::MEM_LR_down);
 
       if(isGenMatched)
       {

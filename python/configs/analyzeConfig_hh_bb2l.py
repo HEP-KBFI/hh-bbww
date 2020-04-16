@@ -47,6 +47,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         executable_analyze,
         cfgFile_analyze,
         samples,
+        MEMbranch,
         lepton_charge_selections,
         applyFakeRateWeights,
         central_or_shifts,
@@ -100,6 +101,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
     )
+    
+    self.MEMbranch = MEMbranch
+
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
@@ -163,7 +167,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         return False
       if isFR_shape_shift and lepton_selection == "Tight":
         return False
-      if not is_mc and not isFR_shape_shift:
+      if not is_mc and not isFR_shape_shift and central_or_shift not in systematics.MEM_hh_bb2l :
         return False
       if not self.accept_central_or_shift(central_or_shift, sample_info):
         return False
@@ -399,6 +403,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 applyFakeRateWeights = self.applyFakeRateWeights \
                   if self.isBDTtraining or not lepton_selection == "Tight" \
                   else "disabled"
+                branchName_memOutput = '%s_%s' % (self.MEMbranch, self.get_addMEM_systematics(central_or_shift)) \
+                                         if self.MEMbranch else ''
+
                 self.jobOptions_analyze[key_analyze_job] = {
                   'ntupleFiles'              : ntupleFiles,
                   'cfgFile_modified'         : cfgFile_modified_path,

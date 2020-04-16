@@ -80,6 +80,8 @@ SyncNtupleManager_bbww::initializeBranches()
     floatMap[FloatVariableType_bbww::PFMETphi],  "PFMETphi",
     floatMap[FloatVariableType_bbww::HME],       "HME",
     floatMap[FloatVariableType_bbww::MEM_LR],    "MEM_LR",
+    floatMap[FloatVariableType_bbww::MEM_LR_up], "MEM_LR_up",
+    floatMap[FloatVariableType_bbww::MEM_LR_down],"MEM_LR_down",
     floatMap[FloatVariableType_bbww::PU_weight], "PU_weight",
     floatMap[FloatVariableType_bbww::MC_weight], "MC_weight"
   );

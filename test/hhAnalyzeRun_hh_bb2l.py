@@ -13,8 +13,8 @@ import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
-mode_choices     = [ 'default', 'forBDTtraining', 'sync', 'MEMforBDTtraining' ]
-sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
+mode_choices     = [ 'default', 'addMEM', 'forBDTtraining_beforeAddMEM', 'MEMforBDTtraining', 'sync', 'sync_wMEM']
+sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww + [ 'MEM_bb2l' ]
 systematics.full = systematics.an_hh_bbww
 systematics.internal = systematics.an_internal_no_mem
 
@@ -75,10 +75,15 @@ if split_trigger_sys in [ 'yes', 'both' ]:
   systematics.full.extend(systematics.triggerSF_2lss)
 
 # Use the arguments
+if "MEM" in mode:
+  systematics.full += systematics.MEM_bb2l
+  systematics.internal += systematics.MEM_bb2l
 central_or_shifts = []
 for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
+      if central_or_shift in systematics.MEM_bb2l and "MEM" not in mode:
+        continue
       central_or_shifts.append(central_or_shift)
 
 do_sync = mode.startswith('sync')
@@ -86,9 +91,16 @@ lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
+MEMbranch                = ''
+MEMsample_base = "addMEM_hh_bb2l"
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
-elif mode == "forBDTtraining":
+elif mode == "addMEM":
+  if not use_preselected:
+    raise ValueError("MEM branches can be read only from preselected Ntuples")
+  samples = load_samples(era, suffix = MEMsample_base)
+  #MEMbranch = 'memObjects_hh_bb2l_lepFakeable_'
+elif mode == "forBDTtraining_beforeAddMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "BDT")
@@ -98,6 +110,12 @@ elif mode == "MEMforBDTtraining":
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "MEM_bb2l_BDT")
   #TODO: specify MEM branch & pass it to the ctor below
+elif mode == "sync_wMEM":
+  if not use_preselected:
+    raise ValueError("MEM branches can be read only from preselected Ntuples")
+  samples = load_samples(era, suffix = "{}_sync{}".format(MEMsample_base, '' if use_nonnominal else "_nom"))
+  #MEMbranch = 'memObjects_hh_bb2l_lepFakeable_'
+
 elif mode == "sync":
   samples = load_samples(era, suffix = "sync")
 else:
@@ -154,6 +172,7 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hh_bb2l",
     cfgFile_analyze                       = "analyze_hh_bb2l_cfg.py",
     samples                               = samples,
+    MEMbranch                             = MEMbranch,
     lepton_charge_selections              = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
