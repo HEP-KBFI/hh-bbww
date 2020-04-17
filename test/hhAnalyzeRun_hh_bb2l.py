@@ -33,6 +33,11 @@ parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
+parser.add_argument('-hme', '--hmeBr',
+   dest = 'add_hmeBr', action='store_true',
+                    help = 'R|add hme branch'
+)
+
 args = parser.parse_args()
 
 # Common arguments
@@ -61,6 +66,7 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
+add_hmeBr            =args.add_hmeBr
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -92,6 +98,9 @@ jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
 MEMbranch                = ''
+hmebranch                = ''
+if add_hmeBr :
+  hmebranch = 'hmeObjects_hh_bb2l_lepFakeable'
 MEMsample_base = "addMEM_hh_bb2l"
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
@@ -99,7 +108,7 @@ elif mode == "addMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
   samples = load_samples(era, suffix = MEMsample_base)
-  #MEMbranch = 'memObjects_hh_bb2l_lepFakeable_'
+  MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
 elif mode == "forBDTtraining_beforeAddMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
@@ -114,7 +123,7 @@ elif mode == "sync_wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
   samples = load_samples(era, suffix = "{}_sync{}".format(MEMsample_base, '' if use_nonnominal else "_nom"))
-  #MEMbranch = 'memObjects_hh_bb2l_lepFakeable_'
+  MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
 
 elif mode == "sync":
   samples = load_samples(era, suffix = "sync")
@@ -173,6 +182,7 @@ if __name__ == '__main__':
     cfgFile_analyze                       = "analyze_hh_bb2l_cfg.py",
     samples                               = samples,
     MEMbranch                             = MEMbranch,
+    hmebranch                             = hmebranch,
     lepton_charge_selections              = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,

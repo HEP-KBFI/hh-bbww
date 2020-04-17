@@ -48,6 +48,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         cfgFile_analyze,
         samples,
         MEMbranch,
+        hmebranch,
         lepton_charge_selections,
         applyFakeRateWeights,
         central_or_shifts,
@@ -103,6 +104,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     )
     
     self.MEMbranch = MEMbranch
+    self.hmebranch = hmebranch
 
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
@@ -405,7 +407,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   else "disabled"
                 branchName_memOutput = '%s_%s' % (self.MEMbranch, self.get_addMEM_systematics(central_or_shift)) \
                                          if self.MEMbranch else ''
-
+                branchName_hmeOutput = '%s_%s' % (self.hmebranch, self.get_addMEM_systematics(central_or_shift)) \
+                                         if self.hmebranch else ''
                 self.jobOptions_analyze[key_analyze_job] = {
                   'ntupleFiles'              : ntupleFiles,
                   'cfgFile_modified'         : cfgFile_modified_path,
@@ -428,6 +431,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'useNonNominal'            : self.use_nonnominal,
                   'fillGenEvtHistograms'     : True,
                   'useAssocJetBtag'          : self.do_sync,
+                  'branchName_memOutput'     : branchName_memOutput,
+                  'branchName_hmeOutput'     : branchName_hmeOutput
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
                 
