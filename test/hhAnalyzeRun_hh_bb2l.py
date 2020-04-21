@@ -13,7 +13,10 @@ import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
-mode_choices     = [ 'default', 'addMEM', 'forBDTtraining_beforeAddMEM', 'MEMforBDTtraining', 'sync', 'sync_wMEM']
+mode_choices     = [
+  'default', 'addMEM', 'forBDTtraining_beforeAddMEM', 'MEMforBDTtraining', 'hh_sync', 'hh_sync_wMEM',
+  'ttbar_sync', 'ttbar_sync_wMEM',
+]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww + [ 'MEM_bb2l' ]
 systematics.full = systematics.an_hh_bbww
 systematics.internal = systematics.an_internal_no_mem
@@ -34,8 +37,8 @@ parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
 parser.add_argument('-hme', '--hmeBr',
-   dest = 'add_hmeBr', action='store_true',
-                    help = 'R|add hme branch'
+  dest = 'add_hmeBr', action = 'store_true',
+  help = 'R|add hme branch'
 )
 
 args = parser.parse_args()
@@ -97,11 +100,12 @@ lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
-MEMbranch                = ''
-hmebranch                = ''
+MEMbranch = ''
+hmebranch = ''
 if add_hmeBr :
   hmebranch = 'hmeObjects_hh_bb2l_lepFakeable'
 MEMsample_base = "addMEM_hh_bb2l"
+
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
 elif mode == "addMEM":
@@ -119,14 +123,20 @@ elif mode == "MEMforBDTtraining":
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "MEM_bb2l_BDT")
   #TODO: specify MEM branch & pass it to the ctor below
-elif mode == "sync_wMEM":
+elif mode == "hh_sync_wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
   samples = load_samples(era, suffix = "{}_sync{}".format(MEMsample_base, '' if use_nonnominal else "_nom"))
   MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
-
-elif mode == "sync":
+elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
+elif mode == "ttbar_sync_wMEM":
+  if not use_preselected:
+    raise ValueError("MEM branches can be read only from preselected Ntuples")
+  samples = load_samples(era, suffix = "{}_sync_ttbar{}".format(MEMsample_base, '' if use_nonnominal else "_nom"))
+  MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
+elif mode == "ttbar_sync":
+  samples = load_samples(era, suffix = "sync_ttbar")
 else:
   raise ValueError("Internal logic error")
 

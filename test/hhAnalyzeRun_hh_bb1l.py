@@ -13,7 +13,7 @@ import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
 
-mode_choices     = [ 'default', 'forBDTtraining', 'sync' ]
+mode_choices     = [ 'default', 'forBDTtraining', 'hh_sync', 'ttbar_sync' ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
 systematics.full = systematics.an_hh_bbww
 systematics.internal = systematics.an_internal_no_mem
@@ -87,7 +87,7 @@ lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
-if mode != "sync":
+if "sync" not in mode:
   samples_to_stitch = getattr(
     importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch"),
     "samples_to_stitch_{}".format(era)
@@ -98,8 +98,10 @@ if mode == "default":
 elif mode == "forBDTtraining":
   samples = load_samples(era, suffix = "BDT")
   samples = load_samples_stitched(samples, era, load_dy = True, load_wjets = True)
-elif mode == "sync":
+elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
+elif mode == "ttbar_sync":
+  samples = load_samples(era, suffix = "sync_ttbar")
 else:
   raise ValueError("Internal logic error")
 

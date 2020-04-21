@@ -11,8 +11,10 @@ sys_choices     = systematics.an_inclusive_opts
 channel_choices = [
   'hh_bbww_inclusive', 'hh_bb2l', 'hh_bb1l'
 ]
+mode_choices = [ 'hh', 'ttbar' ]
 
 parser = tthAnalyzeParser()
+parser.add_modes(mode_choices)
 parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_hlt_filter()
@@ -46,6 +48,7 @@ debug              = args.debug
 running_method     = args.running_method
 
 # Additional arguments
+mode              = args.mode
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 tau_id_wp         = args.tau_id_wp
@@ -95,8 +98,9 @@ if __name__ == '__main__':
     gen_matching       = '',
     project_dir        = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww'),
     file_pattern       = 'hhAnalyzeRun_%s.py',
-    suffix             = 'bbww',
+    suffix             = 'bbww_{}'.format(mode),
     submission_cmd     = sys.argv,
+    mode               = mode,
   )
 
   job_statistics = analysis.create()

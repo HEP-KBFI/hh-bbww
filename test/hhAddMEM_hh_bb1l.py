@@ -85,6 +85,8 @@ elif mode == "BDT":
   samples = load_samples(era, suffix = "BDT")
 elif mode == "sync":
   samples = load_samples(era, suffix = "sync")
+elif mode == "sync_ttbar":
+  samples = load_samples(era, suffix = "sync_ttbar")
 else:
   raise ValueError("Invalid mode: %s" % mode)
 

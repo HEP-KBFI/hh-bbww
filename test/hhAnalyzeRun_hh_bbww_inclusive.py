@@ -12,10 +12,12 @@ import getpass
 
 # E.g. to run: ./test/hhAnalyzeRun_inclusive.py -v 2017Dec13 -e 2017 -o syncTree
 
+mode_choices     = [ 'hh_sync', 'ttbar_sync' ]
 sys_choices      = [ "full" ] + systematics.an_inclusive_opts
 systematics.full = systematics.an_inclusive
 
 parser = tthAnalyzeParser()
+parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_rle_select()
 parser.add_nonnominal()
@@ -42,6 +44,7 @@ sample_filter      = args.filter
 running_method     = args.running_method
 
 # Additional arguments
+mode              = args.mode
 rle_select        = os.path.expanduser(args.rle_select)
 systematics_label = args.systematics
 use_nonnominal    = args.original_central
@@ -67,8 +70,11 @@ for systematic_label in systematics_label:
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
-if use_nonnominal:
+assert(use_nonnominal)
+if mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
+elif mode == "ttbar_sync":
+  samples = load_samples(era, suffix = "sync_ttbar")
 else:
   raise ValueError("Implement me!")
 
