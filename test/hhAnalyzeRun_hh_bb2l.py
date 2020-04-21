@@ -14,7 +14,7 @@ import importlib
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
 mode_choices     = [
-  'default', 'addMEM', 'forBDTtraining_beforeAddMEM', 'MEMforBDTtraining', 'hh_sync', 'hh_sync_wMEM',
+  'default', 'wMEM', 'forBDTtraining', 'forBDTtraining_wMEM', 'hh_sync', 'hh_sync_wMEM',
   'ttbar_sync', 'ttbar_sync_wMEM',
 ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww + [ 'MEM_bb2l' ]
@@ -84,7 +84,7 @@ if split_trigger_sys in [ 'yes', 'both' ]:
   systematics.full.extend(systematics.triggerSF_2lss)
 
 # Use the arguments
-if "MEM" in mode:
+if "wMEM" in mode:
   systematics.full += systematics.MEM_bb2l
   systematics.internal += systematics.MEM_bb2l
 central_or_shifts = []
@@ -102,39 +102,43 @@ gen_matching_by_index = (gen_matching == 'by_index')
 
 MEMbranch = ''
 hmebranch = ''
-if add_hmeBr :
-  hmebranch = 'hmeObjects_hh_bb2l_lepFakeable'
+MEMbranch_base = "memObjects_hh_bb2l"
+HMEbranch_base = "hmeObjects_hh_bb2l"
 MEMsample_base = "addMEM_hh_bb2l"
+
+# the Ntuples that currently have the MEM scores are computed with fakebale lepton selection
+if add_hmeBr:
+  #hmebranch = "{}_lep{}".format(HMEbranch_base, "Loose" if "forBDTtraining" in mode else "Fakeable")
+  hmebranch = "{}_lepFakeable".format(HMEbranch_base)
+if "wMEM" in mode:
+  #MEMbranch = '{}_lep{}'.format(MEMbranch_base, "Loose" if "forBDTtraining" in mode else "Fakeable")
+  MEMbranch = '{}_lepFakeable'.format(MEMbranch_base)
 
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
-elif mode == "addMEM":
+elif mode == "wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
   samples = load_samples(era, suffix = MEMsample_base)
-  MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
-elif mode == "forBDTtraining_beforeAddMEM":
+elif mode == "forBDTtraining":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "BDT")
   samples = load_samples_stitched(samples, era, load_dy = True, load_wjets = True)
-elif mode == "MEMforBDTtraining":
+elif mode == "forBDTtraining_wMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "MEM_bb2l_BDT")
-  #TODO: specify MEM branch & pass it to the ctor below
 elif mode == "hh_sync_wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
   samples = load_samples(era, suffix = "{}_sync{}".format(MEMsample_base, '' if use_nonnominal else "_nom"))
-  MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync_wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
   samples = load_samples(era, suffix = "{}_sync_ttbar{}".format(MEMsample_base, '' if use_nonnominal else "_nom"))
-  MEMbranch = 'memObjects_hh_bb2l_lepFakeable'
 elif mode == "ttbar_sync":
   samples = load_samples(era, suffix = "sync_ttbar")
 else:
