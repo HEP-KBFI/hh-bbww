@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-04-21 14:05:54 with the following command:
+# file generated at 2020-04-22 15:30:48 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p python/samples/sampleLocations_2016_nanoAOD_ttbar.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_ttbar.py -M
 
 samples_2016 = OD()
@@ -313,9 +313,9 @@ samples_2016["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("nof_db_files",                    396),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 28495300),
+  ("nof_tree_events",                 28695100),
   ("nof_db_events",                   28695100),
-  ("fsize_local",                     65801320888), # 65.80GB, avg file size 228.48MB
+  ("fsize_local",                     66262334767), # 66.26GB, avg file size 230.08MB
   ("fsize_db",                        1337128214755), # 1.34TB, avg file size 3.38GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -330,7 +330,7 @@ samples_2016["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_140410"),
         ("selection", "*"),
-        ("blacklist", [3, 5]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -1246,13 +1246,13 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   ("sample_category",                 "TT_mtop175p5"),
   ("process_name_specific",           "TTTo2L2Nu_mtop175p5_PSweights_backup"),
   ("nof_files",                       42),
-  ("nof_db_files",                    81),
+  ("nof_db_files",                    85),
   ("nof_events",                      {
   }),
   ("nof_tree_events",                 2414800),
-  ("nof_db_events",                   3216800),
+  ("nof_db_events",                   3577200),
   ("fsize_local",                     5273427976), # 5.27GB, avg file size 125.56MB
-  ("fsize_db",                        142960320277), # 142.96GB, avg file size 1.76GB
+  ("fsize_db",                        158849492877), # 158.85GB, avg file size 1.87GB
   ("use_it",                          False),
   ("xsection",                        88.4),
   ("genWeight",                       True),
