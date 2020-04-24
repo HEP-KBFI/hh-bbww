@@ -74,7 +74,7 @@ assert(use_nonnominal)
 if mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
-  samples = load_samples(era, suffix = "nanoAOD_sync_ttbar")
+  samples = load_samples(era, suffix = "sync_ttbar")
 else:
   raise ValueError("Implement me!")
 
