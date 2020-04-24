@@ -19,6 +19,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronCollectionSelectorFakeable.h" // RecoElectronCollectionSelectorFakeable
 #include "tthAnalysis/HiggsToTauTau/interface/RecoElectronCollectionSelectorTight.h" // RecoElectronCollectionSelectorTight
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetCollectionSelectorAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // kElectron, kMuon
@@ -27,10 +28,13 @@
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths(), hltPaths_isTriggered()re
 #include "tthAnalysis/HiggsToTauTau/interface/hltPathReader.h" // hltPathReader
 #include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper
-
+#include "tthAnalysis/HiggsToTauTau/interface/Data_to_MC_CorrectionInterface_2016.h"
+#include "tthAnalysis/HiggsToTauTau/interface/Data_to_MC_CorrectionInterface_2017.h"
+#include "tthAnalysis/HiggsToTauTau/interface/Data_to_MC_CorrectionInterface_2018.h"
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
+#include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
@@ -43,6 +47,7 @@
 #include <TBenchmark.h> // TBenchmark
 #include <TError.h> // gErrorAbortLevel, kError
 
+#include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
@@ -90,6 +95,8 @@ main(int argc,
   const std::string era_string = cfg_analyze.getParameter<std::string>("era");
   const Era era = get_era(era_string);
 
+  bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
+  bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
   vstring triggerNames_1e = cfg_analyze.getParameter<vstring>("triggers_1e");
   std::vector<hltPath*> triggers_1e = create_hltPaths(triggerNames_1e);
   vstring triggerNames_2e = cfg_analyze.getParameter<vstring>("triggers_2e");
@@ -111,7 +118,10 @@ main(int argc,
   const bool useNonNominal        = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
   const bool readGenObjects       = isMC && ! redoGenMatching;
+  std::string apply_topPtReweighting_str = cfg_analyze.getParameter<std::string>("apply_topPtReweighting");
+  bool apply_topPtReweighting = ! apply_topPtReweighting_str.empty();
 
+  std::vector<std::string> central_or_shifts_local = { central_or_shift };
   checkOptionValidity(central_or_shift, isMC);
   const int jetBtagSF_option           = getBTagWeight_option   (central_or_shift);
 
@@ -150,6 +160,21 @@ main(int argc,
     run_lumi_eventSelector = new RunLumiEventSelector(cfgRunLumiEventSelector);
   }
 
+  edm::ParameterSet cfg_dataToMCcorrectionInterface;
+  cfg_dataToMCcorrectionInterface.addParameter<std::string>("era", era_string);
+  cfg_dataToMCcorrectionInterface.addParameter<std::string>("hadTauSelection", "disabled"); // CV: dummy value (no taus used in HH->bbWW channel)
+  cfg_dataToMCcorrectionInterface.addParameter<int>("hadTauSelection_antiElectron", -1);
+  cfg_dataToMCcorrectionInterface.addParameter<int>("hadTauSelection_antiMuon", -1);
+  cfg_dataToMCcorrectionInterface.addParameter<bool>("isDEBUG", isDEBUG);
+  Data_to_MC_CorrectionInterface_Base * dataToMCcorrectionInterface = nullptr;
+  switch(era)
+    {
+    case Era::k2016: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2016(cfg_dataToMCcorrectionInterface); break;
+    case Era::k2017: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2017(cfg_dataToMCcorrectionInterface); break;
+    case Era::k2018: dataToMCcorrectionInterface = new Data_to_MC_CorrectionInterface_2018(cfg_dataToMCcorrectionInterface); break;
+    default: throw cmsException("analyze_hh_bb2l", __LINE__) << "Invalid era = " << static_cast<int>(era);
+    }
+
   const fwlite::InputSource inputFiles(cfg);
   const int maxEvents = inputFiles.maxEvents();
   std::cout << " maxEvents = " << maxEvents << '\n';
@@ -175,8 +200,12 @@ main(int argc,
   });
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC);
+  EventInfo eventInfo(isMC, isSignal, isMC_HH_nonres, apply_topPtReweighting);
   EventInfoReader eventInfoReader(&eventInfo);
+  if(apply_topPtReweighting)
+  {
+    eventInfoReader.setTopPtRwgtBranchName(apply_topPtReweighting_str);
+  }
   inputTree->registerReader(&eventInfoReader);
 
   hltPathReader hltPathReader_instance({
@@ -212,9 +241,10 @@ main(int argc,
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
-
+  RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
   inputTree->registerReader(jetReaderAK8);
+
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
@@ -282,13 +312,16 @@ main(int argc,
                 << " (" << eventInfo
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 536 && eventInfo.event== 85157) ) continue;
+    //if(! (eventInfo.run ==1 && eventInfo.lumi == 10 && eventInfo.event== 1582) ) continue;
     ++analyzedEntries;
 
     if(run_lumi_eventSelector && ! (*run_lumi_eventSelector)(eventInfo))
     {
       continue;
     }
+
+    EvtWeightRecorderHH evtWeightRecorder(central_or_shifts_local, central_or_shift, isMC);
+    if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
 
     if(run_lumi_eventSelector)
     {
@@ -300,6 +333,7 @@ main(int argc,
     }
 
     snm->read(eventInfo);
+    snm->read(evtWeightRecorder.get_toppt_rwgt("central"), FloatVariableType_bbww::topPt_wgt);
     snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
     snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
 
@@ -340,7 +374,66 @@ main(int argc,
 
     const std::vector<const RecoLepton *> preselLeptons = mergeLeptonCollections(preselElectrons, preselMuons, isHigherConePt);
     const std::vector<const RecoLepton*> fakeableLeptons = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
+    const std::vector<const RecoLepton*> tightLeptons = mergeLeptonCollections(tightElectrons, tightMuons, isHigherConePt);
+    const std::vector<const RecoLepton*> selLeptons = tightLeptons;
 
+    const RecoLepton *selLepton_lead, *selLepton_sublead, *selLepton3, *selLepton4;
+    int selLepton_lead_type, selLepton_sublead_type, selLepton3_type, selLepton4_type;
+    if( selLeptons.size() ==1 )
+    {
+      selLepton_lead = selLeptons[0];
+      selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+      dataToMCcorrectionInterface->setLeptons(
+       selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta()
+     );
+    }
+    else if ( selLeptons.size() ==2 )
+    {
+      selLepton_lead = selLeptons[0];
+      selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+      selLepton_sublead = selLeptons[1];
+      selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+      dataToMCcorrectionInterface->setLeptons(
+       selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+       selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
+     );
+    }
+    else if ( selLeptons.size() ==3 )
+      {
+	selLepton_lead = selLeptons[0];
+	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+	selLepton_sublead = selLeptons[1];
+	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+	selLepton3 = selLeptons[2];
+        selLepton3_type = getLeptonType(selLepton3->pdgId());
+	dataToMCcorrectionInterface->setLeptons(
+         selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
+	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta()
+	 );
+      }
+    else if( selLeptons.size() >=4 )
+    {
+      selLepton_lead = selLeptons[0];
+      selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+      selLepton_sublead = selLeptons[1];
+      selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+      selLepton3 = selLeptons[2];
+      selLepton3_type = getLeptonType(selLepton3->pdgId());
+      selLepton4 = selLeptons[3];
+      selLepton4_type = getLeptonType(selLepton4->pdgId());
+      dataToMCcorrectionInterface->setLeptons(
+       selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+       selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
+       selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta(),
+       selLepton4_type, selLepton4->pt(), selLepton4->cone_pt(), selLepton4->eta()
+       );
+    }
+    
+    evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
+    evtWeightRecorder.record_leptonIDSF_recoToLoose(dataToMCcorrectionInterface);
+    evtWeightRecorder.record_leptonIDSF_looseToTight(dataToMCcorrectionInterface);
+    
     if(isDEBUG)
     {
       printCollection("preselLeptons", preselLeptons);
@@ -354,6 +447,9 @@ main(int argc,
       jetCleaner       (jet_ptrs, fakeableLeptons)
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
+    std::vector<const RecoJet*> selJets_loose = jetSelectorAK4_bTagLoose(selJets);
+    evtWeightRecorder.record_btagWeight(selJets_loose);
+
     if(isDEBUG)
     {
       printCollection("cleanedJets", cleanedJets);
@@ -489,6 +585,9 @@ main(int argc,
       }
     }
 
+    snm->read(evtWeightRecorder.get_sf_triggerEff("central"), FloatVariableType_bbww::trigger_SF);
+    snm->read(evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central"), FloatVariableType_bbww::lepton_IDSF);
+    snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
     snm->read(preselMuons, fakeableMuons, tightMuons);
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
@@ -521,6 +620,7 @@ main(int argc,
   delete electronReader;
   delete jetReader;
   delete metReader;
+  delete dataToMCcorrectionInterface;
 
   delete inputTree;
   delete snm;

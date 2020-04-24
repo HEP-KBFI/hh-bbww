@@ -13,6 +13,10 @@ class hltPath;
 enum class FloatVariableType_bbww
 {
 //--- MET/MHT
+  trigger_SF,
+  lepton_IDSF,
+  btag_SF,
+  topPt_wgt,
   PFMET,
   PFMETphi,
   HME,

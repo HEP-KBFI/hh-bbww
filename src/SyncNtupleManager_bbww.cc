@@ -22,7 +22,7 @@ SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileNam
   , nof_jetsAk8(2)
   , nof_jetsAk8LS(2)
 {
-  for(int var = as_integer(FloatVariableType_bbww::PFMET); var <= as_integer(FloatVariableType_bbww::MC_weight); ++var)
+  for(int var = as_integer(FloatVariableType_bbww::trigger_SF); var <= as_integer(FloatVariableType_bbww::MC_weight); ++var)
   {
     floatMap[static_cast<FloatVariableType_bbww>(var)] = placeholder_value;
   }
@@ -76,6 +76,10 @@ SyncNtupleManager_bbww::initializeBranches()
     n_presel_jetAK8LS,        n_presel_jetAK8LS_str,
 
 //--- MET/MHT
+    floatMap[FloatVariableType_bbww::trigger_SF], "trigger_SF",
+    floatMap[FloatVariableType_bbww::lepton_IDSF], "lepton_IDSF",
+    floatMap[FloatVariableType_bbww::btag_SF], "btag_SF",
+    floatMap[FloatVariableType_bbww::topPt_wgt], "topPt_wgt",
     floatMap[FloatVariableType_bbww::PFMET],     "PFMET",
     floatMap[FloatVariableType_bbww::PFMETphi],  "PFMETphi",
     floatMap[FloatVariableType_bbww::HME],       "HME",

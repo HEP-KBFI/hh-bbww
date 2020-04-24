@@ -2260,6 +2260,7 @@ int main(int argc, char* argv[])
     if(snm)
     {
       snm->read(eventInfo);
+      snm->read(evtWeightRecorder.get_toppt_rwgt("central"),  FloatVariableType_bbww::topPt_wgt);
       snm->read({
         triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
       });
@@ -2270,6 +2271,9 @@ int main(int argc, char* argv[])
       snm->read(selJetsAK8_Hbb, false);
 
       snm->read(type_Hbb == kHbb_boosted, false, type_Hbb == kHbb_resolved);
+      snm->read(evtWeightRecorder.get_sf_triggerEff("central"), FloatVariableType_bbww::trigger_SF);
+      snm->read(evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central"), FloatVariableType_bbww::lepton_IDSF);
+      snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
