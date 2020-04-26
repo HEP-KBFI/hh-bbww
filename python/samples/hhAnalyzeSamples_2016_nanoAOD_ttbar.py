@@ -1061,7 +1061,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/Run
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143712"),
         ("selection", "*"),
-        ("blacklist", [165, 168, 212, 214, 215, 216, 263, 278, 282]),
+        ("blacklist", [31, 165, 168, 212, 214, 215, 216, 263, 278, 282]),
       ]),
     ]
   ),
