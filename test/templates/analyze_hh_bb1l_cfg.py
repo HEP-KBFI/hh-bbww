@@ -45,6 +45,7 @@ process.analyze_hh_bb1l = cms.PSet(
         histogramName_e = cms.string(""),
         histogramName_mu = cms.string(""),
         era = cms.string(""),
+        applyNonClosureCorrection = cms.bool(True),
     ),
 
     evtCategories = cms.vstring(), # CV: "inclusive" event category is added automatically
