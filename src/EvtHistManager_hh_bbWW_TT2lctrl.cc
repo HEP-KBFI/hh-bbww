@@ -213,10 +213,10 @@ EvtHistManager_hh_bbWW_TT2lctrl::fillHistograms(int numElectrons,
       weight_incorrectAssoc = weight_topKinReco_assoc1;
     }
     else assert(0);
-    fillWithOverFlow2d(histogram_topPair_pt_incorrectAssoc_vs_topPair_pt_correctAssoc_, topPairP4_correctAssoc.pt(), topPairP4_incorrectAssoc.pt(), evtWeight, evtWeightErr); 
+    if(histogram_topPair_pt_incorrectAssoc_vs_topPair_pt_correctAssoc_)fillWithOverFlow2d(histogram_topPair_pt_incorrectAssoc_vs_topPair_pt_correctAssoc_, topPairP4_correctAssoc.pt(), topPairP4_incorrectAssoc.pt(), evtWeight, evtWeightErr); 
     double logWeight_correctAssoc = TMath::Log(TMath::Min(1.e-10, weight_correctAssoc));
     double logWeight_incorrectAssoc = TMath::Log(TMath::Min(1.e-10, weight_incorrectAssoc));
-    fillWithOverFlow2d(histogram_logWeight_incorrectAssoc_vs_logWeight_correctAssoc_, logWeight_correctAssoc, logWeight_incorrectAssoc, evtWeight, evtWeightErr);
+    if(histogram_logWeight_incorrectAssoc_vs_logWeight_correctAssoc_)fillWithOverFlow2d(histogram_logWeight_incorrectAssoc_vs_logWeight_correctAssoc_, logWeight_correctAssoc, logWeight_incorrectAssoc, evtWeight, evtWeightErr);
   }
 
   const Particle::LorentzVector& dileptonP4 = selLeptonP4_lead + selLeptonP4_sublead;
@@ -228,7 +228,6 @@ EvtHistManager_hh_bbWW_TT2lctrl::fillHistograms(int numElectrons,
   double dEta_ll = TMath::Abs(selLeptonP4_lead.eta() - selLeptonP4_sublead.eta());
   fillWithOverFlow(histogram_dEta_ll_,                dEta_ll,                      evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_pT_ll_,                  dileptonP4.pt(),              evtWeight, evtWeightErr);
-
   if ( m_HH_hme > 0. ) {
     fillWithOverFlow(histogram_m_HH_hme_,             m_HH_hme,                     evtWeight, evtWeightErr);    
   }

@@ -258,37 +258,34 @@ public:
             topQuarkP4_antitop = &topQuarkP4_antitop_assoc2;
           }  
           if ( !(topQuarkP4_top && topQuarkP4_antitop) ) return;
-
           fillWithOverFlow(histogram_top_pt_,           topQuarkP4_top->pt(),      evtWeight, evtWeightErr);
           fillWithOverFlow(histogram_top_eta_,          topQuarkP4_top->eta(),     evtWeight, evtWeightErr);
           fillWithOverFlow(histogram_top_phi_,          topQuarkP4_top->phi(),     evtWeight, evtWeightErr);
-          histogram_genTop_pt_vs_top_pt_->Fill(topQuarkP4_top->pt(), genTopQuarkP4_top.pt(), evtWeight);
+          if(histogram_genTop_pt_vs_top_pt_)histogram_genTop_pt_vs_top_pt_->Fill(topQuarkP4_top->pt(), genTopQuarkP4_top.pt(), evtWeight);
           double deltaTop_pt = topQuarkP4_top->pt() - genTopQuarkP4_top.pt();
-          fillWithOverFlow(histogram_deltaTop_pt_,      deltaTop_pt,               evtWeight, evtWeightErr);
-          fillWithOverFlow2d(histogram_deltaTop_pt_vs_genTop_pt_, genTopQuarkP4_top.pt(), deltaTop_pt, evtWeight, evtWeightErr);
+          if(histogram_deltaTop_pt_)fillWithOverFlow(histogram_deltaTop_pt_,      deltaTop_pt,               evtWeight, evtWeightErr);
+          if(histogram_deltaTop_pt_vs_genTop_pt_)fillWithOverFlow2d(histogram_deltaTop_pt_vs_genTop_pt_, genTopQuarkP4_top.pt(), deltaTop_pt, evtWeight, evtWeightErr);
           double deltaTop_eta = topQuarkP4_top->eta() - genTopQuarkP4_top.eta();
-          fillWithOverFlow(histogram_deltaTop_eta_,     deltaTop_eta,              evtWeight, evtWeightErr);
+          if(histogram_deltaTop_eta_)fillWithOverFlow(histogram_deltaTop_eta_,     deltaTop_eta,              evtWeight, evtWeightErr);
           double deltaTop_phi = topQuarkP4_top->phi() - genTopQuarkP4_top.phi();
-          fillWithOverFlow(histogram_deltaTop_phi_,     deltaTop_phi,              evtWeight, evtWeightErr);
-
+          if(histogram_deltaTop_phi_)fillWithOverFlow(histogram_deltaTop_phi_,     deltaTop_phi,              evtWeight, evtWeightErr);
           fillWithOverFlow(histogram_antiTop_pt_,       topQuarkP4_antitop->pt(),  evtWeight, evtWeightErr);
           fillWithOverFlow(histogram_antiTop_eta_,      topQuarkP4_antitop->eta(), evtWeight, evtWeightErr);
           fillWithOverFlow(histogram_antiTop_phi_,      topQuarkP4_antitop->phi(), evtWeight, evtWeightErr);
-          histogram_genAntiTop_pt_vs_antiTop_pt_->Fill(topQuarkP4_antitop->pt(), genTopQuarkP4_antitop.pt(), evtWeight);
+          if(histogram_genAntiTop_pt_vs_antiTop_pt_)histogram_genAntiTop_pt_vs_antiTop_pt_->Fill(topQuarkP4_antitop->pt(), genTopQuarkP4_antitop.pt(), evtWeight);
           double deltaAntiTop_pt = topQuarkP4_antitop->pt() - genTopQuarkP4_antitop.pt();
-          fillWithOverFlow(histogram_deltaAntiTop_pt_,  deltaAntiTop_pt,           evtWeight, evtWeightErr);
-          fillWithOverFlow2d(histogram_deltaAntiTop_pt_vs_genAntiTop_pt_, genTopQuarkP4_antitop.pt(), deltaAntiTop_pt, evtWeight, evtWeightErr);
+          if(histogram_deltaAntiTop_pt_)fillWithOverFlow(histogram_deltaAntiTop_pt_,  deltaAntiTop_pt,           evtWeight, evtWeightErr);
+          if(histogram_deltaAntiTop_pt_vs_genAntiTop_pt_)fillWithOverFlow2d(histogram_deltaAntiTop_pt_vs_genAntiTop_pt_, genTopQuarkP4_antitop.pt(), deltaAntiTop_pt, evtWeight, evtWeightErr);
           double deltaAntiTop_eta = topQuarkP4_antitop->eta() - genTopQuarkP4_antitop.eta();
-          fillWithOverFlow(histogram_deltaAntiTop_eta_, deltaAntiTop_eta,          evtWeight, evtWeightErr);
+          if(histogram_deltaAntiTop_eta_) fillWithOverFlow(histogram_deltaAntiTop_eta_, deltaAntiTop_eta,          evtWeight, evtWeightErr);
           double deltaAntiTop_phi = topQuarkP4_antitop->phi() - genTopQuarkP4_antitop.phi();
-          fillWithOverFlow(histogram_deltaAntiTop_phi_, deltaAntiTop_phi,          evtWeight, evtWeightErr);
-
+          if(histogram_deltaAntiTop_phi_)fillWithOverFlow(histogram_deltaAntiTop_phi_, deltaAntiTop_phi,          evtWeight, evtWeightErr);
           Particle::LorentzVector genTopPairP4 = genTopQuarkP4_top + genTopQuarkP4_antitop;
           Particle::LorentzVector topPairP4 = *topQuarkP4_top + *topQuarkP4_antitop;
           fillWithOverFlow(histogram_topPair_mass_,     topPairP4.mass(),          evtWeight, evtWeightErr);
-          fillWithOverFlow2d(histogram_deltaTopPair_mass_vs_genTopPair_mass_, genTopPairP4.mass(), topPairP4.mass() - genTopPairP4.mass(), evtWeight, evtWeightErr);
+          if(histogram_deltaTopPair_mass_vs_genTopPair_mass_)fillWithOverFlow2d(histogram_deltaTopPair_mass_vs_genTopPair_mass_, genTopPairP4.mass(), topPairP4.mass() - genTopPairP4.mass(), evtWeight, evtWeightErr);
           fillWithOverFlow(histogram_topPair_pt_,       topPairP4.pt(),            evtWeight, evtWeightErr);
-          fillWithOverFlow2d(histogram_deltaTopPair_pt_vs_genTopPair_pt_, genTopPairP4.pt(), topPairP4.pt() - genTopPairP4.pt(), evtWeight, evtWeightErr);
+          if(histogram_deltaTopPair_pt_vs_genTopPair_pt_)fillWithOverFlow2d(histogram_deltaTopPair_pt_vs_genTopPair_pt_, genTopPairP4.pt(), topPairP4.pt() - genTopPairP4.pt(), evtWeight, evtWeightErr);
         }
       }
     }
