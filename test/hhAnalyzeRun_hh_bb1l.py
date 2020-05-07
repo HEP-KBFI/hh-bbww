@@ -50,7 +50,6 @@ running_method     = args.running_method
 # Additional arguments
 mode              = args.mode
 systematics_label = args.systematics
-use_preselected   = args.use_preselected
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
@@ -148,8 +147,6 @@ if __name__ == '__main__':
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
     ', '.join(central_or_shifts)
   )
-  if not use_preselected:
-    logging.warning('Running the analysis on fully inclusive samples!')
 
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
