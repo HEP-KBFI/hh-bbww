@@ -327,7 +327,7 @@ int main(int argc, char* argv[])
   const int jetPt_option    = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift_main, isMC);
   const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift_main, isMC);
   const int hadTauPt_option = useNonNominal_jetmet ? kHadTauPt_uncorrected      : getHadTauPt_option(central_or_shift_main);
-  
+
   const MEMsys mem_option_main = getMEMsys_option(central_or_shift_main);
   assert(mem_option_main == MEMsys::nominal);
 
@@ -447,11 +447,20 @@ int main(int argc, char* argv[])
   const HHWeightInterface * HHWeight_calc = nullptr;
   if(apply_HH_rwgt)
   {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
+    HHWeight_calc = new HHWeightInterface(hhWeight_cfg, true);
     evt_cat_strs = HHWeight_calc->get_scan_strs();
   }
   const size_t Nscan = evt_cat_strs.size();
-  std::cout << "Number of points being scanned = " << Nscan << '\n';
+  if (apply_HH_rwgt)
+  {
+    std::cout << "Number of points being scanned = " << Nscan << '\n';
+    for (const std::string catcat : evt_cat_strs) {
+      std::cout << catcat << '\n';
+    }
+    for (const std::string catcat : BMS) {
+      std::cout << catcat << '\n';
+    }
+  }
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
   if((isMC_tH || isMC_ttH) && ! tHweights.empty())
@@ -489,6 +498,9 @@ int main(int argc, char* argv[])
 
   std::map<std::string, MEMOutputReader_hh_bb2l *> memReader;
   for(auto BMlocal : memReader) BMlocal.second = nullptr;
+  std::map<std::string, MEMOutputReader_hh_bb2l *> memReader_missingBjet;
+  std::string missingBjet = "missingBJet";
+  std::string centralstr = "central";
   if(! branchName_memOutput.empty())
   {
     for(auto BMlocal : BMS)
@@ -497,15 +509,34 @@ int main(int argc, char* argv[])
       std::string namebranch;
       if ( BMlocal == "SM")
       {
-        namebranch = branchName_memOutput.data();
-        namebranchN = Form("n%s", branchName_memOutput.data());
+        namebranch = Form("%s_%s", branchName_memOutput.data(),  centralstr.data());
+        namebranchN = Form("n%s_%s", branchName_memOutput.data(), centralstr.data());
       }
       else {
-        namebranch = Form("%s_%s", branchName_memOutput.data(), BMlocal.c_str());
-        namebranchN = Form("n%s_%s", branchName_memOutput.data(), BMlocal.c_str());
+        namebranch = Form("%s_%s_%s", branchName_memOutput.data(), centralstr.data(), BMlocal.c_str());
+        namebranchN = Form("n%s_%s_%s", branchName_memOutput.data(), centralstr.data(), BMlocal.c_str());
       }
       memReader[BMlocal] = new MEMOutputReader_hh_bb2l(namebranchN, namebranch);
       inputTree -> registerReader(memReader[BMlocal]);
+      ////////////////////////////////////
+      std::string namebranchN_missingBjet;
+      std::string namebranch_missingBjet;
+      // nmemObjects_hh_bb2l_lepFakeable_missingBJet_central_BM12
+      if ( BMlocal == "SM")
+      {
+        std::string BMSM = "BM4";
+        // TOFIX: SM not being booked now using BM4, that is the cluster that contains the SM
+        //namebranch_missingBjet = Form("%s_%s_%s", branchName_memOutput.data(), missingBjet.data(), centralstr.data());
+        //namebranchN_missingBjet = Form("n%s_%s", branchName_memOutput.data(), centralstr.data());
+        namebranch_missingBjet = Form("%s_%s_%s_%s", branchName_memOutput.data(), missingBjet.data(), centralstr.data(), BMSM.data());
+        namebranchN_missingBjet = Form("n%s_%s_%s_%s", branchName_memOutput.data(), missingBjet.data(), centralstr.data(), BMSM.data());
+      }
+      else {
+        namebranch_missingBjet = Form("%s_%s_%s_%s", branchName_memOutput.data(), missingBjet.data(), centralstr.data(), BMlocal.c_str());
+        namebranchN_missingBjet = Form("n%s_%s_%s_%s", branchName_memOutput.data(), missingBjet.data(), centralstr.data(), BMlocal.c_str());
+      }
+      memReader_missingBjet[BMlocal] = new MEMOutputReader_hh_bb2l(namebranchN_missingBjet, namebranch_missingBjet);
+      inputTree -> registerReader(memReader_missingBjet[BMlocal]);
     }
   }
 
@@ -899,13 +930,16 @@ int main(int argc, char* argv[])
     );
     for(const std::string & evt_cat_str: evt_cat_strs)
     {
-      bdt_filler->register_variable<float_type>(evt_cat_str);
+      //Book Weight_klScan
+      bdt_filler->register_variable<float_type>(Form("weight_%s", evt_cat_str.c_str()) );
     }
     for(const std::string & evt_cat_str: BMS)
     {
       bdt_filler->register_variable<float_type>( Form("memweight_signal_%s", evt_cat_str.c_str()) );
       bdt_filler->register_variable<float_type>( Form("memweight_background_%s", evt_cat_str.c_str()) );
       bdt_filler->register_variable<float_type>( Form("memOutput_LR_%s", evt_cat_str.c_str()) );
+      bdt_filler->register_variable<float_type>( Form("memOutput_LR_missingBjet_%s", evt_cat_str.c_str()) );
+      bdt_filler->register_variable<float_type>( Form("weight_%s", evt_cat_str.c_str()) );
     }
     bdt_filler->register_variable<float_type>(
       "lep1_pt", "lep1_conePt", "lep1_eta",
@@ -921,18 +955,20 @@ int main(int argc, char* argv[])
       "met_pt_proj",
       "dR_b1lep1", "dR_b1lep2", "dR_b2lep1", "dR_b2lep2",
       "m_HHvis", "pT_HHvis", "dPhi_HHvis",
-      "m_HH", "pT_HH", "dPhi_HH", "Smin_HH",
+      "m_HH", "pT_HH", "dPhi_HH", "Smin_HH", "dR_HH",
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle",
       "m_HH_hme",
       "logTopness_publishedChi2", "logHiggsness_publishedChi2", "logTopness_fixedChi2", "logHiggsness_fixedChi2",
       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
-      "genWeight", "evtWeight",
+      "genWeight", "evtWeight", //"default",
       //"SM_HHWeight",
-      "mhh_gen", "costS_gen"
+      "mhh_gen", "costS_gen",
+      "mindr_lep1_jet", "mindr_lep2_jet",
+      "avg_dr_jet_central",  "mbb_loose", "mbb_medium", "massLT",  "max_Lep_eta"
     );
     bdt_filler->register_variable<int_type>(
       "nJet", "nBJetLoose", "nBJetMedium",
-      "isHbb_boosted",
+      "isHbb_boosted", "nElectron", "sum_Lep_charge",
       "nJet_vbf", "isVBF"
     );
     bdt_filler->bookTree(fs);
@@ -980,6 +1016,7 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
+    //if ( analyzedEntries > 100 ) break;
     histogram_analyzedEntries->Fill(0.);
 
     if ( isDEBUG ) {
@@ -1624,7 +1661,9 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("signal region veto", evtWeightRecorder.get(central_or_shift_main));
 
     std::vector<double> WeightBM; // weights to do histograms for BMs
+    std::map<std::string, double> WeightBM_toBDT; // weights to do histograms for BMs
     std::map<std::string, double> Weight_ktScan; // weights to do histograms
+    std::map<std::string, double> Weight_ktScan_toBDT; // weights to do histograms
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
 
     if(apply_HH_rwgt)
@@ -1634,6 +1673,26 @@ int main(int argc, char* argv[])
       Weight_ktScan = HHWeight_calc->getScanWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
       HHWeight = WeightBM[0];
       evtWeightRecorder.record_bm(HHWeight); // SM by default
+
+      for(std::size_t bm_list = 0; bm_list < WeightBM.size() ; ++bm_list)
+      {
+        std::string bench;
+        if (bm_list == 0) bench = "SM";
+        else {
+          bench = Form("BM%s", std::to_string(bm_list).data() );
+        }
+        std::string name_BM = Form("weight_%s", bench.data() );
+        WeightBM_toBDT[name_BM] =  WeightBM[bm_list];
+        if (isDEBUG) std::cout << "line = " << name_BM << "; Weight = " << WeightBM[bm_list] << '\n';
+      }
+      for(std::size_t bm_list = 0; bm_list < evt_cat_strs.size() ; ++bm_list)
+      {
+        std::string bench = evt_cat_strs[bm_list].data();
+        std::string name_BM = Form("weight_%s", bench.data() );
+        Weight_ktScan_toBDT[name_BM] =  Weight_ktScan[bench];
+        if (isDEBUG) std::cout << "line = " << name_BM << "; Weight = " << Weight_ktScan_toBDT[name_BM] << '\n';
+      }
+
 
       if(isDEBUG)
       {
@@ -1648,7 +1707,25 @@ int main(int argc, char* argv[])
         }
         std::cout << '\n';
       }
+    } else {
+      for(std::size_t bm_list = 0; bm_list < BMS.size() ; ++bm_list)
+      {
+        std::string bench;
+        if (bm_list == 0) bench = "SM";
+        else {
+          bench = Form("BM%s", std::to_string(bm_list).data() );
+        }
+        std::string name_BM = Form("weight_%s", bench.data() );
+        WeightBM_toBDT[name_BM] =  1.0;
+      }
+      ////
+      for(std::size_t bm_list = 0; bm_list < evt_cat_strs.size() ; ++bm_list)
+      {
+        std::string name_BM = Form("weight_%s", evt_cat_strs[bm_list].data() );
+        Weight_ktScan_toBDT[name_BM] =  1.0;
+      }
     }
+
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
     if(memReader.size() > 0)
     {
@@ -1710,13 +1787,13 @@ int main(int argc, char* argv[])
         }
       }
     }
-    //read MEM result by BM
+    ////read MEM result by BM
     std::map<std::string, std::map<MEMsys, double>> memOutput_LR;
     std::map<std::string, double> memweight_signal;
     std::map<std::string, double> memweight_background;
-    
-    //if(memReader.size() > 0)
-    //{
+    std::map<std::string, double> memOutput_LR_missingBjet;
+
+    std::map<std::string, double> memOutput_LR_toBDT;
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM;
     for(auto BMlocal : BMS)
     {
@@ -1725,21 +1802,35 @@ int main(int argc, char* argv[])
         const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l_BM = memReader[BMlocal]->read(); // Xanda crashing here
         for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l_BM: memOutputs_hh_bb2l_BM)
         {
-	  memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
+	        memOutput_hh_bb2l_matched_BM = memOutput_hh_bb2l_BM;
           memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.get_LR_map();
+          memOutput_LR_toBDT[BMlocal] = memOutput_LR[BMlocal][MEMsys::nominal];
           memweight_signal[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_signal();
           memweight_background[BMlocal] = memOutput_hh_bb2l_matched_BM.weight_background();
           if (isDEBUG) std::cout << "To " << BMlocal << " = "<< memOutput_LR[BMlocal][MEMsys::nominal] << " " << memweight_signal[BMlocal] << " " << memweight_background[BMlocal] << "\n";
         }
       } else {
         memOutput_LR[BMlocal] = memOutput_hh_bb2l_matched_BM.get_LR_map();
+        memOutput_LR_toBDT[BMlocal] = -1.;
         memweight_signal[BMlocal] = -1.;
         memweight_background[BMlocal] = -1.;
       }
+      ///////
+      if( memReader_missingBjet.size() > 0 )
+      {
+        const std::vector<MEMOutput_hh_bb2l> memOutputs_hh_bb2l_missingBjet_BM = memReader_missingBjet[BMlocal]->read();
+        //std::cout << "Size " << BMlocal << " = "<< memOutputs_hh_bb2l_missingBjet_BM.size() << "\n";
+        for(const MEMOutput_hh_bb2l & memOutput_hh_bb2l_BM: memOutputs_hh_bb2l_missingBjet_BM)
+        {
+          MEMOutput_hh_bb2l memOutput_hh_bb2l_matched_BM_missingBje = memOutput_hh_bb2l_BM;
+          memOutput_LR_missingBjet[BMlocal] = memOutput_hh_bb2l_matched_BM_missingBje.isValid() ? memOutput_hh_bb2l_matched_BM_missingBje.LR() : -1.;
+          if (isDEBUG ) std::cout << "To " << BMlocal << " = "<< memOutput_LR_missingBjet[BMlocal] << " (missing bjet) \n";
+        }
+      } else {
+        memOutput_LR_missingBjet[BMlocal] = -1.;
+      }
     }
-  //} //else {
 
-    //}
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1776,42 +1867,42 @@ int main(int argc, char* argv[])
     double m_HH = HHP4.mass();
     double pT_HH = HHP4.pt();
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
-    //double dR_HH = deltaR(HbbP4, HwwP4);
+    double dR_HH = deltaR(HbbP4, HwwP4);
     double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), HwwP4.phi()));
-    /*mT2_2particle mT2Algo_2particle;
+    mT2_2particle mT2Algo_2particle;
     mT2Algo_2particle(
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
-      metP4.px(), metP4.py(), 0.);*/
-    double mT2_W = 1.0; //mT2Algo_2particle.get_min_mT2();
-    //int mT2_W_step = 1.0; //mT2Algo_2particle.get_min_step();
+      metP4.px(), metP4.py(), 0.);
+    double mT2_W = mT2Algo_2particle.get_min_mT2();
+    //int mT2_W_step = mT2Algo_2particle.get_min_step();
     //std::cout << "mT2_W = " << mT2_W << " (found @ step #" << mT2_W_step << ")" << std::endl;
-    //double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
-    //double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
-    /*mT2Algo_2particle(
+    double cSumPx = selLeptonP4_lead.px() + selLeptonP4_sublead.px() + metP4.px();
+    double cSumPy = selLeptonP4_lead.py() + selLeptonP4_sublead.py() + metP4.py();
+    mT2Algo_2particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
-      cSumPx, cSumPy, wBosonMass);*/
-    double mT2_top_2particle = 1.0; //mT2Algo_2particle.get_min_mT2();
-    //int mT2_top_2particle_step = 1.0; //mT2Algo_2particle.get_min_step();
+      cSumPx, cSumPy, wBosonMass);
+    double mT2_top_2particle = mT2Algo_2particle.get_min_mT2();
+    //int mT2_top_2particle_step = mT2Algo_2particle.get_min_step();
     //std::cout << "mT2_top_2particle = " << mT2_top_2particle << " (found @ step #" << mT2_top_2particle_step << ")" << std::endl;
-    /*mT2_3particle mT2Algo_3particle;
+    mT2_3particle mT2Algo_3particle;
     mT2Algo_3particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
-      metP4.px(), metP4.py(), 0.);*/
-    double mT2_top_3particle_permutation1 = 1.0; // mT2Algo_3particle.get_min_mT2();
-    int mT2_top_3particle_permutation1_step = 1.0; // mT2Algo_3particle.get_min_step();
-    /*mT2Algo_3particle(
+      metP4.px(), metP4.py(), 0.);
+    double mT2_top_3particle_permutation1 = mT2Algo_3particle.get_min_mT2();
+    int mT2_top_3particle_permutation1_step =  mT2Algo_3particle.get_min_step();
+    mT2Algo_3particle(
       selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.mass(),
       selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.mass(),
       selLeptonP4_sublead.px(), selLeptonP4_sublead.py(), selLeptonP4_sublead.mass(),
       selLeptonP4_lead.px(), selLeptonP4_lead.py(), selLeptonP4_lead.mass(),
-      metP4.px(), metP4.py(), 0.);*/
-    double mT2_top_3particle_permutation2 = 1.0; //mT2Algo_3particle.get_min_mT2();
-    double mT2_top_3particle_permutation2_step = 1.0; //mT2Algo_3particle.get_min_step();
+      metP4.px(), metP4.py(), 0.);
+    double mT2_top_3particle_permutation2 = mT2Algo_3particle.get_min_mT2();
+    double mT2_top_3particle_permutation2_step = mT2Algo_3particle.get_min_step();
     double mT2_top_3particle = -1.;
     double mT2_top_3particle_step = -1;
     if ( mT2_top_3particle_permutation1 <= mT2_top_3particle_permutation2 ) {
@@ -1825,30 +1916,30 @@ int main(int argc, char* argv[])
     //	        << " permutation1 = " << mT2_top_3particle_permutation1 << " (found @ step #" << mT2_top_3particle_permutation1_step << "),"
     //	        << " permutation2 = " << mT2_top_3particle_permutation2 << " (found @ step #" << mT2_top_3particle_permutation2_step << "),"
     //	        << " min = " << mT2_top_3particle << " (found @ step #" << mT2_top_3particle_step << ")" << std::endl;
-    //Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
-    //algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
+    Higgsness algoHiggsness_publishedChi2(Higgsness::kPublishedChi2);
+    algoHiggsness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
     double logHiggsness_publishedChi2 = -99.;
-    /*if ( algoHiggsness_publishedChi2.isValidSolution() ) {
+    if ( algoHiggsness_publishedChi2.isValidSolution() ) {
       logHiggsness_publishedChi2 = algoHiggsness_publishedChi2.logHiggsness();
     }
     Topness algoTopness_publishedChi2(Topness::kPublishedChi2);
-    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
+    algoTopness_publishedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
     double logTopness_publishedChi2 = -99.;
-    /*if ( algoTopness_publishedChi2.isValidSolution() ) {
+    if ( algoTopness_publishedChi2.isValidSolution() ) {
       logTopness_publishedChi2 = algoTopness_publishedChi2.logTopness();
     }
     Higgsness algoHiggsness_fixedChi2(Higgsness::kFixedChi2);
-    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());*/
+    algoHiggsness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, metP4.px(), metP4.py());
     double logHiggsness_fixedChi2 = -99.;
-    /*if ( algoHiggsness_fixedChi2.isValidSolution() ) {
+    if ( algoHiggsness_fixedChi2.isValidSolution() ) {
       logHiggsness_fixedChi2 = algoHiggsness_fixedChi2.logHiggsness();
     }
     Topness algoTopness_fixedChi2(Topness::kFixedChi2);
-    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());*/
+    algoTopness_fixedChi2.fit(selLeptonP4_lead, selLeptonP4_sublead, selJetP4_Hbb_lead, selJetP4_Hbb_sublead, metP4.px(), metP4.py());
     double logTopness_fixedChi2 = -99.;
-//    if ( algoTopness_fixedChi2.isValidSolution() ) {
-//      logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
-//    }
+    if ( algoTopness_fixedChi2.isValidSolution() ) {
+      logTopness_fixedChi2 = algoTopness_fixedChi2.logTopness();
+    }
 
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm
@@ -2180,6 +2271,25 @@ int main(int argc, char* argv[])
     }
 
     if ( bdt_filler ) {
+      // do HH nonres weight
+      /*std::map<std::string, double> rwgt_map_toBDT;
+      for(const std::string & evt_cat_str: evt_cat_strs)
+      {
+        if(apply_HH_rwgt)
+        {
+          std::string bench = evt_cat_str.data();
+          std::string name_BM = Form("weight_%s", bench.data() );
+          std::cout<< "For BDT filling " << name_BM << "\n";
+          rwgt_map_toBDT[evt_cat_str] = Weight_ktScan[name_BM];
+        }
+        else
+        {
+          rwgt_map_toBDT[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
+        }
+      }*/
+
+      double mindr_lep1_jet=comp_mindr_jet(*selLepton_lead, selJetsAK4);
+      double mindr_lep2_jet=comp_mindr_jet(*selLepton_sublead, selJetsAK4);
 
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep1_pt",                       selLepton_lead->pt())
@@ -2188,6 +2298,18 @@ int main(int argc, char* argv[])
           ("lep2_pt",                       selLepton_sublead->pt())
           ("lep2_conePt",                   comp_lep_conePt(*selLepton_sublead))
           ("lep2_eta",                      selLepton_sublead->eta())
+          /////
+          ("mindr_lep1_jet",         mindr_lep1_jet )
+          ("mindr_lep2_jet",         mindr_lep2_jet )
+          ("avg_dr_jet_central",     comp_avg_dr_jet(selJetsAK4))
+          ("mbb_loose",              selBJetsAK4_loose.size()>1  ? (selBJetsAK4_loose[0]->p4()+selBJetsAK4_loose[1]->p4()).mass() : 0  )
+          ("mbb_medium",             selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0 )
+          ("nElectron",              selElectrons.size())
+          ("sum_Lep_charge",         selLepton_lead -> charge() + selLepton_sublead -> charge())
+          ("massLT",                 comp_massL2(selLepton_lead, selLepton_sublead, metP4.pt(), metP4.phi()))
+          ("max_Lep_eta",            TMath::Max(std::abs(selLepton_lead -> eta()), std::abs(selLepton_sublead -> eta())))
+          ("dR_HH",                         dR_HH)
+          ////
           ("bjet1_pt",                      selJetP4_Hbb_lead.pt())
           ("bjet1_eta",                     selJetP4_Hbb_lead.eta())
           ("bjet2_pt",                      selJetP4_Hbb_sublead.pt())
@@ -2206,14 +2328,14 @@ int main(int argc, char* argv[])
           ("dPhi_ll",                       dPhi_ll)
           ("dEta_ll",                       dEta_ll)
           ("pT_ll",                         pT_ll)
-	  ("min_dPhi_lepMEt",               min_dPhi_lepMEt)
-	  ("max_dPhi_lepMEt",               max_dPhi_lepMEt)
+      	  ("min_dPhi_lepMEt",               min_dPhi_lepMEt)
+      	  ("max_dPhi_lepMEt",               max_dPhi_lepMEt)
           ("m_Hww",                         m_Hww)
           ("mT_Hww",                        mT_Hww)
           ("Smin_Hww",                      Smin_Hww)
           ("pT_Hww",                        pT_Hww)
-	  ("met_pt_proj",                   met_pt_proj)
-	  ("dR_b1lep1",                     dR_b1lep1)
+      	  ("met_pt_proj",                   met_pt_proj)
+      	  ("dR_b1lep1",                     dR_b1lep1)
           ("dR_b1lep2",                     dR_b1lep2)
           ("dR_b2lep1",                     dR_b2lep1)
           ("dR_b2lep2",                     dR_b2lep2)
@@ -2223,7 +2345,7 @@ int main(int argc, char* argv[])
           ("m_HH",                          m_HH)
           ("pT_HH",                         pT_HH)
           ("dPhi_HH",                       dPhi_HH)
-  	  ("Smin_HH",                       Smin_HH)
+      	  ("Smin_HH",                       Smin_HH)
           ("mT2_W",                         mT2_W)
           ("mT2_top_2particle",             mT2_top_2particle)
           ("mT2_top_3particle",             mT2_top_3particle)
@@ -2235,7 +2357,7 @@ int main(int argc, char* argv[])
           ("vbf_jet1_pt",                   vbf_jet1_pt)
           ("vbf_jet1_eta",                  vbf_jet1_eta)
           ("vbf_jet2_pt",                   vbf_jet2_pt)
-	  ("vbf_jet2_eta",                  vbf_jet2_eta)
+      	  ("vbf_jet2_eta",                  vbf_jet2_eta)
           ("vbf_dEta_jj",                   vbf_dEta_jj)
           ("vbf_m_jj",                      vbf_m_jj)
           ("genWeight",                     eventInfo.genWeight)
@@ -2244,14 +2366,17 @@ int main(int argc, char* argv[])
           ("nBJetLoose",                    selBJetsAK4_loose.size())
           ("nBJetMedium",                   selBJetsAK4_medium.size())
           ("nJet_vbf",                      selJetsAK4_vbf.size())
-	  ("isHbb_boosted",                 type_Hbb == kHbb_boosted)
+      	  ("isHbb_boosted",                 type_Hbb == kHbb_boosted)
           ("isVBF",                         isVBF)
           ("mhh_gen",                       eventInfo.gen_mHH)
           ("costS_gen",                     eventInfo.gen_cosThetaStar)
-          (rwgt_map)
+          //(rwgt_map_toBDT)
+          (WeightBM_toBDT)
+          (Weight_ktScan_toBDT)
           (memweight_signal, "memweight_signal")
           (memweight_background, "memweight_background")
-	("memOutput_LR", memOutput_LR["SM"][MEMsys::nominal])
+          (memOutput_LR_toBDT, "memOutput_LR")
+          (memOutput_LR_missingBjet, "memOutput_LR_missingBjet")
         .fill()
       ;
     }
