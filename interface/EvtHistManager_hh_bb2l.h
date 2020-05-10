@@ -42,6 +42,23 @@ public:
                  double mvaoutput_bb2l_node3,
                  double mvaoutput_bb2l_node7,
                  double mvaoutput_bb2l_sm,
+                 ///
+                 std::string category_SM_plainVars_Xness,
+                 std::string category_SM_plainVars_HME,
+                 std::string category_SM_plainVars_Xness_HME,
+                 std::string category_SM_plainVars_nobb_noHME,
+                 std::string category_SM_plainVars_Xness_nnoMbb_noHME,
+                 std::string category_SM_plainVars_Xness_nobb_noHME,
+                 double mva_SM_plainVars_Xness,
+                 double mva_SM_plainVars_HME,
+                 double mva_SM_plainVars_Xness_HME,
+                 double mva_SM_plainVars_nobb_noHME,
+                 double mva_SM_plainVars_Xness_nnoMbb_noHME,
+                 double mva_SM_plainVars_Xness_nobb_noHME,
+                 double m_HH_hme,
+                 double m_HH,
+                 double m_HHvis,
+                 ///
                  double evtWeight);
 
   void
@@ -55,6 +72,16 @@ public:
                  const MEMbbwwResultDilepton * const memResult_missingBJet,
                  double memCpuTime_missingBJet,
                  double evtWeight);
+
+  void
+  bookCategories(TFileDirectory & dir,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_HME,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_HME,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_nobb_noHME,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nnoMbb_noHME,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nobb_noHME
+  );
 
   const TH1 *
   getHistogram_EventCounter() const;
@@ -143,6 +170,14 @@ public:
   TH1 * histogram_MVAOutputnode3_;
   TH1 * histogram_MVAOutputnode7_;
   TH1 * histogram_MVAOutputsm_;
+
+  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_Xness_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_HME_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_Xness_HME_;
+  //
+  std::map<std::string, TH2 *> histograms_by_category_SM_plainVars_nobb_noHME_;
+  std::map<std::string, TH2 *> histograms_by_category_SM_plainVars_Xness_nnoMbb_noHME_;
+  std::map<std::string, TH2 *> histograms_by_category_SM_plainVars_Xness_nobb_noHME_;
 
 
   TH1 * histogram_EventCounter_;

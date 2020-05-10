@@ -288,7 +288,7 @@ int main(int argc, char* argv[])
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
 
-  bool run_hme = cfg_analyze.getParameter<bool>("run_hme");
+  bool run_hme = true; //cfg_analyze.getParameter<bool>("run_hme");
 
   if(! central_or_shifts_local.empty())
   {
@@ -668,6 +668,102 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb2l_res = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_12Var.pkl";
   std::string xgbFileNamenohiggnessnotopness_bb2l = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_res_10Var_nohiggnessnotopness.pkl";
   std::string xgbFileName_bb2l_nonres = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_nonres_13Var.pkl";
+  ////////////
+  // BDTs made with 2017 MC
+  std::string xgbFileName_SM_plainVars_Xness              = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness.pkl";
+  std::string xgbFileName_SM_plainVars_HME                = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_HME.pkl";
+  std::string xgbFileName_SM_plainVars_Xness_HME          = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_HME.pkl";
+  std::string xgbFileName_SM_plainVars_nobb_noHME         = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_nobb_noHME.pkl";
+  std::string xgbFileName_SM_plainVars_Xness_nnoMbb_noHME = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHME.pkl";
+  std::string xgbFileName_SM_plainVars_Xness_nobb_noHME   = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_nobb_noHME.pkl";
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness              = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb", "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_HME                = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb", "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis", "m_HH_hme", "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_HME          = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb", "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis", "m_HH_hme", "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_nobb_noHME         = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll",                    "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_nnoMbb_noHME = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll",          "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_nobb_noHME   = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll",                    "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  XGBInterface mva_xgb_SM_plainVars_Xness(xgbFileName_SM_plainVars_Xness, xgbInputVariables_SM_plainVars_Xness);
+  XGBInterface mva_xgb_SM_plainVars_HME(xgbFileName_SM_plainVars_HME, xgbInputVariables_SM_plainVars_HME);
+  XGBInterface mva_xgb_SM_plainVars_Xness_HME(xgbFileName_SM_plainVars_Xness_HME, xgbInputVariables_SM_plainVars_Xness_HME);
+  XGBInterface mva_xgb_SM_plainVars_nobb_noHME(xgbFileName_SM_plainVars_nobb_noHME, xgbInputVariables_SM_plainVars_nobb_noHME);
+  XGBInterface mva_xgb_SM_plainVars_Xness_nnoMbb_noHME(xgbFileName_SM_plainVars_Xness_nnoMbb_noHME, xgbInputVariables_SM_plainVars_Xness_nnoMbb_noHME);
+  XGBInterface mva_xgb_SM_plainVars_Xness_nobb_noHME(xgbFileName_SM_plainVars_Xness_nobb_noHME, xgbInputVariables_SM_plainVars_Xness_nobb_noHME);
+  // book subcategories
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness =
+  {
+     {"SM_plainVars_Xness_ee", {}},
+     {"SM_plainVars_Xness_em", {}},
+     {"SM_plainVars_Xness_mm", {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_HME =
+  {
+      {"SM_plainVars_HME_ee", {}},
+      {"SM_plainVars_HME_em", {}},
+      {"SM_plainVars_HME_mm", {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness_HME =
+  {
+      {"SM_plainVars_Xness_HME_ee", {}},
+      {"SM_plainVars_Xness_HME_em", {}},
+      {"SM_plainVars_Xness_HME_mm", {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_nobb_noHME =
+  {
+    {"SM_plainVars_nobb_noHME_ee_low_mbb", {}},
+    {"SM_plainVars_nobb_noHME_ee_middle_mbb", {}},
+    {"SM_plainVars_nobb_noHME_ee_high_mbb", {}},
+    {"SM_plainVars_nobb_noHME_em_low_mbb", {}},
+    {"SM_plainVars_nobb_noHME_em_middle_mbb", {}},
+    {"SM_plainVars_nobb_noHME_em_high_mbb", {}},
+    {"SM_plainVars_nobb_noHME_mm_low_mbb", {}},
+    {"SM_plainVars_nobb_noHME_mm_middle_mbb", {}},
+    {"SM_plainVars_nobb_noHME_mm_high_mbb", {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness_nnoMbb_noHME =
+  {
+    {"SM_plainVars_Xness_nnoMbb_noHME_ee_low_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_ee_middle_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_ee_high_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_em_low_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_em_middle_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_em_high_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_mm_low_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_mm_middle_mbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_mm_high_mbb", {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness_nobb_noHME =
+  {
+    {"SM_plainVars_Xness_nobb_noHME_ee_low_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_ee_middle_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_ee_high_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_em_low_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_em_middle_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_em_high_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_mm_low_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_mm_middle_mbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_mm_high_mbb", {}}
+  };
+  /*
+  --> all subcat by flavour
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness.pkl
+  --> plain --> flavour
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_HME.pkl
+  --> mbb bins /
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_nobb_noHME.pkl
+  --> mbb bins | HME 2D
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_HME.pkl
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHME.pkl
+  --> mbb bins | HME 2D
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nobb_noHME.pkl
+  --> mbb bins | HME 2D
+  ////////////////////////////////////////////////////
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_HMEt.log
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_nobb_noHMEt.log
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_HMEt.log
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHMEt.log
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nobb_noHMEt.log
+  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xnesst.log
+  */
 
   std::vector<std::string> xgbInputVariables_bb2l_res =
     {"mht", "m_Hbb", "m_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
@@ -763,6 +859,7 @@ int main(int argc, char* argv[])
   std::map<std::string, GenEvtHistManager*> genEvtHistManager_beforeCuts;
   std::map<std::string, LHEInfoHistManager*> lheInfoHistManager_beforeCuts;
   std::map<std::string, std::map<int, selHistManagerType*>> selHistManagers;
+
   for(const std::string & central_or_shift: central_or_shifts_local)
   {
     const bool skipBooking = central_or_shift != central_or_shift_main;
@@ -827,6 +924,17 @@ int main(int argc, char* argv[])
         selHistManager->metFilters_->bookHistograms(fs);
       }
 
+      if (apply_HH_rwgt) {
+        for(std::size_t bm_list = 0; bm_list < BMS.size() ; ++bm_list)
+        {
+          std::string bench;
+          if (bm_list == 0) bench = "SM";
+          else {
+            bench = Form("BM%s", std::to_string(bm_list).data() );
+          }
+          evt_cat_strs.push_back(bench);
+        }
+      }
       for(const std::string & evt_cat_str: evt_cat_strs)
       {
         if(skipBooking && evt_cat_str != default_cat_str)
@@ -843,6 +951,10 @@ int main(int argc, char* argv[])
         );
         selHistManager->evt_[evt_cat_str] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatchName,
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
+        selHistManager->evt_[evt_cat_str]->bookCategories(
+          fs, categories_SM_plainVars_Xness, categories_SM_plainVars_HME, categories_SM_plainVars_Xness_HME,
+          categories_SM_plainVars_nobb_noHME, categories_SM_plainVars_Xness_nnoMbb_noHME, categories_SM_plainVars_Xness_nobb_noHME
+        );
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
       }
 
@@ -881,6 +993,11 @@ int main(int argc, char* argv[])
           );
           selHistManager->evt_in_categories_[evt_cat_str][category.name_] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatchName,
             Form("%s/sel/evt", histogramDir_category.Data()), era_string, central_or_shift, "memDisabled"));
+          selHistManager->evt_in_categories_[evt_cat_str][category.name_]->bookCategories(
+            fs,
+            categories_SM_plainVars_Xness, categories_SM_plainVars_HME, categories_SM_plainVars_Xness_HME,
+            categories_SM_plainVars_nobb_noHME, categories_SM_plainVars_Xness_nnoMbb_noHME, categories_SM_plainVars_Xness_nobb_noHME
+          );
           selHistManager->evt_in_categories_[evt_cat_str][category.name_]->bookHistograms(fs);
         }
         if ( isMC ) {
@@ -2020,8 +2137,8 @@ int main(int argc, char* argv[])
     if ( hme_isValidSolution ) {
       m_HH_hme = hmeOutput.m_HH_hme();
     }
-    //double hmeCpuTime = hmeOutput.cpuTime();
-    //std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
+    double hmeCpuTime = hmeOutput.cpuTime();
+    if ( isDEBUG ) std::cout << "m_HH_hme = " << m_HH_hme << std::endl;
     //---------------------------------------------------------------------------
 
     const RecoJet* selJet_vbf_lead = nullptr;
@@ -2097,6 +2214,100 @@ int main(int argc, char* argv[])
     int type_Hbb = ( selJetAK8_Hbb ) ? kHbb_boosted : kHbb_resolved;
     int type_vbf = ( isVBF         ) ?  kVBF_tagged : kVBF_nottagged;
 
+    ////////////////////////////////////
+    // fill nonres BDTs done for 2017
+    /*
+    "mT_lep2", "mT_lep1",
+    "m_ll", "pT_ll",
+    "m_Hbb", "pT_Hbb",
+    "nBJetMedium", "met_pt_proj",
+    "m_HHvis", "m_HH_hme",
+    "mT2_W", "mT2_top_3particle",
+    "met_LD", "min_dR_blep",
+    "logTopness_fixedChi2", "logHiggsness_fixedChi2"
+    */
+    std::map<std::string, double> mvaInputVariables_list = {
+      {"mT_lep1",             comp_MT_met(selLepton_lead, met.pt(), met.phi())},
+      {"mT_lep2",             comp_MT_met(selLepton_sublead, met.pt(), met.phi())},
+      {"m_ll",                m_ll},
+      {"pT_ll",               pT_ll},
+      {"m_Hbb",               m_Hbb},
+      {"pT_Hbb",              pT_Hbb},
+      {"nBJetMedium",         selBJetsAK4_medium.size()},
+      {"met_pt_proj",         met_pt_proj},
+      {"m_HHvis",             m_HHvis},
+      {"m_HH_hme",            m_HH_hme},
+      {"mT2_W",               mT2_W},
+      {"mT2_top_3particle",   mT2_top_3particle},
+      {"met_LD",              met_LD > 0},
+      {"min_dR_blep",         std::min({dR_b1lep1, dR_b1lep2, dR_b2lep1, dR_b2lep2})},
+      // data17.loc[data17[var] < -50, var] = -0.01
+      {"logTopness_fixedChi2",   logTopness_fixedChi2 < 50 ? -0.01 : logTopness_fixedChi2  },
+      {"logHiggsness_fixedChi2", logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2}
+    };
+    double mva_SM_plainVars_Xness = mva_xgb_SM_plainVars_Xness(mvaInputVariables_list);
+    double mva_SM_plainVars_HME = mva_xgb_SM_plainVars_HME(mvaInputVariables_list);
+    double mva_SM_plainVars_Xness_HME = mva_xgb_SM_plainVars_Xness_HME(mvaInputVariables_list);
+    double mva_SM_plainVars_nobb_noHME = mva_xgb_SM_plainVars_nobb_noHME(mvaInputVariables_list);
+    double mva_SM_plainVars_Xness_nnoMbb_noHME = mva_xgb_SM_plainVars_Xness_nnoMbb_noHME(mvaInputVariables_list);
+    double mva_SM_plainVars_Xness_nobb_noHME = mva_xgb_SM_plainVars_Xness_nobb_noHME(mvaInputVariables_list);
+
+    //--- do NN categories
+    std::string category_SM_plainVars_Xness = "SM_plainVars_Xness_";
+    std::string category_SM_plainVars_HME = "SM_plainVars_HME_";
+    std::string category_SM_plainVars_Xness_HME = "SM_plainVars_Xness_HME_";
+    std::string category_SM_plainVars_nobb_noHME = "SM_plainVars_nobb_noHME_";
+    std::string category_SM_plainVars_Xness_nnoMbb_noHME = "SM_plainVars_Xness_nnoMbb_noHME_";
+    std::string category_SM_plainVars_Xness_nobb_noHME = "SM_plainVars_Xness_nobb_noHME_";
+    // flavour
+    if  ( ( selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron ) ) {
+      category_SM_plainVars_Xness              += "ee";
+      category_SM_plainVars_HME                += "ee";
+      category_SM_plainVars_Xness_HME          += "ee";
+      category_SM_plainVars_nobb_noHME         += "ee";
+      category_SM_plainVars_Xness_nnoMbb_noHME += "ee";
+      category_SM_plainVars_Xness_nobb_noHME   += "ee";
+    } else if (  selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon      ) {
+      category_SM_plainVars_Xness              += "mm";
+      category_SM_plainVars_HME                += "mm";
+      category_SM_plainVars_Xness_HME          += "mm";
+      category_SM_plainVars_nobb_noHME         += "mm";
+      category_SM_plainVars_Xness_nnoMbb_noHME += "mm";
+      category_SM_plainVars_Xness_nobb_noHME   += "mm";
+    } else if ( (selLepton_lead_type == kElectron && selLepton_sublead_type == kMuon    ) ||
+    (selLepton_lead_type == kMuon     && selLepton_sublead_type == kElectron) ) {
+      category_SM_plainVars_Xness              += "em";
+      category_SM_plainVars_HME                += "em";
+      category_SM_plainVars_Xness_HME          += "em";
+      category_SM_plainVars_nobb_noHME         += "em";
+      category_SM_plainVars_Xness_nnoMbb_noHME += "em";
+      category_SM_plainVars_Xness_nobb_noHME   += "em";
+    }
+    // mbb "SM_plainVars_nobb_noHME_ee_low_mbb"
+    // 75 | 140
+    if  ( m_Hbb < 75 ) {
+      category_SM_plainVars_nobb_noHME         += "_low_mbb";
+      category_SM_plainVars_Xness_nnoMbb_noHME += "_low_mbb";
+      category_SM_plainVars_Xness_nobb_noHME   += "_low_mbb";
+    } else if (  m_Hbb < 140  ) {
+      category_SM_plainVars_nobb_noHME         += "_middle_mbb";
+      category_SM_plainVars_Xness_nnoMbb_noHME += "_middle_mbb";
+      category_SM_plainVars_Xness_nobb_noHME   += "_middle_mbb";
+    } else  {
+      category_SM_plainVars_nobb_noHME         += "_high_mbb";
+      category_SM_plainVars_Xness_nnoMbb_noHME += "_high_mbb";
+      category_SM_plainVars_Xness_nobb_noHME   += "_high_mbb";
+    }
+
+    if ( isDEBUG ) std::cout <<
+    category_SM_plainVars_Xness <<  " " << mva_SM_plainVars_Xness <<  "\n" <<
+    category_SM_plainVars_HME <<  " " << mva_SM_plainVars_HME <<  "\n" <<
+    category_SM_plainVars_Xness_HME <<  " " << mva_SM_plainVars_Xness_HME <<  "\n" <<
+    category_SM_plainVars_nobb_noHME <<  " " << mva_SM_plainVars_nobb_noHME <<  "\n" <<
+    category_SM_plainVars_Xness_nnoMbb_noHME << " " << mva_SM_plainVars_Xness_nnoMbb_noHME <<  "\n" <<
+    category_SM_plainVars_Xness_nobb_noHME << " " << mva_SM_plainVars_Xness_nobb_noHME <<  "\n\n";
+
+
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
@@ -2122,6 +2333,18 @@ int main(int argc, char* argv[])
           rwgt_map[evt_cat_str] = evtWeight;
         }
       }
+      if(apply_HH_rwgt) {
+        for(std::size_t bm_list = 0; bm_list < WeightBM.size() ; ++bm_list)
+        {
+          std::string bench;
+          if (bm_list == 0) bench = "SM";
+          else {
+            bench = Form("BM%s", std::to_string(bm_list).data() );
+          }
+          rwgt_map[bench] = evtWeight * WeightBM[bm_list] / HHWeight;
+        }
+      }
+
       for (const GenMatchEntry* genMatch : genMatches)
       {
         selHistManagerType* selHistManager = selHistManagers[central_or_shift][genMatch->getIdx()];
@@ -2172,6 +2395,23 @@ int main(int argc, char* argv[])
             mvaoutput_bb2l_node3,
             mvaoutput_bb2l_node7,
             mvaoutput_bb2l_sm,
+            ///
+            category_SM_plainVars_Xness,
+            category_SM_plainVars_HME,
+            category_SM_plainVars_Xness_HME,
+            category_SM_plainVars_nobb_noHME,
+            category_SM_plainVars_Xness_nnoMbb_noHME,
+            category_SM_plainVars_Xness_nobb_noHME,
+            mva_SM_plainVars_Xness,
+            mva_SM_plainVars_HME,
+            mva_SM_plainVars_Xness_HME,
+            mva_SM_plainVars_nobb_noHME,
+            mva_SM_plainVars_Xness_nnoMbb_noHME,
+            mva_SM_plainVars_Xness_nobb_noHME,
+            m_HH_hme,
+            m_HH,
+            m_HHvis,
+            ///
             kv.second
           );
           if(memReader.size() > 0)
@@ -2234,6 +2474,23 @@ int main(int argc, char* argv[])
                   mvaoutput_bb2l_node3,
                   mvaoutput_bb2l_node7,
                   mvaoutput_bb2l_sm,
+                  ///
+                  category_SM_plainVars_Xness,
+                  category_SM_plainVars_HME,
+                  category_SM_plainVars_Xness_HME,
+                  category_SM_plainVars_nobb_noHME,
+                  category_SM_plainVars_Xness_nnoMbb_noHME,
+                  category_SM_plainVars_Xness_nobb_noHME,
+                  mva_SM_plainVars_Xness,
+                  mva_SM_plainVars_HME,
+                  mva_SM_plainVars_Xness_HME,
+                  mva_SM_plainVars_nobb_noHME,
+                  mva_SM_plainVars_Xness_nnoMbb_noHME,
+                  mva_SM_plainVars_Xness_nobb_noHME,
+                  m_HH_hme,
+                  m_HH,
+                  m_HHvis,
+                  ///
                   kv.second
                 );
                 if(memReader.size() > 0)
@@ -2271,22 +2528,6 @@ int main(int argc, char* argv[])
     }
 
     if ( bdt_filler ) {
-      // do HH nonres weight
-      /*std::map<std::string, double> rwgt_map_toBDT;
-      for(const std::string & evt_cat_str: evt_cat_strs)
-      {
-        if(apply_HH_rwgt)
-        {
-          std::string bench = evt_cat_str.data();
-          std::string name_BM = Form("weight_%s", bench.data() );
-          std::cout<< "For BDT filling " << name_BM << "\n";
-          rwgt_map_toBDT[evt_cat_str] = Weight_ktScan[name_BM];
-        }
-        else
-        {
-          rwgt_map_toBDT[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
-        }
-      }*/
 
       double mindr_lep1_jet=comp_mindr_jet(*selLepton_lead, selJetsAK4);
       double mindr_lep2_jet=comp_mindr_jet(*selLepton_sublead, selJetsAK4);
@@ -2370,7 +2611,6 @@ int main(int argc, char* argv[])
           ("isVBF",                         isVBF)
           ("mhh_gen",                       eventInfo.gen_mHH)
           ("costS_gen",                     eventInfo.gen_cosThetaStar)
-          //(rwgt_map_toBDT)
           (WeightBM_toBDT)
           (Weight_ktScan_toBDT)
           (memweight_signal, "memweight_signal")
