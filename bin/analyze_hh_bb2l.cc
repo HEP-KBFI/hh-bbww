@@ -262,8 +262,8 @@ int main(int argc, char* argv[])
 
   GenMatchInterface genMatchInterface(2, apply_leptonGenMatching, false);
 
-  vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
-  std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
+  //vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
+  //std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
@@ -810,7 +810,7 @@ int main(int argc, char* argv[])
     WeightHistManager* weights_;
   };
 
-  std::vector<categoryEntryType> categories_evt;
+  /*std::vector<categoryEntryType> categories_evt;
   for ( int type_Hbb = kHbb_undefined; type_Hbb <= kHbb_boosted; ++type_Hbb ) {
     for ( int type_vbf = kVBF_undefined; type_vbf <= kVBF_tagged; ++type_vbf ) {
       if ( !(type_Hbb == kHbb_undefined && type_vbf == kVBF_undefined) ) {
@@ -832,9 +832,9 @@ int main(int argc, char* argv[])
       addCategory_conditionally(categories_evt, categoryEntryType( 1,  1,  1,  2, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1bL1e1mu
       addCategory_conditionally(categories_evt, categoryEntryType( 1,  1,  1, -1, type_Hbb, type_vbf), evtCategoryNames); // hh_1bM1e1mu
     }
-  }
+  }*/
 
-  vstring undefinedEvtCategories;
+  /*vstring undefinedEvtCategories;
   for ( vstring::const_iterator evtCategoryName = evtCategoryNames.begin();
 	evtCategoryName != evtCategoryNames.end(); ++evtCategoryName ) {
     if ( (*evtCategoryName) == "hh_bb2l" ) continue; // CV: skip "inclusive" event category, as it is added automatically
@@ -854,7 +854,7 @@ int main(int argc, char* argv[])
   if ( undefinedEvtCategories.size() >= 1 ) {
     throw cms::Exception("analyze_hh_bb2l")
       << "Invalid Configuration parameter 'evtCategories'. The following event categories are undefined: " << format_vstring(undefinedEvtCategories) << " !!\n";
-  }
+  }*/
 
   std::map<std::string, GenEvtHistManager*> genEvtHistManager_beforeCuts;
   std::map<std::string, LHEInfoHistManager*> lheInfoHistManager_beforeCuts;
@@ -972,7 +972,7 @@ int main(int argc, char* argv[])
           selHistManager->genEvtHistManager_afterCuts_->bookHistograms(fs, eventWeightManager);
         }
       }
-      for(const categoryEntryType & category: categories_evt)
+      /*for(const categoryEntryType & category: categories_evt)
       {
         TString histogramDir_category = histogramDir.data();
         histogramDir_category.ReplaceAll("hh_bb2l", category.name_.data());
@@ -1005,7 +1005,7 @@ int main(int argc, char* argv[])
             Form("%s/sel/lheInfo", histogramDir_category.Data()), era_string, central_or_shift));
           selHistManager->lheInfoHistManager_afterCuts_in_categories_[category.name_]->bookHistograms(fs);
         }
-      }
+      }*/
       if(! skipBooking)
       {
         edm::ParameterSet cfg_EvtYieldHistManager_sel = makeHistManager_cfg(process_and_genMatch,
@@ -1135,6 +1135,9 @@ int main(int argc, char* argv[])
     ++analyzedEntries;
     //if ( analyzedEntries > 100 ) break;
     histogram_analyzedEntries->Fill(0.);
+    // used half of the HH nonres events for training
+    if ( !(eventInfo.event % 2) && era_string == "2017"  && isMC_HH_nonres ) continue;
+
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
@@ -2315,7 +2318,7 @@ int main(int argc, char* argv[])
     std::map<std::string, double> rwgt_map;
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      const double evtWeight = evtWeightRecorder.get(central_or_shift);
+      const double evtWeight = (era_string == "2017"  && isMC_HH_nonres ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
 
       for(const std::string & evt_cat_str: evt_cat_strs)
@@ -2447,7 +2450,7 @@ int main(int argc, char* argv[])
           selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
         }
 
-        for(const categoryEntryType & category: categories_evt)
+        /*for(const categoryEntryType & category: categories_evt)
         {
           if ( (category.numElectrons_    ==             -1 || numElectrons    == category.numElectrons_)    &&
                (category.numMuons_        ==             -1 || numMuons        == category.numMuons_)        &&
@@ -2506,7 +2509,7 @@ int main(int argc, char* argv[])
               selHistManager->lheInfoHistManager_afterCuts_in_categories_[category.name_]->fillHistograms(*lheInfoReader, evtWeight);
             }
           }
-        }
+        }*/
       }
     }
 
