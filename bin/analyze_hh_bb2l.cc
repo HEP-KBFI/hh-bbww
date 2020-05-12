@@ -288,7 +288,7 @@ int main(int argc, char* argv[])
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
 
-  bool run_hme = true; //cfg_analyze.getParameter<bool>("run_hme");
+  bool run_hme = false; //cfg_analyze.getParameter<bool>("run_hme");
 
   if(! central_or_shifts_local.empty())
   {
@@ -670,32 +670,47 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb2l_nonres = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_nonres_13Var.pkl";
   ////////////
   // BDTs made with 2017 MC
+  std::string xgbFileName_SM_plainVars                    = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars.pkl";
   std::string xgbFileName_SM_plainVars_Xness              = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness.pkl";
-  std::string xgbFileName_SM_plainVars_HME                = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_HME.pkl";
-  std::string xgbFileName_SM_plainVars_Xness_HME          = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_HME.pkl";
-  std::string xgbFileName_SM_plainVars_nobb_noHME         = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_nobb_noHME.pkl";
-  std::string xgbFileName_SM_plainVars_Xness_nnoMbb_noHME = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHME.pkl";
-  std::string xgbFileName_SM_plainVars_Xness_nobb_noHME   = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_nobb_noHME.pkl";
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness              = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb", "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_HME                = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb", "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis", "m_HH_hme", "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_HME          = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb", "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis", "m_HH_hme", "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_nobb_noHME         = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll",                    "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_nnoMbb_noHME = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll",          "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_nobb_noHME   = {"mT_lep2", "mT_lep1", "m_ll", "pT_ll",                    "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  //std::string xgbFileName_SM_plainVars_HME                = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_HME.pkl";
+  //std::string xgbFileName_SM_plainVars_Xness_HME          = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_HME.pkl";
+  //std::string xgbFileName_SM_plainVars_nobb_noHME         = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_nobb_noHME.pkl";
+  //std::string xgbFileName_SM_plainVars_Xness_nnoMbb_noHME = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHME.pkl";
+  //std::string xgbFileName_SM_plainVars_Xness_nobb_noHME   = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness_nobb_noHME.pkl";
+  std::string xgbFileName_SM_plainVars_noHH_withbb        = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_noHH_withbb.pkl";
+  std::string xgbFileName_SM_plainVars_noHH               = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_noHH.pkl";
+  std::vector<std::string>  xgbInputVariables_SM_plainVars                    = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness              = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  //std::vector<std::string>  xgbInputVariables_SM_plainVars_HME                = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis", "m_HH_hme", "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
+  //std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_HME          = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis", "m_HH_hme", "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  //std::vector<std::string>  xgbInputVariables_SM_plainVars_nobb_noHME         = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll",                      "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
+  //std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_nnoMbb_noHME = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll",            "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  //std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness_nobb_noHME   = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll",                      "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_noHH_withbb        = {"lep2_conePt", "mT_lep2", "mT_lep1", "m_ll", "m_Hww", "m_Hbb", "bjet2_pt", "nBJetMedium", "met_pt_proj",                        "mT2_W",                      "met_LD",                                        "logHiggsness_fixedChi2"};
+  std::vector<std::string>  xgbInputVariables_SM_plainVars_noHH               = {               "mT_lep2", "mT_lep1", "m_ll",                                              "met_pt_proj",                        "mT2_W",                                                                       "logHiggsness_fixedChi2"};
+  XGBInterface mva_xgb_SM_plainVars(xgbFileName_SM_plainVars, xgbInputVariables_SM_plainVars);
   XGBInterface mva_xgb_SM_plainVars_Xness(xgbFileName_SM_plainVars_Xness, xgbInputVariables_SM_plainVars_Xness);
-  XGBInterface mva_xgb_SM_plainVars_HME(xgbFileName_SM_plainVars_HME, xgbInputVariables_SM_plainVars_HME);
-  XGBInterface mva_xgb_SM_plainVars_Xness_HME(xgbFileName_SM_plainVars_Xness_HME, xgbInputVariables_SM_plainVars_Xness_HME);
-  XGBInterface mva_xgb_SM_plainVars_nobb_noHME(xgbFileName_SM_plainVars_nobb_noHME, xgbInputVariables_SM_plainVars_nobb_noHME);
-  XGBInterface mva_xgb_SM_plainVars_Xness_nnoMbb_noHME(xgbFileName_SM_plainVars_Xness_nnoMbb_noHME, xgbInputVariables_SM_plainVars_Xness_nnoMbb_noHME);
-  XGBInterface mva_xgb_SM_plainVars_Xness_nobb_noHME(xgbFileName_SM_plainVars_Xness_nobb_noHME, xgbInputVariables_SM_plainVars_Xness_nobb_noHME);
+  //XGBInterface mva_xgb_SM_plainVars_HME(xgbFileName_SM_plainVars_HME, xgbInputVariables_SM_plainVars_HME);
+  //XGBInterface mva_xgb_SM_plainVars_Xness_HME(xgbFileName_SM_plainVars_Xness_HME, xgbInputVariables_SM_plainVars_Xness_HME);
+  //XGBInterface mva_xgb_SM_plainVars_nobb_noHME(xgbFileName_SM_plainVars_nobb_noHME, xgbInputVariables_SM_plainVars_nobb_noHME);
+  //XGBInterface mva_xgb_SM_plainVars_Xness_nnoMbb_noHME(xgbFileName_SM_plainVars_Xness_nnoMbb_noHME, xgbInputVariables_SM_plainVars_Xness_nnoMbb_noHME);
+  //XGBInterface mva_xgb_SM_plainVars_Xness_nobb_noHME(xgbFileName_SM_plainVars_Xness_nobb_noHME, xgbInputVariables_SM_plainVars_Xness_nobb_noHME);
+  XGBInterface mva_xgb_SM_plainVars_noHH_withbb(xgbFileName_SM_plainVars_noHH_withbb, xgbInputVariables_SM_plainVars_noHH_withbb);
+  XGBInterface mva_xgb_SM_plainVars_noHH(xgbFileName_SM_plainVars_noHH, xgbInputVariables_SM_plainVars_noHH);
   // book subcategories
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars =
+  {
+     {"SM_plainVars_ee", {}},
+     {"SM_plainVars_em", {}},
+     {"SM_plainVars_mm", {}}
+  };
   const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness =
   {
      {"SM_plainVars_Xness_ee", {}},
      {"SM_plainVars_Xness_em", {}},
      {"SM_plainVars_Xness_mm", {}}
   };
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars_HME =
+  /*const std::map<std::string, std::vector<double>> categories_SM_plainVars_HME =
   {
       {"SM_plainVars_HME_ee", {}},
       {"SM_plainVars_HME_em", {}},
@@ -706,64 +721,109 @@ int main(int argc, char* argv[])
       {"SM_plainVars_Xness_HME_ee", {}},
       {"SM_plainVars_Xness_HME_em", {}},
       {"SM_plainVars_Xness_HME_mm", {}}
-  };
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars_nobb_noHME =
+  };*/
+  /*const std::map<std::string, std::vector<double>> categories_SM_plainVars_nobb_noHME =
   {
-    {"SM_plainVars_nobb_noHME_ee_low_mbb", {}},
-    {"SM_plainVars_nobb_noHME_ee_middle_mbb", {}},
-    {"SM_plainVars_nobb_noHME_ee_high_mbb", {}},
-    {"SM_plainVars_nobb_noHME_em_low_mbb", {}},
-    {"SM_plainVars_nobb_noHME_em_middle_mbb", {}},
-    {"SM_plainVars_nobb_noHME_em_high_mbb", {}},
-    {"SM_plainVars_nobb_noHME_mm_low_mbb", {}},
-    {"SM_plainVars_nobb_noHME_mm_middle_mbb", {}},
-    {"SM_plainVars_nobb_noHME_mm_high_mbb", {}}
-  };
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness_nnoMbb_noHME =
+    {"SM_plainVars_nobb_noHME_ee_lowMbb", {}},
+    {"SM_plainVars_nobb_noHME_ee_medMbb", {}},
+    {"SM_plainVars_nobb_noHME_ee_highMbb", {}},
+    {"SM_plainVars_nobb_noHME_em_lowMbb", {}},
+    {"SM_plainVars_nobb_noHME_em_medMbb", {}},
+    {"SM_plainVars_nobb_noHME_em_highMbb", {}},
+    {"SM_plainVars_nobb_noHME_mm_lowMbb", {}},
+    {"SM_plainVars_nobb_noHME_mm_medMbb", {}},
+    {"SM_plainVars_nobb_noHME_mm_highMbb", {}}
+  };*/
+  /*const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness_nnoMbb_noHME =
   {
-    {"SM_plainVars_Xness_nnoMbb_noHME_ee_low_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_ee_middle_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_ee_high_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_em_low_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_em_middle_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_em_high_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_mm_low_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_mm_middle_mbb", {}},
-    {"SM_plainVars_Xness_nnoMbb_noHME_mm_high_mbb", {}}
+    {"SM_plainVars_Xness_nnoMbb_noHME_ee_lowMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_ee_medMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_ee_highMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_em_lowMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_em_medMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_em_highMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_mm_lowMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_mm_medMbb", {}},
+    {"SM_plainVars_Xness_nnoMbb_noHME_mm_highMbb", {}}
   };
   const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness_nobb_noHME =
   {
-    {"SM_plainVars_Xness_nobb_noHME_ee_low_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_ee_middle_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_ee_high_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_em_low_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_em_middle_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_em_high_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_mm_low_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_mm_middle_mbb", {}},
-    {"SM_plainVars_Xness_nobb_noHME_mm_high_mbb", {}}
+    {"SM_plainVars_Xness_nobb_noHME_ee_lowMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_ee_medMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_ee_highMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_em_lowMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_em_medMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_em_highMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_mm_lowMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_mm_medMbb", {}},
+    {"SM_plainVars_Xness_nobb_noHME_mm_highMbb", {}}
+  };*/
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_noHH =
+  {
+     {"SM_plainVars_noHH_ee_MHH1_lowMbb", {}},
+     {"SM_plainVars_noHH_em_MHH1_lowMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH1_lowMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH2_lowMbb", {}},
+     {"SM_plainVars_noHH_em_MHH2_lowMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH2_lowMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH3_lowMbb", {}},
+     {"SM_plainVars_noHH_em_MHH3_lowMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH3_lowMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH4_lowMbb", {}},
+     {"SM_plainVars_noHH_em_MHH4_lowMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH4_lowMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH5_lowMbb", {}},
+     {"SM_plainVars_noHH_em_MHH5_lowMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH5_lowMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH1_medMbb", {}},
+     {"SM_plainVars_noHH_em_MHH1_medMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH1_medMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH2_medMbb", {}},
+     {"SM_plainVars_noHH_em_MHH2_medMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH2_medMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH3_medMbb", {}},
+     {"SM_plainVars_noHH_em_MHH3_medMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH3_medMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH4_medMbb", {}},
+     {"SM_plainVars_noHH_em_MHH4_medMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH4_medMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH5_medMbb", {}},
+     {"SM_plainVars_noHH_em_MHH5_medMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH5_medMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH1_highMbb", {}},
+     {"SM_plainVars_noHH_em_MHH1_highMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH1_highMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH2_highMbb", {}},
+     {"SM_plainVars_noHH_em_MHH2_highMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH2_highMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH3_highMbb", {}},
+     {"SM_plainVars_noHH_em_MHH3_highMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH3_highMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH4_highMbb", {}},
+     {"SM_plainVars_noHH_em_MHH4_highMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH4_highMbb", {}},
+     {"SM_plainVars_noHH_ee_MHH5_highMbb", {}},
+     {"SM_plainVars_noHH_em_MHH5_highMbb", {}},
+     {"SM_plainVars_noHH_mm_MHH5_highMbb", {}},
   };
-  /*
-  --> all subcat by flavour
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness.pkl
-  --> plain --> flavour
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_HME.pkl
-  --> mbb bins /
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_nobb_noHME.pkl
-  --> mbb bins | HME 2D
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_HME.pkl
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHME.pkl
-  --> mbb bins | HME 2D
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nobb_noHME.pkl
-  --> mbb bins | HME 2D
-  ////////////////////////////////////////////////////
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_HMEt.log
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_nobb_noHMEt.log
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_HMEt.log
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nnoMbb_noHMEt.log
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xness_nobb_noHMEt.log
-  /home/acaan/BMs_HH_bbll/2017_only_noMEM/hh_bb2l_SM_plainVars_Xnesst.log
-  */
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_noHH_withbb =
+  {
+     {"SM_plainVars_noHH_withbb_ee_MHH1", {}},
+     {"SM_plainVars_noHH_withbb_em_MHH1", {}},
+     {"SM_plainVars_noHH_withbb_mm_MHH1", {}},
+     {"SM_plainVars_noHH_withbb_ee_MHH2", {}},
+     {"SM_plainVars_noHH_withbb_em_MHH2", {}},
+     {"SM_plainVars_noHH_withbb_mm_MHH2", {}},
+     {"SM_plainVars_noHH_withbb_ee_MHH3", {}},
+     {"SM_plainVars_noHH_withbb_em_MHH3", {}},
+     {"SM_plainVars_noHH_withbb_mm_MHH3", {}},
+     {"SM_plainVars_noHH_withbb_ee_MHH4", {}},
+     {"SM_plainVars_noHH_withbb_em_MHH4", {}},
+     {"SM_plainVars_noHH_withbb_mm_MHH4", {}},
+     {"SM_plainVars_noHH_withbb_ee_MHH5", {}},
+     {"SM_plainVars_noHH_withbb_em_MHH5", {}},
+     {"SM_plainVars_noHH_withbb_mm_MHH5", {}},
+  };
 
   std::vector<std::string> xgbInputVariables_bb2l_res =
     {"mht", "m_Hbb", "m_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
@@ -952,8 +1012,16 @@ int main(int argc, char* argv[])
         selHistManager->evt_[evt_cat_str] = new EvtHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatchName,
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_[evt_cat_str]->bookCategories(
-          fs, categories_SM_plainVars_Xness, categories_SM_plainVars_HME, categories_SM_plainVars_Xness_HME,
-          categories_SM_plainVars_nobb_noHME, categories_SM_plainVars_Xness_nnoMbb_noHME, categories_SM_plainVars_Xness_nobb_noHME
+          fs,
+          categories_SM_plainVars_Xness,
+          //categories_SM_plainVars_HME,
+          //categories_SM_plainVars_Xness_HME,
+          //categories_SM_plainVars_nobb_noHME,
+          //categories_SM_plainVars_Xness_nnoMbb_noHME,
+          //categories_SM_plainVars_Xness_nobb_noHME,
+          categories_SM_plainVars,
+          categories_SM_plainVars_noHH_withbb,
+          categories_SM_plainVars_noHH
         );
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
       }
@@ -2232,6 +2300,9 @@ int main(int argc, char* argv[])
     std::map<std::string, double> mvaInputVariables_list = {
       {"mT_lep1",             comp_MT_met(selLepton_lead, met.pt(), met.phi())},
       {"mT_lep2",             comp_MT_met(selLepton_sublead, met.pt(), met.phi())},
+      {"lep2_conePt",                   comp_lep_conePt(*selLepton_sublead)},
+      {"bjet2_pt",                      selJetP4_Hbb_sublead.pt()},
+      {"m_Hww",               m_Hww},
       {"m_ll",                m_ll},
       {"pT_ll",               pT_ll},
       {"m_Hbb",               m_Hbb},
@@ -2248,67 +2319,106 @@ int main(int argc, char* argv[])
       {"logTopness_fixedChi2",   logTopness_fixedChi2 < 50 ? -0.01 : logTopness_fixedChi2  },
       {"logHiggsness_fixedChi2", logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2}
     };
+    double mva_SM_plainVars       = mva_xgb_SM_plainVars(mvaInputVariables_list);
     double mva_SM_plainVars_Xness = mva_xgb_SM_plainVars_Xness(mvaInputVariables_list);
-    double mva_SM_plainVars_HME = mva_xgb_SM_plainVars_HME(mvaInputVariables_list);
-    double mva_SM_plainVars_Xness_HME = mva_xgb_SM_plainVars_Xness_HME(mvaInputVariables_list);
-    double mva_SM_plainVars_nobb_noHME = mva_xgb_SM_plainVars_nobb_noHME(mvaInputVariables_list);
-    double mva_SM_plainVars_Xness_nnoMbb_noHME = mva_xgb_SM_plainVars_Xness_nnoMbb_noHME(mvaInputVariables_list);
-    double mva_SM_plainVars_Xness_nobb_noHME = mva_xgb_SM_plainVars_Xness_nobb_noHME(mvaInputVariables_list);
+    //double mva_SM_plainVars_HME = mva_xgb_SM_plainVars_HME(mvaInputVariables_list);
+    //double mva_SM_plainVars_Xness_HME = mva_xgb_SM_plainVars_Xness_HME(mvaInputVariables_list);
+    //double mva_SM_plainVars_nobb_noHME = mva_xgb_SM_plainVars_nobb_noHME(mvaInputVariables_list);
+    //double mva_SM_plainVars_Xness_nnoMbb_noHME = mva_xgb_SM_plainVars_Xness_nnoMbb_noHME(mvaInputVariables_list);
+    //double mva_SM_plainVars_Xness_nobb_noHME = mva_xgb_SM_plainVars_Xness_nobb_noHME(mvaInputVariables_list);
+    double mva_SM_plainVars_noHH_withbb  = mva_xgb_SM_plainVars_noHH_withbb(mvaInputVariables_list);
+    double mva_SM_plainVars_noHH          = mva_xgb_SM_plainVars_noHH(mvaInputVariables_list);
 
     //--- do NN categories
     std::string category_SM_plainVars_Xness = "SM_plainVars_Xness_";
-    std::string category_SM_plainVars_HME = "SM_plainVars_HME_";
-    std::string category_SM_plainVars_Xness_HME = "SM_plainVars_Xness_HME_";
-    std::string category_SM_plainVars_nobb_noHME = "SM_plainVars_nobb_noHME_";
-    std::string category_SM_plainVars_Xness_nnoMbb_noHME = "SM_plainVars_Xness_nnoMbb_noHME_";
-    std::string category_SM_plainVars_Xness_nobb_noHME = "SM_plainVars_Xness_nobb_noHME_";
+    std::string category_SM_plainVars       = "SM_plainVars_";
+    //std::string category_SM_plainVars_HME = "SM_plainVars_HME_";
+    //std::string category_SM_plainVars_Xness_HME = "SM_plainVars_Xness_HME_";
+    //std::string category_SM_plainVars_nobb_noHME = "SM_plainVars_nobb_noHME_";
+    //std::string category_SM_plainVars_Xness_nnoMbb_noHME = "SM_plainVars_Xness_nnoMbb_noHME_";
+    //std::string category_SM_plainVars_Xness_nobb_noHME = "SM_plainVars_Xness_nobb_noHME_";
+    std::string category_SM_plainVars_noHH_withbb      = "SM_plainVars_noHH_withbb_";
+    std::string category_SM_plainVars_noHH             = "SM_plainVars_noHH_";
     // flavour
     if  ( ( selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron ) ) {
+      category_SM_plainVars                     += "ee";
       category_SM_plainVars_Xness              += "ee";
-      category_SM_plainVars_HME                += "ee";
-      category_SM_plainVars_Xness_HME          += "ee";
-      category_SM_plainVars_nobb_noHME         += "ee";
-      category_SM_plainVars_Xness_nnoMbb_noHME += "ee";
-      category_SM_plainVars_Xness_nobb_noHME   += "ee";
+      //category_SM_plainVars_HME                += "ee";
+      //category_SM_plainVars_Xness_HME          += "ee";
+      //category_SM_plainVars_nobb_noHME         += "ee";
+      //category_SM_plainVars_Xness_nnoMbb_noHME += "ee";
+      //category_SM_plainVars_Xness_nobb_noHME   += "ee";
+      category_SM_plainVars_noHH_withbb        += "ee";
+      category_SM_plainVars_noHH               += "ee";
     } else if (  selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon      ) {
+      category_SM_plainVars                    += "mm";
       category_SM_plainVars_Xness              += "mm";
-      category_SM_plainVars_HME                += "mm";
-      category_SM_plainVars_Xness_HME          += "mm";
-      category_SM_plainVars_nobb_noHME         += "mm";
-      category_SM_plainVars_Xness_nnoMbb_noHME += "mm";
-      category_SM_plainVars_Xness_nobb_noHME   += "mm";
+      //category_SM_plainVars_HME                += "mm";
+      //category_SM_plainVars_Xness_HME          += "mm";
+      //category_SM_plainVars_nobb_noHME         += "mm";
+      //category_SM_plainVars_Xness_nnoMbb_noHME += "mm";
+      //category_SM_plainVars_Xness_nobb_noHME   += "mm";
+      category_SM_plainVars_noHH_withbb        += "mm";
+      category_SM_plainVars_noHH               += "mm";
     } else if ( (selLepton_lead_type == kElectron && selLepton_sublead_type == kMuon    ) ||
     (selLepton_lead_type == kMuon     && selLepton_sublead_type == kElectron) ) {
+      category_SM_plainVars                    += "em";
       category_SM_plainVars_Xness              += "em";
-      category_SM_plainVars_HME                += "em";
-      category_SM_plainVars_Xness_HME          += "em";
-      category_SM_plainVars_nobb_noHME         += "em";
-      category_SM_plainVars_Xness_nnoMbb_noHME += "em";
-      category_SM_plainVars_Xness_nobb_noHME   += "em";
+      //category_SM_plainVars_HME                += "em";
+      //category_SM_plainVars_Xness_HME          += "em";
+      //category_SM_plainVars_nobb_noHME         += "em";
+      //category_SM_plainVars_Xness_nnoMbb_noHME += "em";
+      //category_SM_plainVars_Xness_nobb_noHME   += "em";
+      category_SM_plainVars_noHH_withbb        += "em";
+      category_SM_plainVars_noHH               += "em";
     }
-    // mbb "SM_plainVars_nobb_noHME_ee_low_mbb"
+    // "SM_plainVars_noHH_mm_MHH5_highMbb"
+    // "SM_plainVars_noHH_withbb_ee_MHH1"
+    // 250, 350, 450, 550
+    if  ( m_Hbb < 250. ) {
+      category_SM_plainVars_noHH         += "_MHH1";
+      category_SM_plainVars_noHH_withbb  += "_MHH1";
+    } else if (  m_Hbb < 350.  ) {
+      category_SM_plainVars_noHH         += "_MHH2";
+      category_SM_plainVars_noHH_withbb  += "_MHH2";
+    } else if (  m_Hbb < 450.  ) {
+      category_SM_plainVars_noHH         += "_MHH3";
+      category_SM_plainVars_noHH_withbb  += "_MHH3";
+    } else if (  m_Hbb < 550.  ) {
+      category_SM_plainVars_noHH         += "_MHH4";
+      category_SM_plainVars_noHH_withbb  += "_MHH4";
+    } else  {
+      category_SM_plainVars_noHH         += "_MHH5";
+      category_SM_plainVars_noHH_withbb  += "_MHH5";
+    }
+
+    // mbb "SM_plainVars_nobb_noHME_ee_lowMbb"
     // 75 | 140
     if  ( m_Hbb < 75 ) {
-      category_SM_plainVars_nobb_noHME         += "_low_mbb";
-      category_SM_plainVars_Xness_nnoMbb_noHME += "_low_mbb";
-      category_SM_plainVars_Xness_nobb_noHME   += "_low_mbb";
+      //category_SM_plainVars_nobb_noHME         += "_lowMbb";
+      //category_SM_plainVars_Xness_nnoMbb_noHME += "_lowMbb";
+      //category_SM_plainVars_Xness_nobb_noHME   += "_lowMbb";
+      category_SM_plainVars_noHH               += "_lowMbb";
     } else if (  m_Hbb < 140  ) {
-      category_SM_plainVars_nobb_noHME         += "_middle_mbb";
-      category_SM_plainVars_Xness_nnoMbb_noHME += "_middle_mbb";
-      category_SM_plainVars_Xness_nobb_noHME   += "_middle_mbb";
+      //category_SM_plainVars_nobb_noHME         += "_medMbb";
+      //category_SM_plainVars_Xness_nnoMbb_noHME += "_medMbb";
+      //category_SM_plainVars_Xness_nobb_noHME   += "_medMbb";
+      category_SM_plainVars_noHH               += "_medMbb";
     } else  {
-      category_SM_plainVars_nobb_noHME         += "_high_mbb";
-      category_SM_plainVars_Xness_nnoMbb_noHME += "_high_mbb";
-      category_SM_plainVars_Xness_nobb_noHME   += "_high_mbb";
+      //category_SM_plainVars_nobb_noHME         += "_highMbb";
+      //category_SM_plainVars_Xness_nnoMbb_noHME += "_highMbb";
+      //category_SM_plainVars_Xness_nobb_noHME   += "_highMbb";
+      category_SM_plainVars_noHH               += "_highMbb";
     }
 
     if ( isDEBUG ) std::cout <<
-    category_SM_plainVars_Xness <<  " " << mva_SM_plainVars_Xness <<  "\n" <<
-    category_SM_plainVars_HME <<  " " << mva_SM_plainVars_HME <<  "\n" <<
-    category_SM_plainVars_Xness_HME <<  " " << mva_SM_plainVars_Xness_HME <<  "\n" <<
-    category_SM_plainVars_nobb_noHME <<  " " << mva_SM_plainVars_nobb_noHME <<  "\n" <<
-    category_SM_plainVars_Xness_nnoMbb_noHME << " " << mva_SM_plainVars_Xness_nnoMbb_noHME <<  "\n" <<
-    category_SM_plainVars_Xness_nobb_noHME << " " << mva_SM_plainVars_Xness_nobb_noHME <<  "\n\n";
+    category_SM_plainVars_Xness <<  " " << mva_SM_plainVars_Xness <<  "\n" //<<
+    //category_SM_plainVars_HME <<  " " << mva_SM_plainVars_HME <<  "\n" <<
+    //category_SM_plainVars_Xness_HME <<  " " << mva_SM_plainVars_Xness_HME <<  "\n" <<
+    //category_SM_plainVars_nobb_noHME <<  " " << mva_SM_plainVars_nobb_noHME <<  "\n"
+    //category_SM_plainVars_Xness_nnoMbb_noHME << " " << mva_SM_plainVars_Xness_nnoMbb_noHME <<  "\n" <<
+    //category_SM_plainVars_Xness_nobb_noHME << " " << mva_SM_plainVars_Xness_nobb_noHME
+    <<  "\n\n";
 
 
 //--- retrieve gen-matching flags
@@ -2400,17 +2510,23 @@ int main(int argc, char* argv[])
             mvaoutput_bb2l_sm,
             ///
             category_SM_plainVars_Xness,
-            category_SM_plainVars_HME,
-            category_SM_plainVars_Xness_HME,
-            category_SM_plainVars_nobb_noHME,
-            category_SM_plainVars_Xness_nnoMbb_noHME,
-            category_SM_plainVars_Xness_nobb_noHME,
+            //category_SM_plainVars_HME,
+            //category_SM_plainVars_Xness_HME,
+            //category_SM_plainVars_nobb_noHME,
+            //category_SM_plainVars_Xness_nnoMbb_noHME,
+            //category_SM_plainVars_Xness_nobb_noHME,
+            category_SM_plainVars,
+            category_SM_plainVars_noHH_withbb,
+            category_SM_plainVars_noHH,
             mva_SM_plainVars_Xness,
-            mva_SM_plainVars_HME,
-            mva_SM_plainVars_Xness_HME,
-            mva_SM_plainVars_nobb_noHME,
-            mva_SM_plainVars_Xness_nnoMbb_noHME,
-            mva_SM_plainVars_Xness_nobb_noHME,
+            //mva_SM_plainVars_HME,
+            //mva_SM_plainVars_Xness_HME,
+            //mva_SM_plainVars_nobb_noHME,
+            //mva_SM_plainVars_Xness_nnoMbb_noHME,
+            //mva_SM_plainVars_Xness_nobb_noHME,
+            mva_SM_plainVars,
+            mva_SM_plainVars_noHH_withbb,
+            mva_SM_plainVars_noHH,
             m_HH_hme,
             m_HH,
             m_HHvis,
