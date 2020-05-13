@@ -62,6 +62,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
+      apply_nc_correction   = None,
     )
 
     self.lepton_selections = [ "Fakeable" ]
