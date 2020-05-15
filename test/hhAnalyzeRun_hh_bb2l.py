@@ -144,7 +144,15 @@ elif mode == "ttbar_sync":
 else:
   raise ValueError("Internal logic error")
 
+
+for sample_name, sample_info in samples.items():
+  if sample_name == 'sum_events':
+    continue
+  if "CHH" in sample_name:
+    sample_info["use_it"] = False
+
 evtCategories = None
+"""
 if mode == "default" and len(central_or_shifts) <= 1:
   evtCategories = [
     "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_resolvedHbb_vbf", "hh_bb2l_resolvedHbb_nonvbf", "hh_bb2l_boostedHbb", "hh_bb2l_vbf", "hh_bb2l_nonvbf",
@@ -168,6 +176,8 @@ else:
   evtCategories = [
     "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_boostedHbb"
   ]
+"""
+evtCategories = []
 
 if sideband == 'disabled':
   chargeSumSelections = [ "OS" ]
@@ -221,7 +231,81 @@ if __name__ == '__main__':
       "MVAOutput_750"                     : {},
       "MVAOutputnohiggnessnotopness_300"  : {},
       "MVAOutputnohiggnessnotopness_400"  : {},
-      "MVAOutputnohiggnessnotopness_750"  : {}
+      "MVAOutputnohiggnessnotopness_750"  : {},
+      ###
+      "SM_plainVars_noHH_ee_MHH1_lowMbb"    : {},
+      "SM_plainVars_noHH_em_MHH1_lowMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH1_lowMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH2_lowMbb"    : {},
+      "SM_plainVars_noHH_em_MHH2_lowMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH2_lowMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH3_lowMbb"    : {},
+      "SM_plainVars_noHH_em_MHH3_lowMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH3_lowMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH4_lowMbb"    : {},
+      "SM_plainVars_noHH_em_MHH4_lowMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH4_lowMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH5_lowMbb"    : {},
+      "SM_plainVars_noHH_em_MHH5_lowMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH5_lowMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH1_medMbb"    : {},
+      "SM_plainVars_noHH_em_MHH1_medMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH1_medMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH2_medMbb"    : {},
+      "SM_plainVars_noHH_em_MHH2_medMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH2_medMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH3_medMbb"    : {},
+      "SM_plainVars_noHH_em_MHH3_medMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH3_medMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH4_medMbb"    : {},
+      "SM_plainVars_noHH_em_MHH4_medMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH4_medMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH5_medMbb"    : {},
+      "SM_plainVars_noHH_em_MHH5_medMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH5_medMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH1_highMbb"    : {},
+      "SM_plainVars_noHH_em_MHH1_highMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH1_highMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH2_highMbb"    : {},
+      "SM_plainVars_noHH_em_MHH2_highMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH2_highMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH3_highMbb"    : {},
+      "SM_plainVars_noHH_em_MHH3_highMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH3_highMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH4_highMbb"    : {},
+      "SM_plainVars_noHH_em_MHH4_highMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH4_highMbb"    : {},
+      "SM_plainVars_noHH_ee_MHH5_highMbb"    : {},
+      "SM_plainVars_noHH_em_MHH5_highMbb"    : {},
+      "SM_plainVars_noHH_mm_MHH5_highMbb"    : {},
+      ###
+      "SM_plainVars_noHH_withbb_ee_MHH1"    : {},
+      "SM_plainVars_noHH_withbb_em_MHH1"    : {},
+      "SM_plainVars_noHH_withbb_mm_MHH1"    : {},
+      "SM_plainVars_noHH_withbb_ee_MHH2"    : {},
+      "SM_plainVars_noHH_withbb_em_MHH2"    : {},
+      "SM_plainVars_noHH_withbb_mm_MHH2"    : {},
+      "SM_plainVars_noHH_withbb_ee_MHH3"    : {},
+      "SM_plainVars_noHH_withbb_em_MHH3"    : {},
+      "SM_plainVars_noHH_withbb_mm_MHH3"    : {},
+      "SM_plainVars_noHH_withbb_ee_MHH4"    : {},
+      "SM_plainVars_noHH_withbb_em_MHH4"    : {},
+      "SM_plainVars_noHH_withbb_mm_MHH4"    : {},
+      "SM_plainVars_noHH_withbb_ee_MHH5"    : {},
+      "SM_plainVars_noHH_withbb_em_MHH5"    : {},
+      "SM_plainVars_noHH_withbb_mm_MHH5"    : {},
+      #####
+      "SM_plainVars_Xness_nocat"    : {},
+      "SM_plainVars_nocat"    : {},
+      "SM_plainVars_noHH_withbb_nocat"    : {},
+      "SM_plainVars_noHH_nocat"    : {},
+      ##  ///////////
+      "SM_plainVars_Xness_ee"    : {},
+      "SM_plainVars_Xness_em"    : {},
+      "SM_plainVars_Xness_mm"    : {},
+      "SM_plainVars_Xness_HME_ee"    : {},
+      "SM_plainVars_Xness_HME_em"    : {},
+      "SM_plainVars_Xness_HME_mm"    : {},
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
