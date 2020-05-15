@@ -447,7 +447,7 @@ int main(int argc, char* argv[])
   const HHWeightInterface * HHWeight_calc = nullptr;
   if(apply_HH_rwgt)
   {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg, true);
+    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
     evt_cat_strs = HHWeight_calc->get_scan_strs();
   }
   const size_t Nscan = evt_cat_strs.size();
