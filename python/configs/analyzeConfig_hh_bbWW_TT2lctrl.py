@@ -679,6 +679,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_copyHistograms(lines_makefile, make_target = "phony_copyHistograms", make_dependency = "phony_hadd_stage1")
     self.addToMakefile_backgrounds_from_data(lines_makefile, make_dependency = "phony_copyHistograms")
+    self.addToMakefile_addSysTT(lines_makefile, make_target = "phony_addSysTT", make_dependency = "phony_hadd_stage1_5")
     self.addToMakefile_hadd_stage2(lines_makefile)
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
