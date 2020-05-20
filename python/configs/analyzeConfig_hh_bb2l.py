@@ -62,6 +62,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
+        executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
         histograms_to_fit,
@@ -126,6 +127,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.pruneSystematics()
     self.internalizeSystematics()
 
+    self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
@@ -235,7 +237,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               continue
 
             lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-            central_or_shift_extensions = ["", "hadd", "copyHistograms", "addBackgrounds"]
+            central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSysTT", "addBackgrounds"]
             central_or_shift_dedicated = self.central_or_shifts if self.runTHweights(sample_info) else self.central_or_shifts_external
             central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
             for central_or_shift_or_dummy in central_or_shifts_extended:
@@ -245,7 +247,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   continue
                 evtcategories_extended = [""]
                 evtcategories_extended.extend(self.evtCategories)
-                if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
+                if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addSysTT", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
                   continue
 
                 if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
@@ -264,7 +266,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   else :
                     self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                                 "_".join([ lepton_selection_and_frWeight, lepton_charge_selection ]), process_name_or_dummy)
-    for subdirectory in [ "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
@@ -482,6 +484,21 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
           if self.isBDTtraining or self.do_sync:
             continue
+
+          for category in self.evtCategories:
+              key_addSysTT_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
+              key_addSysTT_dir = getKey("addSysTT")
+              addSysTT_job_tuple = ("addSysTT", category, lepton_charge_selection, lepton_selection_and_frWeight)
+              self.jobOptions_addSysTT[key_addSysTT_job] = {
+                'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+                'cfgFile_modified' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_CFGS], "addSysTT_%s_%s_%s_%s_cfg.py" % addSysTT_job_tuple),
+                'outputFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_HIST], "addSysTT_%s_%s_%s_%s.root" % addSysTT_job_tuple),
+                'logFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_LOGS], "addSysTT_%s_%s_%s_%s.log" % addSysTT_job_tuple),
+                'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
+                'process_output' : "addSysTT"
+              }
+              self.createCfg_addSysTT(self.jobOptions_addSysTT[key_addSysTT_job])
+
 
           for category in self.evtCategories:
             # sum fake background contributions for the total of all MC sample

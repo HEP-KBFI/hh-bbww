@@ -55,16 +55,6 @@ process.makePlots.distributions = cms.VPSet(
         yAxisTitle = cms.string('dN/dm_{ll} [1/GeV]')
     ),
     cms.PSet(
-        histogramName = cms.string('sel/evt/$PROCESS/mtt'),
-        xAxisTitle = cms.string('m_{tt} [GeV]'),
-        yAxisTitle = cms.string('dN/dm_{tt} [1/GeV]')
-    ),
-    cms.PSet(
-        histogramName = cms.string('sel/evt/$PROCESS/mtt'),
-        xAxisTitle = cms.string('m_{tt} [GeV]'),
-        yAxisTitle = cms.string('dN/dm_{tt} [1/GeV]')
-    ),
-    cms.PSet(
         histogramName = cms.string('sel/evt/$PROCESS/HT'),
         xAxisTitle = cms.string('H_{T} [GeV]'),
         yAxisTitle = cms.string('dN/dH_{T} [1/GeV]')
