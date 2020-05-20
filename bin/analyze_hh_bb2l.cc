@@ -267,7 +267,7 @@ int main(int argc, char* argv[])
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
+  bool isHH_rwgt_allowed = boost::starts_with(process_string, "signal_ggf_nonresonant_") && process_string.find("cHHH") == std::string::npos;
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
   bool useAssocJetBtag = cfg_analyze.getParameter<bool>("useAssocJetBtag");
@@ -437,7 +437,7 @@ int main(int argc, char* argv[])
   }
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC, isSignal, isMC_HH_nonres, apply_topPtReweighting);
+  EventInfo eventInfo(isMC, isSignal, isHH_rwgt_allowed, apply_topPtReweighting);
   const std::string default_cat_str = "default";
   std::vector<std::string> evt_cat_strs = { default_cat_str };
 
@@ -447,7 +447,7 @@ int main(int argc, char* argv[])
   const HHWeightInterface * HHWeight_calc = nullptr;
   if(apply_HH_rwgt)
   {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg, true);
+    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
     evt_cat_strs = HHWeight_calc->get_scan_strs();
   }
   const size_t Nscan = evt_cat_strs.size();
@@ -1065,7 +1065,7 @@ int main(int argc, char* argv[])
       "bjet2_pt", "bjet2_eta",
       "met", "mht", "met_LD",
       "HT", "STMET",
-      "m_Hbb", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
+      "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
       "m_ll", "dR_ll", "dPhi_ll", "dEta_ll", "pT_ll",
       "min_dPhi_lepMEt", "max_dPhi_lepMEt",
       "m_Hww", "mT_Hww", "pT_Hww", "Smin_Hww",
@@ -1950,10 +1950,22 @@ int main(int argc, char* argv[])
 
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
-    double m_Hbb    = HbbP4.mass();
-    double dR_Hbb   = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
-    double dPhi_Hbb = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
-    double pT_Hbb   = HbbP4.pt();
+    double m_Hbb     = HbbP4.mass();
+    double m_Hbb_regCorr = 0.;
+    double m_Hbb_regRes  = 0.;
+    if ( dynamic_cast<const RecoJet*>(selJet_Hbb_lead) && dynamic_cast<const RecoJet*>(selJet_Hbb_sublead) )
+    {
+      const RecoJet* selJetAK4_Hbb_lead    = dynamic_cast<const RecoJet*>(selJet_Hbb_lead);
+      const RecoJet* selJetAK4_Hbb_sublead = dynamic_cast<const RecoJet*>(selJet_Hbb_sublead);
+      Particle::LorentzVector HbbP4_reg = selJetAK4_Hbb_lead->p4()*selJetAK4_Hbb_lead->bRegCorr() + selJetAK4_Hbb_sublead->p4()*selJetAK4_Hbb_sublead->bRegCorr();
+      m_Hbb_regCorr = HbbP4_reg.mass();
+      m_Hbb_regRes  = m_Hbb_regCorr*TMath::Sqrt(
+         mem::square(selJetAK4_Hbb_lead->bRegRes()/selJetAK4_Hbb_lead->bRegCorr()) 
+       + mem::square(selJetAK4_Hbb_sublead->bRegRes()/selJetAK4_Hbb_sublead->bRegCorr()));
+    }
+    double dR_Hbb    = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
+    double dPhi_Hbb  = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
+    double pT_Hbb    = HbbP4.pt();
     Particle::LorentzVector llP4 = selLeptonP4_lead + selLeptonP4_sublead;
     double m_ll  = llP4.mass();
     double dR_ll = deltaR(selLeptonP4_lead, selLeptonP4_sublead);
@@ -2561,6 +2573,8 @@ int main(int argc, char* argv[])
           ("HT",                            HT)
           ("STMET",                         STMET)
           ("m_Hbb",                         m_Hbb)
+          ("m_Hbb_regCorr",                 m_Hbb_regCorr)
+          ("m_Hbb_regRes",                  m_Hbb_regRes)
           ("dR_Hbb",                        dR_Hbb)
           ("dPhi_Hbb",                      dPhi_Hbb)
           ("pT_Hbb",                        pT_Hbb)

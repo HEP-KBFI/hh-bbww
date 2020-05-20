@@ -129,7 +129,6 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
     self.cfgFile_make_plots_in_categories = os.path.join(self.template_dir, "makePlots_hh_bbWW_TT2lctrl_in_categories_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bbWW_TT2lctrl_cfg.py")
 
-    self.compSF_executable = "NormalizeDYSF.py"
     self.jobOptions_hadd_stage2_harvest = {}
 
     self.select_rle_output = select_rle_output
@@ -227,14 +226,9 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
     self.addToMakefile_hadd(lines_makefile, make_target, make_dependency, inputFiles_hadd_stage2_harvest, outputFile_hadd_stage2_harvest, max_inputFiles_hadd_stage2_harvest)
     for key_hadd_stage2_harvest_job in self.jobOptions_hadd_stage2_harvest:
       outputFile = self.jobOptions_hadd_stage2_harvest[key_hadd_stage2_harvest_job]['outputFile']
-      compSF_target = self.jobOptions_hadd_stage2_harvest[key_hadd_stage2_harvest_job]['compSF_target']
       lines_makefile.append("")
       lines_makefile.append("%s: %s" % (outputFile, make_target))
       lines_makefile.append("")
-      lines_makefile.append("%s: %s" % (compSF_target, outputFile))
-      lines_makefile.append("\t%s -i %s &> %s" % (self.compSF_executable, outputFile, compSF_target))
-      lines_makefile.append("")
-      self.targets.append(compSF_target)
 
   def create(self):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
@@ -658,7 +652,6 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
       self.jobOptions_hadd_stage2_harvest[key_hadd_stage2_harvest_job] = {
         'inputFiles' : inputFiles_hadd_stage2_harvest,
         'outputFile' : os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST], "hadd_harvested_stage2_%s.root" % key_hadd_stage2_harvest_job),
-        'compSF_target' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "compSF_%s.txt" % key_hadd_stage2_harvest_job),
       }
 
     if self.is_sbatch:

@@ -36,8 +36,8 @@ process.analyze_hh_bb1l = cms.PSet(
     muonSelection = cms.string(''),
     apply_leptonGenMatching = cms.bool(True),
 
-    apply_hadTauVeto = cms.bool(False),
-    hadTauSelection_veto = cms.string(''),
+    apply_hadTauVeto = cms.bool(True),
+    hadTauSelection_veto = cms.string('deepVSjMedium'),
     
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
@@ -131,7 +131,7 @@ process.analyze_hh_bb1l = cms.PSet(
     tHweights = cms.VPSet(),
     hhWeight_cfg = cms.PSet(
         denominator_file = cms.string(''),
-        klScan_file = cms.string('hhAnalysis/multilepton/data/kl_scan.dat'),
+        klScan_file = cms.string(''),
         ktScan_file = cms.string(''),
         coefFile = cms.string('HHStatAnalysis/AnalyticalModels/data/coefficientsByBin_extended_3M_costHHSim_19-4.txt'),
         histtitle = cms.string(''),

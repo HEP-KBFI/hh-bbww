@@ -192,8 +192,8 @@ int main(int argc, char* argv[])
   bool isMC_HH = isMC && process_string.find("hh_bbvv")!= std::string::npos;
   bool isMC_TT = isMC && process_string.find("TT")     != std::string::npos;
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  //bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
-  bool isMC_HH_nonres = false; // CV: temporary work-around, as branch "mHH_lhe" is missing in Ntuple containing AK4LS jets produced by Karl
+  //bool isHH_rwgt_allowed = boost::starts_with(process_string, "signal_ggf_nonresonant_") && process_string.find("cHHH") == std::string::npos;
+  bool isHH_rwgt_allowed = false; // CV: temporary work-around, as branch "mHH_lhe" is missing in Ntuple containing AK4LS jets produced by Karl
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift = "central";
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
@@ -244,7 +244,7 @@ int main(int argc, char* argv[])
   std::cout << "Loaded " << inputTree->getFileCount() << " file(s)\n";
 
 //--- declare event-level variables
-  EventInfo eventInfo(true, isSignal, isMC_HH_nonres);
+  EventInfo eventInfo(true, isSignal, isHH_rwgt_allowed);
   const std::string default_cat_str = "default";
   std::vector<std::string> evt_cat_strs = { default_cat_str };
 

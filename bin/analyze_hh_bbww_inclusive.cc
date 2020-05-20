@@ -96,7 +96,7 @@ main(int argc,
   const Era era = get_era(era_string);
 
   bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  bool isMC_HH_nonres = boost::starts_with(process_string, "signal_ggf_nonresonant_");
+  bool isHH_rwgt_allowed = boost::starts_with(process_string, "signal_ggf_nonresonant_") && process_string.find("cHHH") == std::string::npos;
   vstring triggerNames_1e = cfg_analyze.getParameter<vstring>("triggers_1e");
   std::vector<hltPath*> triggers_1e = create_hltPaths(triggerNames_1e);
   vstring triggerNames_2e = cfg_analyze.getParameter<vstring>("triggers_2e");
@@ -200,7 +200,7 @@ main(int argc,
   });
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC, isSignal, isMC_HH_nonres, apply_topPtReweighting);
+  EventInfo eventInfo(isMC, isSignal, isHH_rwgt_allowed, apply_topPtReweighting);
   EventInfoReader eventInfoReader(&eventInfo);
   if(apply_topPtReweighting)
   {
