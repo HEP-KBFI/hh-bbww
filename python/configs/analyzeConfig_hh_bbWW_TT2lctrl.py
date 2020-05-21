@@ -57,6 +57,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
+        executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
         histograms_to_fit,
@@ -108,6 +109,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
     self.pruneSystematics()
     self.internalizeSystematics()
 
+    self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
@@ -250,7 +252,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
               continue
 
             lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-            central_or_shift_extensions = ["", "hadd", "copyHistograms", "addBackgrounds"]
+            central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSysTT", "addBackgrounds"]
             central_or_shift_dedicated = self.central_or_shifts if self.runTHweights(sample_info) else self.central_or_shifts_external
             central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
             for central_or_shift_or_dummy in central_or_shifts_extended:
@@ -258,7 +260,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
               for process_name_or_dummy in process_name_extended:
                 if process_name_or_dummy in [ "hadd" ] and central_or_shift_or_dummy != "":
                   continue
-                if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
+                if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addSysTT", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
                   continue
 
                 if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
@@ -278,7 +280,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
                     self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                                 "_".join([ lepton_selection_and_frWeight, lepton_charge_selection ]), process_name_or_dummy)
   
-    for subdirectory in [ "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
@@ -450,6 +452,21 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
               self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job] = os.path.join(self.dirs[key_hadd_stage1_5_dir][DKEY_HIST],
                                                                           "hadd_stage1_5_%s_%s_%s.root" % hadd_stage1_5_job_tuple)
 
+
+          for category in self.evtCategories:
+              key_addSysTT_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
+              key_addSysTT_dir = getKey("addSysTT")
+              addSysTT_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
+              self.jobOptions_addSysTT[key_addSysTT_job] = {
+                'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+                'cfgFile_modified' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_CFGS], "addSysTT_%s_%s_%s_cfg.py" % addSysTT_job_tuple),
+                'outputFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_HIST], "addSysTT_%s_%s_%s.root" % addSysTT_job_tuple),
+                'logFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_LOGS], "addSysTT_%s_%s_%s.log" % addSysTT_job_tuple),
+                'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
+                'process_output' : "addSysTT"
+                 }
+              self.createCfg_addSysTT(self.jobOptions_addSysTT[key_addSysTT_job])
+
           for category in self.evtCategories:
             # sum fake background contributions for the total of all MC sample
             # input processes: TT_fake, TTW_fake, TTWW_fake, ...
@@ -506,6 +523,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
               self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
               self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
+            self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
             self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
                                                                             "hadd_stage2_%s_%s_%s.root" % hadd_stage2_job_tuple)
 
@@ -643,6 +661,9 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_copyHistograms)
       self.sbatchFile_copyHistograms = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_copyHistograms_%s.py" % self.channel)
       self.createScript_sbatch_copyHistograms(self.executable_copyHistograms, self.sbatchFile_copyHistograms, self.jobOptions_copyHistograms)
+      logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addSysTT)
+      self.sbatchFile_addSysTT = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addSysTT_%s.py" % self.channel)
+      self.createScript_sbatch_addSysTT(self.executable_addSysTT, self.sbatchFile_addSysTT, self.jobOptions_addSysTT)
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addBackgrounds)
       self.sbatchFile_addBackgrounds = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addBackgrounds_%s.py" % self.channel)
       self.createScript_sbatch_addBackgrounds(self.executable_addBackgrounds, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
@@ -658,6 +679,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_copyHistograms(lines_makefile, make_target = "phony_copyHistograms", make_dependency = "phony_hadd_stage1")
     self.addToMakefile_backgrounds_from_data(lines_makefile, make_dependency = "phony_copyHistograms")
+    self.addToMakefile_addSysTT(lines_makefile, make_target = "phony_addSysTT", make_dependency = "phony_hadd_stage1_5")
     self.addToMakefile_hadd_stage2(lines_makefile)
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)

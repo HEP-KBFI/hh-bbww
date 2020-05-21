@@ -36,8 +36,8 @@ process.analyze_hh_bb1l = cms.PSet(
     muonSelection = cms.string(''),
     apply_leptonGenMatching = cms.bool(True),
 
-    apply_hadTauVeto = cms.bool(False),
-    hadTauSelection_veto = cms.string(''),
+    apply_hadTauVeto = cms.bool(True),
+    hadTauSelection_veto = cms.string('deepVSjMedium'),
     
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(

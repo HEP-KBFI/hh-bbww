@@ -1133,7 +1133,7 @@ int main(int argc, char* argv[])
       "bjet2_pt", "bjet2_eta",
       "met", "mht", "met_LD",
       "HT", "STMET",
-      "m_Hbb", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
+      "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb",
       "m_ll", "dR_ll", "dPhi_ll", "dEta_ll", "pT_ll",
       "min_dPhi_lepMEt", "max_dPhi_lepMEt",
       "m_Hww", "mT_Hww", "pT_Hww", "Smin_Hww",
@@ -2021,10 +2021,22 @@ int main(int argc, char* argv[])
 
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
-    double m_Hbb    = HbbP4.mass();
-    double dR_Hbb   = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
-    double dPhi_Hbb = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
-    double pT_Hbb   = HbbP4.pt();
+    double m_Hbb     = HbbP4.mass();
+    double m_Hbb_regCorr = 0.;
+    double m_Hbb_regRes  = 0.;
+    if ( dynamic_cast<const RecoJet*>(selJet_Hbb_lead) && dynamic_cast<const RecoJet*>(selJet_Hbb_sublead) )
+    {
+      const RecoJet* selJetAK4_Hbb_lead    = dynamic_cast<const RecoJet*>(selJet_Hbb_lead);
+      const RecoJet* selJetAK4_Hbb_sublead = dynamic_cast<const RecoJet*>(selJet_Hbb_sublead);
+      Particle::LorentzVector HbbP4_reg = selJetAK4_Hbb_lead->p4()*selJetAK4_Hbb_lead->bRegCorr() + selJetAK4_Hbb_sublead->p4()*selJetAK4_Hbb_sublead->bRegCorr();
+      m_Hbb_regCorr = HbbP4_reg.mass();
+      m_Hbb_regRes  = m_Hbb_regCorr*TMath::Sqrt(
+         mem::square(selJetAK4_Hbb_lead->bRegRes()/selJetAK4_Hbb_lead->bRegCorr()) 
+       + mem::square(selJetAK4_Hbb_sublead->bRegRes()/selJetAK4_Hbb_sublead->bRegCorr()));
+    }
+    double dR_Hbb    = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
+    double dPhi_Hbb  = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
+    double pT_Hbb    = HbbP4.pt();
     Particle::LorentzVector llP4 = selLeptonP4_lead + selLeptonP4_sublead;
     double m_ll  = llP4.mass();
     double dR_ll = deltaR(selLeptonP4_lead, selLeptonP4_sublead);
@@ -2680,6 +2692,8 @@ int main(int argc, char* argv[])
           ("HT",                            HT)
           ("STMET",                         STMET)
           ("m_Hbb",                         m_Hbb)
+          ("m_Hbb_regCorr",                 m_Hbb_regCorr)
+          ("m_Hbb_regRes",                  m_Hbb_regRes)
           ("dR_Hbb",                        dR_Hbb)
           ("dPhi_Hbb",                      dPhi_Hbb)
           ("pT_Hbb",                        pT_Hbb)
