@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-04-15 14:20:24 with the following command:
+# file generated at 2020-05-21 15:29:40 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2016_hh.py -p /hdfs/local/karl/ttHNtupleProduction/2016/2020Apr12_woPresel_nom_hh_bbww/ntuples -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_hh.py -M
 
 samples_2016 = OD()
@@ -1453,7 +1453,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_13TeV-madgraph/RunIISummer16Mi
   ("fsize_local",                     1260762042), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        12626803802), # 12.63GB, avg file size 4.21GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        4.55695e-05),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -1504,7 +1504,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_13TeV-madgraph/RunIISummer16Mi
   ("fsize_local",                     1346391622), # 1.35GB, avg file size 1.35GB
   ("fsize_db",                        13505935893), # 13.51GB, avg file size 2.25GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        3.75655e-05),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -1555,7 +1555,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_13TeV-madgraph/RunIISummer16Mi
   ("fsize_local",                     1482047254), # 1.48GB, avg file size 1.48GB
   ("fsize_db",                        14484771487), # 14.48GB, avg file size 2.41GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.0003753816),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -1606,7 +1606,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_13TeV-madgraph/RunIISummer16Mi
   ("fsize_local",                     1259665900), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        13033305340), # 13.03GB, avg file size 3.26GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.0001216848),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -1657,7 +1657,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_13TeV-madgraph/RunIISummer16
   ("fsize_local",                     1364979658), # 1.36GB, avg file size 1.36GB
   ("fsize_db",                        13628421160), # 13.63GB, avg file size 2.73GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.001743038),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -1708,7 +1708,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_13TeV-madgraph/RunIISummer16
   ("fsize_local",                     1437048269), # 1.44GB, avg file size 1.44GB
   ("fsize_db",                        14044768795), # 14.04GB, avg file size 2.81GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.0002857708),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6298,7 +6298,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_13TeV-madgraph/RunIISummer16MiniAOD
   ("fsize_local",                     1259707994), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        12663197291), # 12.66GB, avg file size 2.53GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0003364547),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6349,7 +6349,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_13TeV-madgraph/RunIISummer16MiniAOD
   ("fsize_local",                     1278158916), # 1.28GB, avg file size 1.28GB
   ("fsize_db",                        12708206493), # 12.71GB, avg file size 3.18GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0001260006),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6400,7 +6400,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_13TeV-madgraph/RunIISummer16MiniAOD
   ("fsize_local",                     1168747990), # 1.17GB, avg file size 1.17GB
   ("fsize_db",                        11297192364), # 11.30GB, avg file size 2.82GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0001038674),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6451,7 +6451,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_13TeV-madgraph/RunIISummer16MiniAOD
   ("fsize_local",                     1539664115), # 1.54GB, avg file size 1.54GB
   ("fsize_db",                        14237299312), # 14.24GB, avg file size 2.85GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.001037918),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6502,7 +6502,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_13TeV-madgraph/RunIISummer16MiniA
   ("fsize_local",                     1400669895), # 1.40GB, avg file size 1.40GB
   ("fsize_db",                        13394462193), # 13.39GB, avg file size 3.35GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.004819446),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6553,7 +6553,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_13TeV-madgraph/RunIISummer16MiniA
   ("fsize_local",                     1501775869), # 1.50GB, avg file size 1.50GB
   ("fsize_db",                        13698968263), # 13.70GB, avg file size 3.42GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0007901474),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),

@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-05-12 13:13:32 with the following command:
+# file generated at 2020-05-21 15:34:11 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2018_hh.py -p python/samples/sampleLocations_2018_hh_bbww.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_hh.py -M
 
 samples_2018 = OD()
@@ -23,7 +23,7 @@ samples_2018["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg
   ("fsize_local",                     1515503567), # 1.52GB, avg file size 757.75MB
   ("fsize_db",                        19461973427), # 19.46GB, avg file size 846.17MB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.00176969),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -76,7 +76,7 @@ samples_2018["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg
   ("fsize_local",                     1625189185), # 1.63GB, avg file size 812.59MB
   ("fsize_db",                        20612880655), # 20.61GB, avg file size 763.44MB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.00078807),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -129,7 +129,7 @@ samples_2018["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCP5_PSWeights_13TeV-pow
   ("fsize_local",                     1629159416), # 1.63GB, avg file size 814.58MB
   ("fsize_db",                        20453536548), # 20.45GB, avg file size 1.20GB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.00033379),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -182,7 +182,7 @@ samples_2018["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg
   ("fsize_local",                     1487137569), # 1.49GB, avg file size 743.57MB
   ("fsize_db",                        19750514425), # 19.75GB, avg file size 987.53MB
   ("use_it",                          True),
-  ("xsection",                        0.026422),
+  ("xsection",                        0.00232827),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -235,7 +235,7 @@ samples_2018["/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-p
   ("fsize_local",                     1650057180), # 1.65GB, avg file size 825.03MB
   ("fsize_db",                        20383479586), # 20.38GB, avg file size 926.52MB
   ("use_it",                          True),
-  ("xsection",                        0.109352),
+  ("xsection",                        0.00732418),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -288,7 +288,7 @@ samples_2018["/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-p
   ("fsize_local",                     1665904499), # 1.67GB, avg file size 832.95MB
   ("fsize_db",                        20213187246), # 20.21GB, avg file size 962.53MB
   ("use_it",                          True),
-  ("xsection",                        0.109352),
+  ("xsection",                        0.00326156),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -341,7 +341,7 @@ samples_2018["/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powhe
   ("fsize_local",                     1627611095), # 1.63GB, avg file size 813.81MB
   ("fsize_db",                        19867289750), # 19.87GB, avg file size 794.69MB
   ("use_it",                          True),
-  ("xsection",                        0.109352),
+  ("xsection",                        0.00138144),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -394,7 +394,7 @@ samples_2018["/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
   ("fsize_local",                     1488939615), # 1.49GB, avg file size 744.47MB
   ("fsize_db",                        19251007287), # 19.25GB, avg file size 916.71MB
   ("use_it",                          True),
-  ("xsection",                        0.109352),
+  ("xsection",                        0.00963593),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -5151,7 +5151,7 @@ samples_2018["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_TuneCP5_PSWeights_13TeV-madgraph-py
   ("fsize_local",                     1621486966), # 1.62GB, avg file size 1.62GB
   ("fsize_db",                        20985004877), # 20.99GB, avg file size 1.05GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0003364547),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         False),
@@ -5201,7 +5201,7 @@ samples_2018["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-py
   ("fsize_local",                     1691734869), # 1.69GB, avg file size 1.69GB
   ("fsize_db",                        21869842221), # 21.87GB, avg file size 994.08MB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0001260006),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         False),
@@ -5251,7 +5251,7 @@ samples_2018["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_TuneCP5_PSWeights_13TeV-madgraph-py
   ("fsize_local",                     1801615248), # 1.80GB, avg file size 1.80GB
   ("fsize_db",                        22460400874), # 22.46GB, avg file size 1.25GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0001038674),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         False),
@@ -5301,7 +5301,7 @@ samples_2018["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_TuneCP5_PSWeights_13TeV-madgraph-py
   ("fsize_local",                     2042978371), # 2.04GB, avg file size 2.04GB
   ("fsize_db",                        23797150820), # 23.80GB, avg file size 1.03GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.001037918),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         False),
@@ -5351,7 +5351,7 @@ samples_2018["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-
   ("fsize_local",                     1852461344), # 1.85GB, avg file size 1.85GB
   ("fsize_db",                        22698378387), # 22.70GB, avg file size 1.08GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.004819446),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         False),
@@ -5401,7 +5401,7 @@ samples_2018["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-
   ("fsize_local",                     1928237400), # 1.93GB, avg file size 1.93GB
   ("fsize_db",                        22714113755), # 22.71GB, avg file size 1.14GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.0007901474),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         False),
@@ -6066,7 +6066,7 @@ samples_2018["/GluGluToHHTo2B2Tau_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pyth
   ("fsize_local",                     4006612091), # 4.01GB, avg file size 1.00GB
   ("fsize_db",                        49487397386), # 49.49GB, avg file size 1.46GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.00489315),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6119,7 +6119,7 @@ samples_2018["/GluGluToHHTo2B2Tau_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pyth
   ("fsize_local",                     4127872361), # 4.13GB, avg file size 1.03GB
   ("fsize_db",                        50081318436), # 50.08GB, avg file size 1.47GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.00217899),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6172,7 +6172,7 @@ samples_2018["/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-p
   ("fsize_local",                     4138801298), # 4.14GB, avg file size 1.03GB
   ("fsize_db",                        50271035315), # 50.27GB, avg file size 1.29GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.00092291),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
@@ -6225,7 +6225,7 @@ samples_2018["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pyth
   ("fsize_local",                     3743743392), # 3.74GB, avg file size 935.94MB
   ("fsize_db",                        48318284793), # 48.32GB, avg file size 1.38GB
   ("use_it",                          True),
-  ("xsection",                        0.073056),
+  ("xsection",                        0.00643758),
   ("genWeight",                       True),
   ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
   ("has_LHE",                         True),
