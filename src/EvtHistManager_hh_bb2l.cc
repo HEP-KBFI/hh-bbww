@@ -92,6 +92,11 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["MVAOutputnohiggnessnotopness_750"] = { "*" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
   /////////
+  central_or_shiftOptions_["SM_plainVars_Xness_nocat"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nocat"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_nocat"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_nocat"] = { "central" };
+  ///////////
   central_or_shiftOptions_["SM_plainVars_Xness_ee"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_em"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_mm"] = { "central" };
@@ -101,34 +106,95 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["SM_plainVars_Xness_HME_ee"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_HME_em"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_HME_mm"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_em_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_em_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_em_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_mm_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_mm_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_nobb_noHME_mm_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_high_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_low_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_middle_mbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_high_mbb"] = { "central" };
+  /*central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_em_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_em_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_em_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_mm_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_mm_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_nobb_noHME_mm_highMbb"] = { "central" };*/
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_highMbb"] = { "central" };
   /////////
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH1_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH1_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH1_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH2_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH2_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH2_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH3_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH3_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH3_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH4_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH4_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH4_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH5_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH5_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH5_lowMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH1_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH1_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH1_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH2_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH2_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH2_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH3_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH3_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH3_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH4_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH4_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH4_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH5_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH5_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH5_medMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH1_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH1_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH1_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH2_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH2_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH2_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH3_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH3_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH3_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH4_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH4_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH4_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_ee_MHH5_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_em_MHH5_highMbb"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_mm_MHH5_highMbb"] = { "central" };
+  //
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_ee_MHH1"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_em_MHH1"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_mm_MHH1"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_ee_MHH2"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_em_MHH2"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_mm_MHH2"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_ee_MHH3"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_em_MHH3"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_mm_MHH3"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_ee_MHH4"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_em_MHH4"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_mm_MHH4"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_ee_MHH5"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_em_MHH5"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_noHH_withbb_mm_MHH5"] = { "central" };
 }
 
 const TH1 *
@@ -140,11 +206,14 @@ EvtHistManager_hh_bb2l::getHistogram_EventCounter() const
 void
 EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
     const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_HME,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_HME,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_nobb_noHME,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nnoMbb_noHME,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nobb_noHME
+    //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_HME,
+    //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_HME,
+    //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_nobb_noHME,
+    //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nnoMbb_noHME,
+    //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nobb_noHME,
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH_withbb,
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH
   )
 {
   // X: not the smartest way, but we will detele most and keep one in the end, so it is ok
@@ -167,7 +236,7 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
       }
       central_or_shiftOptions_[category.first] = { "*" };
     }
-    /////
+    /*/////
     for(auto category: categories_SM_plainVars_HME)
     {
       //std::cout<< "Booked histo: " << category.first <<"\n";
@@ -183,8 +252,59 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
         histograms_by_category_SM_plainVars_HME_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
       }
       central_or_shiftOptions_[category.first] = { "*" };
+    }*/
+    /////
+    for(auto category: categories_SM_plainVars)
+    {
+      //std::cout<< "Booked histo: " << category.first <<"\n";
+      if(! category.second.empty())
+      {
+        const int npoints = category.second.size();
+        Float_t binsx[npoints];
+        std::copy(category.second.begin(), category.second.end(), binsx);
+        histograms_by_category_SM_plainVars_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+      }
+      else
+      {
+        histograms_by_category_SM_plainVars_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
+      }
+      central_or_shiftOptions_[category.first] = { "*" };
     }
-    ////
+    /////
+    for(auto category: categories_SM_plainVars_noHH_withbb)
+    {
+      //std::cout<< "Booked histo: " << category.first <<"\n";
+      if(! category.second.empty())
+      {
+        const int npoints = category.second.size();
+        Float_t binsx[npoints];
+        std::copy(category.second.begin(), category.second.end(), binsx);
+        histograms_by_category_SM_plainVars_noHH_withbb_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+      }
+      else
+      {
+        histograms_by_category_SM_plainVars_noHH_withbb_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
+      }
+      central_or_shiftOptions_[category.first] = { "*" };
+    }
+    /////
+    for(auto category: categories_SM_plainVars_noHH)
+    {
+      //std::cout<< "Booked histo: " << category.first <<"\n";
+      if(! category.second.empty())
+      {
+        const int npoints = category.second.size();
+        Float_t binsx[npoints];
+        std::copy(category.second.begin(), category.second.end(), binsx);
+        histograms_by_category_SM_plainVars_noHH_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+      }
+      else
+      {
+        histograms_by_category_SM_plainVars_noHH_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
+      }
+      central_or_shiftOptions_[category.first] = { "*" };
+    }
+    /*////
     for(auto category: categories_SM_plainVars_Xness_HME)
     {
       //std::cout<< "Booked histo: " << category.first <<"\n";
@@ -204,8 +324,8 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
   //}
   ////////////////////////////
   //for(auto categoryType: {categories_SM_plainVars_nobb_noHME, categories_SM_plainVars_Xness_nnoMbb_noHME, categories_SM_plainVars_Xness_nobb_noHME})
-  //{
-    for(auto category: categories_SM_plainVars_nobb_noHME)
+  //{*/
+    /*for(auto category: categories_SM_plainVars_nobb_noHME)
     {
       //std::cout<< "Booked histo: " << category.first <<"\n";
       histograms_by_category_SM_plainVars_nobb_noHME_[category.first] = book2D(dir, category.first, category.first, 50,  0., +1., 100,  0., +1000.);
@@ -225,7 +345,7 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
       histograms_by_category_SM_plainVars_Xness_nobb_noHME_[category.first] = book2D(dir, category.first, category.first, 50,  0., +1., 100,  0., +1000.);
       central_or_shiftOptions_[category.first] = { "*" };
     }
-  //}
+  //}*/
 
 
 }
@@ -309,6 +429,11 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_m_HH_                                    = book1D(dir, "m_HH",                                  150,    0., 1500.);
   histogram_m_HH_hme_                                = book1D(dir, "m_HH_hme",                              150,    0., 1500.);
 
+  histograms_SM_plainVars_Xness_nocat_       = book1D(dir, "SM_plainVars_Xness_nocat",                               100,    0., 1.);
+  histograms_SM_plainVars_nocat_             = book1D(dir, "SM_plainVars_nocat",                               100,    0., 1.);
+  histograms_SM_plainVars_noHH_withbb_nocat_ = book1D(dir, "SM_plainVars_noHH_withbb_nocat",                               100,    0., 1.);
+  histograms_SM_plainVars_noHH_nocat_        = book1D(dir, "SM_plainVars_noHH_noca",                               100,    0., 1.);
+
 
   histogram_MVAOutput300_                    = book1D(dir, "MVAOutput_300",                    "MVAOutput_300",                    360,   0.,    1.);
   histogram_MVAOutput400_                    = book1D(dir, "MVAOutput_400",                    "MVAOutput_400",                    360,   0.,    1.);
@@ -351,17 +476,23 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
                                        double mvaoutput_bb2l_sm,
                                        ///
                                        std::string category_SM_plainVars_Xness,
-                                       std::string category_SM_plainVars_HME,
-                                       std::string category_SM_plainVars_Xness_HME,
-                                       std::string category_SM_plainVars_nobb_noHME,
-                                       std::string category_SM_plainVars_Xness_nnoMbb_noHME,
-                                       std::string category_SM_plainVars_Xness_nobb_noHME,
+                                       //std::string category_SM_plainVars_HME,
+                                       //std::string category_SM_plainVars_Xness_HME,
+                                       //std::string category_SM_plainVars_nobb_noHME,
+                                       //std::string category_SM_plainVars_Xness_nnoMbb_noHME,
+                                       //std::string category_SM_plainVars_Xness_nobb_noHME,
+                                       std::string category_SM_plainVars,
+                                       std::string category_SM_plainVars_noHH_withbb,
+                                       std::string category_SM_plainVars_noHH,
                                        double mva_SM_plainVars_Xness,
-                                       double mva_SM_plainVars_HME,
-                                       double mva_SM_plainVars_Xness_HME,
-                                       double mva_SM_plainVars_nobb_noHME,
-                                       double mva_SM_plainVars_Xness_nnoMbb_noHME,
-                                       double mva_SM_plainVars_Xness_nobb_noHME,
+                                       //double mva_SM_plainVars_HME,
+                                       //double mva_SM_plainVars_Xness_HME,
+                                       //double mva_SM_plainVars_nobb_noHME,
+                                       //double mva_SM_plainVars_Xness_nnoMbb_noHME,
+                                       //double mva_SM_plainVars_Xness_nobb_noHME,
+                                       double mva_SM_plainVars,
+                                       double mva_SM_plainVars_noHH_withbb,
+                                       double mva_SM_plainVars_noHH,
                                        double m_HH_hme,
                                        double m_HH,
                                        double m_HHvis,
@@ -390,6 +521,13 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_m_HH_hme_,                        m_HH_hme,                    evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_HH_,                            m_HH,                    evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_HHvis_,                         m_HHvis,                    evtWeight, evtWeightErr);
+
+  fillWithOverFlow(histograms_SM_plainVars_Xness_nocat_ ,           mva_SM_plainVars_Xness,                 evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_SM_plainVars_nocat_,                  mva_SM_plainVars,                 evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_SM_plainVars_noHH_withbb_nocat_,      mva_SM_plainVars_noHH_withbb,                    evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_SM_plainVars_noHH_nocat_,             mva_SM_plainVars_noHH,                                   evtWeight, evtWeightErr);
+
+
   ////
   // X: not the smartest way, but we will detele most and keep one in the end, so it is ok
   // I would not waste time trying to do a dict of  histograms_by_category_
@@ -400,26 +538,45 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   }
   fillWithOverFlow(histograms_by_category_SM_plainVars_Xness_[category_SM_plainVars_Xness], mva_SM_plainVars_Xness, evtWeight, evtWeightErr);
   /////
-  if(! histograms_by_category_SM_plainVars_HME_.count(category_SM_plainVars_HME))
+  /*if(! histograms_by_category_SM_plainVars_HME_.count(category_SM_plainVars_HME))
   {
     throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_HME << "' was never booked";
   }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_HME_[category_SM_plainVars_HME], mva_SM_plainVars_HME, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_SM_plainVars_HME_[category_SM_plainVars_HME], mva_SM_plainVars_HME, evtWeight, evtWeightErr);*/
   /////
-  if(! histograms_by_category_SM_plainVars_Xness_HME_.count(category_SM_plainVars_Xness_HME))
+  /*if(! histograms_by_category_SM_plainVars_Xness_HME_.count(category_SM_plainVars_Xness_HME))
   {
     throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_Xness_HME << "' was never booked";
   }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_Xness_HME_[category_SM_plainVars_Xness_HME], mva_SM_plainVars_Xness_HME, evtWeight, evtWeightErr);
-  //////////////////////// the 2D are with HME mass in y-axis
+  fillWithOverFlow(histograms_by_category_SM_plainVars_Xness_HME_[category_SM_plainVars_Xness_HME], mva_SM_plainVars_Xness_HME, evtWeight, evtWeightErr);*/
+  //////
+  if(! histograms_by_category_SM_plainVars_.count(category_SM_plainVars))
+  {
+    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars << "' was never booked";
+  }
+  fillWithOverFlow(histograms_by_category_SM_plainVars_[category_SM_plainVars], mva_SM_plainVars, evtWeight, evtWeightErr);
   /////
-  if(! histograms_by_category_SM_plainVars_nobb_noHME_.count(category_SM_plainVars_nobb_noHME))
+  if(! histograms_by_category_SM_plainVars_noHH_withbb_.count(category_SM_plainVars_noHH_withbb))
+  {
+    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_noHH_withbb << "' was never booked";
+  }
+  fillWithOverFlow(histograms_by_category_SM_plainVars_noHH_withbb_[category_SM_plainVars_noHH_withbb], mva_SM_plainVars_noHH_withbb, evtWeight, evtWeightErr);
+  /////
+  if(! histograms_by_category_SM_plainVars_noHH_.count(category_SM_plainVars_noHH))
+  {
+    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_noHH << "' was never booked";
+  }
+  fillWithOverFlow(histograms_by_category_SM_plainVars_noHH_[category_SM_plainVars_noHH], mva_SM_plainVars_noHH, evtWeight, evtWeightErr);
+  /////
+  //////////////////////// the 2D are with HH mass in y-axis
+  /////
+  /*if(! histograms_by_category_SM_plainVars_nobb_noHME_.count(category_SM_plainVars_nobb_noHME))
   {
     throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_nobb_noHME << "' was never booked";
   }
-  fillWithOverFlow2d(histograms_by_category_SM_plainVars_nobb_noHME_[category_SM_plainVars_nobb_noHME], mva_SM_plainVars_nobb_noHME, m_HH_hme, evtWeight, evtWeightErr);
+  fillWithOverFlow2d(histograms_by_category_SM_plainVars_nobb_noHME_[category_SM_plainVars_nobb_noHME], mva_SM_plainVars_nobb_noHME, m_HH, evtWeight, evtWeightErr);*/
   /////
-  if(! histograms_by_category_SM_plainVars_Xness_nnoMbb_noHME_.count(category_SM_plainVars_Xness_nnoMbb_noHME))
+  /*if(! histograms_by_category_SM_plainVars_Xness_nnoMbb_noHME_.count(category_SM_plainVars_Xness_nnoMbb_noHME))
   {
     throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_Xness_nnoMbb_noHME << "' was never booked";
   }
@@ -429,7 +586,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   {
     throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_Xness_nobb_noHME << "' was never booked";
   }
-  fillWithOverFlow2d(histograms_by_category_SM_plainVars_Xness_nobb_noHME_[category_SM_plainVars_Xness_nobb_noHME], mva_SM_plainVars_Xness_nobb_noHME, m_HH_hme, evtWeight, evtWeightErr);
+  fillWithOverFlow2d(histograms_by_category_SM_plainVars_Xness_nobb_noHME_[category_SM_plainVars_Xness_nobb_noHME], mva_SM_plainVars_Xness_nobb_noHME, m_HH_hme, evtWeight, evtWeightErr);*/
 
 
 }

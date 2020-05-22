@@ -103,7 +103,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
     )
-    
+
     self.MEMbranch = MEMbranch
     self.hmebranch = hmebranch
 
@@ -176,7 +176,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       if not self.accept_central_or_shift(central_or_shift, sample_info):
         return False
     return True
-    
+
   def createCfg_analyze(self, jobOptions, sample_info, lepton_selection):
     """Create python configuration file for the analyze_hh_bb2l executable (analysis code)
 
@@ -242,7 +242,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
             for central_or_shift_or_dummy in central_or_shifts_extended:
               process_name_extended = [ process_name, "hadd" ]
-              for process_name_or_dummy in process_name_extended: 
+              for process_name_or_dummy in process_name_extended:
                 if process_name_or_dummy in [ "hadd" ] and central_or_shift_or_dummy != "":
                   continue
                 evtcategories_extended = [""]
@@ -273,7 +273,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         if dir_type in [ DKEY_CFGS, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
           self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel, subdirectory)
         else:
-          self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel, subdirectory)      
+          self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel, subdirectory)
     for dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT, DKEY_HADD_RT, DKEY_SYNC ]:
       if dir_type == DKEY_SYNC and not self.do_sync:
         continue
@@ -362,7 +362,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               key_analyze_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift)
 
               for jobId in inputFileList.keys():
-                
+
                 analyze_job_tuple = (process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift, jobId)
                 key_analyze_job = getKey(*analyze_job_tuple)
                 ntupleFiles = inputFileList[jobId]
@@ -437,7 +437,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'branchName_hmeOutput'     : branchName_hmeOutput
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
-                
+
                 # initialize input and output file names for hadd_stage1
                 key_hadd_stage1_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, "hadd")
                 hadd_stage1_job_tuple = (process_name, lepton_charge_selection, lepton_selection_and_frWeight)
@@ -447,12 +447,13 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 self.inputFiles_hadd_stage1[key_hadd_stage1_job].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
                 self.outputFile_hadd_stage1[key_hadd_stage1_job] = os.path.join(self.dirs[key_hadd_stage1_dir][DKEY_HIST],
                                                                                 "hadd_stage1_%s_%s_%s.root" % hadd_stage1_job_tuple)
-                  
+
             if self.isBDTtraining or self.do_sync:
               continue
 
             #----------------------------------------------------------------------------
             # split hadd_stage1 files into separate files, one for each event category
+            # hh_bb2l_OS_Tight
             for category in self.evtCategories:
               key_hadd_stage1_job = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
               key_copyHistograms_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, "copyHistograms")
@@ -465,7 +466,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 'cfgFile_modified' : cfgFile_modified,
                 'outputFile' : outputFile,
                 'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                'categories' : [ category ],
+                'categories' : [ "%s_%s_%s" % (category, lepton_charge_selection, lepton_selection_and_frWeight) ],
               }
               self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
             #----------------------------------------------------------------------------
@@ -584,7 +585,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               self.inputFiles_hadd_stage2[key_hadd_stage2_job] = []
             if lepton_selection == "Tight":
               self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
-              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])            
+              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
             self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
                                                                             "hadd_stage2_%s_%s_%s.root" % hadd_stage2_job_tuple)
@@ -601,7 +602,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       lines_makefile = []
       if self.isBDTtraining:
         self.addToMakefile_analyze(lines_makefile)
-        self.addToMakefile_hadd_stage1(lines_makefile)        
+        self.addToMakefile_hadd_stage1(lines_makefile)
       elif self.do_sync:
         self.addToMakefile_syncNtuple(lines_makefile)
         outputFile_sync_path = os.path.join(self.outputDir, DKEY_SYNC, '%s.root' % self.channel)
@@ -614,7 +615,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       self.createMakefile(lines_makefile)
       logging.info("Done.")
       return self.num_jobs
-    
+
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for lepton_charge_selection in self.lepton_charge_selections:
       for category in self.evtCategories:
@@ -641,7 +642,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
           key_prep_dcard_dir = getKey("prepareDatacards")
           prep_dcard_job_tuple = (self.channel, category, lepton_charge_selection, histogramToFit)
-          key_prep_dcard_job = getKey(category, lepton_charge_selection, histogramToFit)          
+          key_prep_dcard_job = getKey(category, lepton_charge_selection, histogramToFit)
           self.jobOptions_prep_dcard[key_prep_dcard_job] = {
             'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
             'cfgFile_modified' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_%s_%s_%s_cfg.py" % prep_dcard_job_tuple),
@@ -688,7 +689,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     for lepton_charge_selection in self.lepton_charge_selections:
       key_hadd_stage2_job = getKey(self.evtCategory_inclusive, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
       key_makePlots_dir = getKey("makePlots")
-      key_makePlots_job = getKey(lepton_charge_selection)      
+      key_makePlots_job = getKey(lepton_charge_selection)
       self.jobOptions_make_plots[key_makePlots_job] = {
         'executable' : self.executable_make_plots,
         'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
