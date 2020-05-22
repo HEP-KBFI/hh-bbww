@@ -17,7 +17,7 @@ process.addSysTT = cms.PSet(
     categories = cms.vstring(),
     processes_input = cms.vstring(["TT", "TT_fake", "TT_Convs"]),
     process_output = cms.string(""),
-)
+
     
     sysShifts = cms.vstring(
         "CMS_ttHl_btag_HFUp",

@@ -46,8 +46,8 @@ bool sortbymax(const float &a,
   return (a > b);
 }
 
-float funcvalue(float bincenter) {
-  float funcvalue_ = (bincenter - 0.5*(200+1200))*2/(1200-200);
+float funcvalue(float bincenter, float xmin, float xmax) {
+  float funcvalue_ = (bincenter - 0.5*(xmin+xmax))*2/(xmax-xmin);
   return funcvalue_;
 }
 
@@ -102,6 +102,9 @@ void add_sysCR(TH1* hist_central, std::vector<std::string> histNames, const TDir
     hists_cr.push_back(hist_cr);
   }
 
+  float xmin = hist_central->GetBinLowEdge(1);
+  float xmax = hist_central->GetBinLowEdge(hist_central->GetNbinsX()) + hist_central->GetBinWidth(hist_central->GetNbinsX());
+
   std::string histNameUp = "CMS_HHbbww_TT_crUp_";
   histNameUp += hist_central->GetName();
   std::string histNameDown = "CMS_HHbbww_TT_crDown_";
@@ -120,7 +123,7 @@ void add_sysCR(TH1* hist_central, std::vector<std::string> histNames, const TDir
     }
     sort(hist_diff.begin(), hist_diff.end(), sortbymax);
     float bincenter = hist_central->GetXaxis()->GetBinCenter(i+1);
-    float funcvalue_ = funcvalue(bincenter);
+    float funcvalue_ = funcvalue(bincenter, xmin, xmax);
     float maxdiff = hist_diff[0];
     float bincontnew = bincont + maxdiff*funcvalue_;
     hist_up->SetBinContent(i+1, bincontnew);
