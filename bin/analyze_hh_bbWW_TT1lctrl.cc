@@ -1031,7 +1031,7 @@ int main(int argc, char* argv[])
     }
 
 //--- rank triggers by priority and ignore triggers of lower priority if a trigger of higher priority has fired for given event;
-//    the ranking of the triggers is as follows: 2mu, 1e1mu, 2e, 1mu, 1e
+//    the ranking of the triggers is as follows: 1mu, 1e
 // CV: this logic is necessary to avoid that the same event is selected multiple times when processing different primary datasets
     if ( !isMC && !isDEBUG ) {
       if ( selTrigger_1e && isTriggered_1mu ) {
