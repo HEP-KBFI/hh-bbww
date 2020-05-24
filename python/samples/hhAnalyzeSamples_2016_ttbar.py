@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-05-12 12:56:38 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p /hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_ttbar.py -M
+# file generated at 2020-05-23 11:53:29 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p /hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_ttbar.py -M
 
 samples_2016 = OD()
 samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] = OD([
@@ -92,7 +92,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   }),
   ("nof_tree_events",                 9963900),
   ("nof_db_events",                   9963900),
-  ("fsize_local",                     39908318008), # 39.91GB, avg file size 2.00GB
+  ("fsize_local",                     39941370506), # 39.94GB, avg file size 2.00GB
   ("fsize_db",                        440499394219), # 440.50GB, avg file size 3.08GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -105,7 +105,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampDOWN"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampDOWN"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -213,7 +213,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   }),
   ("nof_tree_events",                 4944800),
   ("nof_db_events",                   4944800),
-  ("fsize_local",                     19806779693), # 19.81GB, avg file size 1.98GB
+  ("fsize_local",                     19823199993), # 19.82GB, avg file size 1.98GB
   ("fsize_db",                        218167419681), # 218.17GB, avg file size 1.95GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -226,7 +226,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampDOWN_ext1"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampDOWN_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -334,7 +334,7 @@ samples_2016["/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8
   }),
   ("nof_tree_events",                 29818400),
   ("nof_db_events",                   29818400),
-  ("fsize_local",                     129099059610), # 129.10GB, avg file size 2.15GB
+  ("fsize_local",                     129198052385), # 129.20GB, avg file size 2.15GB
   ("fsize_db",                        1348075651578), # 1.35TB, avg file size 3.26GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -347,7 +347,7 @@ samples_2016["/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_hdampDOWN"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_hdampDOWN"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -455,7 +455,7 @@ samples_2016["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   }),
   ("nof_tree_events",                 28900700),
   ("nof_db_events",                   28900700),
-  ("fsize_local",                     128993168501), # 128.99GB, avg file size 2.11GB
+  ("fsize_local",                     129089191646), # 129.09GB, avg file size 2.12GB
   ("fsize_db",                        1338002370689), # 1.34TB, avg file size 3.26GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -468,7 +468,7 @@ samples_2016["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_hdampDOWN"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_hdampDOWN"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -576,7 +576,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   }),
   ("nof_tree_events",                 9923800),
   ("nof_db_events",                   9923800),
-  ("fsize_local",                     40297486172), # 40.30GB, avg file size 2.01GB
+  ("fsize_local",                     40330495452), # 40.33GB, avg file size 2.02GB
   ("fsize_db",                        440216123353), # 440.22GB, avg file size 3.08GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -589,7 +589,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampUP"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampUP"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -697,7 +697,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   }),
   ("nof_tree_events",                 4965300),
   ("nof_db_events",                   4965300),
-  ("fsize_local",                     20160083955), # 20.16GB, avg file size 2.02GB
+  ("fsize_local",                     20176580759), # 20.18GB, avg file size 2.02GB
   ("fsize_db",                        220079948375), # 220.08GB, avg file size 2.37GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -710,7 +710,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampUP_ext1"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_hdampUP_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -818,7 +818,7 @@ samples_2016["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
   }),
   ("nof_tree_events",                 26872200),
   ("nof_db_events",                   29671272),
-  ("fsize_local",                     117700470642), # 117.70GB, avg file size 2.18GB
+  ("fsize_local",                     117789646307), # 117.79GB, avg file size 2.18GB
   ("fsize_db",                        1349067910706), # 1.35TB, avg file size 3.50GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -831,7 +831,7 @@ samples_2016["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_hdampUP"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_hdampUP"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -939,7 +939,7 @@ samples_2016["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   }),
   ("nof_tree_events",                 28695100),
   ("nof_db_events",                   28695100),
-  ("fsize_local",                     129507916987), # 129.51GB, avg file size 2.23GB
+  ("fsize_local",                     129603192541), # 129.60GB, avg file size 2.23GB
   ("fsize_db",                        1337128214755), # 1.34TB, avg file size 3.38GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -952,7 +952,7 @@ samples_2016["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_hdampUP"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_hdampUP"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1060,7 +1060,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   }),
   ("nof_tree_events",                 9414200),
   ("nof_db_events",                   9414200),
-  ("fsize_local",                     37968859072), # 37.97GB, avg file size 2.00GB
+  ("fsize_local",                     38000138475), # 38.00GB, avg file size 2.00GB
   ("fsize_db",                        414089278252), # 414.09GB, avg file size 3.04GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -1073,7 +1073,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueDown"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueDown"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1181,7 +1181,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   }),
   ("nof_tree_events",                 4952600),
   ("nof_db_events",                   4952600),
-  ("fsize_local",                     19969251810), # 19.97GB, avg file size 2.00GB
+  ("fsize_local",                     19985704971), # 19.99GB, avg file size 2.00GB
   ("fsize_db",                        217895870557), # 217.90GB, avg file size 2.29GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -1194,7 +1194,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueDown_ext1"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueDown_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1302,7 +1302,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunII
   }),
   ("nof_tree_events",                 28951700),
   ("nof_db_events",                   28951700),
-  ("fsize_local",                     126064341092), # 126.06GB, avg file size 2.17GB
+  ("fsize_local",                     126160455855), # 126.16GB, avg file size 2.18GB
   ("fsize_db",                        1305952192284), # 1.31TB, avg file size 3.15GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -1315,7 +1315,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_ueDown"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_ueDown"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1423,7 +1423,7 @@ samples_2016["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISumm
   }),
   ("nof_tree_events",                 27921200),
   ("nof_db_events",                   27921200),
-  ("fsize_local",                     125304089406), # 125.30GB, avg file size 2.12GB
+  ("fsize_local",                     125396896181), # 125.40GB, avg file size 2.13GB
   ("fsize_db",                        1289925205797), # 1.29TB, avg file size 3.47GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -1436,7 +1436,7 @@ samples_2016["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISumm
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_ueDown"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_ueDown"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1544,7 +1544,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   }),
   ("nof_tree_events",                 9851000),
   ("nof_db_events",                   9851000),
-  ("fsize_local",                     39795068284), # 39.80GB, avg file size 1.99GB
+  ("fsize_local",                     39827798945), # 39.83GB, avg file size 1.99GB
   ("fsize_db",                        436397875157), # 436.40GB, avg file size 3.03GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -1557,7 +1557,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueUp"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueUp"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1665,7 +1665,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   }),
   ("nof_tree_events",                 4987600),
   ("nof_db_events",                   4987600),
-  ("fsize_local",                     20148530555), # 20.15GB, avg file size 2.01GB
+  ("fsize_local",                     20165054133), # 20.17GB, avg file size 2.02GB
   ("fsize_db",                        220909282587), # 220.91GB, avg file size 2.80GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -1678,7 +1678,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueUp_ext1"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueUp_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1786,7 +1786,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISu
   }),
   ("nof_tree_events",                 29239200),
   ("nof_db_events",                   29239200),
-  ("fsize_local",                     127500457957), # 127.50GB, avg file size 2.16GB
+  ("fsize_local",                     127597537206), # 127.60GB, avg file size 2.16GB
   ("fsize_db",                        1326440207303), # 1.33TB, avg file size 3.68GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -1799,7 +1799,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_ueUp"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_ueUp"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1907,7 +1907,7 @@ samples_2016["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer
   }),
   ("nof_tree_events",                 27939400),
   ("nof_db_events",                   27939400),
-  ("fsize_local",                     125587300480), # 125.59GB, avg file size 2.20GB
+  ("fsize_local",                     125680150725), # 125.68GB, avg file size 2.20GB
   ("fsize_db",                        1300075329090), # 1.30TB, avg file size 3.25GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -1920,7 +1920,7 @@ samples_2016["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_ueUp"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_ueUp"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2028,7 +2028,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   }),
   ("nof_tree_events",                 14846400),
   ("nof_db_events",                   14846400),
-  ("fsize_local",                     60146576012), # 60.15GB, avg file size 2.00GB
+  ("fsize_local",                     60195971011), # 60.20GB, avg file size 2.01GB
   ("fsize_db",                        663165284807), # 663.17GB, avg file size 3.57GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -2041,7 +2041,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_QCDbased"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_QCDbased"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2149,7 +2149,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
   }),
   ("nof_tree_events",                 29208200),
   ("nof_db_events",                   29208200),
-  ("fsize_local",                     127693653654), # 127.69GB, avg file size 2.16GB
+  ("fsize_local",                     127790642806), # 127.79GB, avg file size 2.17GB
   ("fsize_db",                        1339803390539), # 1.34TB, avg file size 2.93GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -2162,7 +2162,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_QCDbased"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_QCDbased"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2270,7 +2270,7 @@ samples_2016["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
   }),
   ("nof_tree_events",                 27446200),
   ("nof_db_events",                   27446200),
-  ("fsize_local",                     123673221596), # 123.67GB, avg file size 2.10GB
+  ("fsize_local",                     123764451577), # 123.76GB, avg file size 2.10GB
   ("fsize_db",                        1287103451975), # 1.29TB, avg file size 3.66GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -2283,7 +2283,7 @@ samples_2016["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_QCDbased"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_QCDbased"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2391,7 +2391,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   }),
   ("nof_tree_events",                 13444300),
   ("nof_db_events",                   15059700),
-  ("fsize_local",                     54284523176), # 54.28GB, avg file size 1.70GB
+  ("fsize_local",                     54329324670), # 54.33GB, avg file size 1.70GB
   ("fsize_db",                        666404281152), # 666.40GB, avg file size 2.73GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -2404,7 +2404,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_GluonMove"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_GluonMove"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2512,7 +2512,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pyth
   }),
   ("nof_tree_events",                 26468200),
   ("nof_db_events",                   26468200),
-  ("fsize_local",                     115382237266), # 115.38GB, avg file size 2.06GB
+  ("fsize_local",                     115470068117), # 115.47GB, avg file size 2.06GB
   ("fsize_db",                        1198509880349), # 1.20TB, avg file size 3.72GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -2525,7 +2525,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_GluonMove"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_GluonMove"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2633,7 +2633,7 @@ samples_2016["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/
   }),
   ("nof_tree_events",                 28881600),
   ("nof_db_events",                   28881600),
-  ("fsize_local",                     129775715054), # 129.78GB, avg file size 2.06GB
+  ("fsize_local",                     129871746515), # 129.87GB, avg file size 2.06GB
   ("fsize_db",                        1342210039307), # 1.34TB, avg file size 3.25GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -2646,7 +2646,7 @@ samples_2016["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_GluonMove"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_GluonMove"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2754,7 +2754,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   }),
   ("nof_tree_events",                 9725600),
   ("nof_db_events",                   9725600),
-  ("fsize_local",                     39339295669), # 39.34GB, avg file size 1.97GB
+  ("fsize_local",                     39371719406), # 39.37GB, avg file size 1.97GB
   ("fsize_db",                        432559736598), # 432.56GB, avg file size 2.01GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -2767,7 +2767,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_erdON"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_erdON"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2875,7 +2875,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   }),
   ("nof_tree_events",                 4837600),
   ("nof_db_events",                   4837600),
-  ("fsize_local",                     19570876527), # 19.57GB, avg file size 1.51GB
+  ("fsize_local",                     19587024800), # 19.59GB, avg file size 1.51GB
   ("fsize_db",                        214453762002), # 214.45GB, avg file size 1.65GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -2888,7 +2888,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_erdON_ext1"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_erdON_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2996,7 +2996,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/Run
   }),
   ("nof_tree_events",                 27973400),
   ("nof_db_events",                   28973400),
-  ("fsize_local",                     122198721029), # 122.20GB, avg file size 2.07GB
+  ("fsize_local",                     122291611351), # 122.29GB, avg file size 2.07GB
   ("fsize_db",                        1316453559336), # 1.32TB, avg file size 3.04GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -3009,7 +3009,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_erdON"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_erdON"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3117,7 +3117,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
   }),
   ("nof_tree_events",                 27338000),
   ("nof_db_events",                   27338000),
-  ("fsize_local",                     123063367342), # 123.06GB, avg file size 2.12GB
+  ("fsize_local",                     123154214915), # 123.15GB, avg file size 2.12GB
   ("fsize_db",                        1273462459025), # 1.27TB, avg file size 3.00GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -3130,7 +3130,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_erdON"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToHadronic_erdON"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3238,7 +3238,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISu
   }),
   ("nof_tree_events",                 989200),
   ("nof_db_events",                   1294000),
-  ("fsize_local",                     3963088266), # 3.96GB, avg file size 1.32GB
+  ("fsize_local",                     3966388842), # 3.97GB, avg file size 1.32GB
   ("fsize_db",                        56723913520), # 56.72GB, avg file size 4.73GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -3251,7 +3251,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_mtop169p5_PSweights_backup"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_mtop169p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3359,7 +3359,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/
   }),
   ("nof_tree_events",                 2042800),
   ("nof_db_events",                   3197800),
-  ("fsize_local",                     8836655603), # 8.84GB, avg file size 1.77GB
+  ("fsize_local",                     8843454480), # 8.84GB, avg file size 1.77GB
   ("fsize_db",                        143556579755), # 143.56GB, avg file size 4.49GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -3372,7 +3372,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_mtop169p5_PSweights_backup"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_mtop169p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3480,7 +3480,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   }),
   ("nof_tree_events",                 2414800),
   ("nof_db_events",                   3577200),
-  ("fsize_local",                     9829537495), # 9.83GB, avg file size 1.09GB
+  ("fsize_local",                     9837645854), # 9.84GB, avg file size 1.09GB
   ("fsize_db",                        158849492877), # 158.85GB, avg file size 1.87GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -3493,7 +3493,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_mtop175p5_PSweights_backup"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_mtop175p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3601,7 +3601,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/
   }),
   ("nof_tree_events",                 2703600),
   ("nof_db_events",                   2703600),
-  ("fsize_local",                     11867375633), # 11.87GB, avg file size 1.98GB
+  ("fsize_local",                     11876369986), # 11.88GB, avg file size 1.98GB
   ("fsize_db",                        122243863139), # 122.24GB, avg file size 3.94GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -3614,7 +3614,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May11_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_mtop175p5_PSweights_backup"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020May20_woPresel_nom_hh_bbww_ttbar/ntuples/TTToSemiLeptonic_mtop175p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
