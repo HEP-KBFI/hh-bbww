@@ -40,14 +40,18 @@
 
 typedef std::vector<std::string> vstring;
 
-bool sortbymax(const float &a,
-		  const float &b)
+bool sortbyfirstmax(const std::pair<float,float> &a,
+		    const std::pair<float,float> &b)
 {
-  return (a > b);
+  return (a.first > b.first);
 }
 
-float funcvalue(float bincenter) {
-  float funcvalue_ = (bincenter - 0.5*(200+1200))*2/(1200-200);
+float sqr(float x) {
+  return x*x;
+}
+
+float funcvalue(float bincenter, float xmin, float xmax) {
+  float funcvalue_ = (bincenter - 0.5*(xmin+xmax))*2/(xmax-xmin);
   return funcvalue_;
 }
 
@@ -77,12 +81,19 @@ std::pair<TH1*, TH1*> add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn)
   std::string histname = hist_central->GetName();
   for(int i=0; i<hist_central->GetNbinsX(); i++) {
     float bincont = hist_central->GetBinContent(i+1);
+    float bincontErr = hist_central->GetBinError(i+1);
     float bincontup = hist_up->GetBinContent(i+1);
+    float bincontupErr = hist_up->GetBinError(i+1);
     float bincontdn = hist_dn->GetBinContent(i+1);
+    float bincontdnErr = hist_dn->GetBinError(i+1);
     float bincontnew = bincont + 0.5*(bincontup-bincontdn);
+    float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
     hist_up->SetBinContent(i+1,bincontnew);
+    hist_up->SetBinError(i+1,bincontnewErr);
     bincontnew = bincont - 0.5*(bincontup-bincontdn);
+    bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
     hist_dn->SetBinContent(i+1, bincontnew);
+    hist_dn->SetBinError(i+1, bincontnewErr);
   }
   setHistName(hist_up);
   setHistName(hist_dn);
@@ -109,25 +120,37 @@ void add_sysCR(TH1* hist_central, std::vector<std::string> histNames, const TDir
   TH1* hist_up = (TH1*) hist_central->Clone(histNameUp.data());
   TH1* hist_dn = (TH1*) hist_central->Clone(histNameDown.data());
 
-  std::vector<float> hist_diff;
+  float xmin = hist_central->GetBinLowEdge(1);
+  float xmax = hist_central->GetBinLowEdge(hist_central->GetNbinsX()) + hist_central->GetBinWidth(hist_central->GetNbinsX());
+
+  std::vector<std::pair<float, float> > hist_diff;
   for(int i=0; i<hist_central->GetNbinsX(); i++) {
     float bincont = hist_central->GetBinContent(i+1);
+    float bincontErr = hist_central->GetBinError(i+1);
     hist_diff.clear();
     for(unsigned int hist_cr=0; hist_cr<hists_cr.size(); hist_cr++) {
       float bincont_shift = hists_cr[hist_cr]->GetBinContent(i+1);
+      float bincont_shiftErr = hists_cr[hist_cr]->GetBinError(i+1);
       float bin_diff = fabs(bincont-bincont_shift);
-      hist_diff.push_back(bin_diff);
+      float bin_diffErr = std::sqrt( sqr(bincontErr) + sqr(bincont_shiftErr));
+      hist_diff.push_back(std::make_pair(bin_diff, bin_diffErr));
     }
-    sort(hist_diff.begin(), hist_diff.end(), sortbymax);
+    sort(hist_diff.begin(), hist_diff.end(), sortbyfirstmax);
     float bincenter = hist_central->GetXaxis()->GetBinCenter(i+1);
-    float funcvalue_ = funcvalue(bincenter);
-    float maxdiff = hist_diff[0];
+    float funcvalue_ = funcvalue(bincenter, xmin, xmax);
+    float maxdiff = hist_diff[0].first;
+    float maxdiffErr = hist_diff[0].second;
     float bincontnew = bincont + maxdiff*funcvalue_;
+    float bincontnewErr = std::sqrt( sqr(bincontErr) + sqr(funcvalue_) * sqr(maxdiffErr) );
     hist_up->SetBinContent(i+1, bincontnew);
+    hist_up->SetBinError(i+1, bincontnewErr);
     bincontnew = bincont - maxdiff*funcvalue_;
+    bincontnewErr = std::sqrt( sqr(bincontErr) + sqr(funcvalue_) * sqr(maxdiffErr) );
     hist_dn->SetBinContent(i+1, bincontnew);
+    hist_dn->SetBinError(i+1, bincontnewErr);
   }
 }
+
 
 int main(int argc, char* argv[])
 {
