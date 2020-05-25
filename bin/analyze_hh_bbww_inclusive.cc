@@ -241,7 +241,7 @@ main(int argc,
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
-  RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
+  RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
   inputTree->registerReader(jetReaderAK8);
 
@@ -447,8 +447,8 @@ main(int argc,
       jetCleaner       (jet_ptrs, fakeableLeptons)
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
-    std::vector<const RecoJet*> selJets_loose = jetSelectorAK4_bTagLoose(selJets);
-    evtWeightRecorder.record_btagWeight(selJets_loose);
+    std::vector<const RecoJet*> selJets_medium = jetSelectorAK4_bTagMedium(selJets);
+    evtWeightRecorder.record_btagWeight(selJets_medium);
 
     if(isDEBUG)
     {
