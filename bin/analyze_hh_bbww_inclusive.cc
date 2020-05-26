@@ -312,7 +312,9 @@ main(int argc,
                 << " (" << eventInfo
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 10 && eventInfo.event== 1582) ) continue;
+    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787813) ) continue;
+    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787805) ) continue;
+    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787805) ) continue;//1:128940:25787807
     ++analyzedEntries;
 
     if(run_lumi_eventSelector && ! (*run_lumi_eventSelector)(eventInfo))
@@ -376,64 +378,68 @@ main(int argc,
     const std::vector<const RecoLepton*> fakeableLeptons = mergeLeptonCollections(fakeableElectrons, fakeableMuons, isHigherConePt);
     const std::vector<const RecoLepton*> tightLeptons = mergeLeptonCollections(tightElectrons, tightMuons, isHigherConePt);
     const std::vector<const RecoLepton*> selLeptons = tightLeptons;
-
+    int selLeptons_size = selLeptons.size();
     const RecoLepton *selLepton_lead, *selLepton_sublead, *selLepton3, *selLepton4;
     int selLepton_lead_type, selLepton_sublead_type, selLepton3_type, selLepton4_type;
-    if( selLeptons.size() ==1 )
-    {
-      selLepton_lead = selLeptons[0];
-      selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-      dataToMCcorrectionInterface->setLeptons(
-       selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta()
-     );
-    }
-    else if ( selLeptons.size() ==2 )
-    {
-      selLepton_lead = selLeptons[0];
-      selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-      selLepton_sublead = selLeptons[1];
-      selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-      dataToMCcorrectionInterface->setLeptons(
-       selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-       selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
-     );
-    }
-    else if ( selLeptons.size() ==3 )
+    if(selLeptons_size) {
+      if( selLeptons_size ==1 )
+      {
+	selLepton_lead = selLeptons[0];
+	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+	dataToMCcorrectionInterface->setLeptons(
+	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta()
+	);
+      }
+      else if ( selLeptons_size ==2 )
+      {
+	selLepton_lead = selLeptons[0];
+	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+	selLepton_sublead = selLeptons[1];
+	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+	dataToMCcorrectionInterface->setLeptons(
+	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
+        );
+      }
+      else if ( selLeptons_size ==3 )
       {
 	selLepton_lead = selLeptons[0];
 	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
 	selLepton_sublead = selLeptons[1];
 	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
 	selLepton3 = selLeptons[2];
-        selLepton3_type = getLeptonType(selLepton3->pdgId());
+	selLepton3_type = getLeptonType(selLepton3->pdgId());
 	dataToMCcorrectionInterface->setLeptons(
-         selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
 	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
 	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta()
-	 );
+        );
       }
-    else if( selLeptons.size() >=4 )
-    {
-      selLepton_lead = selLeptons[0];
-      selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-      selLepton_sublead = selLeptons[1];
-      selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-      selLepton3 = selLeptons[2];
-      selLepton3_type = getLeptonType(selLepton3->pdgId());
-      selLepton4 = selLeptons[3];
-      selLepton4_type = getLeptonType(selLepton4->pdgId());
-      dataToMCcorrectionInterface->setLeptons(
-       selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-       selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
-       selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta(),
-       selLepton4_type, selLepton4->pt(), selLepton4->cone_pt(), selLepton4->eta()
-       );
+      else if( selLeptons_size >=4 )
+      {
+	selLepton_lead = selLeptons[0];
+	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+	selLepton_sublead = selLeptons[1];
+	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+	selLepton3 = selLeptons[2];
+	selLepton3_type = getLeptonType(selLepton3->pdgId());
+	selLepton4 = selLeptons[3];
+	selLepton4_type = getLeptonType(selLepton4->pdgId());
+	dataToMCcorrectionInterface->setLeptons(
+	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
+	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
+	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta(),
+	 selLepton4_type, selLepton4->pt(), selLepton4->cone_pt(), selLepton4->eta()
+	);
+      }
+      
+      evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
+      evtWeightRecorder.record_leptonIDSF_recoToLoose(dataToMCcorrectionInterface);
+      evtWeightRecorder.record_leptonIDSF_looseToTight(dataToMCcorrectionInterface);
     }
-    
-    evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
-    evtWeightRecorder.record_leptonIDSF_recoToLoose(dataToMCcorrectionInterface);
-    evtWeightRecorder.record_leptonIDSF_looseToTight(dataToMCcorrectionInterface);
-    
+
+    float lepton_IDSF  = (selLeptons_size) ? (evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central")) : 1;
+    float trigger_SF   = (selLeptons_size) ? (evtWeightRecorder.get_sf_triggerEff("central")) : 1;
     if(isDEBUG)
     {
       printCollection("preselLeptons", preselLeptons);
@@ -448,6 +454,9 @@ main(int argc,
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     std::vector<const RecoJet*> selJets_medium = jetSelectorAK4_bTagMedium(selJets);
+    /*for(unsigned int i=0; i<selJets_medium.size(); i++) {
+      std::cout << "pt: " << selJets_medium[i]->pt() << "\t" << "eta: " << "\t" << selJets_medium[i]->eta() << "\t" << selJets_medium[i]->BtagWeight() << std::endl;
+      }*/
     evtWeightRecorder.record_btagWeight(selJets_medium);
 
     if(isDEBUG)
@@ -585,9 +594,10 @@ main(int argc,
       }
     }
 
-    snm->read(evtWeightRecorder.get_sf_triggerEff("central"), FloatVariableType_bbww::trigger_SF);
-    snm->read(evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central"), FloatVariableType_bbww::lepton_IDSF);
+    snm->read(trigger_SF, FloatVariableType_bbww::trigger_SF);
+    snm->read(lepton_IDSF, FloatVariableType_bbww::lepton_IDSF);
     snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
+    std::cout <<"btagSF: " << evtWeightRecorder.get_btag("central") << std::endl;
     snm->read(preselMuons, fakeableMuons, tightMuons);
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
