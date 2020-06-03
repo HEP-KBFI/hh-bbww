@@ -704,6 +704,20 @@ int main(int argc, char* argv[])
      {"SM_plainVars_em", {}},
      {"SM_plainVars_mm", {}}
   };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_flavour_boosted =
+  {
+     {"SM_plainVars_ee_Hbb_resolved", {}},
+     {"SM_plainVars_em_Hbb_resolved", {}},
+     {"SM_plainVars_mm_Hbb_resolved", {}},
+     {"SM_plainVars_ee_Hbb_boosted", {}},
+     {"SM_plainVars_em_Hbb_boosted", {}},
+     {"SM_plainVars_mm_Hbb_boosted", {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_plainVars_boosted =
+  {
+     {"SM_plainVars_Hbb_resolved", {}},
+     {"SM_plainVars_Hbb_boosted", {}}
+  };
   const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness =
   {
      {"SM_plainVars_Xness_ee", {}},
@@ -1021,7 +1035,9 @@ int main(int argc, char* argv[])
           //categories_SM_plainVars_Xness_nobb_noHME,
           categories_SM_plainVars,
           categories_SM_plainVars_noHH_withbb,
-          categories_SM_plainVars_noHH
+          categories_SM_plainVars_noHH,
+          categories_SM_plainVars_flavour_boosted,
+          categories_SM_plainVars_boosted
         );
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
       }
@@ -2031,7 +2047,7 @@ int main(int argc, char* argv[])
       Particle::LorentzVector HbbP4_reg = selJetAK4_Hbb_lead->p4()*selJetAK4_Hbb_lead->bRegCorr() + selJetAK4_Hbb_sublead->p4()*selJetAK4_Hbb_sublead->bRegCorr();
       m_Hbb_regCorr = HbbP4_reg.mass();
       m_Hbb_regRes  = m_Hbb_regCorr*TMath::Sqrt(
-         mem::square(selJetAK4_Hbb_lead->bRegRes()/selJetAK4_Hbb_lead->bRegCorr()) 
+         mem::square(selJetAK4_Hbb_lead->bRegRes()/selJetAK4_Hbb_lead->bRegCorr())
        + mem::square(selJetAK4_Hbb_sublead->bRegRes()/selJetAK4_Hbb_sublead->bRegCorr()));
     }
     double dR_Hbb    = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
@@ -2342,8 +2358,11 @@ int main(int argc, char* argv[])
     double mva_SM_plainVars_noHH          = mva_xgb_SM_plainVars_noHH(mvaInputVariables_list);
 
     //--- do NN categories
+    /////// categories_SM_plainVars_boosted = categories_SM_plainVars_flavour_boosted
     std::string category_SM_plainVars_Xness = "SM_plainVars_Xness_";
     std::string category_SM_plainVars       = "SM_plainVars_";
+    std::string category_SM_plainVars_boosted       = "SM_plainVars_";
+    std::string category_SM_plainVars_flavour_boosted       = "SM_plainVars_";
     //std::string category_SM_plainVars_HME = "SM_plainVars_HME_";
     //std::string category_SM_plainVars_Xness_HME = "SM_plainVars_Xness_HME_";
     //std::string category_SM_plainVars_nobb_noHME = "SM_plainVars_nobb_noHME_";
@@ -2362,6 +2381,7 @@ int main(int argc, char* argv[])
       //category_SM_plainVars_Xness_nobb_noHME   += "ee";
       category_SM_plainVars_noHH_withbb        += "ee";
       category_SM_plainVars_noHH               += "ee";
+      category_SM_plainVars_flavour_boosted    += "ee";
     } else if (  selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon      ) {
       category_SM_plainVars                    += "mm";
       category_SM_plainVars_Xness              += "mm";
@@ -2372,6 +2392,7 @@ int main(int argc, char* argv[])
       //category_SM_plainVars_Xness_nobb_noHME   += "mm";
       category_SM_plainVars_noHH_withbb        += "mm";
       category_SM_plainVars_noHH               += "mm";
+      category_SM_plainVars_flavour_boosted    += "mm";
     } else if ( (selLepton_lead_type == kElectron && selLepton_sublead_type == kMuon    ) ||
     (selLepton_lead_type == kMuon     && selLepton_sublead_type == kElectron) ) {
       category_SM_plainVars                    += "em";
@@ -2383,7 +2404,18 @@ int main(int argc, char* argv[])
       //category_SM_plainVars_Xness_nobb_noHME   += "em";
       category_SM_plainVars_noHH_withbb        += "em";
       category_SM_plainVars_noHH               += "em";
+      category_SM_plainVars_flavour_boosted    += "em";
     }
+    ////////////////////
+    if (type_Hbb == kHbb_boosted)
+    {
+      category_SM_plainVars_flavour_boosted  += "_Hbb_boosted";
+      category_SM_plainVars_boosted          += "Hbb_boosted";
+    } else {
+      category_SM_plainVars_flavour_boosted  += "_Hbb_resolved";
+      category_SM_plainVars_boosted          += "Hbb_resolved";
+    }
+    ////////////////////
     // "SM_plainVars_noHH_mm_MHH5_highMbb"
     // "SM_plainVars_noHH_withbb_ee_MHH1"
     // 250, 350, 450, 550
@@ -2530,6 +2562,10 @@ int main(int argc, char* argv[])
             category_SM_plainVars,
             category_SM_plainVars_noHH_withbb,
             category_SM_plainVars_noHH,
+            //
+            category_SM_plainVars_flavour_boosted,
+            category_SM_plainVars_boosted,
+            //
             mva_SM_plainVars_Xness,
             //mva_SM_plainVars_HME,
             //mva_SM_plainVars_Xness_HME,

@@ -52,6 +52,8 @@ public:
                  std::string category_SM_plainVars,
                  std::string category_SM_plainVars_noHH_withbb,
                  std::string category_SM_plainVars_noHH,
+                 std::string category_SM_plainVars_flavour_boosted,
+                 std::string category_SM_plainVars_boosted,
                  double mva_SM_plainVars_Xness,
                  //double mva_SM_plainVars_HME,
                  //double mva_SM_plainVars_Xness_HME,
@@ -89,7 +91,9 @@ public:
                 //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nobb_noHME,
                 const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
                 const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH_withbb,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_flavour_boosted,
+                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted
   );
 
   const TH1 *
@@ -190,6 +194,9 @@ public:
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_;
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_withbb_;
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
+
+  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_flavour_boosted_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_boosted_;
 
   TH1 * histograms_SM_plainVars_Xness_nocat_;
   TH1 * histograms_SM_plainVars_nocat_;

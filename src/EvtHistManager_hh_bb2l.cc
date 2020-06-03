@@ -103,9 +103,22 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["SM_plainVars_HME_ee"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_HME_em"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_HME_mm"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_ee"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_em"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_mm"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_HME_ee"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_HME_em"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Xness_HME_mm"] = { "central" };
+  /////
+  central_or_shiftOptions_["SM_plainVars_ee_Hbb_resolved"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_em_Hbb_resolved"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_mm_Hbb_resolved"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_ee_Hbb_boosted"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_em_Hbb_boosted"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_mm_Hbb_boosted"] = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Hbb_resolved"]   = { "central" };
+  central_or_shiftOptions_["SM_plainVars_Hbb_boosted"]    = { "central" };
+  /////
   /*central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_lowMbb"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_medMbb"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_nobb_noHME_ee_highMbb"] = { "central" };
@@ -213,7 +226,9 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
     //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nobb_noHME,
     const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
     const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH_withbb,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH,
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_flavour_boosted,
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted
   )
 {
   // X: not the smartest way, but we will detele most and keep one in the end, so it is ok
@@ -236,8 +251,8 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
       }
       central_or_shiftOptions_[category.first] = { "*" };
     }
-    /*/////
-    for(auto category: categories_SM_plainVars_HME)
+    /////
+    for(auto category: categories_SM_plainVars_flavour_boosted)
     {
       //std::cout<< "Booked histo: " << category.first <<"\n";
       if(! category.second.empty())
@@ -245,14 +260,14 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
         const int npoints = category.second.size();
         Float_t binsx[npoints];
         std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_HME_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+        histograms_by_category_SM_plainVars_flavour_boosted_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
       }
       else
       {
-        histograms_by_category_SM_plainVars_HME_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
+        histograms_by_category_SM_plainVars_flavour_boosted_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
       }
       central_or_shiftOptions_[category.first] = { "*" };
-    }*/
+    }
     /////
     for(auto category: categories_SM_plainVars)
     {
@@ -304,8 +319,8 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
       }
       central_or_shiftOptions_[category.first] = { "*" };
     }
-    /*////
-    for(auto category: categories_SM_plainVars_Xness_HME)
+    ////
+    for(auto category: categories_SM_plainVars_boosted)
     {
       //std::cout<< "Booked histo: " << category.first <<"\n";
       if(! category.second.empty())
@@ -313,18 +328,18 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
         const int npoints = category.second.size();
         Float_t binsx[npoints];
         std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_Xness_HME_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+        histograms_by_category_SM_plainVars_boosted_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
       }
       else
       {
-        histograms_by_category_SM_plainVars_Xness_HME_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
+        histograms_by_category_SM_plainVars_boosted_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
       }
       central_or_shiftOptions_[category.first] = { "*" };
     }
   //}
   ////////////////////////////
   //for(auto categoryType: {categories_SM_plainVars_nobb_noHME, categories_SM_plainVars_Xness_nnoMbb_noHME, categories_SM_plainVars_Xness_nobb_noHME})
-  //{*/
+  //{
     /*for(auto category: categories_SM_plainVars_nobb_noHME)
     {
       //std::cout<< "Booked histo: " << category.first <<"\n";
@@ -484,6 +499,8 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
                                        std::string category_SM_plainVars,
                                        std::string category_SM_plainVars_noHH_withbb,
                                        std::string category_SM_plainVars_noHH,
+                                       std::string category_SM_plainVars_flavour_boosted,
+                                       std::string category_SM_plainVars_boosted,
                                        double mva_SM_plainVars_Xness,
                                        //double mva_SM_plainVars_HME,
                                        //double mva_SM_plainVars_Xness_HME,
@@ -561,6 +578,18 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
     throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_noHH_withbb << "' was never booked";
   }
   fillWithOverFlow(histograms_by_category_SM_plainVars_noHH_withbb_[category_SM_plainVars_noHH_withbb], mva_SM_plainVars_noHH_withbb, evtWeight, evtWeightErr);
+  /////
+  if(! histograms_by_category_SM_plainVars_flavour_boosted_.count(category_SM_plainVars_flavour_boosted))
+  {
+    throw cmsException(this, __func__, __LINE__) << "Histogram of the name (flavour_boosted) '" << category_SM_plainVars_flavour_boosted << "' was never booked";
+  }
+  fillWithOverFlow(histograms_by_category_SM_plainVars_flavour_boosted_[category_SM_plainVars_flavour_boosted], mva_SM_plainVars, evtWeight, evtWeightErr);
+  /////
+  if(! histograms_by_category_SM_plainVars_boosted_.count(category_SM_plainVars_boosted))
+  {
+    throw cmsException(this, __func__, __LINE__) << "Histogram of the name (boosted) '" << category_SM_plainVars_boosted << "' was never booked";
+  }
+  fillWithOverFlow(histograms_by_category_SM_plainVars_boosted_[category_SM_plainVars_boosted], mva_SM_plainVars, evtWeight, evtWeightErr);
   /////
   if(! histograms_by_category_SM_plainVars_noHH_.count(category_SM_plainVars_noHH))
   {
