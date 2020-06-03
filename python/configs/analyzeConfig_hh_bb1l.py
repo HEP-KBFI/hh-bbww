@@ -50,7 +50,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         central_or_shifts,
         jet_cleaning_by_index,
         gen_matching_by_index,
-        evtCategories,              
+        evtCategories,
         max_files_per_job,
         era,
         use_lumi,
@@ -403,7 +403,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'central_or_shift'         : central_or_shift,
                 'central_or_shifts_local'  : central_or_shifts_local,
                 'evtCategories'            : self.evtCategories,
-                'selectBDT'                : self.isBDTtraining,                
+                'selectBDT'                : self.isBDTtraining,
                 'syncOutput'               : syncOutput,
                 'syncTree'                 : syncTree,
                 'syncRLE'                  : syncRLE,
@@ -440,7 +440,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               'cfgFile_modified' : cfgFile_modified,
               'outputFile' : outputFile,
               'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-              'categories' :[ category ],
+              'categories' :[ category + "_" + lepton_selection_and_frWeight ],
             }
             self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
           #----------------------------------------------------------------------------
@@ -546,7 +546,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
           self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
-          self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST], 
+          self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
                                                                           "hadd_stage2_%s_%s.root" % hadd_stage2_job_tuple)
 
     if self.isBDTtraining or self.do_sync:
@@ -561,7 +561,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       lines_makefile = []
       if self.isBDTtraining:
         self.addToMakefile_analyze(lines_makefile)
-        self.addToMakefile_hadd_stage1(lines_makefile)        
+        self.addToMakefile_hadd_stage1(lines_makefile)
       elif self.do_sync:
         self.addToMakefile_syncNtuple(lines_makefile)
         outputFile_sync_path = os.path.join(self.outputDir, DKEY_SYNC, '%s.root' % self.channel)
@@ -641,7 +641,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               'histogramName_mcClosure_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_mcClosure, histogramToFit)
               })
           self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
-          
+
 
     logging.info("Creating configuration files to run 'makePlots'")
     key_hadd_stage2_job = getKey(self.evtCategory_inclusive, get_lepton_selection_and_frWeight("Tight", "disabled"))
@@ -657,7 +657,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'make_plots_backgrounds' : self.make_plots_backgrounds
       }
     self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
-    if "Fakeable_mcClosure" in self.lepton_selections: #TODO                                                                                                                                              
+    if "Fakeable_mcClosure" in self.lepton_selections: #TODO
         key_hadd_stage2_job = getKey(self.evtCategory_inclusive, get_lepton_selection_and_frWeight("Tight", "disabled"))
         key_makePlots_job = getKey('')
         self.jobOptions_make_plots[key_makePlots_job] = {
