@@ -26,7 +26,7 @@ parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
-parser.add_files_per_job() 
+parser.add_files_per_job()
 parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
@@ -105,7 +105,7 @@ else:
   raise ValueError("Internal logic error")
 
 if mode == "default" and len(central_or_shifts) <= 1:
-  evtCategories = [
+  """evtCategories = [
     "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_resolvedHbb_resolvedWjj_vbf", "hh_bb1l_resolvedHbb_resolvedWjj_nonvbf",
     "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity", "hh_bb1l_vbf", "hh_bb1l_nonvbf",
     "hh_2bM1l", "hh_2bM1l_resolvedHbb_resolvedWjj", "hh_2bM1l_resolvedHbb_resolvedWjj_vbf", "hh_2bM1l_resolvedHbb_resolvedWjj_nonvbf",
@@ -130,11 +130,14 @@ if mode == "default" and len(central_or_shifts) <= 1:
     "hh_1bM1bL1mu_boostedHbb_resolvedWjj", "hh_1bM1bL1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1mu_vbf", "hh_1bM1bL1mu_nonvbf",
     "hh_1bM1mu", "hh_1bM1mu_resolvedHbb_resolvedWjj", "hh_1bM1mu_resolvedHbb_resolvedWjj_vbf", "hh_1bM1mu_resolvedHbb_resolvedWjj_nonvbf",
     "hh_1bM1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1mu_vbf", "hh_1bM1mu_nonvbf"
-  ]
+  ]"""
+  evtCategories = []
 else:
-  evtCategories = [
+  """evtCategories = [
     "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity"
-  ]
+  ]"""
+  evtCategories = []
+
 
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
@@ -183,7 +186,10 @@ if __name__ == '__main__':
       "STMET"                             : {},
       "MVAOutput_350"                     : {},
       "MVAOutput_400"                     : {},
-      "MVAOutput_750"                     : {}
+      "MVAOutput_750"                     : {},
+      "cat_jet_Wjj_Hbb_reco"              : {},
+      "cat_jet_one_jet_to_Wjj"            : {},
+      "cat_jet_strange"                   : {}
     },
     select_rle_output                     = True,
     dry_run                               = dry_run,
