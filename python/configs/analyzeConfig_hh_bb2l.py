@@ -486,20 +486,20 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           if self.isBDTtraining or self.do_sync:
             continue
 
-          for category in self.evtCategories:
-              key_addSysTT_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
-              key_addSysTT_dir = getKey("addSysTT")
-              addSysTT_job_tuple = ("addSysTT", category, lepton_charge_selection, lepton_selection_and_frWeight)
-              self.jobOptions_addSysTT[key_addSysTT_job] = {
-                'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
-                'cfgFile_modified' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_CFGS], "addSysTT_%s_%s_%s_%s_cfg.py" % addSysTT_job_tuple),
-                'outputFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_HIST], "addSysTT_%s_%s_%s_%s.root" % addSysTT_job_tuple),
-                'logFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_LOGS], "addSysTT_%s_%s_%s_%s.log" % addSysTT_job_tuple),
-                'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
-                'process_output' : "addSysTT"
-              }
-              self.createCfg_addSysTT(self.jobOptions_addSysTT[key_addSysTT_job])
-
+          if self.ttbar_syst_enabled:
+            for category in self.evtCategories:
+                addSysTT_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
+                key_addSysTT_job = getKey(*addSysTT_job_tuple)
+                key_addSysTT_dir = getKey("addSysTT")
+                self.jobOptions_addSysTT[key_addSysTT_job] = {
+                  'inputFile' : self.outputFile_hadd_stage1_5[key_addSysTT_job],
+                  'cfgFile_modified' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_CFGS], "addSysTT_%s_%s_%s_cfg.py" % addSysTT_job_tuple),
+                  'outputFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_HIST], "addSysTT_%s_%s_%s.root" % addSysTT_job_tuple),
+                  'logFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_LOGS], "addSysTT_%s_%s_%s.log" % addSysTT_job_tuple),
+                  'categories' : [ getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
+                  'process_output' : "addSysTT"
+                }
+                self.createCfg_addSysTT(self.jobOptions_addSysTT[key_addSysTT_job])
 
           for category in self.evtCategories:
             # sum fake background contributions for the total of all MC sample
@@ -587,6 +587,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
               self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
+            if self.ttbar_syst_enabled:
+              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
             self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
                                                                             "hadd_stage2_%s_%s_%s.root" % hadd_stage2_job_tuple)
 
@@ -718,6 +720,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_copyHistograms)
       self.sbatchFile_copyHistograms = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_copyHistograms_%s.py" % self.channel)
       self.createScript_sbatch_copyHistograms(self.executable_copyHistograms, self.sbatchFile_copyHistograms, self.jobOptions_copyHistograms)
+      if self.ttbar_syst_enabled:
+        logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addSysTT)
+        self.sbatchFile_addSysTT = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addSysTT_%s.py" % self.channel)
+        self.createScript_sbatch_addSysTT(self.executable_addSysTT, self.sbatchFile_addSysTT, self.jobOptions_addSysTT)
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addBackgrounds)
       self.sbatchFile_addBackgrounds = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addBackgrounds_%s.py" % self.channel)
       self.createScript_sbatch_addBackgrounds(self.executable_addBackgrounds, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
@@ -733,18 +739,11 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_copyHistograms(lines_makefile, make_target = "phony_copyHistograms", make_dependency = "phony_hadd_stage1")
     self.addToMakefile_backgrounds_from_data(lines_makefile, make_dependency = "phony_copyHistograms")
-    #----------------------------------------------------------------------------
-    # CV: run hadd_stage2 jobs on quasar,
-    #     as the memory consumption of hadd_stage2 jobs exceeds the memory limit (1.8 Gb) for batch jobs
-    ##is_sbatch_bak = self.is_sbatch
-    ##self.is_sbatch = False
-    ##is_makefile_bak = self.is_makefile
-    ##self.is_makefile = True
-    ##self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
+    if self.ttbar_syst_enabled:
+      self.addToMakefile_addSysTT(lines_makefile, make_target = "phony_addSysTT", make_dependency = "phony_hadd_stage1_5")
+      assert (self.make_dependency_hadd_stage2)
+      self.make_dependency_hadd_stage2 += " phony_addSysTT"  # note the space!
     self.addToMakefile_hadd_stage2(lines_makefile)
-    ##self.is_sbatch = is_sbatch_bak
-    ##self.is_makefile = is_makefile_bak
-    #----------------------------------------------------------------------------
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)
