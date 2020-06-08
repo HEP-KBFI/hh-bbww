@@ -38,7 +38,9 @@
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
-//#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb, selectJets_Wjj
+#include "hhAnalysis/bbww/interface/comp_metP4_B2G_18_008.h" // comp_metP4_B2G_18_008
 
 #include <TChain.h> // TChain
 #include <TTree.h> // TTree
@@ -55,6 +57,9 @@
 #include <assert.h> // assert
 
 typedef std::vector<std::string> vstring;
+
+const double higgsBosonMass = 125.;
+const double topMass = 172.9; // CV: taken from http://pdg.lbl.gov/2019/listings/rpp2019-list-t-quark.pdf ("OUR AVERAGE")
 
 bool 
 isGenMatched(const RecoJet* recJet, const std::vector<const GenParticle*>& genParticles, double dRmax = 0.3)
@@ -227,10 +232,10 @@ int main(int argc,
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
-  //RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
-  //inputTree->registerReader(jetReaderAK8);
-  //RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
-  //RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
+  RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
+  inputTree->registerReader(jetReaderAK8);
+  RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
+  RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
   metReader->setMEt_central_or_shift(kJetMET_central);
@@ -264,7 +269,7 @@ int main(int argc,
     "HadW_pt", "HadW_eta", "HadW_phi", "HadW_mass", "dR_HadW_lep", "dPhi_HadW_lep", "dEta_HadW_lep", 
     "dR_jj", "dPhi_jj",
     "cosTheta",
-    "LepWmT", "HmT",
+    "LepWmT", "HmT", "mHww", "mTop1", "mTop2",
     "evtWeight"
   );
   bdt_filler->register_variable<int_type>(
@@ -383,69 +388,64 @@ int main(int argc,
     ;
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
-      
+   
+    const std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
+    const std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
+
     RecoMEt met = metReader->read();
     const Particle::LorentzVector& metP4 = met.p4();
 
-    //const std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
-    //const std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
-    //const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
-    //const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
-    //const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
     //-------------------------------------------------------------------
     // select the two jets from the H->bb decay from either the AK4 (resolved H->bb) or AK8 (boosted H->bb) collection
     //
-    // WARNING: logic to select the two jets from H->bb decay needs to match the code in analyze_hh_bb1l.cc !!
-    //const RecoJetAK8* selJetAK8_Hbb = nullptr;
-    //const RecoJetBase* selJet1_Hbb = nullptr;
-    //const RecoJetBase* selJet2_Hbb = nullptr;
-    //if ( selJetsAK8_Hbb.size() >= 1 )
-    //{
-    //  selJetAK8_Hbb = selJetsAK8_Hbb[0];
-    //  assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
-    //  if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
-    //  {
-    //    selJet1_Hbb = selJetAK8_Hbb->subJet1();
-    //    selJet2_Hbb = selJetAK8_Hbb->subJet2();
-    //  }
-    //  else
-    //  {
-    //    selJet1_Hbb = selJetAK8_Hbb->subJet2();
-    //    selJet2_Hbb = selJetAK8_Hbb->subJet1();
-    //  }
-    //}
-    //else if ( selJetsAK4_Hbb.size() >= 2 )
-    //{
-    //  selJet1_Hbb = selJetsAK4_Hbb[0];
-    //  selJet2_Hbb = selJetsAK4_Hbb[1];
-    //}
+    // WARNING: logic to select the two jets from H->bb decay 
+    //          needs to match the code in analyze_hh_bb1l.cc !!
+    const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
+    const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
+    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_Hbb(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
+    const selJetsType_Hbb* selJetT_Hbb = nullptr;
+    const RecoJetAK8* selJetAK8_Hbb = nullptr;
+    const RecoJetBase* selJet1_Hbb = nullptr;
+    const RecoJetBase* selJet2_Hbb = nullptr;
+    if ( selJetsT_Hbb.size() >= 1 ) 
+    {
+      selJetT_Hbb = &selJetsT_Hbb[0];
+      selJetAK8_Hbb = selJetT_Hbb->fatjet_;
+      selJet1_Hbb = selJetT_Hbb->jet_or_subjet1_;
+      selJet2_Hbb = selJetT_Hbb->jet_or_subjet2_;
+    }
+    if ( !(selJet1_Hbb && selJet2_Hbb) ) 
+    {
+      continue;
+    }
+    cutFlowTable.update(">= 2 jets from H->bb", evtWeight);
     //-------------------------------------------------------------------
-    //      
-    //if ( !(selJet1_Hbb && selJet2_Hbb) ) {
-    //  continue;
-    //}
-    //cutFlowTable.update(">= 2 jets from H->bb", evtWeight);
 
     //-------------------------------------------------------------------
     // select jets from W->jj decay
-    //std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
-    //if ( selJetAK8_Hbb ) {
-    //  const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
-    //  cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
-    //} else {
-    //  std::vector<const RecoJetBase*> overlaps;
-    //  if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
-    //  if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
-    //  cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
-    //}
-    //const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
-    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtLeptons, isHigherPt);
-    //-------------------------------------------------------------------
-           
+    //
+    // WARNING: logic to clean the AK4 jets with respect to jets from the H->bb decay 
+    //          needs to match the code in jetSelectionAuxFunctions.cc !!
+    std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
+    if ( selJetAK8_Hbb ) 
+    {
+       const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
+      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
+    } 
+    else 
+    {
+      std::vector<const RecoJetBase*> overlaps;
+      if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
+      if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
+      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
+    }
+    const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
     if ( !(selJetsAK4_Wjj.size() >= 2) ) {
       continue;
     }
     cutFlowTable.update(">= 2 jets from W->jj", evtWeight);
+    //-------------------------------------------------------------------
 
     std::vector<GenParticle> genLeptons = genLeptonReader->read();
     std::vector<GenParticle> genJets    = genJetReader->read();
@@ -474,6 +474,29 @@ int main(int argc,
         double hPx = selJet1P4_Wjj.px() + selJet2P4_Wjj.px() + selLepton->p4().px() + metP4.px();
         double hPy = selJet1P4_Wjj.py() + selJet2P4_Wjj.py() + selLepton->p4().py() + metP4.py();
         double HmT = TMath::Sqrt(TMath::Max(0., hEt*hEt - (hPx*hPx + hPy*hPy)));
+
+        // compute four-vector of neutrino produced in H->WW*->jj lnu decay,
+        // using Higgs boson mass constraint, as described in Section 3.4.2 of AN-2018/058 (v4)
+        //
+        // Note: mass of lepton + jets from W->jj decay + neutrino is not equal to 125 GeV
+        //       in case the Higgs boson mass constraint yields a complex solution for the logitudinal momentum of the neutrino
+        //      (of which we then take the real part and discard the complex part)
+        Particle::LorentzVector neutrinoP4_B2G_18_008 = comp_metP4_B2G_18_008(selLepton->p4() + selJet1P4_Wjj + selJet2P4_Wjj, metP4.px(), metP4.py(), higgsBosonMass);
+        double mHww = (selLepton->p4() + selJet1P4_Wjj + selJet2P4_Wjj + neutrinoP4_B2G_18_008).mass();
+
+        Particle::LorentzVector top1P4 = selJet1_Hbb->p4() + selJet1P4_Wjj + selJet2P4_Wjj;
+        Particle::LorentzVector top2P4 = selJet2_Hbb->p4() + selJet1P4_Wjj + selJet2P4_Wjj;
+        double mTop1, mTop2;
+        if ( TMath::Abs(top1P4.mass() - topMass) < TMath::Abs(top2P4.mass() - topMass) )
+        {
+          mTop1 = top1P4.mass();
+          mTop2 = top2P4.mass();
+        }
+        else
+        {
+          mTop1 = top2P4.mass();
+          mTop2 = top1P4.mass();
+        }
 
         if ( bdt_filler ) {
           bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
@@ -512,6 +535,9 @@ int main(int argc,
           ("cosTheta",             cosTheta)
           ("LepWmT",               LepWmT)
           ("HmT",                  HmT)
+          ("mHww",                 mHww)
+          ("mTop1",                mTop1)
+          ("mTop2",                mTop2)
           ("evtWeight",            evtWeight)
           ("nJet",                 selJetsAK4_Wjj.size())
           ("nBJetLoose",           selBJetsAK4_loose.size())
