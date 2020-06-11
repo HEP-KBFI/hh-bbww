@@ -12,7 +12,7 @@ import getpass
 
 # E.g.: ./test/tthAnalyzeRun_hadTopTagger.py -v 2019Dec09 -m default -e 2017
 
-mode_choices     = [ 'default', 'forBDTtraining' ]
+mode_choices     = [ 'forBDTtraining_hadWTagger', 'forBDTtraining_jpa_4jet', 'forBDTtraining_jpa_missingWJet', 'forBDTtraining_jpa_missingBJet' ]
 sys_choices      = [ 'full' ] + systematics.an_opts_hh_bbww
 systematics.full = systematics.an_hh_bbww
 
@@ -46,12 +46,7 @@ jet_cleaning      = args.jet_cleaning
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 
-if mode == "default":
-  samples = load_samples(era)
-elif mode == "forBDTtraining":
-  samples = load_samples(era, suffix = "BDT")
-else:
-  raise ValueError("Internal logic error")
+samples = load_samples(era, suffix = "BDT")
 
 blacklisted_categories = []
 for sample_name, sample_info in samples.items():
@@ -78,6 +73,7 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze_hadWTagger",
     cfgFile_analyze                       = "analyze_hadWTagger_cfg.py",
     samples                               = samples,
+    mode                                  = mode,
     central_or_shifts                     = [ "central" ],
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     max_files_per_job                     = files_per_job,

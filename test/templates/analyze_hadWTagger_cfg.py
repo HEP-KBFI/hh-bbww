@@ -23,6 +23,8 @@ process.analyze_hadWTagger = cms.PSet(
     histogramDir = cms.string(''),
     era = cms.string(''),
 
+    mode = cms.string('forBDTtraining_hadWTagger'),
+
     leptonSelection = cms.string(''),
 
     isMC = cms.bool(True),

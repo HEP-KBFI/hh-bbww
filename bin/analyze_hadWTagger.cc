@@ -42,6 +42,7 @@
 
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb, selectJets_Wjj
+#include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromHiggs.h" // GenParticleMatcherFromHiggs
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop
 #include "hhAnalysis/bbww/interface/comp_metP4_B2G_18_008.h" // comp_metP4_B2G_18_008
@@ -65,16 +66,7 @@ typedef std::vector<std::string> vstring;
 const double higgsBosonMass = 125.;
 const double topMass = 172.9; // CV: taken from http://pdg.lbl.gov/2019/listings/rpp2019-list-t-quark.pdf ("OUR AVERAGE")
 
-bool 
-isGenMatched(const RecoJetBase* recJet, const std::vector<GenJet>& genJets, double dRmax = 0.3)
-{
-  for ( std::vector<GenJet>::const_iterator genJet = genJets.begin();
-	genJet != genJets.end(); ++genJet ) {
-    double dR = deltaR(recJet->p4(), genJet->p4());
-    if ( dR < dRmax ) return true;
-  }
-  return false;
-}
+enum { kMode_undefined, kMode_hadWTagger, kMode_jpa_4jet, kMode_jpa_missingBJet, kMode_jpa_missingWJet };
 
 double
 compCosTheta(const Particle::LorentzVector& recWJet1, const Particle::LorentzVector& recWJet2)
@@ -102,6 +94,27 @@ compCosTheta(const Particle::LorentzVector& recWJet1, const Particle::LorentzVec
   return cosTheta;
 }
 
+template<typename T>
+size_t 
+countGenMatchedJets(const std::vector<const T*>& recJets, const std::vector<const GenJet*>& genJets)
+{
+  size_t numGenMatchedJets = 0;
+  for ( std::vector<const GenJet*>::const_iterator genJet = genJets.begin();
+        genJet != genJets.end(); ++genJet ) {
+    bool isMatched = false;
+    for ( typename std::vector<const T*>::const_iterator recJet = recJets.begin();
+          recJet != recJets.end(); ++recJet ) {
+      if ( deltaR((*genJet)->p4(), (*recJet)->p4()) < 0.3 ) 
+      {
+        isMatched = true;
+        break;
+      }
+    }
+    if ( isMatched ) ++numGenMatchedJets;
+  }
+  return numGenMatchedJets;
+}
+
 bool
 isWithinRoundingErrors_abs(double x1, double x2, double epsilon = 2.e-1)
 {
@@ -114,6 +127,242 @@ isWithinRoundingErrors_rel(double x1, double x2, double epsilon = 5.e-2)
 {
   if ( std::fabs(x1 - x2) < epsilon*(std::fabs(x1) + std::fabs(x2)) ) return true;
   else return false;	
+}
+
+void
+writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
+              const RecoLepton* selLepton, 
+              const std::string& branchName, const RecoJetBase* selJet_base, 
+              const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets)
+{
+  Particle::LorentzVector selJetP4;
+  Particle::LorentzVector selJetP4_reg;
+  double selJet_btagCSV = 0.;
+  double selJet_qgDiscr = 0.;
+  double selJet_charge = 0.;
+  int selJet_isGenBJet = 0;
+  int selJet_isGenWJet = 0;
+  double dR_jet_lep = 0.;
+  double dPhi_jet_lep = 0.;
+  double dEta_jet_lep = 0.;
+  if ( selJet_base ) 
+  {  
+    selJetP4 = selJet_base->p4();
+    if ( dynamic_cast<const RecoJet*>(selJet_base) )
+    {
+      const RecoJet* selJet = dynamic_cast<const RecoJet*>(selJet_base);
+      selJetP4_reg = selJetP4*selJet->bRegCorr();
+      selJet_btagCSV = selJet->BtagCSV();
+      selJet_qgDiscr = selJet->QGDiscr();
+    }
+    selJet_charge = selJet_base->charge();
+    selJet_isGenBJet = isGenMatched(selJet_base->eta(), selJet_base->phi(), genBJets);
+    selJet_isGenWJet = isGenMatched(selJet_base->eta(), selJet_base->phi(), genWJets);
+    dR_jet_lep = deltaR(selJetP4, selLepton->p4());
+    dPhi_jet_lep = deltaPhi(selJetP4.phi(), selLepton->phi());
+    dEta_jet_lep = TMath::Abs(selJetP4.eta() - selLepton->eta());
+  }
+  bdt_filler(Form("%s_pt", branchName.data()), selJetP4.pt());
+  bdt_filler(Form("%s_ptReg", branchName.data()), selJetP4_reg.pt());
+  bdt_filler(Form("%s_eta", branchName.data()), selJetP4.eta());
+  bdt_filler(Form("%s_phi", branchName.data()), selJetP4.phi());
+  bdt_filler(Form("%s_btagCSV", branchName.data()), selJet_btagCSV);
+  bdt_filler(Form("%s_qgDiscr", branchName.data()), selJet_qgDiscr);
+  bdt_filler(Form("%s_charge", branchName.data()), selJet_charge);
+  bdt_filler(Form("%s_isGenBJet", branchName.data()), selJet_isGenBJet);
+  bdt_filler(Form("%s_isGenWJet", branchName.data()), selJet_isGenWJet);
+  bdt_filler(Form("dR_%s_lep", branchName.data()), dR_jet_lep);
+  bdt_filler(Form("dPhi_%s_lep", branchName.data()), dPhi_jet_lep);
+  bdt_filler(Form("dEta_%s_lep", branchName.data()), dEta_jet_lep);
+}
+
+void
+writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
+              const EventInfo& eventInfo,
+              const RecoLepton* selLepton, const std::vector<const GenLepton*>& genLeptons,
+              const Particle::LorentzVector& metP4,
+              const RecoJetBase* selBJet1_base, const RecoJetBase* selBJet2_base, bool Hbb_isBoosted, const std::vector<const GenJet*>& genBJets, 
+              const RecoJet* selWJet1, const RecoJet* selWJet2, const std::vector<const GenJet*>& genWJets,
+              int numJets, int numJets_genMatched_to_Hbb, int numJets_genMatched_to_Wjj, int numBJetsLoose, int numBJetsMedium, int numLeptons,
+              int idxRow, double numRowsPerEvent,
+              bool isGenMatched_value,
+              double evtWeight)
+{
+  if ( !isGenMatched(selLepton->eta(), selLepton->phi(), genLeptons) ) return;
+
+  Particle::LorentzVector selBJet1P4;
+  Particle::LorentzVector selBJet1P4_reg;
+  if ( selBJet1_base ) 
+  {  
+    selBJet1P4 = selBJet1_base->p4();
+    if ( dynamic_cast<const RecoJet*>(selBJet1_base) )
+    {
+      const RecoJet* selBJet1 = dynamic_cast<const RecoJet*>(selBJet1_base);
+      selBJet1P4_reg = selBJet1P4*selBJet1->bRegCorr();
+    }
+  }
+  Particle::LorentzVector selBJet2P4;
+  Particle::LorentzVector selBJet2P4_reg;
+  if ( selBJet2_base ) 
+  { 
+    selBJet2P4 = selBJet2_base->p4();
+    if ( dynamic_cast<const RecoJet*>(selBJet2_base) )
+    {
+      const RecoJet* selBJet2 = dynamic_cast<const RecoJet*>(selBJet2_base);
+      selBJet2P4_reg = selBJet2P4*selBJet2->bRegCorr();
+    }
+  }
+
+  Particle::LorentzVector selWJet1P4;
+  if ( selWJet1 ) selWJet1P4 = selWJet1->p4();
+  Particle::LorentzVector selWJet2P4;
+  if ( selWJet2 ) selWJet2P4 = selWJet2->p4();
+
+  Particle::LorentzVector HbbP4;
+  Particle::LorentzVector HbbP4_reg;
+  double dR_bjet1bjet2 = 0.;
+  double dPhi_bjet1bjet2 = 0.;
+  if ( selBJet1_base && selBJet2_base )
+  {
+    HbbP4 = selBJet1P4 + selBJet2P4;
+    HbbP4_reg = selBJet1P4_reg + selBJet2P4_reg;
+    dR_bjet1bjet2 = deltaR(selBJet1P4, selBJet2P4);
+    dPhi_bjet1bjet2 = deltaPhi(selBJet1P4.phi(), selBJet2P4.phi());
+  }
+
+  Particle::LorentzVector HadWP4;
+  double HadW_cosTheta = 0.;
+  double dR_HadW_lep = 0.;
+  double dPhi_HadW_lep = 0.;
+  double dEta_HadW_lep = 0.;
+  double min_dR_HadW_bjet = 0.;
+  double max_dR_HadW_bjet = 0.;
+  double dR_wjet1wjet2 = 0.;
+  double dPhi_wjet1wjet2 = 0.;
+  Particle::LorentzVector neutrinoP4_B2G_18_008;
+  Particle::LorentzVector LepWP4;
+  double LepW_mT = 0.;
+  Particle::LorentzVector HwwP4;
+  double Hww_mT = 0.;
+  double mTop1 = 0.;
+  double mTop2 = 0.; 
+  double dR_W1W2 = 0.; 
+  if ( selWJet1 && selWJet2 )
+  {
+    HadWP4 = selWJet1P4 + selWJet2P4;
+    HadW_cosTheta = compCosTheta(selWJet1P4, selWJet2P4);
+    dR_HadW_lep = deltaR(HadWP4, selLepton->p4());
+    dPhi_HadW_lep = deltaPhi(HadWP4.phi(), selLepton->phi());
+    dEta_HadW_lep = TMath::Abs(HadWP4.eta() - selLepton->eta());
+    if ( selBJet1_base && selBJet2_base )
+    {
+      double dR_HadW_bjet1 = deltaR(HadWP4, selBJet1P4);
+      double dR_HadW_bjet2 = deltaR(HadWP4, selBJet2P4);
+      min_dR_HadW_bjet = TMath::Min(dR_HadW_bjet1, dR_HadW_bjet2);
+      max_dR_HadW_bjet = TMath::Max(dR_HadW_bjet1, dR_HadW_bjet2);    
+    }
+    else
+    {
+      min_dR_HadW_bjet = deltaR(HadWP4, selBJet1P4);
+    } 
+    dR_wjet1wjet2 = deltaR(selWJet1P4, selWJet2P4);
+    dPhi_wjet1wjet2 = deltaPhi(selWJet1P4.phi(), selWJet2P4.phi());
+
+    // compute four-vector of neutrino produced in H->WW*->jj lnu decay,
+    // using Higgs boson mass constraint, as described in Section 3.4.2 of AN-2018/058 (v4)
+    //
+    // Note: mass of lepton + jets from W->jj decay + neutrino is not equal to 125 GeV
+    //       in case the Higgs boson mass constraint yields a complex solution for the logitudinal momentum of the neutrino
+    //      (of which we then take the real part and discard the complex part)
+    neutrinoP4_B2G_18_008 = comp_metP4_B2G_18_008(selLepton->p4() + selWJet1P4 + selWJet2P4, metP4.px(), metP4.py(), higgsBosonMass);
+
+    LepWP4 = selLepton->p4() + neutrinoP4_B2G_18_008;
+    LepW_mT = comp_MT_met(selLepton->p4(), metP4.pt(), metP4.phi());
+
+    HwwP4 = LepWP4 + HadWP4;
+    double HwwEt = selWJet1P4.Et() + selWJet2P4.Et() + selLepton->pt()      + metP4.pt();
+    double HwwPx = selWJet1P4.px() + selWJet2P4.px() + selLepton->p4().px() + metP4.px();
+    double HwwPy = selWJet1P4.py() + selWJet2P4.py() + selLepton->p4().py() + metP4.py();
+    Hww_mT = TMath::Sqrt(TMath::Max(0., HwwEt*HwwEt - (HwwPx*HwwPx + HwwPy*HwwPy)));
+
+    if ( selBJet1_base && selBJet2_base )
+    {
+      Particle::LorentzVector top1P4 = selBJet1P4_reg + HadWP4;
+      Particle::LorentzVector top2P4 = selBJet2P4_reg + HadWP4;
+      if ( TMath::Abs(top1P4.mass() - topMass) < TMath::Abs(top2P4.mass() - topMass) )
+      {
+        mTop1 = top1P4.mass();
+        mTop2 = top2P4.mass();
+      }
+      else
+      {
+        mTop1 = top2P4.mass();
+        mTop2 = top1P4.mass();
+      }
+    } 
+    else if ( selBJet1_base )
+    {
+      mTop1 = (selBJet1P4_reg + HadWP4).mass();
+    }
+    
+    dR_W1W2 = deltaR(HadWP4, LepWP4);
+  }
+
+  bdt_filler({ eventInfo.run, eventInfo.lumi, eventInfo.event })
+    ("lepton_pt",              selLepton->pt())
+    ("lepton_eta",             selLepton->eta())
+    ("lepton_phi",             selLepton->phi())
+    ("lepton_charge",          selLepton->charge())
+    ("neutrino_pt",            neutrinoP4_B2G_18_008.pt())
+    ("neutrino_eta",           neutrinoP4_B2G_18_008.eta())
+    ("neutrino_phi",           neutrinoP4_B2G_18_008.phi());
+  writeToNtuple(bdt_filler, selLepton, "bjet1", selBJet1_base, genBJets, genWJets);
+  writeToNtuple(bdt_filler, selLepton, "bjet2", selBJet2_base, genBJets, genWJets);
+  writeToNtuple(bdt_filler, selLepton, "wjet1", selWJet1, genBJets, genWJets);
+  writeToNtuple(bdt_filler, selLepton, "wjet2", selWJet2, genBJets, genWJets);
+  bdt_filler(
+     "Hbb_pt",                 HbbP4.pt())
+    ("Hbb_ptReg",              HbbP4_reg.pt())
+    ("Hbb_eta",                HbbP4.eta())
+    ("Hbb_etaReg",             HbbP4_reg.eta())
+    ("Hbb_phi",                HbbP4.phi())
+    ("Hbb_phiReg",             HbbP4_reg.phi())
+    ("Hbb_mass",               HbbP4.mass())
+    ("Hbb_massReg",            HbbP4_reg.mass())
+    ("Hbb_isBoosted",          Hbb_isBoosted)
+    ("dR_bjet1bjet2",          dR_bjet1bjet2)
+    ("dPhi_bjet1bjet2",        dPhi_bjet1bjet2)
+    ("HadW_pt",                HadWP4.pt())
+    ("HadW_eta",               HadWP4.eta())
+    ("HadW_phi",               HadWP4.phi())
+    ("HadW_mass",              HadWP4.mass())
+    ("HadW_cosTheta",          HadW_cosTheta)
+    ("dR_HadW_lep",            dR_HadW_lep)
+    ("dPhi_HadW_lep",          dPhi_HadW_lep)
+    ("dEta_HadW_lep",          dEta_HadW_lep)
+    ("min_dR_HadW_bjet",       min_dR_HadW_bjet)
+    ("max_dR_HadW_bjet",       max_dR_HadW_bjet)
+    ("dR_wjet1wjet2",          dR_wjet1wjet2)
+    ("dPhi_wjet1wjet2",        dPhi_wjet1wjet2)
+    ("LepW_mT",                LepW_mT)
+    ("Hww_mT",                 Hww_mT)
+    ("Hww_mass",               HwwP4.mass())
+    ("mTop1",                  mTop1)
+    ("mTop2",                  mTop2)
+    ("dR_W1W2",                dR_W1W2)
+    ("nJet",                   numJets)
+    ("nGenMatchedJet_Hbb",     numJets_genMatched_to_Hbb)
+    ("nGenMatchedJet_Wjj",     numJets_genMatched_to_Wjj)
+    ("nBJetLoose",             numBJetsLoose)
+    ("nBJetMedium",            numBJetsMedium)
+    ("nLep",                   numLeptons)
+    ("nGenJet_Hbb",            genBJets.size())
+    ("nGenJet_Wjj",            genWJets.size())
+    ("idxRow",                 idxRow)
+    ("nRowsPerEvent",          numRowsPerEvent) 
+    ("isGenMatched",           isGenMatched_value)
+    ("evtWeight",              evtWeight)
+        .fill();
 }
 
 /**
@@ -149,6 +398,15 @@ int main(int argc,
   const std::string process_string          = cfg_analyze.getParameter<std::string>("process");
   const std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
   const bool isDEBUG                        = cfg_analyze.getParameter<bool>("isDEBUG");
+
+  const std::string mode_string             = cfg_analyze.getParameter<std::string>("mode");
+  int mode = kMode_undefined;
+  if      ( mode_string == "forBDTtraining_hadWTagger"      ) mode = kMode_hadWTagger;
+  else if ( mode_string == "forBDTtraining_jpa_4jet"        ) mode = kMode_jpa_4jet;
+  else if ( mode_string == "forBDTtraining_jpa_missingBJet" ) mode = kMode_jpa_missingBJet;
+  else if ( mode_string == "forBDTtraining_jpa_missingWJet" ) mode = kMode_jpa_missingWJet;  
+  else throw cmsException(__func__) 
+    << "Invalid Configuration parameter 'mode' = " << mode << "!!";
 
   const bool isMC                           = cfg_analyze.getParameter<bool>("isMC");
   bool isMC_HH = isMC && process_string.find("hh_bbvv")!= std::string::npos;
@@ -303,28 +561,30 @@ int main(int argc,
     "neutrino_pt", "neutrino_eta", "neutrino_phi", 
     "bjet1_pt", "bjet1_ptReg", "bjet1_eta", "bjet1_phi", "bjet1_btagCSV", "bjet1_qgDiscr", "bjet1_charge", "dR_bjet1_lep", "dPhi_bjet1_lep", "dEta_bjet1_lep",
     "bjet2_pt", "bjet2_ptReg", "bjet2_eta", "bjet2_phi", "bjet2_btagCSV", "bjet2_qgDiscr", "bjet2_charge", "dR_bjet2_lep", "dPhi_bjet2_lep", "dEta_bjet2_lep",   
-    "jet1_pt", "jet1_ptReg", "jet1_eta", "jet1_phi", "jet1_btagCSV", "jet1_qgDiscr", "jet1_charge", "dR_jet1_lep", "dPhi_jet1_lep", "dEta_jet1_lep",
-    "jet2_pt", "jet2_ptReg", "jet2_eta", "jet2_phi", "jet2_btagCSV", "jet2_qgDiscr", "jet2_charge", "dR_jet2_lep", "dPhi_jet2_lep", "dEta_jet2_lep",
+    "wjet1_pt", "wjet1_ptReg", "wjet1_eta", "wjet1_phi", "wjet1_btagCSV", "wjet1_qgDiscr", "wjet1_charge", "dR_wjet1_lep", "dPhi_wjet1_lep", "dEta_wjet1_lep",
+    "wjet2_pt", "wjet2_ptReg", "wjet2_eta", "wjet2_phi", "wjet2_btagCSV", "wjet2_qgDiscr", "wjet2_charge", "dR_wjet2_lep", "dPhi_wjet2_lep", "dEta_wjet2_lep",
     "Hbb_pt", "Hbb_ptReg", "Hbb_eta", "Hbb_etaReg", "Hbb_phi", "Hbb_phiReg", "Hbb_mass", "Hbb_massReg", 
     "dR_bjet1bjet2", "dPhi_bjet1bjet2",
-    "HadW_pt", "HadW_eta", "HadW_phi", "HadW_mass", "dR_HadW_lep", "dPhi_HadW_lep", "dEta_HadW_lep", "HadW_cosTheta",
-    "dR_jet1jet2", "dPhi_jet1jet2",
+    "HadW_pt", "HadW_eta", "HadW_phi", "HadW_mass", "HadW_cosTheta", "dR_HadW_lep", "dPhi_HadW_lep", "dEta_HadW_lep", 
+    "min_dR_HadW_bjet", "max_dR_HadW_bjet",
+    "dR_wjet1wjet2", "dPhi_wjet1wjet2",
     "LepW_mT", 
-    "dR_W1W2", "min_dR_HadW_bjet", "max_dR_HadW_bjet",
     "Hww_mT", "Hww_mass",
     "mTop1", "mTop2",
     "dR_W1W2",
+    "nRowsPerEvent",
     "evtWeight"
   );
   bdt_filler->register_variable<int_type>(
-    "bjet1_isGenMatched_Hbb", "bjet1_isGenMatched_Wjj", 
-    "bjet2_isGenMatched_Hbb", "bjet2_isGenMatched_Wjj",
-    "jet1_isGenMatched_Hbb", "jet1_isGenMatched_Wjj", 
-    "jet2_isGenMatched_Hbb", "jet2_isGenMatched_Wjj",
-    "Hbb_isBoosted", 
-    "nJet", "nBJetLoose", "nBJetMedium", "nLep", 
-    "nGenJets_Hbb", "nGenJets_Wjj",
-    "HadW_isGenMatched"
+    "bjet1_isGenBJet", "bjet1_isGenWJet", 
+    "bjet2_isGenBJet", "bjet2_isGenWJet", 
+    "wjet1_isGenBJet", "wjet1_isGenWJet", 
+    "wjet2_isGenBJet", "wjet2_isGenWJet", 
+    "Hbb_isBoosted",
+    "nJet", "nGenMatchedJet_Hbb", "nGenMatchedJet_Wjj", "nBJetLoose", "nBJetMedium", "nLep", 
+    "nGenJet_Hbb", "nGenJet_Wjj",
+    "idxRow",
+    "isGenMatched"
   );
   bdt_filler->bookTree(fs);
 
@@ -478,7 +738,7 @@ int main(int argc,
     std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
     if ( selJetAK8_Hbb ) 
     {
-       const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
+      const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
       cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, overlaps);
     } 
     else 
@@ -517,168 +777,149 @@ int main(int argc,
     }
     else assert(0);
     std::vector<GenLepton> genLeptons = genParticleMatcher->getLeptons();
+    std::vector<const GenLepton*> genLeptons_ptrs = convert_to_ptrs(genLeptons);
     std::vector<GenJet> genBJets = genParticleMatcher->getBJets();
+    std::vector<const GenJet*> genBJets_ptrs = convert_to_ptrs(genBJets);
     std::vector<GenJet> genWJets = genParticleMatcher->getWJets();
+    std::vector<const GenJet*> genWJets_ptrs = convert_to_ptrs(genWJets);
     //const Particle::LorentzVector& genMEtP4 = genParticleMatcher->getMEt();
     if ( !(genLeptons.size() == 1) ) {
       continue;
     }
     cutFlowTable.update("exactly 1 gen-lepton", evtWeight);
 
-    for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
-	  selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
-      for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
-     	    selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
+    bool Hbb_isBoosted = ( selJetAK8_Hbb ) ? true : false;
+    int numJetsAK4_genMatched_to_Hbb = (int)countGenMatchedJets(cleanedJetsAK4_wrtLeptons, genBJets_ptrs);
+    int numJetsAK4_genMatched_to_Wjj = (int)countGenMatchedJets(cleanedJetsAK4_wrtLeptons, genWJets_ptrs);
+    int numLeptons = (int)preselLeptons.size();
 
-        Particle::LorentzVector selJet1P4_Hbb = selJet1_Hbb->p4();
-        Particle::LorentzVector selJet2P4_Hbb = selJet2_Hbb->p4();
-
-        Particle::LorentzVector selJet1P4_Wjj = (*selJet1_Wjj)->p4();
-        Particle::LorentzVector selJet2P4_Wjj = (*selJet2_Wjj)->p4();
-
-        Particle::LorentzVector HbbP4 = selJet1P4_Hbb + selJet1P4_Hbb;
-        Particle::LorentzVector HbbP4_reg = HbbP4;
-        if ( dynamic_cast<const RecoJet*>(selJet1_Hbb) && dynamic_cast<const RecoJet*>(selJet2_Hbb) )
-        {
-          HbbP4_reg = selJet1_Hbb->p4()*(dynamic_cast<const RecoJet*>(selJet1_Hbb))->bRegCorr() 
-                    + selJet2_Hbb->p4()*(dynamic_cast<const RecoJet*>(selJet2_Hbb))->bRegCorr();
+    if ( mode == kMode_hadWTagger )
+    {
+      int idxRow = 0;
+      double numRowsPerEvent = 0.5*selJetsAK4_Wjj.size()*(selJetsAK4_Wjj.size() - 1);
+      for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
+	    selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
+        for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
+     	      selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
+          assert((*selJet1_Wjj)->pt() > (*selJet2_Wjj)->pt());        
+          writeToNtuple(
+            *bdt_filler, 
+            eventInfo,
+            selLepton, genLeptons_ptrs,
+            metP4,
+            selJet1_Hbb, selJet2_Hbb, Hbb_isBoosted, genBJets_ptrs, 
+            *selJet1_Wjj, *selJet2_Wjj, genWJets_ptrs,
+            cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+            idxRow, numRowsPerEvent,
+            isGenMatched(selJet1_Hbb->eta(), selJet1_Hbb->phi(), genBJets_ptrs) && 
+            isGenMatched(selJet2_Hbb->eta(), selJet2_Hbb->phi(), genBJets_ptrs) && 
+            isGenMatched((*selJet1_Wjj)->eta(), (*selJet1_Wjj)->phi(), genWJets_ptrs) && 
+            isGenMatched((*selJet2_Wjj)->eta(), (*selJet2_Wjj)->phi(), genWJets_ptrs),
+            evtWeight);
+          ++idxRow;
         }
-
-        Particle::LorentzVector HadWP4 = selJet1P4_Wjj + selJet2P4_Wjj;     
-        double HadW_cosTheta = compCosTheta(selJet1P4_Wjj, selJet2P4_Wjj);
-
-        // compute four-vector of neutrino produced in H->WW*->jj lnu decay,
-        // using Higgs boson mass constraint, as described in Section 3.4.2 of AN-2018/058 (v4)
-        //
-        // Note: mass of lepton + jets from W->jj decay + neutrino is not equal to 125 GeV
-        //       in case the Higgs boson mass constraint yields a complex solution for the logitudinal momentum of the neutrino
-        //      (of which we then take the real part and discard the complex part)
-        Particle::LorentzVector neutrinoP4_B2G_18_008 = comp_metP4_B2G_18_008(selLepton->p4() + selJet1P4_Wjj + selJet2P4_Wjj, metP4.px(), metP4.py(), higgsBosonMass);
-
-        Particle::LorentzVector LepWP4 = selLepton->p4() + neutrinoP4_B2G_18_008;
-        double LepW_mT = comp_MT_met(selLepton->p4(), metP4.pt(), metP4.phi());
-
-        Particle::LorentzVector HwwP4 = LepWP4 + HadWP4;
-        double HwwEt = selJet1P4_Wjj.Et() + selJet2P4_Wjj.Et() + selLepton->pt()      + metP4.pt();
-        double HwwPx = selJet1P4_Wjj.px() + selJet2P4_Wjj.px() + selLepton->p4().px() + metP4.px();
-        double HwwPy = selJet1P4_Wjj.py() + selJet2P4_Wjj.py() + selLepton->p4().py() + metP4.py();
-        double Hww_mT = TMath::Sqrt(TMath::Max(0., HwwEt*HwwEt - (HwwPx*HwwPx + HwwPy*HwwPy)));
-
-        Particle::LorentzVector top1P4 = selJet1_Hbb->p4() + selJet1P4_Wjj + selJet2P4_Wjj;
-        Particle::LorentzVector top2P4 = selJet2_Hbb->p4() + selJet1P4_Wjj + selJet2P4_Wjj;
-        double mTop1, mTop2;
-        if ( TMath::Abs(top1P4.mass() - topMass) < TMath::Abs(top2P4.mass() - topMass) )
-        {
-          mTop1 = top1P4.mass();
-          mTop2 = top2P4.mass();
-        }
-        else
-        {
-          mTop1 = top2P4.mass();
-          mTop2 = top1P4.mass();
-        }
-
-        double dR_HadW_bjet1 = deltaR(HadWP4, selJet1P4_Hbb);
-        double dR_HadW_bjet2 = deltaR(HadWP4, selJet2P4_Hbb);
-
-        if ( bdt_filler ) {
-          bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
-          ("lepton_pt",              selLepton->pt())
-          ("lepton_eta",             selLepton->eta())
-          ("lepton_phi",             selLepton->phi())
-          ("lepton_charge",          selLepton->charge())
-          ("neutrino_pt",            neutrinoP4_B2G_18_008.pt())
-          ("neutrino_eta",           neutrinoP4_B2G_18_008.eta())
-          ("neutrino_phi",           neutrinoP4_B2G_18_008.phi())
-          ("bjet1_pt",               selJet1P4_Hbb.pt())
-          ("bjet1_ptReg",            dynamic_cast<const RecoJet*>(selJet1_Hbb) ? (dynamic_cast<const RecoJet*>(selJet1_Hbb))->bRegCorr()*selJet1P4_Hbb.pt() : selJet1P4_Hbb.pt())
-          ("bjet1_eta",              selJet1P4_Hbb.eta())
-          ("bjet1_phi",              selJet1P4_Hbb.phi())
-          ("bjet1_btagCSV",          dynamic_cast<const RecoJet*>(selJet1_Hbb) ? (dynamic_cast<const RecoJet*>(selJet1_Hbb))->BtagCSV() : 0.)
-          ("bjet1_qgDiscr",          dynamic_cast<const RecoJet*>(selJet1_Hbb) ? (dynamic_cast<const RecoJet*>(selJet1_Hbb))->QGDiscr() : 0.)
-          ("bjet1_charge",           selJet1_Hbb->charge())  
-          ("bjet1_isGenMatched_Hbb", isGenMatched(selJet1_Hbb, genBJets))
-          ("bjet1_isGenMatched_Wjj", isGenMatched(selJet1_Hbb, genWJets))
-          ("dR_bjet1_lep",           deltaR(selJet1P4_Hbb, selLepton->p4()))
-          ("dPhi_bjet1_lep",         deltaPhi(selJet1P4_Hbb.phi(), selLepton->phi()))
-          ("dEta_bjet1_lep",         TMath::Abs(selJet1P4_Hbb.eta() - selLepton->eta()))
-          ("bjet2_pt",               selJet2P4_Hbb.pt())
-          ("bjet2_ptReg",            dynamic_cast<const RecoJet*>(selJet2_Hbb) ? (dynamic_cast<const RecoJet*>(selJet2_Hbb))->bRegCorr()*selJet2P4_Hbb.pt() : selJet2P4_Hbb.pt())
-          ("bjet2_eta",              selJet2P4_Hbb.eta())
-          ("bjet2_phi",              selJet2P4_Hbb.phi())
-          ("bjet2_btagCSV",          dynamic_cast<const RecoJet*>(selJet2_Hbb) ? (dynamic_cast<const RecoJet*>(selJet2_Hbb))->BtagCSV() : 0.)
-          ("bjet2_qgDiscr",          dynamic_cast<const RecoJet*>(selJet2_Hbb) ? (dynamic_cast<const RecoJet*>(selJet2_Hbb))->QGDiscr() : 0.)
-          ("bjet2_charge",           selJet2_Hbb->charge())  
-          ("bjet2_isGenMatched_Hbb", isGenMatched(selJet2_Hbb, genBJets))
-          ("bjet2_isGenMatched_Wjj", isGenMatched(selJet2_Hbb, genWJets))
-          ("dR_bjet2_lep",           deltaR(selJet2P4_Hbb, selLepton->p4()))
-          ("dPhi_bjet2_lep",         deltaPhi(selJet2P4_Hbb.phi(), selLepton->phi()))
-          ("dEta_bjet2_lep",         TMath::Abs(selJet2P4_Hbb.eta() - selLepton->eta()))
-          ("Hbb_pt",                 HbbP4.pt())
-          ("Hbb_ptReg",              HbbP4_reg.pt())
-          ("Hbb_eta",                HbbP4.eta())
-          ("Hbb_etaReg",             HbbP4_reg.eta())
-          ("Hbb_phi",                HbbP4.phi())
-          ("Hbb_phiReg",             HbbP4_reg.phi())
-          ("Hbb_mass",               HbbP4.mass())
-          ("Hbb_massReg",            HbbP4_reg.mass())
-          ("dR_bjet1bjet2",          deltaR(selJet1P4_Hbb, selJet2P4_Hbb))
-          ("dPhi_bjet1bjet2",        deltaPhi(selJet1P4_Hbb.phi(), selJet2P4_Hbb.phi()))
-          ("jet1_pt",                selJet1P4_Wjj.pt())
-          ("jet1_ptReg",             (*selJet1_Wjj)->bRegCorr()*selJet1P4_Wjj.pt())
-          ("jet1_eta",               selJet1P4_Wjj.eta())
-          ("jet1_phi",               selJet1P4_Wjj.phi())
-          ("jet1_btagCSV",           (*selJet1_Wjj)->BtagCSV())
-          ("jet1_qgDiscr",           (*selJet1_Wjj)->QGDiscr())
-          ("jet1_charge",            (*selJet1_Wjj)->charge())
-          ("jet1_isGenMatched_Hbb",  isGenMatched(*selJet1_Wjj, genBJets))
-          ("jet1_isGenMatched_Wjj",  isGenMatched(*selJet1_Wjj, genWJets))
-          ("dR_jet1_lep",            deltaR(selJet1P4_Wjj, selLepton->p4()))
-          ("dPhi_jet1_lep",          deltaPhi(selJet1P4_Wjj.phi(), selLepton->phi()))
-          ("dEta_jet1_lep",          TMath::Abs(selJet1P4_Wjj.eta() - selLepton->eta()))
-          ("jet2_pt",                selJet2P4_Wjj.pt())
-          ("jet2_ptReg",             (*selJet2_Wjj)->bRegCorr()*selJet2P4_Wjj.pt())
-          ("jet2_eta",               selJet2P4_Wjj.eta())
-          ("jet2_phi",               selJet2P4_Wjj.phi())
-          ("jet2_btagCSV",           (*selJet2_Wjj)->BtagCSV())
-          ("jet2_qgDiscr",           (*selJet2_Wjj)->QGDiscr())
-          ("jet2_charge",            (*selJet2_Wjj)->charge())
-          ("jet2_isGenMatched_Hbb",  isGenMatched(*selJet2_Wjj, genBJets))
-          ("jet2_isGenMatched_Wjj",  isGenMatched(*selJet2_Wjj, genWJets))
-          ("dR_jet2_lep",            deltaR(selJet2P4_Wjj, selLepton->p4()))
-          ("dPhi_jet2_lep",          deltaPhi(selJet2P4_Wjj.phi(), selLepton->phi()))
-          ("dEta_jet2_lep",          TMath::Abs(selJet2P4_Wjj.eta() - selLepton->eta()))
-          ("HadW_pt",                HadWP4.pt())
-          ("HadW_eta",               HadWP4.eta())
-          ("HadW_phi",               HadWP4.phi())
-          ("HadW_mass",              HadWP4.mass())
-          ("dR_HadW_lep",            deltaR(HadWP4, selLepton->p4()))
-          ("dPhi_HadW_lep",          deltaPhi(HadWP4.phi(), selLepton->phi()))
-          ("dEta_HadW_lep",          TMath::Abs(HadWP4.eta() - selLepton->eta()))
-          ("HadW_cosTheta",          HadW_cosTheta)
-          ("dR_jet1jet2",            deltaR(selJet1P4_Wjj, selJet2P4_Wjj))
-          ("dPhi_jet1jet2",          deltaPhi(selJet1P4_Wjj.phi(), selJet2P4_Wjj.phi()))
-          ("LepW_mT",                LepW_mT)
-          ("Hww_mT",                 Hww_mT)
-          ("Hww_mass",               HwwP4.mass())
-          ("mTop1",                  mTop1)
-          ("mTop2",                  mTop2)
-          ("dR_W1W2",                deltaR(HadWP4, LepWP4))
-          ("min_dR_HadW_bjet",       TMath::Min(dR_HadW_bjet1, dR_HadW_bjet2))
-          ("max_dR_HadW_bjet",       TMath::Max(dR_HadW_bjet1, dR_HadW_bjet2))          
-          ("evtWeight",              evtWeight)
-          ("Hbb_isBoosted",          ( selJetAK8_Hbb ) ? true : false)
-          ("nJet",                   selJetsAK4_Wjj.size())
-          ("nBJetLoose",             selBJetsAK4_loose.size())
-          ("nBJetMedium",            selBJetsAK4_medium.size())
-          ("nLep",                   preselLeptons.size())
-          ("nGenJets_Hbb",           genBJets.size())
-          ("nGenJets_Wjj",           genWJets.size())
-          ("HadW_isGenMatched",      isGenMatched(*selJet1_Wjj, genWJets) && isGenMatched(*selJet2_Wjj, genWJets))
-              .fill();
-	}
       }
     }
+    else if ( mode == kMode_jpa_4jet ) 
+    {
+      int idxRow = 0;
+      double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1)
+        *0.5*(cleanedJetsAK4_wrtLeptons.size() - 2)*(cleanedJetsAK4_wrtLeptons.size() - 3);
+      for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
+            selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
+        for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1 + 1;
+              selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
+          assert((*selBJet1)->pt() > (*selBJet2)->pt());
+          for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
+                selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
+            for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1;
+	          selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
+              assert((*selWJet1)->pt() > (*selWJet2)->pt());
+              if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
+              if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet2)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
+              writeToNtuple(
+                *bdt_filler, 
+                eventInfo,
+                selLepton, genLeptons_ptrs,
+                metP4,
+                *selBJet1, *selBJet2, Hbb_isBoosted, genBJets_ptrs, 
+                *selWJet1, *selWJet2, genWJets_ptrs,
+                cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+                idxRow, numRowsPerEvent,
+                isGenMatched((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets_ptrs) && 
+                isGenMatched((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets_ptrs) && 
+                isGenMatched((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets_ptrs) && 
+                isGenMatched((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets_ptrs),
+                evtWeight);
+              ++idxRow;
+            }
+          }
+        }
+      }
+    }
+    else if ( mode == kMode_jpa_missingBJet )
+    {
+      int idxRow = 0;
+      double numRowsPerEvent = cleanedJetsAK4_wrtLeptons.size()
+        *0.5*(cleanedJetsAK4_wrtLeptons.size() - 1)*(cleanedJetsAK4_wrtLeptons.size() - 2);
+      for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
+            selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
+        for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
+              selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
+          for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1;
+	        selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
+            assert((*selWJet1)->pt() > (*selWJet2)->pt());
+            if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 ) continue;
+            if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) < 0.3 ) continue;
+            writeToNtuple(
+              *bdt_filler, 
+              eventInfo,
+              selLepton, genLeptons_ptrs,
+              metP4,
+              *selBJet1, nullptr, Hbb_isBoosted, genBJets_ptrs, 
+              *selWJet1, *selWJet2, genWJets_ptrs,
+              cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+              idxRow, numRowsPerEvent,
+              isGenMatched((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets_ptrs) && 
+              isGenMatched((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets_ptrs) && 
+              isGenMatched((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets_ptrs),
+              evtWeight);
+            ++idxRow;
+          }
+        }
+      }
+    }
+    else if ( mode == kMode_jpa_missingWJet )
+    {
+      int idxRow = 0;
+      double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1)
+        *(cleanedJetsAK4_wrtLeptons.size() - 2);
+      for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
+            selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
+        for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1 + 1;
+              selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
+          assert((*selBJet1)->pt() > (*selBJet2)->pt());
+          for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
+                selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
+            if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
+            writeToNtuple(
+              *bdt_filler, 
+              eventInfo,
+              selLepton, genLeptons_ptrs,
+              metP4,
+              *selBJet1, *selBJet2, Hbb_isBoosted, genBJets_ptrs, 
+              *selWJet1, nullptr, genWJets_ptrs,
+              cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+              idxRow, numRowsPerEvent,
+              isGenMatched((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets_ptrs) && 
+              isGenMatched((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets_ptrs) && 
+              isGenMatched((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets_ptrs),
+              evtWeight);
+            ++idxRow;
+          }
+        }
+      }
+    } else assert(0);
 
     ++selectedEntries;
   } // idxEntry
@@ -695,7 +936,7 @@ int main(int argc,
   delete muonReader;
   delete electronReader;
   delete jetReaderAK4;
-  //delete jetReaderAK8;
+  delete jetReaderAK8;
 
   delete inputTree;
 
