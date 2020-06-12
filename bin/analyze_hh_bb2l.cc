@@ -1183,7 +1183,7 @@ int main(int argc, char* argv[])
     "HLT filter matching",
     ">= 2 jets from H->bb",
     ">= 1 medium b-jet",
-    "m(ll) < 76 GeV",
+    //"m(ll) < 76 GeV",
     "m(ll) > 12 GeV",
     "Z-boson mass veto",
     "MEt filters",
@@ -1775,14 +1775,14 @@ int main(int argc, char* argv[])
     }
     const std::vector<const RecoJet*> selJetsAK4_vbf = jetSelectorAK4_vbf(cleanedJetsAK4_vbf, isHigherPt);
 
-    if ( !((selLeptonP4_lead + selLeptonP4_sublead).mass() < 76.) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS m_ll < 76 GeV cut." << std::endl;
-      }
-      continue;
-    }
-    cutFlowTable.update("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
-    cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
+    //if ( !((selLeptonP4_lead + selLeptonP4_sublead).mass() < 76.) ) {
+    //  if ( run_lumi_eventSelector ) {
+    //    std::cout << "event " << eventInfo.str() << " FAILS m_ll < 76 GeV cut." << std::endl;
+    //  }
+    //  continue;
+    //}
+    //cutFlowTable.update("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
+    //cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
 
     const bool failsLowMassVeto = isfailsLowMassVeto(preselLeptonsFullUncleaned);
     if ( failsLowMassVeto ) {
