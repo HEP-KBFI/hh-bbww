@@ -46,6 +46,7 @@ SyncNtupleManager_bbww::initializeBranches()
   const char * jstr      = "ak4Jet";
   const char * jstrAk8   = "ak8Jet";
   const char * jstrAk8Ls = "ak8lsJet";
+  const char * bjstr     = "ak4BJet";
 
   const std::string n_sel_lep_str         = Form("n_%s",             lstr);
   const std::string n_presel_mu_str       = Form("n_presel_%s",      mstr);
@@ -57,6 +58,8 @@ SyncNtupleManager_bbww::initializeBranches()
   const std::string n_presel_jet_str      = Form("n_presel_%s",      jstr);
   const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
   const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
+  const std::string n_loose_bjet_str      = Form("n_loose_%s",       bjstr);
+  const std::string n_medium_bjet_str      = Form("n_medium_%s",       bjstr);
 
   setBranches(
     nEvent,                   "event",
@@ -65,6 +68,8 @@ SyncNtupleManager_bbww::initializeBranches()
     flag_boosted,             "is_boosted",
     flag_semiboosted,         "is_semiboosted",
     flag_resolved,            "is_resolved",
+    flag_sf,                  "is_sf",
+    flag_ss,                  "is_ss",
     n_presel_mu,              n_presel_mu_str,
     n_fakeablesel_mu,         n_fakeablesel_mu_str,
     n_mvasel_mu,              n_mvasel_mu_str,
@@ -74,20 +79,22 @@ SyncNtupleManager_bbww::initializeBranches()
     n_presel_jet,             n_presel_jet_str,
     n_presel_jetAK8,          n_presel_jetAK8_str,
     n_presel_jetAK8LS,        n_presel_jetAK8LS_str,
+    n_loose_bjet,             n_loose_bjet_str,
+    n_medium_bjet,            n_medium_bjet_str,
 
 //--- MET/MHT
-    floatMap[FloatVariableType_bbww::trigger_SF], "trigger_SF",
+    floatMap[FloatVariableType_bbww::trigger_SF],  "trigger_SF",
     floatMap[FloatVariableType_bbww::lepton_IDSF], "lepton_IDSF",
-    floatMap[FloatVariableType_bbww::btag_SF], "btag_SF",
-    floatMap[FloatVariableType_bbww::topPt_wgt], "topPt_wgt",
-    floatMap[FloatVariableType_bbww::PFMET],     "PFMET",
-    floatMap[FloatVariableType_bbww::PFMETphi],  "PFMETphi",
-    floatMap[FloatVariableType_bbww::HME],       "HME",
-    floatMap[FloatVariableType_bbww::MEM_LR],    "MEM_LR",
-    floatMap[FloatVariableType_bbww::MEM_LR_up], "MEM_LR_up",
-    floatMap[FloatVariableType_bbww::MEM_LR_down],"MEM_LR_down",
-    floatMap[FloatVariableType_bbww::PU_weight], "PU_weight",
-    floatMap[FloatVariableType_bbww::MC_weight], "MC_weight"
+    floatMap[FloatVariableType_bbww::btag_SF],     "btag_SF",
+    floatMap[FloatVariableType_bbww::topPt_wgt],   "topPt_wgt",
+    floatMap[FloatVariableType_bbww::PFMET],       "PFMET",
+    floatMap[FloatVariableType_bbww::PFMETphi],    "PFMETphi",
+    floatMap[FloatVariableType_bbww::HME],         "HME",
+    floatMap[FloatVariableType_bbww::MEM_LR],      "MEM_LR",
+    floatMap[FloatVariableType_bbww::MEM_LR_up],   "MEM_LR_up",
+    floatMap[FloatVariableType_bbww::MEM_LR_down], "MEM_LR_down",
+    floatMap[FloatVariableType_bbww::PU_weight],   "PU_weight",
+    floatMap[FloatVariableType_bbww::MC_weight],   "MC_weight"
   );
 
   setBranches(
@@ -339,9 +346,13 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoElectron *> & electrons
 }
 
 void
-SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets)
+SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets,
+                             int n_bjet_loose,
+                             int n_bjet_medium)
 {
   n_presel_jet = jets.size();
+  n_loose_bjet = n_bjet_loose;
+  n_medium_bjet = n_bjet_medium;
   const Int_t nof_iterations = std::min(n_presel_jet, nof_jets);
   for(Int_t i = 0; i < nof_iterations; ++i)
   {
@@ -455,6 +466,14 @@ SyncNtupleManager_bbww::read(bool is_boosted,
 }
 
 void
+SyncNtupleManager_bbww::read(bool is_sf,
+                             bool is_ss)
+{
+  flag_sf = is_sf;
+  flag_ss = is_ss;
+}
+
+void
 SyncNtupleManager_bbww::resetBranches()
 {
   nEvent = 0;
@@ -465,6 +484,8 @@ SyncNtupleManager_bbww::resetBranches()
     flag_boosted,
     flag_semiboosted,
     flag_resolved,
+    flag_sf,
+    flag_ss,
     n_presel_mu,
     n_fakeablesel_mu,
     n_mvasel_mu,
@@ -473,7 +494,9 @@ SyncNtupleManager_bbww::resetBranches()
     n_mvasel_ele,
     n_presel_jet,
     n_presel_jetAK8,
-    n_presel_jetAK8LS
+    n_presel_jetAK8LS,
+    n_loose_bjet,
+    n_medium_bjet
   );
 
   for(auto & kv: floatMap)

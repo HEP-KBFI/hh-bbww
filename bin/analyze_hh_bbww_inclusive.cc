@@ -241,6 +241,7 @@ main(int argc,
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
+  RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
   jetReaderAK8->set_central_or_shift(fatJetPt_option);
@@ -452,7 +453,8 @@ main(int argc,
       jetCleaner       (jet_ptrs, fakeableLeptons)
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
-    std::vector<const RecoJet*> selJets_medium = jetSelectorAK4_bTagMedium(selJets);
+    std::vector<const RecoJet*> selBJets_loose = jetSelectorAK4_bTagLoose(selJets);
+    std::vector<const RecoJet*> selBJets_medium = jetSelectorAK4_bTagMedium(selJets);
     evtWeightRecorder.record_btagWeight(selJets);
 
     if(isDEBUG)
@@ -593,11 +595,10 @@ main(int argc,
     snm->read(trigger_SF, FloatVariableType_bbww::trigger_SF);
     snm->read(lepton_IDSF, FloatVariableType_bbww::lepton_IDSF);
     snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
-    std::cout <<"btagSF: " << evtWeightRecorder.get_btag("central") << std::endl;
     snm->read(preselMuons, fakeableMuons, tightMuons);
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
-    snm->read(selJets);
+    snm->read(selJets, selBJets_loose.size(), selBJets_medium.size());
     // "regular" AK8 jets, selected to target H->bb decay, sorted by pT in decreasing order
     snm->read(selFatJets, false);
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection

@@ -2764,21 +2764,26 @@ int main(int argc, char* argv[])
 
       snm->read(preselMuons, fakeableMuons, tightMuons);
       snm->read(preselElectrons, fakeableElectrons, tightElectrons);
-      snm->read(selJetsAK4);
+      snm->read(selJetsAK4, selBJetsAK4_loose.size(), selBJetsAK4_medium.size());
       snm->read(selJetsAK8_Hbb, false);
 
       snm->read(type_Hbb == kHbb_boosted, false, type_Hbb == kHbb_resolved);
-      snm->read(evtWeightRecorder.get_sf_triggerEff("central"), FloatVariableType_bbww::trigger_SF);
-      snm->read(evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central"), FloatVariableType_bbww::lepton_IDSF);
-      snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
+      snm->read(selLepton_lead_type == selLepton_sublead_type, isLeptonCharge_SS);
+
+      const double leptonSF = evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central");
+      const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
+      const double btagSF = evtWeightRecorder.get_btag("central");
+      snm->read(triggerSF,                              FloatVariableType_bbww::trigger_SF);
+      snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
+      snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
       snm->read(memOutput_LR["SM"][MEMsys::nominal],    FloatVariableType_bbww::MEM_LR);
-      snm->read(memOutput_LR["SM"][MEMsys::up],    FloatVariableType_bbww::MEM_LR_up);
-      snm->read(memOutput_LR["SM"][MEMsys::down],    FloatVariableType_bbww::MEM_LR_down);
+      snm->read(memOutput_LR["SM"][MEMsys::up],         FloatVariableType_bbww::MEM_LR_up);
+      snm->read(memOutput_LR["SM"][MEMsys::down],       FloatVariableType_bbww::MEM_LR_down);
 
       if(isGenMatched)
       {

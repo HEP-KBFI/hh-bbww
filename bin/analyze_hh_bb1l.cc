@@ -2372,7 +2372,7 @@ int main(int argc, char* argv[])
 
       snm->read(preselMuons, fakeableMuons, tightMuons);
       snm->read(preselElectrons, fakeableElectrons, tightElectrons);
-      snm->read(selJetsAK4);
+      snm->read(selJetsAK4, selBJetsAK4_loose.size(), selBJetsAK4_medium.size());
       std::vector<const RecoJetAK8*> tmpJetsAK8_Hbb;
       if ( selJetAK8_Hbb ) tmpJetsAK8_Hbb.push_back(selJetAK8_Hbb);
       snm->read(tmpJetsAK8_Hbb, false);
