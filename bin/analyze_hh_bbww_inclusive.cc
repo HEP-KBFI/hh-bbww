@@ -312,9 +312,6 @@ main(int argc,
                 << " (" << eventInfo
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787813) ) continue;
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787805) ) continue;
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787805) ) continue;//1:128940:25787807
     ++analyzedEntries;
 
     if(run_lumi_eventSelector && ! (*run_lumi_eventSelector)(eventInfo))
@@ -454,10 +451,7 @@ main(int argc,
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     std::vector<const RecoJet*> selJets_medium = jetSelectorAK4_bTagMedium(selJets);
-    /*for(unsigned int i=0; i<selJets_medium.size(); i++) {
-      std::cout << "pt: " << selJets_medium[i]->pt() << "\t" << "eta: " << "\t" << selJets_medium[i]->eta() << "\t" << selJets_medium[i]->BtagWeight() << std::endl;
-      }*/
-    evtWeightRecorder.record_btagWeight(selJets_medium);
+    evtWeightRecorder.record_btagWeight(selJets);
 
     if(isDEBUG)
     {
