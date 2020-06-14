@@ -68,7 +68,9 @@ SyncNtupleManager_bbww::initializeBranches()
     flag_boosted,             "is_boosted",
     flag_semiboosted,         "is_semiboosted",
     flag_resolved,            "is_resolved",
-    flag_sf,                  "is_sf",
+    flag_ee,                  "is_ee",
+    flag_mm,                  "is_mm",
+    flag_em,                  "is_em",
     flag_ss,                  "is_ss",
     n_presel_mu,              n_presel_mu_str,
     n_fakeablesel_mu,         n_fakeablesel_mu_str,
@@ -466,10 +468,14 @@ SyncNtupleManager_bbww::read(bool is_boosted,
 }
 
 void
-SyncNtupleManager_bbww::read(bool is_sf,
-                             bool is_ss)
+SyncNtupleManager_bbww::read(bool is_ee,
+                             bool is_mm,
+                             bool is_em,
+                             int  is_ss)
 {
-  flag_sf = is_sf;
+  flag_ee = is_ee;
+  flag_mm = is_mm;
+  flag_em = is_em;
   flag_ss = is_ss;
 }
 
@@ -484,7 +490,9 @@ SyncNtupleManager_bbww::resetBranches()
     flag_boosted,
     flag_semiboosted,
     flag_resolved,
-    flag_sf,
+    flag_ee,
+    flag_mm,
+    flag_em,
     flag_ss,
     n_presel_mu,
     n_fakeablesel_mu,

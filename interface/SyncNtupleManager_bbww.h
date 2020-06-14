@@ -55,8 +55,10 @@ public:
   void read(bool is_boosted,
             bool is_semiboosted,
             bool is_resolved);
-  void read(bool is_sf,
-            bool is_ss);
+  void read(bool is_ee,
+            bool is_mm,
+            bool is_em,
+            int  is_ss);
   void resetBranches() override;
 
 protected:
@@ -86,8 +88,10 @@ protected:
   Int_t flag_semiboosted;
   Int_t flag_resolved;
 
-  Int_t flag_sf;
-  Int_t flag_ss;
+  Int_t flag_ee;
+  Int_t flag_mm;
+  Int_t flag_em;
+  int flag_ss;
 
   Float_t * mu_pt;
   Float_t * mu_conept;

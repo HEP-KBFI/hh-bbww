@@ -2768,7 +2768,10 @@ int main(int argc, char* argv[])
       snm->read(selJetsAK8_Hbb, false);
 
       snm->read(type_Hbb == kHbb_boosted, false, type_Hbb == kHbb_resolved);
-      snm->read(selLepton_lead_type == selLepton_sublead_type, isLeptonCharge_SS);
+      const bool is_ee = selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron;
+      const bool is_mm = selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon;
+      const bool is_em = ! (is_ee || is_mm);
+      snm->read(is_ee, is_mm, is_em, static_cast<int>(isLeptonCharge_SS));
 
       const double leptonSF = evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central");
       const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
