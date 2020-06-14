@@ -243,6 +243,7 @@ main(int argc,
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8);
 
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
@@ -250,6 +251,7 @@ main(int argc,
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
   RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_fatJetsLS, branchName_subJetsLS);
+  jetReaderAK8LS->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8LS);
   const RecoJetCollectionSelectorAK8 jetSelectorAK8LS(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
