@@ -149,6 +149,7 @@ protected:
   Float_t * jet_phi;
   Float_t * jet_E;
   Float_t * jet_CSV;
+  Float_t * jet_btagSF;
 
   Float_t * jetAk8_pt;
   Float_t * jetAk8_eta;

@@ -162,7 +162,8 @@ SyncNtupleManager_bbww::initializeBranches()
     jet_eta,                  "eta",
     jet_phi,                  "phi",
     jet_E,                    "E",
-    jet_CSV,                  "CSV"
+    jet_CSV,                  "CSV",
+    jet_btagSF,               "btagSF"
   );
 
   setBranches(
@@ -364,6 +365,7 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets,
     jet_phi[i] = jet -> phi();
     jet_E[i] = (jet -> p4()).E();
     jet_CSV[i] = std::max(jet -> BtagCSV(), 0.);
+    jet_btagSF[i] = jet -> BtagWeight();
   }
 }
 
@@ -575,7 +577,8 @@ SyncNtupleManager_bbww::resetBranches()
     jet_eta,
     jet_phi,
     jet_E,
-    jet_CSV
+    jet_CSV,
+    jet_btagSF
   );
 
   reset(
