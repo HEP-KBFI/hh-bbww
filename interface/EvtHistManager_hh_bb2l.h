@@ -44,25 +44,11 @@ public:
                  double mvaoutput_bb2l_sm,
                  ///
                  std::string category_SM_plainVars_Xness,
-                 //std::string category_SM_plainVars_HME,
-                 //std::string category_SM_plainVars_Xness_HME,
-                 //std::string category_SM_plainVars_nobb_noHME,
-                 //std::string category_SM_plainVars_Xness_nnoMbb_noHME,
-                 //std::string category_SM_plainVars_Xness_nobb_noHME,
                  std::string category_SM_plainVars,
-                 std::string category_SM_plainVars_noHH_withbb,
-                 std::string category_SM_plainVars_noHH,
                  std::string category_SM_plainVars_flavour_boosted,
                  std::string category_SM_plainVars_boosted,
                  double mva_SM_plainVars_Xness,
-                 //double mva_SM_plainVars_HME,
-                 //double mva_SM_plainVars_Xness_HME,
-                 //double mva_SM_plainVars_nobb_noHME,
-                 //double mva_SM_plainVars_Xness_nnoMbb_noHME,
-                 //double mva_SM_plainVars_Xness_nobb_noHME,
                  double mva_SM_plainVars,
-                 double mva_SM_plainVars_noHH_withbb,
-                 double mva_SM_plainVars_noHH,
                  double m_HH_hme,
                  double m_HH,
                  double m_HHvis,
@@ -84,14 +70,7 @@ public:
   void
   bookCategories(TFileDirectory & dir,
                 const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness,
-                //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_HME,
-                //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_HME,
-                //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_nobb_noHME,
-                //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nnoMbb_noHME,
-                //const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness_nobb_noHME,
                 const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH_withbb,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_noHH,
                 const std::map<std::string, std::vector<double>> & categories_SM_plainVars_flavour_boosted,
                 const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted
   );
@@ -184,25 +163,14 @@ public:
   TH1 * histogram_MVAOutputnode7_;
   TH1 * histogram_MVAOutputsm_;
 
-  //std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_HME_;
-  //std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_Xness_HME_;
-  //
-  //std::map<std::string, TH2 *> histograms_by_category_SM_plainVars_nobb_noHME_;
-  //std::map<std::string, TH2 *> histograms_by_category_SM_plainVars_Xness_nnoMbb_noHME_;
-  //std::map<std::string, TH2 *> histograms_by_category_SM_plainVars_Xness_nobb_noHME_;
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_Xness_;
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_;
-  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_withbb_;
-  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
 
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_flavour_boosted_;
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_boosted_;
 
   TH1 * histograms_SM_plainVars_Xness_nocat_;
   TH1 * histograms_SM_plainVars_nocat_;
-  TH1 * histograms_SM_plainVars_noHH_withbb_nocat_;
-  TH1 * histograms_SM_plainVars_noHH_nocat_;
-
 
   TH1 * histogram_EventCounter_;
 

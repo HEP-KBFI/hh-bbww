@@ -152,31 +152,6 @@ for sample_name, sample_info in samples.items():
     sample_info["use_it"] = False
 
 evtCategories = None
-"""
-if mode == "default" and len(central_or_shifts) <= 1:
-  evtCategories = [
-    "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_resolvedHbb_vbf", "hh_bb2l_resolvedHbb_nonvbf", "hh_bb2l_boostedHbb", "hh_bb2l_vbf", "hh_bb2l_nonvbf",
-    "hh_2bM2l", "hh_2bM2l_resolvedHbb", "hh_2bM2l_resolvedHbb_nonvbf", "hh_2bM2l_nonvbf",
-    "hh_1bM1bL2l", "hh_1bM1bL2l_resolvedHbb", "hh_1bM1bL2l_resolvedHbb_nonvbf", "hh_1bM1bL2l_nonvbf",
-    "hh_1bM2l", "hh_1bM2l_resolvedHbb", "hh_1bM2l_resolvedHbb_nonvbf", "hh_1bM2l_nonvbf",
-    "hh_bb2e", "hh_bb2e_resolvedHbb", "hh_bb2e_resolvedHbb_vbf", "hh_bb2e_resolvedHbb_nonvbf", "hh_bb2e_boostedHbb", "hh_bb2e_vbf", "hh_bb2e_nonvbf",
-    "hh_2bM2e", "hh_2bM2e_resolvedHbb", "hh_2bM2e_resolvedHbb_nonvbf", "hh_2bM2e_nonvbf",
-    "hh_1bM1bL2e", "hh_1bM1bL2e_resolvedHbb", "hh_1bM1bL2e_resolvedHbb_nonvbf", "hh_1bM1bL2e_nonvbf",
-    "hh_1bM2e", "hh_1bM2e_resolvedHbb", "hh_1bM2e_resolvedHbb_nonvbf", "hh_1bM2e_nonvbf",
-    "hh_bb2mu", "hh_bb2mu_resolvedHbb", "hh_bb2mu_resolvedHbb_vbf", "hh_bb2mu_resolvedHbb_nonvbf", "hh_bb2mu_boostedHbb", "hh_bb2mu_vbf", "hh_bb2mu_nonvbf",
-    "hh_2bM2mu", "hh_2bM2mu_resolvedHbb", "hh_2bM2mu_resolvedHbb_nonvbf", "hh_2bM2mu_nonvbf",
-    "hh_1bM1bL2mu", "hh_1bM1bL2mu_resolvedHbb", "hh_1bM1bL2mu_resolvedHbb_nonvbf", "hh_1bM1bL2mu_nonvbf",
-    "hh_1bM2mu", "hh_1bM2mu_resolvedHbb", "hh_1bM2mu_resolvedHbb_nonvbf", "hh_1bM2mu_nonvbf",
-    "hh_bb1e1mu", "hh_bb1e1mu_resolvedHbb", "hh_bb1e1mu_resolvedHbb_vbf", "hh_bb1e1mu_resolvedHbb_nonvbf", "hh_bb1e1mu_boostedHbb", "hh_bb1e1mu_vbf", "hh_bb1e1mu_nonvbf",
-    "hh_2bM1e1mu", "hh_2bM1e1mu_resolvedHbb", "hh_2bM1e1mu_resolvedHbb_nonvbf", "hh_2bM1e1mu_nonvbf",
-    "hh_1bM1bL1e1mu", "hh_1bM1bL1e1mu_resolvedHbb", "hh_1bM1bL1e1mu_resolvedHbb_nonvbf", "hh_1bM1bL1e1mu_nonvbf",
-    "hh_1bM1e1mu", "hh_1bM1e1mu_resolvedHbb", "hh_1bM1e1mu_resolvedHbb_nonvbf", "hh_1bM1e1mu_nonvbf"
-  ]
-else:
-  evtCategories = [
-    "hh_bb2l", "hh_bb2l_resolvedHbb", "hh_bb2l_boostedHbb"
-  ]
-"""
 evtCategories = []
 
 if sideband == 'disabled':
@@ -220,6 +195,7 @@ if __name__ == '__main__':
     check_output_files                    = check_output_files,
     running_method                        = running_method,
     num_parallel_jobs                     = num_parallel_jobs,
+    executable_addSysTT                   = "addSysTT",
     executable_addBackgrounds             = "addBackgrounds",
     executable_addFakes                   = "addBackgroundLeptonFakes",
     histograms_to_fit                     = {
@@ -232,88 +208,22 @@ if __name__ == '__main__':
       "MVAOutputnohiggnessnotopness_300"  : {},
       "MVAOutputnohiggnessnotopness_400"  : {},
       "MVAOutputnohiggnessnotopness_750"  : {},
-      ###
-      #"SM_plainVars_noHH_ee_MHH1_lowMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH1_lowMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH1_lowMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH2_lowMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH2_lowMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH2_lowMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH3_lowMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH3_lowMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH3_lowMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH4_lowMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH4_lowMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH4_lowMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH5_lowMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH5_lowMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH5_lowMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH1_medMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH1_medMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH1_medMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH2_medMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH2_medMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH2_medMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH3_medMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH3_medMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH3_medMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH4_medMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH4_medMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH4_medMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH5_medMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH5_medMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH5_medMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH1_highMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH1_highMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH1_highMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH2_highMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH2_highMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH2_highMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH3_highMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH3_highMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH3_highMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH4_highMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH4_highMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH4_highMbb"    : {},
-      #"SM_plainVars_noHH_ee_MHH5_highMbb"    : {},
-      #"SM_plainVars_noHH_em_MHH5_highMbb"    : {},
-      #"SM_plainVars_noHH_mm_MHH5_highMbb"    : {},
-      ###
-      #"SM_plainVars_noHH_withbb_ee_MHH1"    : {},
-      #"SM_plainVars_noHH_withbb_em_MHH1"    : {},
-      #"SM_plainVars_noHH_withbb_mm_MHH1"    : {},
-      #"SM_plainVars_noHH_withbb_ee_MHH2"    : {},
-      #"SM_plainVars_noHH_withbb_em_MHH2"    : {},
-      #"SM_plainVars_noHH_withbb_mm_MHH2"    : {},
-      #"SM_plainVars_noHH_withbb_ee_MHH3"    : {},
-      #"SM_plainVars_noHH_withbb_em_MHH3"    : {},
-      #"SM_plainVars_noHH_withbb_mm_MHH3"    : {},
-      #"SM_plainVars_noHH_withbb_ee_MHH4"    : {},
-      #"SM_plainVars_noHH_withbb_em_MHH4"    : {},
-      #"SM_plainVars_noHH_withbb_mm_MHH4"    : {},
-      #"SM_plainVars_noHH_withbb_ee_MHH5"    : {},
-      #"SM_plainVars_noHH_withbb_em_MHH5"    : {},
-      #"SM_plainVars_noHH_withbb_mm_MHH5"    : {},
-      #####
-      "SM_plainVars_Xness_nocat"    : {},
-      "SM_plainVars_nocat"    : {},
+      "SM_plainVars_Xness_nocat"          : {},
+      "SM_plainVars_nocat"                : {},
       "SM_plainVars_noHH_withbb_nocat"    : {},
-      "SM_plainVars_noHH_nocat"    : {},
-      ##  ///////////
+      "SM_plainVars_noHH_nocat"           : {},
       "SM_plainVars_Xness_ee"    : {},
       "SM_plainVars_Xness_em"    : {},
       "SM_plainVars_Xness_mm"    : {},
       "SM_plainVars_ee"    : {},
       "SM_plainVars_em"    : {},
       "SM_plainVars_mm"    : {},
-      ##  /////////////
       "SM_plainVars_ee_Hbb_resolved" : {},
       "SM_plainVars_em_Hbb_resolved" : {},
       "SM_plainVars_mm_Hbb_resolved" : {},
       "SM_plainVars_ee_Hbb_boosted" : {},
       "SM_plainVars_em_Hbb_boosted" : {},
       "SM_plainVars_mm_Hbb_boosted" : {},
-      ##  ///////////////
       "SM_plainVars_Hbb_resolved" : {},
       "SM_plainVars_Hbb_boosted"  : {}
     },
