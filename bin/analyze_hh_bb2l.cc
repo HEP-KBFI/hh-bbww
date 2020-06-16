@@ -656,19 +656,15 @@ int main(int argc, char* argv[])
      {"SM_plainVars_Xness_em", {}},
      {"SM_plainVars_Xness_mm", {}}
   };
-  /*const std::map<std::string, std::vector<double>> categories_check =
+  const std::map<std::string, std::vector<double>> categories_check =
   {
-     {"cat_ee_0b", {}},
-     {"cat_em_0b", {}},
-     {"cat_mm_0b", {}},
      {"cat_ee_1b", {}},
      {"cat_em_1b", {}},
      {"cat_mm_1b", {}},
      {"cat_ee_2b", {}},
      {"cat_em_2b", {}},
      {"cat_mm_2b", {}}
-  };*/
-
+  };
 
   std::vector<std::string> xgbInputVariables_bb2l_res =
     {"mht", "m_Hbb", "m_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
@@ -814,7 +810,8 @@ int main(int argc, char* argv[])
           categories_SM_plainVars_Xness,
           categories_SM_plainVars,
           categories_SM_plainVars_flavour_boosted,
-          categories_SM_plainVars_boosted
+          categories_SM_plainVars_boosted,
+          categories_check
         );
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
       }
@@ -2088,32 +2085,30 @@ int main(int argc, char* argv[])
     std::string category_SM_plainVars                       = "SM_plainVars_";
     std::string category_SM_plainVars_boosted               = "SM_plainVars_";
     std::string category_SM_plainVars_flavour_boosted       = "SM_plainVars_";
-    //std::string category_check                              = "cat_";
-    /*
-    {"cat_ee_0b", {}},
-    {"cat_em_0b", {}},
-    {"cat_mm_0b", {}},
-    {"cat_ee_1b", {}},
-    {"cat_em_1b", {}},
-    {"cat_mm_1b", {}},
-    {"cat_ee_2b", {}},
-    {"cat_em_2b", {}},
-    {"cat_mm_2b", {}}
-    */
+    std::string category_check                              = "cat_";
     // flavour
     if  ( ( selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron ) ) {
-      category_SM_plainVars                     += "ee";
+      category_SM_plainVars                    += "ee";
       category_SM_plainVars_Xness              += "ee";
       category_SM_plainVars_flavour_boosted    += "ee";
+      category_check                           += "ee";
     } else if (  selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon      ) {
       category_SM_plainVars                    += "mm";
       category_SM_plainVars_Xness              += "mm";
       category_SM_plainVars_flavour_boosted    += "mm";
+      category_check                           += "mm";
     } else if ( (selLepton_lead_type == kElectron && selLepton_sublead_type == kMuon    ) ||
     (selLepton_lead_type == kMuon     && selLepton_sublead_type == kElectron) ) {
       category_SM_plainVars                    += "em";
       category_SM_plainVars_Xness              += "em";
       category_SM_plainVars_flavour_boosted    += "em";
+      category_check                           += "em";
+    }
+    if ( numBJets_medium == 1 )
+    {
+      category_check                           += "_1b";
+    } else {
+      category_check                           += "_2b";
     }
     ////////////////////
     if (type_Hbb == kHbb_boosted)
@@ -2223,12 +2218,19 @@ int main(int argc, char* argv[])
             //
             category_SM_plainVars_flavour_boosted,
             category_SM_plainVars_boosted,
+            category_check,
             //
             mva_SM_plainVars_Xness,
             mva_SM_plainVars,
             m_HH_hme,
             m_HH,
             m_HHvis,
+            selLepton_lead->pt(), selLepton_lead->eta(),
+            selLepton_sublead->pt(), selLepton_sublead->eta(),
+            selJetsAK4.size() > 0  ? selJetsAK4[0]->pt() : 0.,
+            selJetsAK4.size() > 1  ? selJetsAK4[1]->pt() : 0.,
+            selJetsAK4.size() > 0  ? selJetsAK4[0]->eta() : -10.,
+            selJetsAK4.size() > 1  ? selJetsAK4[1]->eta() : -10.,
             ///
             kv.second
           );

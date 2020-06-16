@@ -149,7 +149,8 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
     const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness,
     const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
     const std::map<std::string, std::vector<double>> & categories_SM_plainVars_flavour_boosted,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted
+    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted,
+    const std::map<std::string, std::vector<double>> & categories_check
   )
 {
   // X: not the smartest way, but we will detele most and keep one in the end, so it is ok
@@ -222,6 +223,20 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
       }
       central_or_shiftOptions_[category.first] = { "*" };
     }
+    /////
+    for(auto category: categories_check)
+    {
+      histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, category.first + "_jet1_pt", category.first, 400,  0., 200.);
+      histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, category.first + "_jet1_eta", category.first, 22,  -3., +3.);
+      histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, category.first + "_lep1_pt", category.first, 600,  0., +300.);
+      histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, category.first + "_lep1_eta", category.first, 22,  -3., +3.);
+      histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, category.first + "_jet2_pt", category.first, 300,  0., 150.);
+      histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, category.first + "_jet2_eta", category.first, 22,  -3., +3.);
+      histograms_by_category_check_lep2_pt_[category.first] = book1D(dir, category.first + "_lep2_pt", category.first, 400,  0., +200.);
+      histograms_by_category_check_lep2_eta_[category.first] = book1D(dir, category.first + "_lep2_eta", category.first, 22,  -3., +3.);
+      central_or_shiftOptions_[category.first] = { "*" };
+    }
+    //
 }
 
 void
@@ -284,11 +299,18 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
                                        std::string category_SM_plainVars,
                                        std::string category_SM_plainVars_flavour_boosted,
                                        std::string category_SM_plainVars_boosted,
+                                       std::string category_check,
                                        double mva_SM_plainVars_Xness,
                                        double mva_SM_plainVars,
                                        double m_HH_hme,
                                        double m_HH,
                                        double m_HHvis,
+                                       double selLepton_lead_pt, double selLepton_lead_eta,
+                                       double selLepton_sublead_pt, double selLepton_sublead_eta,
+                                       double selJetsAK4_0_pt,
+                                       double selJetsAK4_1_pt,
+                                       double selJetsAK4_0_eta,
+                                       double selJetsAK4_1_eta,
                                        ///
                                        double evtWeight)
 {
@@ -346,6 +368,18 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   }
   fillWithOverFlow(histograms_by_category_SM_plainVars_boosted_[category_SM_plainVars_boosted], mva_SM_plainVars, evtWeight, evtWeightErr);
   /////
+  if(! histograms_by_category_check_jet1_pt_.count(category_check))
+  {
+    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_check << "' was never booked";
+  }
+  fillWithOverFlow(histograms_by_category_check_jet1_pt_[category_check], selJetsAK4_0_pt, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_jet1_eta_[category_check], selJetsAK4_0_eta, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_lep1_pt_[category_check], selLepton_lead_pt, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_check], selLepton_lead_eta, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_check], selJetsAK4_1_pt, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_check], selJetsAK4_1_eta, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_lep2_pt_[category_check], selLepton_sublead_pt, evtWeight, evtWeightErr);
+  fillWithOverFlow(histograms_by_category_check_lep2_eta_[category_check], selLepton_sublead_eta, evtWeight, evtWeightErr);
 }
 
 void
