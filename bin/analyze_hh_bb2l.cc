@@ -1443,6 +1443,9 @@ int main(int argc, char* argv[])
     const std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 2);
     const std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
 
+    const std::vector<const RecoLepton*> fakeableElectronsForTrigger = getIntersection(fakeableLeptons, fakeableElectrons, isHigherConePt);
+    const std::vector<const RecoLepton*> fakeableMuonsForTrigger     = getIntersection(fakeableLeptons, fakeableMuons,     isHigherConePt);
+
     std::vector<const RecoLepton*> selLeptons;
     std::vector<const RecoMuon*> selMuons;
     std::vector<const RecoElectron*> selElectrons;
@@ -1624,13 +1627,15 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("<= 2 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
-    if ( !((fakeableElectrons.size() >= 2 &&                              (selTrigger_2e    || selTrigger_1e                  )) ||
-           (fakeableElectrons.size() >= 1 && fakeableMuons.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
-           (                                 fakeableMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
+    if ( !((fakeableElectronsForTrigger.size() >= 2 &&                                        (selTrigger_2e    || selTrigger_1e                  )) ||
+           (fakeableElectronsForTrigger.size() >= 1 && fakeableMuonsForTrigger.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
+           (                                           fakeableMuonsForTrigger.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
         std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
                   << ", #fakeableMuons = " << fakeableMuons.size()
+                  << ", #fakeableElectronsForTrigger = " << fakeableElectronsForTrigger.size()
+                  << ", #fakeableMuonsForTrigger = " << fakeableMuonsForTrigger.size()
                   << ", selTrigger_2mu = " << selTrigger_2mu
                   << ", selTrigger_1e1mu = " << selTrigger_1e1mu
                   << ", selTrigger_2e = " << selTrigger_2e
