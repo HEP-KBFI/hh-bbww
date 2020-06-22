@@ -226,13 +226,13 @@ EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
     /////
     for(auto category: categories_check)
     {
-      histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, category.first + "_jet1_pt", category.first, 400,  0., 200.);
+      histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, category.first + "_jet1_pt", category.first, 40,  0., 200.);
       histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, category.first + "_jet1_eta", category.first, 22,  -3., +3.);
-      histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, category.first + "_lep1_pt", category.first, 600,  0., +300.);
+      histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, category.first + "_lep1_pt", category.first, 60,  0., +300.);
       histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, category.first + "_lep1_eta", category.first, 22,  -3., +3.);
-      histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, category.first + "_jet2_pt", category.first, 300,  0., 150.);
+      histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, category.first + "_jet2_pt", category.first, 30,  0., 150.);
       histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, category.first + "_jet2_eta", category.first, 22,  -3., +3.);
-      histograms_by_category_check_lep2_pt_[category.first] = book1D(dir, category.first + "_lep2_pt", category.first, 400,  0., +200.);
+      histograms_by_category_check_lep2_pt_[category.first] = book1D(dir, category.first + "_lep2_pt", category.first, 40,  0., +200.);
       histograms_by_category_check_lep2_eta_[category.first] = book1D(dir, category.first + "_lep2_eta", category.first, 22,  -3., +3.);
       central_or_shiftOptions_[category.first] = { "*" };
     }

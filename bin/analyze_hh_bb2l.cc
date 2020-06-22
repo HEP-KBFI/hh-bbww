@@ -1482,7 +1482,8 @@ int main(int argc, char* argv[])
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
+    //std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
+    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb({}, selJetsAK4_Hbb);
     const selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
