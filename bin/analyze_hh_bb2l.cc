@@ -732,19 +732,19 @@ int main(int argc, char* argv[])
           Form("%s/sel/electrons", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
         selHistManager->electrons_->bookHistograms(fs);
         selHistManager->leadElectron_ = new ElectronHistManager(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/leadElectron", histogramDir.data()), era_string, central_or_shift, "minimalHistograms", 0));
+          Form("%s/sel/leadElectron", histogramDir.data()), era_string, central_or_shift, "minimalHistograms"));
         selHistManager->leadElectron_->bookHistograms(fs);
         selHistManager->subleadElectron_ = new ElectronHistManager(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/subleadElectron", histogramDir.data()), era_string, central_or_shift, "minimalHistograms", 1));
+          Form("%s/sel/subleadElectron", histogramDir.data()), era_string, central_or_shift, "minimalHistograms"));
         selHistManager->subleadElectron_->bookHistograms(fs);
         selHistManager->muons_ = new MuonHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/muons", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
         selHistManager->muons_->bookHistograms(fs);
         selHistManager->leadMuon_ = new MuonHistManager(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/leadMuon", histogramDir.data()), era_string, central_or_shift, "minimalHistograms", 0));
+          Form("%s/sel/leadMuon", histogramDir.data()), era_string, central_or_shift, "minimalHistograms"));
         selHistManager->leadMuon_->bookHistograms(fs);
         selHistManager->subleadMuon_ = new MuonHistManager(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/subleadMuon", histogramDir.data()), era_string, central_or_shift, "minimalHistograms", 1));
+          Form("%s/sel/subleadMuon", histogramDir.data()), era_string, central_or_shift, "minimalHistograms"));
         selHistManager->subleadMuon_->bookHistograms(fs);
         selHistManager->jetsAK4_ = new JetHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/jetsAK4", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
@@ -939,7 +939,7 @@ int main(int argc, char* argv[])
     "HLT filter matching",
     ">= 2 jets from H->bb",
     ">= 1 medium b-jet",
-    "m(ll) < 76 GeV",
+    //"m(ll) < 76 GeV",
     "m(ll) > 12 GeV",
     "Z-boson mass veto",
     "MEt filters",
@@ -1199,6 +1199,9 @@ int main(int argc, char* argv[])
     const std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 2);
     const std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
 
+    const std::vector<const RecoLepton*> fakeableElectronsForTrigger = getIntersection(fakeableLeptons, fakeableElectrons, isHigherConePt);
+    const std::vector<const RecoLepton*> fakeableMuonsForTrigger     = getIntersection(fakeableLeptons, fakeableMuons,     isHigherConePt);
+
     std::vector<const RecoLepton*> selLeptons;
     std::vector<const RecoMuon*> selMuons;
     std::vector<const RecoElectron*> selElectrons;
@@ -1380,13 +1383,15 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("<= 2 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
-    if ( !((fakeableElectrons.size() >= 2 &&                              (selTrigger_2e    || selTrigger_1e                  )) ||
-           (fakeableElectrons.size() >= 1 && fakeableMuons.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
-           (                                 fakeableMuons.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
+    if ( !((fakeableElectronsForTrigger.size() >= 2 &&                                        (selTrigger_2e    || selTrigger_1e                  )) ||
+           (fakeableElectronsForTrigger.size() >= 1 && fakeableMuonsForTrigger.size() >= 1 && (selTrigger_1e1mu || selTrigger_1mu || selTrigger_1e)) ||
+           (                                           fakeableMuonsForTrigger.size() >= 2 && (selTrigger_2mu   || selTrigger_1mu                 ))) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
         std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
                   << ", #fakeableMuons = " << fakeableMuons.size()
+                  << ", #fakeableElectronsForTrigger = " << fakeableElectronsForTrigger.size()
+                  << ", #fakeableMuonsForTrigger = " << fakeableMuonsForTrigger.size()
                   << ", selTrigger_2mu = " << selTrigger_2mu
                   << ", selTrigger_1e1mu = " << selTrigger_1e1mu
                   << ", selTrigger_2e = " << selTrigger_2e
@@ -1532,14 +1537,14 @@ int main(int argc, char* argv[])
     }
     const std::vector<const RecoJet*> selJetsAK4_vbf = jetSelectorAK4_vbf(cleanedJetsAK4_vbf, isHigherPt);
 
-    if ( !((selLeptonP4_lead + selLeptonP4_sublead).mass() < 76.) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS m_ll < 76 GeV cut." << std::endl;
-      }
-      continue;
-    }
-    cutFlowTable.update("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
-    cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
+    //if ( !((selLeptonP4_lead + selLeptonP4_sublead).mass() < 76.) ) {
+    //  if ( run_lumi_eventSelector ) {
+    //    std::cout << "event " << eventInfo.str() << " FAILS m_ll < 76 GeV cut." << std::endl;
+    //  }
+    //  continue;
+    //}
+    //cutFlowTable.update("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
+    //cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
 
     const bool failsLowMassVeto = isfailsLowMassVeto(preselLeptonsFullUncleaned);
     if ( failsLowMassVeto ) {
@@ -2393,21 +2398,29 @@ int main(int argc, char* argv[])
 
       snm->read(preselMuons, fakeableMuons, tightMuons);
       snm->read(preselElectrons, fakeableElectrons, tightElectrons);
-      snm->read(selJetsAK4);
+      snm->read(selJetsAK4, selBJetsAK4_loose.size(), selBJetsAK4_medium.size());
       snm->read(selJetsAK8_Hbb, false);
 
       snm->read(type_Hbb == kHbb_boosted, false, type_Hbb == kHbb_resolved);
-      snm->read(evtWeightRecorder.get_sf_triggerEff("central"), FloatVariableType_bbww::trigger_SF);
-      snm->read(evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central"), FloatVariableType_bbww::lepton_IDSF);
-      snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
+      const bool is_ee = selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron;
+      const bool is_mm = selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon;
+      const bool is_em = ! (is_ee || is_mm);
+      snm->read(is_ee, is_mm, is_em, static_cast<int>(isLeptonCharge_SS));
+
+      const double leptonSF = evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central");
+      const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
+      const double btagSF = evtWeightRecorder.get_btag("central");
+      snm->read(triggerSF,                              FloatVariableType_bbww::trigger_SF);
+      snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
+      snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
       snm->read(memOutput_LR["SM"][MEMsys::nominal],    FloatVariableType_bbww::MEM_LR);
-      snm->read(memOutput_LR["SM"][MEMsys::up],    FloatVariableType_bbww::MEM_LR_up);
-      snm->read(memOutput_LR["SM"][MEMsys::down],    FloatVariableType_bbww::MEM_LR_down);
+      snm->read(memOutput_LR["SM"][MEMsys::up],         FloatVariableType_bbww::MEM_LR_up);
+      snm->read(memOutput_LR["SM"][MEMsys::down],       FloatVariableType_bbww::MEM_LR_down);
 
       if(isGenMatched)
       {

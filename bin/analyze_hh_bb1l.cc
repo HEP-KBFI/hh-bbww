@@ -1674,6 +1674,9 @@ int main(int argc, char* argv[])
     const std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 1);
     const std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
 
+    const std::vector<const RecoLepton*> fakeableElectronsForTrigger = getIntersection(fakeableLeptons, fakeableElectrons, isHigherConePt);
+    const std::vector<const RecoLepton*> fakeableMuonsForTrigger     = getIntersection(fakeableLeptons, fakeableMuons,     isHigherConePt);
+
     std::vector<const RecoLepton*> selLeptons;
     std::vector<const RecoMuon*> selMuons;
     std::vector<const RecoElectron*> selElectrons;
@@ -1846,12 +1849,14 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("<= 1 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
-    if ( !((fakeableElectrons.size() >= 1 && selTrigger_1e) ||
-           (fakeableMuons.size()     >= 1 && selTrigger_1mu)) ) {
+    if ( !((fakeableElectronsForTrigger.size() >= 1 && selTrigger_1e) ||
+           (fakeableMuonsForTrigger.size()     >= 1 && selTrigger_1mu)) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
         std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
                   << ", #fakeableMuons = " << fakeableMuons.size()
+                  << ", #fakeableElectronsForTrigger = " << fakeableElectronsForTrigger.size()
+                  << ", #fakeableMuonsForTrigger = " << fakeableMuonsForTrigger.size()
                   << ", selTrigger_1mu = " << selTrigger_1mu
                   << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
       }
@@ -3382,7 +3387,7 @@ int main(int argc, char* argv[])
 
       snm->read(preselMuons, fakeableMuons, tightMuons);
       snm->read(preselElectrons, fakeableElectrons, tightElectrons);
-      snm->read(selJetsAK4);
+      snm->read(selJetsAK4, selBJetsAK4_loose.size(), selBJetsAK4_medium.size());
       std::vector<const RecoJetAK8*> tmpJetsAK8_Hbb;
       if ( selJetAK8_Hbb ) tmpJetsAK8_Hbb.push_back(selJetAK8_Hbb);
       snm->read(tmpJetsAK8_Hbb, false);

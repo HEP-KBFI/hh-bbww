@@ -44,7 +44,9 @@ public:
   void read(const std::vector<const RecoElectron *> & electrons,
             const std::vector<const RecoElectron *> & fakeable_electrons,
             const std::vector<const RecoElectron *> & tight_electrons);
-  void read(const std::vector<const RecoJet *> & jets);
+  void read(const std::vector<const RecoJet *> & jets,
+            int n_bjet_loose,
+            int n_bjet_medium);
   void read(const std::vector<const RecoJetAK8 *> & jetsAk8,
             bool isLS);
   void read(Float_t value,
@@ -53,6 +55,10 @@ public:
   void read(bool is_boosted,
             bool is_semiboosted,
             bool is_resolved);
+  void read(bool is_ee,
+            bool is_mm,
+            bool is_em,
+            int  is_ss);
   void resetBranches() override;
 
 protected:
@@ -75,10 +81,17 @@ protected:
   Int_t n_presel_jet;
   Int_t n_presel_jetAK8;
   Int_t n_presel_jetAK8LS;
+  Int_t n_loose_bjet;
+  Int_t n_medium_bjet;
 
   Int_t flag_boosted;
   Int_t flag_semiboosted;
   Int_t flag_resolved;
+
+  Int_t flag_ee;
+  Int_t flag_mm;
+  Int_t flag_em;
+  int flag_ss;
 
   Float_t * mu_pt;
   Float_t * mu_conept;
@@ -136,6 +149,7 @@ protected:
   Float_t * jet_phi;
   Float_t * jet_E;
   Float_t * jet_CSV;
+  Float_t * jet_btagSF;
 
   Float_t * jetAk8_pt;
   Float_t * jetAk8_eta;

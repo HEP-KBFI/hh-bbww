@@ -24,6 +24,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
         executable_analyze,
         cfgFile_analyze,
         samples,
+        mode,
         central_or_shifts,
         jet_cleaning_by_index,
         max_files_per_job,
@@ -65,6 +66,8 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       apply_nc_correction   = None,
     )
 
+    self.mode = mode
+
     self.lepton_selections = [ "Fakeable" ]
     self.lepton_frWeights = [ "disabled" ]
 
@@ -82,7 +85,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bb1l.cc
     """
 
-    jobOptions['histogramDir'] = "hadWTagger"
+    jobOptions['histogramDir'] = jobOptions['mode']
     branchName_genBJets = None
     if jobOptions['sample_name'].startswith(('/TTToSemiLeptonic')):
       branchName_genBJets = "GenBQuarkFromTop"
@@ -191,6 +194,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
           self.jobOptions_analyze[key_analyze_job] = {
             'sample_name'              : sample_name,
             'ntupleFiles'              : ntupleFiles,
+            'mode'                     : self.mode,
             'cfgFile_modified'         : cfgFile_modified_path,
             'histogramFile'            : histogramFile_path,
             'logFile'                  : logFile_path,

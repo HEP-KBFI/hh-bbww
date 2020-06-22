@@ -23,6 +23,8 @@ process.analyze_hadWTagger = cms.PSet(
     histogramDir = cms.string(''),
     era = cms.string(''),
 
+    mode = cms.string('forBDTtraining_hadWTagger'),
+
     leptonSelection = cms.string(''),
 
     isMC = cms.bool(True),
@@ -36,11 +38,19 @@ process.analyze_hadWTagger = cms.PSet(
     branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
 
-    branchName_genLeptons = cms.string('GenLep'),
-    branchName_genJets = cms.string('GenJet'),
-    branchName_genBJets = cms.string('GenBQuarkFromTop'),
-    branchName_genWBosons = cms.string('GenVbosons'),
-    branchName_genWJets = cms.string('GenWZQuark'),
+    branchNames_genParticles = cms.PSet(
+        # branches specific to HH->bbWW signal events
+        branchName_genLeptons = cms.string('GenLep'),
+        branchName_genNeutrinos = cms.string('GenNu'),
+        branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
+        branchName_genWJets = cms.string('GenWZQuark'),
+        
+        # branches specific to tt+jets background events   
+        branchName_genLeptonsFromTop = cms.string('GenLepFromTop'),
+        branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
+        branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
+        branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
+    ),
 
     jetCleaningByIndex = cms.bool(False),
 
