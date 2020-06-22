@@ -9,11 +9,11 @@
 #include <string>   // std::string
 #include <iostream> // std::cout, std::endl
 
-void 
+void
 printJet(const std::string& label, const RecoJetBase* jet, const RecoLepton* selLepton_lead = nullptr, const RecoLepton* selLepton_sublead = nullptr)
 {
   std::cout << label << ":";
-  if ( jet ) 
+  if ( jet )
   {
     std::cout << " pT = " << jet->pt() << ", eta = " << jet->eta() << ", phi = " << jet->phi();
     if ( selLepton_lead    ) std::cout << ", dR(selLepton_lead) = " << deltaR(jet->p4(), selLepton_lead->p4());
@@ -27,7 +27,7 @@ printJet(const std::string& label, const RecoJetBase* jet, const RecoLepton* sel
 }
 
 std::vector<selJetsType_Hbb>
-selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb, 
+selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
                const std::vector<const RecoJet*> selJetsAK4_Hbb,
                const RecoLepton* selLepton_lead,
 	       const RecoLepton* selLepton_sublead,
@@ -62,7 +62,7 @@ selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
       printJet(" subjet #2", selJets_Hbb.jet_or_subjet2_, selLepton_lead, selLepton_sublead);
     }
     retVal.push_back(selJets_Hbb);
-  } 
+  }
 
   if ( (int)retVal.size() < maxJetPairs || maxJetPairs == -1 )
   {
@@ -132,13 +132,13 @@ countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
 }
 
 std::vector<selJetsType_Wjj>
-selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,                
+selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR12,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR16,
                const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8LS_Wjj,
                const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
                const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
-               const RecoJetCollectionCleaner& jetCleanerAK4_dR12, 
+               const RecoJetCollectionCleaner& jetCleanerAK4_dR12,
                const RecoJetCollectionSelector& jetSelectorAK4,
                const selJetsType_Hbb& selJets_Hbb,
                const RecoLepton* selLepton,
@@ -168,14 +168,14 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
     cleanedJetsAK4_wrtHbb   = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
   }
   std::vector<const RecoJetAK8*> selJetsAK8LS_Wjj;
-  if ( selLepton ) 
-  { 
+  if ( selLepton )
+  {
     jetSelectorAK8LS_Wjj.getSelector().set_lepton(selLepton);
     selJetsAK8LS_Wjj = jetSelectorAK8LS_Wjj(cleanedJetsAK8LS_wrtHbb, isHigherPt);
-  } 
-  else 
-  { 
-    if ( isDEBUG ) 
+  }
+  else
+  {
+    if ( isDEBUG )
     {
       std::cerr << "Warning in <selectJets_Wjj>: Cannot select AK8LS jets, as there is no lepton in the event !!" << std::endl;
     }
@@ -206,8 +206,8 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
 
   if ( (int)retVal.size() < maxJetPairs || maxJetPairs == -1 )
   {
-    if ( selJetsAK4_Wjj.size() >= 2 ) 
-    { 
+    if ( selJetsAK4_Wjj.size() >= 2 )
+    {
       std::vector<JetPair_Wjj> jetsPairsAK4_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj);
       assert(selLepton);
       rankJetPairs_Wjj(jetsPairsAK4_Wjj, selJetsAK4_Wjj, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
@@ -221,8 +221,8 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
         const JetPair_Wjj& jetPair = jetsPairsAK4_Wjj[idx];
         assert(jetPair.jet1_ && jetPair.jet2_);
         selJets_Wjj.jet_or_subjet1_ = jetPair.jet1_;
-        selJets_Wjj.jet_or_subjet2_ = jetPair.jet2_; 
-        if ( isDEBUG ) 
+        selJets_Wjj.jet_or_subjet2_ = jetPair.jet2_;
+        if ( isDEBUG )
         {
           std::cout << "found resolved AK4 W->jj decay:" << std::endl;
           printJet("AK4 jet #1", selJets_Wjj.jet_or_subjet1_);
@@ -230,8 +230,8 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
         }
         retVal.push_back(selJets_Wjj);
       }
-    } 
-    else 
+    }
+    else
     {
       selJetsType_Wjj selJets_Wjj;
       if ( selJetsAK4_Wjj.size() >= 1 ) selJets_Wjj.jet_or_subjet1_ = selJetsAK4_Wjj[0];
@@ -240,5 +240,49 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
     }
   }
 
+  return retVal;
+}
+
+std::vector<selJetsType_Wjj>
+selectJets_Wjj_resolved(
+               //const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
+               const std::vector<const RecoJet*>& cleanedJetsAK4_wrtHbb,
+               const RecoLepton* selLepton,
+               const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
+               const RecoJetCollectionCleaner& jetCleanerAK4_dR12,
+               const RecoJetCollectionSelector& jetSelectorAK4,
+               const std::vector<const RecoJet*>& selBJetsAK4_medium,
+               const TMVAInterface& mva_Wjj,
+               const EventInfo& eventInfo,
+	             bool isDEBUG)
+{
+
+  // CV: only consider the first ten jets, in order to avoid too large combinatorics in building W->jj pairs,
+  //     which would require many time-consuming MEM computations
+  //const std::vector<const RecoJet*> selJetsFullAK4_Wjj = jetSelectorAK4(cleanedJetsAK4_wrtHbb, isHigherPt);
+  const std::vector<const RecoJet*> selJetsAK4_Wjj = pickFirstNobjects(cleanedJetsAK4_wrtHbb, 10);
+
+  std::vector<selJetsType_Wjj> retVal;
+  std::vector<JetPair_Wjj> jetsPairsAK4_Wjj = makeJetPairs_Wjj(selJetsAK4_Wjj);
+  assert(selLepton);
+  rankJetPairs_Wjj(jetsPairsAK4_Wjj, selJetsAK4_Wjj, *selLepton, selBJetsAK4_medium.size(), mva_Wjj, eventInfo);
+  assert(jetsPairsAK4_Wjj.size() >= 1);
+
+  size_t numJetPairs_resolved = jetsPairsAK4_Wjj.size();
+  for ( size_t idx = 0; idx < numJetPairs_resolved; ++idx )
+  {
+    selJetsType_Wjj selJets_Wjj;
+    const JetPair_Wjj& jetPair = jetsPairsAK4_Wjj[idx];
+    assert(jetPair.jet1_ && jetPair.jet2_);
+    selJets_Wjj.jet_or_subjet1_ = jetPair.jet1_;
+    selJets_Wjj.jet_or_subjet2_ = jetPair.jet2_;
+    if ( isDEBUG )
+    {
+      std::cout << "found resolved AK4 W->jj decay:" << std::endl;
+      printJet("AK4 jet #1", selJets_Wjj.jet_or_subjet1_);
+      printJet("AK4 jet #2", selJets_Wjj.jet_or_subjet2_);
+    }
+    retVal.push_back(selJets_Wjj);
+  }
   return retVal;
 }
