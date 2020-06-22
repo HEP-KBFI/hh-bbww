@@ -43,6 +43,18 @@ public:
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
 		 double mvaoutput350, double mvaoutput400, double mvaoutput750,
      std::string category_SM_jets,
+     std::string category_SM_cat_jet_2BDT_Wjj_BDT,
+     std::string category_SM_cat_jet_2BDT_Wjj_simple,
+     std::string category_SM_cat_jet_Wjj_BDT,
+     std::string category_SM_cat_jet_Wjj_simple,
+     std::string category_X900GeV_cat_jet_2BDT_Wjj_BDT,
+     std::string category_X900GeV_cat_jet_2BDT_Wjj_simple,
+     double output_SM_cat_jet_2BDT_Wjj_BDT,
+     double output_SM_cat_jet_2BDT_Wjj_simple,
+     double mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space,
+     double mvaoutput_bb1l_SM_Wjj_simple_all_phase_space,
+     double output_X900GeV_cat_jet_2BDT_Wjj_BDT,
+     double output_X900GeV_cat_jet_2BDT_Wjj_simple,
                  double evtWeight);
 
   const TH1 *
@@ -50,7 +62,13 @@ public:
 
   void
   bookCategories(TFileDirectory & dir,
-      const std::map<std::string, std::vector<double>> & categories_SM_jets
+      const std::map<std::string, std::vector<double>> & categories_SM_jets,
+      const std::map<std::string, std::vector<double>> & categories_SM_jets_2BDT_Wjj_BDT,
+      const std::map<std::string, std::vector<double>> & categories_SM_jets_2BDT_Wjj_simple,
+      const std::map<std::string, std::vector<double>> & categories_SM_jets_Wjj_BDT,
+      const std::map<std::string, std::vector<double>> & categories_SM_jets_Wjj_simple,
+      const std::map<std::string, std::vector<double>> & categories_X900GeV_jets_2BDT_Wjj_BDT,
+      const std::map<std::string, std::vector<double>> & categories_X900GeV_jets_2BDT_Wjj_simple
   );
 
   /// flag to enable/disable booking & filling of MEM histograms
@@ -121,6 +139,12 @@ public:
 
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_MVA_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_jets_2BDT_Wjj_BDT_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_jets_2BDT_Wjj_simple_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_jets_Wjj_BDT_;
+  std::map<std::string, TH1 *> histograms_by_category_SM_jets_Wjj_simple_;
+  std::map<std::string, TH1 *> histograms_by_category_X900GeV_jets_2BDT_Wjj_BDT_;
+  std::map<std::string, TH1 *> histograms_by_category_X900GeV_jets_2BDT_Wjj_simple_;
 
   int option_; // flag to enable/disable booking & filling of MEM histograms
 };

@@ -926,6 +926,162 @@ int main(int argc, char* argv[])
      {"cat_jet_original",   {}},
      {"cat_jet_rest", {}}
   };*/
+  /*
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wj1.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_BDT_all_phase_space.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_BDT_full_reco_only.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_simple_full_reco_only_noIndPt.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_simple_all_phase_space.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_simple_full_reco_only.pkl
+
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_simple_full_PS.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_BDT_full_PS.pkl
+
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_simple_full_reco.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_BDT_full_reco.pkl
+  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wj1.pkl
+  */
+  // trained on 2016 only
+  std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only    = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wjj_BDT_full_reco.pkl";
+  std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wjj_simple_full_reco.pkl";
+  std::string xgbFileName_bb1l_X900GeV_Wj1                       = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wj1.pkl";
+  //
+  std::string xgbFileName_bb1l_SM_Wj1 = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wj1.pkl";
+  std::string xgbFileName_bb1l_SM_Wjj_BDT_all_phase_space = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_BDT_all_phase_space.pkl";
+  std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_BDT_full_reco_only.pkl";
+  std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_simple_full_reco_only_noIndPt.pkl";
+  std::string xgbFileName_bb1l_SM_Wjj_simple_all_phase_space = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_simple_all_phase_space.pkl";
+  std::vector<std::string> xgbInputVariables_bb1l_SM_Wj1 = {
+    "mT_top_3particle", "mT_W", "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nBJetMedium", "lep_conePt", "met_LD", "HT"
+  };
+  std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_BDT = {
+    "mindr_lep1_jet", "m_Hbb_regCorr", "m_HH",          "mWlep_met_simple", "dR_Hww",         "m_Wjj",        "cosThetaS_Hbb", "cosThetaS_Wjj",        "cosThetaS_WW",           "cosThetaS_HH",            "nBJetMedium", "dR_b1lep", "dR_b2lep", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "lep_conePt", "met_LD", "mT_W", "mT_top_3particle", "HT"
+  };
+  std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_simple = {
+    "mindr_lep1_jet", "m_Hbb_regCorr", "mHH_simple_met", "mWlep_met_simple", "mWW_simple_met", "mWjj_simple", "cosThetaS_Hbb", "cosThetaS_Wjj_simple", "cosThetaS_WW_simple_met", "cosThetaS_HH_simple_met", "nBJetMedium", "dR_b1lep", "dR_b2lep", "lep_conePt", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "met_LD", "HT", "mT_top_3particle", "mT_W"
+  };
+  XGBInterface mva_xgb_bb1l_SM_Wj1(                       xgbFileName_bb1l_SM_Wj1,                        xgbInputVariables_bb1l_SM_Wj1);
+  XGBInterface mva_xgb_bb1l_SM_Wjj_BDT_all_phase_space(   xgbFileName_bb1l_SM_Wjj_BDT_all_phase_space,    xgbInputVariables_bb1l_SM_Wjj_BDT);
+  XGBInterface mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only,     xgbInputVariables_bb1l_SM_Wjj_BDT);
+  XGBInterface mva_xgb_bb1l_SM_Wjj_simple_full_reco_only( xgbFileName_bb1l_SM_Wjj_simple_full_reco_only,  xgbInputVariables_bb1l_SM_Wjj_simple);
+  XGBInterface mva_xgb_bb1l_SM_Wjj_simple_all_phase_space(xgbFileName_bb1l_SM_Wjj_simple_all_phase_space, xgbInputVariables_bb1l_SM_Wjj_simple);
+  XGBInterface mva_xgb_bb1l_X900GeV_Wj1(                       xgbFileName_bb1l_X900GeV_Wj1,                        xgbInputVariables_bb1l_SM_Wj1);
+  XGBInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_all_phase_space(      xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only,    xgbInputVariables_bb1l_SM_Wjj_BDT);
+  XGBInterface mva_xgb_bb1l_X900GeV_Wjj_simple_all_phase_space(   xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only,    xgbInputVariables_bb1l_SM_Wjj_simple);
+
+  ////
+  const std::map<std::string, std::vector<double>> categories_SM_jets_2BDT_Wjj_BDT =
+  {
+     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_resolved",   {}},
+     //
+     {"cat_jet_2BDT_Wjj_BDT_e_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_e_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_m_rest",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_e_rest",   {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_SM_jets_2BDT_Wjj_simple =
+  {
+     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_resolved",   {}},
+     //
+     {"cat_jet_2BDT_Wjj_simple_e_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_e_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_m_rest",   {}},
+     {"cat_jet_2BDT_Wjj_simple_e_rest",   {}}
+  };
+  ////
+  const std::map<std::string, std::vector<double>> categories_SM_jets_Wjj_BDT =
+  {
+     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_resolved",   {}},
+     //
+     {"cat_jet_Wjj_BDT_e_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_BDT_e_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_Wjj_BDT_m_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_BDT_m_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_Wjj_BDT_m_rest",   {}},
+     {"cat_jet_Wjj_BDT_e_rest",   {}},
+  };
+  ////
+  const std::map<std::string, std::vector<double>> categories_SM_jets_Wjj_simple =
+  {
+     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_resolved",   {}},
+     //
+     {"cat_jet_Wjj_simple_e_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_simple_e_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_Wjj_simple_m_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_Wjj_simple_m_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_Wjj_simple_m_rest",   {}},
+     {"cat_jet_Wjj_simple_e_rest",   {}}
+  };
+  ////
+  const std::map<std::string, std::vector<double>> categories_X900GeV_jets_2BDT_Wjj_BDT =
+  {
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_resolved",   {}},
+     //
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_rest",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_rest",   {}}
+  };
+  const std::map<std::string, std::vector<double>> categories_X900GeV_jets_2BDT_Wjj_simple =
+  {
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_Wjj_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_resolved",   {}},
+     //
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_one_jet_to_Wjj_Hbb_boosted",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_one_jet_to_Wjj_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_rest",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_rest",   {}}
+  };
+  ////
 
   struct selHistManagerType
   {
@@ -1072,7 +1228,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
         //
-        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_SM_jets);
+        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_SM_jets, categories_SM_jets_2BDT_Wjj_BDT, categories_SM_jets_2BDT_Wjj_simple, categories_SM_jets_Wjj_BDT, categories_SM_jets_Wjj_simple, categories_X900GeV_jets_2BDT_Wjj_BDT, categories_X900GeV_jets_2BDT_Wjj_simple);
       }
 
       if(isMC && ! skipBooking)
@@ -1309,7 +1465,10 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
+    //if ( analyzedEntries > 100) break;
     histogram_analyzedEntries->Fill(0.);
+    // used half of the HH nonres events for training
+    if ( !(eventInfo.event % 2) && era_string == "2016"  && isHH_rwgt_allowed ) continue;
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
@@ -1772,12 +1931,14 @@ int main(int argc, char* argv[])
     const std::vector<RecoJetAK8> jets_ak8LS = jetReaderAK8LS->read();
     const std::vector<const RecoJetAK8*> jet_ptrs_ak8LS = convert_to_ptrs(jets_ak8LS);
 
+
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("uncleaned AK8 jets (Hbb)", jet_ptrs_ak8);
       printHbb(jet_ptrs_ak8, jetSelectorAK8_Hbb, genBJets);
       printCollection("uncleaned AK8LS jets (Wjj)", jet_ptrs_ak8LS);
       printWjj(jet_ptrs_ak8LS, jetSelectorAK8_Wjj, genWBosons, genWJets);
     }
+    // make the AK8_LS collection here -- outside the Wjjreco function
 
     // select jets from H->bb decay
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
@@ -1794,52 +1955,10 @@ int main(int argc, char* argv[])
     cutFlowTable.update(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
 
-    // X:have a minimal amount of jets to make Wjj
-    int nJet_that_not_bb = 0;
-    if ( selJetsAK8_Hbb.size() > 0 )
-    {
-      for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
-      {
-        const RecoJet * jet1 = *jet1_it;
-        const RecoJetAK8 * jetFat = selJetsAK8_Hbb[0];
-        //const RecoSubjetAK8* selJet1_Wjj_test = jetFat->subJet1();
-        //const RecoSubjetAK8* selJet2_Wjj_test = jetFat->subJet2();
-        //if ( (deltaR(selJet1_Wjj_test->p4(), jet1->p4()) < 0.4 || deltaR(selJet2_Wjj_test ->p4(), jet1->p4()) < 0.4) ) nJet_that_not_bb++;
-        //if ( deltaR(jetFat->p4(), jet1->p4()) < 0.8 ) nJet_that_not_bb++;
-        if ( deltaR(jetFat->p4(), jet1->p4()) < 0.8 ) nJet_that_not_bb++;
-      }
-    } else nJet_that_not_bb = selJetsAK4.size();
-
-    bool new_had_cut = true;
-    //if ( !((selJetsAK4.size() > 3 && ) || ( selJetsAK8.size() == 1 && selJetsAK4.size() > 1 ) || (selJetsAK8.size() > 1)) )
-    //if ( !((selJetsAK4.size() > 3 && selJetsAK8.size() == 0) || ( selJetsAK8.size() == 1 && nJet_that_not_bb > 1 ) || (selJetsAK8.size() > 1)) )
-    if ( !((selJetsAK4.size() > 2) || ( selJetsAK8_Hbb.size() == 1 && nJet_that_not_bb > 0 ) || ( selJetsAK8_Hbb.size() == 0 && selJetsAK8.size() > 0 && nJet_that_not_bb > 1 ) || ( selJetsAK8_Hbb.size() > 0 && selJetsAK8.size() > 1)) )
-    {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS >= #jets to make Hbb and Wjj\n";
-      }
-      continue;
-      new_had_cut = false;
-    }
-    bool new_had_cut_fullreco = true;
-    //if ( !((selJetsAK4.size() > 3 && ) || ( selJetsAK8.size() == 1 && selJetsAK4.size() > 1 ) || (selJetsAK8.size() > 1)) )
-    if ( !((selJetsAK4.size() > 3) || ( selJetsAK8_Hbb.size() == 1 && nJet_that_not_bb > 1 ) || ( selJetsAK8_Hbb.size() == 0 && selJetsAK8.size() > 0 && nJet_that_not_bb > 1 ) || (selJetsAK8_Hbb.size() > 0 && selJetsAK8.size() > 1)) )
-    //if ( !((selJetsAK4.size() > 2 && selJetsAK8.size() == 0) || ( selJetsAK8.size() == 1 && nJet_that_not_bb > 0 ) || (selJetsAK8.size() > 1)) )
-    {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS >= #jets to make Hbb and Wjj\n";
-      }
-      //continue;
-      new_had_cut_fullreco = false;
-    }
-    cutFlowTable.update("#jets to make Hbb and Wjj", evtWeightRecorder.get(central_or_shift_main));
-    cutFlowHistManager->fillHistograms("#jets to make Hbb and Wjj", evtWeightRecorder.get(central_or_shift_main));
-    //*/
-
     // preliminary jet selection to make Hbb possible
-    //if ( !(selJetsAK4.size() > 2 || (selJetsAK8.size() > 0))  ) {
-    //  continue;
-    //}
+    if ( !((selJetsAK4.size() >= 2) || (selJetsAK8_Hbb.size() > 0))  ) {
+      continue;
+    }
 
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
     const selJetsType_Hbb* selJetT_Hbb = nullptr;
@@ -1847,7 +1966,7 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
     double tau21_Hbb = -1.;
-    double m_Hbb_SF = -1.;// jet_ptrsAK8.msoftdrop()
+    double m_Hbb_SF = -1.;
     if ( selJetsT_Hbb.size() >= 1 )
     {
       selJetT_Hbb = &selJetsT_Hbb[0];
@@ -1864,10 +1983,10 @@ int main(int argc, char* argv[])
     ///*
     // X: this should not be a cut -- there should be only a jet multiplicity cut
     if ( !(selJet1_Hbb && selJet2_Hbb) ) {
+      std::cout << "event " << eventInfo.str() << " FAILS >= 2 jets from H->bb selection\n";
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 2 jets from H->bb selection\n";
       }
-      //continue;
       original_jet_cut = false;
     }
     cutFlowTable.update(">= 2 jets from H->bb", evtWeightRecorder.get(central_or_shift_main));
@@ -1889,17 +2008,11 @@ int main(int argc, char* argv[])
 
     int numBJets_loose, numBJets_medium;
     countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
-    /*if ( !(numBJets_medium >= 1) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection\n";
-      }
-      continue;
-    }*/
 
     double m_Hbb    = HbbP4.mass();
     double m_Hbb_regCorr = 0.;
     double m_Hbb_regRes  = 0.;
-    double cosThetaS_Hbb_reg = -100.;
+    double cosThetaS_Hbb_reg = -0.01;
     Particle::LorentzVector HbbP4_reg;
     if ( dynamic_cast<const RecoJet*>(selJet_Hbb_lead) && dynamic_cast<const RecoJet*>(selJet_Hbb_sublead) )
     {
@@ -1915,23 +2028,210 @@ int main(int argc, char* argv[])
       HbbP4_reg = HbbP4;
       m_Hbb_regCorr = HbbP4.mass();
     }
+    /////////////
+    // X: have a minimal amount of jets to make Wjj
+    std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
+    if ( selJetsAK8_Hbb.size() > 0 )
+    {
+      const RecoJetAK8 * jetFat = selJetsAK8_Hbb[0];
+      cleanedJetsAK4_wrtHbb   = jetCleanerAK4_dR08(selJetsAK4, std::vector<const RecoJetBase*>({ jetFat }));
+    } else {
+      // cleanedJetsAK4_wrtHbb   = jetCleanerAK4_dR04(selJetsAK4, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+      // the above was not effective in extremelly rare cases in if the initial selection is done only in jet multiplicity
+      // I will assume that the selJetsAK4 objects are all isolated among them
+      // and just make sure that I remove the AK4 that is the same in pt and eta
+      for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
+      {
+        const RecoJet * jet1 = *jet1_it;
+        if ( !( (jet1->pt() == selJet1_Hbb->pt() && jet1->eta() == selJet1_Hbb->eta()) || (jet1->pt() == selJet2_Hbb->pt() && jet1->eta() == selJet2_Hbb->eta()) ) )
+        {
+          cleanedJetsAK4_wrtHbb.push_back( jet1 );
+        }
+      }
+    }
+    int nJet_that_not_bb = cleanedJetsAK4_wrtHbb.size();
+
+    std::vector<const RecoJetAK8*> selJetsAK8LS_Wjj;
+    std::vector<const RecoJetAK8*> cleanedJetsAK8LS_wrtHbb;
+    int nJet_that_not_jj_aK8LS = 0;
+    ///*
+    // if AK8_LS to Wjj
+    if ( jet_ptrs_ak8LS.size() > 0 )
+    {
+      if ( selJetAK8_Hbb ) {
+        const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
+        cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR16(jet_ptrs_ak8LS, overlaps); // CV: do *not* clean W->jj "fat" jet collection with respect to leptons!
+      } else {
+        cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8LS, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+      }
+      if ( selLepton && selJetsAK8LS_Wjj.size() > 0 )
+      {
+        jetSelectorAK8_Wjj.getSelector().set_lepton(selLepton);
+        selJetsAK8LS_Wjj = jetSelectorAK8_Wjj(cleanedJetsAK8LS_wrtHbb, isHigherPt);
+        const RecoJetAK8 * jetFat = selJetsAK8LS_Wjj[0];
+        for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
+        {
+          const RecoJet * jet1 = *jet1_it;
+          if ( deltaR(jetFat->p4(), jet1->p4()) < 0.8 ) nJet_that_not_jj_aK8LS++;
+        }
+      }
+      else
+      {
+        if ( isDEBUG )
+        {
+          std::cerr << "Warning in <selectJets_Wjj>: Cannot select AK8LS jets, as there is no lepton in the event !!" << std::endl;
+        }
+      }
+    }
+    //*/
+
+    /*
+    // if AK8 to Wjj
+    std::vector<const RecoJetAK8*> selJetsAK8_Wjj;
+    if ( selJetAK8_Hbb ) {
+      // the bellow assures that is not the same object
+      for(auto jet1_it = selJetsAK8.begin(); jet1_it != selJetsAK8.end(); ++jet1_it)
+      {
+        const RecoJetAK8 * jet1 = *jet1_it;
+        if ( !( jet1->pt() == selJetAK8_Hbb->pt() && jet1->eta() == selJetAK8_Hbb->eta() ) )
+        {
+          selJetsAK8_Wjj.push_back( jet1 );
+        }
+      }
+    } else {
+      selJetsAK8_Wjj = jetCleanerAK8_dR08(selJetsAK8, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+    }*/
+
+    bool new_had_cut = true;
+    //if ( !((selJetsAK4.size() > 2) || ( selJetsAK8_Hbb.size() == 1 && nJet_that_not_bb > 0 ) || ( selJetsAK8_Hbb.size() == 0 && selJetsAK8.size() > 0 && nJet_that_not_jj > 1 ) || ( selJetsAK8_Hbb.size() > 0 && selJetsAK8.size() > 1)) )
+    if ( !(
+      // /*
+      // if AK8_LS to Wjj
+      ( selJetsAK8_Hbb.size() == 0   && selJetsAK8LS_Wjj.size() == 0 && selJetsAK4.size() >= 3 ) ||
+      ( selJetsAK8_Hbb.size() >= 1   && selJetsAK8LS_Wjj.size() == 0 && nJet_that_not_bb  >= 1 ) ||
+      ( selJetsAK8LS_Wjj.size() >= 1  )
+      // */
+      /////////////
+      // /*
+      // if AK8 to Wjj
+      /// to Ak8 // ( selJetsAK8_Hbb.size() == 0   && selJetsAK8_Wjj.size() == 0 && selJetsAK4.size() >= 3 ) ||
+      /// to Ak8 // ( selJetsAK8_Hbb.size() >= 1   && selJetsAK8_Wjj.size() == 0 && nJet_that_not_bb  >= 1 ) ||
+      /// to Ak8 // ( selJetsAK8_Wjj.size() >= 1  )
+      // */
+      /////////////
+    )
+    )
+    {
+      if ( run_lumi_eventSelector ) {
+        std::cout << "event " << eventInfo.str() << " FAILS >= #jets to make Hbb and Wjj\n";
+      }
+      continue;
+      new_had_cut = false;
+    }
+    bool new_had_cut_fullreco = true;
+    if ( !(
+      // /*
+      // if AK8_LS to Wjj
+      ( selJetsAK8_Hbb.size() == 0   && selJetsAK8LS_Wjj.size() == 0 && selJetsAK4.size() >= 4 ) ||
+      ( selJetsAK8_Hbb.size() >= 1   && selJetsAK8LS_Wjj.size() == 0 && nJet_that_not_bb  >= 2 ) ||
+      ( selJetsAK8LS_Wjj.size() >= 1  )
+      // */
+      //////////
+      // /*
+      // if AK8 to Wjj
+      /// to Ak8 // ( selJetsAK8_Hbb.size() == 0   && selJetsAK8_Wjj.size() == 0 && selJetsAK4.size() >= 4 ) ||
+      /// to Ak8 // ( selJetsAK8_Hbb.size() >= 1   && selJetsAK8_Wjj.size() == 0 && nJet_that_not_bb  >= 2 ) ||
+      /// to Ak8 // ( selJetsAK8_Wjj.size() >= 1  )
+      // */
+    ))
+    {
+      if ( run_lumi_eventSelector ) {
+        std::cout << "event " << eventInfo.str() << " FAILS >= #jets to make Hbb and Wjj\n";
+      }
+      new_had_cut_fullreco = false;
+    }
+    if ( isDEBUG )
+    {
+      std::cout << "event " << eventInfo.str() << " PASSES >= #jets to make Hbb and Wjj\n";
+      std::cout << "selJetsAK4.size() " << selJetsAK4.size() << " \n";
+      std::cout << "selJetsAK8_Hbb.size() " << selJetsAK8_Hbb.size() << " \n";
+      std::cout << "nJet_that_not_bb " << nJet_that_not_bb << " \n";
+      std::cout << "cleanedJetsAK4_wrtHbb.size() " << cleanedJetsAK4_wrtHbb.size() << " \n";
+      std::cout << "selJetsAK8LS_Wjj.size() " << selJetsAK8LS_Wjj.size() << " \n";
+      std::cout << "nJet_that_not_jj_aK8LS " << nJet_that_not_jj_aK8LS << " \n\n";
+    }
+
+    cutFlowTable.update("#jets to make Hbb and Wjj", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("#jets to make Hbb and Wjj", evtWeightRecorder.get(central_or_shift_main));
 
     // select jets from W->jj decay
-    std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj(
-      jet_ptrs_ak8LS, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj,
-      cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
-      *selJetT_Hbb,
-      selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo);
+    // take Wjj from BDT if not selJetsAK8LS_Wjj.size() > 0
     const selJetsType_Wjj* selJetT_Wjj = nullptr;
     const RecoJetAK8* selJetAK8_Wjj = nullptr;
-    const RecoJetBase* selJet1_Wjj = nullptr;
-    const RecoJetBase* selJet2_Wjj = nullptr;
-    if ( selJetsT_Wjj.size() >= 1 )
+    const RecoJetBase* selJet1_Wjj = nullptr; // to use with the evt-level BDT with reco Wjj-BDT method
+    const RecoJetBase* selJet2_Wjj = nullptr; // to use with the evt-level BDT with reco Wjj-BDT method
+
+    double tau21_Wjj_simple = -1.;
+    double m_Wjj_SF_simple = -1.;
+    const RecoJetBase* selJet1_Wjj_simple = nullptr; // to use with the evt-level BDT with reco Wjj-simple method
+    const RecoJetBase* selJet2_Wjj_simple = nullptr; // to use with the evt-level BDT with reco Wjj-simple method
+    double mass_dist_Wjj = 1000.;
+    bool WjjWasFat = false;
+
+    const RecoMEt met_uncorr = metReader->read();
+    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
+    const Particle::LorentzVector& metP4 = met.p4();
+
+    /*
+    // if AK8 to Wjj
+    if ( selJetsAK8_Wjj.size() >= 1 )
     {
-      selJetT_Wjj = &selJetsT_Wjj[0];
-      selJetAK8_Wjj = selJetT_Wjj->fatjet_;
-      selJet1_Wjj = selJetT_Wjj->jet_or_subjet1_;
-      selJet2_Wjj = selJetT_Wjj->jet_or_subjet2_;
+      selJetAK8_Wjj = selJetsAK8_Wjj[0];
+      selJet1_Wjj = selJetAK8_Wjj->subJet1();
+      selJet2_Wjj = selJetAK8_Wjj->subJet2();
+
+      tau21_Wjj_simple = selJetAK8_Wjj->tau2()/selJetAK8_Wjj->tau1();
+      m_Wjj_SF_simple = selJetAK8_Wjj->msoftdrop();
+      selJet1_Wjj_simple = selJetAK8_Wjj->subJet1();
+      selJet2_Wjj_simple = selJetAK8_Wjj->subJet2();
+      mass_dist_Wjj = std::abs((selJetAK8_Wjj->p4() + selLeptonP4 + metP4).mass() - m_Hbb_regCorr);
+      WjjWasFat = true;
+    }
+    // */
+
+    // /*
+    // if AK8_LS to Wjj
+    if ( selJetsAK8LS_Wjj.size() >= 1 )
+    {
+      selJetAK8_Wjj = selJetsAK8LS_Wjj[0];
+      selJet1_Wjj = selJetAK8_Wjj->subJet1();
+      selJet2_Wjj = selJetAK8_Wjj->subJet2();
+
+      tau21_Wjj_simple = selJetAK8_Wjj->tau2()/selJetAK8_Wjj->tau1();
+      m_Wjj_SF_simple = selJetAK8_Wjj->msoftdrop();
+      selJet1_Wjj_simple = selJetAK8_Wjj->subJet1();
+      selJet2_Wjj_simple = selJetAK8_Wjj->subJet2();
+      mass_dist_Wjj = std::abs((selJetAK8_Wjj->p4() + selLeptonP4 + metP4).mass() - m_Hbb_regCorr);
+      WjjWasFat = true;
+    }
+    // */
+
+    if ( ! WjjWasFat )
+    {
+      // take the resolved jets by the BDT
+      if ( new_had_cut_fullreco  )
+      {
+        std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj_resolved(
+                       cleanedJetsAK4_wrtHbb, selLepton,
+                       jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+                       selBJetsAK4_medium,
+                       mva_Wjj, eventInfo, isDEBUG);
+        selJetT_Wjj = &selJetsT_Wjj[0];
+        selJet1_Wjj = selJetT_Wjj->jet_or_subjet1_;
+        selJet2_Wjj = selJetT_Wjj->jet_or_subjet2_;
+      } else if ( cleanedJetsAK4_wrtHbb.size()  >= 1 ) {
+        selJet1_Wjj = cleanedJetsAK4_wrtHbb[0];
+      }
     }
     std::vector<const RecoJetBase*> selJets_Wjj;
     if ( selJet1_Wjj ) selJets_Wjj.push_back(selJet1_Wjj);
@@ -1952,9 +2252,6 @@ int main(int argc, char* argv[])
       }
     }
 
-    const RecoMEt met_uncorr = metReader->read();
-    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
-    const Particle::LorentzVector& metP4 = met.p4();
     Particle::LorentzVector neutrinoP4_B2G_18_008 = comp_metP4_B2G_18_008(selLeptonP4 + selJetP4_Wjj_lead + selJetP4_Wjj_sublead, metP4.px(), metP4.py(), higgsBosonMass);
     Particle::LorentzVector WlnuP4 = selLeptonP4 + neutrinoP4_B2G_18_008;
     bool isMatched_Wjj = false;
@@ -1962,14 +2259,12 @@ int main(int argc, char* argv[])
     bool isMatched_Wlep = false;
     double genDR_Wjj = 1000.;
     double genDR_Wlep = 1000.;
-    //if ( new_had_cut )
-    //{
     for(auto jet1_it = genWBosons.begin(); jet1_it != genWBosons.end(); ++jet1_it)
     {
       const Particle::LorentzVector jet1 = jet1_it->p4();
       Particle::LorentzVector Wjj = selJetP4_Wjj_lead + selJetP4_Wjj_sublead;
       double DRgenWjj = deltaR(Wjj, jet1);
-      double DRgenWlep = deltaR(WlnuP4, jet1);
+      double DRgenWlep = 1000.; //deltaR(WlnuP4, jet1);
       if ( DRgenWjj < 0.8 ) isMatched_Wjj_fat = true;
       if ( DRgenWjj < 0.4 ) isMatched_Wjj = true;
       if ( DRgenWlep < 0.4 ) isMatched_Wlep = true;
@@ -1977,10 +2272,9 @@ int main(int argc, char* argv[])
       if ( DRgenWjj < genDR_Wjj ) genDR_Wjj = DRgenWjj;
       if ( DRgenWlep < genDR_Wlep ) genDR_Wlep = DRgenWlep;
     }
-    //}
 
     ///*
-    //X: This should not be a cut
+    //X: This should not be a cut -- jet multiplicity cuts were already made
     if ( !(selJet1_Wjj || selJet2_Wjj) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
@@ -1988,116 +2282,39 @@ int main(int argc, char* argv[])
       //continue;
       original_jet_cut = false;
     }//*/
-    // new_had_cut original_jet_cut
-    ///////////////////////////
-    // for now suport both selections
-    if ( !(new_had_cut || original_jet_cut || new_had_cut_fullreco) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
-      }
-      continue;
-    }
     ///////////////////////////
     // simpler to compare
-    // if there is a fat jet and it is not already tagged as Hbb check if it is in mW window
+    // if there is a fat jet and it is not already tagged as Hbb
     // chose the two jets (ordered by pT, that are not the Hbb ones) with closest mass of the Hbb as the Wjj
-
-    double tau21_Wjj_simple = -1.;
-    double m_Wjj_SF_simple = -1.;
-    const RecoJetBase* selJet1_Wjj_simple = nullptr;
-    const RecoJetBase* selJet2_Wjj_simple = nullptr;
-    double mass_dist_Wjj = 1000.;
-    bool WjjWasFat = false;
-    //if ( selJetsAK8.size() > 1 )
-    //{
-      for(auto jet1_it = selJetsAK8.begin(); jet1_it != selJetsAK8.end(); ++jet1_it)
-      {
-        const RecoJetAK8 * jet1 = *jet1_it;
-        if (selJetAK8_Wjj) {
-          if ( jet1->pt() == selJetAK8_Wjj->pt() ) continue;
-        }// else {
-        //  if (selJet1_Wjj_simple->pt() == selJet1_Hbb_pT || selJet2_Wjj_simple->pt() == selJet2_Hbb_pT) continue;
-        //}
-        //selJetAK8_Wjj_simple = selJetsAK8->fatjet_;
-        tau21_Wjj_simple = jet1->tau2()/jet1->tau1();
-        m_Wjj_SF_simple = jet1->msoftdrop();
-        selJet1_Wjj_simple = jet1->subJet1();
-        selJet2_Wjj_simple = jet1->subJet2();
-        //Particle::LorentzVector neutrinoP4_B2G_18_008_teste = comp_metP4_B2G_18_008(selLeptonP4 + selJet1_Wjj_simple->p4() + selJet2_Wjj_simple->p4(), metP4.px(), metP4.py(), higgsBosonMass);
-        //Particle::LorentzVector WlnuP4_teste = selLeptonP4 + neutrinoP4_B2G_18_008_teste;
-        //mass_dist_Wjj = std::abs((selJet1_Wjj_simple->p4() + selJet2_Wjj_simple->p4()  + WlnuP4_teste).mass() - m_Hbb_regCorr);
-        mass_dist_Wjj = std::abs((jet1->p4() + selLeptonP4 + metP4).mass() - m_Hbb_regCorr);
-
-        ////Particle::LorentzVector neutrinoP4_B2G_18_008_teste = comp_metP4_B2G_18_008(selLeptonP4 + selJet1_Wjj_simple->p4() + selJet2_Wjj_simple->p4(), metP4.px(), metP4.py(), m_Hbb_regCorr);
-        ////Particle::LorentzVector WlnuP4_teste = selLeptonP4 + neutrinoP4_B2G_18_008_teste;
-        //mass_dist_Wjj = std::abs((selJet1_Wjj_simple->p4() + selJet2_Wjj_simple->p4()  + WlnuP4_teste).mass() - m_Hbb_regCorr);
-        WjjWasFat = true;
-      }
-    //}
-    // even if there is a fat jet that could be Wjj try to find a resolved pair with mass mWW_test closer to mbb
-    // where mWW_test is computed with the four-vector of neutrino produced in H->WW*->jj lnu decay to each pair,
-    // using Higgs boson mass constraint, as described in Section 3.4.2 of AN-2018/058 (v4)
-    //bool Ak4jet_overlap_bossted_Hbb = false;
-    if ( !WjjWasFat )
+    if ( ! WjjWasFat )
     {
-    for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
-    {
-      const RecoJetBase * jet1 = *jet1_it;
-      if ( jet1->pt() == selJet1_Hbb_pT || jet1->pt() == selJet2_Hbb_pT) continue;
-      /*if ( selJet1_Hbb && selJet2_Hbb )
+      if ( ! new_had_cut_fullreco )
       {
-        if ( deltaR(selJet1_Hbb->p4(), jet1->p4()) < 0.4 || deltaR(selJet2_Hbb->p4(), jet1->p4()) < 0.4 )
+        selJet1_Wjj = cleanedJetsAK4_wrtHbb[0];
+      } else {
+        //for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
+        for(auto jet1_it = cleanedJetsAK4_wrtHbb.begin(); jet1_it != cleanedJetsAK4_wrtHbb.end(); ++jet1_it)
         {
-          //Ak4jet_overlap_bossted_Hbb = true;
-          continue;
-        }
-      }*/
-      if ( selJetAK8_Hbb )
-      {
-        if ( deltaR(selJetAK8_Hbb->p4(), jet1->p4()) < 0.8 ) continue;
-      }
-      if (mass_dist_Wjj == 1000.) selJet1_Wjj_simple = jet1;
+          const RecoJetBase * jet1 = *jet1_it;
+          if (mass_dist_Wjj == 1000.) selJet1_Wjj_simple = jet1;
 
-      for(auto jet2_it = jet1_it + 1; jet2_it != selJetsAK4.end(); ++jet2_it)
-      {
-        const RecoJetBase * jet2 = *jet2_it;
-        if ( jet2->pt() == selJet1_Hbb_pT || jet2->pt() == selJet2_Hbb_pT) continue;
-        /*if ( selJet1_Hbb && selJet2_Hbb )
-        {
-          if ( deltaR(selJet1_Hbb->p4(), jet2->p4()) < 0.4 || deltaR(selJet2_Hbb->p4(), jet2->p4()) < 0.4 )
+          for(auto jet2_it = jet1_it + 1; jet2_it != cleanedJetsAK4_wrtHbb.end(); ++jet2_it)
           {
-            //Ak4jet_overlap_bossted_Hbb = true;
-            continue;
+            const RecoJetBase * jet2 = *jet2_it;
+
+            const double massdiff = std::abs((jet1->p4() + jet2->p4() + selLeptonP4 + metP4).mass() - m_Hbb_regCorr);
+
+            if( massdiff < mass_dist_Wjj )
+            {
+              mass_dist_Wjj = massdiff;
+              selJet1_Wjj_simple = jet1;
+              selJet2_Wjj_simple = jet2;
+            }
           }
-        }*/
-        if ( selJetAK8_Hbb )
-        {
-          if ( deltaR(selJetAK8_Hbb->p4(), jet2->p4()) < 0.8 ) continue;
         }
-
-        //Particle::LorentzVector neutrinoP4_B2G_18_008_teste = comp_metP4_B2G_18_008(selLeptonP4 + jet1->p4() + jet2->p4(), metP4.px(), metP4.py(), higgsBosonMass);
-        //Particle::LorentzVector WlnuP4_teste = selLeptonP4 + neutrinoP4_B2G_18_008_teste;
-        //const double massdiff = std::abs((jet1->p4() + jet2->p4() + WlnuP4_teste).mass() - m_Hbb_regCorr);
-        ///Particle::LorentzVector neutrinoP4_B2G_18_008_teste = comp_metP4_B2G_18_008(selLeptonP4 + jet1->p4() + jet2->p4(), metP4.px(), metP4.py(), m_Hbb_regCorr);
-        ///Particle::LorentzVector WlnuP4_teste = selLeptonP4 + neutrinoP4_B2G_18_008_teste;
-        ///const double massdiff = std::abs((jet1->p4() + jet2->p4() + WlnuP4_teste).mass() - m_Hbb_regCorr);
-        const double massdiff = std::abs((jet1->p4() + jet2->p4() + selLeptonP4 + metP4).mass() - m_Hbb_regCorr);
-
-        if( massdiff < mass_dist_Wjj )
-        {
-          mass_dist_Wjj = massdiff;
-          selJet1_Wjj_simple = jet1;
-          //selJet1_Wjj_simple = jet1;
-          selJet2_Wjj_simple = jet2;
-          //WjjWasFat = false;
-          ////////////////
-          //////////////
-        } //else Ak4jet_overlap_bossted_Hbb = false;
       }
-    }
-    } // if ( !WjjWasFat )
-    //if ( Ak4jet_overlap_bossted_Hbb ) continue;
 
+    }
     Particle::LorentzVector Wjj_simple;
     double mWjj_simple = -1.;
     double pt_Wjj_simple = -1.;
@@ -2141,7 +2358,6 @@ int main(int argc, char* argv[])
       dr_Wj1_b2_simple = deltaR(selJet1_Wjj_simple->p4(), selJetP4_Hbb_sublead);
       dr_Wj1_lep_simple = deltaR(selJet1_Wjj_simple->p4(), selLeptonP4);
     }
-    //pt_Wj1_simple  pt_Wj2_simple  eta_Wj1_simple  eta_Wj2_simple
 
     double mWlep_simple = -1.;
     double pt_Wlep_simple = -1.;
@@ -2166,10 +2382,7 @@ int main(int argc, char* argv[])
     double pt_HH_simple_met  = -1.;
     double eta_HH_simple_met  = -100.;
     double dr_HH_simple_met  = -100.;
-    double cosThetaS_HH_simple_met  = -100.;
-    //
-    bool fails_mD_cut_simple = false;
-    bool fails_centrality_cut_simple = false;
+    double cosThetaS_HH_simple_met  = -0.01;
     //
     bool isMatched_Wjj_simple = false;
     bool isMatched_Wjj_fat_simple = false;
@@ -2187,13 +2400,11 @@ int main(int argc, char* argv[])
     double eta_WW_simple_met = -100.;
     double dr_WW_simple_met = -1.;
 
-    double cosThetaS_Wjj_simple = -100.;
-    double cosThetaS_WW_simple  = -100.;
-    double cosThetaS_WW_simple_met = -100.;
-    double cosThetaS_HH_simple  = -100.;
+    double cosThetaS_Wjj_simple = -0.01;
+    double cosThetaS_WW_simple  = -0.01;
+    double cosThetaS_WW_simple_met = -0.01;
+    double cosThetaS_HH_simple  = -0.01;
 
-    if ( new_had_cut ){
-    //
     Particle::LorentzVector neutrinoP4_B2G_18_008_simple = comp_metP4_B2G_18_008(selLeptonP4 + Wjj_simple, metP4.px(), metP4.py(), higgsBosonMass);
     Particle::LorentzVector Wlep_simple = selLeptonP4 + neutrinoP4_B2G_18_008_simple;
     mWlep_simple = Wlep_simple.mass();
@@ -2253,21 +2464,6 @@ int main(int argc, char* argv[])
     dr_HH_simple_met = deltaR(HbbP4_reg, Wjj_simple + selLeptonP4 + metP4);
     cosThetaS_HH_simple_met = comp_cosThetaStar(HbbP4_reg, Wjj_simple + selLeptonP4 + metP4);
     //
-    //bool fails_mD_cut_simple = false;
-    //bool fails_centrality_cut_simple = false;
-    if (WjjWasFat)
-    {
-      double mD_simple = deltaR(Wjj_simple, Wlep_simple)*0.5*(Wjj_simple  + Wlep_simple).pt();
-      if ( !(mD_simple <= higgsBosonMass)) fails_mD_cut_simple = true;
-      if ( !((pt_WW_simple/mHH_simple) >= 0.3) ) fails_centrality_cut_simple = true;
-      // Xanda: make from that a cut
-    }
-    //
-    //bool isMatched_Wjj_simple = false;
-    //bool isMatched_Wjj_fat_simple = false;
-    //bool isMatched_Wlep_simple = false;
-    //double gendr_Wj1_Wj2j_simple = 1000.;
-    //double genDR_Wlep_simple = 1000.;
     for(auto jet1_it = genWBosons.begin(); jet1_it != genWBosons.end(); ++jet1_it)
     {
       const Particle::LorentzVector jet1 = jet1_it->p4();
@@ -2281,10 +2477,9 @@ int main(int argc, char* argv[])
       if ( DRgenWlep < genDR_Wlep_simple ) genDR_Wlep_simple = DRgenWlep;
 
     }
-    } // end if new_had_cut
 
     // select VBF jet candidates
-    const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+    //const std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(cleanedJetsAK4_wrtLeptons, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
     std::vector<const RecoJet*> cleanedJetsAK4_vbf;
     if ( selJetAK8_Wjj ) {
       std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Wjj };
@@ -2345,29 +2540,29 @@ int main(int argc, char* argv[])
     bool fails_mD_cut = false;
     if ( selJetAK8_Wjj ) {
       Particle::LorentzVector WjjP4 = selJetAK8_Wjj->p4();
-      //Particle::LorentzVector WlnuP4 = selLepton->p4() + neutrinoP4_B2G_18_008;
       double mD = deltaR(WjjP4, WlnuP4)*0.5*(WjjP4 + WlnuP4).pt();
       if ( !(mD <= higgsBosonMass) ) {
-	if ( run_lumi_eventSelector ) {
-	  std::cout << "event " << eventInfo.str() << " FAILS mD < 125 GeV selection\n";
-	}
-	fails_mD_cut = true;
+      	if ( run_lumi_eventSelector ) {
+      	  std::cout << "event " << eventInfo.str() << " FAILS mD < 125 GeV selection\n";
+      	}
+      	fails_mD_cut = true;
+        continue;
       }
     }
     cutFlowTable.update("boosted W->jj: mD < 125 GeV selection", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("boosted W->jj: mD < 125 GeV selection", evtWeightRecorder.get(central_or_shift_main));
 
     // apply cut on event centrality variable, defined in Table 9 of AN-2018/058 (v4)
-    // Xanda: review if that centrality cut be aplied with the simpler method to find boosted
     bool fails_centrality_cut = false;
     if ( selJetAK8_Wjj ) {
       double pT_HWW = (selJetAK8_Wjj->p4() + selLepton->p4() + neutrinoP4_B2G_18_008).pt();
       double mHH = (selJetP4_Hbb_lead + selJetP4_Hbb_sublead + selJetAK8_Wjj->p4() + selLepton->p4() + neutrinoP4_B2G_18_008).mass();
       if ( !((pT_HWW/mHH) >= 0.3) ) {
-	if ( run_lumi_eventSelector ) {
-	  std::cout << "event " << eventInfo.str() << " FAILS pT_HWW/mHH > 0.3 selection\n";
-	}
-	fails_centrality_cut = true;
+      	if ( run_lumi_eventSelector ) {
+      	  std::cout << "event " << eventInfo.str() << " FAILS pT_HWW/mHH > 0.3 selection\n";
+      	}
+      	fails_centrality_cut = true;
+        continue;
       }
     }
     cutFlowTable.update("boosted W->jj: pT_HWW/mHH > 0.3", evtWeightRecorder.get(central_or_shift_main));
@@ -2469,7 +2664,6 @@ int main(int argc, char* argv[])
         Weight_ktScan_toBDT[name_BM] =  1.0;
       }
     }
-
     // compute signal extraction observables
 
     double dR_Hbb   = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
@@ -2481,8 +2675,8 @@ int main(int argc, char* argv[])
     double dR_Wjj   = -1.;
     double dPhi_Wjj = -1.;
     double pT_Wjj   = -1.;
-    double cosThetaS_Wjj = -100.;
-    if ( selJet_Wjj_lead && selJet_Wjj_sublead && original_jet_cut ) {
+    double cosThetaS_Wjj = -0.01;
+    if ( selJet_Wjj_lead && selJet_Wjj_sublead ) {
       cosThetaS_Wjj = comp_cosThetaStar(selJetP4_Wjj_lead, selJetP4_Wjj_sublead);
       m_Wjj    = WjjP4.mass();
       dR_Wjj   = deltaR(selJetP4_Wjj_lead, selJetP4_Wjj_sublead);
@@ -2615,7 +2809,170 @@ int main(int argc, char* argv[])
     mvaInputs_XGB["gen_mHH"] = 750;
     //double mvaoutput_bb1l750 = mva_xgb_bb1l(mvaInputs_XGB);
     double mvaoutput_bb1l750 = -1;
+    //////
+    double mindr_lep1_jet = comp_mindr_jet(*selLepton, selJetsAK4);
+    std::map<std::string, double> mvaInputVariables_list = {
+      {"mindr_lep1_jet",          mindr_lep1_jet},
+      {"m_Hbb_regCorr",           m_Hbb_regCorr},
+      {"m_HH",                    m_HH},
+      {"mWlep_met_simple",        mWlep_met_simple},
+      {"dR_Hww",                  dR_Hww},
+      {"m_Wjj",                   m_Wjj},
+      {"cosThetaS_Hbb",           cosThetaS_Hbb},
+      {"cosThetaS_Wjj",           cosThetaS_Wjj},
+      {"cosThetaS_WW",            cosThetaS_WW},
+      {"cosThetaS_HH",            cosThetaS_HH},
+      {"nBJetMedium",             selBJetsAK4_medium.size()},
+      {"dR_b1lep",                dR_b1lep},
+      {"dR_b2lep",                dR_b2lep},
+      {"lep_conePt",              comp_lep_conePt(*selLepton)},
+      {"selJet1_Hbb_pT",          selJet1_Hbb_pT},
+      {"selJet2_Hbb_pT",          selJet2_Hbb_pT},
+      {"met_LD",                  met_LD},
+      {"mT_W",                    mT_W},
+      {"mT_top_3particle",        mT_top_3particle},
+      {"HT",                      HT},
+      {"mHH_simple_met",          mHH_simple_met},
+      {"mWlep_met_simple",        mWlep_met_simple},
+      {"mWW_simple_met",          mWW_simple_met},
+      {"mWjj_simple",             mWjj_simple},
+      {"cosThetaS_Wjj_simple",    cosThetaS_Wjj_simple},
+      {"cosThetaS_WW_simple_met", cosThetaS_WW_simple_met},
+      {"cosThetaS_HH_simple_met", cosThetaS_HH_simple_met},
+      {"dr_Wj1_lep_simple",       dr_Wj1_lep_simple},
+      {"dr_Wj2_lep_simple",       dr_Wj2_lep_simple}
+    };
+    //////
+    double mvaoutput_bb1l_SM_Wj1 = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space = mva_xgb_bb1l_SM_Wjj_BDT_all_phase_space(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only = mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wjj_simple_full_reco_only = mva_xgb_bb1l_SM_Wjj_simple_full_reco_only(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wjj_simple_all_phase_space = mva_xgb_bb1l_SM_Wjj_simple_all_phase_space(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wj1 = mva_xgb_bb1l_X900GeV_Wj1(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_BDT_all_phase_space(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_simple_all_phase_space(mvaInputVariables_list);
+    if (isDEBUG)  std::cout << "BDT outputs \n" <<
+    "mvaoutput_bb1l_SM_Wj1 = " << mvaoutput_bb1l_SM_Wj1 << "; \n" <<
+    "mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space = " << mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space << "; \n" <<
+    "mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only = " << mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only << "; \n" <<
+    "mvaoutput_bb1l_SM_Wjj_simple_full_reco_only = " << mvaoutput_bb1l_SM_Wjj_simple_full_reco_only << "; \n" <<
+    "mvaoutput_bb1l_SM_Wjj_simple_all_phase_space = " << mvaoutput_bb1l_SM_Wjj_simple_all_phase_space << "; \n" <<
+    "mvaoutput_bb1l_X900GeV_Wj1 = " << mvaoutput_bb1l_X900GeV_Wj1 << "; \n" <<
+    "mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = " << mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only << "; \n" <<
+    "mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only = " << mvaoutput_bb1l_SM_Wjj_simple_all_phase_space << "; \n";
 
+    // Not the smartest way, but in the end we will end up with one type of BDT as baseline
+    // so, I would not invest time on making this smart
+    std::string category_SM_cat_jet_2BDT_Wjj_BDT    = "cat_jet_2BDT_Wjj_BDT";
+    std::string category_SM_cat_jet_2BDT_Wjj_simple = "cat_jet_2BDT_Wjj_simple";
+    std::string category_SM_cat_jet_Wjj_BDT         = "cat_jet_Wjj_BDT";
+    std::string category_SM_cat_jet_Wjj_simple      = "cat_jet_Wjj_simple";
+    std::string category_X900GeV_cat_jet_2BDT_Wjj_BDT    = "cat_jet_2BDT_Wjj_BDT_X900GeV";
+    std::string category_X900GeV_cat_jet_2BDT_Wjj_simple = "cat_jet_2BDT_Wjj_simple_X900GeV";
+    double output_SM_cat_jet_2BDT_Wjj_BDT    = -1.;
+    double output_SM_cat_jet_2BDT_Wjj_simple = -1.;
+    double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = -1.;
+    double output_X900GeV_cat_jet_2BDT_Wjj_simple = -1.;
+    //////////
+    if ( selLepton_type == kElectron )
+    {
+      category_SM_cat_jet_2BDT_Wjj_BDT    += "_e";
+      category_SM_cat_jet_2BDT_Wjj_simple += "_e";
+      category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_e";
+      category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_e";
+      category_SM_cat_jet_Wjj_BDT         += "_e";
+      category_SM_cat_jet_Wjj_simple      += "_e";
+    } else {
+      category_SM_cat_jet_2BDT_Wjj_BDT    += "_m";
+      category_SM_cat_jet_2BDT_Wjj_simple += "_m";
+      category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_m";
+      category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_m";
+      category_SM_cat_jet_Wjj_BDT         += "_m";
+      category_SM_cat_jet_Wjj_simple      += "_m";
+    }
+    ///////////////////////////////////////////////////////
+    // reco Wjj by simple
+    if ( WjjWasFat && (fails_mD_cut || fails_centrality_cut) )
+    {
+      category_SM_cat_jet_2BDT_Wjj_simple += "_rest";
+      category_SM_cat_jet_Wjj_simple      += "_rest";
+      category_SM_cat_jet_2BDT_Wjj_BDT    += "_rest";
+      category_SM_cat_jet_Wjj_BDT         += "_rest";
+      category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_rest";
+      category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_rest";
+    } else if ( selJet1_Wjj_simple && selJet2_Wjj_simple )
+    {
+      category_SM_cat_jet_2BDT_Wjj_simple += "_Wjj_Hbb_reco";
+      category_SM_cat_jet_Wjj_simple      += "_Wjj_Hbb_reco";
+      category_SM_cat_jet_2BDT_Wjj_BDT    += "_Wjj_Hbb_reco";
+      category_SM_cat_jet_Wjj_BDT         += "_Wjj_Hbb_reco";
+      category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_Wjj_Hbb_reco";
+      category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_Wjj_Hbb_reco";
+      output_SM_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_SM_Wjj_simple_full_reco_only;
+      output_SM_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only;
+      output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
+      output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only;
+      if ( WjjWasFat && selJetAK8_Hbb )
+      {
+        category_SM_cat_jet_2BDT_Wjj_simple += "_boosted";
+        category_SM_cat_jet_Wjj_simple      += "_boosted";
+        category_SM_cat_jet_2BDT_Wjj_BDT    += "_boosted";
+        category_SM_cat_jet_Wjj_BDT         += "_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_boosted";
+
+      } else if ( WjjWasFat )
+      {
+        category_SM_cat_jet_2BDT_Wjj_simple += "_Wjj_boosted";
+        category_SM_cat_jet_Wjj_simple      += "_Wjj_boosted";
+        category_SM_cat_jet_2BDT_Wjj_BDT    += "_Wjj_boosted";
+        category_SM_cat_jet_Wjj_BDT         += "_Wjj_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_Wjj_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_Wjj_boosted";
+      } else if ( selJetAK8_Hbb )
+      {
+        category_SM_cat_jet_2BDT_Wjj_simple += "_Hbb_boosted";
+        category_SM_cat_jet_Wjj_simple      += "_Hbb_boosted";
+        category_SM_cat_jet_2BDT_Wjj_BDT    += "_Hbb_boosted";
+        category_SM_cat_jet_Wjj_BDT         += "_Hbb_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_Hbb_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_Hbb_boosted";
+      } else {
+        category_SM_cat_jet_2BDT_Wjj_simple += "_resolved";
+        category_SM_cat_jet_Wjj_simple      += "_resolved";
+        category_SM_cat_jet_2BDT_Wjj_BDT    += "_resolved";
+        category_SM_cat_jet_Wjj_BDT         += "_resolved";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_resolved";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_resolved";
+      }
+    } else {
+      category_SM_cat_jet_2BDT_Wjj_simple += "_one_jet_to_Wjj";
+      category_SM_cat_jet_Wjj_simple      += "_one_jet_to_Wjj";
+      category_SM_cat_jet_2BDT_Wjj_BDT    += "_one_jet_to_Wjj";
+      category_SM_cat_jet_Wjj_BDT         += "_one_jet_to_Wjj";
+      category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_one_jet_to_Wjj";
+      category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_one_jet_to_Wjj";
+      output_SM_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_SM_Wj1;
+      output_SM_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_SM_Wj1;
+      output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wj1;
+      output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wj1;
+      if ( selJetAK8_Hbb )
+      {
+        category_SM_cat_jet_2BDT_Wjj_simple += "_Hbb_boosted";
+        category_SM_cat_jet_Wjj_simple      += "_Hbb_boosted";
+        category_SM_cat_jet_2BDT_Wjj_BDT    += "_Hbb_boosted";
+        category_SM_cat_jet_Wjj_BDT         += "_Hbb_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_Hbb_boosted";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_Hbb_boosted";
+      } else {
+        category_SM_cat_jet_2BDT_Wjj_simple += "_resolved";
+        category_SM_cat_jet_Wjj_simple      += "_resolved";
+        category_SM_cat_jet_2BDT_Wjj_BDT    += "_resolved";
+        category_SM_cat_jet_Wjj_BDT         += "_resolved";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_resolved";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_resolved";
+      }
+    }
     int numElectrons = ( selLepton_type == kElectron ) ?            1 : 0;
     int numMuons     = ( selLepton_type == kMuon     ) ?            1 : 0;
     int type_Hbb     = ( selJetAK8_Hbb               ) ? kHbb_boosted : kHbb_resolved;
@@ -2638,7 +2995,7 @@ int main(int argc, char* argv[])
     }
     ////////////////////////////
     int type_Wjj_simple     = kWjj_resolved;
-    if ( WjjWasFat && !fails_mD_cut_simple && !fails_centrality_cut_simple ) {
+    if ( WjjWasFat && !fails_mD_cut && !fails_centrality_cut ) {
       if ( tau21_Wjj_simple < 0.55 ) type_Wjj_simple = kWjj_boosted_highPurity;
       else type_Wjj_simple = kWjj_boosted_lowPurity;
     }
@@ -2662,31 +3019,26 @@ int main(int argc, char* argv[])
     }
 
 //--- doing categories to datacard only
-    //new_had_cut || original_jet_cut
     std::string category_count = "cat_jet_";
-    if ( new_had_cut  ) // original_jet_cut
+    if ( new_had_cut && ! ( WjjWasFat && (fails_mD_cut || fails_centrality_cut) ) ) // original_jet_cut
     {
       if ( new_had_cut_fullreco  ) {
-        //if (Ak4jet_overlap_bossted_Hbb)
         category_count += "Wjj_Hbb_reco";
-        //else category_count += "Wjj_Hbb_reco_Wjj_overlap_boosted";
       }
       else {
         category_count += "one_jet_to_Wjj";
       }
-    } /*else if (Ak4jet_overlap_bossted_Hbb)
-    {
-      category_count += "Wjj_overlap_boosted";
-    }*/
-    else if ( original_jet_cut ) category_count += "strange";
-    //}
+    }
+    else category_count += "strange";
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
 //--- fill histograms with events passing final selection
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      const double evtWeight = evtWeightRecorder.get(central_or_shift);
+      //const double evtWeight = evtWeightRecorder.get(central_or_shift);
+      const double evtWeight = (era_string == "2016"  && isHH_rwgt_allowed ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
+
       const bool skipFilling = central_or_shift != central_or_shift_main;
       std::map<std::string, double> rwgt_map;
       for(const std::string & evt_cat_str: evt_cat_strs)
@@ -2704,6 +3056,18 @@ int main(int argc, char* argv[])
           rwgt_map[evt_cat_str] = evtWeight;
         }
       }
+      /*if(apply_HH_rwgt) {
+        for(std::size_t bm_list = 0; bm_list < WeightBM.size() ; ++bm_list)
+        {
+          std::string bench;
+          if (bm_list == 0) bench = "SM";
+          else {
+            bench = Form("BM%s", std::to_string(bm_list).data() );
+          }
+          rwgt_map[bench] = evtWeight * WeightBM[bm_list] / HHWeight;
+        }
+      }*/
+
       for (const GenMatchEntry* genMatch : genMatches)
       {
         selHistManagerType* selHistManager = selHistManagers[central_or_shift][genMatch->getIdx()];
@@ -2748,6 +3112,18 @@ int main(int argc, char* argv[])
             nullptr, -1.,
             mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
             category_count,
+            category_SM_cat_jet_2BDT_Wjj_BDT,
+            category_SM_cat_jet_2BDT_Wjj_simple,
+            category_SM_cat_jet_Wjj_BDT,
+            category_SM_cat_jet_Wjj_simple,
+            category_X900GeV_cat_jet_2BDT_Wjj_BDT,
+            category_X900GeV_cat_jet_2BDT_Wjj_simple,
+            output_SM_cat_jet_2BDT_Wjj_BDT,
+            output_SM_cat_jet_2BDT_Wjj_simple,
+            mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space,
+            mvaoutput_bb1l_SM_Wjj_simple_all_phase_space,
+            output_X900GeV_cat_jet_2BDT_Wjj_BDT,
+            output_X900GeV_cat_jet_2BDT_Wjj_simple,
             kv.second
           );
         }
@@ -2776,46 +3152,6 @@ int main(int argc, char* argv[])
           selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
         }
 
-        /*for ( std::vector<categoryEntryType>::const_iterator category = categories_evt.begin();
-              category != categories_evt.end(); ++category ) {
-          if ( (category->numElectrons_    ==             -1 || numElectrons    == category->numElectrons_)    &&
-               (category->numMuons_        ==             -1 || numMuons        == category->numMuons_)        &&
-               (category->numBJets_medium_ ==             -1 || numBJets_medium == category->numBJets_medium_) &&
-               (category->numBJets_loose_  ==             -1 || numBJets_loose  == category->numBJets_loose_)  &&
-               (category->type_Hbb_        == kHbb_undefined || type_Hbb        == category->type_Hbb_)        &&
-               (category->type_Wjj_        == kWjj_undefined || type_Wjj        == category->type_Wjj_)        &&
-               (category->type_vbf_        == kVBF_undefined || type_vbf        == category->type_vbf_)        ) {
-
-            if(selHistManager->evt_in_categories_.find(category->name_) != selHistManager->evt_in_categories_.end())
-            {
-              for(const auto & kv: rwgt_map)
-              {
-                selHistManager->evt_in_categories_[kv.first][category->name_]->fillHistograms(
-                  selElectrons.size(),
-                  selMuons.size(),
-                  selJetsAK4.size(),
-                  selBJetsAK4_loose.size(),
-                  selBJetsAK4_medium.size(),
-                  HT,
-                  STMET,
-                  m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb,
-                  m_Wjj, dR_Wjj, dPhi_Wjj, pT_Wjj,
-                  dR_Hww, dPhi_Hww, pT_Hww, Smin_Hww,
-                  m_HHvis, m_HH, m_HH_B2G_18_008, m_HH_hme, dR_HH, dPhi_HH, pT_HH, Smin_HH,
-                  mT_W, mT_top_2particle, mT_top_3particle,
-                  mvaOutput_Hj_tagger, mvaOutput_Hjj_tagger,
-                  vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
-                  nullptr, -1.,
-                  mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
-                  kv.second
-                );
-              }
-            }
-            if ( selHistManager->lheInfoHistManager_afterCuts_in_categories_.find(category->name_) != selHistManager->lheInfoHistManager_afterCuts_in_categories_.end() ) {
-              selHistManager->lheInfoHistManager_afterCuts_in_categories_[category->name_]->fillHistograms(*lheInfoReader, evtWeight);
-            }
-	  }
-    }*/
       }
     }
 
@@ -2837,8 +3173,6 @@ int main(int argc, char* argv[])
     }
 
     if ( bdt_filler ) {
-
-      double mindr_lep1_jet=comp_mindr_jet(*selLepton, selJetsAK4);
 
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep_pt",                                   selLepton->pt())
