@@ -1465,7 +1465,7 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
-    if ( analyzedEntries > 10000) break;
+    //if ( analyzedEntries > 10000) break;
     histogram_analyzedEntries->Fill(0.);
     // used half of the HH nonres events for training
     if ( !(eventInfo.event % 2) && era_string == "2016"  && isHH_rwgt_allowed ) continue;
