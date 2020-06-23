@@ -1465,7 +1465,7 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
-    //if ( analyzedEntries > 100) break;
+    if ( analyzedEntries > 10000) break;
     histogram_analyzedEntries->Fill(0.);
     // used half of the HH nonres events for training
     if ( !(eventInfo.event % 2) && era_string == "2016"  && isHH_rwgt_allowed ) continue;
@@ -1674,9 +1674,6 @@ int main(int argc, char* argv[])
     const std::vector<const RecoLepton*> fakeableLeptons = pickFirstNobjects(fakeableLeptonsFull, 1);
     const std::vector<const RecoLepton*> tightLeptons = getIntersection(fakeableLeptons, tightLeptonsFull, isHigherConePt);
 
-    const std::vector<const RecoLepton*> fakeableElectronsForTrigger = getIntersection(fakeableLeptons, fakeableElectrons, isHigherConePt);
-    const std::vector<const RecoLepton*> fakeableMuonsForTrigger     = getIntersection(fakeableLeptons, fakeableMuons,     isHigherConePt);
-
     std::vector<const RecoLepton*> selLeptons;
     std::vector<const RecoMuon*> selMuons;
     std::vector<const RecoElectron*> selElectrons;
@@ -1849,14 +1846,12 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("<= 1 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
     // require that trigger paths match event category (with event category based on fakeableLeptons)
-    if ( !((fakeableElectronsForTrigger.size() >= 1 && selTrigger_1e) ||
-           (fakeableMuonsForTrigger.size()     >= 1 && selTrigger_1mu)) ) {
+    if ( !((fakeableElectrons.size() >= 1 && selTrigger_1e) ||
+           (fakeableMuons.size()     >= 1 && selTrigger_1mu)) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
         std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
                   << ", #fakeableMuons = " << fakeableMuons.size()
-                  << ", #fakeableElectronsForTrigger = " << fakeableElectronsForTrigger.size()
-                  << ", #fakeableMuonsForTrigger = " << fakeableMuonsForTrigger.size()
                   << ", selTrigger_1mu = " << selTrigger_1mu
                   << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
       }
@@ -2058,7 +2053,7 @@ int main(int argc, char* argv[])
 
     std::vector<const RecoJetAK8*> selJetsAK8LS_Wjj;
     std::vector<const RecoJetAK8*> cleanedJetsAK8LS_wrtHbb;
-    int nJet_that_not_jj_aK8LS = 0;
+    //int nJet_that_not_jj_aK8LS = 0;
     ///*
     // if AK8_LS to Wjj
     if ( jet_ptrs_ak8LS.size() > 0 )
@@ -2069,16 +2064,10 @@ int main(int argc, char* argv[])
       } else {
         cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8LS, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
       }
-      if ( selLepton && selJetsAK8LS_Wjj.size() > 0 )
+      if ( selLepton )
       {
         jetSelectorAK8_Wjj.getSelector().set_lepton(selLepton);
         selJetsAK8LS_Wjj = jetSelectorAK8_Wjj(cleanedJetsAK8LS_wrtHbb, isHigherPt);
-        const RecoJetAK8 * jetFat = selJetsAK8LS_Wjj[0];
-        for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
-        {
-          const RecoJet * jet1 = *jet1_it;
-          if ( deltaR(jetFat->p4(), jet1->p4()) < 0.8 ) nJet_that_not_jj_aK8LS++;
-        }
       }
       else
       {
@@ -2163,7 +2152,7 @@ int main(int argc, char* argv[])
       std::cout << "nJet_that_not_bb " << nJet_that_not_bb << " \n";
       std::cout << "cleanedJetsAK4_wrtHbb.size() " << cleanedJetsAK4_wrtHbb.size() << " \n";
       std::cout << "selJetsAK8LS_Wjj.size() " << selJetsAK8LS_Wjj.size() << " \n";
-      std::cout << "nJet_that_not_jj_aK8LS " << nJet_that_not_jj_aK8LS << " \n\n";
+      //std::cout << "nJet_that_not_jj_aK8LS " << nJet_that_not_jj_aK8LS << " \n\n";
     }
 
     cutFlowTable.update("#jets to make Hbb and Wjj", evtWeightRecorder.get(central_or_shift_main));
@@ -2220,6 +2209,7 @@ int main(int argc, char* argv[])
       WjjWasFat = true;
     }
     // */
+    if ( WjjWasFat ) std::cout<< " WjjWasFat " << "\n";
 
     if ( ! WjjWasFat )
     {
@@ -2567,7 +2557,7 @@ int main(int argc, char* argv[])
       	  std::cout << "event " << eventInfo.str() << " FAILS pT_HWW/mHH > 0.3 selection\n";
       	}
       	fails_centrality_cut = true;
-        continue;
+        //continue;
       }
     }
     cutFlowTable.update("boosted W->jj: pT_HWW/mHH > 0.3", evtWeightRecorder.get(central_or_shift_main));
@@ -2897,7 +2887,7 @@ int main(int argc, char* argv[])
     }
     ///////////////////////////////////////////////////////
     // reco Wjj by simple
-    if ( WjjWasFat && (fails_mD_cut || fails_centrality_cut) )
+    /*if ( WjjWasFat && (fails_mD_cut || fails_centrality_cut) )
     {
       category_SM_cat_jet_2BDT_Wjj_simple += "_rest";
       category_SM_cat_jet_Wjj_simple      += "_rest";
@@ -2905,7 +2895,8 @@ int main(int argc, char* argv[])
       category_SM_cat_jet_Wjj_BDT         += "_rest";
       category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_rest";
       category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_rest";
-    } else if ( selJet1_Wjj_simple && selJet2_Wjj_simple )
+    } else */
+    if ( selJet1_Wjj_simple && selJet2_Wjj_simple )
     {
       category_SM_cat_jet_2BDT_Wjj_simple += "_Wjj_Hbb_reco";
       category_SM_cat_jet_Wjj_simple      += "_Wjj_Hbb_reco";
@@ -3387,7 +3378,7 @@ int main(int argc, char* argv[])
 
       snm->read(preselMuons, fakeableMuons, tightMuons);
       snm->read(preselElectrons, fakeableElectrons, tightElectrons);
-      snm->read(selJetsAK4, selBJetsAK4_loose.size(), selBJetsAK4_medium.size());
+      //snm->read(selJetsAK4);
       std::vector<const RecoJetAK8*> tmpJetsAK8_Hbb;
       if ( selJetAK8_Hbb ) tmpJetsAK8_Hbb.push_back(selJetAK8_Hbb);
       snm->read(tmpJetsAK8_Hbb, false);
