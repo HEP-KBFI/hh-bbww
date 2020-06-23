@@ -2209,7 +2209,6 @@ int main(int argc, char* argv[])
       WjjWasFat = true;
     }
     // */
-    if ( WjjWasFat ) std::cout<< " WjjWasFat " << "\n";
 
     if ( ! WjjWasFat )
     {
