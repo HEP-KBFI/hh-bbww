@@ -923,26 +923,6 @@ int main(int argc, char* argv[])
      {"cat_jet_Wjj_overlap_boosted",    {}},
      {"cat_jet_Wjj_Hbb_reco_Wjj_overlap_boosted", {}}
   };
-  /*const std::map<std::string, std::vector<double>> categories_SM_jets_original =
-  {
-     {"cat_jet_original",   {}},
-     {"cat_jet_rest", {}}
-  };*/
-  /*
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wj1.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_BDT_all_phase_space.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_BDT_full_reco_only.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_simple_full_reco_only_noIndPt.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_simple_all_phase_space.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_SM_Wjj_simple_full_reco_only.pkl
-
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_simple_full_PS.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_BDT_full_PS.pkl
-
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_simple_full_reco.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wjj_BDT_full_reco.pkl
-  /home/acaan/BMs_HH_bbl/2016_only/hh_bb2l_X900GeV_Wj1.pkl
-  */
   // trained on 2016 only
   std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only    = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wjj_BDT_full_reco.pkl";
   std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wjj_simple_full_reco.pkl";
@@ -972,147 +952,156 @@ int main(int argc, char* argv[])
   XGBInterface mva_xgb_bb1l_X900GeV_Wjj_simple_all_phase_space(   xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only,    xgbInputVariables_bb1l_SM_Wjj_simple);
 
   ////
+  // _HbbFat_WjjFat_HP
+  // _HbbFat_WjjFat_LP
+  // _HbbFat_WjjRes_allReco
+  // _HbbFat_WjjRes_MissJet
+  // _WjjFat_HP
+  // _WjjFat_LP
+  // _Res_allReco
+  // _Res_MissWJet
+  // _Res_MissBJet
   const std::map<std::string, std::vector<double>> categories_SM_jets_2BDT_Wjj_BDT =
   {
      // category name                                    binning (if empty is 100 bins from 0-1)
-     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_allReco_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_Res_allReco_e",   {}},
      //
-     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_allReco_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_Res_allReco_m",   {}},
      //
-     {"cat_jet_2BDT_Wjj_BDT_e_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_m_rest",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_e_rest",   {}}
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_MissJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_Res_MissWJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_MissJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_Res_MissWJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_Res_MissBJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_Res_MissBJet_e",   {}}
   };
   const std::map<std::string, std::vector<double>> categories_SM_jets_2BDT_Wjj_simple =
   {
-     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_allReco_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_Res_allReco_e",   {}},
      //
-     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_allReco_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_Res_allReco_m",   {}},
      //
-     {"cat_jet_2BDT_Wjj_simple_e_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_simple_m_rest",   {}},
-     {"cat_jet_2BDT_Wjj_simple_e_rest",   {}}
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_MissJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_Res_MissWJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_MissJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_Res_MissWJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_Res_MissBJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_Res_MissBJet_e",   {}}
   };
   ////
   const std::map<std::string, std::vector<double>> categories_SM_jets_Wjj_BDT =
   {
-     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_BDT_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjFat_HP_e",   {}},
+     {"cat_jet_Wjj_BDT_WjjFat_HP_e",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjFat_LP_e",   {}},
+     {"cat_jet_Wjj_BDT_WjjFat_LP_e",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjRes_allReco_e",   {}},
+     {"cat_jet_Wjj_BDT_Res_allReco_e",   {}},
      //
-     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_BDT_m_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjFat_HP_m",   {}},
+     {"cat_jet_Wjj_BDT_WjjFat_HP_m",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjFat_LP_m",   {}},
+     {"cat_jet_Wjj_BDT_WjjFat_LP_m",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjRes_allReco_m",   {}},
+     {"cat_jet_Wjj_BDT_Res_allReco_m",   {}},
      //
-     {"cat_jet_Wjj_BDT_e_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_BDT_e_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_Wjj_BDT_m_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_BDT_m_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_Wjj_BDT_m_rest",   {}},
-     {"cat_jet_Wjj_BDT_e_rest",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjRes_MissJet_e",   {}},
+     {"cat_jet_Wjj_BDT_Res_MissWJet_e",   {}},
+     {"cat_jet_Wjj_BDT_HbbFat_WjjRes_MissJet_m",   {}},
+     {"cat_jet_Wjj_BDT_Res_MissWJet_m",   {}},
+     {"cat_jet_Wjj_BDT_Res_MissBJet_m",   {}},
+     {"cat_jet_Wjj_BDT_Res_MissBJet_e",   {}},
   };
   ////
   const std::map<std::string, std::vector<double>> categories_SM_jets_Wjj_simple =
   {
-     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_simple_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjFat_HP_e",   {}},
+     {"cat_jet_Wjj_simple_WjjFat_HP_e",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjFat_LP_e",   {}},
+     {"cat_jet_Wjj_simple_WjjFat_LP_e",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjRes_allReco_e",   {}},
+     {"cat_jet_Wjj_simple_Res_allReco_e",   {}},
      //
-     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_simple_m_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjFat_HP_m",   {}},
+     {"cat_jet_Wjj_simple_WjjFat_HP_m",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjFat_LP_m",   {}},
+     {"cat_jet_Wjj_simple_WjjFat_LP_m",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjRes_allReco_m",   {}},
+     {"cat_jet_Wjj_simple_Res_allReco_m",   {}},
      //
-     {"cat_jet_Wjj_simple_e_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_simple_e_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_Wjj_simple_m_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_Wjj_simple_m_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_Wjj_simple_m_rest",   {}},
-     {"cat_jet_Wjj_simple_e_rest",   {}}
+     {"cat_jet_Wjj_simple_HbbFat_WjjRes_MissJet_e",   {}},
+     {"cat_jet_Wjj_simple_Res_MissWJet_e",   {}},
+     {"cat_jet_Wjj_simple_HbbFat_WjjRes_MissJet_m",   {}},
+     {"cat_jet_Wjj_simple_Res_MissWJet_m",   {}},
+     {"cat_jet_Wjj_simple_Res_MissBJet_m",   {}},
+     {"cat_jet_Wjj_simple_Res_MissBJet_e",   {}}
   };
   ////
   const std::map<std::string, std::vector<double>> categories_X900GeV_jets_2BDT_Wjj_BDT =
   {
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_allReco_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_Res_allReco_e",   {}},
      //
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_allReco_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_Res_allReco_m",   {}},
      //
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_m_rest",   {}},
-     {"cat_jet_2BDT_Wjj_BDT_X900GeV_e_rest",   {}}
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_MissJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissWJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_MissJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissWJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissBJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissBJet_e",   {}}
   };
   const std::map<std::string, std::vector<double>> categories_X900GeV_jets_2BDT_Wjj_simple =
   {
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_HP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_LP_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_allReco_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_Res_allReco_e",   {}},
      //
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_Wjj_boosted_HP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_Wjj_boosted_LP",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_Wjj_Hbb_reco_resolved",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_HP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_LP_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_allReco_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_Res_allReco_m",   {}},
      //
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_one_jet_to_Wjj_Hbb_boosted",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_one_jet_to_Wjj_resolved",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_m_rest",   {}},
-     {"cat_jet_2BDT_Wjj_simple_X900GeV_e_rest",   {}}
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_MissJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissWJet_e",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_MissJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissWJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissBJet_m",   {}},
+     {"cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissBJet_e",   {}}
   };
   ////
 
@@ -2849,10 +2838,149 @@ int main(int argc, char* argv[])
     std::string category_SM_cat_jet_Wjj_simple      = "cat_jet_Wjj_simple";
     std::string category_X900GeV_cat_jet_2BDT_Wjj_BDT    = "cat_jet_2BDT_Wjj_BDT_X900GeV";
     std::string category_X900GeV_cat_jet_2BDT_Wjj_simple = "cat_jet_2BDT_Wjj_simple_X900GeV";
-    double output_SM_cat_jet_2BDT_Wjj_BDT    = -1.;
-    double output_SM_cat_jet_2BDT_Wjj_simple = -1.;
-    double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = -1.;
-    double output_X900GeV_cat_jet_2BDT_Wjj_simple = -1.;
+    double output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
+    double output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wjj_simple_all_phase_space;
+    double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only;
+    double output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
+    ///////
+    /// making the subcategories following Christian's fluxogram
+    // _HbbFat_WjjFat_HP
+    // _HbbFat_WjjFat_LP
+    // _HbbFat_WjjRes_allReco
+    // _HbbFat_WjjRes_MissJet
+    // _WjjFat_HP
+    // _WjjFat_LP
+    // _Res_allReco
+    // _Res_MissWJet
+    // _Res_MissBJet
+    if ( selJetAK8_Hbb )
+    {
+      category_SM_cat_jet_2BDT_Wjj_simple       += "_HbbFat";
+      category_SM_cat_jet_Wjj_simple            += "_HbbFat";
+      category_SM_cat_jet_2BDT_Wjj_BDT          += "_HbbFat";
+      category_SM_cat_jet_Wjj_BDT               += "_HbbFat";
+      category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_HbbFat";
+      category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_HbbFat";
+      if ( WjjWasFat )
+      {
+        category_SM_cat_jet_2BDT_Wjj_simple       += "_WjjFat";
+        category_SM_cat_jet_Wjj_simple            += "_WjjFat";
+        category_SM_cat_jet_2BDT_Wjj_BDT          += "_WjjFat";
+        category_SM_cat_jet_Wjj_BDT               += "_WjjFat";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_WjjFat";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_WjjFat";
+        if ( !fails_mD_cut && !fails_centrality_cut && tau21_Wjj_simple < 0.55 )
+        {
+          category_SM_cat_jet_2BDT_Wjj_simple += "_HP";
+          category_SM_cat_jet_Wjj_simple      += "_HP";
+          category_SM_cat_jet_2BDT_Wjj_BDT    += "_HP";
+          category_SM_cat_jet_Wjj_BDT         += "_HP";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_HP";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_HP";
+        } else {
+          category_SM_cat_jet_2BDT_Wjj_simple += "_LP";
+          category_SM_cat_jet_Wjj_simple      += "_LP";
+          category_SM_cat_jet_2BDT_Wjj_BDT    += "_LP";
+          category_SM_cat_jet_Wjj_BDT         += "_LP";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_LP";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_LP";
+        }
+      } else {
+        category_SM_cat_jet_2BDT_Wjj_simple       += "_WjjRes";
+        category_SM_cat_jet_Wjj_simple            += "_WjjRes";
+        category_SM_cat_jet_2BDT_Wjj_BDT          += "_WjjRes";
+        category_SM_cat_jet_Wjj_BDT               += "_WjjRes";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_WjjRes";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_WjjRes";
+        if ( selJet1_Wjj_simple && selJet2_Wjj_simple )
+        {
+          category_SM_cat_jet_2BDT_Wjj_simple       += "_allReco";
+          category_SM_cat_jet_Wjj_simple            += "_allReco";
+          category_SM_cat_jet_2BDT_Wjj_BDT          += "_allReco";
+          category_SM_cat_jet_Wjj_BDT               += "_allReco";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_allReco";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_allReco";
+        } else {
+          category_SM_cat_jet_2BDT_Wjj_simple       += "_MissJet";
+          category_SM_cat_jet_Wjj_simple            += "_MissJet";
+          category_SM_cat_jet_2BDT_Wjj_BDT          += "_MissJet";
+          category_SM_cat_jet_Wjj_BDT               += "_MissJet";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_MissJet";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_MissJet";
+
+          // in the case of the missing W jet use the BDT made fpr this phase space
+          output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_SM_Wj1;
+          output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wj1;
+          output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wj1;
+          output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wj1;
+        }
+      }
+    } else {
+      if ( WjjWasFat )
+      {
+        category_SM_cat_jet_2BDT_Wjj_simple       += "_WjjFat";
+        category_SM_cat_jet_Wjj_simple            += "_WjjFat";
+        category_SM_cat_jet_2BDT_Wjj_BDT          += "_WjjFat";
+        category_SM_cat_jet_Wjj_BDT               += "_WjjFat";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_WjjFat";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_WjjFat";
+        if ( !fails_mD_cut && !fails_centrality_cut && tau21_Wjj_simple < 0.55 )
+        {
+          category_SM_cat_jet_2BDT_Wjj_simple += "_HP";
+          category_SM_cat_jet_Wjj_simple      += "_HP";
+          category_SM_cat_jet_2BDT_Wjj_BDT    += "_HP";
+          category_SM_cat_jet_Wjj_BDT         += "_HP";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_HP";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_HP";
+        } else {
+          category_SM_cat_jet_2BDT_Wjj_simple += "_LP";
+          category_SM_cat_jet_Wjj_simple      += "_LP";
+          category_SM_cat_jet_2BDT_Wjj_BDT    += "_LP";
+          category_SM_cat_jet_Wjj_BDT         += "_LP";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_LP";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_LP";
+        }
+      } else {
+        category_SM_cat_jet_2BDT_Wjj_simple       += "_Res";
+        category_SM_cat_jet_Wjj_simple            += "_Res";
+        category_SM_cat_jet_2BDT_Wjj_BDT          += "_Res";
+        category_SM_cat_jet_Wjj_BDT               += "_Res";
+        category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_Res";
+        category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_Res";
+        // here I added the missing b-jet when the case -- now that will be empty
+        if ( selJet1_Wjj_simple && selJet2_Wjj_simple && selJet1_Hbb && selJet2_Hbb)
+        {
+          category_SM_cat_jet_2BDT_Wjj_simple       += "_allReco";
+          category_SM_cat_jet_Wjj_simple            += "_allReco";
+          category_SM_cat_jet_2BDT_Wjj_BDT          += "_allReco";
+          category_SM_cat_jet_Wjj_BDT               += "_allReco";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_allReco";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_allReco";
+        } else if ( ! ( selJet1_Wjj_simple && selJet2_Wjj_simple ) )
+        {
+          category_SM_cat_jet_2BDT_Wjj_simple       += "_MissWJet";
+          category_SM_cat_jet_Wjj_simple            += "_MissWJet";
+          category_SM_cat_jet_2BDT_Wjj_BDT          += "_MissWJet";
+          category_SM_cat_jet_Wjj_BDT               += "_MissWJet";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_MissWJet";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_MissWJet";
+
+          // in the case of the missing W jet use the BDT made fpr this phase space
+          output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_SM_Wj1;
+          output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wj1;
+          output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wj1;
+          output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wj1;
+        } else
+        {
+          category_SM_cat_jet_2BDT_Wjj_simple       += "_MissBJet";
+          category_SM_cat_jet_Wjj_simple            += "_MissBJet";
+          category_SM_cat_jet_2BDT_Wjj_BDT          += "_MissBJet";
+          category_SM_cat_jet_Wjj_BDT               += "_MissBJet";
+          category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_MissBJet";
+          category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_MissBJet";
+        }
+      }
+    }
     //////////
     if ( selLepton_type == kElectron )
     {
@@ -2870,9 +2998,10 @@ int main(int argc, char* argv[])
       category_SM_cat_jet_Wjj_BDT         += "_m";
       category_SM_cat_jet_Wjj_simple      += "_m";
     }
+
     ///////////////////////////////////////////////////////
     // reco Wjj by simple
-    if ( selJet1_Wjj_simple && selJet2_Wjj_simple )
+    /*if ( selJet1_Wjj_simple && selJet2_Wjj_simple )
     {
       category_SM_cat_jet_2BDT_Wjj_simple += "_Wjj_Hbb_reco";
       category_SM_cat_jet_Wjj_simple      += "_Wjj_Hbb_reco";
@@ -2975,7 +3104,8 @@ int main(int argc, char* argv[])
         category_X900GeV_cat_jet_2BDT_Wjj_BDT     += "_resolved";
         category_X900GeV_cat_jet_2BDT_Wjj_simple  += "_resolved";
       }
-    }
+    }*/
+
     int numElectrons = ( selLepton_type == kElectron ) ?            1 : 0;
     int numMuons     = ( selLepton_type == kMuon     ) ?            1 : 0;
     int type_Hbb     = ( selJetAK8_Hbb               ) ? kHbb_boosted : kHbb_resolved;
