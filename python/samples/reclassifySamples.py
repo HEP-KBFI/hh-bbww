@@ -1,4 +1,4 @@
-from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples_multilepton
+from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples as reclassifySamples_multilepton
 
 def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None):
 
