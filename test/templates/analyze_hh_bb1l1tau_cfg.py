@@ -72,6 +72,7 @@ process.analyze_hh_bb1l1tau = cms.PSet(
     lumiScale = cms.VPSet(),
     apply_genWeight = cms.bool(True),
     apply_DYMCReweighting = cms.bool(False),
+    apply_DYMCNormScaleFactors = cms.bool(False),
     apply_topPtReweighting = cms.string(''),
     apply_l1PreFireWeight = cms.bool(True),
     apply_hlt_filter = cms.bool(False),
