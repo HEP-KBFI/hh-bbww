@@ -15,8 +15,12 @@ enum class FloatVariableType_bbww
 //--- MET/MHT
   trigger_SF,
   lepton_IDSF,
+  lepton_IDSF_recoToLoose,
+  lepton_IDSF_looseToTight,
   btag_SF,
   topPt_wgt,
+  fakeRate,
+  L1prefire,
   PFMET,
   PFMETphi,
   HME,

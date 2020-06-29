@@ -18,8 +18,8 @@ process.fwliteOutput = cms.PSet(
 
 process.analyze_hh_bbww_inclusive = cms.PSet(
     treeName = cms.string('Events'),
-    process = cms.string('signal'),
-    era = cms.string('2017'),
+    process = cms.string(''),
+    era = cms.string(''),
 
     triggers_1e = cms.vstring(),
     triggers_2e = cms.vstring(),
@@ -41,6 +41,8 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
 
     isMC = cms.bool(True),
     central_or_shift = cms.string('central'),
+    apply_topPtReweighting = cms.string(''),
+    apply_l1PreFireWeight = cms.bool(True),
 
     branchName_electrons = cms.string('Electron'),
     branchName_muons = cms.string('Muon'),

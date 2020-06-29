@@ -59,7 +59,7 @@ SyncNtupleManager_bbww::initializeBranches()
   const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
   const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
   const std::string n_loose_bjet_str      = Form("n_loose_%s",       bjstr);
-  const std::string n_medium_bjet_str      = Form("n_medium_%s",       bjstr);
+  const std::string n_medium_bjet_str     = Form("n_medium_%s",      bjstr);
 
   setBranches(
     nEvent,                   "event",
@@ -85,18 +85,22 @@ SyncNtupleManager_bbww::initializeBranches()
     n_medium_bjet,            n_medium_bjet_str,
 
 //--- MET/MHT
-    floatMap[FloatVariableType_bbww::trigger_SF],  "trigger_SF",
-    floatMap[FloatVariableType_bbww::lepton_IDSF], "lepton_IDSF",
-    floatMap[FloatVariableType_bbww::btag_SF],     "btag_SF",
-    floatMap[FloatVariableType_bbww::topPt_wgt],   "topPt_wgt",
-    floatMap[FloatVariableType_bbww::PFMET],       "PFMET",
-    floatMap[FloatVariableType_bbww::PFMETphi],    "PFMETphi",
-    floatMap[FloatVariableType_bbww::HME],         "HME",
-    floatMap[FloatVariableType_bbww::MEM_LR],      "MEM_LR",
-    floatMap[FloatVariableType_bbww::MEM_LR_up],   "MEM_LR_up",
-    floatMap[FloatVariableType_bbww::MEM_LR_down], "MEM_LR_down",
-    floatMap[FloatVariableType_bbww::PU_weight],   "PU_weight",
-    floatMap[FloatVariableType_bbww::MC_weight],   "MC_weight"
+    floatMap[FloatVariableType_bbww::trigger_SF],               "trigger_SF",
+    floatMap[FloatVariableType_bbww::lepton_IDSF],              "lepton_IDSF",
+    floatMap[FloatVariableType_bbww::btag_SF],                  "btag_SF",
+    floatMap[FloatVariableType_bbww::topPt_wgt],                "topPt_wgt",
+    floatMap[FloatVariableType_bbww::fakeRate],                 "fakeRate",
+    floatMap[FloatVariableType_bbww::L1prefire],                "L1prefire",
+    floatMap[FloatVariableType_bbww::lepton_IDSF_recoToLoose],  "lepton_IDSF_recoToLoose",
+    floatMap[FloatVariableType_bbww::lepton_IDSF_looseToTight], "lepton_IDSF_looseToTight",
+    floatMap[FloatVariableType_bbww::PFMET],                    "PFMET",
+    floatMap[FloatVariableType_bbww::PFMETphi],                 "PFMETphi",
+    floatMap[FloatVariableType_bbww::HME],                      "HME",
+    floatMap[FloatVariableType_bbww::MEM_LR],                   "MEM_LR",
+    floatMap[FloatVariableType_bbww::MEM_LR_up],                "MEM_LR_up",
+    floatMap[FloatVariableType_bbww::MEM_LR_down],              "MEM_LR_down",
+    floatMap[FloatVariableType_bbww::PU_weight],                "PU_weight",
+    floatMap[FloatVariableType_bbww::MC_weight],                "MC_weight"
   );
 
   setBranches(

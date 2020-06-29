@@ -3507,6 +3507,24 @@ int main(int argc, char* argv[])
       const bool is_resolved = type_Hbb == kHbb_resolved && type_Wjj == kWjj_resolved;
       snm->read(is_boosted, is_semiboosted, is_resolved);
 
+      const double leptonSF = evtWeightRecorder.get_leptonIDSF("central");
+      const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
+      const double btagSF = evtWeightRecorder.get_btag("central");
+      const double topPtWeight = evtWeightRecorder.get_toppt_rwgt("central");
+      const double fakeRate = evtWeightRecorder.get_FR("central");
+      const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
+      const double leptonSF_recoToLoose = evtWeightRecorder.get_leptonIDSF_recoToLoose("central");
+      const double leptonSF_looseToTight = evtWeightRecorder.get_leptonIDSF_looseToTight("central");
+
+      snm->read(triggerSF,                              FloatVariableType_bbww::trigger_SF);
+      snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
+      snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
+      snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
+      snm->read(topPtWeight,                            FloatVariableType_bbww::topPt_wgt);
+      snm->read(l1Prefire,                              FloatVariableType_bbww::L1prefire);
+      snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
+      snm->read(leptonSF_looseToTight,                  FloatVariableType_bbww::lepton_IDSF_looseToTight);
+      snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
