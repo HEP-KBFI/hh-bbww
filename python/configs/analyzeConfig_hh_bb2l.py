@@ -111,17 +111,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
     self.lepton_charge_selections = lepton_charge_selections
-    run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
-    if self.era not in [ '2016', '2017', '2018' ]:
-      logging.warning('mcClosure for lepton FR not possible for era %s' % self.era)
-      run_mcClosure = False
-    if run_mcClosure:
-      # Run MC closure jobs only if the analysis is run w/ (at least some) systematic uncertainties
-      #self.lepton_selections.extend([ "Fakeable_mcClosure_all" ]) #TODO
-      pass
 
     self.apply_leptonGenMatching = True
-    if run_mcClosure:
+    if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
     self.central_or_shifts_fr = systematics.FRe_shape + systematics.FRm_shape
     self.pruneSystematics()

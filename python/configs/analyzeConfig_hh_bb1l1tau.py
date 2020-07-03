@@ -100,11 +100,10 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
     self.hadTau_mva_wp = hadTau_mva_wp
     self.chargeSumSelections = chargeSumSelections
     self.applyFakeRateWeights = applyFakeRateWeights
-    run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
 
     self.apply_leptonGenMatching = True
     self.apply_hadTauGenMatching = True
-    if run_mcClosure:
+    if self.run_mcClosure:
       self.lepton_and_hadTau_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m", "Fakeable_mcClosure_t" ])
     self.central_or_shifts_fr = systematics.FR_all
     self.pruneSystematics()
