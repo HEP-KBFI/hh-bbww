@@ -94,9 +94,10 @@ if "sync" not in mode:
 
 if mode == "default":
   samples = load_samples(era)
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo_noincl', 'wjets_incl' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, load_dy = True, load_wjets = True)
+  samples = load_samples_stitched(samples, era, [ 'dy_lo', 'wjets_noincl' ])
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
