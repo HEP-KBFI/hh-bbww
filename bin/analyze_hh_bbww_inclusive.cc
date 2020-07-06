@@ -34,6 +34,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
 #include "tthAnalysis/HiggsToTauTau/interface/L1PreFiringWeightReader.h" // L1PreFiringWeightReader
+#include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
@@ -123,6 +124,7 @@ main(int argc,
   const std::string apply_topPtReweighting_str = cfg_analyze.getParameter<std::string>("apply_topPtReweighting");
   const bool apply_topPtReweighting = ! apply_topPtReweighting_str.empty();
   const bool apply_l1PreFireWeight = cfg_analyze.getParameter<bool>("apply_l1PreFireWeight");
+  const bool apply_btagSFRatio = cfg_analyze.getParameter<bool>("applyBtagSFRatio");
 
   std::vector<std::string> central_or_shifts_local = { central_or_shift };
   checkOptionValidity(central_or_shift, isMC);
@@ -221,6 +223,13 @@ main(int argc,
   {
     l1PreFiringWeightReader = new L1PreFiringWeightReader(era);
     inputTree->registerReader(l1PreFiringWeightReader);
+  }
+
+  BtagSFRatioFacility * btagSFRatioFacility = nullptr;
+  if(apply_btagSFRatio)
+  {
+    const edm::ParameterSet btagSFRatio = cfg_analyze.getParameterSet("btagSFRatio");
+    btagSFRatioFacility = new BtagSFRatioFacility(btagSFRatio);
   }
 
 //--- declare particle collections
@@ -469,6 +478,10 @@ main(int argc,
     std::vector<const RecoJet*> selBJets_loose = jetSelectorAK4_bTagLoose(selJets);
     std::vector<const RecoJet*> selBJets_medium = jetSelectorAK4_bTagMedium(selJets);
     evtWeightRecorder.record_btagWeight(selJets);
+    if(btagSFRatioFacility)
+    {
+      evtWeightRecorder.record_btagSFRatio(btagSFRatioFacility, selJets.size());
+    }
 
     if(isDEBUG)
     {
@@ -610,6 +623,7 @@ main(int argc,
     snm->read(lepton_IDSF_recoToLoose, FloatVariableType_bbww::lepton_IDSF_recoToLoose);
     snm->read(lepton_IDSF_looseToTight, FloatVariableType_bbww::lepton_IDSF_looseToTight);
     snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
+    snm->read(evtWeightRecorder.get_btagSFRatio("central"), FloatVariableType_bbww::btag_SF_ratio);
     snm->read(preselMuons, fakeableMuons, tightMuons);
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order

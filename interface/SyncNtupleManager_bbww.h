@@ -18,6 +18,7 @@ enum class FloatVariableType_bbww
   lepton_IDSF_recoToLoose,
   lepton_IDSF_looseToTight,
   btag_SF,
+  btag_SF_ratio,
   topPt_wgt,
   fakeRate,
   L1prefire,

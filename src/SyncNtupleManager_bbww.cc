@@ -88,6 +88,7 @@ SyncNtupleManager_bbww::initializeBranches()
     floatMap[FloatVariableType_bbww::trigger_SF],               "trigger_SF",
     floatMap[FloatVariableType_bbww::lepton_IDSF],              "lepton_IDSF",
     floatMap[FloatVariableType_bbww::btag_SF],                  "btag_SF",
+    floatMap[FloatVariableType_bbww::btag_SF_ratio],            "btag_SF_ratio",
     floatMap[FloatVariableType_bbww::topPt_wgt],                "topPt_wgt",
     floatMap[FloatVariableType_bbww::fakeRate],                 "fakeRate",
     floatMap[FloatVariableType_bbww::L1prefire],                "L1prefire",
