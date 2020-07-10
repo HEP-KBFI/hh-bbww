@@ -434,7 +434,7 @@ int main(int argc, char* argv[])
   const bool isMC_ttH = process_string == "TTH";
   const bool isMC_EWK = process_string == "WZ" || process_string == "ZZ";
 
-  const bool take_Wjj_boosted_from_AK8_LS = true;
+  const bool take_Wjj_boosted_from_AK8_LS = false;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -2840,8 +2840,8 @@ int main(int argc, char* argv[])
     std::string category_X900GeV_cat_jet_2BDT_Wjj_simple = "cat_jet_2BDT_Wjj_simple_X900GeV";
     double output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
     double output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wjj_simple_all_phase_space;
-    double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only;
-    double output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
+    double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
+    double output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only;
     ///////
     /// making the subcategories following Christian's fluxogram
     // _HbbFat_WjjFat_HP
