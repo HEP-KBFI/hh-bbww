@@ -104,10 +104,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.apply_hadTauVeto = apply_hadTauVeto
     self.hadTau_mva_wp_veto = hadTau_mva_wp_veto
     self.applyFakeRateWeights = applyFakeRateWeights
-    run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
 
     self.apply_leptonGenMatching = True
-    if run_mcClosure:
+    if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
     self.central_or_shifts_fr = systematics.FRe_shape + systematics.FRm_shape
     self.pruneSystematics()

@@ -92,6 +92,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
 #include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface.h" // HHWeightInterface
+#include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors
+#include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 
@@ -234,7 +236,9 @@ int main(int argc, char* argv[])
   edm::VParameterSet lumiScale = cfg_analyze.getParameter<edm::VParameterSet>("lumiScale");
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
   bool apply_l1PreFireWeight = cfg_analyze.getParameter<bool>("apply_l1PreFireWeight");
+  bool apply_btagSFRatio = cfg_analyze.getParameter<bool>("applyBtagSFRatio");
   bool apply_DYMCReweighting = cfg_analyze.getParameter<bool>("apply_DYMCReweighting");
+  bool apply_DYMCNormScaleFactors = cfg_analyze.getParameter<bool>("apply_DYMCNormScaleFactors");
   std::string apply_topPtReweighting_str = cfg_analyze.getParameter<std::string>("apply_topPtReweighting");
   bool apply_topPtReweighting = ! apply_topPtReweighting_str.empty();
   bool apply_hlt_filter = cfg_analyze.getParameter<bool>("apply_hlt_filter");
@@ -297,8 +301,14 @@ int main(int argc, char* argv[])
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
-  if ( apply_DYMCReweighting ) {
+  if(apply_DYMCReweighting)
+  {
     dyReweighting = new DYMCReweighting(era);
+  }
+  DYMCNormScaleFactors * dyNormScaleFactors = nullptr;
+  if(apply_DYMCNormScaleFactors)
+  {
+    dyNormScaleFactors = new DYMCNormScaleFactors(era);
   }
 
   edm::ParameterSet cfg_dataToMCcorrectionInterface;
@@ -354,8 +364,6 @@ int main(int argc, char* argv[])
   bool redoGenMatching = cfg_analyze.getParameter<bool>("redoGenMatching");
   bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
   bool genMatchingByIndex = cfg_analyze.getParameter<bool>("genMatchingByIndex");
-
-  std::string branchName_genTauLeptons = cfg_analyze.getParameter<std::string>("branchName_genTauLeptons");
 
   bool selectBDT = ( cfg_analyze.exists("selectBDT") ) ? cfg_analyze.getParameter<bool>("selectBDT") : false;
 
@@ -452,6 +460,13 @@ int main(int argc, char* argv[])
     inputTree->registerReader(l1PreFiringWeightReader);
   }
 
+  BtagSFRatioFacility * btagSFRatioFacility = nullptr;
+  if(apply_btagSFRatio)
+  {
+    const edm::ParameterSet btagSFRatio = cfg_analyze.getParameterSet("btagSFRatio");
+    btagSFRatioFacility = new BtagSFRatioFacility(btagSFRatio);
+  }
+
   std::map<std::string, MEMOutputReader_hh_bb2l *> memReader;
   for(auto BMlocal : memReader) BMlocal.second = nullptr;
   std::map<std::string, MEMOutputReader_hh_bb2l *> memReader_missingBjet;
@@ -543,12 +558,6 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
-
-  GenParticleReader* genTauLeptonReader = nullptr;
-  if ( isMC && apply_DYMCReweighting ) {
-    genTauLeptonReader = new GenParticleReader(branchName_genTauLeptons);
-    inputTree->registerReader(genTauLeptonReader);
-  }
 
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
@@ -1037,15 +1046,15 @@ int main(int argc, char* argv[])
       }
     }
 
-    std::vector<GenParticle> genTauLeptons;
-    if ( isMC && apply_DYMCReweighting ) {
-      genTauLeptons = genTauLeptonReader->read();
-    }
-
+    std::vector<GenParticle> genLeptonsDY;
     if(isMC)
     {
+      for(const GenParticle & genLepton: genLeptons)
+      {
+        genLeptonsDY.push_back(genLepton);
+      }
       if(apply_genWeight)         evtWeightRecorder.record_genWeight(boost::math::sign(eventInfo.genWeight));
-      if(apply_DYMCReweighting)   evtWeightRecorder.record_dy_rwgt(dyReweighting, genTauLeptons);
+      if(apply_DYMCReweighting)   evtWeightRecorder.record_dy_rwgt(dyReweighting, genLeptonsDY);
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
@@ -1424,10 +1433,21 @@ int main(int argc, char* argv[])
 
     if(isMC)
     {
+      if(apply_DYMCNormScaleFactors)
+      {
+        evtWeightRecorder.record_dy_norm(
+          dyNormScaleFactors, genLeptonsDY, selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size()
+        );
+      }
+
 //--- compute event-level weight for data/MC correction of b-tagging efficiency and mistag rate
 //   (using the method "Event reweighting using scale factors calculated with a tag and probe method",
 //    described on the BTV POG twiki https://twiki.cern.ch/twiki/bin/view/CMS/BTagShapeCalibration )
       evtWeightRecorder.record_btagWeight(selJetsAK4);
+      if(btagSFRatioFacility)
+      {
+        evtWeightRecorder.record_btagSFRatio(btagSFRatioFacility, selJetsAK4.size());
+      }
 
       if(isMC_EWK)
       {
@@ -1487,8 +1507,8 @@ int main(int argc, char* argv[])
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
-    //std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
-    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb({}, selJetsAK4_Hbb);
+    std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
+    //std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb({}, selJetsAK4_Hbb);
     const selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
@@ -2407,12 +2427,23 @@ int main(int argc, char* argv[])
       const bool is_em = ! (is_ee || is_mm);
       snm->read(is_ee, is_mm, is_em, static_cast<int>(isLeptonCharge_SS));
 
-      const double leptonSF = evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central");
+      const double leptonSF = evtWeightRecorder.get_leptonIDSF("central");
       const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
       const double btagSF = evtWeightRecorder.get_btag("central");
+      const double topPtWeight = evtWeightRecorder.get_toppt_rwgt("central");
+      const double fakeRate = evtWeightRecorder.get_FR("central");
+      const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
+      const double leptonSF_recoToLoose = evtWeightRecorder.get_leptonIDSF_recoToLoose("central");
+      const double leptonSF_looseToTight = evtWeightRecorder.get_leptonIDSF_looseToTight("central");
+
       snm->read(triggerSF,                              FloatVariableType_bbww::trigger_SF);
+      snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
       snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
       snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
+      snm->read(topPtWeight,                            FloatVariableType_bbww::topPt_wgt);
+      snm->read(l1Prefire,                              FloatVariableType_bbww::L1prefire);
+      snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
+      snm->read(leptonSF_looseToTight,                  FloatVariableType_bbww::lepton_IDSF_looseToTight);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
@@ -2499,7 +2530,6 @@ int main(int argc, char* argv[])
   delete genHadTauReader;
   delete genPhotonReader;
   delete genJetReader;
-  delete genTauLeptonReader;
   delete lheInfoReader;
   delete psWeightReader;
   //delete memReader;

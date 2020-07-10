@@ -11,5 +11,5 @@ for sample_name, sample_info in samples_2017_hh.items():
     continue
   sample_info["xsection"] *= sample_info["nof_events"]["Count"][0] / sample_info["nof_tree_events"]
 
-from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples
+from hhAnalysis.bbww.samples.reclassifySamples import reclassifySamples
 samples_2017 = reclassifySamples(samples_2017_hh, samples_2017_bkg)
