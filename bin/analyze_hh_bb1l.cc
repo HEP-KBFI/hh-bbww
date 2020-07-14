@@ -923,10 +923,8 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb1l_X900GeV_Wj1                       = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wj1.pkl";
   //
   std::string xgbFileName_bb1l_SM_Wj1 = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wj1.pkl";
-  std::string xgbFileName_bb1l_SM_Wjj_BDT_all_phase_space = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_BDT_all_phase_space.pkl";
   std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_BDT_full_reco_only.pkl";
   std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_simple_full_reco_only_noIndPt.pkl";
-  std::string xgbFileName_bb1l_SM_Wjj_simple_all_phase_space = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_SM_Wjj_simple_all_phase_space.pkl";
   std::vector<std::string> xgbInputVariables_bb1l_SM_Wj1 = {
     "mT_top_3particle", "mT_W", "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nBJetMedium", "lep_conePt", "met_LD", "HT"
   };
@@ -936,14 +934,12 @@ int main(int argc, char* argv[])
   std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_simple = {
     "mindr_lep1_jet", "m_Hbb_regCorr", "mHH_simple_met", "mWlep_met_simple", "mWW_simple_met", "mWjj_simple", "cosThetaS_Hbb", "cosThetaS_Wjj_simple", "cosThetaS_WW_simple_met", "cosThetaS_HH_simple_met", "nBJetMedium", "dR_b1lep", "dR_b2lep", "lep_conePt", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "met_LD", "HT", "mT_top_3particle", "mT_W"
   };
-  XGBInterface mva_xgb_bb1l_SM_Wj1(                       xgbFileName_bb1l_SM_Wj1,                        xgbInputVariables_bb1l_SM_Wj1);
-  XGBInterface mva_xgb_bb1l_SM_Wjj_BDT_all_phase_space(   xgbFileName_bb1l_SM_Wjj_BDT_all_phase_space,    xgbInputVariables_bb1l_SM_Wjj_BDT);
-  XGBInterface mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only,     xgbInputVariables_bb1l_SM_Wjj_BDT);
-  XGBInterface mva_xgb_bb1l_SM_Wjj_simple_full_reco_only( xgbFileName_bb1l_SM_Wjj_simple_full_reco_only,  xgbInputVariables_bb1l_SM_Wjj_simple);
-  XGBInterface mva_xgb_bb1l_SM_Wjj_simple_all_phase_space(xgbFileName_bb1l_SM_Wjj_simple_all_phase_space, xgbInputVariables_bb1l_SM_Wjj_simple);
+  XGBInterface mva_xgb_bb1l_SM_Wj1(                            xgbFileName_bb1l_SM_Wj1,                        xgbInputVariables_bb1l_SM_Wj1);
+  XGBInterface mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(         xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only,     xgbInputVariables_bb1l_SM_Wjj_BDT);
+  XGBInterface mva_xgb_bb1l_SM_Wjj_simple_full_reco_only(      xgbFileName_bb1l_SM_Wjj_simple_full_reco_only,  xgbInputVariables_bb1l_SM_Wjj_simple);
   XGBInterface mva_xgb_bb1l_X900GeV_Wj1(                       xgbFileName_bb1l_X900GeV_Wj1,                        xgbInputVariables_bb1l_SM_Wj1);
-  XGBInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_all_phase_space(      xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only,    xgbInputVariables_bb1l_SM_Wjj_BDT);
-  XGBInterface mva_xgb_bb1l_X900GeV_Wjj_simple_all_phase_space(   xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only,    xgbInputVariables_bb1l_SM_Wjj_simple);
+  XGBInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_full_reco_only(    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only,     xgbInputVariables_bb1l_SM_Wjj_BDT);
+  XGBInterface mva_xgb_bb1l_X900GeV_Wjj_simple_full_reco_only( xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only,  xgbInputVariables_bb1l_SM_Wjj_simple);
 
   ////
   // _HbbFat_WjjFat_HP
@@ -2697,26 +2693,21 @@ int main(int argc, char* argv[])
     };
     //////
     double mvaoutput_bb1l_SM_Wj1 = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list);
-    double mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space = mva_xgb_bb1l_SM_Wjj_BDT_all_phase_space(mvaInputVariables_list);
     double mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only = mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(mvaInputVariables_list);
     double mvaoutput_bb1l_SM_Wjj_simple_full_reco_only = mva_xgb_bb1l_SM_Wjj_simple_full_reco_only(mvaInputVariables_list);
-    double mvaoutput_bb1l_SM_Wjj_simple_all_phase_space = mva_xgb_bb1l_SM_Wjj_simple_all_phase_space(mvaInputVariables_list);
     double mvaoutput_bb1l_X900GeV_Wj1 = mva_xgb_bb1l_X900GeV_Wj1(mvaInputVariables_list);
-    double mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_BDT_all_phase_space(mvaInputVariables_list);
-    double mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_simple_all_phase_space(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_BDT_full_reco_only(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_simple_full_reco_only(mvaInputVariables_list);
     if (isDEBUG)  std::cout << "BDT outputs \n" <<
     "mvaoutput_bb1l_SM_Wj1 = " << mvaoutput_bb1l_SM_Wj1 << "; \n" <<
-    "mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space = " << mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space << "; \n" <<
     "mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only = " << mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only << "; \n" <<
     "mvaoutput_bb1l_SM_Wjj_simple_full_reco_only = " << mvaoutput_bb1l_SM_Wjj_simple_full_reco_only << "; \n" <<
-    "mvaoutput_bb1l_SM_Wjj_simple_all_phase_space = " << mvaoutput_bb1l_SM_Wjj_simple_all_phase_space << "; \n" <<
     "mvaoutput_bb1l_X900GeV_Wj1 = " << mvaoutput_bb1l_X900GeV_Wj1 << "; \n" <<
-    "mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = " << mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only << "; \n" <<
-    "mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only = " << mvaoutput_bb1l_SM_Wjj_simple_all_phase_space << "; \n";
+    "mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = " << mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only << "; \n";
 
     // determining default value for BDT for cases that assume a different BDT for the missing jet case
-    double output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_SM_Wjj_BDT_all_phase_space;
-    double output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wjj_simple_all_phase_space;
+    double output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only;
+    double output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wjj_simple_full_reco_only;
     double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
     double output_X900GeV_cat_jet_2BDT_Wjj_simple = mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only;
     ///////
