@@ -57,7 +57,7 @@ for sample_name, sample_info in samples.items():
     continue
   if sample_name.startswith(('/MuonEG/', '/Tau/')):
     sample_info["use_it"] = False
-  if sample_name.startswith(('/TTToSemiLeptonic')):
+  if sample_name.startswith(('/TTToSemiLeptonic')) and sample_info["process_name_specific"] in ["TTToSemiLeptonic"] :
     sample_info["use_it"] = True
   if sample_name.startswith(('/GluGluToHHTo2B2WToLNu2J_node_SM')):
     sample_info["use_it"] = True

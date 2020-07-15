@@ -166,6 +166,7 @@ writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
   bdt_filler(Form("%s_ptReg", branchName.data()), selJetP4_reg.pt());
   bdt_filler(Form("%s_eta", branchName.data()), selJetP4.eta());
   bdt_filler(Form("%s_phi", branchName.data()), selJetP4.phi());
+  bdt_filler(Form("%s_mass", branchName.data()), selJetP4.mass());
   bdt_filler(Form("%s_btagCSV", branchName.data()), selJet_btagCSV);
   bdt_filler(Form("%s_qgDiscr", branchName.data()), selJet_qgDiscr);
   bdt_filler(Form("%s_charge", branchName.data()), selJet_charge);
@@ -312,10 +313,12 @@ writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
     ("lepton_pt",              selLepton->pt())
     ("lepton_eta",             selLepton->eta())
     ("lepton_phi",             selLepton->phi())
+    ("lepton_mass",             selLepton->mass())
     ("lepton_charge",          selLepton->charge())
     ("neutrino_pt",            neutrinoP4_B2G_18_008.pt())
     ("neutrino_eta",           neutrinoP4_B2G_18_008.eta())
-    ("neutrino_phi",           neutrinoP4_B2G_18_008.phi());
+    ("neutrino_phi",           neutrinoP4_B2G_18_008.phi())
+    ("neutrino_mass",           neutrinoP4_B2G_18_008.mass());
   writeToNtuple(bdt_filler, selLepton, "bjet1", selBJet1_base, genBJets, genWJets);
   writeToNtuple(bdt_filler, selLepton, "bjet2", selBJet2_base, genBJets, genWJets);
   writeToNtuple(bdt_filler, selLepton, "wjet1", selWJet1, genBJets, genWJets);
@@ -557,12 +560,12 @@ int main(int argc,
   typedef std::remove_pointer<decltype(bdt_filler)>::type::int_type int_type;
 
   bdt_filler->register_variable<float_type>(
-    "lepton_pt", "lepton_eta", "lepton_phi", "lepton_charge",
-    "neutrino_pt", "neutrino_eta", "neutrino_phi", 
-    "bjet1_pt", "bjet1_ptReg", "bjet1_eta", "bjet1_phi", "bjet1_btagCSV", "bjet1_qgDiscr", "bjet1_charge", "dR_bjet1_lep", "dPhi_bjet1_lep", "dEta_bjet1_lep",
-    "bjet2_pt", "bjet2_ptReg", "bjet2_eta", "bjet2_phi", "bjet2_btagCSV", "bjet2_qgDiscr", "bjet2_charge", "dR_bjet2_lep", "dPhi_bjet2_lep", "dEta_bjet2_lep",   
-    "wjet1_pt", "wjet1_ptReg", "wjet1_eta", "wjet1_phi", "wjet1_btagCSV", "wjet1_qgDiscr", "wjet1_charge", "dR_wjet1_lep", "dPhi_wjet1_lep", "dEta_wjet1_lep",
-    "wjet2_pt", "wjet2_ptReg", "wjet2_eta", "wjet2_phi", "wjet2_btagCSV", "wjet2_qgDiscr", "wjet2_charge", "dR_wjet2_lep", "dPhi_wjet2_lep", "dEta_wjet2_lep",
+    "lepton_pt", "lepton_eta", "lepton_phi", "lepton_mass", "lepton_charge",
+    "neutrino_pt", "neutrino_eta", "neutrino_phi", "neutrino_mass",
+    "bjet1_pt", "bjet1_ptReg", "bjet1_eta", "bjet1_phi", "bjet1_mass","bjet1_btagCSV", "bjet1_qgDiscr", "bjet1_charge", "dR_bjet1_lep", "dPhi_bjet1_lep", "dEta_bjet1_lep",
+    "bjet2_pt", "bjet2_ptReg", "bjet2_eta", "bjet2_phi", "bjet2_mass", "bjet2_btagCSV", "bjet2_qgDiscr", "bjet2_charge", "dR_bjet2_lep", "dPhi_bjet2_lep", "dEta_bjet2_lep",   
+    "wjet1_pt", "wjet1_ptReg", "wjet1_eta", "wjet1_phi", "wjet1_mass", "wjet1_btagCSV", "wjet1_qgDiscr", "wjet1_charge", "dR_wjet1_lep", "dPhi_wjet1_lep", "dEta_wjet1_lep",
+    "wjet2_pt", "wjet2_ptReg", "wjet2_eta", "wjet2_phi", "wjet2_mass", "wjet2_btagCSV", "wjet2_qgDiscr", "wjet2_charge", "dR_wjet2_lep", "dPhi_wjet2_lep", "dEta_wjet2_lep",
     "Hbb_pt", "Hbb_ptReg", "Hbb_eta", "Hbb_etaReg", "Hbb_phi", "Hbb_phiReg", "Hbb_mass", "Hbb_massReg", 
     "dR_bjet1bjet2", "dPhi_bjet1bjet2",
     "HadW_pt", "HadW_eta", "HadW_phi", "HadW_mass", "HadW_cosTheta", "dR_HadW_lep", "dPhi_HadW_lep", "dEta_HadW_lep", 
@@ -689,7 +692,7 @@ int main(int argc,
 //--- build collections of jets 
     const std::vector<RecoJet> jets_ak4 = jetReaderAK4->read();
     const std::vector<const RecoJet*> jet_ptrs_ak4 = convert_to_ptrs(jets_ak4);
-    const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleaningByIndex ?
+    std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleaningByIndex ?
       jetCleanerAK4_byIndex(jet_ptrs_ak4, fakeableLeptons) :
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
       //jetCleanerAK4_dR02   (jet_ptrs_ak4, fakeableLeptons)
@@ -801,7 +804,7 @@ int main(int argc,
 	    selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
         for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
      	      selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
-          assert((*selJet1_Wjj)->pt() > (*selJet2_Wjj)->pt());        
+          assert((*selJet1_Wjj)->pt() >= (*selJet2_Wjj)->pt());        
           writeToNtuple(
             *bdt_filler, 
             eventInfo,
@@ -824,17 +827,17 @@ int main(int argc,
     {
       int idxRow = 0;
       double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1)
-        *0.5*(cleanedJetsAK4_wrtLeptons.size() - 2)*(cleanedJetsAK4_wrtLeptons.size() - 3);
+	*0.5*(cleanedJetsAK4_wrtLeptons.size() - 2)*(cleanedJetsAK4_wrtLeptons.size() - 3);
       for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
             selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
         for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1 + 1;
               selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
-          assert((*selBJet1)->pt() > (*selBJet2)->pt());
+          assert((*selBJet1)->pt() >= (*selBJet2)->pt());
           for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
                 selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
             for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1;
 	          selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
-              assert((*selWJet1)->pt() > (*selWJet2)->pt());
+              assert((*selWJet1)->pt() >= (*selWJet2)->pt());
               if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
               if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet2)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
               writeToNtuple(
@@ -851,8 +854,8 @@ int main(int argc,
                 isGenMatched((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets_ptrs) && 
                 isGenMatched((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets_ptrs),
                 evtWeight);
-              ++idxRow;
-            }
+	      ++idxRow;
+	    }
           }
         }
       }
@@ -868,7 +871,7 @@ int main(int argc,
               selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
           for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1;
 	        selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
-            assert((*selWJet1)->pt() > (*selWJet2)->pt());
+            assert((*selWJet1)->pt() >= (*selWJet2)->pt());
             if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 ) continue;
             if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) < 0.3 ) continue;
             writeToNtuple(
@@ -898,7 +901,7 @@ int main(int argc,
             selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
         for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1 + 1;
               selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
-          assert((*selBJet1)->pt() > (*selBJet2)->pt());
+          assert((*selBJet1)->pt() >= (*selBJet2)->pt());
           for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
                 selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
             if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
