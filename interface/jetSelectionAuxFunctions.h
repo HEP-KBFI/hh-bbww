@@ -33,7 +33,7 @@ struct selJetsType_Hbb
 };
 
 std::vector<selJetsType_Hbb>
-selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb, 
+selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
                const std::vector<const RecoJet*> selJetsAK4_Hbb,
                const RecoLepton* selLepton_lead = nullptr,
 	       const RecoLepton* selLepton_sublead = nullptr,
@@ -62,7 +62,7 @@ struct selJetsType_Wjj
 };
 
 std::vector<selJetsType_Wjj>
-selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS, 
+selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR12,
                const RecoJetCollectionCleanerAK8& jetCleanerAK8_dR16,
                const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8LS_Wjj,
@@ -78,5 +78,18 @@ selectJets_Wjj(const std::vector<const RecoJetAK8*>& jet_ptrs_ak8LS,
                const std::vector<const GenJet*>* genWJets = nullptr,
                int maxJetPairs = 1,
 	       bool isDEBUG = false);
+
+std::vector<selJetsType_Wjj>
+selectJets_Wjj_resolved(
+              //const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
+              const std::vector<const RecoJet*>& cleanedJetsAK4_wrtHbb,
+              const RecoLepton* selLepton,
+              const RecoJetCollectionCleaner& jetCleanerAK4_dR08,
+              const RecoJetCollectionCleaner& jetCleanerAK4_dR12,
+              const RecoJetCollectionSelector& jetSelectorAK4,
+              const std::vector<const RecoJet*>& selBJetsAK4_medium,
+              const TMVAInterface& mva_Wjj,
+              const EventInfo& eventInfo,
+	            bool isDEBUG);
 
 #endif // jetSelectionAuxFunctions_h

@@ -33,6 +33,9 @@
 #include "tthAnalysis/HiggsToTauTau/interface/Data_to_MC_CorrectionInterface_2018.h"
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfo.h" // EventInfo
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/L1PreFiringWeightReader.h" // L1PreFiringWeightReader
+#include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
+
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
@@ -118,8 +121,10 @@ main(int argc,
   const bool useNonNominal        = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
   const bool readGenObjects       = isMC && ! redoGenMatching;
-  std::string apply_topPtReweighting_str = cfg_analyze.getParameter<std::string>("apply_topPtReweighting");
-  bool apply_topPtReweighting = ! apply_topPtReweighting_str.empty();
+  const std::string apply_topPtReweighting_str = cfg_analyze.getParameter<std::string>("apply_topPtReweighting");
+  const bool apply_topPtReweighting = ! apply_topPtReweighting_str.empty();
+  const bool apply_l1PreFireWeight = cfg_analyze.getParameter<bool>("apply_l1PreFireWeight");
+  const bool apply_btagSFRatio = cfg_analyze.getParameter<bool>("applyBtagSFRatio");
 
   std::vector<std::string> central_or_shifts_local = { central_or_shift };
   checkOptionValidity(central_or_shift, isMC);
@@ -213,6 +218,20 @@ main(int argc,
   });
   inputTree -> registerReader(&hltPathReader_instance);
 
+  L1PreFiringWeightReader * l1PreFiringWeightReader = nullptr;
+  if(apply_l1PreFireWeight)
+  {
+    l1PreFiringWeightReader = new L1PreFiringWeightReader(era);
+    inputTree->registerReader(l1PreFiringWeightReader);
+  }
+
+  BtagSFRatioFacility * btagSFRatioFacility = nullptr;
+  if(apply_btagSFRatio)
+  {
+    const edm::ParameterSet btagSFRatio = cfg_analyze.getParameterSet("btagSFRatio");
+    btagSFRatioFacility = new BtagSFRatioFacility(btagSFRatio);
+  }
+
 //--- declare particle collections
   RecoMuonReader * const muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
   inputTree->registerReader(muonReader);
@@ -241,8 +260,10 @@ main(int argc,
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
+  RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8);
 
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
@@ -250,6 +271,7 @@ main(int argc,
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
 
   RecoJetReaderAK8 * const jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_fatJetsLS, branchName_subJetsLS);
+  jetReaderAK8LS->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8LS);
   const RecoJetCollectionSelectorAK8 jetSelectorAK8LS(era, -1, isDEBUG);
   const RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
@@ -312,9 +334,6 @@ main(int argc,
                 << " (" << eventInfo
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787813) ) continue;
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787805) ) continue;
-    //if(! (eventInfo.run ==1 && eventInfo.lumi == 128940 && eventInfo.event== 25787805) ) continue;//1:128940:25787807
     ++analyzedEntries;
 
     if(run_lumi_eventSelector && ! (*run_lumi_eventSelector)(eventInfo))
@@ -323,7 +342,8 @@ main(int argc,
     }
 
     EvtWeightRecorderHH evtWeightRecorder(central_or_shifts_local, central_or_shift, isMC);
-    if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
+    if(apply_topPtReweighting) evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
+    if(apply_l1PreFireWeight)  evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
 
     if(run_lumi_eventSelector)
     {
@@ -438,8 +458,10 @@ main(int argc,
       evtWeightRecorder.record_leptonIDSF_looseToTight(dataToMCcorrectionInterface);
     }
 
-    float lepton_IDSF  = (selLeptons_size) ? (evtWeightRecorder.get_leptonSF() * evtWeightRecorder.get_leptonIDSF("central")) : 1;
-    float trigger_SF   = (selLeptons_size) ? (evtWeightRecorder.get_sf_triggerEff("central")) : 1;
+    const double lepton_IDSF              = selLeptons_size ? evtWeightRecorder.get_leptonIDSF("central") : 1;
+    const double lepton_IDSF_recoToLoose  = selLeptons_size ? evtWeightRecorder.get_leptonIDSF_recoToLoose("central") : 1;
+    const double lepton_IDSF_looseToTight = selLeptons_size ? evtWeightRecorder.get_leptonIDSF_looseToTight("central") : 1;
+    const double trigger_SF               = selLeptons_size ? evtWeightRecorder.get_sf_triggerEff("central") : 1;
     if(isDEBUG)
     {
       printCollection("preselLeptons", preselLeptons);
@@ -453,11 +475,13 @@ main(int argc,
       jetCleaner       (jet_ptrs, fakeableLeptons)
     ;
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
-    std::vector<const RecoJet*> selJets_medium = jetSelectorAK4_bTagMedium(selJets);
-    /*for(unsigned int i=0; i<selJets_medium.size(); i++) {
-      std::cout << "pt: " << selJets_medium[i]->pt() << "\t" << "eta: " << "\t" << selJets_medium[i]->eta() << "\t" << selJets_medium[i]->BtagWeight() << std::endl;
-      }*/
-    evtWeightRecorder.record_btagWeight(selJets_medium);
+    std::vector<const RecoJet*> selBJets_loose = jetSelectorAK4_bTagLoose(selJets);
+    std::vector<const RecoJet*> selBJets_medium = jetSelectorAK4_bTagMedium(selJets);
+    evtWeightRecorder.record_btagWeight(selJets);
+    if(btagSFRatioFacility)
+    {
+      evtWeightRecorder.record_btagSFRatio(btagSFRatioFacility, selJets.size());
+    }
 
     if(isDEBUG)
     {
@@ -596,12 +620,14 @@ main(int argc,
 
     snm->read(trigger_SF, FloatVariableType_bbww::trigger_SF);
     snm->read(lepton_IDSF, FloatVariableType_bbww::lepton_IDSF);
+    snm->read(lepton_IDSF_recoToLoose, FloatVariableType_bbww::lepton_IDSF_recoToLoose);
+    snm->read(lepton_IDSF_looseToTight, FloatVariableType_bbww::lepton_IDSF_looseToTight);
     snm->read(evtWeightRecorder.get_btag("central"), FloatVariableType_bbww::btag_SF);
-    std::cout <<"btagSF: " << evtWeightRecorder.get_btag("central") << std::endl;
+    snm->read(evtWeightRecorder.get_btagSFRatio("central"), FloatVariableType_bbww::btag_SF_ratio);
     snm->read(preselMuons, fakeableMuons, tightMuons);
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
-    snm->read(selJets);
+    snm->read(selJets, selBJets_loose.size(), selBJets_medium.size());
     // "regular" AK8 jets, selected to target H->bb decay, sorted by pT in decreasing order
     snm->read(selFatJets, false);
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection
@@ -609,6 +635,7 @@ main(int argc,
     snm->read(selFatJetsLS, true);
     snm->read(met.pt(),  FloatVariableType_bbww::PFMET);
     snm->read(met.phi(), FloatVariableType_bbww::PFMETphi);
+    snm->read(evtWeightRecorder.get_l1PreFiringWeight("central"), FloatVariableType_bbww::L1prefire);
 
     snm->fill();
 

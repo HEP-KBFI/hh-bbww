@@ -26,7 +26,7 @@ parser.add_tau_id_wp()
 parser.add_hlt_filter()
 parser.add_files_per_job()
 parser.add_use_home()
-parser.add_stitched(use_dy = False, use_wj = False)
+parser.add_stitched([ 'dy_nlo_incl' ])
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
@@ -86,8 +86,7 @@ if mode == "default":
 else:
   raise ValueError("Internal logic error")
 
-if 'dy' in use_stitched or 'wjets' in use_stitched:
-  samples = load_samples_stitched(samples, era, load_dy = 'dy' in use_stitched, load_wjets = 'wjets' in use_stitched)
+samples = load_samples_stitched(samples, era, use_stitched)
 
 blacklisted_categories = []
 for sample_name, sample_info in samples.items():

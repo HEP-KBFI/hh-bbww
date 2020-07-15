@@ -100,11 +100,10 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
     self.hadTau_mva_wp = hadTau_mva_wp
     self.chargeSumSelections = chargeSumSelections
     self.applyFakeRateWeights = applyFakeRateWeights
-    run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
 
     self.apply_leptonGenMatching = True
     self.apply_hadTauGenMatching = True
-    if run_mcClosure:
+    if self.run_mcClosure:
       self.lepton_and_hadTau_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m", "Fakeable_mcClosure_t" ])
     self.central_or_shifts_fr = systematics.FR_all
     self.pruneSystematics()
@@ -384,24 +383,25 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
                   else "disabled"
 
                 self.jobOptions_analyze[key_analyze_job] = {
-                  'ntupleFiles'              : ntupleFiles,
-                  'cfgFile_modified'         : cfgFile_modified_path,
-                  'histogramFile'            : histogramFile_path,
-                  'logFile'                  : logFile_path,
-                  'selEventsFileName_output' : rleOutputFile_path,
-                  'electronSelection'        : electron_selection,
-                  'muonSelection'            : muon_selection,
-                  'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
-                  'hadTauSelection'          : hadTau_selection,
-                  'apply_hadTauGenMatching'  : self.apply_hadTauGenMatching,
-                  'chargeSumSelection'       : chargeSumSelection,
-                  'applyFakeRateWeights'     : applyFakeRateWeights,
-                  'central_or_shift'         : central_or_shift,
-                  'central_or_shifts_local'  : central_or_shifts_local,
-                  'selectBDT'                : self.isBDTtraining,
-                  'apply_hlt_filter'         : self.hlt_filter,
-                  'useNonNominal'            : self.use_nonnominal,
-                  'fillGenEvtHistograms'     : True,
+                  'ntupleFiles'                : ntupleFiles,
+                  'cfgFile_modified'           : cfgFile_modified_path,
+                  'histogramFile'              : histogramFile_path,
+                  'logFile'                    : logFile_path,
+                  'selEventsFileName_output'   : rleOutputFile_path,
+                  'electronSelection'          : electron_selection,
+                  'muonSelection'              : muon_selection,
+                  'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
+                  'hadTauSelection'            : hadTau_selection,
+                  'apply_hadTauGenMatching'    : self.apply_hadTauGenMatching,
+                  'chargeSumSelection'         : chargeSumSelection,
+                  'applyFakeRateWeights'       : applyFakeRateWeights,
+                  'central_or_shift'           : central_or_shift,
+                  'central_or_shifts_local'    : central_or_shifts_local,
+                  'selectBDT'                  : self.isBDTtraining,
+                  'apply_hlt_filter'           : self.hlt_filter,
+                  'useNonNominal'              : self.use_nonnominal,
+                  'fillGenEvtHistograms'       : True,
+                  'apply_DYMCNormScaleFactors' : False,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_and_hadTau_selection)
 

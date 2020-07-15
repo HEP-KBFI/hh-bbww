@@ -3,7 +3,7 @@
 
 /** \class EvtHistManager_hh_bb1l
  *
- * Book and fill histograms for event-level quantities in the dilepton category 
+ * Book and fill histograms for event-level quantities in the dilepton category
  * of the HH->bbWW analysis
  *
  * \author Christian Veelken, Tallinn
@@ -33,19 +33,29 @@ public:
                  int numBJets_medium,
 		 double HT,
 		 double STMET,
-		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb, 
-		 double m_Wjj, double dR_Wjj, double dPhi_Wjj, double pT_Wjj, 
+		 double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb,
+		 double m_Wjj, double dR_Wjj, double dPhi_Wjj, double pT_Wjj,
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
 		 double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
-		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj, 
+		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
 		 double mvaoutput350, double mvaoutput400, double mvaoutput750,
+     std::string category_SM_jets,
+     std::string  category_mount,
+     const std::map<std::string, double> categories_map_MVAs,
                  double evtWeight);
 
   const TH1 *
   getHistogram_EventCounter() const;
+
+  void
+  bookCategories(TFileDirectory & dir,
+      const std::map<std::string, std::vector<double>> & categories_SM_jets,
+      const std::map<std::string, std::vector<double>> & categories_list_bins,
+      const std::vector<std::string> for_categories_map
+  );
 
   /// flag to enable/disable booking & filling of MEM histograms
   enum { kOption_undefined, kOption_memDisabled, kOption_memEnabled };
@@ -72,7 +82,7 @@ public:
 
   TH1 * histogram_dR_Hww_;
   TH1 * histogram_dPhi_Hww_;
-  TH1 * histogram_pT_Hww_;  
+  TH1 * histogram_pT_Hww_;
   TH1 * histogram_Smin_Hww_;
 
   TH1 * histogram_m_HHvis_;
@@ -90,7 +100,7 @@ public:
 
   TH1 * histogram_mvaOutput_Hj_tagger_;
   TH1 * histogram_mvaOutput_Hjj_tagger_;
-  
+
   TH1 * histogram_vbf_jet1_pt_;
   TH1 * histogram_vbf_jet1_eta_;
   TH1 * histogram_vbf_jet2_pt_;
@@ -112,6 +122,9 @@ public:
   TH1 * histogram_MVAOutput750_;
 
   TH1 * histogram_EventCounter_;
+
+  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
+  std::map<std::string, TH1 *> histograms_by_category_types_;
 
   int option_; // flag to enable/disable booking & filling of MEM histograms
 };

@@ -62,6 +62,7 @@ process.analyze_hh_bb2l = cms.PSet(
     lumiScale = cms.VPSet(),
     apply_genWeight = cms.bool(True),
     apply_DYMCReweighting = cms.bool(False),
+    apply_DYMCNormScaleFactors = cms.bool(False),
     apply_topPtReweighting = cms.string(''),
     apply_l1PreFireWeight = cms.bool(True),
     apply_hlt_filter = cms.bool(False),
@@ -95,7 +96,6 @@ process.analyze_hh_bb2l = cms.PSet(
     genMatchingByIndex = cms.bool(True),
     jetCleaningByIndex = cms.bool(True),
 
-    branchName_genTauLeptons = cms.string('GenTau'),
     branchName_memOutput = cms.string(''),
     branchName_hmeOutput = cms.string(''),
 

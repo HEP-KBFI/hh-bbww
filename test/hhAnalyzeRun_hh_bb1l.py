@@ -26,7 +26,7 @@ parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
-parser.add_files_per_job() 
+parser.add_files_per_job()
 parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
@@ -53,7 +53,7 @@ systematics_label = args.systematics
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
-files_per_job     = args.files_per_job
+files_per_job     = 2 #args.files_per_job
 use_home          = args.use_home
 tau_id            = args.tau_id
 jet_cleaning      = args.jet_cleaning
@@ -81,7 +81,7 @@ for systematic_label in systematics_label:
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
 
-do_sync = mode.startswith('sync')
+do_sync = 'sync' in mode
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
@@ -105,36 +105,10 @@ else:
   raise ValueError("Internal logic error")
 
 if mode == "default" and len(central_or_shifts) <= 1:
-  evtCategories = [
-    "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_resolvedHbb_resolvedWjj_vbf", "hh_bb1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity", "hh_bb1l_vbf", "hh_bb1l_nonvbf",
-    "hh_2bM1l", "hh_2bM1l_resolvedHbb_resolvedWjj", "hh_2bM1l_resolvedHbb_resolvedWjj_vbf", "hh_2bM1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_2bM1l_boostedHbb_resolvedWjj", "hh_2bM1l_boostedHbb_boostedWjj_lowPurity", "hh_2bM1l_boostedHbb_boostedWjj_highPurity", "hh_2bM1l_vbf", "hh_2bM1l_nonvbf",
-    "hh_1bM1bL1l", "hh_1bM1bL1l_resolvedHbb_resolvedWjj", "hh_1bM1bL1l_resolvedHbb_resolvedWjj_vbf", "hh_1bM1bL1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1bL1l_boostedHbb_resolvedWjj", "hh_1bM1bL1l_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1l_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1l_vbf", "hh_1bM1bL1l_nonvbf",
-    "hh_1bM1l", "hh_1bM1l_resolvedHbb_resolvedWjj", "hh_1bM1l_resolvedHbb_resolvedWjj_vbf", "hh_1bM1l_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_1bM1l_boostedHbb_boostedWjj_highPurity", "hh_1bM1l_vbf", "hh_1bM1l_nonvbf",
-    "hh_bb1e", "hh_bb1e_resolvedHbb_resolvedWjj", "hh_bb1e_resolvedHbb_resolvedWjj_vbf", "hh_bb1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_bb1e_boostedHbb_resolvedWjj", "hh_bb1e_boostedHbb_boostedWjj_lowPurity", "hh_bb1e_boostedHbb_boostedWjj_highPurity", "hh_bb1e_vbf", "hh_bb1e_nonvbf",
-    "hh_2bM1e", "hh_2bM1e_resolvedHbb_resolvedWjj", "hh_2bM1e_resolvedHbb_resolvedWjj_vbf", "hh_2bM1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_2bM1e_boostedHbb_resolvedWjj", "hh_2bM1e_boostedHbb_boostedWjj_lowPurity", "hh_2bM1e_boostedHbb_boostedWjj_highPurity", "hh_2bM1e_vbf", "hh_2bM1e_nonvbf",
-    "hh_1bM1bL1e", "hh_1bM1bL1e_resolvedHbb_resolvedWjj", "hh_1bM1bL1e_resolvedHbb_resolvedWjj_vbf", "hh_1bM1bL1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1bL1e_boostedHbb_resolvedWjj", "hh_1bM1bL1e_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1e_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1e_vbf", "hh_1bM1bL1e_nonvbf",
-    "hh_1bM1e", "hh_1bM1e_resolvedHbb_resolvedWjj", "hh_1bM1e_resolvedHbb_resolvedWjj_vbf", "hh_1bM1e_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1e_boostedHbb_resolvedWjj", "hh_bb1e_boostedHbb_boostedWjj_lowPurity", "hh_1bM1e_boostedHbb_boostedWjj_highPurity", "hh_1bM1e_vbf", "hh_1bM1e_nonvbf",
-    "hh_bb1mu", "hh_bb1mu_resolvedHbb_resolvedWjj", "hh_bb1mu_resolvedHbb_resolvedWjj_vbf", "hh_bb1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_bb1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_bb1mu_boostedHbb_boostedWjj_highPurity", "hh_bb1mu_vbf", "hh_bb1mu_nonvbf",
-    "hh_2bM1mu", "hh_2bM1mu_resolvedHbb_resolvedWjj", "hh_2bM1mu_resolvedHbb_resolvedWjj_vbf", "hh_2bM1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_2bM1mu_boostedHbb_resolvedWjj", "hh_2bM1mu_boostedHbb_boostedWjj_lowPurity", "hh_2bM1mu_boostedHbb_boostedWjj_highPurity", "hh_2bM1mu_vbf", "hh_2bM1mu_nonvbf",
-    "hh_1bM1bL1mu", "hh_1bM1bL1mu_resolvedHbb_resolvedWjj", "hh_1bM1bL1mu_resolvedHbb_resolvedWjj_vbf", "hh_1bM1bL1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1bL1mu_boostedHbb_resolvedWjj", "hh_1bM1bL1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1bL1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1bL1mu_vbf", "hh_1bM1bL1mu_nonvbf",
-    "hh_1bM1mu", "hh_1bM1mu_resolvedHbb_resolvedWjj", "hh_1bM1mu_resolvedHbb_resolvedWjj_vbf", "hh_1bM1mu_resolvedHbb_resolvedWjj_nonvbf",
-    "hh_1bM1mu_boostedHbb_resolvedWjj", "hh_bb1mu_boostedHbb_boostedWjj_lowPurity", "hh_1bM1mu_boostedHbb_boostedWjj_highPurity", "hh_1bM1mu_vbf", "hh_1bM1mu_nonvbf"
-  ]
+  evtCategories = []
 else:
-  evtCategories = [
-    "hh_bb1l", "hh_bb1l_resolvedHbb_resolvedWjj", "hh_bb1l_boostedHbb_resolvedWjj", "hh_bb1l_boostedHbb_boostedWjj_lowPurity", "hh_bb1l_boostedHbb_boostedWjj_highPurity"
-  ]
+  evtCategories = []
+
 
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
@@ -154,6 +128,58 @@ if __name__ == '__main__':
   if args.tau_id_wp:
     logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection_veto, args.tau_id_wp))
     hadTau_mva_wp_veto = args.tau_id_wp
+
+  categories_list_bins =  [
+   "_HbbFat_WjjFat_HP_e",
+   "_WjjFat_HP_e",
+   "_HbbFat_WjjFat_LP_e",
+   "_WjjFat_LP_e",
+   "_HbbFat_WjjRes_allReco_e",
+   "_Res_allReco_1b_e",
+   "_Res_allReco_2b_e",
+   "_HbbFat_WjjFat_HP_m",
+   "_WjjFat_HP_m",
+   "_HbbFat_WjjFat_LP_m",
+   "_WjjFat_LP_m",
+   "_HbbFat_WjjRes_allReco_m",
+   "_Res_allReco_1b_m",
+   "_Res_allReco_2b_m",
+   "_HbbFat_WjjRes_MissJet_e",
+   "_Res_MissWJet_1b_e",
+   "_Res_MissWJet_2b_e",
+   "_HbbFat_WjjRes_MissJet_m",
+   "_Res_MissWJet_1b_m",
+   "_Res_MissWJet_2b_m",
+   "_Res_MissBJet_m",
+   "_Res_MissBJet_e"
+   ]
+
+  for_categories_map = [
+  # those are for the BDT types
+  "cat_jet_2BDT_Wjj_BDT_SM",
+  "cat_jet_2BDT_Wjj_simple_SM",
+  "cat_jet_2BDT_Wjj_BDT_X900GeV",
+  "cat_jet_2BDT_Wjj_simple_X900GeV"
+  ]
+
+  histograms_to_fit_list                 = {
+    "EventCounter"                      : {},
+    #"HT"                                : {},
+    #"STMET"                             : {},
+    #"MVAOutput_350"                     : {},
+    #"MVAOutput_400"                     : {},
+    #"MVAOutput_750"                     : {},
+    "cat_jet_Wjj_Hbb_reco"              : {},
+    "cat_jet_one_jet_to_Wjj"            : {},
+    "cat_jet_strange"                   : {},
+    "cat_jet_Wjj_Hbb_reco_MVA"              : {},
+    "cat_jet_one_jet_to_Wjj_MVA"            : {},
+    "cat_jet_strange_MVA"                   : {}
+  }
+  # add  the BDT types with subcategories to the histogram list
+  for typeMVA in for_categories_map :
+    for typyCat in categories_list_bins :
+      histograms_to_fit_list[typeMVA + typyCat] = {}
 
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
@@ -177,14 +203,7 @@ if __name__ == '__main__':
     num_parallel_jobs                     = num_parallel_jobs,
     executable_addBackgrounds             = "addBackgrounds",
     executable_addFakes                   = "addBackgroundLeptonFakes",
-    histograms_to_fit                     = {
-      "EventCounter"                      : {},
-      "HT"                                : {},
-      "STMET"                             : {},
-      "MVAOutput_350"                     : {},
-      "MVAOutput_400"                     : {},
-      "MVAOutput_750"                     : {}
-    },
+    histograms_to_fit                     = histograms_to_fit_list,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,

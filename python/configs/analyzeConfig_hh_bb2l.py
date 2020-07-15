@@ -111,17 +111,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
     self.lepton_charge_selections = lepton_charge_selections
-    run_mcClosure = 'central' not in self.central_or_shifts or len(central_or_shifts) > 1 or self.do_sync
-    if self.era not in [ '2016', '2017', '2018' ]:
-      logging.warning('mcClosure for lepton FR not possible for era %s' % self.era)
-      run_mcClosure = False
-    if run_mcClosure:
-      # Run MC closure jobs only if the analysis is run w/ (at least some) systematic uncertainties
-      #self.lepton_selections.extend([ "Fakeable_mcClosure_all" ]) #TODO
-      pass
 
     self.apply_leptonGenMatching = True
-    if run_mcClosure:
+    if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
     self.central_or_shifts_fr = systematics.FRe_shape + systematics.FRm_shape
     self.pruneSystematics()
@@ -412,29 +404,30 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 branchName_hmeOutput = '%s_%s' % (self.hmebranch, self.get_addMEM_systematics(central_or_shift)) \
                                          if self.hmebranch else ''
                 self.jobOptions_analyze[key_analyze_job] = {
-                  'ntupleFiles'              : ntupleFiles,
-                  'cfgFile_modified'         : cfgFile_modified_path,
-                  'histogramFile'            : histogramFile_path,
-                  'logFile'                  : logFile_path,
-                  'selEventsFileName_output' : rleOutputFile_path,
-                  'leptonChargeSelection'    : lepton_charge_selection,
-                  'electronSelection'        : electron_selection,
-                  'muonSelection'            : muon_selection,
-                  'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
-                  'applyFakeRateWeights'     : applyFakeRateWeights,
-                  'central_or_shift'         : central_or_shift,
-                  'central_or_shifts_local'  : central_or_shifts_local,
-                  'evtCategories'            : self.evtCategories,
-                  'selectBDT'                : self.isBDTtraining,
-                  'syncOutput'               : syncOutput,
-                  'syncTree'                 : syncTree,
-                  'syncRLE'                  : syncRLE,
-                  'apply_hlt_filter'         : self.hlt_filter,
-                  'useNonNominal'            : self.use_nonnominal,
-                  'fillGenEvtHistograms'     : True,
-                  'useAssocJetBtag'          : self.do_sync,
-                  'branchName_memOutput'     : branchName_memOutput,
-                  'branchName_hmeOutput'     : branchName_hmeOutput
+                  'ntupleFiles'                : ntupleFiles,
+                  'cfgFile_modified'           : cfgFile_modified_path,
+                  'histogramFile'              : histogramFile_path,
+                  'logFile'                    : logFile_path,
+                  'selEventsFileName_output'   : rleOutputFile_path,
+                  'leptonChargeSelection'      : lepton_charge_selection,
+                  'electronSelection'          : electron_selection,
+                  'muonSelection'              : muon_selection,
+                  'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
+                  'applyFakeRateWeights'       : applyFakeRateWeights,
+                  'central_or_shift'           : central_or_shift,
+                  'central_or_shifts_local'    : central_or_shifts_local,
+                  'evtCategories'              : self.evtCategories,
+                  'selectBDT'                  : self.isBDTtraining,
+                  'syncOutput'                 : syncOutput,
+                  'syncTree'                   : syncTree,
+                  'syncRLE'                    : syncRLE,
+                  'apply_hlt_filter'           : self.hlt_filter,
+                  'useNonNominal'              : self.use_nonnominal,
+                  'fillGenEvtHistograms'       : True,
+                  'useAssocJetBtag'            : self.do_sync,
+                  'branchName_memOutput'       : branchName_memOutput,
+                  'branchName_hmeOutput'       : branchName_hmeOutput,
+                  'apply_DYMCNormScaleFactors' : False,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
