@@ -222,7 +222,6 @@ if __name__ == '__main__':
   for job_type, num_jobs in job_statistics.items():
     logging.info(" #jobs of type '%s' = %i" % (job_type, num_jobs))
 
-  print (histograms_to_fit_list)
   if auto_exec:
     run_analysis = True
   elif no_exec:
