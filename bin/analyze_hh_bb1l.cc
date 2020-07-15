@@ -959,19 +959,23 @@ int main(int argc, char* argv[])
      {"_HbbFat_WjjFat_LP_e",      {}},
      {"_WjjFat_LP_e",             {}},
      {"_HbbFat_WjjRes_allReco_e", {}},
-     {"_Res_allReco_e",           {}},
+     {"_Res_allReco_1b_e",        {}},
+     {"_Res_allReco_2b_e",        {}},
      //
      {"_HbbFat_WjjFat_HP_m",      {}},
      {"_WjjFat_HP_m",             {}},
      {"_HbbFat_WjjFat_LP_m",      {}},
      {"_WjjFat_LP_m",             {}},
      {"_HbbFat_WjjRes_allReco_m", {}},
-     {"_Res_allReco_m",           {}},
+     {"_Res_allReco_1b_m",        {}},
+     {"_Res_allReco_2b_m",        {}},
      //
      {"_HbbFat_WjjRes_MissJet_e", {}},
-     {"_Res_MissWJet_e",          {}},
+     {"_Res_MissWJet_1b_e",       {}},
+     {"_Res_MissWJet_2b_e",       {}},
      {"_HbbFat_WjjRes_MissJet_m", {}},
-     {"_Res_MissWJet_m",          {}},
+     {"_Res_MissWJet_1b_m",       {}},
+     {"_Res_MissWJet_2b_m",       {}},
      {"_Res_MissBJet_m",          {}},
      {"_Res_MissBJet_e",          {}}
   };
@@ -1919,35 +1923,6 @@ int main(int argc, char* argv[])
       }
     }
 
-    //////////////////////
-    /*
-    // old cut method
-    // select jets from W->jj decay
-    std::vector<selJetsType_Wjj> selJetsT_Wjj_old = selectJets_Wjj(
-      jet_ptrs_ak8LS, jetCleanerAK8_dR12, jetCleanerAK8_dR16, jetSelectorAK8_Wjj,
-      cleanedJetsAK4_wrtLeptons, jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
-      *selJetT_Hbb,
-      selLepton, selBJetsAK4_medium, mva_Wjj, eventInfo);
-    const selJetsType_Wjj* selJetT_Wjj_old = nullptr;
-    const RecoJetAK8* selJetAK8_Wjj_old = nullptr;
-    const RecoJetBase* selJet1_Wjj_old = nullptr;
-    const RecoJetBase* selJet2_Wjj_old = nullptr;
-    if ( selJetsT_Wjj_old.size() >= 1 )
-    {
-      selJetT_Wjj_old = &selJetsT_Wjj_old[0];
-      selJetAK8_Wjj_old = selJetT_Wjj_old->fatjet_;
-      selJet1_Wjj_old = selJetT_Wjj_old->jet_or_subjet1_;
-      selJet2_Wjj_old = selJetT_Wjj_old->jet_or_subjet2_;
-    }
-    bool old_cut = true;
-    if ( !(selJet1_Wjj_old || selJet2_Wjj_old) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
-      }
-      old_cut = false;
-    }
-    /////////////////// */
-
     bool new_had_cut = true;
     if ( !(
       ( selJetsAK8_Hbb.size() == 0   && selJets_Wjj_boosted.size() == 0 && selJetsAK4.size() >= 3 ) ||
@@ -1962,32 +1937,6 @@ int main(int argc, char* argv[])
       continue;
       new_had_cut = false;
     }
-    /*
-    if ( old_cut && ! new_had_cut) {
-      std::cout << " ===================================" << " \n";
-      std::cout << "old_cut passed and new_had_cut failed " << " \n";
-      std::cout << "event " << eventInfo.str() << " PASSES >= #jets to make Hbb and Wjj\n";
-      std::cout << "selJetsAK4.size() " << selJetsAK4.size() << " \n";
-      std::cout << "selJetsAK8_Hbb.size() " << selJetsAK8_Hbb.size() << " \n";
-      std::cout << "nJet_that_not_bb " << nJet_that_not_bb << " \n";
-      std::cout << "cleanedJetsAK4_wrtHbb.size() " << cleanedJetsAK4_wrtHbb.size() << " \n";
-      std::cout << "selJetsAK8LS_Wjj.size() " << selJetsAK8LS_Wjj.size() << " \n";
-      std::cout << "selJetsT_Wjj_old.size() " << selJetsT_Wjj_old.size() << " \n\n\n";
-    }
-    if ( ! old_cut && new_had_cut) {
-      std::cout << " ===================================" << " \n";
-      std::cout << "new_cut passed and old_cut failed " << " \n";
-      std::cout << "event " << eventInfo.str() << " PASSES >= #jets to make Hbb and Wjj\n";
-      std::cout << "selJetsAK4.size() " << selJetsAK4.size() << " \n";
-      std::cout << "selJetsAK8_Hbb.size() " << selJetsAK8_Hbb.size() << " \n";
-      std::cout << "nJet_that_not_bb " << nJet_that_not_bb << " \n";
-      std::cout << "cleanedJetsAK4_wrtHbb.size() " << cleanedJetsAK4_wrtHbb.size() << " \n";
-      std::cout << "selJetsAK8LS_Wjj.size() " << selJetsAK8LS_Wjj.size() << " \n";
-      std::cout << "selJet1_Wjj_old || selJet2_Wjj_old " << selJet1_Wjj_old << " " <<  selJet2_Wjj_old << " " << old_cut << " " << new_had_cut << " \n";
-      std::cout << "selJetsT_Wjj_old.size() " << selJetsT_Wjj_old.size() << " \n\n\n";
-    }
-    if ( !(old_cut || new_had_cut) ) continue;
-    */
 
     bool new_had_cut_fullreco = true;
     if ( !(
@@ -2692,11 +2641,11 @@ int main(int argc, char* argv[])
       {"dr_Wj2_lep_simple",       dr_Wj2_lep_simple}
     };
     //////
-    double mvaoutput_bb1l_SM_Wj1 = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list);
-    double mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only = mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(mvaInputVariables_list);
-    double mvaoutput_bb1l_SM_Wjj_simple_full_reco_only = mva_xgb_bb1l_SM_Wjj_simple_full_reco_only(mvaInputVariables_list);
-    double mvaoutput_bb1l_X900GeV_Wj1 = mva_xgb_bb1l_X900GeV_Wj1(mvaInputVariables_list);
-    double mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_BDT_full_reco_only(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wj1                            = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only         = mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(mvaInputVariables_list);
+    double mvaoutput_bb1l_SM_Wjj_simple_full_reco_only      = mva_xgb_bb1l_SM_Wjj_simple_full_reco_only(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wj1                       = mva_xgb_bb1l_X900GeV_Wj1(mvaInputVariables_list);
+    double mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only    = mva_xgb_bb1l_X900GeV_Wjj_BDT_full_reco_only(mvaInputVariables_list);
     double mvaoutput_bb1l_X900GeV_Wjj_simple_full_reco_only = mva_xgb_bb1l_X900GeV_Wjj_simple_full_reco_only(mvaInputVariables_list);
     if (isDEBUG)  std::cout << "BDT outputs \n" <<
     "mvaoutput_bb1l_SM_Wj1 = " << mvaoutput_bb1l_SM_Wj1 << "; \n" <<
@@ -2764,9 +2713,21 @@ int main(int argc, char* argv[])
         if ( selJet1_Wjj_simple && selJet2_Wjj_simple && selJet1_Hbb && selJet2_Hbb)
         {
           category_mount       += "_allReco";
+          if ( selBJetsAK4_medium.size() >= 1 )
+          {
+            category_mount       += "_2b";
+          } else {
+            category_mount       += "_1b";
+          }
         } else if ( ! ( selJet1_Wjj_simple && selJet2_Wjj_simple ) )
         {
           category_mount       += "_MissWJet";
+          if ( selBJetsAK4_medium.size() >= 1 )
+          {
+            category_mount       += "_2b";
+          } else {
+            category_mount       += "_1b";
+          }
           // in the case of the missing W jet use the BDT made fpr this phase space
           output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_SM_Wj1;
           output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wj1;
@@ -2786,6 +2747,7 @@ int main(int argc, char* argv[])
     } else {
       category_mount    += "_m";
     }
+    if ( isDEBUG ) std::cout << "category_mount = " << category_mount << std::endl;
     ////
     // Map  for variables to fill and naming conventions
     // the keys should coincide with for_categories_map (keys used for histogram booking)
