@@ -53,7 +53,7 @@ systematics_label = args.systematics
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
-files_per_job     = args.files_per_job
+files_per_job     = 2 #args.files_per_job
 use_home          = args.use_home
 tau_id            = args.tau_id
 jet_cleaning      = args.jet_cleaning
@@ -94,10 +94,9 @@ if "sync" not in mode:
 
 if mode == "default":
   samples = load_samples(era)
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo_noincl', 'wjets_incl' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, [ 'dy_lo', 'wjets_noincl' ])
+  samples = load_samples_stitched(samples, era, load_dy = True, load_wjets = True)
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
@@ -130,6 +129,58 @@ if __name__ == '__main__':
     logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection_veto, args.tau_id_wp))
     hadTau_mva_wp_veto = args.tau_id_wp
 
+  categories_list_bins =  [
+   "_HbbFat_WjjFat_HP_e",
+   "_WjjFat_HP_e",
+   "_HbbFat_WjjFat_LP_e",
+   "_WjjFat_LP_e",
+   "_HbbFat_WjjRes_allReco_e",
+   "_Res_allReco_1b_e",
+   "_Res_allReco_2b_e",
+   "_HbbFat_WjjFat_HP_m",
+   "_WjjFat_HP_m",
+   "_HbbFat_WjjFat_LP_m",
+   "_WjjFat_LP_m",
+   "_HbbFat_WjjRes_allReco_m",
+   "_Res_allReco_1b_m",
+   "_Res_allReco_2b_m",
+   "_HbbFat_WjjRes_MissJet_e",
+   "_Res_MissWJet_1b_e",
+   "_Res_MissWJet_2b_e",
+   "_HbbFat_WjjRes_MissJet_m",
+   "_Res_MissWJet_1b_m",
+   "_Res_MissWJet_2b_m",
+   "_Res_MissBJet_m",
+   "_Res_MissBJet_e"
+   ]
+
+  for_categories_map = [
+  # those are for the BDT types
+  "cat_jet_2BDT_Wjj_BDT_SM",
+  "cat_jet_2BDT_Wjj_simple_SM",
+  "cat_jet_2BDT_Wjj_BDT_X900GeV",
+  "cat_jet_2BDT_Wjj_simple_X900GeV"
+  ]
+
+  histograms_to_fit_list                 = {
+    "EventCounter"                      : {},
+    #"HT"                                : {},
+    #"STMET"                             : {},
+    #"MVAOutput_350"                     : {},
+    #"MVAOutput_400"                     : {},
+    #"MVAOutput_750"                     : {},
+    "cat_jet_Wjj_Hbb_reco"              : {},
+    "cat_jet_one_jet_to_Wjj"            : {},
+    "cat_jet_strange"                   : {},
+    "cat_jet_Wjj_Hbb_reco_MVA"              : {},
+    "cat_jet_one_jet_to_Wjj_MVA"            : {},
+    "cat_jet_strange_MVA"                   : {}
+  }
+  # add  the BDT types with subcategories to the histogram list
+  for typeMVA in for_categories_map :
+    for typyCat in categories_list_bins :
+      histograms_to_fit_list[typeMVA + typyCat] = {}
+
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
@@ -152,134 +203,7 @@ if __name__ == '__main__':
     num_parallel_jobs                     = num_parallel_jobs,
     executable_addBackgrounds             = "addBackgrounds",
     executable_addFakes                   = "addBackgroundLeptonFakes",
-    histograms_to_fit                     = {
-      "EventCounter"                      : {},
-      #"HT"                                : {},
-      #"STMET"                             : {},
-      #"MVAOutput_350"                     : {},
-      #"MVAOutput_400"                     : {},
-      #"MVAOutput_750"                     : {},
-      "cat_jet_Wjj_Hbb_reco"              : {},
-      "cat_jet_one_jet_to_Wjj"            : {},
-      "cat_jet_strange"                   : {},
-      "cat_jet_Wjj_Hbb_reco_MVA"              : {},
-      "cat_jet_one_jet_to_Wjj_MVA"            : {},
-      "cat_jet_strange_MVA"                   : {},
-      ###
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_HP_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_WjjFat_HP_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_LP_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_WjjFat_LP_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_allReco_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_Res_allReco_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_HP_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_WjjFat_HP_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjFat_LP_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_WjjFat_LP_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_allReco_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_Res_allReco_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_MissJet_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_Res_MissWJet_e"            : {},
-      "cat_jet_2BDT_Wjj_BDT_HbbFat_WjjRes_MissJet_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_Res_MissWJet_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_Res_MissBJet_m"            : {},
-      "cat_jet_2BDT_Wjj_BDT_Res_MissBJet_e"            : {},
-      #############
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_HP_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_WjjFat_HP_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_LP_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_WjjFat_LP_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_allReco_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_Res_allReco_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_HP_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_WjjFat_HP_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjFat_LP_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_WjjFat_LP_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_allReco_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_Res_allReco_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_MissJet_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_Res_MissWJet_e"            : {},
-      "cat_jet_2BDT_Wjj_simple_HbbFat_WjjRes_MissJet_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_Res_MissWJet_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_Res_MissBJet_m"            : {},
-      "cat_jet_2BDT_Wjj_simple_Res_MissBJet_e"            : {},
-      ##############
-      "cat_jet_Wjj_BDT_HbbFat_WjjFat_HP_e"            : {},
-      "cat_jet_Wjj_BDT_WjjFat_HP_e"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjFat_LP_e"            : {},
-      "cat_jet_Wjj_BDT_WjjFat_LP_e"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjRes_allReco_e"            : {},
-      "cat_jet_Wjj_BDT_Res_allReco_e"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjFat_HP_m"            : {},
-      "cat_jet_Wjj_BDT_WjjFat_HP_m"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjFat_LP_m"            : {},
-      "cat_jet_Wjj_BDT_WjjFat_LP_m"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjRes_allReco_m"            : {},
-      "cat_jet_Wjj_BDT_Res_allReco_m"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjRes_MissJet_e"            : {},
-      "cat_jet_Wjj_BDT_Res_MissWJet_e"            : {},
-      "cat_jet_Wjj_BDT_HbbFat_WjjRes_MissJet_m"            : {},
-      "cat_jet_Wjj_BDT_Res_MissWJet_m"            : {},
-      "cat_jet_Wjj_BDT_Res_MissBJet_m"            : {},
-      "cat_jet_Wjj_BDT_Res_MissBJet_e"            : {},
-      ##############
-      "cat_jet_Wjj_simple_HbbFat_WjjFat_HP_e"            : {},
-      "cat_jet_Wjj_simple_WjjFat_HP_e"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjFat_LP_e"            : {},
-      "cat_jet_Wjj_simple_WjjFat_LP_e"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjRes_allReco_e"            : {},
-      "cat_jet_Wjj_simple_Res_allReco_e"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjFat_HP_m"            : {},
-      "cat_jet_Wjj_simple_WjjFat_HP_m"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjFat_LP_m"            : {},
-      "cat_jet_Wjj_simple_WjjFat_LP_m"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjRes_allReco_m"            : {},
-      "cat_jet_Wjj_simple_Res_allReco_m"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjRes_MissJet_e"            : {},
-      "cat_jet_Wjj_simple_Res_MissWJet_e"            : {},
-      "cat_jet_Wjj_simple_HbbFat_WjjRes_MissJet_m"            : {},
-      "cat_jet_Wjj_simple_Res_MissWJet_m"            : {},
-      "cat_jet_Wjj_simple_Res_MissBJet_m"            : {},
-      "cat_jet_Wjj_simple_Res_MissBJet_e"            : {},
-      ################
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_HP_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_HP_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_LP_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_LP_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_allReco_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_Res_allReco_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_HP_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_HP_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjFat_LP_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_WjjFat_LP_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_allReco_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_Res_allReco_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_MissJet_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissWJet_e"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_HbbFat_WjjRes_MissJet_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissWJet_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissBJet_m"       : {},
-      "cat_jet_2BDT_Wjj_BDT_X900GeV_Res_MissBJet_e"       : {},
-      ###############
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_HP_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_HP_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_LP_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_LP_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_allReco_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_Res_allReco_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_HP_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_HP_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjFat_LP_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_WjjFat_LP_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_allReco_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_Res_allReco_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_MissJet_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissWJet_e"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_HbbFat_WjjRes_MissJet_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissWJet_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissBJet_m"       : {},
-      "cat_jet_2BDT_Wjj_simple_X900GeV_Res_MissBJet_e"       : {},
-    },
+    histograms_to_fit                     = histograms_to_fit_list,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,
@@ -298,6 +222,7 @@ if __name__ == '__main__':
   for job_type, num_jobs in job_statistics.items():
     logging.info(" #jobs of type '%s' = %i" % (job_type, num_jobs))
 
+  print (histograms_to_fit_list)
   if auto_exec:
     run_analysis = True
   elif no_exec:
