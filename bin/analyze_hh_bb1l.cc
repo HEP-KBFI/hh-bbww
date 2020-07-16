@@ -83,6 +83,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
+#include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterface.h"
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface.h" // HHWeightInterface
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
@@ -941,6 +942,14 @@ int main(int argc, char* argv[])
   XGBInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_full_reco_only(    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only,     xgbInputVariables_bb1l_SM_Wjj_BDT);
   XGBInterface mva_xgb_bb1l_X900GeV_Wjj_simple_full_reco_only( xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only,  xgbInputVariables_bb1l_SM_Wjj_simple);
 
+  /*
+  std::string jet_assignment_LBN = "hhAnalysis/bbww/data/jet_assignment_MVAs/my_model_even.pb";
+  std::vector<std::string> mvaInputVariables_LBN = {
+    "bjet1_btagCSV", "bjet2_ptReg", "bjet2_btagCSV", "bjet2_qgDiscr", "wjet2_ptReg", "wjet2_qgDiscr", "HadW_mass", "dR_HadW_lep", "max_dR_HadW_bjet", "dR_wjet1wjet2", "mTop1"
+  };
+  TensorFlowInterface mva_LBN(jet_assignment_LBN, mvaInputVariables_LBN, {}, "", "");
+  */
+
   ////
   // _HbbFat_WjjFat_HP
   // _HbbFat_WjjFat_LP
@@ -1264,6 +1273,7 @@ int main(int argc, char* argv[])
   const edm::ParameterSet cutFlowTableCfg = makeHistManager_cfg(
     process_string, Form("%s/sel/cutFlow", histogramDir.data()), era_string, central_or_shift_main
   );
+  //bool isDEBUG_TF = true;
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
     "object multiplicity",
@@ -1297,7 +1307,7 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
-    //if ( analyzedEntries > 10000) break;
+    //if ( analyzedEntries > 100) break;
     histogram_analyzedEntries->Fill(0.);
     // used half of the HH nonres events for training
     if ( !(eventInfo.event % 2) && isHH_rwgt_allowed ) continue;
@@ -2044,6 +2054,29 @@ int main(int argc, char* argv[])
     // put your other favourite method to reconstruct HERE
     // if ( ! WjjWasFat && ! boosted Hbb ) what is equivalent to if ( nJet_AK8 >= 3 ) just by the definition of the inclusive category
     // or, continue with what we have BDT-Wjj and just after simple-Wjj
+    /*std::map<std::string, double> mvaInputVariables_list_LBN = {
+      {"bjet1_btagCSV",    0.5}
+      {"bjet2_ptReg",      100.}
+      {"bjet2_btagCSV",    0.5}
+      {"bjet2_qgDiscr",    0.5}
+      {"wjet2_ptReg",      100.}
+      {"wjet2_qgDiscr",    0.5}
+      {"HadW_mass",        90.}
+      {"dR_HadW_lep",      0.6}
+      {"max_dR_HadW_bjet", 1.4}
+      {"dR_wjet1wjet2",    1.4}
+      {"mTop1",            180.}
+    };
+    std::map<std::string, double> mvaOutput_LBN = mva_LBN(mvaInputVariables_list_LBN);
+   if ( isDEBUG_TF ) {
+     std::cout << "event " << eventInfo.str() << "\n";
+     std::cout << "Variables :\n";
+     for(auto elem : vaInputVariables_list_LBN) std::cout << elem.first << " " << elem.second << "\n";
+     std::cout << "\n";
+     std::cout << "result :";
+     for(auto elem : mvaOutput_LBN) std::cout << elem.first << " " << elem.second << " ";
+     std::cout << "\n";
+   }*/
 
     ////////
     // take the resolved jets by the BDT
