@@ -1311,7 +1311,7 @@ int main(int argc, char* argv[])
     //if ( analyzedEntries > 100) break;
     histogram_analyzedEntries->Fill(0.);
     // used half of the HH nonres events for training
-    if ( !(eventInfo.event % 2) && isHH_rwgt_allowed ) continue;
+    if ( (!(eventInfo.event % 2) && isHH_rwgt_allowed) && ! selectBDT ) continue;
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
@@ -2858,7 +2858,7 @@ int main(int argc, char* argv[])
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
       //const double evtWeight = evtWeightRecorder.get(central_or_shift);
-      const double evtWeight = ( isHH_rwgt_allowed ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
+      const double evtWeight = ( isHH_rwgt_allowed && ! selectBDT ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
 
       const bool skipFilling = central_or_shift != central_or_shift_main;
       std::map<std::string, double> rwgt_map;
