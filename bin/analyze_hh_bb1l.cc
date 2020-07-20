@@ -437,6 +437,7 @@ int main(int argc, char* argv[])
 
   const bool take_Wjj_boosted_from_AK8_LS = false;
   const bool ignore_Wjj_boosted = false;
+  //const bool doDataMCPlots     = true;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -2935,6 +2936,11 @@ int main(int argc, char* argv[])
             category_count,
             category_mount,
             categories_map_MVAs,
+            selLepton->pt(), selLepton->eta(),
+            selJetsAK4.size() > 0  ? selJetsAK4[0]->pt() : 0.,
+            selJetsAK4.size() > 1  ? selJetsAK4[1]->pt() : 0.,
+            selJetsAK4.size() > 0  ? selJetsAK4[0]->eta() : -10.,
+            selJetsAK4.size() > 1  ? selJetsAK4[1]->eta() : -10.,
             kv.second
           );
         }

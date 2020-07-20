@@ -45,6 +45,11 @@ public:
      std::string category_SM_jets,
      std::string  category_mount,
      const std::map<std::string, double> categories_map_MVAs,
+     double selLepton_lead_pt, double selLepton_lead_eta,
+     double selJetsAK4_0_pt,
+     double selJetsAK4_1_pt,
+     double selJetsAK4_0_eta,
+     double selJetsAK4_1_eta,
                  double evtWeight);
 
   const TH1 *
@@ -125,6 +130,13 @@ public:
 
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
   std::map<std::string, TH1 *> histograms_by_category_types_;
+
+  std::map<std::string, TH1 *> histograms_by_category_check_jet1_pt_;
+  std::map<std::string, TH1 *> histograms_by_category_check_jet1_eta_;
+  std::map<std::string, TH1 *> histograms_by_category_check_lep1_pt_;
+  std::map<std::string, TH1 *> histograms_by_category_check_lep1_eta_;
+  std::map<std::string, TH1 *> histograms_by_category_check_jet2_pt_;
+  std::map<std::string, TH1 *> histograms_by_category_check_jet2_eta_;
 
   int option_; // flag to enable/disable booking & filling of MEM histograms
 };
