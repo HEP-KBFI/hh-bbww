@@ -436,6 +436,7 @@ int main(int argc, char* argv[])
   const bool isMC_EWK = process_string == "WZ" || process_string == "ZZ";
 
   const bool take_Wjj_boosted_from_AK8_LS = false;
+  const bool ignore_Wjj_boosted = false;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -1892,7 +1893,7 @@ int main(int argc, char* argv[])
     int nJet_that_not_bb = cleanedJetsAK4_wrtHbb.size();
 
     std::vector<const RecoJetAK8*> selJets_Wjj_boosted;
-    if ( take_Wjj_boosted_from_AK8_LS )
+    if ( take_Wjj_boosted_from_AK8_LS || ! ignore_Wjj_boosted )
     {
       std::vector<const RecoJetAK8*> cleanedJetsAK8LS_wrtHbb;
       if ( jet_ptrs_ak8LS.size() > 0 )
@@ -1916,7 +1917,7 @@ int main(int argc, char* argv[])
           }
         }
       }
-    } else {
+    } else if ( ! ignore_Wjj_boosted ) {
       // if AK8 to Wjj
       if ( selJetAK8_Hbb ) {
         // the bellow assures that is not the same object
