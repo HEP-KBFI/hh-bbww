@@ -180,12 +180,6 @@ if __name__ == '__main__':
     #"MVAOutput_350"                     : {},
     #"MVAOutput_400"                     : {},
     #"MVAOutput_750"                     : {},
-    "cat_jet_Wjj_Hbb_reco"              : {},
-    "cat_jet_one_jet_to_Wjj"            : {},
-    "cat_jet_strange"                   : {},
-    "cat_jet_Wjj_Hbb_reco_MVA"              : {},
-    "cat_jet_one_jet_to_Wjj_MVA"            : {},
-    "cat_jet_strange_MVA"                   : {}
   }
   # add  the BDT types with subcategories to the histogram list
   for typeMVA in for_categories_map :

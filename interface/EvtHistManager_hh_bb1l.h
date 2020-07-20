@@ -42,7 +42,6 @@ public:
 		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
 		 double mvaoutput350, double mvaoutput400, double mvaoutput750,
-     std::string category_SM_jets,
      std::string  category_mount,
      const std::map<std::string, double> categories_map_MVAs,
      double selLepton_lead_pt, double selLepton_lead_eta,
@@ -58,7 +57,6 @@ public:
 
   void
   bookCategories(TFileDirectory & dir,
-      const std::map<std::string, std::vector<double>> & categories_SM_jets,
       const std::map<std::string, std::vector<double>> & categories_list_bins,
       const std::vector<std::string> for_categories_map,
       bool doDataMCPlots

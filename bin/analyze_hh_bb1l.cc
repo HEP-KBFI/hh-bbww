@@ -912,14 +912,6 @@ int main(int argc, char* argv[])
   };
   XGBInterface mva_xgb_bb1l(xgbFileName_bb1l, xgbInputVariables_bb1l);
   std::map<std::string, double> mvaInputs_XGB;
-  const std::map<std::string, std::vector<double>> categories_SM_jets =
-  {
-     {"cat_jet_Wjj_Hbb_reco",   {}},
-     {"cat_jet_one_jet_to_Wjj", {}},
-     {"cat_jet_strange",        {}},
-     {"cat_jet_Wjj_overlap_boosted",    {}},
-     {"cat_jet_Wjj_Hbb_reco_Wjj_overlap_boosted", {}}
-  };
   // trained on 2016 only
   std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only    = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wjj_BDT_full_reco.pkl";
   std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb1l/hh_bb2l_X900GeV_Wjj_simple_full_reco.pkl";
@@ -1102,7 +1094,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
         //
-        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_SM_jets, categories_list_bins, for_categories_map, doDataMCPlots);
+        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_list_bins, for_categories_map, doDataMCPlots);
       }
 
       if(isMC && ! skipBooking)
@@ -2840,18 +2832,6 @@ int main(int argc, char* argv[])
       memOutputs_hh_bb1l_missingHadWJet = memReader_missingHadWJet->read();
     }
 
-//--- doing categories to datacard only
-    std::string category_count = "cat_jet_";
-    if ( new_had_cut && ! ( WjjWasFat && (fails_mD_cut || fails_centrality_cut) ) ) // original_jet_cut
-    {
-      if ( new_had_cut_fullreco  ) {
-        category_count += "Wjj_Hbb_reco";
-      }
-      else {
-        category_count += "one_jet_to_Wjj";
-      }
-    }
-    else category_count += "strange";
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
@@ -2933,7 +2913,6 @@ int main(int argc, char* argv[])
             vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
             nullptr, -1.,
             mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
-            category_count,
             category_mount,
             categories_map_MVAs,
             selLepton->pt(), selLepton->eta(),
