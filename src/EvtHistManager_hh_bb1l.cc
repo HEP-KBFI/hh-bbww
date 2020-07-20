@@ -79,7 +79,8 @@ void
 EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
     const std::map<std::string, std::vector<double>> & categories_SM_jets,
     const std::map<std::string, std::vector<double>> & categories_list_bins,
-    const std::vector<std::string> for_categories_map
+    const std::vector<std::string> for_categories_map,
+    bool doDataMCPlots
   )
 {
     for(auto category: categories_SM_jets)
@@ -120,15 +121,18 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
       }
     }
     ///////////////////////////////
-    for(auto category: categories_list_bins)
+    if ( doDataMCPlots )
     {
-      histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, "jet1_pt" + category.first, category.first, 40,  0., 200.);
-      histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, "jet1_eta" + category.first, category.first, 22,  -3., +3.);
-      histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, "lep1_pt" + category.first, category.first, 60,  0., +300.);
-      histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, "lep1_eta" + category.first, category.first, 22,  -3., +3.);
-      histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, "jet2_pt" + category.first, category.first, 40,  0., 200.);
-      histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, "jet2_eta" + category.first, category.first, 22,  -3., +3.);
-      central_or_shiftOptions_[category.first] = { "*" };
+      for(auto category: categories_list_bins)
+      {
+        histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, "jet1_pt" + category.first, category.first, 40,  0., 200.);
+        histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, "jet1_eta" + category.first, category.first, 22,  -3., +3.);
+        histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, "lep1_pt" + category.first, category.first, 60,  0., +300.);
+        histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, "lep1_eta" + category.first, category.first, 22,  -3., +3.);
+        histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, "jet2_pt" + category.first, category.first, 40,  0., 200.);
+        histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, "jet2_eta" + category.first, category.first, 22,  -3., +3.);
+        central_or_shiftOptions_[category.first] = { "*" };
+    }
     }
 }
 
@@ -235,6 +239,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
                double selJetsAK4_1_pt,
                double selJetsAK4_0_eta,
                double selJetsAK4_1_eta,
+               bool doDataMCPlots,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -264,17 +269,19 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_HT_,                               HT,                                 evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_STMET_,                            STMET,                              evtWeight, evtWeightErr);
   /////
-  if(! histograms_by_category_check_jet1_pt_.count(category_mount))
+  if ( doDataMCPlots )
   {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_mount << "' was never booked";
+    if(! histograms_by_category_check_jet1_pt_.count(category_mount))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_mount << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_check_jet1_pt_[category_mount], selJetsAK4_0_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet1_eta_[category_mount], selJetsAK4_0_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep1_pt_[category_mount], selLepton_lead_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_mount], selLepton_lead_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_mount], selJetsAK4_1_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_mount], selJetsAK4_1_eta, evtWeight, evtWeightErr);
   }
-  fillWithOverFlow(histograms_by_category_check_jet1_pt_[category_mount], selJetsAK4_0_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_jet1_eta_[category_mount], selJetsAK4_0_eta, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_lep1_pt_[category_mount], selLepton_lead_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_mount], selLepton_lead_eta, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_mount], selJetsAK4_1_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_mount], selJetsAK4_1_eta, evtWeight, evtWeightErr);
-
   /*fillWithOverFlow(histogram_m_Hbb_,                            m_Hbb,                              evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_Hbb_,                           dR_Hbb,                             evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_Hbb_,                         dPhi_Hbb,                           evtWeight, evtWeightErr);

@@ -43,11 +43,9 @@ public:
                  double mvaoutput_bb2l_node7,
                  double mvaoutput_bb2l_sm,
                  ///
-                 std::string category_SM_plainVars_Xness,
-                 std::string category_SM_plainVars,
-                 std::string category_SM_plainVars_flavour_boosted,
-                 std::string category_SM_plainVars_boosted,
                  std::string category_check,
+                 const std::map<std::string, double> categories_map_MVAs,
+                 ///
                  double mva_SM_plainVars_Xness,
                  double mva_SM_plainVars,
                  double m_HH_hme,
@@ -59,6 +57,7 @@ public:
                  double selJetsAK4_1_pt,
                  double selJetsAK4_0_eta,
                  double selJetsAK4_1_eta,
+                 bool doDataMCPlots,
                  ///
                  double evtWeight);
 
@@ -76,11 +75,9 @@ public:
 
   void
   bookCategories(TFileDirectory & dir,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_flavour_boosted,
-                const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted,
-                const std::map<std::string, std::vector<double>> & categories_check
+                const std::vector<std::string> for_categories_map,
+                const std::map<std::string, std::vector<double>> & categories_check,
+                bool doDataMCPlots
   );
 
   const TH1 *
@@ -171,11 +168,7 @@ public:
   TH1 * histogram_MVAOutputnode7_;
   TH1 * histogram_MVAOutputsm_;
 
-  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_Xness_;
-  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_;
-
-  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_flavour_boosted_;
-  std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_boosted_;
+  std::map<std::string, TH1 *> histograms_by_category_types_;
 
   std::map<std::string, TH1 *> histograms_by_category_check_jet1_pt_;
   std::map<std::string, TH1 *> histograms_by_category_check_jet1_eta_;

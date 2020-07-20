@@ -146,97 +146,47 @@ EvtHistManager_hh_bb2l::getHistogram_EventCounter() const
 
 void
 EvtHistManager_hh_bb2l::bookCategories(TFileDirectory & dir,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_Xness,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_flavour_boosted,
-    const std::map<std::string, std::vector<double>> & categories_SM_plainVars_boosted,
-    const std::map<std::string, std::vector<double>> & categories_check
+    const std::vector<std::string> for_categories_map,
+    const std::map<std::string, std::vector<double>> & categories_check,
+    bool doDataMCPlots
   )
 {
-  // X: not the smartest way, but we will detele most and keep one in the end, so it is ok
-  // I would not waste time trying to do a dict of  histograms_by_category_
-  //for(auto categoryType: {categories_SM_plainVars_Xness, categories_SM_plainVars_HME, categories_SM_plainVars_Xness_HME})
-    for(auto category: categories_SM_plainVars_Xness)
+    for(auto typeMVA: for_categories_map)
     {
-      //std::cout<< "Booked histo: " << category.first <<"\n";
-      if(! category.second.empty())
+      for(auto category: categories_check)
       {
-        const int npoints = category.second.size();
-        Float_t binsx[npoints];
-        std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_Xness_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+        std::string name_test = typeMVA + category.first;
+        //std::cout<< "Booked histo: " << name_test <<"\n";
+        if(! category.second.empty())
+        {
+          const int npoints = category.second.size();
+          Float_t binsx[npoints];
+          std::copy(category.second.begin(), category.second.end(), binsx);
+          histograms_by_category_types_[name_test] = book1D(dir, name_test, category.first, npoints - 1, binsx);
+        }
+        else
+        {
+          histograms_by_category_types_[name_test] = book1D(dir, name_test, category.first, 400,  0., +1.);
+        }
+        central_or_shiftOptions_[name_test] = { "*" };
       }
-      else
-      {
-        histograms_by_category_SM_plainVars_Xness_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
-      }
-      central_or_shiftOptions_[category.first] = { "*" };
     }
     /////
-    for(auto category: categories_SM_plainVars_flavour_boosted)
+    if ( doDataMCPlots )
     {
-      //std::cout<< "Booked histo: " << category.first <<"\n";
-      if(! category.second.empty())
+      for(auto category: categories_check)
       {
-        const int npoints = category.second.size();
-        Float_t binsx[npoints];
-        std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_flavour_boosted_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
+        histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, category.first + "_jet1_pt", category.first, 40,  0., 200.);
+        histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, category.first + "_jet1_eta", category.first, 22,  -3., +3.);
+        histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, category.first + "_lep1_pt", category.first, 60,  0., +300.);
+        histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, category.first + "_lep1_eta", category.first, 22,  -3., +3.);
+        histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, category.first + "_jet2_pt", category.first, 40,  0., 200.);
+        histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, category.first + "_jet2_eta", category.first, 22,  -3., +3.);
+        histograms_by_category_check_lep2_pt_[category.first] = book1D(dir, category.first + "_lep2_pt", category.first, 40,  0., +200.);
+        histograms_by_category_check_lep2_eta_[category.first] = book1D(dir, category.first + "_lep2_eta", category.first, 22,  -3., +3.);
+        central_or_shiftOptions_[category.first] = { "*" };
       }
-      else
-      {
-        histograms_by_category_SM_plainVars_flavour_boosted_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
-      }
-      central_or_shiftOptions_[category.first] = { "*" };
     }
-    /////
-    for(auto category: categories_SM_plainVars)
-    {
-      //std::cout<< "Booked histo: " << category.first <<"\n";
-      if(! category.second.empty())
-      {
-        const int npoints = category.second.size();
-        Float_t binsx[npoints];
-        std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
-      }
-      else
-      {
-        histograms_by_category_SM_plainVars_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
-      }
-      central_or_shiftOptions_[category.first] = { "*" };
-    }
-    /////
-    for(auto category: categories_SM_plainVars_boosted)
-    {
-      //std::cout<< "Booked histo: " << category.first <<"\n";
-      if(! category.second.empty())
-      {
-        const int npoints = category.second.size();
-        Float_t binsx[npoints];
-        std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_boosted_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
-      }
-      else
-      {
-        histograms_by_category_SM_plainVars_boosted_[category.first] = book1D(dir, category.first, category.first, 100,  0., +1.);
-      }
-      central_or_shiftOptions_[category.first] = { "*" };
-    }
-    /////
-    for(auto category: categories_check)
-    {
-      histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, category.first + "_jet1_pt", category.first, 40,  0., 200.);
-      histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, category.first + "_jet1_eta", category.first, 22,  -3., +3.);
-      histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, category.first + "_lep1_pt", category.first, 60,  0., +300.);
-      histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, category.first + "_lep1_eta", category.first, 22,  -3., +3.);
-      histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, category.first + "_jet2_pt", category.first, 30,  0., 150.);
-      histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, category.first + "_jet2_eta", category.first, 22,  -3., +3.);
-      histograms_by_category_check_lep2_pt_[category.first] = book1D(dir, category.first + "_lep2_pt", category.first, 40,  0., +200.);
-      histograms_by_category_check_lep2_eta_[category.first] = book1D(dir, category.first + "_lep2_eta", category.first, 22,  -3., +3.);
-      central_or_shiftOptions_[category.first] = { "*" };
-    }
-    //
 }
 
 void
@@ -295,11 +245,9 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
                                        double mvaoutput_bb2l_node7,
                                        double mvaoutput_bb2l_sm,
                                        ///
-                                       std::string category_SM_plainVars_Xness,
-                                       std::string category_SM_plainVars,
-                                       std::string category_SM_plainVars_flavour_boosted,
-                                       std::string category_SM_plainVars_boosted,
                                        std::string category_check,
+                                       const std::map<std::string, double> categories_map_MVAs,
+                                       ////
                                        double mva_SM_plainVars_Xness,
                                        double mva_SM_plainVars,
                                        double m_HH_hme,
@@ -311,6 +259,7 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
                                        double selJetsAK4_1_pt,
                                        double selJetsAK4_0_eta,
                                        double selJetsAK4_1_eta,
+                                       bool doDataMCPlots,
                                        ///
                                        double evtWeight)
 {
@@ -339,47 +288,32 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
 
   fillWithOverFlow(histograms_SM_plainVars_Xness_nocat_ ,           mva_SM_plainVars_Xness,                 evtWeight, evtWeightErr);
   fillWithOverFlow(histograms_SM_plainVars_nocat_,                  mva_SM_plainVars,                 evtWeight, evtWeightErr);
-
   ////
-  // X: not the smartest way, but we will detele most and keep one in the end, so it is ok
-  // I would not waste time trying to do a dict of  histograms_by_category_
+  for(auto typeMVA: categories_map_MVAs)
+  {
+    std::string name_test = typeMVA.first + category_check;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+  }
   /////
-  if(! histograms_by_category_SM_plainVars_Xness_.count(category_SM_plainVars_Xness))
+  if ( doDataMCPlots )
   {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars_Xness << "' was never booked";
+    if(! histograms_by_category_check_jet1_pt_.count(category_check))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_check << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_check_jet1_pt_[category_check], selJetsAK4_0_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet1_eta_[category_check], selJetsAK4_0_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep1_pt_[category_check], selLepton_lead_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_check], selLepton_lead_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_check], selJetsAK4_1_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_check], selJetsAK4_1_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep2_pt_[category_check], selLepton_sublead_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep2_eta_[category_check], selLepton_sublead_eta, evtWeight, evtWeightErr);
   }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_Xness_[category_SM_plainVars_Xness], mva_SM_plainVars_Xness, evtWeight, evtWeightErr);
-  //////
-  if(! histograms_by_category_SM_plainVars_.count(category_SM_plainVars))
-  {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_plainVars << "' was never booked";
-  }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_[category_SM_plainVars], mva_SM_plainVars, evtWeight, evtWeightErr);
-  /////
-  if(! histograms_by_category_SM_plainVars_flavour_boosted_.count(category_SM_plainVars_flavour_boosted))
-  {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name (flavour_boosted) '" << category_SM_plainVars_flavour_boosted << "' was never booked";
-  }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_flavour_boosted_[category_SM_plainVars_flavour_boosted], mva_SM_plainVars, evtWeight, evtWeightErr);
-  /////
-  if(! histograms_by_category_SM_plainVars_boosted_.count(category_SM_plainVars_boosted))
-  {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name (boosted) '" << category_SM_plainVars_boosted << "' was never booked";
-  }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_boosted_[category_SM_plainVars_boosted], mva_SM_plainVars, evtWeight, evtWeightErr);
-  /////
-  if(! histograms_by_category_check_jet1_pt_.count(category_check))
-  {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_check << "' was never booked";
-  }
-  fillWithOverFlow(histograms_by_category_check_jet1_pt_[category_check], selJetsAK4_0_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_jet1_eta_[category_check], selJetsAK4_0_eta, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_lep1_pt_[category_check], selLepton_lead_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_check], selLepton_lead_eta, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_check], selJetsAK4_1_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_check], selJetsAK4_1_eta, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_lep2_pt_[category_check], selLepton_sublead_pt, evtWeight, evtWeightErr);
-  fillWithOverFlow(histograms_by_category_check_lep2_eta_[category_check], selLepton_sublead_eta, evtWeight, evtWeightErr);
 }
 
 void

@@ -50,6 +50,7 @@ public:
      double selJetsAK4_1_pt,
      double selJetsAK4_0_eta,
      double selJetsAK4_1_eta,
+     bool doDataMCPlots,
                  double evtWeight);
 
   const TH1 *
@@ -59,7 +60,8 @@ public:
   bookCategories(TFileDirectory & dir,
       const std::map<std::string, std::vector<double>> & categories_SM_jets,
       const std::map<std::string, std::vector<double>> & categories_list_bins,
-      const std::vector<std::string> for_categories_map
+      const std::vector<std::string> for_categories_map,
+      bool doDataMCPlots
   );
 
   /// flag to enable/disable booking & filling of MEM histograms

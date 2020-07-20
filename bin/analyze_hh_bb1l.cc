@@ -437,7 +437,7 @@ int main(int argc, char* argv[])
 
   const bool take_Wjj_boosted_from_AK8_LS = false;
   const bool ignore_Wjj_boosted = false;
-  //const bool doDataMCPlots     = true;
+  const bool doDataMCPlots      = true;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -1102,7 +1102,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
         //
-        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_SM_jets, categories_list_bins, for_categories_map);
+        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_SM_jets, categories_list_bins, for_categories_map, doDataMCPlots);
       }
 
       if(isMC && ! skipBooking)
@@ -2941,6 +2941,7 @@ int main(int argc, char* argv[])
             selJetsAK4.size() > 1  ? selJetsAK4[1]->pt() : 0.,
             selJetsAK4.size() > 0  ? selJetsAK4[0]->eta() : -10.,
             selJetsAK4.size() > 1  ? selJetsAK4[1]->eta() : -10.,
+            doDataMCPlots,
             kv.second
           );
         }
