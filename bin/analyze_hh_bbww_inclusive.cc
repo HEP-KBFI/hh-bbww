@@ -43,9 +43,14 @@
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 
 #include <FWCore/ParameterSet/interface/ParameterSet.h> // edm::ParameterSet
-#include <FWCore/ParameterSetReader/interface/ParameterSetReader.h> // edm::readPSetsFrom()
 #include <DataFormats/FWLite/interface/InputSource.h> // fwlite::InputSource
 #include <DataFormats/Math/interface/deltaR.h> // deltaR()
+
+#if __has_include (<FWCore/ParameterSetReader/interface/ParameterSetReader.h>)
+#  include <FWCore/ParameterSetReader/interface/ParameterSetReader.h> // edm::readPSetsFrom()
+#else
+#  include <FWCore/PythonParameterSet/interface/MakeParameterSets.h> // edm::readPSetsFrom()
+#endif
 
 #include <TBenchmark.h> // TBenchmark
 #include <TError.h> // gErrorAbortLevel, kError
