@@ -206,13 +206,17 @@ if __name__ == '__main__':
 
   histograms_to_fit_list                 = {
     "EventCounter"                      : {},
-    "HT"                                : {},
-    "STMET"                             : {}
+    #"HT"                                : {},
+    #"STMET"                             : {}
   }
   # add  the BDT types with subcategories to the histogram list
   for typeMVA in for_categories_map :
     for typyCat in categories_list_bins :
       histograms_to_fit_list[typeMVA + typyCat] = {}
+  if doDataMCPlots :
+    for typeMVA in for_data_MC_plots :
+      for typyCat in categories_list_bins :
+        histograms_to_fit_list[ typyCat + "_" + typeMVA ] = {}
 
   analysis = analyzeConfig_hh_bb2l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
