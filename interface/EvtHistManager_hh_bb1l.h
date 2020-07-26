@@ -38,7 +38,6 @@ public:
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
-		 double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
 		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
 		 double mvaoutput350, double mvaoutput400, double mvaoutput750,

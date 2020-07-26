@@ -53,14 +53,14 @@ systematics_label = args.systematics
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
-files_per_job     = args.files_per_job
+files_per_job     = 1 #args.files_per_job
 use_home          = args.use_home
 tau_id            = args.tau_id
 jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
-doDataMCPlots     = True
+doDataMCPlots     = False
 
 if regroup_jerc:
   if 'full' not in systematics_label:
