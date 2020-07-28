@@ -70,6 +70,7 @@ gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 add_hmeBr            =args.add_hmeBr
+doDataMCPlots     = True
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -95,7 +96,7 @@ for systematic_label in systematics_label:
         continue
       central_or_shifts.append(central_or_shift)
 
-do_sync = 'sync' in mode
+do_sync = mode.startswith('sync')
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
@@ -175,6 +176,48 @@ if __name__ == '__main__':
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
 
+  categories_list_bins =  [
+     "cat_ee_1b",
+     "cat_em_1b",
+     "cat_mm_1b",
+     "cat_ee_2b",
+     "cat_em_2b",
+     "cat_mm_2b",
+     "cat_ee_Hbb_boosted",
+     "cat_em_Hbb_boosted",
+     "cat_mm_Hbb_boosted"
+   ]
+
+  for_categories_map = [
+  # those are for the BDT types
+  "SM_plainVars_"
+  ]
+
+  for_data_MC_plots = [
+  "jet1_pt",
+  "jet1_eta",
+  "lep1_pt",
+  "lep1_eta",
+  "jet2_pt",
+  "jet2_eta",
+  "lep2_pt",
+  "lep2_eta"
+  ]
+
+  histograms_to_fit_list                 = {
+    "EventCounter"                      : {},
+    #"HT"                                : {},
+    #"STMET"                             : {}
+  }
+  # add  the BDT types with subcategories to the histogram list
+  for typeMVA in for_categories_map :
+    for typyCat in categories_list_bins :
+      histograms_to_fit_list[typeMVA + typyCat] = {}
+  if doDataMCPlots :
+    for typeMVA in for_data_MC_plots :
+      for typyCat in categories_list_bins :
+        histograms_to_fit_list[ typyCat + "_" + typeMVA ] = {}
+
   analysis = analyzeConfig_hh_bb2l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
@@ -199,62 +242,7 @@ if __name__ == '__main__':
     executable_addSysTT                   = "addSysTT",
     executable_addBackgrounds             = "addBackgrounds",
     executable_addFakes                   = "addBackgroundLeptonFakes",
-    histograms_to_fit                     = {
-      "EventCounter"                      : {},
-      "HT"                                : {},
-      "STMET"                             : {},
-      "SM_plainVars_ee"    : {},
-      "SM_plainVars_em"    : {},
-      "SM_plainVars_mm"    : {},
-      "cat_ee_1b_jet1_pt"    : {},
-      "cat_ee_1b_jet1_eta"    : {},
-      "cat_ee_1b_lep1_pt"    : {},
-      "cat_ee_1b_lep1_eta"    : {},
-      "cat_ee_1b_jet2_pt"    : {},
-      "cat_ee_1b_jet2_eta"    : {},
-      "cat_ee_1b_lep2_pt"    : {},
-      "cat_ee_1b_lep2_eta"    : {},
-      "cat_ee_2b_jet1_pt"    : {},
-      "cat_ee_2b_jet1_eta"    : {},
-      "cat_ee_2b_lep1_pt"    : {},
-      "cat_ee_2b_lep1_eta"    : {},
-      "cat_ee_2b_jet2_pt"    : {},
-      "cat_ee_2b_jet2_eta"    : {},
-      "cat_ee_2b_lep2_pt"    : {},
-      "cat_ee_2b_lep2_eta"    : {},
-      "cat_em_1b_jet1_pt"    : {},
-      "cat_em_1b_jet1_eta"    : {},
-      "cat_em_1b_lep1_pt"    : {},
-      "cat_em_1b_lep1_eta"    : {},
-      "cat_em_1b_jet2_pt"    : {},
-      "cat_em_1b_jet2_eta"    : {},
-      "cat_em_1b_lep2_pt"    : {},
-      "cat_em_1b_lep2_eta"    : {},
-      "cat_em_2b_jet1_pt"    : {},
-      "cat_em_2b_jet1_eta"    : {},
-      "cat_em_2b_lep1_pt"    : {},
-      "cat_em_2b_lep1_eta"    : {},
-      "cat_em_2b_jet2_pt"    : {},
-      "cat_em_2b_jet2_eta"    : {},
-      "cat_em_2b_lep2_pt"    : {},
-      "cat_em_2b_lep2_eta"    : {},
-      "cat_mm_1b_jet1_pt"    : {},
-      "cat_mm_1b_jet1_eta"    : {},
-      "cat_mm_1b_lep1_pt"    : {},
-      "cat_mm_1b_lep1_eta"    : {},
-      "cat_mm_1b_jet2_pt"    : {},
-      "cat_mm_1b_jet2_eta"    : {},
-      "cat_mm_1b_lep2_pt"    : {},
-      "cat_mm_1b_lep2_eta"    : {},
-      "cat_mm_2b_jet1_pt"    : {},
-      "cat_mm_2b_jet1_eta"    : {},
-      "cat_mm_2b_lep1_pt"    : {},
-      "cat_mm_2b_lep1_eta"    : {},
-      "cat_mm_2b_jet2_pt"    : {},
-      "cat_mm_2b_jet2_eta"    : {},
-      "cat_mm_2b_lep2_pt"    : {},
-      "cat_mm_2b_lep2_eta"    : {},
-    },
+    histograms_to_fit                     = histograms_to_fit_list,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,

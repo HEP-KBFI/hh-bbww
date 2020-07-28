@@ -53,13 +53,14 @@ systematics_label = args.systematics
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
-files_per_job     = 2 #args.files_per_job
+files_per_job     = args.files_per_job 
 use_home          = args.use_home
 tau_id            = args.tau_id
 jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
+doDataMCPlots     = False
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -94,9 +95,10 @@ if "sync" not in mode:
 
 if mode == "default":
   samples = load_samples(era)
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo_noincl', 'wjets_incl' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, load_dy = True, load_wjets = True)
+  samples = load_samples_stitched(samples, era, [ 'dy_lo', 'wjets_noincl' ])
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
@@ -162,6 +164,15 @@ if __name__ == '__main__':
   "cat_jet_2BDT_Wjj_simple_X900GeV"
   ]
 
+  for_data_MC_plots = [
+  "jet1_pt",
+  "jet1_eta",
+  "lep1_pt",
+  "lep1_eta",
+  "jet2_pt",
+  "jet2_eta"
+  ]
+
   histograms_to_fit_list                 = {
     "EventCounter"                      : {},
     #"HT"                                : {},
@@ -169,17 +180,15 @@ if __name__ == '__main__':
     #"MVAOutput_350"                     : {},
     #"MVAOutput_400"                     : {},
     #"MVAOutput_750"                     : {},
-    "cat_jet_Wjj_Hbb_reco"              : {},
-    "cat_jet_one_jet_to_Wjj"            : {},
-    "cat_jet_strange"                   : {},
-    "cat_jet_Wjj_Hbb_reco_MVA"              : {},
-    "cat_jet_one_jet_to_Wjj_MVA"            : {},
-    "cat_jet_strange_MVA"                   : {}
   }
   # add  the BDT types with subcategories to the histogram list
   for typeMVA in for_categories_map :
     for typyCat in categories_list_bins :
       histograms_to_fit_list[typeMVA + typyCat] = {}
+  if doDataMCPlots :
+    for typeMVA in for_data_MC_plots :
+      for typyCat in categories_list_bins :
+        histograms_to_fit_list[typeMVA + typyCat] = {}
 
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),

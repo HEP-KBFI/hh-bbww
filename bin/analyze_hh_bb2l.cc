@@ -1,5 +1,4 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h" // edm::ParameterSet
-#include "FWCore/PythonParameterSet/interface/MakeParameterSets.h" // edm::readPSetsFrom()
 #include "FWCore/Utilities/interface/Exception.h" // cms::Exception
 #include "PhysicsTools/FWLite/interface/TFileService.h" // fwlite::TFileService
 #include "DataFormats/FWLite/interface/InputSource.h" // fwlite::InputSource
@@ -7,6 +6,12 @@
 #include "DataFormats/Math/interface/LorentzVector.h" // math::PtEtaPhiMLorentzVector
 #include "DataFormats/Math/interface/deltaR.h" // deltaR
 #include "DataFormats/Math/interface/deltaPhi.h" // deltaPhi
+
+#if __has_include (<FWCore/ParameterSetReader/interface/ParameterSetReader.h>)
+#  include <FWCore/ParameterSetReader/interface/ParameterSetReader.h> // edm::readPSetsFrom()
+#else
+#  include <FWCore/PythonParameterSet/interface/MakeParameterSets.h> // edm::readPSetsFrom()
+#endif
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -247,6 +252,7 @@ int main(int argc, char* argv[])
   MEtFilterSelector metFilterSelector(cfgMEtFilter, isMC);
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
+  const bool doDataMCPlots = true;
 
   bool run_hme = false; //cfg_analyze.getParameter<bool>("run_hme");
 
@@ -639,32 +645,6 @@ int main(int argc, char* argv[])
   XGBInterface mva_xgb_SM_plainVars(xgbFileName_SM_plainVars, xgbInputVariables_SM_plainVars);
   XGBInterface mva_xgb_SM_plainVars_Xness(xgbFileName_SM_plainVars_Xness, xgbInputVariables_SM_plainVars_Xness);
   // book subcategories
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars =
-  {
-     {"SM_plainVars_ee", {}},
-     {"SM_plainVars_em", {}},
-     {"SM_plainVars_mm", {}}
-  };
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars_flavour_boosted =
-  {
-     {"SM_plainVars_ee_Hbb_resolved", {}},
-     {"SM_plainVars_em_Hbb_resolved", {}},
-     {"SM_plainVars_mm_Hbb_resolved", {}},
-     {"SM_plainVars_ee_Hbb_boosted", {}},
-     {"SM_plainVars_em_Hbb_boosted", {}},
-     {"SM_plainVars_mm_Hbb_boosted", {}}
-  };
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars_boosted =
-  {
-     {"SM_plainVars_Hbb_resolved", {}},
-     {"SM_plainVars_Hbb_boosted", {}}
-  };
-  const std::map<std::string, std::vector<double>> categories_SM_plainVars_Xness =
-  {
-     {"SM_plainVars_Xness_ee", {}},
-     {"SM_plainVars_Xness_em", {}},
-     {"SM_plainVars_Xness_mm", {}}
-  };
   const std::map<std::string, std::vector<double>> categories_check =
   {
      {"cat_ee_1b", {}},
@@ -672,8 +652,20 @@ int main(int argc, char* argv[])
      {"cat_mm_1b", {}},
      {"cat_ee_2b", {}},
      {"cat_em_2b", {}},
-     {"cat_mm_2b", {}}
+     {"cat_mm_2b", {}},
+     {"cat_ee_Hbb_boosted", {}},
+     {"cat_em_Hbb_boosted", {}},
+     {"cat_mm_Hbb_boosted", {}}
   };
+  const std::vector<std::string> for_categories_map =
+  {
+    "SM_plainVars_"
+  };
+  // X: I will assume that the binning by subcategory is fixed independent of the BDT
+  // that may end up not being true, in that case there is some logic to work out again
+  // one idea of solution if the different binning schemes to resonant and non-resonant is to make
+  // a  categories_list_bins_res / for_categories_map_res / categories_map_MVA_res and a categories_list_bins_nonres / for_categories_map_nonres / categories_map_MVA_nonres
+
 
   std::vector<std::string> xgbInputVariables_bb2l_res =
     {"mht", "m_Hbb", "m_ll", "Smin_Hww", "m_HHvis", "pT_HH", "mT2_top_2particle", "m_HH_hme", "logTopness_fixedChi2", "logHiggsness_fixedChi2", "nBJetLoose", "gen_mHH"
@@ -816,11 +808,9 @@ int main(int argc, char* argv[])
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_[evt_cat_str]->bookCategories(
           fs,
-          categories_SM_plainVars_Xness,
-          categories_SM_plainVars,
-          categories_SM_plainVars_flavour_boosted,
-          categories_SM_plainVars_boosted,
-          categories_check
+          for_categories_map,
+          categories_check,
+          doDataMCPlots
         );
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
       }
@@ -966,10 +956,10 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
-    //if ( analyzedEntries > 4000 ) break;
+    //if ( analyzedEntries > 400 ) break;
     histogram_analyzedEntries->Fill(0.);
     // used half of the HH nonres events for training
-    if ( !(eventInfo.event % 2) && era_string == "2017"  && isHH_rwgt_allowed ) continue;
+    if ( (!(eventInfo.event % 2) && isHH_rwgt_allowed)  && ! selectBDT ) continue;
 
 
     if ( isDEBUG ) {
@@ -2106,49 +2096,45 @@ int main(int argc, char* argv[])
     double mva_SM_plainVars_Xness = mva_xgb_SM_plainVars_Xness(mvaInputVariables_list);
 
     //--- do NN categories
-    /////// categories_SM_plainVars_boosted = categories_SM_plainVars_flavour_boosted
-    std::string category_SM_plainVars_Xness                 = "SM_plainVars_Xness_";
-    std::string category_SM_plainVars                       = "SM_plainVars_";
-    std::string category_SM_plainVars_boosted               = "SM_plainVars_";
-    std::string category_SM_plainVars_flavour_boosted       = "SM_plainVars_";
+    /////// categories_SM_plainVars_boosted
+    //std::string category_SM_plainVars_Xness                 = "SM_plainVars_Xness_";
+    //std::string category_SM_plainVars                       = "SM_plainVars_";
+    //std::string category_SM_plainVars_boosted               = "SM_plainVars_";
+    //std::string category_SM_plainVars_flavour_boosted       = "SM_plainVars_";
     std::string category_check                              = "cat_";
     // flavour
     if  ( ( selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron ) ) {
-      category_SM_plainVars                    += "ee";
-      category_SM_plainVars_Xness              += "ee";
-      category_SM_plainVars_flavour_boosted    += "ee";
-      category_check                           += "ee";
+      category_check                    += "ee";
     } else if (  selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon      ) {
-      category_SM_plainVars                    += "mm";
-      category_SM_plainVars_Xness              += "mm";
-      category_SM_plainVars_flavour_boosted    += "mm";
-      category_check                           += "mm";
+      category_check                    += "mm";
     } else if ( (selLepton_lead_type == kElectron && selLepton_sublead_type == kMuon    ) ||
     (selLepton_lead_type == kMuon     && selLepton_sublead_type == kElectron) ) {
-      category_SM_plainVars                    += "em";
-      category_SM_plainVars_Xness              += "em";
-      category_SM_plainVars_flavour_boosted    += "em";
-      category_check                           += "em";
+      category_check                    += "em";
     }
-    if ( numBJets_medium == 1 )
+    // btag
+    if ( type_Hbb == kHbb_boosted )
+    {
+      category_check                           += "_Hbb_boosted";
+    }
+    else if ( numBJets_medium == 1 )
     {
       category_check                           += "_1b";
     } else {
       category_check                           += "_2b";
     }
     ////////////////////
-    if (type_Hbb == kHbb_boosted)
+    // Map  for variables to fill and naming conventions
+    // the keys should coincide with for_categories_map (keys used for histogram booking)
+    // -- like this for a resonant case or BM's case that can be added as a loop
+    const std::map<std::string, double> categories_map_MVAs =
     {
-      category_SM_plainVars_flavour_boosted  += "_Hbb_boosted";
-      category_SM_plainVars_boosted          += "Hbb_boosted";
-    } else {
-      category_SM_plainVars_flavour_boosted  += "_Hbb_resolved";
-      category_SM_plainVars_boosted          += "Hbb_resolved";
-    }
+      {"SM_plainVars_",         mva_SM_plainVars}
+    };
 
-    if ( isDEBUG ) std::cout <<
-    category_SM_plainVars_Xness <<  " " << mva_SM_plainVars_Xness <<  "\n"
-    <<  "\n\n";
+    if ( isDEBUG )
+    {
+      for(auto category: categories_map_MVAs) std::cout << category.first <<  " " << category.second <<  "\n";
+    }
 
 
 //--- retrieve gen-matching flags
@@ -2158,7 +2144,7 @@ int main(int argc, char* argv[])
     std::map<std::string, double> rwgt_map;
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      const double evtWeight = (era_string == "2017"  && isHH_rwgt_allowed ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
+      const double evtWeight = ( isHH_rwgt_allowed  && ! selectBDT ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
 
       for(const std::string & evt_cat_str: evt_cat_strs)
@@ -2239,12 +2225,8 @@ int main(int argc, char* argv[])
             mvaoutput_bb2l_node7,
             mvaoutput_bb2l_sm,
             ///
-            category_SM_plainVars_Xness,
-            category_SM_plainVars,
-            //
-            category_SM_plainVars_flavour_boosted,
-            category_SM_plainVars_boosted,
             category_check,
+            categories_map_MVAs,
             //
             mva_SM_plainVars_Xness,
             mva_SM_plainVars,
@@ -2257,6 +2239,7 @@ int main(int argc, char* argv[])
             selJetsAK4.size() > 1  ? selJetsAK4[1]->pt() : 0.,
             selJetsAK4.size() > 0  ? selJetsAK4[0]->eta() : -10.,
             selJetsAK4.size() > 1  ? selJetsAK4[1]->eta() : -10.,
+            doDataMCPlots,
             ///
             kv.second
           );

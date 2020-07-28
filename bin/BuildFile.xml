@@ -1,6 +1,7 @@
 <bin file="analyze_hh_bb1l.cc" name="analyze_hh_bb1l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -17,6 +18,7 @@
 <bin file="analyze_hh_bb1l1tau.cc" name="analyze_hh_bb1l1tau">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -34,6 +36,7 @@
 <bin file="analyze_hh_bb2l.cc" name="analyze_hh_bb2l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -51,6 +54,7 @@
 <bin file="addSysTT.cc" name="addSysTT">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/Candidate"/>
@@ -68,6 +72,7 @@
 <bin file="addMEM_hh_bb1l.cc" name="addMEM_hh_bb1l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -86,6 +91,7 @@
 <bin file="addMEM_hh_bb2l.cc" name="addMEM_hh_bb2l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -104,6 +110,7 @@
 <bin file="analyze_hh_bbWW_DYctrl.cc" name="analyze_hh_bbWW_DYctrl">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -120,6 +127,7 @@
 <bin file="analyze_hh_bbWW_Wctrl.cc" name="analyze_hh_bbWW_Wctrl">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -136,6 +144,7 @@
 <bin file="analyze_hh_bbWW_TT1lctrl.cc" name="analyze_hh_bbWW_TT1lctrl">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -152,6 +161,7 @@
 <bin file="analyze_hh_bbWW_TT2lctrl.cc" name="analyze_hh_bbWW_TT2lctrl">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -168,6 +178,7 @@
 <bin file="analyze_hh_bbww_inclusive.cc" name="analyze_hh_bbww_inclusive">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -184,6 +195,7 @@
 <bin file="analyzeMEM_hh_bb1l.cc" name="analyzeMEM_hh_bb1l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -200,6 +212,7 @@
 <bin file="analyzeMEM_hh_bb2l.cc" name="analyzeMEM_hh_bb2l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>
@@ -216,6 +229,7 @@
 <bin file="analyze_hadWTagger.cc" name="analyze_hadWTagger">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
   <use   name="FWCore/PythonParameterSet"/>
   <use   name="FWCore/Utilities"/>
   <use   name="DataFormats/FWLite"/>

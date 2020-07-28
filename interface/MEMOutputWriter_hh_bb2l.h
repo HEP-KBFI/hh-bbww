@@ -26,9 +26,6 @@ public:
    */
   void write(const  std::vector<MEMOutput_hh_bb2l> & memOutputs);
 
-  void
-  deleteMap(const std::map<std::string, auto> & map);;
-
 protected:
  /**
    * @brief Initialize names of branches to be read from tree

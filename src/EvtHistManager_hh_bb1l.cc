@@ -77,28 +77,11 @@ EvtHistManager_hh_bb1l::getHistogram_EventCounter() const
 
 void
 EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
-    const std::map<std::string, std::vector<double>> & categories_SM_jets,
     const std::map<std::string, std::vector<double>> & categories_list_bins,
-    const std::vector<std::string> for_categories_map
+    const std::vector<std::string> for_categories_map,
+    bool doDataMCPlots
   )
 {
-    for(auto category: categories_SM_jets)
-    {
-      //std::cout<< "Booked histo: " << category.first <<"\n";
-      if(! category.second.empty())
-      {
-        const int npoints = category.second.size();
-        Float_t binsx[npoints];
-        std::copy(category.second.begin(), category.second.end(), binsx);
-        histograms_by_category_SM_plainVars_noHH_[category.first] = book1D(dir, category.first, category.first, npoints - 1, binsx);
-      }
-      else
-      {
-        histograms_by_category_SM_plainVars_noHH_[category.first] = book1D(dir, category.first, category.first, 30,  0., +300.);
-      }
-      central_or_shiftOptions_[category.first] = { "*" };
-    }
-    ///////////////////////////////
     for(auto typeMVA: for_categories_map)
     {
       for(auto category: categories_list_bins)
@@ -120,6 +103,19 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
       }
     }
     ///////////////////////////////
+    if ( doDataMCPlots )
+    {
+      for(auto category: categories_list_bins)
+      {
+        histograms_by_category_check_jet1_pt_[category.first] = book1D(dir, "jet1_pt" + category.first, category.first, 40,  0., 200.);
+        histograms_by_category_check_jet1_eta_[category.first] = book1D(dir, "jet1_eta" + category.first, category.first, 22,  -3., +3.);
+        histograms_by_category_check_lep1_pt_[category.first] = book1D(dir, "lep1_pt" + category.first, category.first, 60,  0., +300.);
+        histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, "lep1_eta" + category.first, category.first, 22,  -3., +3.);
+        histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, "jet2_pt" + category.first, category.first, 40,  0., 200.);
+        histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, "jet2_eta" + category.first, category.first, 22,  -3., +3.);
+        central_or_shiftOptions_[category.first] = { "*" };
+    }
+    }
 }
 
 
@@ -213,23 +209,21 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 				       double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
-				       double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 				       const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
 				       double mvaoutput_bb1l350, double mvaoutput_bb1l400, double mvaoutput_bb1l750,
-               std::string category_SM_jets,
                std::string  category_mount,
                const std::map<std::string, double> categories_map_MVAs,
+               double selLepton_lead_pt, double selLepton_lead_eta,
+               double selJetsAK4_0_pt,
+               double selJetsAK4_1_pt,
+               double selJetsAK4_0_eta,
+               double selJetsAK4_1_eta,
+               bool doDataMCPlots,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
 
-  if(! histograms_by_category_SM_plainVars_noHH_.count(category_SM_jets))
-  {
-    throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_SM_jets << "' was never booked";
-  }
-  fillWithOverFlow(histograms_by_category_SM_plainVars_noHH_[category_SM_jets],  m_Hbb, evtWeight, evtWeightErr);
-  //
   for(auto typeMVA: categories_map_MVAs)
   {
     std::string name_test = typeMVA.first + category_mount;
@@ -248,7 +242,20 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 
   fillWithOverFlow(histogram_HT_,                               HT,                                 evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_STMET_,                            STMET,                              evtWeight, evtWeightErr);
-
+  /////
+  if ( doDataMCPlots )
+  {
+    if(! histograms_by_category_check_jet1_pt_.count(category_mount))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << category_mount << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_check_jet1_pt_[category_mount], selJetsAK4_0_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet1_eta_[category_mount], selJetsAK4_0_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep1_pt_[category_mount], selLepton_lead_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_mount], selLepton_lead_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_mount], selJetsAK4_1_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_mount], selJetsAK4_1_eta, evtWeight, evtWeightErr);
+  }
   /*fillWithOverFlow(histogram_m_Hbb_,                            m_Hbb,                              evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_Hbb_,                           dR_Hbb,                             evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_Hbb_,                         dPhi_Hbb,                           evtWeight, evtWeightErr);

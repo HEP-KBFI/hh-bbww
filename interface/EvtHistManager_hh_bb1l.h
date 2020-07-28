@@ -38,13 +38,17 @@ public:
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
-		 double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
 		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
 		 double mvaoutput350, double mvaoutput400, double mvaoutput750,
-     std::string category_SM_jets,
      std::string  category_mount,
      const std::map<std::string, double> categories_map_MVAs,
+     double selLepton_lead_pt, double selLepton_lead_eta,
+     double selJetsAK4_0_pt,
+     double selJetsAK4_1_pt,
+     double selJetsAK4_0_eta,
+     double selJetsAK4_1_eta,
+     bool doDataMCPlots,
                  double evtWeight);
 
   const TH1 *
@@ -52,9 +56,9 @@ public:
 
   void
   bookCategories(TFileDirectory & dir,
-      const std::map<std::string, std::vector<double>> & categories_SM_jets,
       const std::map<std::string, std::vector<double>> & categories_list_bins,
-      const std::vector<std::string> for_categories_map
+      const std::vector<std::string> for_categories_map,
+      bool doDataMCPlots
   );
 
   /// flag to enable/disable booking & filling of MEM histograms
@@ -125,6 +129,13 @@ public:
 
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
   std::map<std::string, TH1 *> histograms_by_category_types_;
+
+  std::map<std::string, TH1 *> histograms_by_category_check_jet1_pt_;
+  std::map<std::string, TH1 *> histograms_by_category_check_jet1_eta_;
+  std::map<std::string, TH1 *> histograms_by_category_check_lep1_pt_;
+  std::map<std::string, TH1 *> histograms_by_category_check_lep1_eta_;
+  std::map<std::string, TH1 *> histograms_by_category_check_jet2_pt_;
+  std::map<std::string, TH1 *> histograms_by_category_check_jet2_eta_;
 
   int option_; // flag to enable/disable booking & filling of MEM histograms
 };
