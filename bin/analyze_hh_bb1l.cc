@@ -1663,7 +1663,7 @@ int main(int argc, char* argv[])
       }
       continue;
     }
-    cutFlowTable.update(Form("electron pT > %f0.0 GeV / muon pT > %f0.0 GeV", minPt_electron, minPt_muon), evtWeightRecorder.get(central_or_shift_main));
+    cutFlowTable.update(Form("electron pT > %0.0f GeV / muon pT > %0.0f GeV", minPt_electron, minPt_muon), evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("electron pT > 32 GeV / muon pT > 25 GeV", evtWeightRecorder.get(central_or_shift_main));
 
     // require exactly one lepton passing tight selection criteria, to avoid overlap with other channels
