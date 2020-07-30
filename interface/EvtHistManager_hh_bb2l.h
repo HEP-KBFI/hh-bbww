@@ -46,7 +46,6 @@ public:
                  std::string category_check,
                  const std::map<std::string, double> categories_map_MVAs,
                  ///
-                 double mva_SM_plainVars_Xness,
                  double mva_SM_plainVars,
                  double m_HH_hme,
                  double m_HH,
@@ -181,7 +180,6 @@ public:
   std::map<std::string, TH1 *> histograms_by_category_check_lep2_eta_;
 
 
-  TH1 * histograms_SM_plainVars_Xness_nocat_;
   TH1 * histograms_SM_plainVars_nocat_;
 
   TH1 * histogram_EventCounter_;

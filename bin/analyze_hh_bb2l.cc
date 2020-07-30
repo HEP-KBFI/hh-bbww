@@ -638,12 +638,12 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb2l_nonres = "hhAnalysis/bbww/data/bb2l_HH_XGB_noTopness_evtLevelSUM_HH_bb2l_nonres_13Var.pkl";
   ////////////
   // BDTs made with 2017 MC
-  std::string xgbFileName_SM_plainVars                    = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars.pkl";
-  std::string xgbFileName_SM_plainVars_Xness              = "hhAnalysis/bbww/data/nonnres_BDT/hh_bb2l_SM_plainVars_Xness.pkl";
-  std::vector<std::string>  xgbInputVariables_SM_plainVars                    = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
-  std::vector<std::string>  xgbInputVariables_SM_plainVars_Xness              = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep", "logTopness_fixedChi2", "logHiggsness_fixedChi2"};
-  XGBInterface mva_xgb_SM_plainVars(xgbFileName_SM_plainVars, xgbInputVariables_SM_plainVars);
-  XGBInterface mva_xgb_SM_plainVars_Xness(xgbFileName_SM_plainVars_Xness, xgbInputVariables_SM_plainVars_Xness);
+  // baselines == trained for 2017 era only
+  std::string xgbFileName_SM_plainVars_odd                    = "hhAnalysis/bbww/data/BDT_hh_bb2l/hh_bb2l_SM_plainVars_odd.xml";
+  std::string xgbFileName_SM_plainVars_even                   = "hhAnalysis/bbww/data/BDT_hh_bb2l/hh_bb2l_SM_plainVars_even.xml";
+  std::vector<std::string>  xgbInputVariables_SM_plainVars    = {               "mT_lep2", "mT_lep1", "m_ll", "pT_ll", "m_Hbb",   "pT_Hbb", "nBJetMedium", "met_pt_proj", "m_HHvis",             "mT2_W", "mT2_top_3particle", "met_LD", "min_dR_blep"};
+  TMVAInterface mva_xgb_SM_plainVars(xgbFileName_SM_plainVars_odd, xgbFileName_SM_plainVars_even, xgbInputVariables_SM_plainVars);
+  mva_xgb_SM_plainVars.enableBDTTransform();
   // book subcategories
   const std::map<std::string, std::vector<double>> categories_check =
   {
@@ -958,9 +958,6 @@ int main(int argc, char* argv[])
     ++analyzedEntries;
     //if ( analyzedEntries > 400 ) break;
     histogram_analyzedEntries->Fill(0.);
-    // used half of the HH nonres events for training
-    if ( (!(eventInfo.event % 2) && isHH_rwgt_allowed)  && ! selectBDT ) continue;
-
 
     if ( isDEBUG ) {
       std::cout << "event #" << inputTree -> getCurrentMaxEventIdx() << ' ' << eventInfo << '\n';
@@ -2092,15 +2089,11 @@ int main(int argc, char* argv[])
       {"logTopness_fixedChi2",   logTopness_fixedChi2 < 50 ? -0.01 : logTopness_fixedChi2  },
       {"logHiggsness_fixedChi2", logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2}
     };
-    double mva_SM_plainVars       = mva_xgb_SM_plainVars(mvaInputVariables_list);
-    double mva_SM_plainVars_Xness = mva_xgb_SM_plainVars_Xness(mvaInputVariables_list);
+    double mva_SM_plainVars       = mva_xgb_SM_plainVars(mvaInputVariables_list, eventInfo.event);
+    if (isDEBUG) std::cout << "mva_SM_plainVars = " << mva_SM_plainVars << "\n";
 
     //--- do NN categories
     /////// categories_SM_plainVars_boosted
-    //std::string category_SM_plainVars_Xness                 = "SM_plainVars_Xness_";
-    //std::string category_SM_plainVars                       = "SM_plainVars_";
-    //std::string category_SM_plainVars_boosted               = "SM_plainVars_";
-    //std::string category_SM_plainVars_flavour_boosted       = "SM_plainVars_";
     std::string category_check                              = "cat_";
     // flavour
     if  ( ( selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron ) ) {
@@ -2144,7 +2137,7 @@ int main(int argc, char* argv[])
     std::map<std::string, double> rwgt_map;
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      const double evtWeight = ( isHH_rwgt_allowed  && ! selectBDT ) ? 2.*evtWeightRecorder.get(central_or_shift) : evtWeightRecorder.get(central_or_shift);
+      const double evtWeight = evtWeightRecorder.get(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
 
       for(const std::string & evt_cat_str: evt_cat_strs)
@@ -2228,7 +2221,6 @@ int main(int argc, char* argv[])
             category_check,
             categories_map_MVAs,
             //
-            mva_SM_plainVars_Xness,
             mva_SM_plainVars,
             m_HH_hme,
             m_HH,

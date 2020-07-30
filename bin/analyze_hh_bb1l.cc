@@ -896,7 +896,7 @@ int main(int argc, char* argv[])
   */
 
   std::vector<std::string> xgbInputVariables_bb1l_X900GeV_Wj1 = {
-    "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nJet", "nBJetMedium", "lep_conePt", "met_LD", "HT", "mT_top_3particle", "mT_W"
+    "mT_top_3particle", "mT_W", "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nBJetMedium", "lep_conePt", "met_LD", "HT"
   };
   std::vector<std::string> xgbInputVariables_bb1l_X900GeV_Wjj_BDT = {
     "mindr_lep1_jet", "m_Hbb_regCorr", "m_HH", "mWlep_met_simple", "dR_Hww", "m_Wjj", "cosThetaS_Hbb", "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "lep_conePt", "met_LD", "mT_W", "mT_top_3particle", "HT"
@@ -905,12 +905,13 @@ int main(int argc, char* argv[])
     "mindr_lep1_jet", "m_Hbb_regCorr", "mHH_simple_met", "mWlep_met_simple", "mWW_simple_met", "mWjj_simple", "cosThetaS_Hbb", "cosThetaS_Wjj_simple", "cosThetaS_WW_simple_met", "cosThetaS_HH_simple_met", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "dr_Wj1_lep_simple", "dr_Wj2_lep_simple", "lep_conePt", "met_LD", "HT", "mT_top_3particle", "mT_W"
   };
 
-  std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even    = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_X900GeV_Wjj_BDT_full_reco_even.xml";
-  std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_X900GeV_Wjj_simple_full_reco_even.xml";
-  std::string xgbFileName_bb1l_X900GeV_Wj1_even                       = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_X900GeV_Wj1_even.xml";
-  std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd    = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_X900GeV_Wjj_BDT_full_reco_odd.xml";
-  std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_X900GeV_Wjj_simple_full_reco_odd.xml";
-  std::string xgbFileName_bb1l_X900GeV_Wj1_odd                       = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_X900GeV_Wj1_odd.xml";
+  // baselines == trained for 2016 era only
+  std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even    = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_even.xml";
+  std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_simple_full_reco_even.xml";
+  std::string xgbFileName_bb1l_X900GeV_Wj1_even                       = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wj1_even.xml";
+  std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd     = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_odd.xml";
+  std::string xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only_odd  = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_simple_full_reco_odd.xml";
+  std::string xgbFileName_bb1l_X900GeV_Wj1_odd                        = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wj1_odd.xml";
   TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_simple_full_reco_only( xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only_odd, xgbFileName_bb1l_X900GeV_Wjj_simple_full_reco_only_even, xgbInputVariables_bb1l_X900GeV_Wjj_simple);
   TMVAInterface mva_xgb_bb1l_X900GeV_Wj1(                       xgbFileName_bb1l_X900GeV_Wj1_odd,                       xgbFileName_bb1l_X900GeV_Wj1_even,                       xgbInputVariables_bb1l_X900GeV_Wj1);
   TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_full_reco_only(    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd,    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even,    xgbInputVariables_bb1l_X900GeV_Wjj_BDT);
@@ -919,7 +920,7 @@ int main(int argc, char* argv[])
   mva_xgb_bb1l_X900GeV_Wjj_simple_full_reco_only.enableBDTTransform();
 
   std::vector<std::string> xgbInputVariables_bb1l_SM_Wj1 = {
-    "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nJet", "nBJetMedium", "lep_conePt", "met_LD", "HT", "mT_top_3particle", "mT_W"
+    "mT_top_3particle", "mT_W", "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nBJetMedium", "lep_conePt", "met_LD", "HT"
   };
   std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_BDT = {
     "mindr_lep1_jet", "m_Hbb_regCorr", "m_HH", "mWlep_met_simple", "dR_Hww", "m_Wjj", "cosThetaS_Hbb", "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "lep_conePt", "met_LD", "mT_W", "mT_top_3particle", "HT"
@@ -927,12 +928,12 @@ int main(int argc, char* argv[])
   std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_simple = {
     "mindr_lep1_jet", "m_Hbb_regCorr", "mHH_simple_met", "mWlep_met_simple", "mWW_simple_met", "mWjj_simple", "cosThetaS_Hbb", "cosThetaS_Wjj_simple", "cosThetaS_WW_simple_met", "cosThetaS_HH_simple_met", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "lep_conePt", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "met_LD", "HT", "mT_top_3particle", "mT_W"
   };
-  std::string xgbFileName_bb1l_SM_Wj1_even                       = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_SM_Wj1_even.xml";
-  std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even    = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_SM_Wjj_BDT_full_reco_only_even.xml";
-  std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_SM_Wjj_simple_full_reco_only_noIndPt_even.xml";
-  std::string xgbFileName_bb1l_SM_Wj1_odd                       = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_SM_Wj1_odd.xml";
-  std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd    = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_SM_Wjj_BDT_full_reco_only_odd.xml";
-  std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb2l_SM_Wjj_simple_full_reco_only_noIndPt_odd.xml";
+  std::string xgbFileName_bb1l_SM_Wj1_even                       = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wj1_even.xml";
+  std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even    = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_even.xml";
+  std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_simple_full_reco_only_noIndPt_even.xml";
+  std::string xgbFileName_bb1l_SM_Wj1_odd                        = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wj1_odd.xml";
+  std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd     = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_odd.xml";
+  std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_odd  = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_simple_full_reco_only_noIndPt_odd.xml";
   TMVAInterface mva_xgb_bb1l_SM_Wj1(                            xgbFileName_bb1l_SM_Wj1_odd,                       xgbFileName_bb1l_SM_Wj1_even,                       xgbInputVariables_bb1l_SM_Wj1);
   TMVAInterface mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(         xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd,    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even,    xgbInputVariables_bb1l_SM_Wjj_BDT); // ,
   TMVAInterface mva_xgb_bb1l_SM_Wjj_simple_full_reco_only(      xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_odd, xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_even, xgbInputVariables_bb1l_SM_Wjj_simple);
@@ -1663,7 +1664,7 @@ int main(int argc, char* argv[])
       }
       continue;
     }
-    cutFlowTable.update(Form("electron pT > %0.0f GeV / muon pT > %0.0f GeV", minPt_electron, minPt_muon), evtWeightRecorder.get(central_or_shift_main));
+    cutFlowTable.update(Form("electron pT > %f0.0 GeV / muon pT > %f0.0 GeV", minPt_electron, minPt_muon), evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("electron pT > 32 GeV / muon pT > 25 GeV", evtWeightRecorder.get(central_or_shift_main));
 
     // require exactly one lepton passing tight selection criteria, to avoid overlap with other channels
