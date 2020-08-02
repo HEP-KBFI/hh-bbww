@@ -120,10 +120,6 @@ public:
   TH1 * histogram_memScore_;
   TH1 * histogram_memCpuTime_;
 
-  TH1 * histogram_MVAOutput350_;
-  TH1 * histogram_MVAOutput400_;
-  TH1 * histogram_MVAOutput750_;
-
   TH1 * histogram_EventCounter_;
 
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;

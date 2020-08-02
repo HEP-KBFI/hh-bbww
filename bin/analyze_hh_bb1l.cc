@@ -948,40 +948,45 @@ int main(int argc, char* argv[])
   // _HbbFat_WjjFat_HP
   // _HbbFat_WjjFat_LP
   // _HbbFat_WjjRes_allReco
-  // _HbbFat_WjjRes_MissJet
+  // _HbbFat_WjjRes_MissWJet
   // _WjjFat_HP
   // _WjjFat_LP
   // _Res_allReco
   // _Res_MissWJet
   // _Res_MissBJet
-  const std::map<std::string, std::vector<double>> categories_list_bins =
-  {
+  std::map<std::string, std::vector<double>> categories_list_bins = {
      // category name          binning (if empty is 400 bins from 0-1)
-     {"_HbbFat_WjjFat_HP_e",      {}},
-     {"_WjjFat_HP_e",             {}},
-     {"_HbbFat_WjjFat_LP_e",      {}},
-     {"_WjjFat_LP_e",             {}},
      {"_HbbFat_WjjRes_allReco_e", {}},
      {"_Res_allReco_1b_e",        {}},
      {"_Res_allReco_2b_e",        {}},
      //
-     {"_HbbFat_WjjFat_HP_m",      {}},
-     {"_WjjFat_HP_m",             {}},
-     {"_HbbFat_WjjFat_LP_m",      {}},
-     {"_WjjFat_LP_m",             {}},
      {"_HbbFat_WjjRes_allReco_m", {}},
      {"_Res_allReco_1b_m",        {}},
      {"_Res_allReco_2b_m",        {}},
      //
-     {"_HbbFat_WjjRes_MissJet_e", {}},
+     {"_HbbFat_WjjRes_MissWJet_e", {}},
      {"_Res_MissWJet_1b_e",       {}},
      {"_Res_MissWJet_2b_e",       {}},
-     {"_HbbFat_WjjRes_MissJet_m", {}},
+     //
+     {"_HbbFat_WjjRes_MissWJet_m", {}},
      {"_Res_MissWJet_1b_m",       {}},
-     {"_Res_MissWJet_2b_m",       {}},
-     {"_Res_MissBJet_m",          {}},
-     {"_Res_MissBJet_e",          {}}
+     {"_Res_MissWJet_2b_m",       {}}
   };
+  if ( ! ignore_Wjj_boosted )
+  {
+      categories_list_bins["_HbbFat_WjjFat_HP_e"] =      {};
+      categories_list_bins["_WjjFat_HP_e"] =             {};
+      categories_list_bins["_HbbFat_WjjFat_LP_e"] =      {};
+      categories_list_bins["_WjjFat_LP_e"] =             {};
+      //
+      categories_list_bins["_HbbFat_WjjFat_HP_m"] =      {};
+      categories_list_bins["_WjjFat_HP_m"] =             {};
+      categories_list_bins["_HbbFat_WjjFat_LP_m"] =      {};
+      categories_list_bins["_WjjFat_LP_m"] =             {};
+      //
+      categories_list_bins["_Res_MissBJet_m"] =          {};
+      categories_list_bins["_Res_MissBJet_e"] =          {};
+  }
   const std::vector<std::string> for_categories_map =
   {
     "cat_jet_2BDT_Wjj_BDT_SM",
@@ -990,7 +995,7 @@ int main(int argc, char* argv[])
     "cat_jet_2BDT_Wjj_simple_X900GeV"
   };
   // X: I will assume that the binning by subcategory is fixed independent of the BDT
-  // that may end up not being true, in that case there is some logic to work out again
+  // that may end up not being true. In that case, there is some logic to work out again
   // one idea of solution if the different binning schemes to resonant and non-resonant is to make
   // a  categories_list_bins_res / for_categories_map_res / categories_map_MVA_res and a categories_list_bins_nonres / for_categories_map_nonres / categories_map_MVA_nonres
 
@@ -1300,7 +1305,7 @@ int main(int argc, char* argv[])
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
     ++analyzedEntries;
-    //if ( analyzedEntries > 100) break;
+    if ( analyzedEntries > 100) break;
     histogram_analyzedEntries->Fill(0.);
 
     if ( isDEBUG ) {
@@ -2652,7 +2657,7 @@ int main(int argc, char* argv[])
     // _HbbFat_WjjFat_HP
     // _HbbFat_WjjFat_LP
     // _HbbFat_WjjRes_allReco
-    // _HbbFat_WjjRes_MissJet
+    // _HbbFat_WjjRes_MissWJet
     // _WjjFat_HP
     // _WjjFat_LP
     // _Res_allReco
@@ -2662,7 +2667,7 @@ int main(int argc, char* argv[])
     if ( selJetAK8_Hbb )
     {
       category_mount       += "_HbbFat";
-      if ( WjjWasFat )
+      if ( WjjWasFat && ! ignore_Wjj_boosted )
       {
         category_mount       += "_WjjFat";
         if ( !fails_mD_cut && !fails_centrality_cut && tau21_Wjj_simple < 0.55 )
@@ -2677,7 +2682,7 @@ int main(int argc, char* argv[])
         {
           category_mount       += "_allReco";
         } else {
-          category_mount       += "_MissJet";
+          category_mount       += "_MissWJet";
           // in the case of the missing W jet use the BDT made for this phase space
           output_SM_cat_jet_2BDT_Wjj_BDT         = mvaoutput_bb1l_SM_Wj1;
           output_SM_cat_jet_2BDT_Wjj_simple      = mvaoutput_bb1l_SM_Wj1;
@@ -2686,7 +2691,7 @@ int main(int argc, char* argv[])
         }
       }
     } else {
-      if ( WjjWasFat )
+      if ( WjjWasFat && ! ignore_Wjj_boosted )
       {
         category_mount       += "_WjjFat";
         if ( !fails_mD_cut && !fails_centrality_cut && tau21_Wjj_simple < 0.55 )

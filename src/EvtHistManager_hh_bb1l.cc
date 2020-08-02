@@ -63,9 +63,6 @@ EvtHistManager_hh_bb1l::EvtHistManager_hh_bb1l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["log_memLR_div_Err"] = { "central" };
   central_or_shiftOptions_["memScore"] = { "*" };
   central_or_shiftOptions_["memCpuTime"] = { "central" };
-  central_or_shiftOptions_["MVAOutput_350"] = { "*" };
-  central_or_shiftOptions_["MVAOutput_400"] = { "*" };
-  central_or_shiftOptions_["MVAOutput_750"] = { "*" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -179,10 +176,6 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
     histogram_memScore_                  = book1D(dir, "memScore",                  360,  -18.,  +18.);
     histogram_memCpuTime_                = book1D(dir, "memCpuTime",                100,    0., 1000.);
   }
-
-  histogram_MVAOutput350_                = book1D(dir, "MVAOutput_350",             360,    0.,    1.);
-  histogram_MVAOutput400_                = book1D(dir, "MVAOutput_400",             360,    0.,    1.);
-  histogram_MVAOutput750_                = book1D(dir, "MVAOutput_750",             360,    0.,    1.);
 
   histogram_EventCounter_                = book1D(dir, "EventCounter",                1,   -0.5,  +0.5);
 }
