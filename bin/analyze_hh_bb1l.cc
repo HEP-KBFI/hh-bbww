@@ -1256,7 +1256,7 @@ int main(int argc, char* argv[])
       "cosThetaS_Wjj_simple", "cosThetaS_WW_simple", "cosThetaS_HH_simple", "cosThetaS_WW_simple_met",
       "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH",
       "mHH_simple_met", "pt_HH_simple_met", "eta_HH_simple_met", "dr_HH_simple_met", "cosThetaS_HH_simple_met",
-      "pt_Wj1_simple",  "pt_Wj2_simple",  "eta_Wj1_simple",  "eta_Wj2_simple"
+      "pt_Wj1_simple",  "pt_Wj2_simple",  "eta_Wj1_simple",  "eta_Wj2_simple", "max_mvaOutput_4jet_assigment"
     );
     bdt_filler->register_variable<int_type>(
       "lep_charge", "nElectron", "new_had_cut", "new_had_cut_fullreco", "original_jet_cut", "nJet_that_not_bb",
@@ -1265,7 +1265,8 @@ int main(int argc, char* argv[])
       "isWjj_boosted_simple", "isWjj_boosted_highPurity_simple",
       "nJet_vbf", "isVBF", "WjjWasFat",
       "nMEMOutputs", "nMEMOutputs_missingBJet", "nMEMOutputs_missingHadWJet",
-      "isMatched_Wjj_simple", "isMatched_Wjj_fat_simple", "isMatched_Wlep_simple", "isMatched_Wjj", "isMatched_Wjj_fat", "isMatched_Wlep"
+      "isMatched_Wjj_simple", "isMatched_Wjj_fat_simple", "isMatched_Wlep_simple", "isMatched_Wjj", "isMatched_Wjj_fat", "isMatched_Wlep",
+      "max_truth_4jet_assigment", "hadtruth"
     );
     bdt_filler->bookTree(fs);
   }
@@ -2061,14 +2062,14 @@ int main(int argc, char* argv[])
 
     ////////
     // take the resolved jets by the BDT
+    double max_mvaOutput_4jet_assigment = -9.;
+    bool   max_truth_4jet_assigment     = false;
+    bool   hadtruth = false;
     if ( ! WjjWasFat )
     {
       // implement the 4-jet loop here
       if ( selJetsAK4.size() >= 4 && selJetsAK8_Hbb.size() == 0 ) // if resolved with 4 jets
       {
-        double max_mvaOutput_4jet_assigment = -9.;
-        bool   max_truth_4jet_assigment     = false;
-        bool hadtruth = false;
         for ( std::vector<const RecoJet*>::const_iterator selBJet1 = selJetsAK4.begin(); selBJet1 != selJetsAK4.end(); ++selBJet1 ) {
           for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selJetsAK4.begin(); selBJet2 != selJetsAK4.end(); ++selBJet2 ) {
             if ( &(*selBJet2) == &(*selBJet1) ) continue;
@@ -3214,6 +3215,9 @@ int main(int argc, char* argv[])
           ("original_jet_cut",        original_jet_cut)
           ("numBJets_loose",          numBJets_loose)
           ("numBJets_medium",         numBJets_medium)
+          ("max_mvaOutput_4jet_assigment", max_mvaOutput_4jet_assigment)
+          ("max_truth_4jet_assigment",     max_truth_4jet_assigment)
+          ("hadtruth",                     hadtruth)
           //
           (WeightBM_toBDT)
           (Weight_ktScan_toBDT)
