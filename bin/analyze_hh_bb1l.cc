@@ -889,12 +889,6 @@ int main(int argc, char* argv[])
   std::cout << "selEventsFileName_output = " << selEventsFileName_output << std::endl;
 
 //--- declare histograms
-  /*std::string xgbFileName_bb1l = "hhAnalysis/bbww/data/bb1l_HH_XGB_noTopness_evtLevelSUM_HH_bb1l_res_12Var.pkl";
-  std::vector<std::string> xgbInputVariables_bb1l = {
-    "lep_pt", "met_LD", "m_Hbb", "m_Wjj", "dR_b1lep", "dR_b2lep","Smin_HH", "mT_W", "mT_top_2particle", "mvaOutput_Hj_tagger", "max_bjet_pt", "gen_mHH"
-  };
-  */
-
   std::vector<std::string> xgbInputVariables_bb1l_X900GeV_Wj1 = {
     "mT_top_3particle", "mT_W", "mindr_lep1_jet", "dR_b1lep", "dR_b2lep", "m_Hbb_regCorr", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "dr_Wj1_lep_simple", "nBJetMedium", "lep_conePt", "met_LD", "HT"
   };
@@ -2600,29 +2594,7 @@ int main(int argc, char* argv[])
       vbf_jet2_eta = selJet_vbf_sublead->eta();
     }
 
-    /*// computing event level BDTs
-    mvaInputs_XGB["lep_pt"] = selLepton->pt();
-    mvaInputs_XGB["met_LD"] = met_LD;
-    mvaInputs_XGB["m_Hbb"] = m_Hbb;
-    mvaInputs_XGB["m_Wjj"] = m_Wjj;
-    mvaInputs_XGB["dR_b1lep"] = dR_b1lep;
-    mvaInputs_XGB["dR_b2lep"] = dR_b2lep;
-    mvaInputs_XGB["Smin_HH"] = Smin_HH;
-    mvaInputs_XGB["mT_W"] = mT_W;
-    mvaInputs_XGB["mT_top_2particle"] = mT_top_2particle;
-    mvaInputs_XGB["mvaOutput_Hj_tagger"] = mvaOutput_Hj_tagger;
-    mvaInputs_XGB["max_bjet_pt"] = selJetP4_Hbb_lead.pt();
-    mvaInputs_XGB["gen_mHH"] = 350;
-    */
-    //double mvaoutput_bb1l350 = mva_xgb_bb1l(mvaInputs_XGB);
-    double mvaoutput_bb1l350 = -1;
-    //mvaInputs_XGB["gen_mHH"] = 400;
-    //double mvaoutput_bb1l400 = mva_xgb_bb1l(mvaInputs_XGB);
-    double mvaoutput_bb1l400 = -1;
-    //mvaInputs_XGB["gen_mHH"] = 750;
-    //double mvaoutput_bb1l750 = mva_xgb_bb1l(mvaInputs_XGB);
-    double mvaoutput_bb1l750 = -1; //
-    //////
+    // computing event level BDTs
     double mindr_lep1_jet = comp_mindr_jet(*selLepton, selJetsAK4);
     std::map<std::string, double> mvaInputVariables_list = {
       {"nJet",                    selJetsAK4.size()},
@@ -2899,7 +2871,6 @@ int main(int argc, char* argv[])
             mT_W, mT_top_2particle, mT_top_3particle,
             vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
             nullptr, -1.,
-            mvaoutput_bb1l350, mvaoutput_bb1l400, mvaoutput_bb1l750,
             category_mount,
             categories_map_MVAs,
             selLepton->pt(), selLepton->eta(),

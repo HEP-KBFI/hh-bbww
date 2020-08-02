@@ -211,7 +211,6 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 				       const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-				       double mvaoutput_bb1l350, double mvaoutput_bb1l400, double mvaoutput_bb1l750,
                std::string  category_mount,
                const std::map<std::string, double> categories_map_MVAs,
                double selLepton_lead_pt, double selLepton_lead_eta,
@@ -314,10 +313,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_memScore_,                       memResult->getScore(),              evtWeight, evtWeightErr);
     fillWithOverFlow(histogram_memCpuTime_,                     memCpuTime,                         evtWeight, evtWeightErr);
   }
-
-  fillWithOverFlow(histogram_MVAOutput350_,                     mvaoutput_bb1l350,                  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput400_,                     mvaoutput_bb1l400,                  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput750_,                     mvaoutput_bb1l750,                  evtWeight, evtWeightErr);*/
+  */
 
   fillWithOverFlow(histogram_EventCounter_,                     0.,                                 evtWeight, evtWeightErr);
 }

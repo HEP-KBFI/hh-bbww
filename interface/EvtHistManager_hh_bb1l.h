@@ -40,7 +40,6 @@ public:
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
 		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-		 double mvaoutput350, double mvaoutput400, double mvaoutput750,
      std::string  category_mount,
      const std::map<std::string, double> categories_map_MVAs,
      double selLepton_lead_pt, double selLepton_lead_eta,
