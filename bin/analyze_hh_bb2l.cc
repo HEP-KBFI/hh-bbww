@@ -1479,10 +1479,14 @@ int main(int argc, char* argv[])
       evtWeightRecorder.record_jetToLepton_FR_sublead(leptonFakeRateInterface, selLepton_sublead);
     }
 
-    if(applyFakeRateWeights == kFR_enabled)
+    if ( !selectBDT ) 
     {
-      evtWeightRecorder.compute_FR_2l(passesTight_lepton_lead, passesTight_lepton_sublead);
+      if(applyFakeRateWeights == kFR_enabled)
+      {
+        evtWeightRecorder.compute_FR_2l(passesTight_lepton_lead, passesTight_lepton_sublead);
+      }
     }
+
     std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
     std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
 
@@ -2292,6 +2296,9 @@ int main(int argc, char* argv[])
       double mindr_lep1_jet=comp_mindr_jet(*selLepton_lead, selJetsAK4);
       double mindr_lep2_jet=comp_mindr_jet(*selLepton_sublead, selJetsAK4);
 
+      double lep1_frWeight = ( selLepton_lead->genLepton()    ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
+      double lep2_frWeight = ( selLepton_sublead->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_sublead(central_or_shift_main);
+      
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep1_pt",                       selLepton_lead->pt())
           ("lep1_conePt",                   comp_lep_conePt(*selLepton_lead))
@@ -2364,7 +2371,7 @@ int main(int argc, char* argv[])
           ("vbf_dEta_jj",                   vbf_dEta_jj)
           ("vbf_m_jj",                      vbf_m_jj)
           ("genWeight",                     eventInfo.genWeight)
-          ("evtWeight",                     evtWeightRecorder.get(central_or_shift_main))
+          ("evtWeight",                     evtWeightRecorder.get(central_or_shift_main)*lep1_frWeight*lep2_frWeight)
           ("nJet",                          comp_n_jet25_recl(selJetsAK4))
           ("nBJetLoose",                    selBJetsAK4_loose.size())
           ("nBJetMedium",                   selBJetsAK4_medium.size())
