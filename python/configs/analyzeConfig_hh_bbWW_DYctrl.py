@@ -422,21 +422,22 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                   else "disabled"
 
                 self.jobOptions_analyze[key_analyze_job] = {
-                  'ntupleFiles'              : ntupleFiles,
-                  'cfgFile_modified'         : cfgFile_modified_path,
-                  'histogramFile'            : histogramFile_path,
-                  'logFile'                  : logFile_path,
-                  'selEventsFileName_output' : rleOutputFile_path,
-                  'leptonChargeSelection'    : lepton_charge_selection,
-                  'electronSelection'        : electron_selection,
-                  'muonSelection'            : muon_selection,
-                  'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
-                  'applyFakeRateWeights'     : applyFakeRateWeights,
-                  'central_or_shift'         : central_or_shift,
-                  'central_or_shifts_local'  : central_or_shifts_local,
-                  'apply_hlt_filter'         : self.hlt_filter,
-                  'useNonNominal'            : self.use_nonnominal,
-                  'fillGenEvtHistograms'     : True,
+                  'ntupleFiles'                : ntupleFiles,
+                  'cfgFile_modified'           : cfgFile_modified_path,
+                  'histogramFile'              : histogramFile_path,
+                  'logFile'                    : logFile_path,
+                  'selEventsFileName_output'   : rleOutputFile_path,
+                  'leptonChargeSelection'      : lepton_charge_selection,
+                  'electronSelection'          : electron_selection,
+                  'muonSelection'              : muon_selection,
+                  'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
+                  'applyFakeRateWeights'       : applyFakeRateWeights,
+                  'central_or_shift'           : central_or_shift,
+                  'central_or_shifts_local'    : central_or_shifts_local,
+                  'apply_hlt_filter'           : self.hlt_filter,
+                  'useNonNominal'              : self.use_nonnominal,
+                  'fillGenEvtHistograms'       : True,
+                  'apply_DYMCNormScaleFactors' : False,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
