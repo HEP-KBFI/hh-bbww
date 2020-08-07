@@ -437,7 +437,6 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                   'apply_hlt_filter'           : self.hlt_filter,
                   'useNonNominal'              : self.use_nonnominal,
                   'fillGenEvtHistograms'       : True,
-                  'apply_DYMCNormScaleFactors' : False,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 

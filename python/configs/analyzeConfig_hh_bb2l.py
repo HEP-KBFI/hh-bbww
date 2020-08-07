@@ -427,7 +427,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'useAssocJetBtag'            : self.do_sync,
                   'branchName_memOutput'       : branchName_memOutput,
                   'branchName_hmeOutput'       : branchName_hmeOutput,
-                  'apply_DYMCNormScaleFactors' : False,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
