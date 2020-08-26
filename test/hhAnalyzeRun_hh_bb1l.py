@@ -26,7 +26,7 @@ parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
-parser.add_files_per_job()
+parser.add_files_per_job(files_per_job = 15)
 parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
@@ -53,7 +53,7 @@ systematics_label = args.systematics
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
-files_per_job     = args.files_per_job 
+files_per_job     = args.files_per_job
 use_home          = args.use_home
 tau_id            = args.tau_id
 jet_cleaning      = args.jet_cleaning
@@ -61,6 +61,7 @@ gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 doDataMCPlots     = False
+ignore_Wjj_boosted = True
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -131,30 +132,34 @@ if __name__ == '__main__':
     logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection_veto, args.tau_id_wp))
     hadTau_mva_wp_veto = args.tau_id_wp
 
+
   categories_list_bins =  [
-   "_HbbFat_WjjFat_HP_e",
-   "_WjjFat_HP_e",
-   "_HbbFat_WjjFat_LP_e",
-   "_WjjFat_LP_e",
    "_HbbFat_WjjRes_allReco_e",
    "_Res_allReco_1b_e",
    "_Res_allReco_2b_e",
-   "_HbbFat_WjjFat_HP_m",
-   "_WjjFat_HP_m",
-   "_HbbFat_WjjFat_LP_m",
-   "_WjjFat_LP_m",
    "_HbbFat_WjjRes_allReco_m",
    "_Res_allReco_1b_m",
    "_Res_allReco_2b_m",
-   "_HbbFat_WjjRes_MissJet_e",
+   "_HbbFat_WjjRes_MissWJet_e",
    "_Res_MissWJet_1b_e",
    "_Res_MissWJet_2b_e",
-   "_HbbFat_WjjRes_MissJet_m",
+   "_HbbFat_WjjRes_MissWJet_m",
    "_Res_MissWJet_1b_m",
-   "_Res_MissWJet_2b_m",
-   "_Res_MissBJet_m",
-   "_Res_MissBJet_e"
+   "_Res_MissWJet_2b_m"
    ]
+  if ignore_Wjj_boosted :
+      categories_list_bins = categories_list_bins + [
+       "_HbbFat_WjjFat_HP_e",
+       "_WjjFat_HP_e",
+       "_HbbFat_WjjFat_LP_e",
+       "_WjjFat_LP_e",
+       "_HbbFat_WjjFat_HP_m",
+       "_WjjFat_HP_m",
+       "_HbbFat_WjjFat_LP_m",
+       "_WjjFat_LP_m",
+       "_Res_MissBJet_m",
+       "_Res_MissBJet_e"
+       ]
 
   for_categories_map = [
   # those are for the BDT types
@@ -177,9 +182,6 @@ if __name__ == '__main__':
     "EventCounter"                      : {},
     #"HT"                                : {},
     #"STMET"                             : {},
-    #"MVAOutput_350"                     : {},
-    #"MVAOutput_400"                     : {},
-    #"MVAOutput_750"                     : {},
   }
   # add  the BDT types with subcategories to the histogram list
   for typeMVA in for_categories_map :

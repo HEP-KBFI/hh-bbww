@@ -110,7 +110,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
-    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ]
+    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH", "ggH", "qqH" ]
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
@@ -422,21 +422,21 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                   else "disabled"
 
                 self.jobOptions_analyze[key_analyze_job] = {
-                  'ntupleFiles'              : ntupleFiles,
-                  'cfgFile_modified'         : cfgFile_modified_path,
-                  'histogramFile'            : histogramFile_path,
-                  'logFile'                  : logFile_path,
-                  'selEventsFileName_output' : rleOutputFile_path,
-                  'leptonChargeSelection'    : lepton_charge_selection,
-                  'electronSelection'        : electron_selection,
-                  'muonSelection'            : muon_selection,
-                  'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
-                  'applyFakeRateWeights'     : applyFakeRateWeights,
-                  'central_or_shift'         : central_or_shift,
-                  'central_or_shifts_local'  : central_or_shifts_local,
-                  'apply_hlt_filter'         : self.hlt_filter,
-                  'useNonNominal'            : self.use_nonnominal,
-                  'fillGenEvtHistograms'     : True,
+                  'ntupleFiles'                : ntupleFiles,
+                  'cfgFile_modified'           : cfgFile_modified_path,
+                  'histogramFile'              : histogramFile_path,
+                  'logFile'                    : logFile_path,
+                  'selEventsFileName_output'   : rleOutputFile_path,
+                  'leptonChargeSelection'      : lepton_charge_selection,
+                  'electronSelection'          : electron_selection,
+                  'muonSelection'              : muon_selection,
+                  'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
+                  'applyFakeRateWeights'       : applyFakeRateWeights,
+                  'central_or_shift'           : central_or_shift,
+                  'central_or_shifts_local'    : central_or_shifts_local,
+                  'apply_hlt_filter'           : self.hlt_filter,
+                  'useNonNominal'              : self.use_nonnominal,
+                  'fillGenEvtHistograms'       : True,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 

@@ -63,9 +63,6 @@ EvtHistManager_hh_bb1l::EvtHistManager_hh_bb1l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["log_memLR_div_Err"] = { "central" };
   central_or_shiftOptions_["memScore"] = { "*" };
   central_or_shiftOptions_["memCpuTime"] = { "central" };
-  central_or_shiftOptions_["MVAOutput_350"] = { "*" };
-  central_or_shiftOptions_["MVAOutput_400"] = { "*" };
-  central_or_shiftOptions_["MVAOutput_750"] = { "*" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -180,10 +177,6 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
     histogram_memCpuTime_                = book1D(dir, "memCpuTime",                100,    0., 1000.);
   }
 
-  histogram_MVAOutput350_                = book1D(dir, "MVAOutput_350",             360,    0.,    1.);
-  histogram_MVAOutput400_                = book1D(dir, "MVAOutput_400",             360,    0.,    1.);
-  histogram_MVAOutput750_                = book1D(dir, "MVAOutput_750",             360,    0.,    1.);
-
   histogram_EventCounter_                = book1D(dir, "EventCounter",                1,   -0.5,  +0.5);
 }
 
@@ -211,7 +204,6 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 				       const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-				       double mvaoutput_bb1l350, double mvaoutput_bb1l400, double mvaoutput_bb1l750,
                std::string  category_mount,
                const std::map<std::string, double> categories_map_MVAs,
                double selLepton_lead_pt, double selLepton_lead_eta,
@@ -314,10 +306,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_memScore_,                       memResult->getScore(),              evtWeight, evtWeightErr);
     fillWithOverFlow(histogram_memCpuTime_,                     memCpuTime,                         evtWeight, evtWeightErr);
   }
-
-  fillWithOverFlow(histogram_MVAOutput350_,                     mvaoutput_bb1l350,                  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput400_,                     mvaoutput_bb1l400,                  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput750_,                     mvaoutput_bb1l750,                  evtWeight, evtWeightErr);*/
+  */
 
   fillWithOverFlow(histogram_EventCounter_,                     0.,                                 evtWeight, evtWeightErr);
 }

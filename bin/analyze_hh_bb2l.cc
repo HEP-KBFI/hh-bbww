@@ -96,7 +96,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/Topness.h" // Topness
 #include "tthAnalysis/HiggsToTauTau/interface/LocalFileInPath.h" // LocalFileInPath
 #include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
-#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface.h" // HHWeightInterface
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface_2.h" // HHWeightInterface
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 
@@ -410,24 +410,24 @@ int main(int argc, char* argv[])
   EventInfo eventInfo(isMC, isSignal, isHH_rwgt_allowed, apply_topPtReweighting);
   const std::string default_cat_str = "default";
   std::vector<std::string> evt_cat_strs = { default_cat_str };
-
+  
 //--- HH scan
+  std::vector<std::string> HHWeightNames;
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
   const bool apply_HH_rwgt = eventInfo.is_hh_nonresonant() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
-  const HHWeightInterface * HHWeight_calc = nullptr;
+  const HHWeightInterface_2 * HHWeight_calc = nullptr;
   if(apply_HH_rwgt)
   {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
-    evt_cat_strs = HHWeight_calc->get_scan_strs();
+    HHWeight_calc = new HHWeightInterface_2(hhWeight_cfg);
+    evt_cat_strs = HHWeight_calc->get_bm_names();
+    HHWeightNames = HHWeight_calc->get_weight_names();
   }
   const size_t Nscan = evt_cat_strs.size();
+  std::cout << "Number of points being scanned = " << Nscan << '\n';
   if (apply_HH_rwgt)
   {
-    std::cout << "Number of points being scanned = " << Nscan << '\n';
+    std::cout << "\n Weights booked = " << apply_HH_rwgt << '\n';
     for (const std::string catcat : evt_cat_strs) {
-      std::cout << catcat << '\n';
-    }
-    for (const std::string catcat : BMS) {
       std::cout << catcat << '\n';
     }
   }
@@ -868,10 +868,10 @@ int main(int argc, char* argv[])
     bdt_filler = new std::remove_pointer<decltype(bdt_filler)>::type(
       makeHistManager_cfg(process_string, Form("%s/sel/evtntuple", histogramDir.data()), era_string, central_or_shift_main)
     );
-    for(const std::string & evt_cat_str: evt_cat_strs)
+    for(const std::string & evt_cat_str: HHWeightNames)
     {
-      //Book Weight_klScan
-      bdt_filler->register_variable<float_type>(Form("weight_%s", evt_cat_str.c_str()) );
+      if (!apply_HH_rwgt) continue;
+      bdt_filler->register_variable<float_type>(Form(evt_cat_str.c_str()));
     }
     for(const std::string & evt_cat_str: BMS)
     {
@@ -1479,10 +1479,14 @@ int main(int argc, char* argv[])
       evtWeightRecorder.record_jetToLepton_FR_sublead(leptonFakeRateInterface, selLepton_sublead);
     }
 
-    if(applyFakeRateWeights == kFR_enabled)
+    if ( !selectBDT ) 
     {
-      evtWeightRecorder.compute_FR_2l(passesTight_lepton_lead, passesTight_lepton_sublead);
+      if(applyFakeRateWeights == kFR_enabled)
+      {
+        evtWeightRecorder.compute_FR_2l(passesTight_lepton_lead, passesTight_lepton_sublead);
+      }
     }
+
     std::vector<RecoJetAK8> jets_ak8 = jetReaderAK8->read();
     std::vector<const RecoJetAK8*> jet_ptrs_ak8 = convert_to_ptrs(jets_ak8);
 
@@ -1617,39 +1621,17 @@ int main(int argc, char* argv[])
     cutFlowTable.update("signal region veto", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("signal region veto", evtWeightRecorder.get(central_or_shift_main));
 
-    std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::map<std::string, double> WeightBM_toBDT; // weights to do histograms for BMs
-    std::map<std::string, double> Weight_ktScan; // weights to do histograms
-    std::map<std::string, double> Weight_ktScan_toBDT; // weights to do histograms
+    std::map<std::string, double> weightMapHH;
+    std::map<std::string, double> reWeightMapHH;
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
 
     if(apply_HH_rwgt)
     {
       assert(HHWeight_calc);
-      WeightBM = HHWeight_calc->getJHEPWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      Weight_ktScan = HHWeight_calc->getScanWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      HHWeight = WeightBM[0];
+      weightMapHH = HHWeight_calc->getWeightMap(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      reWeightMapHH = HHWeight_calc->getReWeightMap(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      HHWeight = weightMapHH["Weight_SM"];
       evtWeightRecorder.record_bm(HHWeight); // SM by default
-
-      for(std::size_t bm_list = 0; bm_list < WeightBM.size() ; ++bm_list)
-      {
-        std::string bench;
-        if (bm_list == 0) bench = "SM";
-        else {
-          bench = Form("BM%s", std::to_string(bm_list).data() );
-        }
-        std::string name_BM = Form("weight_%s", bench.data() );
-        WeightBM_toBDT[name_BM] =  WeightBM[bm_list];
-        if (isDEBUG) std::cout << "line = " << name_BM << "; Weight = " << WeightBM[bm_list] << '\n';
-      }
-      for(std::size_t bm_list = 0; bm_list < evt_cat_strs.size() ; ++bm_list)
-      {
-        std::string bench = evt_cat_strs[bm_list].data();
-        std::string name_BM = Form("weight_%s", bench.data() );
-        Weight_ktScan_toBDT[name_BM] =  Weight_ktScan[bench];
-        if (isDEBUG) std::cout << "line = " << name_BM << "; Weight = " << Weight_ktScan_toBDT[name_BM] << '\n';
-      }
-
 
       if(isDEBUG)
       {
@@ -1657,29 +1639,13 @@ int main(int argc, char* argv[])
           "cost "             << eventInfo.gen_cosThetaStar << " : "
           "weight = "         << HHWeight                   << '\n'
           ;
-        std::cout << "Calculated " << Weight_ktScan.size() << " scan weights\n";
-        for(std::size_t bm_list = 0; bm_list < Weight_ktScan.size(); ++bm_list)
+
+	std::cout << "Calculated " << weightMapHH.size() << " scan weights\n";
+	for(const auto & kv: weightMapHH)
         {
-          std::cout << "line = " << bm_list << " " << evt_cat_strs[bm_list] << "; Weight = " <<  Weight_ktScan[evt_cat_strs[bm_list]] << '\n';
+          std::cout << "line = " <<kv.first << "; Weight = " <<  kv.second << '\n';
         }
         std::cout << '\n';
-      }
-    } else {
-      for(std::size_t bm_list = 0; bm_list < BMS.size() ; ++bm_list)
-      {
-        std::string bench;
-        if (bm_list == 0) bench = "SM";
-        else {
-          bench = Form("BM%s", std::to_string(bm_list).data() );
-        }
-        std::string name_BM = Form("weight_%s", bench.data() );
-        WeightBM_toBDT[name_BM] =  1.0;
-      }
-      ////
-      for(std::size_t bm_list = 0; bm_list < evt_cat_strs.size() ; ++bm_list)
-      {
-        std::string name_BM = Form("weight_%s", evt_cat_strs[bm_list].data() );
-        Weight_ktScan_toBDT[name_BM] =  1.0;
       }
     }
 
@@ -2134,39 +2100,10 @@ int main(int argc, char* argv[])
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
 //--- fill histograms with events passing final selection
-    std::map<std::string, double> rwgt_map;
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
       const double evtWeight = evtWeightRecorder.get(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
-
-      for(const std::string & evt_cat_str: evt_cat_strs)
-      {
-        if(skipFilling && evt_cat_str != default_cat_str)
-        {
-          continue;
-        }
-        if(apply_HH_rwgt)
-        {
-          rwgt_map[evt_cat_str] = evtWeight * Weight_ktScan[evt_cat_str] / HHWeight;
-        }
-        else
-        {
-          rwgt_map[evt_cat_str] = evtWeight;
-        }
-      }
-      if(apply_HH_rwgt) {
-        for(std::size_t bm_list = 0; bm_list < WeightBM.size() ; ++bm_list)
-        {
-          std::string bench;
-          if (bm_list == 0) bench = "SM";
-          else {
-            bench = Form("BM%s", std::to_string(bm_list).data() );
-          }
-          rwgt_map[bench] = evtWeight * WeightBM[bm_list] / HHWeight;
-        }
-      }
-
       for (const GenMatchEntry* genMatch : genMatches)
       {
         selHistManagerType* selHistManager = selHistManagers[central_or_shift][genMatch->getIdx()];
@@ -2200,9 +2137,9 @@ int main(int argc, char* argv[])
           selHistManager->met_->fillHistograms(met, mhtP4, met_LD, evtWeight);
           selHistManager->metFilters_->fillHistograms(metFilters, evtWeight);
         }
-        for(const auto & kv: rwgt_map)
+        for(const auto & kv: reWeightMapHH)
         {
-        selHistManager->evt_[kv.first]->fillHistograms(
+          selHistManager->evt_[kv.first]->fillHistograms(
             selElectrons.size(),
             selMuons.size(),
             selJetsAK4.size(),
@@ -2292,6 +2229,9 @@ int main(int argc, char* argv[])
       double mindr_lep1_jet=comp_mindr_jet(*selLepton_lead, selJetsAK4);
       double mindr_lep2_jet=comp_mindr_jet(*selLepton_sublead, selJetsAK4);
 
+      double lep1_frWeight = ( selLepton_lead->genLepton()    ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
+      double lep2_frWeight = ( selLepton_sublead->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_sublead(central_or_shift_main);
+      
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
           ("lep1_pt",                       selLepton_lead->pt())
           ("lep1_conePt",                   comp_lep_conePt(*selLepton_lead))
@@ -2364,7 +2304,7 @@ int main(int argc, char* argv[])
           ("vbf_dEta_jj",                   vbf_dEta_jj)
           ("vbf_m_jj",                      vbf_m_jj)
           ("genWeight",                     eventInfo.genWeight)
-          ("evtWeight",                     evtWeightRecorder.get(central_or_shift_main))
+          ("evtWeight",                     evtWeightRecorder.get(central_or_shift_main)*lep1_frWeight*lep2_frWeight)
           ("nJet",                          comp_n_jet25_recl(selJetsAK4))
           ("nBJetLoose",                    selBJetsAK4_loose.size())
           ("nBJetMedium",                   selBJetsAK4_medium.size())
@@ -2373,12 +2313,11 @@ int main(int argc, char* argv[])
           ("isVBF",                         isVBF)
           ("mhh_gen",                       eventInfo.gen_mHH)
           ("costS_gen",                     eventInfo.gen_cosThetaStar)
-          (WeightBM_toBDT)
-          (Weight_ktScan_toBDT)
           (memweight_signal, "memweight_signal")
           (memweight_background, "memweight_background")
           (memOutput_LR_toBDT, "memOutput_LR")
           (memOutput_LR_missingBjet, "memOutput_LR_missingBjet")
+          (weightMapHH)
         .fill()
       ;
     }
