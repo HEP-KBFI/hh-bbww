@@ -156,7 +156,7 @@ writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
     if ( dynamic_cast<const RecoJet*>(selJet_base) )
     {
       const RecoJet* selJet = dynamic_cast<const RecoJet*>(selJet_base);
-      selJetP4_reg = selJetP4*selJet->bRegCorr();
+      selJetP4_reg = selJet->p4_bRegCorr();
       selJet_btagCSV = selJet->BtagCSV();
       selJet_qgDiscr = selJet->QGDiscr();
     }
@@ -204,7 +204,7 @@ writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
     if ( dynamic_cast<const RecoJet*>(selBJet1_base) )
     {
       const RecoJet* selBJet1 = dynamic_cast<const RecoJet*>(selBJet1_base);
-      selBJet1P4_reg = selBJet1P4*selBJet1->bRegCorr();
+      selBJet1P4_reg = selBJet1->p4_bRegCorr();
     }
   }
   Particle::LorentzVector selBJet2P4;
@@ -215,7 +215,7 @@ writeToNtuple(NtupleFillerBDT<float, int>& bdt_filler,
     if ( dynamic_cast<const RecoJet*>(selBJet2_base) )
     {
       const RecoJet* selBJet2 = dynamic_cast<const RecoJet*>(selBJet2_base);
-      selBJet2P4_reg = selBJet2P4*selBJet2->bRegCorr();
+      selBJet2P4_reg = selBJet2->p4_bRegCorr();
     }
   }
 

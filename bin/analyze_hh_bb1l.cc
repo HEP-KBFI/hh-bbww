@@ -1855,8 +1855,9 @@ int main(int argc, char* argv[])
     {
       const RecoJet* selJetAK4_Hbb_lead    = dynamic_cast<const RecoJet*>(selJet_Hbb_lead);
       const RecoJet* selJetAK4_Hbb_sublead = dynamic_cast<const RecoJet*>(selJet_Hbb_sublead);
-      HbbP4_reg = selJetAK4_Hbb_lead->p4()*selJetAK4_Hbb_lead->bRegCorr() + selJetAK4_Hbb_sublead->p4()*selJetAK4_Hbb_sublead->bRegCorr();
-      cosThetaS_Hbb_reg = comp_cosThetaStar(selJetAK4_Hbb_lead->p4()*selJetAK4_Hbb_lead->bRegCorr(), selJetAK4_Hbb_sublead->p4()*selJetAK4_Hbb_sublead->bRegCorr());
+
+      HbbP4_reg = selJetAK4_Hbb_lead->p4_bRegCorr() + selJetAK4_Hbb_sublead->p4_bRegCorr();
+      cosThetaS_Hbb_reg = comp_cosThetaStar(selJetAK4_Hbb_lead->p4_bRegCorr(), selJetAK4_Hbb_sublead->p4_bRegCorr());
       m_Hbb_regCorr = HbbP4_reg.mass();
       m_Hbb_regRes  = m_Hbb_regCorr*TMath::Sqrt(
          mem::square(selJetAK4_Hbb_lead->bRegRes()/selJetAK4_Hbb_lead->bRegCorr())
