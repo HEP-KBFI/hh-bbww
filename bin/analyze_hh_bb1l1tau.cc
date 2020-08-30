@@ -1050,6 +1050,9 @@ int main(int argc, char* argv[])
         genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
           genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
         );
+        lheInfoHistManager_beforeCuts[central_or_shift]->fillHistograms(
+          *lheInfoReader, evtWeightRecorder.get_inclusive(central_or_shift)
+        );
         if(eventWeightManager)
         {
           genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
