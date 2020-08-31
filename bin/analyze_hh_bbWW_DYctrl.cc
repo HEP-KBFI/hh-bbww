@@ -710,7 +710,7 @@ int main(int argc, char* argv[])
 
         if(eventWeightManager)
         {
-          selHistManager->genEvtHistManager_afterCuts_->bookHistograms(fs, eventWeightManager);
+          selHistManager->genEvtHistManager_afterCuts_->bookHistograms(fs, eventWeightManager, true);
         }
       }
       for(const categoryEntryType & category: categories_evt)
@@ -1559,7 +1559,7 @@ int main(int argc, char* argv[])
             if(eventWeightManager)
             {
               selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
-                eventWeightManager, evtWeightRecorder.get_inclusive(central_or_shift)
+                eventWeightManager, evtWeightRecorder.get_inclusive(central_or_shift), numSelJetsAK4_nonVBF, HT
               );
             }
           }
@@ -1628,6 +1628,10 @@ int main(int argc, char* argv[])
       selectedEntries_weighted_byGenMatchType[central_or_shift][process_and_genMatch] += evtWeightRecorder.get(central_or_shift);
     }
     histogram_selectedEntries->Fill(0.);
+    if(isDEBUG)
+    {
+      std::cout << evtWeightRecorder << '\n';
+    }
   }
 
   std::cout << "max num. Entries = " << inputTree -> getCumulativeMaxEventCount()
