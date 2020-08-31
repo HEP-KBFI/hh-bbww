@@ -1651,6 +1651,17 @@ int main(int argc, char* argv[])
         std::cout << '\n';
       }
     }
+    else 
+    {
+      for(const std::string & evt_cat_str: evt_cat_strs) 
+      {
+	if(evt_cat_str != default_cat_str)
+	{
+	  continue;
+	}
+	reWeightMapHH[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
+      }
+    }
 
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
     if(memReader.size() > 0)

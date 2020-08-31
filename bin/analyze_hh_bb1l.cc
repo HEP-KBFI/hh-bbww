@@ -2386,6 +2386,17 @@ int main(int argc, char* argv[])
         std::cout << '\n';
       }
     }
+    else 
+    {
+      for(const std::string & evt_cat_str: evt_cat_strs) 
+      {
+	if(evt_cat_str != default_cat_str)
+	{
+	  continue;
+	}
+	reWeightMapHH[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
+      }
+    }
 
     double dR_b1lep = deltaR(selJetP4_Hbb_lead, selLeptonP4);
     double dR_b2lep = deltaR(selJetP4_Hbb_sublead, selLeptonP4);
