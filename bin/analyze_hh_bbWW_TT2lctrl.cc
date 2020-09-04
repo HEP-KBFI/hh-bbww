@@ -995,6 +995,9 @@ int main(int argc, char* argv[])
         genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
           genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
         );
+        lheInfoHistManager_beforeCuts[central_or_shift]->fillHistograms(
+          *lheInfoReader, evtWeightRecorder.get_inclusive(central_or_shift)
+        );
         if(eventWeightManager)
         {
           genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
@@ -1860,6 +1863,10 @@ int main(int argc, char* argv[])
       selectedEntries_weighted_byGenMatchType[central_or_shift][process_and_genMatch] += evtWeightRecorder.get(central_or_shift);
     }
     histogram_selectedEntries->Fill(0.);
+    if(isDEBUG)
+    {
+      std::cout << evtWeightRecorder << '\n';
+    }
   }
 
   std::cout << "max num. Entries = " << inputTree -> getCumulativeMaxEventCount()
