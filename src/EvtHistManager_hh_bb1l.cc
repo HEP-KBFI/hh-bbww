@@ -95,6 +95,25 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
         else
         {
           histograms_by_category_types_[name_test] = book1D(dir, name_test, category.first, 400,  0., +1.);
+	  /*histograms_by_category_types_[name_test+"_leppt"] = book1D(dir, name_test+"_leppt", category.first+"_leppt", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_bjet1pt"] = book1D(dir, name_test+"_bjet1pt", category.first+"_bjet1pt", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_mht"] = book1D(dir, name_test+"_mht", category.first+"_mht", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_m_Hbb_regCorr"] = book1D(dir, name_test+"_m_Hbb_regCorr", category.first+"_m_Hbb_regCorr", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_m_Wjj"] = book1D(dir, name_test+"_m_Wjj", category.first+"_mWjj", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_pT_Wjj"] = book1D(dir, name_test+"_pT_Wjj", category.first+"_ptWjj", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_dR_Hww"] = book1D(dir, name_test+"_dR_Hww", category.first+"_drHww", 50,  0.,10.);
+	  histograms_by_category_types_[name_test+"_Smin_Hww"] = book1D(dir, name_test+"_SminHww", category.first+"_SminHww", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_dR_b1lep"] = book1D(dir, name_test+"_dR_b1lep", category.first+"_dR_b1lep", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_dR_b2lep"] = book1D(dir, name_test+"_dR_b2lep", category.first+"_dR_b2lep", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_pT_HH"] = book1D(dir, name_test+"_pT_HH", category.first+"_pTHH", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_mTW"] = book1D(dir, name_test+"_mTW", category.first+"_mTW", 100,  0., 50000.);
+	  histograms_by_category_types_[name_test+"_mT_top_3particle"] = book1D(dir, name_test+"_mT_top_3particle", category.first+"_mTtop3part", 100,  0., 50000.);
+	  histograms_by_category_types_[name_test+"_mindr_lep1_jet"] = book1D(dir, name_test+"_mindr_lep1_jet", category.first+"_mindrlepjet", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_avg_dr_jet_central"] = book1D(dir, name_test+"_avg_dr_jetcentral", category.first+"_avgdrjetcentral", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_mbb_loose"] = book1D(dir, name_test+"_mbb_loose", category.first+"_mbb_loose", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_mbb_medium"] = book1D(dir, name_test+"_mbb_medium", category.first+"_mbb_medium", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_cosThetaS_Hbb_reg"] = book1D(dir, name_test+"_costhetaS_Hbb_reg", category.first+"_costhetaS_Hbb_reg", 20,  0., 1.);
+	  histograms_by_category_types_[name_test+"_cosThetaS_HH"] = book1D(dir, name_test+"_costhetaS_HH", category.first+"_costhetasS_HH", 50,  0., 1.);*/
         }
         central_or_shiftOptions_[name_test] = { "*" };
       }
@@ -210,7 +229,9 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
                double selJetsAK4_0_pt,
                double selJetsAK4_1_pt,
                double selJetsAK4_0_eta,
-               double selJetsAK4_1_eta,
+               double selJetsAK4_1_eta, 
+	       double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
+				       double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH,
                bool doDataMCPlots,
 				       double evtWeight)
 {
@@ -224,6 +245,25 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
       throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
     }
     fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+    /*    fillWithOverFlow(histograms_by_category_types_[name_test+"_leppt"],  selLepton_lead_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_bjet1pt"],  selJetsAK4_0_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mht"],  mht, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_m_Hbb_regCorr"],  m_Hbb_regCorr, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_m_Wjj"],  m_Wjj, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_pT_Wjj"],  pT_Wjj, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_dR_Hww"],  dR_Hww, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_Smin_Hww"],  Smin_Hww, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_dR_b1lep"],  dR_b1lep, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_dR_b2lep"],  dR_b2lep, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_pT_HH"],  pT_HH, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mTW"],  mT_W, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mT_top_3particle"],  mT_top_3particle, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mindr_lep1_jet"],  mindr_lep1_jet, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_avg_dr_jet_central"],  avg_dr_jet_central, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mbb_loose"],  mbb_loose, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mbb_medium"],  mbb_medium, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_Hbb_reg"],  cosThetaS_Hbb_reg, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_HH"],  cosThetaS_HH, evtWeight, evtWeightErr);*/
   }
   //
   fillWithOverFlow(histogram_numElectrons_,                     numElectrons,                       evtWeight, evtWeightErr);

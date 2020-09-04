@@ -47,6 +47,8 @@ public:
      double selJetsAK4_1_pt,
      double selJetsAK4_0_eta,
      double selJetsAK4_1_eta,
+     double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
+     double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH,
      bool doDataMCPlots,
                  double evtWeight);
 
