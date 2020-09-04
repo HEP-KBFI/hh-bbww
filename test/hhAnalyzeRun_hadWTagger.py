@@ -12,7 +12,7 @@ import getpass
 
 # E.g.: ./test/tthAnalyzeRun_hadTopTagger.py -v 2019Dec09 -m default -e 2017
 
-mode_choices     = [ 'forBDTtraining_hadWTagger', 'forBDTtraining_jpa_4jet', 'forBDTtraining_jpa_missingWJet', 'forBDTtraining_jpa_missingBJet' ]
+mode_choices     = [ 'forBDTtraining_hadWTagger', 'forBDTtraining_jpa_4jet' ]
 sys_choices      = [ 'full' ] + systematics.an_opts_hh_bbww
 systematics.full = systematics.an_hh_bbww
 
