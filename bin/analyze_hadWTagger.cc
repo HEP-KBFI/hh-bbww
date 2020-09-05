@@ -994,6 +994,7 @@ int main(int argc,
 	      selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
 	  for ( std::vector<const RecoJet*>::const_iterator selBJet2 = cleanedJetsAK4_wrtLeptons.begin();
               selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
+	    assert((*selBJet1)->pt() >= (*selBJet2)->pt());
             writeToNtuple(
 	       *bdt_filler_restOfcat,
 	       eventInfo,
@@ -1055,6 +1056,7 @@ int main(int argc,
 	      selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {
 	  for ( std::vector<const RecoJet*>::const_iterator selWJet2 = cleanedJetsAK4_wrtLeptons.begin();
 		selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
+	    assert((*selWJet1)->pt() >= (*selWJet2)->pt());
 	    writeToNtuple(
 	       *bdt_filler_restOfcat,
 	       eventInfo,
@@ -1075,7 +1077,7 @@ int main(int argc,
       }
     }
     else {
-      continue;
+      assert(0);
     }
     ++selectedEntries;
   } // idxEntry
