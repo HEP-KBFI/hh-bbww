@@ -189,7 +189,7 @@ struct categoryEntryType
   }
 }*/
 
-std::pair<int, int> matchedJets(std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons, std::vector<const GenJet*> genBJets_ptrs, std::vector<const GenJet*> genWJets_ptrs) {
+std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs) {
   int matchedBJet(0);
   int matchedWJet(0);
   for ( std::vector<const RecoJet*>::const_iterator selJet1 = cleanedJetsAK4_wrtLeptons.begin();
@@ -462,7 +462,7 @@ int main(int argc, char* argv[])
   const bool take_Wjj_boosted_with_B2G_sel = false;
   const bool ignore_Wjj_boosted = true; // this to be false will make Wjj_boosted be empty, but not innesistent
   const bool doDataMCPlots      = false;
-  const bool select_jpa = true;
+  const bool select_jpa = false;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -859,17 +859,20 @@ int main(int argc, char* argv[])
     inputTree->registerReader(genWBosonReader);
     genWJetReader = new GenParticleReader(branchName_genWJets);
     inputTree->registerReader(genWJetReader);
-    if(isSignal) {
+  }
+
+  if ( isSignal )
+    {
       genParticleFromHiggsReader = new GenParticleReader(branchName_genParticlesFromHiggs);
       inputTree->registerReader(genParticleFromHiggsReader);
     }
-    if( isMC_TT) {
+  else if ( isMC_TT )
+    {
       genBJetFromTopReader = new GenParticleReader(branchName_genBJetsFromTop);
       inputTree->registerReader(genBJetFromTopReader);
       genWJetFromTopReader = new GenParticleReader(branchName_genWJetsFromTop);
       inputTree->registerReader(genWJetFromTopReader);
     }
-  }
 
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
@@ -972,7 +975,7 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even;
   if( !select_jpa ) {
     //xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_even_new.xml";
-    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_even_new_AK8.xml";
+    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_even_new_AK8_genmatch.xml";
   }
   else {
     xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_even_jpa_4jet.xml";
@@ -984,7 +987,7 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd;
   if( !select_jpa ) {
     //xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_odd_new.xml";
-    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_odd_new_AK8.xml";
+    xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_odd_new_AK8_genmatch.xml";
   }
   else {
     xgbFileName_bb1l_X900GeV_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_X900GeV_Wjj_BDT_full_reco_odd_jpa_4jet.xml";
@@ -1030,7 +1033,7 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even;
   if ( !select_jpa ) {
     //xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_even_new.xml";
-    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_even_new_AK8.xml";
+    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_even_new_AK8_genmatch.xml";
   }
   else {
     xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_even_jpa_4jet.xml";
@@ -1042,7 +1045,7 @@ int main(int argc, char* argv[])
   std::string xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd;
   if ( !select_jpa ) {
     //xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_odd_new.xml";
-    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_odd_new_AK8.xml";
+    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_odd_new_AK8_genmatch.xml";
   }
   else {
     xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_odd_jpa_4jet.xml";
@@ -1433,7 +1436,7 @@ int main(int argc, char* argv[])
                 << " (" << eventInfo
                 << ") file (" << selectedEntries << " Entries selected)\n";
     }
-    //if(eventInfo.event != 291) continue;
+    //if(eventInfo.event != 170554 ) continue;
     ++analyzedEntries;
     //if ( analyzedEntries > 100) break;
     histogram_analyzedEntries->Fill(0.);
@@ -1517,39 +1520,13 @@ int main(int argc, char* argv[])
     std::vector<GenParticle> genBJets;
     std::vector<GenParticle> genWBosons;
     std::vector<GenParticle> genWJets;
-    std::vector<GenParticle> genParticlesFromHiggs;
+
     if ( isMC ) {
       genBJets = genBJetReader->read();
       genWBosons = genWBosonReader->read();
       genWJets = genWJetReader->read();
-      if(isSignal) {
-	genParticlesFromHiggs = genParticleFromHiggsReader->read();
-      }
     }
-    GenParticleMatcherBase* genParticleMatcher = nullptr;
-    if(isSignal) {
-      std::vector<GenParticle> genNeutrinos;
-      genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
-      genParticleMatcher = &genParticleMatcherFromHiggs;
-    }
-    else if ( isMC_TT )
-      {
-	std::vector<GenLepton> genLeptonsFromTop;
-	std::vector<GenParticle> genNeutrinosFromTop;
-	std::vector<GenParticle> genBJetsFromTop = genBJetFromTopReader->read();
-	std::vector<GenParticle> genWJetsFromTop = genWJetFromTopReader->read();
-	genParticleMatcherFromTop.setGenParticles(genLeptonsFromTop, genNeutrinosFromTop, genWJetsFromTop, genBJetsFromTop);
-	genParticleMatcher = &genParticleMatcherFromTop;
-      }
 
-    std::vector<const GenJet*> genBJets_ptrs;
-    std::vector<const GenJet*> genWJets_ptrs;
-    if (genParticleMatcher ) {
-      std::vector<GenJet> genBJets_ = genParticleMatcher->getBJets();
-      std::vector<GenJet> genWJets_ = genParticleMatcher->getWJets();
-      genBJets_ptrs = convert_to_ptrs(genBJets_);
-      genWJets_ptrs = convert_to_ptrs(genWJets_);
-    }
     if ( isDEBUG ) {
       dumpGenParticles("genBJet", genBJets);
       dumpGenParticles("genWBoson", genWBosons);
@@ -1702,7 +1679,6 @@ int main(int argc, char* argv[])
     const std::vector<const RecoHadTau*> cleanedHadTaus = hadTauCleaner(hadTau_ptrs, fakeableMuons, fakeableElectrons);
     // CV: veto events containing one or more taus, to avoid overlap with HH->bbWW single lepton channel
     const std::vector<const RecoHadTau*> vetoHadTaus = vetoHadTauSelector(cleanedHadTaus, isHigherPt);
-
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     const std::vector<RecoJet> jets_ak4 = jetReaderAK4->read();
     const std::vector<const RecoJet*> jet_ptrs_ak4 = convert_to_ptrs(jets_ak4);
@@ -1789,6 +1765,34 @@ int main(int argc, char* argv[])
         jetGenMatcherAK4.addGenHadTauMatch(cleanedJetsAK4_wrtLeptons, genHadTaus);
         jetGenMatcherAK4.addGenJetMatch   (cleanedJetsAK4_wrtLeptons, genJets);
       }
+    }
+    GenParticleMatcherBase* genParticleMatcher = nullptr;
+    if ( isSignal )
+      {
+	std::vector<GenParticle> genNeutrinos;
+	std::vector<GenParticle> genParticlesFromHiggs = genParticleFromHiggsReader->read();
+        genWJets = genWJetReader->read();
+        genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
+        genParticleMatcher = &genParticleMatcherFromHiggs;
+      }
+    else if ( isMC_TT )
+      {
+	std::vector<GenLepton> genLeptonsFromTop;
+	std::vector<GenParticle> genNeutrinosFromTop;
+	std::vector<GenParticle> genBJetsFromTop = genBJetFromTopReader->read();
+	std::vector<GenParticle> genWJetsFromTop = genWJetFromTopReader->read();
+        genParticleMatcherFromTop.setGenParticles(genLeptonsFromTop, genNeutrinosFromTop, genWJetsFromTop, genBJetsFromTop);
+        genParticleMatcher = &genParticleMatcherFromTop;
+      }
+    std::vector<const GenJet*> genBJets_ptrs;
+    std::vector<const GenJet*> genWJets_ptrs;
+    std::vector<GenJet> genBJets_;
+    std::vector<GenJet> genWJets_;
+    if (genParticleMatcher ) {
+      genBJets_ = genParticleMatcher->getBJets();
+      genBJets_ptrs = convert_to_ptrs(genBJets_);
+      genWJets_ = genParticleMatcher->getWJets();
+      genWJets_ptrs = convert_to_ptrs(genWJets_);
     }
 
     // require at least one lepton passing loose preselection criteria
@@ -1973,12 +1977,14 @@ int main(int argc, char* argv[])
     
     int nJet_that_not_bb(0); 
     std::vector<const RecoJet*> jetQuad;
+    std::pair<int, int> matchedJets_ = matchedJets(selJetsAK4, genBJets_ptrs, genWJets_ptrs);
+    if ( !(matchedJets_.first ==2 && matchedJets_.second ==2) ) continue;
     if( select_jpa )  {
-      std::pair<int, int> matchedJets_ = matchedJets(selJetsAK4, genBJets_ptrs, genWJets_ptrs);
-      if ( matchedJets_.first ==2 && matchedJets_.second ==2 ) jetQuad = selectJet_Quad(selJetsAK4, *selLepton, selBJetsAK4_medium.size(), genBJets_ptrs, genWJets_ptrs, mva_jpa, eventInfo);
+      jetQuad = selectJet_Quad(selJetsAK4, *selLepton, selBJetsAK4_medium.size(), genBJets_ptrs, genWJets_ptrs, mva_jpa, eventInfo);
       if( !jetQuad.size() ) continue; //currently interseted only for Res_allReco case
       nJet_that_not_bb = 2;
     }
+
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
     const selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
@@ -2066,21 +2072,21 @@ int main(int argc, char* argv[])
       // the above was not effective in extremelly rare cases in if the initial selection is done only in jet multiplicity
       // I will assume that the selJetsAK4 objects are all isolated among them
       // and just make sure that I remove the AK4 that is the same in pt and eta
-      std::vector<const RecoJetBase*> overlaps;
+      /*std::vector<const RecoJetBase*> overlaps;
       if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
       if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
       cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(selJetsAK4, overlaps);
-    }
+      }*/
 
-    /* for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
-      {
-        const RecoJet * jet1 = *jet1_it;
-        if ( !( (jet1->pt() == selJet1_Hbb->pt() && jet1->eta() == selJet1_Hbb->eta()) || (jet1->pt() == selJet2_Hbb->pt() && jet1->eta() == selJet2_Hbb->eta()) ) )
+   for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
+     {
+       const RecoJet * jet1 = *jet1_it;
+       if ( !( (jet1->phi() == selJet1_Hbb->phi() && jet1->eta() == selJet1_Hbb->eta()) || (jet1->phi() == selJet2_Hbb->phi() && jet1->eta() == selJet2_Hbb->eta()) ) )
         {
           cleanedJetsAK4_wrtHbb.push_back( jet1 );
         }
       }
-      }*/
+    }
     if( !select_jpa) nJet_that_not_bb = cleanedJetsAK4_wrtHbb.size();
 
     std::vector<const RecoJetAK8*> selJets_Wjj_boosted;
@@ -2300,6 +2306,8 @@ int main(int argc, char* argv[])
 	    selJetT_Wjj = &selJetsT_Wjj[0];
 	    selJet1_Wjj = selJetT_Wjj->jet_or_subjet1_;
 	    selJet2_Wjj = selJetT_Wjj->jet_or_subjet2_;
+	    selJet1_Wjj_simple = selJetT_Wjj->jet_or_subjet1_;
+            selJet2_Wjj_simple = selJetT_Wjj->jet_or_subjet2_;
 	    neutrinoP4_B2G_18_008 = comp_metP4_B2G_18_008(selLeptonP4 + selJet1_Wjj->p4() + selJet2_Wjj->p4(), metP4.px(), metP4.py(), higgsBosonMass);
 	    } else if ( cleanedJetsAK4_wrtHbb.size() >= 1 )
 	  {
@@ -2489,15 +2497,26 @@ int main(int argc, char* argv[])
 	std::cout << '\n';
       }
     }
-    else 
+
+
+    for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      for(const std::string & evt_cat_str: evt_cat_strs) 
+      const double evtWeight = evtWeightRecorder.get(central_or_shift);
+      const bool skipFilling = central_or_shift != central_or_shift_main;
+      for(const std::string & evt_cat_str: evt_cat_strs)
       {
-	if(evt_cat_str != default_cat_str)
-	{
+	if(skipFilling && evt_cat_str != default_cat_str)
+        {
 	  continue;
 	}
-	reWeightMapHH[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
+	if(apply_HH_rwgt)
+	{
+	  reWeightMapHH[evt_cat_str] *= evtWeight;
+	}
+	else
+	{
+	  reWeightMapHH[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
+	}
       }
     }
 
@@ -2973,7 +2992,7 @@ int main(int argc, char* argv[])
       }
     }
     //////////
-    //std::cout << "*******8" << category_mount << std::endl;
+    //std::cout << "*******8" << category_mount << "\t" << eventInfo.event << std::endl;
     //    if( category_mount == "_Res_MissWJet_2b_e" ) std::cout << "******************" << category_mount << "\t" << eventInfo.event << std::endl;
     if ( selLepton_type == kElectron )
     {
