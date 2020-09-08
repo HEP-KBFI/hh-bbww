@@ -96,8 +96,15 @@ process.analyze_hh_bb1l = cms.PSet(
     jetCleaningByIndex = cms.bool(True),
 
     branchName_genBJets = cms.string('GenBQuarkFromTop'),
+    branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
     branchName_genWBosons = cms.string('GenVbosons'),
     branchName_genWJets = cms.string('GenWZQuark'),
+
+    branchName_genLeptonsFromTop = cms.string('GenLepFromTop'),
+    branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
+    branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
+    branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
+
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
@@ -130,6 +137,9 @@ process.analyze_hh_bb1l = cms.PSet(
         denominator_file = cms.string(''),
         klScan_file = cms.string(''),
         ktScan_file = cms.string(''),
+        c2Scan_file = cms.string(''),
+        cgScan_file = cms.string(''),
+        c2gScan_file = cms.string(''),
         coefFile = cms.string('HHStatAnalysis/AnalyticalModels/data/coefficientsByBin_extended_3M_costHHSim_19-4.txt'),
         histtitle = cms.string(''),
         isDEBUG = cms.bool(False),
