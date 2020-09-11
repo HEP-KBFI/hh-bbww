@@ -115,7 +115,7 @@ NtupleFillerBDT<float, int>* createNtuple(std::string mode, std::string histogra
   return bdt_filler;
 }
 
-std::pair<int, int> matchedJets(std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons, std::vector<const GenJet*> genBJets_ptrs, std::vector<const GenJet*> genWJets_ptrs) { 
+std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs) { 
   int matchedBJet(0);
   int matchedWJet(0);
   for ( std::vector<const RecoJet*>::const_iterator selJet1 = cleanedJetsAK4_wrtLeptons.begin();
@@ -765,11 +765,11 @@ int main(int argc,
       selJet1_Hbb = selJetT_Hbb->jet_or_subjet1_;
       selJet2_Hbb = selJetT_Hbb->jet_or_subjet2_;
     }
-    if ( !(selJet1_Hbb && selJet2_Hbb) ) 
+    /*if ( !(selJet1_Hbb && selJet2_Hbb) ) 
     {
       continue;
     }
-    cutFlowTable.update(">= 2 jets from H->bb", evtWeight);
+    cutFlowTable.update(">= 2 jets from H->bb", evtWeight);*/
     //-------------------------------------------------------------------
 
     //-------------------------------------------------------------------
@@ -791,10 +791,10 @@ int main(int argc,
       cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
     }
     const std::vector<const RecoJet*> selJetsAK4_Wjj = jetSelectorAK4_Wjj(cleanedJetsAK4_wrtHbb, isHigherPt);
-    if ( !(selJetsAK4_Wjj.size() >= 2) ) {
+    /*if ( !(selJetsAK4_Wjj.size() >= 2) ) {
       continue;
     }
-    cutFlowTable.update(">= 2 jets from W->jj", evtWeight);
+    cutFlowTable.update(">= 2 jets from W->jj", evtWeight);*/
     //-------------------------------------------------------------------
 
 //--- build collections of generator level particles 
@@ -992,7 +992,7 @@ int main(int argc,
 	double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1);
 	for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
 	      selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
-	  for ( std::vector<const RecoJet*>::const_iterator selBJet2 = cleanedJetsAK4_wrtLeptons.begin();
+	  for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1+1;
               selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
 	    assert((*selBJet1)->pt() >= (*selBJet2)->pt());
             writeToNtuple(
@@ -1054,7 +1054,7 @@ int main(int argc,
 	double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1);
 	for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
 	      selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {
-	  for ( std::vector<const RecoJet*>::const_iterator selWJet2 = cleanedJetsAK4_wrtLeptons.begin();
+	  for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 +1;
 		selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
 	    assert((*selWJet1)->pt() >= (*selWJet2)->pt());
 	    writeToNtuple(
