@@ -57,6 +57,7 @@
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
 #include <TError.h> // gErrorAbortLevel, kError
+#include <TH2D.h>
 #include <TLorentzVector.h> // TLorentzVector
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
@@ -71,8 +72,8 @@ typedef std::vector<std::string> vstring;
 const double higgsBosonMass = 125.;
 const double topMass = 172.9; // CV: taken from http://pdg.lbl.gov/2019/listings/rpp2019-list-t-quark.pdf ("OUR AVERAGE")
 
-enum { kMode_undefined, kMode_hadWTagger, kMode_jpa_4jet, kMode_jpa_missingBJet, kMode_jpa_missingWJet, kMode_jpa_restOfcat };
-
+enum { kMode_undefined, kMode_hadWTagger, kMode_jpa_4jet, kMode_jpa_missingBJet, kMode_jpa_missingWJet, kMode_jpa_missingBJet_missingWJet, kMode_jpa_missingAllWJet, kMode_jpa_missingBJet_missingAllWJet, kMode_jpa_restOfcat };
+//TH2D* h_genmatch = new TH2D("genmatc", "" , 3, -0.5,2.5, 3, -0.5, 2.5);
 NtupleFillerBDT<float, int>* createNtuple(std::string mode, std::string histogramDir, std::string era_string, std::string process_string) {
 
   NtupleFillerBDT<float, int>* bdt_filler = new std::remove_pointer<decltype(bdt_filler)>::type(
@@ -130,6 +131,7 @@ std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK
   }
   return std::pair<int, int>(matchedBJet, matchedWJet);
 }
+
 double
 compCosTheta(const Particle::LorentzVector& recWJet1, const Particle::LorentzVector& recWJet2)
 {
@@ -609,24 +611,36 @@ int main(int argc,
 
 //--- book Ntuple for BDT training
   NtupleFillerBDT<float, int>* bdt_filler_oldHadWTagger = nullptr; 
-  NtupleFillerBDT<float, int>* bdt_filler_jpa_4jets = nullptr;
-  NtupleFillerBDT<float, int>* bdt_filler_missingBJets =nullptr;
-  NtupleFillerBDT<float, int>* bdt_filler_missingWJets =nullptr;
-  NtupleFillerBDT<float, int>* bdt_filler_restOfcat =nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_jpa_4jet = nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_missingBJet =nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_missingWJet =nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_missingBJet_missingWJet =nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_missingAllWJet =nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_missingBJet_missingAllWJet =nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_boosted_missingWJet = nullptr;
+  NtupleFillerBDT<float, int>* bdt_filler_boosted_2jet = nullptr;
 
   if      ( mode_string == "forBDTtraining_hadWTagger"      ) {
     bdt_filler_oldHadWTagger = createNtuple("oldHadWTagger", histogramDir, era_string, process_string);
     bdt_filler_oldHadWTagger->bookTree(fs);
   }
   else if ( mode_string == "forBDTtraining_jpa_4jet"      ) {
-    bdt_filler_jpa_4jets = createNtuple("jpa_4jet", histogramDir, era_string, process_string);
-    bdt_filler_jpa_4jets->bookTree(fs);
-    bdt_filler_missingBJets = createNtuple("jpa_missingBJet", histogramDir, era_string, process_string);
-    bdt_filler_missingBJets->bookTree(fs);
-    bdt_filler_missingWJets = createNtuple("jpa_missingWJet", histogramDir, era_string, process_string);
-    bdt_filler_missingWJets->bookTree(fs);
-    bdt_filler_restOfcat = createNtuple("jpa_restOfcat", histogramDir, era_string, process_string);
-    bdt_filler_restOfcat->bookTree(fs);
+    bdt_filler_jpa_4jet = createNtuple("jpa_4jet", histogramDir, era_string, process_string);
+    bdt_filler_jpa_4jet->bookTree(fs);
+    bdt_filler_missingBJet = createNtuple("jpa_missingBJet", histogramDir, era_string, process_string);
+    bdt_filler_missingBJet->bookTree(fs);
+    bdt_filler_missingWJet = createNtuple("jpa_missingWJet", histogramDir, era_string, process_string);
+    bdt_filler_missingWJet->bookTree(fs);
+    bdt_filler_missingBJet_missingWJet = createNtuple("jpa_missingBJet_missingWJet", histogramDir, era_string, process_string);
+    bdt_filler_missingBJet_missingWJet->bookTree(fs);
+    bdt_filler_missingAllWJet = createNtuple("jpa_missingAllWJet", histogramDir, era_string, process_string);
+    bdt_filler_missingAllWJet->bookTree(fs);
+    bdt_filler_missingBJet_missingAllWJet = createNtuple("jpa_missingBJet_missingAllWJet", histogramDir, era_string, process_string);
+    bdt_filler_missingBJet_missingAllWJet->bookTree(fs);
+    bdt_filler_boosted_missingWJet = createNtuple("jpa_boosted_missingWJet", histogramDir, era_string, process_string);
+    bdt_filler_boosted_missingWJet->bookTree(fs);
+    bdt_filler_boosted_2jet = createNtuple("jpa_boosted_2jet", histogramDir, era_string, process_string);
+    bdt_filler_boosted_2jet->bookTree(fs);
   }
   else throw cmsException(__func__)
 	 << "Invalid Configuration parameter 'mode' = " << mode_string << "!!";
@@ -835,7 +849,7 @@ int main(int argc,
     int numJetsAK4_genMatched_to_Wjj = (int)countGenMatchedJets(cleanedJetsAK4_wrtLeptons, genWJets_ptrs);
     int numLeptons = (int)preselLeptons.size();
     std::pair<int, int> matchedJets_ = matchedJets(cleanedJetsAK4_wrtLeptons, genBJets_ptrs, genWJets_ptrs);
-
+    //h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
     int mode = kMode_undefined;
     if      ( mode_string == "forBDTtraining_hadWTagger"      ) mode = kMode_hadWTagger;
     else if ( mode_string == "forBDTtraining_jpa_4jet"        ) {
@@ -848,6 +862,15 @@ int main(int argc,
       else if ( matchedJets_.first ==2 && matchedJets_.second ==1 ) {
 	mode = kMode_jpa_missingWJet;
       }
+      else if ( matchedJets_.first ==1 && matchedJets_.second ==1) {
+	mode = kMode_jpa_missingBJet_missingWJet;
+      }
+      else if ( matchedJets_.first ==2 && matchedJets_.second ==0) {
+        mode = kMode_jpa_missingAllWJet;
+      }
+      else if ( matchedJets_.first ==1 && matchedJets_.second ==0) {
+        mode = kMode_jpa_missingBJet_missingAllWJet;
+      }
       else {
 	mode = kMode_jpa_restOfcat;
       }
@@ -855,7 +878,51 @@ int main(int argc,
     else throw cmsException(__func__)
 	   << "Invalid Configuration parameter 'mode' = " << mode << "!!";
 
-    
+    if ( Hbb_isBoosted ) {
+      if ( matchedJets_.second ==1 ) {
+	int idxRow = 0;
+	double numRowsPerEvent = selJetsAK4_Wjj.size();
+	for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj.begin();
+	      selJet_Wjj != selJetsAK4_Wjj.end(); ++selJet_Wjj ) {
+	  writeToNtuple(
+	     *bdt_filler_boosted_missingWJet,
+	     eventInfo,
+	     selLepton, genLeptons_ptrs,
+	     metP4,
+	     selJetAK8_Hbb->subJet1(), selJetAK8_Hbb->subJet2(), true, genBJets_ptrs,
+	     *selJet_Wjj, nullptr, genWJets_ptrs,
+	     cleanedJetsAK4_wrtLeptons.size(), 0, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+	     idxRow, numRowsPerEvent,
+	     isGenMatched((*selJet_Wjj)->eta(), (*selJet_Wjj)->phi(), genWJets_ptrs),
+	     evtWeight);
+	  ++idxRow;
+	}
+      }
+      else if ( matchedJets_.second == 2 ) {
+	int idxRow = 0;
+	double numRowsPerEvent = 0.5*selJetsAK4_Wjj.size()*(selJetsAK4_Wjj.size() - 1);
+	for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
+	      selJet1_Wjj != selJetsAK4_Wjj.end(); ++selJet1_Wjj ) {
+	  for ( std::vector<const RecoJet*>::const_iterator selJet2_Wjj = selJet1_Wjj + 1;
+		selJet2_Wjj != selJetsAK4_Wjj.end(); ++selJet2_Wjj ) {
+	    assert((*selJet1_Wjj)->pt() >= (*selJet2_Wjj)->pt());
+	    writeToNtuple(
+	      *bdt_filler_boosted_2jet,
+	      eventInfo,
+	      selLepton, genLeptons_ptrs,
+	      metP4,
+	      selJetAK8_Hbb->subJet1(), selJetAK8_Hbb->subJet2(), Hbb_isBoosted, genBJets_ptrs,
+	      *selJet1_Wjj, *selJet2_Wjj, genWJets_ptrs,
+	      cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+	      idxRow, numRowsPerEvent,
+	      isGenMatched((*selJet1_Wjj)->eta(), (*selJet1_Wjj)->phi(), genWJets_ptrs) &&
+	      isGenMatched((*selJet2_Wjj)->eta(), (*selJet2_Wjj)->phi(), genWJets_ptrs),
+	      evtWeight);
+	    ++idxRow;
+	  }
+	}
+      }
+    }
 
     if ( mode == kMode_hadWTagger )
     {
@@ -902,7 +969,7 @@ int main(int argc,
               if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
               if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet2)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
               writeToNtuple(
-               *bdt_filler_jpa_4jets,
+               *bdt_filler_jpa_4jet,
                 eventInfo,
                 selLepton, genLeptons_ptrs,
                 metP4,
@@ -936,7 +1003,7 @@ int main(int argc,
             if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 ) continue;
             if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) < 0.3 ) continue;
             writeToNtuple(
-             *bdt_filler_missingBJets,
+             *bdt_filler_missingBJet,
               eventInfo,
               selLepton, genLeptons_ptrs,
               metP4,
@@ -967,7 +1034,7 @@ int main(int argc,
                 selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {            
             if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) < 0.3 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) < 0.3 ) continue;
             writeToNtuple(
-             *bdt_filler_missingWJets,
+             *bdt_filler_missingWJet,
               eventInfo,
               selLepton, genLeptons_ptrs,
               metP4,
@@ -984,97 +1051,75 @@ int main(int argc,
         }
       }
     } 
-    else if ( mode == kMode_jpa_restOfcat )
-    {
+    else if ( mode == kMode_jpa_missingBJet_missingWJet ) {
       int idxRow = 0;
-      if ( matchedJets_.first ==2 && matchedJets_.second ==0 )
-      {
-	double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1);
-	for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
-	      selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
-	  for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1+1;
-              selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
-	    assert((*selBJet1)->pt() >= (*selBJet2)->pt());
-            writeToNtuple(
-	       *bdt_filler_restOfcat,
-	       eventInfo,
-	       selLepton, genLeptons_ptrs,
-	       metP4,
-	       *selBJet1, *selBJet2, Hbb_isBoosted, genBJets_ptrs,
-	       nullptr, nullptr, genWJets_ptrs,
-	       cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
-	       idxRow, numRowsPerEvent,
-	       isGenMatched((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets_ptrs) &&
-	       isGenMatched((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets_ptrs),
-	       evtWeight);
-	    ++idxRow;
-	  }
-	}
-      }
-      else if ( matchedJets_.first ==1 && matchedJets_.second ==0 )
-      {
-	double numRowsPerEvent = cleanedJetsAK4_wrtLeptons.size();
-	for ( std::vector<const RecoJet*>::const_iterator selBJet = cleanedJetsAK4_wrtLeptons.begin();
-              selBJet != cleanedJetsAK4_wrtLeptons.end(); ++selBJet ) {
+      double numRowsPerEvent = cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1);
+      for ( std::vector<const RecoJet*>::const_iterator selBJet = cleanedJetsAK4_wrtLeptons.begin();
+	    selBJet != cleanedJetsAK4_wrtLeptons.end(); ++selBJet ) {
+	for ( std::vector<const RecoJet*>::const_iterator selWJet = cleanedJetsAK4_wrtLeptons.begin();
+	      selWJet != cleanedJetsAK4_wrtLeptons.end(); ++selWJet ) {
+	  if ( (*selWJet)->eta() == (*selBJet)->eta() && (*selWJet)->phi() == (*selBJet)->phi() )  continue;
 	  writeToNtuple(
-	     *bdt_filler_restOfcat,
+	     *bdt_filler_missingBJet_missingWJet,
 	     eventInfo,
 	     selLepton, genLeptons_ptrs,
 	     metP4,
 	     *selBJet, nullptr, Hbb_isBoosted, genBJets_ptrs,
-	     nullptr, nullptr, genWJets_ptrs,
-	     cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
-	     idxRow, numRowsPerEvent,
-	     isGenMatched((*selBJet)->eta(), (*selBJet)->phi(), genBJets_ptrs),
-	     evtWeight);
-	  ++idxRow;
-	}
-      }
-      else if ( matchedJets_.first == 0 && matchedJets_.second == 1 ) 
-      { 
-	double numRowsPerEvent = cleanedJetsAK4_wrtLeptons.size();
-	for ( std::vector<const RecoJet*>::const_iterator selWJet = cleanedJetsAK4_wrtLeptons.begin();
-		selWJet != cleanedJetsAK4_wrtLeptons.end(); ++selWJet ) {
-	  writeToNtuple(
-	     *bdt_filler_restOfcat,
-	     eventInfo,
-	     selLepton, genLeptons_ptrs,
-	     metP4,
-	     nullptr, nullptr, Hbb_isBoosted, genBJets_ptrs,
 	     *selWJet, nullptr, genWJets_ptrs,
 	     cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
 	     idxRow, numRowsPerEvent,
-	     isGenMatched((*selWJet)->eta(), (*selWJet)->phi(), genWJets_ptrs), 
+	     isGenMatched((*selBJet)->eta(), (*selBJet)->phi(), genBJets_ptrs) &&
+	     isGenMatched((*selWJet)->eta(), (*selWJet)->phi(), genWJets_ptrs),
 	     evtWeight);
 	  ++idxRow;
 	}
       }
-      else if ( matchedJets_.first == 0 && matchedJets_.second == 2 )
-      {
-	double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1);
-	for ( std::vector<const RecoJet*>::const_iterator selWJet1 = cleanedJetsAK4_wrtLeptons.begin();
-	      selWJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet1 ) {
-	  for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 +1;
-		selWJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selWJet2 ) {
-	    assert((*selWJet1)->pt() >= (*selWJet2)->pt());
-	    writeToNtuple(
-	       *bdt_filler_restOfcat,
-	       eventInfo,
-	       selLepton, genLeptons_ptrs,
-	       metP4,
-	       nullptr, nullptr, Hbb_isBoosted, genBJets_ptrs,
-	       *selWJet1, *selWJet2, genWJets_ptrs,
-	       cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
-	       idxRow, numRowsPerEvent,
-	       isGenMatched((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets_ptrs),
-	       evtWeight);
-	    ++idxRow;
-	  }
-	}
+    }
+    else if ( mode == kMode_jpa_missingAllWJet ) {
+      int idxRow = 0;
+      double numRowsPerEvent = 0.5*cleanedJetsAK4_wrtLeptons.size()*(cleanedJetsAK4_wrtLeptons.size() - 1);
+      for ( std::vector<const RecoJet*>::const_iterator selBJet1 = cleanedJetsAK4_wrtLeptons.begin();
+	    selBJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet1 ) {
+	for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1+1;
+	      selBJet2 != cleanedJetsAK4_wrtLeptons.end(); ++selBJet2 ) {
+	  assert((*(selBJet1))->pt() >= (*(selBJet2))->pt());
+	  writeToNtuple(
+            *bdt_filler_missingAllWJet,
+	    eventInfo,
+	    selLepton, genLeptons_ptrs,
+	    metP4,
+	    *selBJet1, *selBJet2, Hbb_isBoosted, genBJets_ptrs,
+	    nullptr, nullptr, genWJets_ptrs,
+	    cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+	    idxRow, numRowsPerEvent,
+	    isGenMatched((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets_ptrs) &&
+	    isGenMatched((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets_ptrs) ,
+	    evtWeight);
+	  ++idxRow;
+	} 
       }
-      else {
-	continue;
+    }
+    else if ( mode == kMode_jpa_missingBJet_missingAllWJet ) {
+      int idxRow = 0;
+      double numRowsPerEvent = cleanedJetsAK4_wrtLeptons.size();
+      for ( std::vector<const RecoJet*>::const_iterator selBJet = cleanedJetsAK4_wrtLeptons.begin();
+	    selBJet != cleanedJetsAK4_wrtLeptons.end(); ++selBJet ) {
+	writeToNtuple(
+	   *bdt_filler_missingBJet_missingAllWJet,
+	   eventInfo,
+	   selLepton, genLeptons_ptrs,
+	   metP4,
+	   *selBJet, nullptr, Hbb_isBoosted, genBJets_ptrs,
+	   nullptr, nullptr, genWJets_ptrs,
+	   cleanedJetsAK4_wrtLeptons.size(), numJetsAK4_genMatched_to_Hbb, numJetsAK4_genMatched_to_Wjj, selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), numLeptons,
+	   idxRow, numRowsPerEvent,
+	   isGenMatched((*selBJet)->eta(), (*selBJet)->phi(), genBJets_ptrs),
+	   evtWeight);
+	++idxRow;
       }
+      }
+    else if ( mode == kMode_jpa_restOfcat ) {
+      continue;
     }
     else {
       assert(0);
@@ -1089,7 +1134,9 @@ int main(int argc,
             << " analyzed = " << analyzedEntries << '\n'
             << " selected = " << selectedEntries << "\n\n"
             << "cut-flow table" << std::endl;
-
+  fs.file().cd();
+  //h_genmatch->Write();
+  //  delete h_genmatch;
   delete run_lumi_eventSelector;
   delete muonReader;
   delete electronReader;
