@@ -407,55 +407,41 @@ main(int argc,
     const RecoLepton *selLepton_lead, *selLepton_sublead, *selLepton3, *selLepton4;
     int selLepton_lead_type, selLepton_sublead_type, selLepton3_type, selLepton4_type;
     if(selLeptons_size) {
-      if( selLeptons_size ==1 )
+      if(selLeptons_size == 1)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta()
-	);
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead });
       }
-      else if ( selLeptons_size ==2 )
+      else if(selLeptons_size == 2)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	selLepton_sublead = selLeptons[1];
-	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
-        );
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        selLepton_sublead = selLeptons[1];
+        selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead });
       }
-      else if ( selLeptons_size ==3 )
+      else if(selLeptons_size == 3)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	selLepton_sublead = selLeptons[1];
-	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-	selLepton3 = selLeptons[2];
-	selLepton3_type = getLeptonType(selLepton3->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
-	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta()
-        );
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        selLepton_sublead = selLeptons[1];
+        selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+        selLepton3 = selLeptons[2];
+        selLepton3_type = getLeptonType(selLepton3->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead, selLepton3 });
       }
-      else if( selLeptons_size >=4 )
+      else if(selLeptons_size >= 4)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	selLepton_sublead = selLeptons[1];
-	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-	selLepton3 = selLeptons[2];
-	selLepton3_type = getLeptonType(selLepton3->pdgId());
-	selLepton4 = selLeptons[3];
-	selLepton4_type = getLeptonType(selLepton4->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
-	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta(),
-	 selLepton4_type, selLepton4->pt(), selLepton4->cone_pt(), selLepton4->eta()
-	);
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        selLepton_sublead = selLeptons[1];
+        selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+        selLepton3 = selLeptons[2];
+        selLepton3_type = getLeptonType(selLepton3->pdgId());
+        selLepton4 = selLeptons[3];
+        selLepton4_type = getLeptonType(selLepton4->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead, selLepton3, selLepton4 });
       }
       
       evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
