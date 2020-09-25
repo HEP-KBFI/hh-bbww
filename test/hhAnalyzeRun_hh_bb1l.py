@@ -33,6 +33,10 @@ parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
+parser.add_argument('-secondBDT', '--secondBDT',
+  dest = 'second_bdt', action = 'store_true',
+  help = 'R|doing second_bdt for jpa'
+)
 args = parser.parse_args()
 
 # Common arguments
@@ -62,6 +66,7 @@ regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 doDataMCPlots     = False
 ignore_Wjj_boosted = True
+second_bdt = args.second_bdt
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -99,7 +104,7 @@ if mode == "default":
   samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
+  if not second_bdt : samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
@@ -140,10 +145,10 @@ if __name__ == '__main__':
    "_HbbFat_WjjRes_allReco_m",
    "_Res_allReco_1b_m",
    "_Res_allReco_2b_m",
-   "_HbbFat_WjjRes_MissWJet_e",
+   "_HbbFat_WjjRes_MissJet_e",
    "_Res_MissWJet_1b_e",
    "_Res_MissWJet_2b_e",
-   "_HbbFat_WjjRes_MissWJet_m",
+   "_HbbFat_WjjRes_MissJet_m",
    "_Res_MissWJet_1b_m",
    "_Res_MissWJet_2b_m"
    ]
@@ -224,6 +229,7 @@ if __name__ == '__main__':
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
     submission_cmd                        = sys.argv,
+    second_bdt                            = second_bdt,
   )
 
   if mode.find("forBDTtraining") != -1:

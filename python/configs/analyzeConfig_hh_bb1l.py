@@ -71,6 +71,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         hlt_filter        = False,
         use_home          = False,
         submission_cmd    = None,
+        second_bdt        = False,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -139,7 +140,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.evtCategory_inclusive = "hh_bb1l"
     if not self.evtCategory_inclusive in self.evtCategories:
       self.evtCategories.append(self.evtCategory_inclusive)
-
+    self.second_bdt = second_bdt
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
     """
@@ -403,6 +404,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'central_or_shifts_local'  : central_or_shifts_local,
                 'evtCategories'            : self.evtCategories,
                 'selectBDT'                : self.isBDTtraining,
+                'secondBDT'                : self.second_bdt,
                 'syncOutput'               : syncOutput,
                 'syncTree'                 : syncTree,
                 'syncRLE'                  : syncRLE,
