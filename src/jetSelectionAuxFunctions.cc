@@ -286,3 +286,42 @@ selectJets_Wjj_resolved(
   }
   return retVal;
 }
+
+std::pair< const RecoJetBase*, const RecoJetBase* >
+selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtHbb,
+		       const Particle::LorentzVector metP4,
+		       const RecoLepton* selLepton,
+		       const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb)
+{
+  Particle::LorentzVector HbbP4 = selJet1_Hbb->p4() + selJet2_Hbb->p4();
+  double m_Hbb_regCorr =  HbbP4.mass();
+  if ( dynamic_cast<const RecoJet*>(selJet1_Hbb) && dynamic_cast<const RecoJet*>(selJet2_Hbb) )
+  {
+    const RecoJet* selJetAK4_Hbb_lead    = dynamic_cast<const RecoJet*>(selJet1_Hbb);
+    const RecoJet* selJetAK4_Hbb_sublead = dynamic_cast<const RecoJet*>(selJet2_Hbb);
+
+    HbbP4 = selJetAK4_Hbb_lead->p4_bRegCorr() + selJetAK4_Hbb_sublead->p4_bRegCorr();
+    m_Hbb_regCorr = HbbP4.mass();
+  }
+
+  double mass_dist_Wjj = 1000;
+  const RecoJetBase* selJet1_Wjj = nullptr;
+  const RecoJetBase* selJet2_Wjj = nullptr;
+  for(auto jet1_it = cleanedJetsAK4_wrtHbb.begin(); jet1_it != cleanedJetsAK4_wrtHbb.end(); ++jet1_it)
+  {
+    const RecoJetBase * jet1 = *jet1_it;
+    selJet1_Wjj = jet1;
+    for(auto jet2_it = jet1_it + 1; jet2_it != cleanedJetsAK4_wrtHbb.end(); ++jet2_it)
+    {
+      const RecoJetBase * jet2 = *jet2_it;
+      const double massdiff = std::abs((jet1->p4() + jet2->p4() + selLepton->p4() + metP4).mass() - m_Hbb_regCorr);
+      if( massdiff < mass_dist_Wjj )
+      {
+	mass_dist_Wjj = massdiff;
+	selJet1_Wjj = jet1;
+	selJet2_Wjj = jet2;
+      }
+    }
+  }
+  return std::pair<const RecoJetBase*, const RecoJetBase*> (selJet1_Wjj, selJet2_Wjj);
+}

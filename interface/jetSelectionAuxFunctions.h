@@ -92,4 +92,9 @@ selectJets_Wjj_resolved(
               const EventInfo& eventInfo,
 	            bool isDEBUG);
 
+std::pair< const RecoJetBase*, const RecoJetBase* >
+selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtHbb,
+			    const Particle::LorentzVector metP4,
+			    const RecoLepton* selLepton,
+			    const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb);
 #endif // jetSelectionAuxFunctions_h
