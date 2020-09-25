@@ -1,4 +1,4 @@
-#ifndef hh_Analysis_bbww_JetQuad
+#ifndef hhAnalysis_bbww_JetQuad_h
 #define hhAnalysis_bbww_JetQuad_h
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
@@ -178,4 +178,4 @@ std::vector<JetQuadBase>
 makeJetDoubletsMissingAllWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets);
 std::vector<JetQuadBase>
 makeJetSingletsMissingBJetMissingAllWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets);
-#endif // JetQuad_h
+#endif // hhAnalysis_bbww_JetQuad_h

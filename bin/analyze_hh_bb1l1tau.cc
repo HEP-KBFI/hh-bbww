@@ -1505,11 +1505,11 @@ int main(int argc, char* argv[])
 
       int selHadTau_genPdgId = getHadTau_genPdgId(selHadTau);
 
-      dataToMCcorrectionInterface->setLeptons(selLepton_type, selLepton->pt(), selLepton->cone_pt(), selLepton->eta());
-      dataToMCcorrectionInterface->setHadTaus(selHadTau_genPdgId, selHadTau->pt(), selHadTau->eta());
+      dataToMCcorrectionInterface->setLeptons({ selLepton });
+      dataToMCcorrectionInterface->setHadTaus({ selHadTau });
 
-      dataToMCcorrectionInterface_1l_1tau_trigger->setLeptons(selLepton_type, selLepton->pt(), selLepton->eta());
-      dataToMCcorrectionInterface_1l_1tau_trigger->setHadTaus(selHadTau_genPdgId, selHadTau->pt(), selHadTau->eta(), selHadTau->decayMode());
+      dataToMCcorrectionInterface_1l_1tau_trigger->setLepton(selLepton);
+      dataToMCcorrectionInterface_1l_1tau_trigger->setHadTau(selHadTau);
       dataToMCcorrectionInterface_1l_1tau_trigger->setTriggerBits(isTriggered_1e, isTriggered_1e1tau, isTriggered_1mu, isTriggered_1mu1tau);
 
 //--- apply data/MC corrections for trigger efficiency
@@ -1522,7 +1522,7 @@ int main(int argc, char* argv[])
 //    to also pass the tight identification and isolation criteria
       if(electronSelection == kFakeable && muonSelection == kFakeable)
       {
-        evtWeightRecorder.record_leptonSF(dataToMCcorrectionInterface->getSF_leptonID_and_Iso_fakeable_to_loose());
+        evtWeightRecorder.record_leptonSF(dataToMCcorrectionInterface->getSF_leptonID_and_Iso_looseToFakeable());
       }
       else if(electronSelection >= kFakeable && muonSelection >= kFakeable)
       {

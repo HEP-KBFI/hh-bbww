@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-05-21 15:13:06 with the following command:
+# file generated at 2020-09-21 12:35:39 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -9,7 +9,9 @@ meta_dictionary = OD()
 ### event sums
 
 sum_events = { 
+  ("signal_ggf_spin2_300_hh_2b2t", "signal_ggf_spin2_300_hh_2b2t_PSWeights"),
   ("signal_ggf_nonresonant_node_sm_hh_2b2v", "signal_ggf_nonresonant_node_2_hh_2b2v", "signal_ggf_nonresonant_node_3_hh_2b2v", "signal_ggf_nonresonant_node_7_hh_2b2v", "signal_ggf_nonresonant_node_9_hh_2b2v", "signal_ggf_nonresonant_node_12_hh_2b2v"),
+  ("signal_ggf_nonresonant_node_sm_hh_2b2v_sl", "signal_ggf_nonresonant_node_2_hh_2b2v_sl", "signal_ggf_nonresonant_node_3_hh_2b2v_sl", "signal_ggf_nonresonant_node_4_hh_2b2v_sl", "signal_ggf_nonresonant_node_5_hh_2b2v_sl", "signal_ggf_nonresonant_node_6_hh_2b2v_sl", "signal_ggf_nonresonant_node_7_hh_2b2v_sl", "signal_ggf_nonresonant_node_8_hh_2b2v_sl", "signal_ggf_nonresonant_node_9_hh_2b2v_sl", "signal_ggf_nonresonant_node_10_hh_2b2v_sl", "signal_ggf_nonresonant_node_11_hh_2b2v_sl", "signal_ggf_nonresonant_node_12_hh_2b2v_sl"),
   ("signal_ggf_nonresonant_node_sm_hh_2b2t", "signal_ggf_nonresonant_node_2_hh_2b2t", "signal_ggf_nonresonant_node_3_hh_2b2t", "signal_ggf_nonresonant_node_4_hh_2b2t", "signal_ggf_nonresonant_node_7_hh_2b2t", "signal_ggf_nonresonant_node_9_hh_2b2t", "signal_ggf_nonresonant_node_12_hh_2b2t"),
 }
 
@@ -846,6 +848,149 @@ meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correct
   ("comment",               "100.0%; status: VALID; size: 43.86GB; nevents: 779.99k; release: 9_4_7; last modified: 2019-02-15 21:22:09"),
 ])
 
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_2_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_2_hh_2b2v_sl"),
+  ("nof_db_events",         399996),
+  ("nof_db_files",          18),
+  ("fsize_db",              23455313360),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 23.46GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-09-07 13:53:06"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_3_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_3_hh_2b2v_sl"),
+  ("nof_db_events",         399995),
+  ("nof_db_files",          16),
+  ("fsize_db",              22258977475),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 22.26GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-09-10 05:20:48"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_4_hh_2b2v_sl"),
+  ("nof_db_events",         399992),
+  ("nof_db_files",          13),
+  ("fsize_db",              21958456433),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 21.96GB; nevents: 399.99k; release: 9_4_7; last modified: 2020-09-08 00:49:25"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_5_hh_2b2v_sl"),
+  ("nof_db_events",         399991),
+  ("nof_db_files",          19),
+  ("fsize_db",              22796867258),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 22.80GB; nevents: 399.99k; release: 9_4_7; last modified: 2020-09-12 13:07:08"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_6_hh_2b2v_sl"),
+  ("nof_db_events",         399994),
+  ("nof_db_files",          18),
+  ("fsize_db",              22013540129),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 22.01GB; nevents: 399.99k; release: 9_4_7; last modified: 2020-09-13 10:45:19"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_7_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_7_hh_2b2v_sl"),
+  ("nof_db_events",         387996),
+  ("nof_db_files",          19),
+  ("fsize_db",              21474694603),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 21.47GB; nevents: 388.00k; release: 9_4_7; last modified: 2020-09-09 07:52:08"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_8_hh_2b2v_sl"),
+  ("nof_db_events",         271997),
+  ("nof_db_files",          6),
+  ("fsize_db",              14777506627),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: PRODUCTION; size: 14.78GB; nevents: 272.00k; release: 9_4_7; last modified: 2020-09-06 16:07:40"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_9_hh_2b2v_sl"),
+  ("nof_db_events",         379999),
+  ("nof_db_files",          19),
+  ("fsize_db",              22556064701),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 22.56GB; nevents: 380.00k; release: 9_4_7; last modified: 2020-09-13 12:41:01"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_10_hh_2b2v_sl"),
+  ("nof_db_events",         394997),
+  ("nof_db_files",          16),
+  ("fsize_db",              21793847390),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 21.79GB; nevents: 395.00k; release: 9_4_7; last modified: 2020-09-11 20:56:25"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_11_hh_2b2v_sl"),
+  ("nof_db_events",         399996),
+  ("nof_db_files",          21),
+  ("fsize_db",              22081476015),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 22.08GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-09-10 16:52:36"),
+])
+
+meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_12_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
+  ("process_name_specific", "signal_ggf_nonresonant_node_12_hh_2b2v_sl"),
+  ("nof_db_events",         399997),
+  ("nof_db_files",          16),
+  ("fsize_db",              21818668033),
+  ("xsection",              0.109352),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 21.82GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-09-12 00:50:24"),
+])
+
 meta_dictionary["/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14"),
   ("sample_category",       "signal_ggf_nonresonant_cHHH0_hh_bbvv_sl"),
@@ -1613,6 +1758,19 @@ meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunIIFall1
   ("comment",               "100.0%; status: VALID; size: 19.01GB; nevents: 300.00k; release: 9_4_6_patch1; last modified: 2018-10-13 06:13:55"),
 ])
 
+meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_vbf_spin0_320_hh_bbtt"),
+  ("process_name_specific", "signal_vbf_spin0_320_hh_2b2t"),
+  ("nof_db_events",         300000),
+  ("nof_db_files",          17),
+  ("fsize_db",              21328204465),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 21.33GB; nevents: 300.00k; release: 9_4_7; last modified: 2020-09-13 08:49:04"),
+])
+
 meta_dictionary["/VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2"),
   ("sample_category",       "signal_vbf_spin0_350_hh_bbtt"),
@@ -2068,6 +2226,19 @@ meta_dictionary["/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/Run
   ("comment",               "100.0%; status: VALID; size: 5.94GB; nevents: 100.00k; release: 9_4_7; last modified: 2018-10-06 03:03:38"),
 ])
 
+meta_dictionary["/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_vbf_spin2_1200_hh_bbtt"),
+  ("process_name_specific", "signal_vbf_spin2_1200_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          12),
+  ("fsize_db",              6678759317),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 6.68GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-12 15:05:51"),
+])
+
 meta_dictionary["/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1"),
   ("sample_category",       "signal_vbf_spin2_1750_hh_bbtt"),
@@ -2170,6 +2341,19 @@ meta_dictionary["/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph_correct
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 15.22GB; nevents: 300.00k; release: 9_4_7; last modified: 2018-10-07 19:28:16"),
+])
+
+meta_dictionary["/GluGluToRadionToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin0_340_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin0_340_hh_2b2t"),
+  ("nof_db_events",         300000),
+  ("nof_db_files",          13),
+  ("fsize_db",              16173745478),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 16.17GB; nevents: 300.00k; release: 9_4_7; last modified: 2020-09-14 17:44:10"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -2484,6 +2668,45 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2tau_M-300_narrow_13TeV-madgraph/R
   ("comment",               "100.0%; status: VALID; size: 50.47GB; nevents: 981.55k; release: 9_4_6_patch1,9_4_7; last modified: 2018-04-20 01:01:32"),
 ])
 
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_300_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_300_hh_2b2t_PSWeights"),
+  ("nof_db_events",         300000),
+  ("nof_db_files",          15),
+  ("fsize_db",              17677825990),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 17.68GB; nevents: 300.00k; release: 9_4_7; last modified: 2020-09-12 00:51:59"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_320_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_320_hh_2b2t"),
+  ("nof_db_events",         300000),
+  ("nof_db_files",          18),
+  ("fsize_db",              17935667488),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 17.94GB; nevents: 300.00k; release: 9_4_7; last modified: 2020-09-12 02:51:41"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_340_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_340_hh_2b2t"),
+  ("nof_db_events",         300000),
+  ("nof_db_files",          18),
+  ("fsize_db",              17760509945),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 17.76GB; nevents: 300.00k; release: 9_4_7; last modified: 2020-09-14 17:41:05"),
+])
+
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1"),
   ("sample_category",       "signal_ggf_spin2_350_hh_bbtt"),
@@ -2575,6 +2798,19 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_c
   ("comment",               "100.0%; status: VALID; size: 10.75GB; nevents: 188.00k; release: 9_4_7; last modified: 2018-10-17 12:55:13"),
 ])
 
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_700_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_700_hh_2b2t"),
+  ("nof_db_events",         188000),
+  ("nof_db_files",          8),
+  ("fsize_db",              11883223603),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: PRODUCTION; size: 11.88GB; nevents: 188.00k; release: 9_4_7; last modified: 2020-09-12 01:28:51"),
+])
+
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1"),
   ("sample_category",       "signal_ggf_spin2_750_hh_bbtt"),
@@ -2599,6 +2835,123 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_c
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 11.18GB; nevents: 192.00k; release: 9_4_7; last modified: 2018-10-04 16:45:48"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_850_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_850_hh_2b2t"),
+  ("nof_db_events",         200000),
+  ("nof_db_files",          17),
+  ("fsize_db",              13865049944),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 13.87GB; nevents: 200.00k; release: 9_4_7; last modified: 2020-09-14 16:03:04"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_900_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_900_hh_2b2t"),
+  ("nof_db_events",         200000),
+  ("nof_db_files",          13),
+  ("fsize_db",              12987146416),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 12.99GB; nevents: 200.00k; release: 9_4_7; last modified: 2020-09-14 16:00:19"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_1000_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_1000_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          15),
+  ("fsize_db",              6928425445),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 6.93GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-14 16:00:49"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_1250_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_1250_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          12),
+  ("fsize_db",              7138355527),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 7.14GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-12 16:57:36"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_1500_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_1500_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          8),
+  ("fsize_db",              7132527151),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 7.13GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-12 02:53:59"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_1750_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_1750_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          13),
+  ("fsize_db",              7174276773),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 7.17GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-12 20:57:58"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_2000_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_2000_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          11),
+  ("fsize_db",              7094533804),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 7.09GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-14 16:01:34"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_2500_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_2500_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          4),
+  ("fsize_db",              7168943218),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 7.17GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-11 06:57:40"),
+])
+
+meta_dictionary["/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_ggf_spin2_3000_hh_bbtt"),
+  ("process_name_specific", "signal_ggf_spin2_3000_hh_2b2t"),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          9),
+  ("fsize_db",              7211613236),
+  ("xsection",              0.073056),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 7.21GB; nevents: 100.00k; release: 9_4_7; last modified: 2020-09-12 04:59:45"),
 ])
 
 meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -2664,6 +3017,19 @@ meta_dictionary["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_13TeV-madgraph/RunIIFall17Mini
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 22.24GB; nevents: 392.00k; release: 9_4_7; last modified: 2018-10-16 23:07:57"),
+])
+
+meta_dictionary["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "signal_vbf_nonresonant_0p5_1_1_hh_bbtt"),
+  ("process_name_specific", "signal_vbf_nonresonant_0p5_1_1_hh_2b2t"),
+  ("nof_db_events",         397000),
+  ("nof_db_files",          23),
+  ("fsize_db",              25263738678),
+  ("xsection",              0.0007901474),
+  ("use_it",                True),
+  ("genWeight",             True),
+  ("comment",               "status: VALID; size: 25.26GB; nevents: 397.00k; release: 9_4_7; last modified: 2020-08-30 04:03:21"),
 ])
 
 meta_dictionary["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -2869,7 +3235,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_ggf_nonresonant_cHHH1_hh_bbvv:       395.00k
 # signal_ggf_nonresonant_cHHH2p45_hh_bbvv:    397.40k
 # signal_ggf_nonresonant_cHHH5_hh_bbvv:       400.00k
-# signal_ggf_nonresonant_hh_bbvv_sl:          779.99k
+# signal_ggf_nonresonant_hh_bbvv_sl:          5.01M
 # signal_ggf_nonresonant_cHHH0_hh_bbvv_sl:    392.60k
 # signal_ggf_nonresonant_cHHH1_hh_bbvv_sl:    399.99k
 # signal_ggf_nonresonant_cHHH2p45_hh_bbvv_sl: 400.00k
@@ -2929,6 +3295,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_vbf_spin0_270_hh_bbtt:               384.00k
 # signal_vbf_spin0_280_hh_bbtt:               400.00k
 # signal_vbf_spin0_300_hh_bbtt:               300.00k
+# signal_vbf_spin0_320_hh_bbtt:               300.00k
 # signal_vbf_spin0_350_hh_bbtt:               300.00k
 # signal_vbf_spin0_400_hh_bbtt:               100.00k
 # signal_vbf_spin0_450_hh_bbtt:               300.00k
@@ -2964,6 +3331,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_vbf_spin2_850_hh_bbtt:               200.00k
 # signal_vbf_spin2_900_hh_bbtt:               100.00k
 # signal_vbf_spin2_1000_hh_bbtt:              100.00k
+# signal_vbf_spin2_1200_hh_bbtt:              100.00k
 # signal_vbf_spin2_1750_hh_bbtt:              100.00k
 # signal_vbf_spin2_2000_hh_bbtt:              100.00k
 # signal_ggf_spin0_250_hh_bbtt:               390.00k
@@ -2972,6 +3340,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_ggf_spin0_280_hh_bbtt:               398.00k
 # signal_ggf_spin0_300_hh_bbtt:               300.00k
 # signal_ggf_spin0_320_hh_bbtt:               300.00k
+# signal_ggf_spin0_340_hh_bbtt:               300.00k
 # signal_ggf_spin0_350_hh_bbtt:               300.00k
 # signal_ggf_spin0_400_hh_bbtt:               296.00k
 # signal_ggf_spin0_450_hh_bbtt:               272.00k
@@ -2995,7 +3364,9 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_ggf_spin2_260_hh_bbtt:               384.00k
 # signal_ggf_spin2_270_hh_bbtt:               390.00k
 # signal_ggf_spin2_280_hh_bbtt:               379.00k
-# signal_ggf_spin2_300_hh_bbtt:               981.55k
+# signal_ggf_spin2_300_hh_bbtt:               1.28M
+# signal_ggf_spin2_320_hh_bbtt:               300.00k
+# signal_ggf_spin2_340_hh_bbtt:               300.00k
 # signal_ggf_spin2_350_hh_bbtt:               300.00k
 # signal_ggf_spin2_400_hh_bbtt:               300.00k
 # signal_ggf_spin2_450_hh_bbtt:               300.00k
@@ -3003,13 +3374,24 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_ggf_spin2_550_hh_bbtt:               192.00k
 # signal_ggf_spin2_600_hh_bbtt:               200.00k
 # signal_ggf_spin2_650_hh_bbtt:               188.00k
+# signal_ggf_spin2_700_hh_bbtt:               188.00k
 # signal_ggf_spin2_750_hh_bbtt:               200.00k
 # signal_ggf_spin2_800_hh_bbtt:               192.00k
+# signal_ggf_spin2_850_hh_bbtt:               200.00k
+# signal_ggf_spin2_900_hh_bbtt:               200.00k
+# signal_ggf_spin2_1000_hh_bbtt:              100.00k
+# signal_ggf_spin2_1250_hh_bbtt:              100.00k
+# signal_ggf_spin2_1500_hh_bbtt:              100.00k
+# signal_ggf_spin2_1750_hh_bbtt:              100.00k
+# signal_ggf_spin2_2000_hh_bbtt:              100.00k
+# signal_ggf_spin2_2500_hh_bbtt:              100.00k
+# signal_ggf_spin2_3000_hh_bbtt:              100.00k
 # signal_vbf_nonresonant_1_1_0_hh_bbtt:       369.00k
 # signal_vbf_nonresonant_1_1_1_hh_bbtt:       300.00k
 # signal_vbf_nonresonant_1_1_2_hh_bbtt:       400.00k
 # signal_vbf_nonresonant_1_2_1_hh_bbtt:       400.00k
 # signal_vbf_nonresonant_1p5_1_1_hh_bbtt:     392.00k
+# signal_vbf_nonresonant_0p5_1_1_hh_bbtt:     397.00k
 # signal_ggf_nonresonant_hh_bbtt:             2.74M
 # signal_ggf_nonresonant_cHHH0_hh_bbtt:       971.00k
 # signal_ggf_nonresonant_cHHH1_hh_bbtt:       973.40k
