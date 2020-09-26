@@ -57,8 +57,8 @@ makeJetQuads(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<co
 	{
 	  for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1; selWJet2 != selJetsAK4.end(); ++selWJet2 )
 	  {
-	    if ( ((*selWJet1)->eta() == (*selBJet1)->eta() && (*selWJet1)->phi() == (*selBJet1)->phi()) || ((*selWJet1)->eta() == (*selBJet2)->eta() && (*selWJet1)->phi() == (*selBJet2)->phi()) ) continue;
-	    if ( ((*selWJet2)->eta() == (*selBJet1)->eta() && (*selWJet2)->phi() == (*selBJet1)->phi()) || ((*selWJet2)->eta() == (*selBJet2)->eta() && (*selWJet2)->phi() == (*selBJet2)->phi()) ) continue;
+	    if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) <0.1 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) <0.1 ) continue;
+	    if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) <0.1 || deltaR((*selWJet2)->p4(), (*selBJet2)->p4()) <0.1 ) continue;
 	    bool selBJet1_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets) : false;
 	    bool selBJet2_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets) : false;
 	    bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
@@ -96,8 +96,8 @@ makeJetTripletsMissingBJet(const std::vector<const RecoJet*>& selJetsAK4, const 
         {
           for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1; selWJet2 != selJetsAK4.end(); ++selWJet2 )
             {
-              if ( ((*selWJet1)->eta() == (*selBJet1)->eta() && (*selWJet1)->phi() == (*selBJet1)->phi()) ) continue;
-              if ( ((*selWJet2)->eta() == (*selBJet1)->eta() && (*selWJet2)->phi() == (*selBJet1)->phi()) ) continue;
+              if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) <0.1 ) continue;
+              if ( deltaR((*selWJet2)->p4(), (*selBJet1)->p4()) <0.1 ) continue;
               bool selBJet1_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets) : false;
               bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
               bool selWJet2_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets) : false;
@@ -110,24 +110,35 @@ makeJetTripletsMissingBJet(const std::vector<const RecoJet*>& selJetsAK4, const 
 }
 
 std::vector<JetQuadBase>
-makeJetTripletsMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets)
+makeJetTripletsMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets, const RecoJetAK8* selJetAK8_Hbb)
 {
   std::vector<JetQuadBase> jetTriplets;
-  for ( std::vector<const RecoJet*>::const_iterator selBJet1 = selJetsAK4.begin(); selBJet1 != selJetsAK4.end(); ++selBJet1 )
+  if ( !selJetAK8_Hbb ) {
+    for ( std::vector<const RecoJet*>::const_iterator selBJet1 = selJetsAK4.begin(); selBJet1 != selJetsAK4.end(); ++selBJet1 )
     {
       for ( std::vector<const RecoJet*>::const_iterator selBJet2 = selBJet1+1; selBJet2 != selJetsAK4.end(); ++selBJet2 )
+      {
+	for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
         {
-          for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
-            {
-              if ( ((*selWJet1)->eta() == (*selBJet1)->eta() && (*selWJet1)->phi() == (*selBJet1)->phi()) || ((*selWJet1)->eta() == (*selBJet2)->eta() && (*selWJet1)->phi() == (*selBJet2)->phi())) continue;
-              bool selBJet1_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets) : false;
-              bool selBJet2_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets) : false;
-              bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
-              JetQuadBase jetTriplet(*selBJet1, selBJet1_isGenMatched, *selBJet2, selBJet2_isGenMatched, *selWJet1, selWJet1_isGenMatched, nullptr, false);
-              jetTriplets.push_back(jetTriplet);
-            }
-        }
+	  if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) <0.1 ) continue;
+	  bool selBJet1_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets) : false;
+	  bool selBJet2_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets) : false;
+	  bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
+	  JetQuadBase jetTriplet(*selBJet1, selBJet1_isGenMatched, *selBJet2, selBJet2_isGenMatched, *selWJet1, selWJet1_isGenMatched, nullptr, false);
+	  jetTriplets.push_back(jetTriplet);
+	}
+      }
     }
+  }
+  else 
+  {
+    for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
+    {
+      bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
+      JetQuadBase jetQuad(selJetAK8_Hbb->subJet1(), false, selJetAK8_Hbb->subJet2(), false, *selWJet1, selWJet1_isGenMatched, nullptr, false);
+      jetTriplets.push_back(jetQuad);
+    }
+  }
   return jetTriplets;
 }
 
@@ -139,7 +150,7 @@ makeJetDoubletsMissingBJetMissingWJet(const std::vector<const RecoJet*>& selJets
     {
       for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
 	{
-	  if ( (*selWJet1)->eta() == (*selBJet1)->eta() && (*selWJet1)->phi() == (*selBJet1)->phi() ) continue;
+	  if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) <0.1 ) continue;
 	  bool selBJet1_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets) : false;
 	  bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
 	  JetQuadBase jetDoublet(*selBJet1, selBJet1_isGenMatched, nullptr, false, *selWJet1, selWJet1_isGenMatched, nullptr, false);
@@ -181,17 +192,17 @@ makeJetSingletsMissingBJetMissingAllWJet(const std::vector<const RecoJet*>& selJ
 
 TMVAInterface initialize_mva_evt_category(bool Hbb_isBoosted)
 {
-  std::string mvaFileName_jpa_evtCat_even = ( !Hbb_isBoosted ) ? "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_resolved_odd.xml" : "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_boosted_even.xml";
+  std::string mvaFileName_jpa_evtCat_even = ( !Hbb_isBoosted ) ? "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_resolved_even.xml" : "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_boosted_even.xml";
   std::string mvaFileName_jpa_evtCat_odd  = ( !Hbb_isBoosted ) ? "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_resolved_odd.xml" : "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_boosted_odd.xml";
   std::vector<std::string> mvaInputVariables;
   if ( !Hbb_isBoosted ) {
     mvaInputVariables = {
-      "bdtScore_jpa_4jet", "bdtScore_jpa_missingWJet", "bdtScore_jpa_missingBJet"};//, "bdtScore_jpa_missingAllWJet", "bdtScore_jpa_missingBJet_missingWJet", "bdtScore_jpa_missingBJet_missingAllWJet"
-    //};
+      "bdtScore_jpa_4jet", "bdtScore_jpa_missingWJet", "bdtScore_jpa_missingBJet", "bdtScore_jpa_missingAllWJet", "bdtScore_jpa_missingBJet_missingWJet", "bdtScore_jpa_missingBJet_missingAllWJet"
+    };
   }
   else {
     mvaInputVariables = {
-      "bdtScore_jpa_4jet", "bdtScore_jpa_missingWJet", "bdtScore_jpa_missingBJet"
+      "bdtScore_jpa_4jet", "bdtScore_jpa_missingWJet"
     };
   }
   TMVAInterface mva_jpa_evtCat(mvaFileName_jpa_evtCat_odd, mvaFileName_jpa_evtCat_even, mvaInputVariables);
@@ -201,7 +212,7 @@ TMVAInterface initialize_mva_evt_category(bool Hbb_isBoosted)
 
 int evt_category(const TMVAInterface& mva, double bdtScore_jpa_4jet, double bdtScore_jpa_missingWJet, double bdtScore_jpa_missingBJet, 
 		 double bdtScore_jpa_missingAllWJet, double bdtScore_jpa_missingBJet_missingWJet, double bdtScore_jpa_missingBJet_missingAllWJet,
-		 EventInfo eventInfo, RecoJetAK8* selJetAK8_Hbb) {
+		 EventInfo eventInfo, const RecoJetAK8* selJetAK8_Hbb) {
 
   std::map<std::string, double> mvaInputVariables;
   if ( !selJetAK8_Hbb ) {
@@ -209,20 +220,19 @@ int evt_category(const TMVAInterface& mva, double bdtScore_jpa_4jet, double bdtS
       {"bdtScore_jpa_4jet",                                 bdtScore_jpa_4jet},
       {"bdtScore_jpa_missingWJet",                          bdtScore_jpa_missingWJet},
       {"bdtScore_jpa_missingBJet",                          bdtScore_jpa_missingBJet},
-      //{"bdtScore_jpa_missingAllWJet",                       bdtScore_jpa_missingAllWJet},
-      //{"bdtScore_jpa_missingBJet_missingWJet",              bdtScore_jpa_missingBJet_missingWJet},
-      //{"bdtScore_jpa_missingBJet_missingAllWJet",           bdtScore_jpa_missingBJet_missingAllWJet},
+      {"bdtScore_jpa_missingAllWJet",                       bdtScore_jpa_missingAllWJet},
+      {"bdtScore_jpa_missingBJet_missingWJet",              bdtScore_jpa_missingBJet_missingWJet},
+      {"bdtScore_jpa_missingBJet_missingAllWJet",           bdtScore_jpa_missingBJet_missingAllWJet},
     };
   }
   else {
     mvaInputVariables = {
       {"bdtScore_jpa_4jet",                                 bdtScore_jpa_4jet},
-      {"bdtScore_jpa_4jet",                                 bdtScore_jpa_4jet},
       {"bdtScore_jpa_missingWJet",                          bdtScore_jpa_missingWJet},
     };
   }
   int output = (int) mva(mvaInputVariables, eventInfo.event, true);
-  return output;
+  return (output+1);
 }
 
 TMVAInterface initialize_mva_jpa_4jet(bool Hbb_isBoosted)
@@ -761,7 +771,7 @@ selectJet_TripletMissingWJet(const std::vector<const RecoJet*> cleanedJetsAK4_wr
 {
   
   JetQuadBase JetQuadBase_;
-  std::vector<JetQuadBase> jetTripletsAK4 = makeJetTripletsMissingWJet(cleanedJetsAK4_wrtLeptons, genBJets_ptrs, genWJets_ptrs);
+  std::vector<JetQuadBase> jetTripletsAK4 = makeJetTripletsMissingWJet(cleanedJetsAK4_wrtLeptons, genBJets_ptrs, genWJets_ptrs, selJetAK8_Hbb);
   if( ! jetTripletsAK4.size() ) return JetQuadBase_;
   rankJetTripletsMissingWJet(jetTripletsAK4, selLepton, nJet, nBJetLoose, nBJetMedium, mva, eventInfo, selJetAK8_Hbb);
   return jetTripletsAK4[0];
