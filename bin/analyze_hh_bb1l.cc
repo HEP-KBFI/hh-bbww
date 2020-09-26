@@ -2371,10 +2371,8 @@ int main(int argc, char* argv[])
       selJet2_Hbb_eta = selJet2_Hbb->eta();
     }
     const double cosThetaS_Hbb(-10);
-    Particle::LorentzVector HbbP4 ;
     if ( selJet1_Hbb && selJet2_Hbb ) {
       comp_cosThetaStar(selJet1_Hbb->p4(), selJet2_Hbb->p4());
-      HbbP4 = selJet1_Hbb->p4() + selJet2_Hbb->p4();
     }
     std::vector<const RecoJetBase*> selJets_Hbb;
     if ( selJet1_Hbb ) selJets_Hbb.push_back(selJet1_Hbb);
@@ -2388,7 +2386,8 @@ int main(int argc, char* argv[])
 
     int numBJets_loose, numBJets_medium;
     countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
-
+    
+    Particle::LorentzVector HbbP4  = selJet1_Hbb->p4() + selJet2_Hbb->p4();
     double m_Hbb    = ( selJet1_Hbb && selJet2_Hbb ) ? HbbP4.mass() :  0.;
     double m_Hbb_regCorr = 0.;
     double m_Hbb_regRes  = 0.;
@@ -2418,7 +2417,8 @@ int main(int argc, char* argv[])
       cutFlowHistManager->fillHistograms("#jets to make Hbb and Wjj", evtWeightRecorder.get(central_or_shift_main));
     }
 
-    Particle::LorentzVector neutrinoP4_B2G_18_008;
+    Particle::LorentzVector neutrinoP4_B2G_18_008 = ( selJet1_Wjj && selJet2_Wjj ) ? comp_metP4_B2G_18_008(selLeptonP4 + selJet1_Wjj->p4() + selJet2_Wjj->p4(), metP4.px(), metP4.py(), higgsBosonMass)
+      : metP4;
     Particle::LorentzVector WlnuP4 = selLeptonP4 + neutrinoP4_B2G_18_008;
     // if AK8_LS to Wjj
     if ( selJets_Wjj_boosted.size() >= 1 )
@@ -2532,7 +2532,6 @@ int main(int argc, char* argv[])
 	  // one should not use the variables that use neutrinoP4_B2G_18_008 too be contructed on the missing jet case
 	}
     }
-    WlnuP4 = selLeptonP4 + neutrinoP4_B2G_18_008;
     std::vector<const RecoJetBase*> selJets_Wjj;
     if ( selJet1_Wjj ) selJets_Wjj.push_back(selJet1_Wjj);
     if ( selJet2_Wjj ) selJets_Wjj.push_back(selJet2_Wjj);
@@ -2675,7 +2674,7 @@ int main(int argc, char* argv[])
     double dR_Hbb(-1.);
     double dPhi_Hbb(-1);
     double pT_Hbb(-1.);
-    double eta_Hbb(-1.);
+    double eta_Hbb(-10.);
     if ( selJet_Hbb_lead && selJet_Hbb_sublead ) {
       dR_Hbb = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
       dPhi_Hbb = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
@@ -2713,18 +2712,31 @@ int main(int argc, char* argv[])
     double dR_b1lep = ( selJet_Hbb_lead) ? deltaR(selJetP4_Hbb_lead, selLeptonP4) : -1;
     double dR_b2lep = (selJet_Hbb_sublead ) ? deltaR(selJetP4_Hbb_sublead, selLeptonP4) : -1;
     Particle::LorentzVector HHvisP4 = HbbP4 + WjjP4 + selLeptonP4;
-    double m_HHvis = HHvisP4.mass();
-    double pT_HHvis = HHvisP4.pt();
-    double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4).phi()));
-    Particle::LorentzVector HHP4_B2G_18_008 = HbbP4 + WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008;
-    Particle::LorentzVector HHP4 = HbbP4 + WjjP4 + selLeptonP4 + metP4;
-    double m_HH = HHP4.mass();
-    double m_HH_B2G_18_008 = HHP4_B2G_18_008.mass();
-    double pT_HH = HHP4.pt();
+    double m_HHvis(0.);
+    double pT_HHvis(-1.);
+    double dPhi_HHvis(-1.);
+    if ( selJet1_Hbb || selJet1_Wjj ) {
+      m_HHvis = HHvisP4.mass();
+      pT_HHvis = HHvisP4.pt();
+      dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4).phi()));
+    }
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
-    double dR_HH = deltaR(HbbP4, WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008);
-    double dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4 + metP4).phi()));
-    double cosThetaS_HH = comp_cosThetaStar(HbbP4, WjjP4 + selLeptonP4 + metP4);
+    Particle::LorentzVector HHP4_B2G_18_008;
+    HHP4_B2G_18_008 = ( selJet1_Wjj && selJet2_Wjj ) ? HbbP4 + WjjP4 + selLeptonP4 + neutrinoP4_B2G_18_008 : p4zero;
+    double m_HH_B2G_18_008 = HHP4_B2G_18_008.mass();
+    Particle::LorentzVector HHP4 = HbbP4 + WjjP4 + selLeptonP4 + metP4;
+    double m_HH(0);
+    double pT_HH(-1.);
+    double dPhi_HH(-1.);
+    double dR_HH(-1.);
+    double cosThetaS_HH(-10.);
+    if ( selJet1_Hbb || selJet1_Wjj ) {
+      m_HH = HHP4.mass();
+      pT_HH = HHP4.pt();
+      dR_HH = deltaR(HbbP4, WjjP4 + selLeptonP4 + metP4);
+      dPhi_HH = TMath::Abs(deltaPhi(HbbP4.phi(), (WjjP4 + selLeptonP4 + metP4).phi()));
+      cosThetaS_HH = comp_cosThetaStar(HbbP4, WjjP4 + selLeptonP4 + metP4);
+    }
     // check gen-matching with simple-Wjj reco based objects
     bool isMatched_Wjj = false;
     bool isMatched_Wjj_fat = false;
@@ -2978,7 +2990,6 @@ int main(int argc, char* argv[])
     }
 
     //////
-
     double mindr_lep1_jet = comp_mindr_jet(*selLepton, selJetsAK4);
     std::map<std::string, double> mvaInputVariables_list = {
       {"lep_pt",                  selLepton->pt()},
@@ -3472,7 +3483,7 @@ int main(int argc, char* argv[])
           ("mT_top_2particle",                         mT_top_2particle)
           ("mT_top_3particle",                         mT_top_3particle)
           ("m_HH_hme",                                 m_HH_hme)
-      	  ("vbf_jet1_pt",                              vbf_jet1_pt)
+	("vbf_jet1_pt",                              vbf_jet1_pt)
           ("vbf_jet1_eta",                             vbf_jet1_eta)
           ("vbf_jet2_pt",                              vbf_jet2_pt)
 	        ("vbf_jet2_eta",                             vbf_jet2_eta)
