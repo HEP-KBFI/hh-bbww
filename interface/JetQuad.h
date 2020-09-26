@@ -118,7 +118,7 @@ TMVAInterface initialize_mva_evt_category(bool Hbb_isBoosted = false);
 
 int evt_category(const TMVAInterface& mva, double bdtScore_jpa_4jet, double bdtScore_jpa_missingWJet, double bdtScore_jpa_missingBJet, 
 		 double bdtScore_jpa_missingAllWJet, double bdtScore_jpa_missingBJet_missingWJet, double bdtScore_jpa_missingBJet_missingAllWJet,
-		 EventInfo eventInfo, RecoJetAK8* selJetAK8_Hbb = nullptr );
+		 EventInfo eventInfo, const RecoJetAK8* selJetAK8_Hbb = nullptr );
 
 void
 rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepton, 
@@ -171,7 +171,7 @@ makeJetQuads(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<co
 std::vector<JetQuadBase>
 makeJetTripletsMissingBJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets);
 std::vector<JetQuadBase>
-makeJetTripletsMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets);
+makeJetTripletsMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets, const RecoJetAK8* selJetAK8_Hbb = nullptr);
 std::vector<JetQuadBase>
 makeJetDoubletsMissingBJetMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<const GenJet*>& genBJets, const std::vector<const GenJet*>& genWJets);
 std::vector<JetQuadBase>
