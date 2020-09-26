@@ -293,7 +293,10 @@ selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wr
 		       const RecoLepton* selLepton,
 		       const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb)
 {
-  Particle::LorentzVector HbbP4 = selJet1_Hbb->p4() + selJet2_Hbb->p4();
+  const Particle::LorentzVector p4zero(0,0,0,0);
+  const Particle::LorentzVector& selJetP4_Hbb_lead = ( selJet1_Hbb ) ? selJet1_Hbb->p4() : p4zero;
+  const Particle::LorentzVector& selJetP4_Hbb_sublead = ( selJet2_Hbb ) ? selJet2_Hbb->p4() : p4zero;
+  Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
   double m_Hbb_regCorr =  HbbP4.mass();
   if ( dynamic_cast<const RecoJet*>(selJet1_Hbb) && dynamic_cast<const RecoJet*>(selJet2_Hbb) )
   {
