@@ -2287,7 +2287,7 @@ int main(int argc, char* argv[])
 	evt_category(mva_evt_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
 	  bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
 	  eventInfo.event) : 
-	evt_category(mva_evt_Hbb_isBoosted_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, 
+	evt_category(mva_evt_Hbb_isBoosted_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
 	  bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
 	  eventInfo.event, selJetAK8_Hbb);
 
@@ -2295,8 +2295,10 @@ int main(int argc, char* argv[])
 	if ( evt_category_ == kjpa_HbbBoosted_2jet ) {
 	  selJet1_Wjj = jpa_4jet.WJet1_;
 	  selJet2_Wjj = jpa_4jet.WJet2_;
+	  //std::cout << "boosted4ja" << "\t" << jpa_4jet.WJet1_isGenMatched_ << "\t" << jpa_4jet.WJet2_isGenMatched_ << "\t" << std::endl;
 	}
 	else if ( evt_category_ == kjpa_HbbBoosted_missingWJet ) {
+	  //std::cout << "boosted1ja" << "\t" << jpa_4jet.WJet1_isGenMatched_ << "\t" << jpa_4jet.WJet2_isGenMatched_ << "\t" << std::endl;
 	  selJet1_Wjj = jpa_missingWJet.WJet1_;
 	}
 	else {
@@ -2311,37 +2313,45 @@ int main(int argc, char* argv[])
           selJet2_Hbb = jpa_4jet.BJet2_;
           selJet1_Wjj = jpa_4jet.WJet1_;
           selJet2_Wjj = jpa_4jet.WJet2_;
+	  //std::cout << "jpa4jet== " << jpa_4jet.BJet1_isGenMatched_ << "\t" << jpa_4jet.BJet2_isGenMatched_ << "\t" << jpa_4jet.WJet1_isGenMatched_ << "\t" << jpa_4jet.WJet2_isGenMatched_ << "\t" << std::endl;
         }
         else if ( evt_category_ == kjpa_HbbResolved_missingWJet ) {
 	  selJet1_Hbb = jpa_missingWJet.BJet1_;
           selJet2_Hbb = jpa_missingWJet.BJet2_;
           selJet1_Wjj = jpa_missingWJet.WJet1_;
+	  //std::cout << "jpamissingWJet== " << jpa_missingWJet.BJet1_isGenMatched_ << "\t" << jpa_missingWJet.BJet2_isGenMatched_ << "\t" << jpa_missingWJet.WJet1_isGenMatched_ << "\t" << jpa_missingWJet.WJet2_isGenMatched_ << "\t" << std::endl;
         }
 	else if ( evt_category_ == kjpa_HbbResolved_missingBJet ) {
 	  selJet1_Hbb = jpa_missingBJet.BJet1_;
 	  selJet2_Hbb = jpa_missingBJet.BJet2_;
           selJet1_Wjj = jpa_missingBJet.WJet1_;
           selJet2_Wjj = jpa_missingBJet.WJet2_;
+	  //std::cout << "jpamissingBJet== " << jpa_missingBJet.BJet1_isGenMatched_ << "\t" << jpa_missingBJet.BJet2_isGenMatched_ << "\t" << jpa_missingBJet.WJet1_isGenMatched_ << "\t" << jpa_missingBJet.WJet2_isGenMatched_ << "\t" << std::endl;
 	}
 	else if ( evt_category_ == kjpa_HbbResolved_missingAllWJet ) {
           selJet1_Hbb = jpa_missingAllWJet.BJet1_;
           selJet2_Hbb = jpa_missingAllWJet.BJet2_;
+	  //std::cout << "jpamissingAllWJet== " << jpa_missingAllWJet.BJet1_isGenMatched_ << "\t" << jpa_missingAllWJet.BJet2_isGenMatched_ << "\t" << jpa_missingAllWJet.WJet1_isGenMatched_ << "\t" << jpa_missingAllWJet.WJet2_isGenMatched_ << "\t" << std::endl;
         }
 	else if ( evt_category_ == kjpa_HbbResolved_missingBJet_missingWJet ) {
           selJet1_Hbb = jpa_missingBJet_missingWJet.BJet1_;
 	  selJet2_Hbb = jpa_missingBJet_missingWJet.BJet2_;
           selJet1_Wjj = jpa_missingBJet_missingWJet.WJet1_;
+	  //std::cout << "jpamissingBJetWJet== " << jpa_missingBJet_missingWJet.BJet1_isGenMatched_ << "\t" << jpa_missingBJet_missingWJet.BJet2_isGenMatched_ << "\t" << jpa_missingBJet_missingWJet.WJet1_isGenMatched_ << "\t" << jpa_missingBJet_missingWJet.WJet2_isGenMatched_ << "\t" << std::endl;
         }
 	else if ( evt_category_ == kjpa_HbbResolved_missingBJet_missingAllWJet ) {
           selJet1_Hbb = jpa_missingBJet_missingAllWJet.BJet1_;
 	  selJet2_Hbb = jpa_missingBJet_missingAllWJet.BJet2_;
+	  //std::cout << "jpamissingBJetAllWJet== " << jpa_missingBJet_missingAllWJet.BJet1_isGenMatched_ << "\t" << jpa_missingBJet_missingAllWJet.BJet2_isGenMatched_ << "\t" << jpa_missingBJet_missingAllWJet.WJet1_isGenMatched_ << "\t" << jpa_missingBJet_missingAllWJet.WJet2_isGenMatched_ << "\t" << std::endl;
         }
 	else {
+	  //std::cout << "restofcat= " << selJet1_Hbb << "\t" <<  selJet2_Hbb << "\t" << cleanedJetsAK4_wrtHbb.size() << std::endl;
 	  std::pair<const RecoJetBase*, const RecoJetBase*> selJets_Wjj = selectJets_Wjj_forrestOfcat(cleanedJetsAK4_wrtHbb, metP4, selLepton, selJet1_Hbb, selJet2_Hbb);
 	  selJet1_Wjj = selJets_Wjj.first;
 	  selJet2_Wjj = selJets_Wjj.second;
         }
       }
+      //std::cout << "***********evt== " << evt_category_ << "\t" << selJet1_Hbb<< "\t" << selJet2_Hbb << "\t" << selJet1_Wjj << "\t" << selJet2_Wjj << std::endl;
     }
     bool original_jet_cut = true;
     ///*
@@ -2370,9 +2380,9 @@ int main(int argc, char* argv[])
       selJet2_Hbb_pT = selJet2_Hbb->pt();
       selJet2_Hbb_eta = selJet2_Hbb->eta();
     }
-    const double cosThetaS_Hbb(-10);
+    double cosThetaS_Hbb(-10);
     if ( selJet1_Hbb && selJet2_Hbb ) {
-      comp_cosThetaStar(selJet1_Hbb->p4(), selJet2_Hbb->p4());
+      cosThetaS_Hbb = comp_cosThetaStar(selJet1_Hbb->p4(), selJet2_Hbb->p4());
     }
     std::vector<const RecoJetBase*> selJets_Hbb;
     if ( selJet1_Hbb ) selJets_Hbb.push_back(selJet1_Hbb);
@@ -2387,11 +2397,11 @@ int main(int argc, char* argv[])
     int numBJets_loose, numBJets_medium;
     countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     
-    Particle::LorentzVector HbbP4  = selJet1_Hbb->p4() + selJet2_Hbb->p4();
+    Particle::LorentzVector HbbP4  = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = ( selJet1_Hbb && selJet2_Hbb ) ? HbbP4.mass() :  0.;
     double m_Hbb_regCorr = 0.;
     double m_Hbb_regRes  = 0.;
-    double cosThetaS_Hbb_reg = -0.01;
+    double cosThetaS_Hbb_reg = -10.;
     Particle::LorentzVector HbbP4_reg;
 
     if ( dynamic_cast<const RecoJet*>(selJet_Hbb_lead) && dynamic_cast<const RecoJet*>(selJet_Hbb_sublead) )
@@ -3045,7 +3055,6 @@ int main(int argc, char* argv[])
       {"dr_Wj1_lep_simple",       dr_Wj1_lep_simple},
       {"dr_Wj2_lep_simple",       dr_Wj2_lep_simple}
     };
-
     //////
     double mvaoutput_bb1l_SM_Wj1                            = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list, eventInfo.event);
     double mvaoutput_bb1l_SM_Wjj_BDT_full_reco_only         = mva_xgb_bb1l_SM_Wjj_BDT_full_reco_only(mvaInputVariables_list, eventInfo.event);
