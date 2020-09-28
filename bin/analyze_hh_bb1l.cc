@@ -980,7 +980,8 @@ int main(int argc, char* argv[])
     };*/
   std::vector<std::string> xgbInputVariables_bb1l_X900GeV_Wjj_BDT = {
       "lep_pt", "bjet1_pt", "mht", "m_Hbb_regCorr", "m_Wjj", "pT_Wjj", "dR_Hww", "Smin_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_3particle", "mindr_lep1_jet", "avg_dr_jet_central", "mbb_loose", "mbb_medium", "cosThetaS_Hbb_reg", "selJet2_Hbb_pT", "cosThetaS_HH"
-    };
+  };
+
   std::vector<std::string> xgbInputVariables_bb1l_X900GeV_Wjj_simple = {
     "mindr_lep1_jet", "m_Hbb_regCorr", "mHH_simple_met", "mWlep_met_simple", "mWW_simple_met", "mWjj_simple", "cosThetaS_Hbb", "cosThetaS_Wjj_simple", "cosThetaS_WW_simple_met", "cosThetaS_HH_simple_met", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "dr_Wj1_lep_simple", "dr_Wj2_lep_simple", "lep_conePt", "met_LD", "HT", "mT_top_3particle", "mT_W"
   };
@@ -1037,7 +1038,10 @@ int main(int argc, char* argv[])
   /* std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_BDT = {
      "mindr_lep1_jet", "m_Hbb_regCorr", "m_HH", "mWlep_met_simple", "dR_Hww", "m_Wjj", "cosThetaS_Hbb", "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "lep_conePt", "met_LD", "mT_W", "mT_top_3particle", "HT"
     };*/
-  std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_BDT = {"lep_pt", "bjet1_pt", "mht", "m_Hbb_regCorr", "m_Wjj", "pT_Wjj", "dR_Hww", "Smin_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_3particle", "mindr_lep1_jet", "avg_dr_jet_central", "mbb_loose", "mbb_medium", "cosThetaS_Hbb_reg", "selJet2_Hbb_pT", "cosThetaS_HH"};
+  /* std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_BDT = {"lep_pt", "bjet1_pt", "mht", "m_Hbb_regCorr", "m_Wjj", "pT_Wjj", "dR_Hww", "Smin_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_3particle", "mindr_lep1_jet", "avg_dr_jet_central", "mbb_loose", "mbb_medium", "cosThetaS_Hbb_reg", "selJet2_Hbb_pT", "cosThetaS_HH"};*/
+  std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_BDT = {
+    "lep_pt", "met", "HT", "m_Hbb_regCorr", "m_Wjj", "Smin_Hww", "dR_b1lep", "dR_b2lep", "pT_HH", "mT_W", "mT_top_2particle", "mindr_lep1_jet", "avg_dr_jet_central", "mbb_loose", "mbb_medium", "dR_HH", "nBJetMedium"
+  };
 
   std::vector<std::string> xgbInputVariables_bb1l_SM_Wjj_simple = {
     "mindr_lep1_jet", "m_Hbb_regCorr", "mHH_simple_met", "mWlep_met_simple", "mWW_simple_met", "mWjj_simple", "cosThetaS_Hbb", "cosThetaS_Wjj_simple", "cosThetaS_WW_simple_met", "cosThetaS_HH_simple_met", "nJet", "nBJetMedium", "dR_b1lep", "dR_b2lep", "lep_conePt", "selJet1_Hbb_pT", "selJet2_Hbb_pT", "met_LD", "HT", "mT_top_3particle", "mT_W"
@@ -1053,7 +1057,8 @@ int main(int argc, char* argv[])
     xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_even_new_AK8_genmatch.xml";
   }
   else {
-    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_even_jpa_4jet.xml";
+    //xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_even_jpa_4jet.xml";
+    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_even_jpa_all.xml";
   }
   std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_simple_full_reco_only_noIndPt_even.xml";
   //std::string xgbFileName_bb1l_SM_Wj1_odd                        = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wj1_odd.xml";
@@ -1065,13 +1070,14 @@ int main(int argc, char* argv[])
     xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_only_odd_new_AK8_genmatch.xml";
   }
   else {
-    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_odd_jpa_4jet.xml";
+    //xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_odd_jpa_4jet.xml";
+    xgbFileName_bb1l_SM_Wjj_BDT_full_reco_only_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_full_reco_odd_jpa_all.xml";
   }
   std::string xgbFileName_bb1l_SM_Wjj_simple_full_reco_only_odd  = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_simple_full_reco_only_noIndPt_odd.xml";
-  std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_odd_new.xml";
-  std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_even_new.xml";
-  //std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_odd_new_AK8.xml";
-  //std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_even_new_AK8.xml";
+  //std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_odd_new.xml";
+  //std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_even_new.xml";
+  std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_odd_jpa_all_boosted.xml";
+  std::string xgbFileName_bb1l_SM_Wjj_BDT_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_boosted_only_even_jpa_all_boosted.xml";
   std::string xgbFileName_bb1l_SM_Wjj_BDT_one_missing_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_one_missing_boosted_only_odd_new.xml";
   std::string xgbFileName_bb1l_SM_Wjj_BDT_one_missing_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/hh_bb1l_SM_Wjj_BDT_one_missing_boosted_only_even_new.xml";
 
@@ -2081,7 +2087,7 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("signal region veto", evtWeightRecorder.get(central_or_shift_main));
 
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
-    const selJetsType_Hbb* selJetT_Hbb = nullptr;
+    selJetsType_Hbb* selJetT_Hbb = nullptr;
     const RecoJetAK8* selJetAK8_Hbb = nullptr;
     const RecoJetBase* selJet1_Hbb = nullptr;
     const RecoJetBase* selJet2_Hbb = nullptr;
@@ -2394,6 +2400,10 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet_Hbb_sublead = ( selJets_Hbb.size() >1 ) ? selJets_Hbb[1] : nullptr;
     const Particle::LorentzVector selJetP4_Hbb_sublead = ( selJets_Hbb.size() >1 ) ? selJet_Hbb_sublead->p4() : p4zero;
 
+    if ( !selJetAK8_Hbb ) {
+      selJetT_Hbb->jet_or_subjet1_ = selJet1_Hbb;
+      selJetT_Hbb->jet_or_subjet1_ = selJet2_Hbb;
+    }
     int numBJets_loose, numBJets_medium;
     countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     
@@ -3138,11 +3148,11 @@ int main(int argc, char* argv[])
         //if ( selJet1_Wjj_simple && selJet2_Wjj_simple && selJet1_Hbb && selJet2_Hbb)
         //{
 	category_mount       += "_allReco";
-	if ( selBJetsAK4_medium.size() >= 2 )
+	if ( numBJets_medium == 2 )
         {
 	  category_mount       += "_2b";
 	} else {
-	  if ( selBJetsAK4_medium.size() ==1 ) 
+	  if ( numBJets_medium ==1 ) 
 	  {
 	    category_mount       += "_1b";
 	  }
