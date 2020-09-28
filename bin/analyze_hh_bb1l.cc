@@ -1426,7 +1426,7 @@ int main(int argc, char* argv[])
     );
     bdt_filler->register_variable<int_type>(
       "lep_charge", "nElectron", "new_had_cut", "new_had_cut_fullreco", "original_jet_cut", "nJet_that_not_bb",
-      "nJet", "nBJetLoose", "nBJetMedium", "numBJets_loose", "numBJets_medium",
+      "nJet", "nBJetLoose", "nBJetMedium", "numBJets_loose", "numBJets_medium", "numBJets", "numWJets",
       "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity",
       "isWjj_boosted_simple", "isWjj_boosted_highPurity_simple",
       "nJet_vbf", "isVBF", "WjjWasFat",
@@ -2308,9 +2308,9 @@ int main(int argc, char* argv[])
 	  selJet1_Wjj = jpa_missingWJet.WJet1_;
 	}
 	else {
-	  std::pair<const RecoJetBase*, const RecoJetBase*> selJets_Wjj = selectJets_Wjj_forrestOfcat(cleanedJetsAK4_wrtHbb, metP4, selLepton, selJet1_Hbb, selJet2_Hbb);
-	    selJet1_Wjj = selJets_Wjj.first;
-	    selJet2_Wjj = selJets_Wjj.second;
+	  //std::pair<const RecoJetBase*, const RecoJetBase*> selJets_Wjj = selectJets_Wjj_forrestOfcat(cleanedJetsAK4_wrtHbb, metP4, selLepton, selJet1_Hbb, selJet2_Hbb);
+	  selJet1_Wjj = nullptr;//selJets_Wjj.first;
+	  selJet2_Wjj = nullptr;//selJets_Wjj.second;
 	}
       }
       else {
@@ -2352,9 +2352,13 @@ int main(int argc, char* argv[])
         }
 	else {
 	  //std::cout << "restofcat= " << selJet1_Hbb << "\t" <<  selJet2_Hbb << "\t" << cleanedJetsAK4_wrtHbb.size() << std::endl;
-	  std::pair<const RecoJetBase*, const RecoJetBase*> selJets_Wjj = selectJets_Wjj_forrestOfcat(cleanedJetsAK4_wrtHbb, metP4, selLepton, selJet1_Hbb, selJet2_Hbb);
-	  selJet1_Wjj = selJets_Wjj.first;
-	  selJet2_Wjj = selJets_Wjj.second;
+	  //std::pair<const RecoJetBase*, const RecoJetBase*> selJets_Wjj = selectJets_Wjj_forrestOfcat(cleanedJetsAK4_wrtHbb, metP4, selLepton, selJet1_Hbb, selJet2_Hbb);
+	  //selJet1_Wjj = selJets_Wjj.first;
+	  //selJet2_Wjj = selJets_Wjj.second;
+	  selJet1_Wjj = nullptr;
+	  selJet2_Wjj = nullptr;
+	  selJet1_Hbb = nullptr;
+	  selJet2_Hbb = nullptr;
         }
       }
       //std::cout << "***********evt== " << evt_category_ << "\t" << selJet1_Hbb<< "\t" << selJet2_Hbb << "\t" << selJet1_Wjj << "\t" << selJet2_Wjj << std::endl;
@@ -2406,7 +2410,9 @@ int main(int argc, char* argv[])
     }
     int numBJets_loose, numBJets_medium;
     countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
-    
+    int numWJets = ( selJet1_Wjj && selJet2_Wjj ) ? 2 : ( ( selJet1_Wjj ) ? 1 : 0);
+    int numBJets = ( selJet1_Hbb && selJet2_Hbb ) ? 2 : ( ( selJet1_Hbb ) ? 1 : 0);
+
     Particle::LorentzVector HbbP4  = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = ( selJet1_Hbb && selJet2_Hbb ) ? HbbP4.mass() :  0.;
     double m_Hbb_regCorr = 0.;
@@ -3560,6 +3566,8 @@ int main(int argc, char* argv[])
           ("original_jet_cut",        original_jet_cut)
           ("numBJets_loose",          numBJets_loose)
           ("numBJets_medium",         numBJets_medium)
+	  ("numBJets",          numBJets)
+        	("numWJets",     numWJets)
           //
 	(weightMapHH)
         .fill()
