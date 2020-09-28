@@ -2985,7 +2985,7 @@ int main(int argc, char* argv[])
 	    selJet2_vbf != selJetsAK4_vbf.end(); ++selJet2_vbf ) {
 	double dEta_jj = TMath::Abs((*selJet1_vbf)->eta() - (*selJet2_vbf)->eta());
 	double m_jj = ((*selJet1_vbf)->p4() + (*selJet2_vbf)->p4()).mass();
-	if ( dEta_jj > 4. && m_jj > 500. ) {
+	if ( dEta_jj > 3.0 && m_jj > 500. ) {
 	  if ( m_jj > vbf_m_jj ) { // CV: in case of ambiguity, take the jet pair of highest mass
 	    selJet_vbf_lead = (*selJet1_vbf);
 	    selJet_vbf_sublead = (*selJet2_vbf);
