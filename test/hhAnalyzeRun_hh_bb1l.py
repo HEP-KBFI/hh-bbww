@@ -145,6 +145,8 @@ if __name__ == '__main__':
    "_HbbFat_WjjRes_allReco_m",
    "_Res_allReco_1b_m",
    "_Res_allReco_2b_m",
+   "_Res_allReco_0b_m",
+   "_Res_allReco_0b_m",
    "_HbbFat_WjjRes_MissJet_e",
    "_Res_MissWJet_1b_e",
    "_Res_MissWJet_2b_e",
