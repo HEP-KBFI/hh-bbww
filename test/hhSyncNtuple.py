@@ -7,7 +7,7 @@ from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics
 
-sys_choices     = systematics.an_inclusive_opts
+sys_choices     = [ 'internal', systematics.mcClosure_str ] + systematics.an_inclusive_opts
 channel_choices = [
   'hh_bbww_inclusive', 'hh_bb2l', 'hh_bb1l'
 ]
@@ -21,7 +21,7 @@ parser.add_hlt_filter()
 parser.add_tau_id_wp()
 parser.add_tau_id()
 parser.add_use_home()
-parser.add_sys(sys_choices)
+parser.add_sys(sys_choices, default_choice = systematics.mcClosure_str)
 parser.add_argument('-c', '--channels',
   type = str, nargs = '+', dest = 'channels', metavar = 'channel', choices = channel_choices,
   default = channel_choices, required = False,
