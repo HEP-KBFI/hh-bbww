@@ -90,6 +90,8 @@ SyncNtupleManager_bbww::initializeBranches()
 
 //--- MET/MHT
     floatMap[FloatVariableType_bbww::trigger_SF],               "trigger_SF",
+    floatMap[FloatVariableType_bbww::vbf_m_jj],                 "vbf_m_jj",
+    floatMap[FloatVariableType_bbww::vbf_dEta_jj],              "vbf_dEta_jj",
     floatMap[FloatVariableType_bbww::lepton_IDSF],              "lepton_IDSF",
     floatMap[FloatVariableType_bbww::btag_SF],                  "btag_SF",
     floatMap[FloatVariableType_bbww::btag_SF_ratio],            "btag_SF_ratio",
