@@ -19,6 +19,7 @@ SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileNam
   , nof_mus(2)
   , nof_eles(2)
   , nof_jets(4)
+  , nof_jets_vbf(2)
   , nof_jetsAk8(2)
   , nof_jetsAk8LS(2)
 {
@@ -44,6 +45,7 @@ SyncNtupleManager_bbww::initializeBranches()
   const char * mstr      = "mu";
   const char * estr      = "ele";
   const char * jstr      = "ak4Jet";
+  const char * jvbfstr   = "ak4JetVBF";
   const char * jstrAk8   = "ak8Jet";
   const char * jstrAk8Ls = "ak8lsJet";
   const char * bjstr     = "ak4BJet";
@@ -56,6 +58,7 @@ SyncNtupleManager_bbww::initializeBranches()
   const std::string n_fakeablesel_ele_str = Form("n_fakeablesel_%s", estr);
   const std::string n_mvasel_ele_str      = Form("n_mvasel_%s",      estr);
   const std::string n_presel_jet_str      = Form("n_presel_%s",      jstr);
+  const std::string n_presel_jet_vbf_str  = Form("n_presel_%s",      jvbfstr);
   const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
   const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
   const std::string n_loose_bjet_str      = Form("n_loose_%s",       bjstr);
@@ -79,6 +82,7 @@ SyncNtupleManager_bbww::initializeBranches()
     n_fakeablesel_ele,        n_fakeablesel_ele_str,
     n_mvasel_ele,             n_mvasel_ele_str,
     n_presel_jet,             n_presel_jet_str,
+    n_presel_jet_vbf,         n_presel_jet_vbf_str,
     n_presel_jetAK8,          n_presel_jetAK8_str,
     n_presel_jetAK8LS,        n_presel_jetAK8LS_str,
     n_loose_bjet,             n_loose_bjet_str,
@@ -169,6 +173,16 @@ SyncNtupleManager_bbww::initializeBranches()
     jet_E,                    "E",
     jet_CSV,                  "CSV",
     jet_btagSF,               "btagSF"
+  );
+
+  setBranches(
+    jvbfstr, nof_jets_vbf,
+    jet_vbf_pt,              "pt",
+    jet_vbf_eta,             "eta",
+    jet_vbf_phi,             "phi",
+    jet_vbf_E,               "E",
+    jet_vbf_CSV,             "CSV",
+    jet_vbf_btagSF,          "btagSF"
   );
 
   setBranches(
@@ -354,6 +368,23 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoElectron *> & electrons
 }
 
 void
+SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets_vbf)
+{
+  n_presel_jet_vbf = jets_vbf.size();
+  const Int_t nof_iterations = std::min(n_presel_jet_vbf, nof_jets_vbf);
+  for(Int_t i = 0; i < nof_iterations; ++i)
+  {
+    const RecoJet * const jet = jets_vbf[i];
+    jet_vbf_pt[i] = jet -> pt();
+    jet_vbf_eta[i] = jet -> eta();
+    jet_vbf_phi[i] = jet -> phi();
+    jet_vbf_E[i] = (jet -> p4()).E();
+    jet_vbf_CSV[i] = std::max(jet -> BtagCSV(), 0.);
+    jet_vbf_btagSF[i] = jet -> BtagWeight();
+  }
+}
+
+void
 SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets,
                              int n_bjet_loose,
                              int n_bjet_medium)
@@ -508,6 +539,7 @@ SyncNtupleManager_bbww::resetBranches()
     n_fakeablesel_ele,
     n_mvasel_ele,
     n_presel_jet,
+    n_presel_jet_vbf,
     n_presel_jetAK8,
     n_presel_jetAK8LS,
     n_loose_bjet,
@@ -584,6 +616,16 @@ SyncNtupleManager_bbww::resetBranches()
     jet_E,
     jet_CSV,
     jet_btagSF
+  );
+
+  reset(
+    nof_jets_vbf,
+    jet_vbf_pt,
+    jet_vbf_eta,
+    jet_vbf_phi,
+    jet_vbf_E,
+    jet_vbf_CSV,
+    jet_vbf_btagSF
   );
 
   reset(

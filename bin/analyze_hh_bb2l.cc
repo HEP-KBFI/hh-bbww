@@ -2338,6 +2338,11 @@ int main(int argc, char* argv[])
       snm->read(selJetsAK4, selBJetsAK4_loose.size(), selBJetsAK4_medium.size());
       snm->read(selJetsAK8_Hbb, false);
 
+      std::vector<const RecoJet*> tmpJets_vbf;
+      if(selJet_vbf_lead)    { tmpJets_vbf.push_back(selJet_vbf_lead);    }
+      if(selJet_vbf_sublead) { tmpJets_vbf.push_back(selJet_vbf_sublead); }
+      snm->read(tmpJets_vbf);
+
       snm->read(type_Hbb == kHbb_boosted, false, type_Hbb == kHbb_resolved);
       const bool is_ee = selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron;
       const bool is_mm = selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon;

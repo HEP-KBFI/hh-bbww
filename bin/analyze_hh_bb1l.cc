@@ -3580,6 +3580,11 @@ int main(int argc, char* argv[])
       if ( selJetAK8_Wjj ) tmpJetsAK8_Wjj.push_back(selJetAK8_Wjj);
       snm->read(tmpJetsAK8_Wjj, true);
 
+      std::vector<const RecoJet*> tmpJets_vbf;
+      if(selJet_vbf_lead)    { tmpJets_vbf.push_back(selJet_vbf_lead);    }
+      if(selJet_vbf_sublead) { tmpJets_vbf.push_back(selJet_vbf_sublead); }
+      snm->read(tmpJets_vbf);
+
       const bool is_boosted = type_Hbb == kHbb_boosted && (type_Wjj == kWjj_resolved || type_Wjj == kWjj_boosted_highPurity);
       const bool is_semiboosted = type_Hbb == kHbb_boosted && type_Wjj == kWjj_resolved;
       const bool is_resolved = type_Hbb == kHbb_resolved && type_Wjj == kWjj_resolved;
