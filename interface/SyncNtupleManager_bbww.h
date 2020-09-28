@@ -14,6 +14,8 @@ enum class FloatVariableType_bbww
 {
 //--- MET/MHT
   trigger_SF,
+  vbf_m_jj,
+  vbf_dEta_jj,
   lepton_IDSF,
   lepton_IDSF_recoToLoose,
   lepton_IDSF_looseToTight,

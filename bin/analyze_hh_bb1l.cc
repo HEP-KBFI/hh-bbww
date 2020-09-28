@@ -3584,6 +3584,11 @@ int main(int argc, char* argv[])
       if(selJet_vbf_lead)    { tmpJets_vbf.push_back(selJet_vbf_lead);    }
       if(selJet_vbf_sublead) { tmpJets_vbf.push_back(selJet_vbf_sublead); }
       snm->read(tmpJets_vbf);
+      if(isVBF)
+      {
+        snm->read(vbf_m_jj,    FloatVariableType_bbww::vbf_m_jj);
+        snm->read(vbf_dEta_jj, FloatVariableType_bbww::vbf_dEta_jj);
+      }
 
       const bool is_boosted = type_Hbb == kHbb_boosted && (type_Wjj == kWjj_resolved || type_Wjj == kWjj_boosted_highPurity);
       const bool is_semiboosted = type_Hbb == kHbb_boosted && type_Wjj == kWjj_resolved;
