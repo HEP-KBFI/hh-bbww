@@ -808,7 +808,7 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4_vbf(era, -1, isDEBUG);
-  //jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
+  jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
   jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
