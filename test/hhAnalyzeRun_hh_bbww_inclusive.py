@@ -13,7 +13,7 @@ import getpass
 # E.g. to run: ./test/hhAnalyzeRun_inclusive.py -v 2017Dec13 -e 2017 -o syncTree
 
 mode_choices     = [ 'hh_sync', 'ttbar_sync' ]
-sys_choices      = [ "full" ] + systematics.an_inclusive_opts
+sys_choices      = [ "full", systematics.mcClosure_str ] + systematics.an_inclusive_opts
 systematics.full = systematics.an_inclusive
 
 parser = tthAnalyzeParser()
@@ -67,6 +67,8 @@ for systematic_label in systematics_label:
   for central_or_shift in getattr(systematics, systematic_label):
     if central_or_shift not in central_or_shifts:
       central_or_shifts.append(central_or_shift)
+if systematics.mcClosure_str in central_or_shifts:
+  central_or_shifts.remove(systematics.mcClosure_str)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 

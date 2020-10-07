@@ -265,6 +265,10 @@ main(int argc,
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
+
+  RecoJetCollectionSelector jetSelectorAK4_vbf(era, -1, isDEBUG);
+  jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
+
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
@@ -468,6 +472,7 @@ main(int argc,
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     std::vector<const RecoJet*> selBJets_loose = jetSelectorAK4_bTagLoose(selJets);
     std::vector<const RecoJet*> selBJets_medium = jetSelectorAK4_bTagMedium(selJets);
+    const std::vector<const RecoJet*> selJets_vbf = jetSelectorAK4_vbf(cleanedJets, isHigherPt);
     evtWeightRecorder.record_btagWeight(selJets);
     if(btagSFRatioFacility)
     {
@@ -478,6 +483,7 @@ main(int argc,
     {
       printCollection("cleanedJets", cleanedJets);
       printCollection("selJets", selJets);
+      printCollection("selJets_vbf", selJets_vbf);
     }
 
     const std::vector<RecoJetAK8> fatJets = jetReaderAK8->read();
@@ -619,6 +625,7 @@ main(int argc,
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
     snm->read(selJets, selBJets_loose.size(), selBJets_medium.size());
+    snm->read(selJets_vbf);
     // "regular" AK8 jets, selected to target H->bb decay, sorted by pT in decreasing order
     snm->read(selFatJets, false);
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection

@@ -96,7 +96,7 @@ for systematic_label in systematics_label:
         continue
       central_or_shifts.append(central_or_shift)
 
-do_sync = mode.startswith('sync')
+do_sync = 'sync' in mode
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')

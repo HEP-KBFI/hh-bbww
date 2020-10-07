@@ -810,7 +810,7 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4_vbf(era, -1, isDEBUG);
-  //jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
+  jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
   jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
@@ -2014,17 +2014,9 @@ int main(int argc, char* argv[])
 
 //--- apply data/MC corrections for efficiencies of leptons passing the loose identification and isolation criteria
 //    to also pass the tight identification and isolation criteria
-      if(electronSelection == kFakeable && muonSelection == kFakeable)
+      if( electronSelection >= kFakeable && muonSelection >= kFakeable)
       {
-        evtWeightRecorder.record_leptonSF(dataToMCcorrectionInterface->getSF_leptonID_and_Iso_looseToFakeable());
-      }
-      else if( electronSelection >= kFakeable && muonSelection >= kFakeable)
-      {
-        // apply loose-to-tight lepton ID SFs if either of the following is true:
-        // 1) both electron and muon selections are tight -> corresponds to SR
-        // 2) electron selection is relaxed to fakeable and muon selection is kept as tight -> corresponds to MC closure w/ relaxed e selection
-        // 3) muon selection is relaxed to fakeable and electron selection is kept as tight -> corresponds to MC closure w/ relaxed mu selection
-        // we allow (2) and (3) so that the MC closure regions would more compatible w/ the SR (1) in comparison
+        // apply looseToTight SF to leptons matched to generator-level prompt leptons and passing Tight selection conditions
         evtWeightRecorder.record_leptonIDSF_looseToTight(dataToMCcorrectionInterface);
       }
     }
@@ -3678,6 +3670,16 @@ int main(int argc, char* argv[])
       std::vector<const RecoJetAK8*> tmpJetsAK8_Wjj;
       if ( selJetAK8_Wjj ) tmpJetsAK8_Wjj.push_back(selJetAK8_Wjj);
       snm->read(tmpJetsAK8_Wjj, true);
+
+      std::vector<const RecoJet*> tmpJets_vbf;
+      if(selJet_vbf_lead)    { tmpJets_vbf.push_back(selJet_vbf_lead);    }
+      if(selJet_vbf_sublead) { tmpJets_vbf.push_back(selJet_vbf_sublead); }
+      snm->read(tmpJets_vbf);
+      if(isVBF)
+      {
+        snm->read(vbf_m_jj,    FloatVariableType_bbww::vbf_m_jj);
+        snm->read(vbf_dEta_jj, FloatVariableType_bbww::vbf_dEta_jj);
+      }
 
       const bool is_boosted = type_Hbb == kHbb_boosted && (type_Wjj == kWjj_resolved || type_Wjj == kWjj_boosted_highPurity);
       const bool is_semiboosted = type_Hbb == kHbb_boosted && type_Wjj == kWjj_resolved;
