@@ -120,7 +120,7 @@ makeJetTripletsMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const 
       {
 	for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
         {
-	  if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) <0.1 ) continue;
+	  if ( deltaR((*selWJet1)->p4(), (*selBJet1)->p4()) <0.1 || deltaR((*selWJet1)->p4(), (*selBJet2)->p4()) <0.1 ) continue;
 	  bool selBJet1_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet1)->eta(), (*selBJet1)->phi(), genBJets) : false;
 	  bool selBJet2_isGenMatched = ( genBJets.size() ) ? isGenMatchedT<GenJet>((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets) : false;
 	  bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
