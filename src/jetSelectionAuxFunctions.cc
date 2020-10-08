@@ -310,6 +310,10 @@ selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wr
   double mass_dist_Wjj = 1000;
   const RecoJetBase* selJet1_Wjj = nullptr;
   const RecoJetBase* selJet2_Wjj = nullptr;
+  // take the resolved jets by the simple reco                                                                                                                                                            
+  // simpler to compare -- it is just a simple loop                                                                                                                                                       
+  // if there is a fat jet and it is not already tagged as Hbb                                                                                                                                            
+  // chose the two jets (ordered by pT, that are not the Hbb ones) with closest mass of the Hbb as the Wjj  
   for(auto jet1_it = cleanedJetsAK4_wrtHbb.begin(); jet1_it != cleanedJetsAK4_wrtHbb.end(); ++jet1_it)
   {
     const RecoJetBase * jet1 = *jet1_it;
