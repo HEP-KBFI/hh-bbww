@@ -37,6 +37,11 @@ parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
   help = 'R|doing second_bdt for jpa'
 )
+parser.add_argument('-doDataMCPlot', '--doDataMCPlot',
+  dest = 'doDataMCPlots', action = 'store_true',
+  help = 'R| do controlPlots'
+)
+
 args = parser.parse_args()
 
 # Common arguments
@@ -64,7 +69,7 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
-doDataMCPlots     = False
+doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
 second_bdt = args.second_bdt
 
@@ -145,8 +150,14 @@ if __name__ == '__main__':
    "_HbbFat_WjjRes_allReco_m",
    "_Res_allReco_1b_m",
    "_Res_allReco_2b_m",
-   "_Res_allReco_0b_m",
-   "_Res_allReco_0b_m",
+   #"_Res_allReco_0b_m",
+   #"_Res_allReco_0b_m",
+    "_Res_restOfcat_1b_m",
+    "_Res_restOfcat_2b_m",
+    "_Res_restOfcat_1b_e",
+    "_Res_restOfcat_2b_e",
+    "_HbbFat_restOfcat_e",
+    "_HbbFat_restOfcat_m",
    "_HbbFat_WjjRes_MissJet_e",
    "_Res_MissWJet_1b_e",
    "_Res_MissWJet_2b_e",
@@ -154,7 +165,7 @@ if __name__ == '__main__':
    "_Res_MissWJet_1b_m",
    "_Res_MissWJet_2b_m"
    ]
-  if ignore_Wjj_boosted :
+  if not ignore_Wjj_boosted :
       categories_list_bins = categories_list_bins + [
        "_HbbFat_WjjFat_HP_e",
        "_WjjFat_HP_e",
@@ -171,9 +182,9 @@ if __name__ == '__main__':
   for_categories_map = [
   # those are for the BDT types
   "cat_jet_2BDT_Wjj_BDT_SM",
-  "cat_jet_2BDT_Wjj_simple_SM",
-  "cat_jet_2BDT_Wjj_BDT_X900GeV",
-  "cat_jet_2BDT_Wjj_simple_X900GeV"
+ # "cat_jet_2BDT_Wjj_simple_SM",
+ # "cat_jet_2BDT_Wjj_BDT_X900GeV",
+ # "cat_jet_2BDT_Wjj_simple_X900GeV"
   ]
 
   for_data_MC_plots = [
@@ -182,7 +193,8 @@ if __name__ == '__main__':
   "lep1_pt",
   "lep1_eta",
   "jet2_pt",
-  "jet2_eta"
+  "jet2_eta",
+    "MET_pT"
   ]
 
   histograms_to_fit_list                 = {
@@ -232,6 +244,7 @@ if __name__ == '__main__':
     use_home                              = use_home,
     submission_cmd                        = sys.argv,
     second_bdt                            = second_bdt,
+    doDataMCPlots                         = doDataMCPlots,
   )
 
   if mode.find("forBDTtraining") != -1:
