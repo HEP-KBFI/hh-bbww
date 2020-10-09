@@ -48,7 +48,7 @@ public:
      double selJetsAK4_0_eta,
      double selJetsAK4_1_eta,
      double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
-     double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH,
+		 double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH, double metpt,
      bool doDataMCPlots,
                  double evtWeight);
 
@@ -133,7 +133,7 @@ public:
   std::map<std::string, TH1 *> histograms_by_category_check_lep1_eta_;
   std::map<std::string, TH1 *> histograms_by_category_check_jet2_pt_;
   std::map<std::string, TH1 *> histograms_by_category_check_jet2_eta_;
-
+  std::map<std::string, TH1 *> histograms_by_category_check_metpt_;
   int option_; // flag to enable/disable booking & filling of MEM histograms
 };
 

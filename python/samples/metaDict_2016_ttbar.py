@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-09-27 22:15:40 with the following command:
+# file generated at 2020-10-06 23:42:45 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2016_RunIISummer16MiniAODv3.txt -m python/samples/metaDict_2016_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2016_RunIISummer16MiniAODv3.txt -c python/samples/sampleLocations_2016_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -385,13 +385,13 @@ meta_dictionary["/TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/R
   ("crab_string",           ""),
   ("sample_category",       "TT_mtop169p5"),
   ("process_name_specific", "TTToHadronic_mtop169p5"),
-  ("nof_db_events",         6523600),
-  ("nof_db_files",          95),
-  ("fsize_db",              301056891477),
+  ("nof_db_events",         9545400),
+  ("nof_db_files",          168),
+  ("fsize_db",              441017480302),
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 301.06GB; nevents: 6.52M; release: 9_4_9; last modified: 2020-09-16 21:52:01"),
+  ("comment",               "status: VALID; size: 441.02GB; nevents: 9.55M; release: 9_4_9; last modified: 2020-10-03 06:26:25"),
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] =  OD([
@@ -424,13 +424,13 @@ meta_dictionary["/TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/R
   ("crab_string",           ""),
   ("sample_category",       "TT_mtop175p5"),
   ("process_name_specific", "TTToHadronic_mtop175p5"),
-  ("nof_db_events",         7945400),
-  ("nof_db_files",          102),
-  ("fsize_db",              368605739744),
+  ("nof_db_events",         9568400),
+  ("nof_db_files",          188),
+  ("fsize_db",              445115273754),
   ("xsection",              377.85),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 368.61GB; nevents: 7.95M; release: 9_4_9; last modified: 2020-09-18 01:07:27"),
+  ("comment",               "status: VALID; size: 445.12GB; nevents: 9.57M; release: 9_4_9; last modified: 2020-10-05 18:58:10"),
 ])
 
 
@@ -442,6 +442,6 @@ meta_dictionary["/TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/R
 # TT_QCDbased:  71.50M
 # TT_GluonMove: 70.41M
 # TT_erdON:     70.87M
-# TT_mtop169p5: 47.82M
-# TT_mtop175p5: 41.15M
+# TT_mtop169p5: 50.84M
+# TT_mtop175p5: 42.78M
 

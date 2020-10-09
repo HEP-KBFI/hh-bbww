@@ -129,6 +129,7 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
         histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, "lep1_eta" + category.first, category.first, 22,  -3., +3.);
         histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, "jet2_pt" + category.first, category.first, 40,  0., 200.);
         histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, "jet2_eta" + category.first, category.first, 22,  -3., +3.);
+	histograms_by_category_check_metpt_[category.first] = book1D(dir, "MET_pT" + category.first, category.first, 40,  0., 200.);
         central_or_shiftOptions_[category.first] = { "*" };
     }
     }
@@ -138,7 +139,7 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
 void
 EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
 {
-  histogram_numElectrons_                = book1D(dir, "numElectrons",                5,   -0.5,  +4.5);
+  /*  histogram_numElectrons_                = book1D(dir, "numElectrons",                5,   -0.5,  +4.5);
   histogram_numMuons_                    = book1D(dir, "numMuons",                    5,   -0.5,  +4.5);
   histogram_numJets_                     = book1D(dir, "numJets",                    20,   -0.5, +19.5);
   histogram_numBJets_loose_              = book1D(dir, "numBJets_loose",             10,   -0.5,  +9.5);
@@ -183,7 +184,7 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_jet2_pt_                 = book1D(dir, "vbf_jet2_pt",                40,    0.,  200.);
   histogram_vbf_jet2_eta_                = book1D(dir, "vbf_jet2_eta",              100,   -5.0,  +5.0);
   histogram_vbf_m_jj_                    = book1D(dir, "vbf_m_jj",                  150,    0., 1500.);
-  histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               100,    0.,   10.);
+  histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               100,    0.,   10.);*/
 
   if ( option_ == kOption_memEnabled ) {
     histogram_log_memProb_signal_        = book1D(dir, "log_memProb_signal",        200, -200.,   0.);
@@ -231,7 +232,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
                double selJetsAK4_0_eta,
                double selJetsAK4_1_eta, 
 	       double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
-				       double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH,
+				       double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH, double metpt,
                bool doDataMCPlots,
 				       double evtWeight)
 {
@@ -266,14 +267,14 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_HH"],  cosThetaS_HH, evtWeight, evtWeightErr);*/
   }
   //
-  fillWithOverFlow(histogram_numElectrons_,                     numElectrons,                       evtWeight, evtWeightErr);
+  /*fillWithOverFlow(histogram_numElectrons_,                     numElectrons,                       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numMuons_,                         numMuons,                           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numJets_,                          numJets,                            evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numBJets_loose_,                   numBJets_loose,                     evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numBJets_medium_,                  numBJets_medium,                    evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_HT_,                               HT,                                 evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_STMET_,                            STMET,                              evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_STMET_,                            STMET,                              evtWeight, evtWeightErr);*/
   /////
   if ( doDataMCPlots )
   {
@@ -287,6 +288,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_mount], selLepton_lead_eta, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_mount], selJetsAK4_1_pt, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_mount], selJetsAK4_1_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_metpt_[category_mount], metpt, evtWeight, evtWeightErr);
   }
   /*fillWithOverFlow(histogram_m_Hbb_,                            m_Hbb,                              evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_Hbb_,                           dR_Hbb,                             evtWeight, evtWeightErr);
