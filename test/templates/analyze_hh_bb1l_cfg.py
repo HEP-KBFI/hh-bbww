@@ -39,6 +39,8 @@ process.analyze_hh_bb1l = cms.PSet(
     apply_hadTauVeto = cms.bool(True),
     hadTauSelection_veto = cms.string('deepVSjMedium'),
     
+    apply_pileupJetID = cms.string('loose'),
+
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
@@ -104,7 +106,6 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_genNeutrinosFromTop = cms.string('GenNuFromTop'),
     branchName_genBJetsFromTop = cms.string('GenBQuarkFromTop'),
     branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
-
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
