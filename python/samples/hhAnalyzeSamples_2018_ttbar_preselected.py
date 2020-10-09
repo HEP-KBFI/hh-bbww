@@ -1143,7 +1143,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2020Jul19_wPresel_nom_hh_bbww_ttbar/ntuples/TTTo2L2Nu_ueUp"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [4]),
       ]),
     ]
   ),
