@@ -30,6 +30,7 @@ enum class FloatVariableType_bbww
   MEM_LR,
   MEM_LR_up,
   MEM_LR_down,
+  PU_jetID_SF,
   PU_weight,               ///< PU weight
   MC_weight                ///< MC weight
 };

@@ -3712,6 +3712,7 @@ int main(int argc, char* argv[])
       const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
       const double leptonSF_recoToLoose = evtWeightRecorder.get_leptonIDSF_recoToLoose("central");
       const double leptonSF_looseToTight = evtWeightRecorder.get_leptonIDSF_looseToTight("central");
+      const double pileupJetIDSF = evtWeightRecorder.get_pileupJetIDSF("central");
 
       snm->read(triggerSF,                              FloatVariableType_bbww::trigger_SF);
       snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
@@ -3722,6 +3723,7 @@ int main(int argc, char* argv[])
       snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
       snm->read(leptonSF_looseToTight,                  FloatVariableType_bbww::lepton_IDSF_looseToTight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
+      snm->read(pileupJetIDSF,                          FloatVariableType_bbww::PU_jetID_SF);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
