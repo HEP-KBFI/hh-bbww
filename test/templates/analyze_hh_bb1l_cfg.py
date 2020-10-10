@@ -39,7 +39,7 @@ process.analyze_hh_bb1l = cms.PSet(
     apply_hadTauVeto = cms.bool(True),
     hadTauSelection_veto = cms.string('deepVSjMedium'),
     
-    apply_pileupJetID = cms.string('loose'),
+    apply_pileupJetID = cms.string(''),
 
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(

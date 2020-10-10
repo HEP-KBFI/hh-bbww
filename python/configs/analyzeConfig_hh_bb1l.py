@@ -99,6 +99,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
+      apply_pileupJetID     = 'disabled',
     )
 
     self.lepton_selections = [ "Tight", "Fakeable" ]
@@ -402,6 +403,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'apply_hadTauVeto'         : self.apply_hadTauVeto,
                 'hadTauSelection_veto'     : self.hadTau_mva_wp_veto,
                 'applyFakeRateWeights'     : applyFakeRateWeights,
+                'apply_pileupJetID'        : self.apply_pileupJetID,
                 'central_or_shift'         : central_or_shift,
                 'central_or_shifts_local'  : central_or_shifts_local,
                 'evtCategories'            : self.evtCategories,

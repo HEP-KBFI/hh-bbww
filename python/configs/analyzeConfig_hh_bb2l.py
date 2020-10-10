@@ -102,6 +102,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
+      apply_pileupJetID     = 'disabled',
     )
 
     self.MEMbranch = MEMbranch
@@ -414,6 +415,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'muonSelection'              : muon_selection,
                   'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
                   'applyFakeRateWeights'       : applyFakeRateWeights,
+                  'apply_pileupJetID'          : self.apply_pileupJetID,
                   'central_or_shift'           : central_or_shift,
                   'central_or_shifts_local'    : central_or_shifts_local,
                   'evtCategories'              : self.evtCategories,
