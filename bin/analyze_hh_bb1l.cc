@@ -507,14 +507,8 @@ int main(int argc, char* argv[])
   bool apply_hadTauVeto = cfg_analyze.getParameter<bool>("apply_hadTauVeto");
   const std::string hadTauSelection_veto = cfg_analyze.getParameter<std::string>("hadTauSelection_veto");
 
-  std::string apply_pileupJetID_string = cfg_analyze.getParameter<std::string>("apply_pileupJetID");
-  pileupJetID apply_pileupJetID;
-  if      ( apply_pileupJetID_string == "disabled" ) apply_pileupJetID = kPileupJetID_disabled;
-  else if ( apply_pileupJetID_string == "loose"    ) apply_pileupJetID = kPileupJetID_loose;
-  else if ( apply_pileupJetID_string == "medium"   ) apply_pileupJetID = kPileupJetID_medium;
-  else if ( apply_pileupJetID_string == "tight"    ) apply_pileupJetID = kPileupJetID_tight;
-  else throw cmsException(__func__)
-	 << "Invalid Configuration parameter 'apply_pileupJetID' = " << apply_pileupJetID_string << "!!";
+  const std::string apply_pileupJetID_string = cfg_analyze.getParameter<std::string>("apply_pileupJetID");
+  const pileupJetID apply_pileupJetID = get_pileupJetID(apply_pileupJetID_string);
 
   vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
