@@ -563,6 +563,8 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4_wPileupJetId(era, -1, isDEBUG);
   jetSelectorAK4_wPileupJetId.getSelector().set_pileupJetId(apply_pileupJetID);
+  RecoJetCollectionSelector jetSelectorAK4_woPileupJetId(era, -1, isDEBUG);
+  jetSelectorAK4_woPileupJetId.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelector jetSelectorAK4_vbf(era, -1, isDEBUG);
   jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
   jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
@@ -1461,7 +1463,8 @@ int main(int argc, char* argv[])
 
       if ( apply_pileupJetID != kPileupJetID_disabled )
       {
-        dataToMCcorrectionInterface->setJets(selJetsAK4);
+        const std::vector<const RecoJet*> selJetsAK4_woPileupJetId = jetSelectorAK4_woPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
+        dataToMCcorrectionInterface->setJets(selJetsAK4_woPileupJetId);
         evtWeightRecorder.record_pileupJetIDSF(dataToMCcorrectionInterface);
       }
 
