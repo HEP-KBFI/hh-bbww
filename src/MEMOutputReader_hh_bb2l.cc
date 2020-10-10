@@ -121,13 +121,12 @@ MEMOutputReader_hh_bb2l::setBranchNames() // const std::string & BM
   ++numInstances_[branchName_obj_];
 }
 
-void
+std::vector<std::string>
 MEMOutputReader_hh_bb2l::setBranchAddresses(TTree * tree)
 {
   if(instances_[branchName_obj_] == this)
   {
     BranchAddressInitializer bai(tree, max_nMEMOutputs_);
-		std::cout<<" set branches MEM to BM: " << branchName_obj_ << "\n";
     bai.setBranchAddress(nMEMOutputs_, branchName_num_);
     bai.setBranchAddress(run_, branchName_run_);
     bai.setBranchAddress(lumi_, branchName_lumi_);
@@ -150,7 +149,9 @@ MEMOutputReader_hh_bb2l::setBranchAddresses(TTree * tree)
     bai.setBranchAddress(realTime_, branchName_realTime_);
     bai.setBranchAddress(errorFlag_, branchName_errorFlag_);
     bai.setBranchAddress(isValid_, branchName_isValid_);
+    return bai.getBoundBranchNames();
   }
+  return {};
 }
 
 std::vector<MEMOutput_hh_bb2l>
