@@ -34,7 +34,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // selectObjects(), get_selection(), get_era(), kLoose, kFakeable, kTight
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // selectObjects(), get_selection(), get_era(), pileupJetID, kLoose, kFakeable, kTight
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_MT_met
 #include "tthAnalysis/HiggsToTauTau/interface/sysUncertOptions.h" // k*_central
 #include "tthAnalysis/HiggsToTauTau/interface/memAuxFunctions.h" // get_memObjectBranchName(), get_memPermutationBranchName()
@@ -511,6 +511,15 @@ int main(int argc,
   const std::string leptonSelection_string = cfg_analyze.getParameter<std::string>("leptonSelection");
   const int leptonSelection = get_selection(leptonSelection_string);
 
+  std::string apply_pileupJetID_string = cfg_analyze.getParameter<std::string>("apply_pileupJetID");
+  pileupJetID apply_pileupJetID;
+  if      ( apply_pileupJetID_string == "disabled" ) apply_pileupJetID = kPileupJetID_disabled;
+  else if ( apply_pileupJetID_string == "loose"    ) apply_pileupJetID = kPileupJetID_loose;
+  else if ( apply_pileupJetID_string == "medium"   ) apply_pileupJetID = kPileupJetID_medium;
+  else if ( apply_pileupJetID_string == "tight"    ) apply_pileupJetID = kPileupJetID_tight;
+  else throw cmsException(__func__)
+	 << "Invalid Configuration parameter 'apply_pileupJetID' = " << apply_pileupJetID_string << "!!";
+
   std::cout << "selEventsFileName_input = " << selEventsFileName_input << '\n';
   RunLumiEventSelector* run_lumi_eventSelector = nullptr;
   if ( selEventsFileName_input != "" )
@@ -562,9 +571,11 @@ int main(int argc,
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
   RecoJetCollectionSelector jetSelectorAK4_Hbb(era, -1, isDEBUG);
+  jetSelectorAK4_Hbb.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelector jetSelectorAK4_Wjj(era, -1, isDEBUG);
   //jetSelectorAK4_Wjj.getSelector().set_max_absEta(4.7);
   jetSelectorAK4_Wjj.getSelector().set_max_absEta(2.4);
+  jetSelectorAK4_Wjj.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 

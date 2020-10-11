@@ -27,6 +27,8 @@ process.analyze_hadWTagger = cms.PSet(
 
     leptonSelection = cms.string(''),
 
+    apply_pileupJetID = cms.string('loose'),
+
     isMC = cms.bool(True),
     lumiScale = cms.VPSet(),
     apply_genWeight = cms.bool(True),

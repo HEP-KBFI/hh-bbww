@@ -46,6 +46,8 @@ process.analyze_hh_bb2l = cms.PSet(
     apply_leptonGenMatching = cms.bool(True),
     leptonChargeSelection = cms.string(''),
 
+    apply_pileupJetID = cms.string(''),
+
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),

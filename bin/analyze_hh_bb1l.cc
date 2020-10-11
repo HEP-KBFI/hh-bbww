@@ -66,7 +66,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenEvtHistManager.h" // GenEvtHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoHistManager.h" // LHEInfoHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // getBTagWeight_option, getHadTau_genPdgId, isHigherPt, isMatched, pileupJetID
 #include "tthAnalysis/HiggsToTauTau/interface/leptonGenMatchingAuxFunctions.h" // getLeptonGenMatch_definitions_1lepton, getLeptonGenMatch_string, getLeptonGenMatch_int
 #include "tthAnalysis/HiggsToTauTau/interface/GenMatchInterface.h" // GenMatchInterface
 #include "tthAnalysis/HiggsToTauTau/interface/fakeBackgroundAuxFunctions.h"
@@ -522,6 +522,9 @@ int main(int argc, char* argv[])
   bool apply_hadTauVeto = cfg_analyze.getParameter<bool>("apply_hadTauVeto");
   const std::string hadTauSelection_veto = cfg_analyze.getParameter<std::string>("hadTauSelection_veto");
 
+  const std::string apply_pileupJetID_string = cfg_analyze.getParameter<std::string>("apply_pileupJetID");
+  const pileupJetID apply_pileupJetID = get_pileupJetID(apply_pileupJetID_string);
+
   vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
@@ -612,6 +615,7 @@ int main(int argc, char* argv[])
   cfg_dataToMCcorrectionInterface.addParameter<std::string>("hadTauSelection", "disabled"); // CV: dummy value (no taus used in HH->bbWW channel)
   cfg_dataToMCcorrectionInterface.addParameter<int>("hadTauSelection_antiElectron", -1);
   cfg_dataToMCcorrectionInterface.addParameter<int>("hadTauSelection_antiMuon", -1);
+  cfg_dataToMCcorrectionInterface.addParameter<std::string>("pileupJetID", apply_pileupJetID_string);
   cfg_dataToMCcorrectionInterface.addParameter<bool>("isDEBUG", isDEBUG);
   Data_to_MC_CorrectionInterface_Base * dataToMCcorrectionInterface = nullptr;
   switch(era)
@@ -823,10 +827,14 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleanerByIndex jetCleanerAK4_byIndex(isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR08(0.8, isDEBUG);
   RecoJetCollectionCleaner jetCleanerAK4_dR12(1.2, isDEBUG);
-  RecoJetCollectionSelector jetSelectorAK4(era, -1, isDEBUG);
+  RecoJetCollectionSelector jetSelectorAK4_wPileupJetId(era, -1, isDEBUG);
+  jetSelectorAK4_wPileupJetId.getSelector().set_pileupJetId(apply_pileupJetID);
+  RecoJetCollectionSelector jetSelectorAK4_woPileupJetId(era, -1, isDEBUG);
+  jetSelectorAK4_woPileupJetId.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelector jetSelectorAK4_vbf(era, -1, isDEBUG);
   jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
   jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
+  jetSelectorAK4_vbf.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
 
@@ -1712,7 +1720,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
     const Particle::LorentzVector& metP4 = met.p4();
 
-    const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
 
@@ -1960,6 +1968,13 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
       dataToMCcorrectionInterface->setLeptons({ selLepton });
 
+      if ( apply_pileupJetID != kPileupJetID_disabled )
+      {
+        const std::vector<const RecoJet*> selJetsAK4_woPileupJetId = jetSelectorAK4_woPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
+        dataToMCcorrectionInterface->setJets(selJetsAK4_woPileupJetId);
+        evtWeightRecorder.record_pileupJetIDSF(dataToMCcorrectionInterface);
+      }
+
 //--- apply data/MC corrections for trigger efficiency
       evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
 
@@ -2008,7 +2023,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJetAK8*> selJetsAK8 = jetSelectorAK8(cleanedJetsAK8_wrtLeptons, isHigherPt);
-    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherCSV);
+    const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherCSV);
 
     if ( !(selBJetsAK4_medium.size() >= 1 || selJetsAK8_Hbb.size() >=1 ) ) {
       if ( run_lumi_eventSelector ) {
@@ -2470,7 +2485,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {
 	std::vector<selJetsType_Wjj> selJetsT_Wjj = selectJets_Wjj_resolved(
 						      cleanedJetsAK4_wrtHbb, selLepton,
-						      jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4,
+						      jetCleanerAK4_dR08, jetCleanerAK4_dR12, jetSelectorAK4_wPileupJetId,
 						      selBJetsAK4_medium,
 						      mva_Wjj, eventInfo, isDEBUG);
 	selJetT_Wjj = &selJetsT_Wjj[0];
@@ -2515,7 +2530,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
 //--- compute MHT and linear MET discriminant (met_LD)
 
-    const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
     Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, {}, selJetsAK4_mht);
     double met_LD = compMEt_LD(metP4, mhtP4);
 
@@ -3295,6 +3310,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
       const double leptonSF_recoToLoose = evtWeightRecorder.get_leptonIDSF_recoToLoose("central");
       const double leptonSF_looseToTight = evtWeightRecorder.get_leptonIDSF_looseToTight("central");
+      const double pileupJetIDSF = evtWeightRecorder.get_pileupJetIDSF("central");
 
       snm->read(triggerSF,                              FloatVariableType_bbww::trigger_SF);
       snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
@@ -3305,6 +3321,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
       snm->read(leptonSF_looseToTight,                  FloatVariableType_bbww::lepton_IDSF_looseToTight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
+      snm->read(pileupJetIDSF,                          FloatVariableType_bbww::PU_jetID_SF);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
       snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
