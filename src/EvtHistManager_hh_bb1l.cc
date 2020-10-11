@@ -224,8 +224,9 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 				       const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-               std::string  category_mount,
-               const std::map<std::string, double> categories_map_MVAs,
+				       std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
+				       const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs, 
+				       const std::map<std::string, double> exclusive_categories_map_MVAs,
                double selLepton_lead_pt, double selLepton_lead_eta,
                double selJetsAK4_0_pt,
                double selJetsAK4_1_pt,
@@ -246,6 +247,25 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
       throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
     }
     fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+  }
+  for(auto typeMVA: inclusive_categories_map_MVAs)
+  {
+    std::string name_test = typeMVA.first + inclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+  }
+  for(auto typeMVA: exclusive_categories_map_MVAs)
+  {
+    std::string name_test = typeMVA.first + exclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+  }  
     /*    fillWithOverFlow(histograms_by_category_types_[name_test+"_leppt"],  selLepton_lead_pt, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_types_[name_test+"_bjet1pt"],  selJetsAK4_0_pt, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_types_[name_test+"_mht"],  mht, evtWeight, evtWeightErr);
@@ -265,7 +285,6 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histograms_by_category_types_[name_test+"_mbb_medium"],  mbb_medium, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_Hbb_reg"],  cosThetaS_Hbb_reg, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_HH"],  cosThetaS_HH, evtWeight, evtWeightErr);*/
-  }
   //
   /*fillWithOverFlow(histogram_numElectrons_,                     numElectrons,                       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numMuons_,                         numMuons,                           evtWeight, evtWeightErr);
