@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-06 23:19:48 with the following command:
+# file generated at 2020-10-11 14:48:06 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -1591,13 +1591,13 @@ meta_dictionary["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights
   ("crab_string",           ""),
   ("sample_category",       "signal_ggf_spin0_600_hh_bbvv_sl"),
   ("process_name_specific", "signal_ggf_spin0_600_hh_2b2v_sl_PSWeights"),
-  ("nof_db_events",         177997),
-  ("nof_db_files",          8),
-  ("fsize_db",              10167016385),
+  ("nof_db_events",         199997),
+  ("nof_db_files",          9),
+  ("fsize_db",              11409643552),
   ("xsection",              0.109352),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 10.17GB; nevents: 178.00k; release: 9_4_7; last modified: 2020-09-10 11:33:14"),
+  ("comment",               "status: PRODUCTION; size: 11.41GB; nevents: 200.00k; release: 9_4_7; last modified: 2020-09-10 11:33:14"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -4256,7 +4256,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_ggf_spin0_450_hh_bbvv_sl:            567.99k
 # signal_ggf_spin0_500_hh_bbvv_sl:            491.00k
 # signal_ggf_spin0_550_hh_bbvv_sl:            480.00k
-# signal_ggf_spin0_600_hh_bbvv_sl:            377.99k
+# signal_ggf_spin0_600_hh_bbvv_sl:            399.99k
 # signal_ggf_spin0_650_hh_bbvv_sl:            386.00k
 # signal_ggf_spin0_700_hh_bbvv_sl:            399.99k
 # signal_ggf_spin0_750_hh_bbvv_sl:            399.99k
