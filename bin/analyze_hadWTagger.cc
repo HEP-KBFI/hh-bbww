@@ -73,7 +73,8 @@ const double higgsBosonMass = 125.;
 const double topMass = 172.9; // CV: taken from http://pdg.lbl.gov/2019/listings/rpp2019-list-t-quark.pdf ("OUR AVERAGE")
 
 enum { kMode_undefined, kMode_hadWTagger, kMode_jpa_4jet, kMode_jpa_missingBJet, kMode_jpa_missingWJet, kMode_jpa_missingBJet_missingWJet, kMode_jpa_missingAllWJet, kMode_jpa_missingBJet_missingAllWJet, kMode_jpa_restOfcat };
-//TH2D* h_genmatch = new TH2D("genmatc", "" , 3, -0.5,2.5, 3, -0.5, 2.5);
+TH2D* h_genmatch = new TH2D("genmatc", "" , 3, -0.5,2.5, 3, -0.5, 2.5);
+//TH1D* h_genmatch = new TH1D("genmatch", "" ,3, -0.5, 2.5);
 NtupleFillerBDT<float, int>* createNtuple(std::string mode, std::string histogramDir, std::string era_string, std::string process_string) {
 
   NtupleFillerBDT<float, int>* bdt_filler = new std::remove_pointer<decltype(bdt_filler)>::type(
@@ -116,13 +117,15 @@ NtupleFillerBDT<float, int>* createNtuple(std::string mode, std::string histogra
   return bdt_filler;
 }
 
-std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs) { 
+std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
+				const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs,
+				bool Hbb_isBoosted = false) {
   int matchedBJet(0);
   int matchedWJet(0);
   for ( std::vector<const RecoJet*>::const_iterator selJet1 = cleanedJetsAK4_wrtLeptons.begin();
 	selJet1 != cleanedJetsAK4_wrtLeptons.end(); ++selJet1 ) {
 
-    if ( isGenMatched((*selJet1)->eta(), (*selJet1)->phi(), genBJets_ptrs) ) {
+    if ( !Hbb_isBoosted && isGenMatched((*selJet1)->eta(), (*selJet1)->phi(), genBJets_ptrs) ) {
       ++matchedBJet;
     }
     else if ( isGenMatched((*selJet1)->eta(), (*selJet1)->phi(), genWJets_ptrs) )  {
@@ -849,7 +852,7 @@ int main(int argc,
     int numJetsAK4_genMatched_to_Wjj = (int)countGenMatchedJets(cleanedJetsAK4_wrtLeptons, genWJets_ptrs);
     int numLeptons = (int)preselLeptons.size();
     std::pair<int, int> matchedJets_ = matchedJets(cleanedJetsAK4_wrtLeptons, genBJets_ptrs, genWJets_ptrs);
-    //h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
+    if ( !Hbb_isBoosted ) h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
     int mode = kMode_undefined;
     if      ( mode_string == "forBDTtraining_hadWTagger"      ) mode = kMode_hadWTagger;
     else if ( mode_string == "forBDTtraining_jpa_4jet"        ) {
@@ -879,7 +882,9 @@ int main(int argc,
 	   << "Invalid Configuration parameter 'mode' = " << mode << "!!";
 
     if ( Hbb_isBoosted ) {
-      if ( matchedJets_.second ==1 ) {
+      std::pair<int, int> HbbBoosted_matchedJets_ = matchedJets(selJetsAK4_Wjj, genBJets_ptrs, genWJets_ptrs, true);
+      //h_genmatch->Fill(matchedJets_.second);
+      if ( HbbBoosted_matchedJets_.second ==1 ) {
 	int idxRow = 0;
 	double numRowsPerEvent = selJetsAK4_Wjj.size();
 	for ( std::vector<const RecoJet*>::const_iterator selJet_Wjj = selJetsAK4_Wjj.begin();
@@ -898,7 +903,7 @@ int main(int argc,
 	  ++idxRow;
 	}
       }
-      else if ( matchedJets_.second == 2 ) {
+      else if ( HbbBoosted_matchedJets_.second == 2 ) {
 	int idxRow = 0;
 	double numRowsPerEvent = 0.5*selJetsAK4_Wjj.size()*(selJetsAK4_Wjj.size() - 1);
 	for ( std::vector<const RecoJet*>::const_iterator selJet1_Wjj = selJetsAK4_Wjj.begin();
@@ -1135,7 +1140,7 @@ int main(int argc,
             << " selected = " << selectedEntries << "\n\n"
             << "cut-flow table" << std::endl;
   fs.file().cd();
-  //h_genmatch->Write();
+  h_genmatch->Write();
   //  delete h_genmatch;
   delete run_lumi_eventSelector;
   delete muonReader;
