@@ -163,7 +163,17 @@ if __name__ == '__main__':
    "_Res_MissWJet_2b_e",
    "_HbbFat_WjjRes_MissJet_m",
    "_Res_MissWJet_1b_m",
-   "_Res_MissWJet_2b_m"
+   "_Res_MissWJet_2b_m",
+    "_singleCat_2b_m",
+     "_singleCat_2b_e",
+    "_singleCat_1b_m",
+     "_singleCat_1b_e",
+    "_resolved_singleCat_2b_m",
+     "_resolved_singleCat_2b_e",
+    "_resolved_singleCat_1b_m",
+     "_resolved_singleCat_1b_e",
+    "_boosted_singleCat_m",
+     "_boosted_singleCat_e"
    ]
   if not ignore_Wjj_boosted :
       categories_list_bins = categories_list_bins + [
