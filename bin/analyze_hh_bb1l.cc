@@ -2092,7 +2092,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       for(auto jet1_it = selJetsAK4.begin(); jet1_it != selJetsAK4.end(); ++jet1_it)
       {
 	const RecoJet * jet1 = *jet1_it;
-	if ( !( (jet1->phi() == selJet1_Hbb->phi() && jet1->eta() == selJet1_Hbb->eta()) || (jet1->phi() == selJet2_Hbb->phi() && jet1->eta() == selJet2_Hbb->eta()) ) )
+	if ( !(deltaR(jet1->p4(), selJet1_Hbb->p4()) <0.1 || deltaR(jet1->p4(), selJet2_Hbb->p4()) <0.1) )
 	{
 	  cleanedJetsAK4_wrtHbb.push_back( jet1 );
 	}
