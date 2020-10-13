@@ -18,8 +18,8 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
   mvaInputFilePath_ = mvaInputFilePath;
   if ( mvaInputFilePath_.find_last_of("/") != (mvaInputFilePath_.size() - 1) ) mvaInputFilePath_.append("/");
 
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b2W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_4jet_boosted_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b2W]   = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_4jet_boosted_odd.xml";
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b2W]  = "bb1l_jpa_4jet_boosted_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b2W]   = "bb1l_jpa_4jet_boosted_odd.xml";
   mvaInputVariables_1stLayer_[(int)JPA::Category_boosted::k2b2W]       = {  
     "wjet1_btagCSV",
     "wjet1_qgDiscr",
@@ -33,8 +33,8 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "dR_wjet1wjet2",
     "Hww_mass"
   };
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b1W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingWJet_boosted_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b1W]   = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingWJet_boosted_odd.xml";
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b1W]  = "bb1l_jpa_missingWJet_boosted_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b1W]   = "bb1l_jpa_missingWJet_boosted_odd.xml";
   mvaInputVariables_1stLayer_[(int)JPA::Category_boosted::k2b1W]       = {
     "dEta_bjet1_lep",
     "wjet1_ptReg",
@@ -45,8 +45,9 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "nBJetMedium"
   };
 
-  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b1W; ++jpaCategory )
   {
+std::cout << "initializing 1stLayer BDT for boosted category = " << jpaCategory << std::endl;
     TMVAInterface* mva = new TMVAInterface(
       mvaInputFilePath_ + mvaInputFileNames_1stLayer_even_[jpaCategory], 
       mvaInputFilePath_ + mvaInputFileNames_1stLayer_odd_[jpaCategory], 
@@ -73,8 +74,8 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "nBJetMedium",
     "Hbb_massReg"
   };
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b1W] = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingWJet_resolved_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b1W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingWJet_resolved_odd.xml";
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b1W] = "bb1l_jpa_missingWJet_resolved_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b1W]  = "bb1l_jpa_missingWJet_resolved_odd.xml";
   mvaInputVariables_1stLayer_[(int)JPA::Category_resolved::k2b1W]      = {
     "bjet1_btagCSV",
     "bjet2_ptReg",
@@ -90,8 +91,8 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "nBJetLoose",
     "nBJetMedium"
   };
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b0W] = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingAllWJet_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b0W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingAllWJet_odd.xml";
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b0W] = "bb1l_jpa_missingAllWJet_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b0W]  = "bb1l_jpa_missingAllWJet_odd.xml";
   mvaInputVariables_1stLayer_[(int)JPA::Category_resolved::k2b0W]      = {
     "bjet1_ptReg",
     "bjet1_btagCSV",
@@ -103,8 +104,8 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "nJet",
     "nBJetMedium"
   };
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b2W] = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingBJet_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b2W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingBJet_odd.xml";
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b2W] = "bb1l_jpa_missingBJet_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b2W]  = "bb1l_jpa_missingBJet_odd.xml";
   mvaInputVariables_1stLayer_[(int)JPA::Category_resolved::k1b2W]      = {
     "bjet1_ptReg",
     "bjet1_btagCSV",
@@ -119,25 +120,25 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "nJet",
     "nBJetMedium"
   };
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b1W] = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingBJet_missingWJet_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b1W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingBJet_missingWJet_odd.xml";
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b1W] = "bb1l_jpa_missingBJet_missingWJet_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b1W]  = "bb1l_jpa_missingBJet_missingWJet_odd.xml";
   mvaInputVariables_1stLayer_[(int)JPA::Category_resolved::k1b1W]      = {
-    "bjet1_ptReg",
-    "bjet1_btagCSV",
-    "bjet1_qgDiscr",
-    "dEta_bjet1_lep",
-    "wjet1_ptReg",
-    "wjet1_btagCSV",
-    "wjet1_qgDiscr",
-    "dEta_wjet1_lep",
-    "nJet",
-    "nBJetLoose",
-    "nBJetMedium",
+    "bjet1_ptReg", 
+    "bjet1_btagCSV", 
+    "bjet1_qgDiscr", 
+    "dEta_bjet1_lep", 
+    "wjet1_ptReg", 
+    "wjet1_btagCSV", 
+    "wjet1_qgDiscr", 
+    "dEta_wjet1_lep", 
+    "nJet", 
+    "nBJetLoose", 
+    "nBJetMedium", 
     "nLep"
   };
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b1W] = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingBJet_missingAllWJet_even.xml";
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b1W]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_missingBJet_missingAllWJet_odd.xml";
-  mvaInputVariables_1stLayer_[(int)JPA::Category_resolved::k1b1W]      = {
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b0W] = "bb1l_jpa_missingBJet_missingAllWJet_even.xml";
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b0W]  = "bb1l_jpa_missingBJet_missingAllWJet_odd.xml";
+  mvaInputVariables_1stLayer_[(int)JPA::Category_resolved::k1b0W]      = {
     "lepton_pt",
     "bjet1_ptReg",
     "bjet1_btagCSV",
@@ -148,8 +149,9 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     "nBJetMedium"
   };
 
-  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b0to2W; ++jpaCategory )
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k1b0W; ++jpaCategory )
   {
+std::cout << "initializing 1stLayer BDT for resolved category = " << jpaCategory << std::endl;
     TMVAInterface* mva = new TMVAInterface(
       mvaInputFilePath_ + mvaInputFileNames_1stLayer_even_[jpaCategory], 
       mvaInputFilePath_ + mvaInputFileNames_1stLayer_odd_[jpaCategory], 
@@ -158,14 +160,14 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
     mvas_1stLayer_[jpaCategory] = mva;
   }
 
-  mvaInputFileNames_2ndLayer_even_[kBoosted]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_boosted_even.xml";
-  mvaInputFileNames_2ndLayer_odd_[kBoosted]   = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_boosted_odd.xml";
+  mvaInputFileNames_2ndLayer_even_[kBoosted]  = "bb1l_jpa_evtCat_boosted_even.xml";
+  mvaInputFileNames_2ndLayer_odd_[kBoosted]   = "bb1l_jpa_evtCat_boosted_odd.xml";
   mvaInputVariables_2ndLayer_[kBoosted]       = { 
     "bdtScore_jpa_4jet",
     "bdtScore_jpa_missingWJet"
   };
-  mvaInputFileNames_2ndLayer_even_[kResolved] = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_resolved_even.xml";
-  mvaInputFileNames_2ndLayer_odd_[kResolved]  = "hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_jpa_evtCat_resolved_odd.xml";
+  mvaInputFileNames_2ndLayer_even_[kResolved] = "bb1l_jpa_evtCat_resolved_even.xml";
+  mvaInputFileNames_2ndLayer_odd_[kResolved]  = "bb1l_jpa_evtCat_resolved_odd.xml";
   mvaInputVariables_2ndLayer_[kResolved]      = { 
     "bdtScore_jpa_4jet", 
     "bdtScore_jpa_missingWJet", 
@@ -176,6 +178,7 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
   };
   for ( int jpaCategory = kResolved; jpaCategory <= kBoosted; ++jpaCategory ) 
   {
+std::cout << "initializing 2ndLayer BDT for resolved category = " << jpaCategory << std::endl;
     TMVAInterface* mva = new TMVAInterface(
       mvaInputFilePath_ + mvaInputFileNames_2ndLayer_even_[jpaCategory], 
       mvaInputFilePath_ + mvaInputFileNames_2ndLayer_odd_[jpaCategory], 
@@ -225,7 +228,7 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
 {
   set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
   std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets);
-  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b0to2W; ++jpaCategory )
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k1b0W; ++jpaCategory )
   {
     jpas_[jpaCategory] = makeJPAs_resolved(ak4Jets_ptrs, jpaCategory);
     std::sort(jpas_[jpaCategory].begin(), jpas_[jpaCategory].end(), isHigherJPAScore);
@@ -247,11 +250,25 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
   else if ( mvaOutput_2ndLayer == 4 ) jpaCategory = (int)JPA::Category_resolved::k2b0W;
   else if ( mvaOutput_2ndLayer == 5 ) jpaCategory = (int)JPA::Category_resolved::k1b1W;
   else if ( mvaOutput_2ndLayer == 6 ) jpaCategory = (int)JPA::Category_resolved::k1b0W;
-  else if ( mvaOutput_2ndLayer == 7 ) jpaCategory = (int)JPA::Category_resolved::k0b0to2W;
+  else if ( mvaOutput_2ndLayer == 7 ) jpaCategory = (int)JPA::Category_resolved::k0b;
   else assert(0);
   mvaOutput_2ndLayer_[kResolved] = mvaOutput_2ndLayer;
-  if ( jpas_[jpaCategory].size() >= 1 ) return jpas_[jpaCategory].front();
-  else return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_resolved::kUndefined, false);
+  if ( jpaCategory >= (int)JPA::Category_resolved::k2b2W && jpaCategory <= (int)JPA::Category_resolved::k1b0W )
+  {
+    if ( jpas_[jpaCategory].size() >= 1 )
+    {
+      return jpas_[jpaCategory].front();
+    }
+    else 
+    {
+      std::cerr << "Warning in <JPAInterface::operator()>: 2nd layer BDT chose category for which list of JPAs is empty !!" << std::endl;
+      return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_resolved::kUndefined, false);
+    }
+  }
+  else
+  {
+    return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_resolved::k0b, false);
+  }
 }
 
 JPA
@@ -261,7 +278,7 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
 {
   set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
   std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets);
-  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b1W; ++jpaCategory )
   {
     jpas_[jpaCategory] = makeJPAs_boosted(ak4Jets_ptrs, &ak8jet_subjet1, &ak8jet_subjet2, jpaCategory);
     std::sort(jpas_[jpaCategory].begin(), jpas_[jpaCategory].end(), isHigherJPAScore);
@@ -278,8 +295,22 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
   else if ( mvaOutput_2ndLayer == 3 ) jpaCategory = (int)JPA::Category_boosted::k2b0W;
   else assert(0);
   mvaOutput_2ndLayer_[kBoosted] = mvaOutput_2ndLayer;
-  if ( jpas_[jpaCategory].size() >= 1 ) return jpas_[jpaCategory].front();
-  else return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_boosted::kUndefined, true);
+  if ( jpaCategory >= (int)JPA::Category_boosted::k2b2W && jpaCategory <= (int)JPA::Category_boosted::k2b1W ) 
+  {
+    if ( jpas_[jpaCategory].size() >= 1 ) 
+    {
+      return jpas_[jpaCategory].front();
+    }
+    else 
+    {
+      std::cerr << "Warning in <JPAInterface::operator()>: 2nd layer BDT chose category for which list of JPAs is empty !!" << std::endl;
+      return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_boosted::kUndefined, true);
+    }
+  }
+  else
+  {
+    return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_boosted::k2b0W, true);
+  }
 }
 
 namespace

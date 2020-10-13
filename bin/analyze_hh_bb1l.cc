@@ -111,6 +111,7 @@
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromHiggs.h" // GenParticleMatcherFromHiggs
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched 
+#include "hhAnalysis/bbww/interface/JPAInterface.h" // JPA, JPAJet, JPAInterface
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
 #include <TError.h> // gErrorAbortLevel, kError
@@ -149,8 +150,32 @@ enum { kHbb_undefined, kHbb_resolved, kHbb_boosted };
 enum { kWjj_undefined, kWjj_resolved, kWjj_boosted_lowPurity, kWjj_boosted_highPurity };
 enum { kVBF_undefined, kVBF_nottagged, kVBF_tagged };
 enum {kjpa_HbbBoosted_undefined, kjpa_HbbBoosted_2jet, kjpa_HbbBoosted_missingWJet, kjpa_HbbBoosted_restOfcat};
+std::string jpaCategory_Saswati_boosted(int jpaCategory)
+{
+  std::string jpaCategory_string;
+  if      ( jpaCategory == kjpa_HbbBoosted_undefined   ) jpaCategory_string = "undefined";
+  else if ( jpaCategory == kjpa_HbbBoosted_2jet        ) jpaCategory_string = "2b2W (boosted)";
+  else if ( jpaCategory == kjpa_HbbBoosted_missingWJet ) jpaCategory_string = "2b1W (boosted)";
+  else if ( jpaCategory == kjpa_HbbBoosted_restOfcat   ) jpaCategory_string = "2b0W (boosted)";
+  else assert(0);
+  return jpaCategory_string;
+}
 enum {kjpa_HbbResolved_undefined, kjpa_HbbResolved_4jet, kjpa_HbbResolved_missingWJet, kjpa_HbbResolved_missingBJet, kjpa_HbbResolved_missingAllWJet, 
       kjpa_HbbResolved_missingBJet_missingWJet, kjpa_HbbResolved_missingBJet_missingAllWJet, kjpa_HbbResolved_restOfcat};
+std::string jpaCategory_Saswati_resolved(int jpaCategory)
+{
+  std::string jpaCategory_string;
+  if      ( jpaCategory == kjpa_HbbResolved_undefined                  ) jpaCategory_string = "undefined";
+  else if ( jpaCategory == kjpa_HbbResolved_4jet                       ) jpaCategory_string = "2b2W (resolved)";
+  else if ( jpaCategory == kjpa_HbbResolved_missingWJet                ) jpaCategory_string = "2b1W (resolved)";
+  else if ( jpaCategory == kjpa_HbbResolved_missingBJet                ) jpaCategory_string = "1b2W (resolved)";
+  else if ( jpaCategory == kjpa_HbbResolved_missingAllWJet             ) jpaCategory_string = "2b0W (resolved)";
+  else if ( jpaCategory == kjpa_HbbResolved_missingBJet_missingWJet    ) jpaCategory_string = "1b1W (resolved)";
+  else if ( jpaCategory == kjpa_HbbResolved_missingBJet_missingAllWJet ) jpaCategory_string = "1b0W (resolved)";
+  else if ( jpaCategory == kjpa_HbbResolved_restOfcat                  ) jpaCategory_string = "0b   (resolved)";
+  else assert(0);
+  return jpaCategory_string;
+}
 
 struct categoryEntryType
 {
@@ -441,6 +466,27 @@ comp_mem_maxLR(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l)
     }
   }
   return maxLR;
+}
+
+JPAJet convert_to_JPAJet(const RecoJet* ak4Jet)
+{
+  JPAJet ak4Jet_jpa(ak4Jet->p4(), ak4Jet->p4_bRegCorr(), ak4Jet->BtagCSV(), ak4Jet->QGDiscr());
+  return ak4Jet_jpa;
+}
+
+std::pair<JPAJet, JPAJet> convert_to_JPAJets(const RecoJetAK8* ak8Jet)
+{
+  assert(ak8Jet->subJet1() && ak8Jet->subJet2());
+
+  const RecoSubjetAK8* ak8jet_subjet1 = ak8Jet->subJet1();
+  double ak8jet_subjet1_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
+  JPAJet ak8jet_subjet1_jpa(ak8jet_subjet1->p4(), ak8jet_subjet1->p4(), ak8jet_subjet1->BtagCSV(), ak8jet_subjet1_QGDiscr);
+
+  const RecoSubjetAK8* ak8jet_subjet2 = ak8Jet->subJet2();
+  double ak8jet_subjet2_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
+  JPAJet ak8jet_subjet2_jpa(ak8jet_subjet2->p4(), ak8jet_subjet2->p4(), ak8jet_subjet2->BtagCSV(), ak8jet_subjet2_QGDiscr);
+
+  return std::pair<JPAJet, JPAJet>(ak8jet_subjet1_jpa, ak8jet_subjet2_jpa);
 }
 
 /**
@@ -982,6 +1028,8 @@ int main(int argc, char* argv[])
   TMVAInterface mva_jpa_missingBJetmissingAllWJet = initialize_mva_jpa_missingBJetmissingAllWJet();
   TMVAInterface mva_evt_category = initialize_mva_evt_category();
   TMVAInterface mva_evt_Hbb_isBoosted_category = initialize_mva_evt_category(true);
+
+  JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l");
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
   std::ostream* selEventsFile = ( selEventsFileName_output != "" ) ? new std::ofstream(selEventsFileName_output.data(), std::ios::out) : 0;
@@ -2222,6 +2270,42 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
         evt_category(mva_evt_Hbb_isBoosted_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
 		     bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
 		     eventInfo.event, selJetAK8_Hbb);
+
+      //---------------------------------------------------------------------------------------------
+      // CV: new JPA code
+      std::string jpaCategory_Christian = "undefined";
+      double jpaScore_Christian = -1.;
+      if ( selJetAK8_Hbb ) 
+      {
+        std::vector<JPAJet> ak4Jets_jpa;
+        for ( std::vector<const RecoJet*>::const_iterator ak4Jet = cleanedJetsAK4_wrtHbb.begin();
+              ak4Jet != cleanedJetsAK4_wrtHbb.end(); ++ak4Jet ) {
+          ak4Jets_jpa.push_back(convert_to_JPAJet(*ak4Jet));
+        }
+        std::pair<JPAJet, JPAJet> ak8jet_subjet1_and_2_jpa = convert_to_JPAJets(selJetAK8_Hbb);
+        JPA jpa = jpaInterface(
+          ak4Jets_jpa, ak8jet_subjet1_and_2_jpa.first, ak8jet_subjet1_and_2_jpa.second, 
+          selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(), 
+          eventInfo.event);
+        jpaCategory_Christian = jpa.jpaCategory_string();
+        jpaScore_Christian = jpa.jpaScore();
+      }
+      else
+      {
+        std::vector<JPAJet> ak4Jets_jpa;
+        for ( std::vector<const RecoJet*>::const_iterator ak4Jet = selJetsAK4.begin();
+              ak4Jet != selJetsAK4.end(); ++ak4Jet ) {
+          ak4Jets_jpa.push_back(convert_to_JPAJet(*ak4Jet));
+        }
+        JPA jpa = jpaInterface(
+          ak4Jets_jpa,
+          selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(), 
+          eventInfo.event);
+        jpaCategory_Christian = jpa.jpaCategory_string();
+        jpaScore_Christian = jpa.jpaScore();
+      }      
+      //---------------------------------------------------------------------------------------------
+
       if ( second_bdt ) {
 	std::pair<int, int> matchedJets_ = ( !selJetAK8_Hbb ) ? matchedJets(selJetsAK4, genBJets_ptrs, genWJets_ptrs) : matchedJets(cleanedJetsAK4_wrtHbb, genBJets_ptrs, genWJets_ptrs, true);
 	//if ( !selJetAK8_Hbb ) h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
@@ -2332,6 +2416,25 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	  selJet1_Hbb = nullptr;
 	  selJet2_Hbb = nullptr;
         }
+      }
+
+      std::string jpaCategory_Saswati;
+      if ( selJetAK8_Hbb )
+      {
+        jpaCategory_Saswati = jpaCategory_Saswati_boosted(evt_category_);
+      }
+      else
+      {
+        jpaCategory_Saswati = jpaCategory_Saswati_resolved(evt_category_);
+      }
+      double jpaScore_Saswati = bdtScore;
+      std::cout << "Saswati's JPA code:" << std::endl;
+      std::cout << " category = " << jpaCategory_Saswati << ": score = " << jpaScore_Saswati << std::endl;
+      std::cout << "Christian's JPA code:" << std::endl;
+      std::cout << " category = " << jpaCategory_Christian << ": score = " << jpaScore_Christian << std::endl;
+      if ( jpaCategory_Christian != jpaCategory_Saswati )
+      {
+        std::cout << "--> CHECK !!" << std::endl;
       }
     }
 
