@@ -29,6 +29,24 @@ JetQuadBase(const RecoJetBase* BJet1=nullptr, bool BJet1_isGenMatched=false, con
     , bdtScore_(bdtScore)
   {}
   ~JetQuadBase() {}
+  friend std::ostream&
+  operator<<(std::ostream& os, const JetQuadBase& jpa)
+  {
+    os << "bjet1:";
+    if ( jpa.BJet1_ ) os << (*jpa.BJet1_) << std::endl;
+    else os << " N/A" << std::endl;
+    os << "bjet2:";
+    if ( jpa.BJet2_ ) os << (*jpa.BJet2_) << std::endl;
+    else os << " N/A" << std::endl;
+    os << "wjet1:";
+    if ( jpa.WJet1_ ) os << (*jpa.WJet1_) << std::endl;
+    else os << " N/A" << std::endl;
+    os << "wjet2:";
+    if ( jpa.WJet2_ ) os << (*jpa.WJet2_) << std::endl;
+    else os << " N/A" << std::endl;
+    os << "bdtScore = " << jpa.bdtScore_ << std::endl;
+    return os;
+  }
   const RecoJetBase* BJet1_;
   bool BJet1_isGenMatched_;
   const RecoJetBase* BJet2_;
@@ -118,7 +136,7 @@ TMVAInterface initialize_mva_evt_category(bool Hbb_isBoosted = false);
 
 int evt_category(const TMVAInterface& mva, double bdtScore_jpa_4jet, double bdtScore_jpa_missingWJet, double bdtScore_jpa_missingBJet, 
 		 double bdtScore_jpa_missingAllWJet, double bdtScore_jpa_missingBJet_missingWJet, double bdtScore_jpa_missingBJet_missingAllWJet,
-		 EventInfo eventInfo, const RecoJetAK8* selJetAK8_Hbb = nullptr );
+		 const EventInfo& eventInfo, const RecoJetAK8* selJetAK8_Hbb = nullptr );
 
 void
 rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepton, 

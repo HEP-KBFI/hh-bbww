@@ -13,7 +13,10 @@
 const double topMass = 172.9; // CV: taken from http://pdg.lbl.gov/2019/listings/rpp2019-list-t-quark.pdf ("OUR AVERAGE")
 const double higgsBosonMass = 125.;
 
-JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
+const double jpaScore_default = 0.;
+
+JPAInterface::JPAInterface(const std::string& mvaInputFilePath, bool isDEBUG)
+  : isDEBUG_(isDEBUG)
 {
   mvaInputFilePath_ = mvaInputFilePath;
   if ( mvaInputFilePath_.find_last_of("/") != (mvaInputFilePath_.size() - 1) ) mvaInputFilePath_.append("/");
@@ -47,10 +50,9 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath)
 
   for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b1W; ++jpaCategory )
   {
-std::cout << "initializing 1stLayer BDT for boosted category = " << jpaCategory << std::endl;
     TMVAInterface* mva = new TMVAInterface(
-      mvaInputFilePath_ + mvaInputFileNames_1stLayer_even_[jpaCategory], 
       mvaInputFilePath_ + mvaInputFileNames_1stLayer_odd_[jpaCategory], 
+      mvaInputFilePath_ + mvaInputFileNames_1stLayer_even_[jpaCategory], 
       mvaInputVariables_1stLayer_[jpaCategory]);
     mva->enableBDTTransform();
     mvas_1stLayer_[jpaCategory] = mva;
@@ -151,10 +153,9 @@ std::cout << "initializing 1stLayer BDT for boosted category = " << jpaCategory 
 
   for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k1b0W; ++jpaCategory )
   {
-std::cout << "initializing 1stLayer BDT for resolved category = " << jpaCategory << std::endl;
     TMVAInterface* mva = new TMVAInterface(
-      mvaInputFilePath_ + mvaInputFileNames_1stLayer_even_[jpaCategory], 
       mvaInputFilePath_ + mvaInputFileNames_1stLayer_odd_[jpaCategory], 
+      mvaInputFilePath_ + mvaInputFileNames_1stLayer_even_[jpaCategory], 
       mvaInputVariables_1stLayer_[jpaCategory]);
     mva->enableBDTTransform();
     mvas_1stLayer_[jpaCategory] = mva;
@@ -178,10 +179,9 @@ std::cout << "initializing 1stLayer BDT for resolved category = " << jpaCategory
   };
   for ( int jpaCategory = kResolved; jpaCategory <= kBoosted; ++jpaCategory ) 
   {
-std::cout << "initializing 2ndLayer BDT for resolved category = " << jpaCategory << std::endl;
     TMVAInterface* mva = new TMVAInterface(
-      mvaInputFilePath_ + mvaInputFileNames_2ndLayer_even_[jpaCategory], 
       mvaInputFilePath_ + mvaInputFileNames_2ndLayer_odd_[jpaCategory], 
+      mvaInputFilePath_ + mvaInputFileNames_2ndLayer_even_[jpaCategory], 
       mvaInputVariables_2ndLayer_[jpaCategory]);
     mva->enableBDTTransform();
     mvas_2ndLayer_[jpaCategory] = mva;
@@ -226,9 +226,16 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
                          const JPA::LorentzVector& leptonP4, int numLeptons, int numJets, int numBJets_loose, int numBJets_medium, double metPx, double metPy, 
                          int event_number)
 {
+  if ( isDEBUG_ )
+  {
+    std::cout << "<JPAInterface::operator() resolved>:" << std::endl;
+  }
+  ak4Jets_ = ak4Jets;
+  ak8jet_subjet1_ = JPAJet();
+  ak8jet_subjet2_ = JPAJet();
   set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
-  std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets);
-  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k1b0W; ++jpaCategory )
+  std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets_);
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
   {
     jpas_[jpaCategory] = makeJPAs_resolved(ak4Jets_ptrs, jpaCategory);
     std::sort(jpas_[jpaCategory].begin(), jpas_[jpaCategory].end(), isHigherJPAScore);
@@ -242,7 +249,16 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
   mvaInputVariables["bdtScore_jpa_missingAllWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_resolved::k2b0W];
   mvaInputVariables["bdtScore_jpa_missingBJet_missingWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_resolved::k1b1W];
   mvaInputVariables["bdtScore_jpa_missingBJet_missingAllWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_resolved::k1b0W];
-  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[kResolved])(mvaInputVariables, event_number_, true));
+  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[kResolved])(mvaInputVariables, event_number_, true)) + 1;
+  if ( isDEBUG_ )
+  {
+    std::cout << "mvaInputVariables:" << std::endl;
+    for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+          mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+    }
+    std::cout << "mvaOutput_2ndLayer = " << mvaOutput_2ndLayer << std::endl;
+  }
   int jpaCategory = (int)JPA::Category_resolved::kUndefined;
   if      ( mvaOutput_2ndLayer == 1 ) jpaCategory = (int)JPA::Category_resolved::k2b2W;
   else if ( mvaOutput_2ndLayer == 2 ) jpaCategory = (int)JPA::Category_resolved::k2b1W;
@@ -252,22 +268,15 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
   else if ( mvaOutput_2ndLayer == 6 ) jpaCategory = (int)JPA::Category_resolved::k1b0W;
   else if ( mvaOutput_2ndLayer == 7 ) jpaCategory = (int)JPA::Category_resolved::k0b;
   else assert(0);
-  mvaOutput_2ndLayer_[kResolved] = mvaOutput_2ndLayer;
-  if ( jpaCategory >= (int)JPA::Category_resolved::k2b2W && jpaCategory <= (int)JPA::Category_resolved::k1b0W )
+  mvaOutputs_2ndLayer_[kResolved] = mvaOutput_2ndLayer;
+  if ( jpas_[jpaCategory].size() >= 1 )
   {
-    if ( jpas_[jpaCategory].size() >= 1 )
-    {
-      return jpas_[jpaCategory].front();
-    }
-    else 
-    {
-      std::cerr << "Warning in <JPAInterface::operator()>: 2nd layer BDT chose category for which list of JPAs is empty !!" << std::endl;
-      return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_resolved::kUndefined, false);
-    }
+    return jpas_[jpaCategory].front();
   }
-  else
+  else 
   {
-    return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_resolved::k0b, false);
+    std::cerr << "Warning in <JPAInterface::operator()>: 2nd layer BDT chose category for which list of JPAs is empty !!" << std::endl;
+    return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_resolved::kUndefined, false);
   }
 }
 
@@ -276,11 +285,18 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
                          const JPA::LorentzVector& leptonP4, int numLeptons, int numJets, int numBJets_loose, int numBJets_medium, double metPx, double metPy, 
                          int event_number)
 {
-  set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
-  std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets);
-  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b1W; ++jpaCategory )
+  if ( isDEBUG_ )
   {
-    jpas_[jpaCategory] = makeJPAs_boosted(ak4Jets_ptrs, &ak8jet_subjet1, &ak8jet_subjet2, jpaCategory);
+    std::cout << "<JPAInterface::operator() boosted>:" << std::endl;
+  }
+  ak4Jets_ = ak4Jets;
+  ak8jet_subjet1_ = ak8jet_subjet1;
+  ak8jet_subjet2_ = ak8jet_subjet2;
+  set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
+  std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets_);
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  {
+    jpas_[jpaCategory] = makeJPAs_boosted(ak4Jets_ptrs, &ak8jet_subjet1_, &ak8jet_subjet2_, jpaCategory);
     std::sort(jpas_[jpaCategory].begin(), jpas_[jpaCategory].end(), isHigherJPAScore);
     if ( jpas_[jpaCategory].size() >= 1 ) mvaOutputs_1stLayer_[jpaCategory] = jpas_[jpaCategory].front().jpaScore();
     else mvaOutputs_1stLayer_[jpaCategory] = -1.; // CV: default value, used during training of the 2nd layer BDT also
@@ -288,28 +304,30 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
   std::map<std::string, double> mvaInputVariables;
   mvaInputVariables["bdtScore_jpa_4jet"] = mvaOutputs_1stLayer_[(int)JPA::Category_boosted::k2b2W];
   mvaInputVariables["bdtScore_jpa_missingWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_boosted::k2b1W];
-  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[kBoosted])(mvaInputVariables, event_number_, true));
+  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[kBoosted])(mvaInputVariables, event_number_, true)) + 1;
+  if ( isDEBUG_ )
+  {
+    std::cout << "mvaInputVariables:" << std::endl;
+    for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+          mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+    }
+    std::cout << "mvaOutput_2ndLayer = " << mvaOutput_2ndLayer << std::endl;
+  }
   int jpaCategory = (int)JPA::Category_boosted::kUndefined;
   if      ( mvaOutput_2ndLayer == 1 ) jpaCategory = (int)JPA::Category_boosted::k2b2W;
   else if ( mvaOutput_2ndLayer == 2 ) jpaCategory = (int)JPA::Category_boosted::k2b1W;
   else if ( mvaOutput_2ndLayer == 3 ) jpaCategory = (int)JPA::Category_boosted::k2b0W;
   else assert(0);
-  mvaOutput_2ndLayer_[kBoosted] = mvaOutput_2ndLayer;
-  if ( jpaCategory >= (int)JPA::Category_boosted::k2b2W && jpaCategory <= (int)JPA::Category_boosted::k2b1W ) 
+  mvaOutputs_2ndLayer_[kBoosted] = mvaOutput_2ndLayer;
+  if ( jpas_[jpaCategory].size() >= 1 ) 
   {
-    if ( jpas_[jpaCategory].size() >= 1 ) 
-    {
-      return jpas_[jpaCategory].front();
-    }
-    else 
-    {
-      std::cerr << "Warning in <JPAInterface::operator()>: 2nd layer BDT chose category for which list of JPAs is empty !!" << std::endl;
-      return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_boosted::kUndefined, true);
-    }
+    return jpas_[jpaCategory].front();
   }
-  else
+  else 
   {
-    return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_boosted::k2b0W, true);
+    std::cerr << "Warning in <JPAInterface::operator()>: 2nd layer BDT chose category for which list of JPAs is empty !!" << std::endl;
+    return JPA(nullptr, nullptr, nullptr, nullptr, -1., (int)JPA::Category_boosted::kUndefined, true);
   }
 }
 
@@ -345,6 +363,23 @@ namespace
 std::map<std::string, double>
 JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, const JPAJet* wjet1, const JPAJet* wjet2)
 {
+  if ( isDEBUG_ )
+  {
+    std::cout << "<JPAInterface::compMVAInputVariables>:" << std::endl;
+    std::cout << " bjet1:";
+    if ( bjet1 ) std::cout << " " << (*bjet1) << std::endl;
+    else std::cout << " N/A" << std::endl;
+    std::cout << " bjet2:";
+    if ( bjet2 ) std::cout << " " << (*bjet2) << std::endl;
+    else std::cout << " N/A" << std::endl;
+    std::cout << " wjet1:";
+    if ( wjet1 ) std::cout << " " << (*wjet1) << std::endl;
+    else std::cout << " N/A" << std::endl;
+    std::cout << " wjet2:";
+    if ( wjet2 ) std::cout << " " << (*wjet2) << std::endl;
+    else std::cout << " N/A" << std::endl;
+  }
+
   double bjet1_ptReg    = 0.; 
   double bjet2_ptReg    = 0.;
   double wjet1_ptReg    = 0.; 
@@ -366,12 +401,18 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
   double dEta_bjet2_lep = 0.;
   double dEta_wjet1_lep = 0.;
   double dEta_wjet2_lep = 0.;
+
+  double dR_bjet1_lep   = 0.;
+  double dR_bjet2_lep   = 0.;
+  double dR_wjet1_lep   = 0.;
+  double dR_wjet2_lep   = 0.;
   if ( bjet1 )
   {
     bjet1_ptReg    = bjet1->p4_reg().pt();
     bjet1_BtagCSV  = bjet1->BtagCSV();
     bjet1_QGDiscr  = bjet1->QGDiscr();
     dEta_bjet1_lep = TMath::Abs(bjet1->p4().eta() - leptonP4_.eta());
+    dR_bjet1_lep   = deltaR(bjet1->p4(), leptonP4_);
   }
   if ( bjet2 )
   {
@@ -379,6 +420,7 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
     bjet2_BtagCSV  = bjet2->BtagCSV();
     bjet2_QGDiscr  = bjet2->QGDiscr();
     dEta_bjet2_lep = TMath::Abs(bjet2->p4().eta() - leptonP4_.eta());
+    dR_bjet2_lep   = deltaR(bjet2->p4(), leptonP4_);
   }
   if ( wjet1 )
   {
@@ -386,6 +428,7 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
     wjet1_BtagCSV  = wjet1->BtagCSV();
     wjet1_QGDiscr  = wjet1->QGDiscr();
     dEta_wjet1_lep = TMath::Abs(wjet1->p4().eta() - leptonP4_.eta());
+    dR_wjet1_lep   = deltaR(wjet1->p4(), leptonP4_);
   }
   if ( wjet2 )
   {
@@ -393,6 +436,7 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
     wjet2_BtagCSV  = wjet2->BtagCSV();
     wjet2_QGDiscr  = wjet2->QGDiscr();
     dEta_wjet2_lep = TMath::Abs(wjet2->p4().eta() - leptonP4_.eta());
+    dR_wjet2_lep   = deltaR(wjet2->p4(), leptonP4_);
   }
 
   Particle::LorentzVector hadWP4;
@@ -423,13 +467,20 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
   double min_dR_hadW_bjet = TMath::Min(dR_hadW_bjet1, dR_hadW_bjet2);
   double max_dR_hadW_bjet = TMath::Max(dR_hadW_bjet1, dR_hadW_bjet2);
   double mTop1 = -1.;
-  if ( TMath::Abs(top1P4.mass() - topMass) < TMath::Abs(top2P4.mass() - topMass) )
+  if ( bjet1 && bjet2 )
+  {
+    if ( TMath::Abs(top1P4.mass() - topMass) < TMath::Abs(top2P4.mass() - topMass) )
+    {
+      mTop1 = top1P4.mass();
+    }
+    else
+    {
+      mTop1 = top2P4.mass();
+    }
+  }
+  else if ( bjet1 )
   {
     mTop1 = top1P4.mass();
-  }
-  else
-  {
-    mTop1 = top2P4.mass();
   }
   Particle::LorentzVector HbbP4;
   Particle::LorentzVector HbbP4_reg;
@@ -454,20 +505,24 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
     { "bjet1_btagCSV",    bjet1_BtagCSV                            },
     { "bjet1_qgDiscr",    bjet1_QGDiscr                            },
     { "dEta_bjet1_lep",   dEta_bjet1_lep                           },
+    { "dR_bjet1_lep",     dR_bjet1_lep                             },
     { "bjet2_ptReg",      bjet2_ptReg                              },
     { "bjet2_btagCSV",    bjet2_BtagCSV                            },
     { "bjet2_qgDiscr",    bjet2_QGDiscr                            },
     { "dEta_bjet2_lep",   dEta_bjet2_lep                           },
+    { "dR_bjet2_lep",     dR_bjet2_lep                             },
     { "dR_bjet1bjet2",    dR_bjet1bjet2                            },
     { "maxwjetbtagCSV",   TMath::Max(wjet1_BtagCSV, wjet2_BtagCSV) },    
     { "wjet1_ptReg",      wjet1_ptReg                              },
     { "wjet1_btagCSV",    wjet1_BtagCSV                            },
     { "wjet1_qgDiscr",    wjet1_QGDiscr                            },
     { "dEta_wjet1_lep",   dEta_wjet1_lep                           },
+    { "dR_wjet1_lep",     dR_wjet1_lep                             },
     { "wjet2_ptReg",      wjet2_ptReg                              },
     { "wjet2_btagCSV",    wjet2_BtagCSV                            },
     { "wjet2_qgDiscr",    wjet2_QGDiscr                            },
     { "dEta_wjet2_lep",   dEta_wjet2_lep                           },
+    { "dR_wjet2_lep",     dR_wjet2_lep                             },
     { "dR_wjet1wjet2",    dR_wjet1wjet2                            },
     { "HadW_mass",        hadWP4.mass()                            },
     { "HadW_cosTheta",    hadW_cosTheta                            },
@@ -483,6 +538,14 @@ JPAInterface::compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, co
     { "Hbb_massReg",      HbbP4_reg.mass()                         },
     { "Hww_mass",         HwwP4.mass()                             },
   };
+  if ( isDEBUG_ )
+  {
+    std::cout << "mvaInputVariables:" << std::endl;
+    for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+          mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+    }
+  }
   return mvaInputVariables;
 }
 
@@ -526,17 +589,27 @@ JPAInterface::makeJPAs_resolved(const std::vector<const JPAJet*>& ak4Jets, int j
     for ( std::vector<const JPAJet*>::const_iterator bjet2 = bjets2.begin(); bjet2 != bjets2.end(); ++bjet2 ) 
     {
       if ( (*bjet1) && (*bjet2) && !((*bjet1)->p4().pt() > (*bjet2)->p4().pt()) ) continue;
-      assert((*bjet1) != (*bjet2) && !((*bjet1) == nullptr && (*bjet2) != nullptr));
+      assert(!((*bjet1) == nullptr && (*bjet2) != nullptr));
       for ( std::vector<const JPAJet*>::const_iterator wjet1 = wjets1.begin(); wjet1 != wjets1.end(); ++wjet1 ) 
       {
+        if ( (*wjet1) != nullptr && ((*wjet1) == (*bjet1) || (*wjet1) == (*bjet2)) ) continue;
         for ( std::vector<const JPAJet*>::const_iterator wjet2 = wjets2.begin(); wjet2 != wjets2.end(); ++wjet2 ) 
         {
+          if ( (*wjet2) != nullptr && ((*wjet2) == (*bjet1) || (*wjet2) == (*bjet2)) ) continue;
           if ( (*wjet1) && (*wjet2) && !((*wjet1)->p4().pt() > (*wjet2)->p4().pt()) ) continue;
-          assert((*wjet1) != (*wjet2) && !((*wjet1) == nullptr && (*wjet2) != nullptr));
-          TMVAInterface* mva = mvas_1stLayer_[jpaCategory];
-          assert(mva);
-          std::map<std::string, double> mvaInputVariables = compMVAInputVariables(*bjet1, *bjet2, *wjet1, *wjet2);
-          double jpaScore = (*mva)(mvaInputVariables, event_number_);
+          assert(!((*wjet1) == nullptr && (*wjet2) != nullptr));
+          double jpaScore = jpaScore_default;
+          if ( jpaCategory != (int)JPA::Category_resolved::k0b )
+          {
+            TMVAInterface* mva = mvas_1stLayer_[jpaCategory];
+            assert(mva);
+            std::map<std::string, double> mvaInputVariables = compMVAInputVariables(*bjet1, *bjet2, *wjet1, *wjet2);
+            jpaScore = (*mva)(mvaInputVariables, event_number_);
+          }
+          if ( isDEBUG_ )
+          {
+            std::cout << "--> jpaScore = " << jpaScore << std::endl;
+          }
           jpas.push_back(JPA(*bjet1, *bjet2, *wjet1, *wjet2, jpaScore, jpaCategory, false));
         }
       }
@@ -552,7 +625,7 @@ JPAInterface::makeJPAs_boosted(const std::vector<const JPAJet*>& ak4Jets, const 
   assert(ak8jet_subjet1 && ak8jet_subjet2);
   const JPAJet* bjet1 = nullptr;
   const JPAJet* bjet2 = nullptr;
-  if ( ak8jet_subjet1->p4().pt() > ak8jet_subjet2->p4().pt() )
+  if ( ak8jet_subjet1->BtagCSV() > ak8jet_subjet2->BtagCSV() )
   {
     bjet1 = ak8jet_subjet1;
     bjet2 = ak8jet_subjet2;
@@ -569,7 +642,7 @@ JPAInterface::makeJPAs_boosted(const std::vector<const JPAJet*>& ak4Jets, const 
   else
     wjets1 = { nullptr };
   std::vector<const JPAJet*> wjets2;
-  if ( jpaCategory == (int)JPA::Category_resolved::k2b2W )
+  if ( jpaCategory == (int)JPA::Category_boosted::k2b2W )
     wjets2 = ak4Jets;
   else
     wjets2 = { nullptr };
@@ -578,11 +651,19 @@ JPAInterface::makeJPAs_boosted(const std::vector<const JPAJet*>& ak4Jets, const 
     for ( std::vector<const JPAJet*>::const_iterator wjet2 = wjets2.begin(); wjet2 != wjets2.end(); ++wjet2 ) 
     {
       if ( (*wjet1) && (*wjet2) && !((*wjet1)->p4().pt() > (*wjet2)->p4().pt()) ) continue;
-      assert((*wjet1) != (*wjet2) && !((*wjet1) == nullptr && (*wjet2) != nullptr));
-      TMVAInterface* mva = mvas_1stLayer_[jpaCategory];
-      assert(mva);
-      std::map<std::string, double> mvaInputVariables = compMVAInputVariables(bjet1, bjet2, *wjet1, *wjet2);
-      double jpaScore = (*mva)(mvaInputVariables, event_number_);
+      assert(!((*wjet1) == nullptr && (*wjet2) != nullptr));
+      double jpaScore = jpaScore_default;
+      if ( jpaCategory != (int)JPA::Category_boosted::k2b0W )
+      {
+        TMVAInterface* mva = mvas_1stLayer_[jpaCategory];
+        assert(mva);
+        std::map<std::string, double> mvaInputVariables = compMVAInputVariables(bjet1, bjet2, *wjet1, *wjet2);
+        jpaScore = (*mva)(mvaInputVariables, event_number_);
+      }
+      if ( isDEBUG_ )
+      {
+        std::cout << "--> jpaScore = " << jpaScore << std::endl;
+      }
       jpas.push_back(JPA(bjet1, bjet2, *wjet1, *wjet2, jpaScore, jpaCategory, true));
     }
   }
@@ -590,9 +671,17 @@ JPAInterface::makeJPAs_boosted(const std::vector<const JPAJet*>& ak4Jets, const 
 }
 
 double
-JPAInterface::jpaScore(int jpaCategory) const
+JPAInterface::mvaOutput_1stLayer(int jpaCategory) const
 {
-  std::map<int, double>::const_iterator jpaScore = mvaOutput_2ndLayer_.find(jpaCategory);
-  assert(jpaScore != mvaOutput_2ndLayer_.end());
+  std::map<int, double>::const_iterator jpaScore = mvaOutputs_1stLayer_.find(jpaCategory);
+  assert(jpaScore != mvaOutputs_1stLayer_.end());
+  return jpaScore->second;
+}
+
+double
+JPAInterface::mvaOutput_2ndLayer(int jpaCategory) const
+{
+  std::map<int, double>::const_iterator jpaScore = mvaOutputs_2ndLayer_.find(jpaCategory);
+  assert(jpaScore != mvaOutputs_2ndLayer_.end());
   return jpaScore->second;
 }

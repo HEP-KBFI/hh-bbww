@@ -72,13 +72,25 @@ makeJetQuads(const std::vector<const RecoJet*>& selJetsAK4, const std::vector<co
   }
   else
   {
+    const RecoJetBase* selJetAK8_Hbb_subjet1 = nullptr;
+    const RecoJetBase* selJetAK8_Hbb_subjet2 = nullptr; 
+    if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
+    {
+      selJetAK8_Hbb_subjet1 = selJetAK8_Hbb->subJet1();
+      selJetAK8_Hbb_subjet2 = selJetAK8_Hbb->subJet2();
+    }
+    else
+    {
+      selJetAK8_Hbb_subjet1 = selJetAK8_Hbb->subJet2();
+      selJetAK8_Hbb_subjet2 = selJetAK8_Hbb->subJet1();
+    }
     for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
     {
       for ( std::vector<const RecoJet*>::const_iterator selWJet2 = selWJet1 + 1; selWJet2 != selJetsAK4.end(); ++selWJet2 )
       {
 	bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
 	bool selWJet2_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets) : false;
-	JetQuadBase jetQuad(selJetAK8_Hbb->subJet1(), false, selJetAK8_Hbb->subJet2(), false, *selWJet1, selWJet1_isGenMatched, *selWJet2, selWJet2_isGenMatched);
+	JetQuadBase jetQuad(selJetAK8_Hbb_subjet1, false, selJetAK8_Hbb_subjet2, false, *selWJet1, selWJet1_isGenMatched, *selWJet2, selWJet2_isGenMatched);
 	jetQuads.push_back(jetQuad);
       }
     }
@@ -132,10 +144,22 @@ makeJetTripletsMissingWJet(const std::vector<const RecoJet*>& selJetsAK4, const 
   }
   else 
   {
+    const RecoJetBase* selJetAK8_Hbb_subjet1 = nullptr;
+    const RecoJetBase* selJetAK8_Hbb_subjet2 = nullptr; 
+    if ( selJetAK8_Hbb->subJet1()->BtagCSV() > selJetAK8_Hbb->subJet2()->BtagCSV() )
+    {
+      selJetAK8_Hbb_subjet1 = selJetAK8_Hbb->subJet1();
+      selJetAK8_Hbb_subjet2 = selJetAK8_Hbb->subJet2();
+    }
+    else
+    {
+      selJetAK8_Hbb_subjet1 = selJetAK8_Hbb->subJet2();
+      selJetAK8_Hbb_subjet2 = selJetAK8_Hbb->subJet1();
+    }
     for ( std::vector<const RecoJet*>::const_iterator selWJet1 = selJetsAK4.begin(); selWJet1 != selJetsAK4.end(); ++selWJet1 )
     {
       bool selWJet1_isGenMatched = ( genWJets.size() ) ? isGenMatchedT<GenJet>((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets) : false;
-      JetQuadBase jetQuad(selJetAK8_Hbb->subJet1(), false, selJetAK8_Hbb->subJet2(), false, *selWJet1, selWJet1_isGenMatched, nullptr, false);
+      JetQuadBase jetQuad(selJetAK8_Hbb_subjet1, false, selJetAK8_Hbb_subjet2, false, *selWJet1, selWJet1_isGenMatched, nullptr, false);
       jetTriplets.push_back(jetQuad);
     }
   }
@@ -212,8 +236,8 @@ TMVAInterface initialize_mva_evt_category(bool Hbb_isBoosted)
 
 int evt_category(const TMVAInterface& mva, double bdtScore_jpa_4jet, double bdtScore_jpa_missingWJet, double bdtScore_jpa_missingBJet, 
 		 double bdtScore_jpa_missingAllWJet, double bdtScore_jpa_missingBJet_missingWJet, double bdtScore_jpa_missingBJet_missingAllWJet,
-		 EventInfo eventInfo, const RecoJetAK8* selJetAK8_Hbb) {
-
+		 const EventInfo& eventInfo, const RecoJetAK8* selJetAK8_Hbb) {
+  //std::cout << "<evt_category>:" << std::endl;
   std::map<std::string, double> mvaInputVariables;
   if ( !selJetAK8_Hbb ) {
     mvaInputVariables = {
@@ -231,7 +255,14 @@ int evt_category(const TMVAInterface& mva, double bdtScore_jpa_4jet, double bdtS
       {"bdtScore_jpa_missingWJet",                          bdtScore_jpa_missingWJet},
     };
   }
-  int output = (int) mva(mvaInputVariables, eventInfo.event, true);
+  //std::cout << "mvaInputVariables:" << std::endl;
+  //for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+  //      mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+  //  std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+  //}
+  //std::cout << "event number = " << eventInfo.event << std::endl;
+  int output = (int)mva(mvaInputVariables, eventInfo.event, true);
+  //std::cout << "--> returning " << (output+1) << std::endl;
   return (output+1);
 }
 
@@ -334,10 +365,16 @@ const RecoJet* getSelJetAK4(const RecoJetBase* jet_) {
 void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepton, 
 		  int nBJetMedium, const Particle::LorentzVector& metP4,
 		  const TMVAInterface& mva, const EventInfo& eventInfo, const RecoJetAK8* selJetAK8_Hbb) {
-
+  //std::cout << "<rankJetQuads>:" << std::endl;
   for ( std::vector<JetQuadBase>::iterator jetQuad = jetQuads.begin(); jetQuad != jetQuads.end(); ++jetQuad )
     {
       assert(jetQuad->BJet1_ && jetQuad->BJet2_ && jetQuad->WJet1_ && jetQuad->WJet2_ );
+
+      //std::cout << "jetQuad #" << jetQuad - jetQuads.begin();
+      //if ( selJetAK8_Hbb ) std::cout << " (boosted)";
+      //else std::cout << " (resolved)";
+      //std::cout << ":" << std::endl;
+      //std::cout << (*jetQuad);
 
       double selBJet1_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets   
       double selBJet2_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
@@ -353,7 +390,7 @@ void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepto
       if ( selBJet1 )
 	{
 	  selBJet1_BtagCSV = selBJet1->BtagCSV();
-	  selBJet1P4_reg= selBJet1_P4*selBJet1->bRegCorr();
+	  selBJet1P4_reg= selBJet1->p4_bRegCorr();
 	}
 
       const RecoJet* selBJet2 = getSelJetAK4(jetQuad->BJet2_);
@@ -363,7 +400,7 @@ void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepto
         {
           selBJet2_BtagCSV = selBJet2->BtagCSV();
 	  selBJet2_QGDiscr = selBJet2->QGDiscr();
-	  selBJet2P4_reg= selBJet2_P4*selBJet2->bRegCorr();
+	  selBJet2P4_reg= selBJet2->p4_bRegCorr();
         }
 
       const RecoJet* selWJet1 = getSelJetAK4(jetQuad->WJet1_);
@@ -371,7 +408,7 @@ void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepto
       if ( selWJet1 )
         {
           selWJet1_BtagCSV = selWJet1->BtagCSV();
-	  //selWJet1_QGDiscr = selWJet1->QGDiscr();
+	  selWJet1_QGDiscr = selWJet1->QGDiscr();
 	}
 
       const RecoJet* selWJet2 = getSelJetAK4(jetQuad->WJet2_);
@@ -380,7 +417,7 @@ void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepto
       if ( selWJet2 )
         {
           selWJet2_BtagCSV = selWJet2->BtagCSV();
-	  selWJet2P4_reg= selWJet2_P4*selWJet2->bRegCorr();
+	  selWJet2P4_reg= selWJet2->p4_bRegCorr();
 	  selWJet2_BtagCSV = selWJet2->BtagCSV();
 	  selWJet2_QGDiscr = selWJet2->QGDiscr();
         }
@@ -443,7 +480,13 @@ void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepto
           {"Hww_mass",         HwwP4.mass()},
         };
       }
+      //std::cout << "mvaInputVariables:" << std::endl;
+      //for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+      //      mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      //  std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+      //}
       double bdtScore = mva(mvaInputVariables, eventInfo.event);
+      //std::cout << "--> bdtScore = " << bdtScore << std::endl;
       //if (selJetAK8_Hbb) {std::cout << "**************"<< bdtScore << std::endl;
       //assert(0);}
       jetQuad->bdtScore_ = bdtScore;
@@ -453,10 +496,17 @@ void rankJetQuads(std::vector<JetQuadBase>& jetQuads, const RecoLepton& selLepto
 
 void rankJetTripletsMissingWJet(std::vector<JetQuadBase>& jetTriplets, const RecoLepton& selLepton, int nJet, int nBJetLoose, int nBJetMedium, 
 				const TMVAInterface& mva, const EventInfo& eventInfo, const RecoJetAK8* selJetAK8_Hbb) {
-  
+  //std::cout << "<rankJetTripletsMissingWJet>:" << std::endl;
   for ( std::vector<JetQuadBase>::iterator jetTriplet = jetTriplets.begin(); jetTriplet != jetTriplets.end(); ++jetTriplet )
     {
       assert(jetTriplet->BJet1_ && jetTriplet->BJet2_ && jetTriplet->WJet1_ && !jetTriplet->WJet2_);
+
+      //std::cout << "jetTriplet #" << jetTriplet - jetTriplets.begin();
+      //if ( selJetAK8_Hbb ) std::cout << " (boosted)";
+      //else std::cout << " (resolved)";
+      //std::cout << ":" << std::endl;
+      //std::cout << (*jetTriplet);
+
       double selBJet1_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
       double selBJet2_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
       double selBJet2_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
@@ -469,7 +519,7 @@ void rankJetTripletsMissingWJet(std::vector<JetQuadBase>& jetTriplets, const Rec
       if ( selBJet1 )
         {
           selBJet1_BtagCSV = selBJet1->BtagCSV();
-          selBJet1P4_reg= selBJet1_P4*selBJet1->bRegCorr();
+          selBJet1P4_reg= selBJet1->p4_bRegCorr();
         }
 
       const RecoJet* selBJet2 = getSelJetAK4(jetTriplet->BJet2_);
@@ -478,7 +528,8 @@ void rankJetTripletsMissingWJet(std::vector<JetQuadBase>& jetTriplets, const Rec
       if ( selBJet2 )
         {
           selBJet2_BtagCSV = selBJet2->BtagCSV();
-          selBJet2P4_reg= selBJet2_P4*selBJet2->bRegCorr();
+          selBJet2_QGDiscr = selBJet2->QGDiscr();
+          selBJet2P4_reg= selBJet2->p4_bRegCorr();
         }
 
       const RecoJet* selWJet1 = getSelJetAK4(jetTriplet->WJet1_);
@@ -488,7 +539,7 @@ void rankJetTripletsMissingWJet(std::vector<JetQuadBase>& jetTriplets, const Rec
         {
           selWJet1_BtagCSV = selWJet1->BtagCSV();
           selWJet1_QGDiscr = selWJet1->QGDiscr();
-          selWJet1P4_reg= selWJet1_P4*selWJet1->bRegCorr();
+          selWJet1P4_reg= selWJet1->p4_bRegCorr();
         }
 
       double dR_bjet1bjet2 = deltaR(selBJet1_P4, selBJet2_P4);
@@ -527,7 +578,13 @@ void rankJetTripletsMissingWJet(std::vector<JetQuadBase>& jetTriplets, const Rec
 	  {"nBJetMedium",         nBJetMedium},
 	};
       }
+      //std::cout << "mvaInputVariables:" << std::endl;
+      //for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+      //      mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      //  std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+      //}
       double bdtScore = mva(mvaInputVariables, eventInfo.event);
+      //std::cout << "--> bdtScore = " << bdtScore << std::endl;
       //if( selJetAK8_Hbb){std::cout << "*************8wjet= " << bdtScore << std::endl;
       //assert(0);}
       jetTriplet->bdtScore_ = bdtScore;
@@ -536,10 +593,15 @@ void rankJetTripletsMissingWJet(std::vector<JetQuadBase>& jetTriplets, const Rec
 }
 
 void rankJetTripletsMissingBJet(std::vector<JetQuadBase>& jetTriplets, const RecoLepton& selLepton, int nJet, int nBJetMedium, const TMVAInterface& mva, const EventInfo& eventInfo) {
-  
+  //std::cout << "<rankJetTripletsMissingBJet>:" << std::endl;
   for ( std::vector<JetQuadBase>::iterator jetTriplet = jetTriplets.begin(); jetTriplet != jetTriplets.end(); ++jetTriplet )
     {
       assert(jetTriplet->BJet1_ && !jetTriplet->BJet2_ && jetTriplet->WJet1_ && jetTriplet->WJet2_ );
+
+      //std::cout << "jetTriplet #" << jetTriplet - jetTriplets.begin();
+      //std::cout << " (resolved)";
+      //std::cout << ":" << std::endl;
+      //std::cout << (*jetTriplet);
 
       double selBJet1_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets 
       double selWJet1_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
@@ -547,12 +609,12 @@ void rankJetTripletsMissingBJet(std::vector<JetQuadBase>& jetTriplets, const Rec
       double selWJet2_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
 
       const RecoJet* selBJet1 = getSelJetAK4(jetTriplet->BJet1_);
-      Particle::LorentzVector selBJet1_P4 = jetTriplet->BJet1_->p4();
+      //Particle::LorentzVector selBJet1_P4 = jetTriplet->BJet1_->p4();
       Particle::LorentzVector selBJet1P4_reg;
       if ( selBJet1 )
         {
           selBJet1_BtagCSV = selBJet1->BtagCSV();
-          selBJet1P4_reg= selBJet1_P4*selBJet1->bRegCorr();
+          selBJet1P4_reg= selBJet1->p4_bRegCorr();
         }
 
       const RecoJet* selWJet1 = getSelJetAK4(jetTriplet->WJet1_);
@@ -561,7 +623,7 @@ void rankJetTripletsMissingBJet(std::vector<JetQuadBase>& jetTriplets, const Rec
       if ( selWJet1 )
         {
           selWJet1_BtagCSV = selWJet1->BtagCSV();
-          selWJet1P4_reg= selWJet1_P4*selWJet1->bRegCorr();
+          selWJet1P4_reg= selWJet1->p4_bRegCorr();
         }
 
       const RecoJet* selWJet2 = getSelJetAK4(jetTriplet->WJet2_);
@@ -571,7 +633,7 @@ void rankJetTripletsMissingBJet(std::vector<JetQuadBase>& jetTriplets, const Rec
         {
           selWJet2_BtagCSV = selWJet2->BtagCSV();
           selWJet2_QGDiscr = selWJet2->QGDiscr();
-          selWJet2P4_reg= selWJet2_P4*selWJet2->bRegCorr();
+          selWJet2P4_reg= selWJet2->p4_bRegCorr();
         }
       Particle::LorentzVector HadWP4 = selWJet1_P4 + selWJet2_P4;
       double dR_HadW_lep = deltaR(HadWP4, selLepton.p4());
@@ -592,7 +654,13 @@ void rankJetTripletsMissingBJet(std::vector<JetQuadBase>& jetTriplets, const Rec
         {"nJet", nJet},
         {"nBJetMedium", nBJetMedium},
       };
+      //std::cout << "mvaInputVariables:" << std::endl;
+      //for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+      //      mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      //  std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+      //}
       double bdtScore = mva(mvaInputVariables, eventInfo.event);
+      //std::cout << "--> bdtScore = " << bdtScore << std::endl;
       jetTriplet->bdtScore_ = bdtScore;
     }
   std::sort(jetTriplets.begin(), jetTriplets.end(), isHigherRankedByBDT);
@@ -616,7 +684,7 @@ void rankJetDoubletsMissingBJetMissingWJet(std::vector<JetQuadBase>& jetDoublets
         {
           selBJet1_BtagCSV = selBJet1->BtagCSV();
 	  selBJet1_QGDiscr = selBJet1->QGDiscr();
-          selBJet1P4_reg= selBJet1_P4*selBJet1->bRegCorr();
+          selBJet1P4_reg= selBJet1->p4_bRegCorr();
         }
 
       const RecoJet* selWJet1 = getSelJetAK4(jetDoublet->WJet1_);
@@ -625,7 +693,7 @@ void rankJetDoubletsMissingBJetMissingWJet(std::vector<JetQuadBase>& jetDoublets
       if ( selWJet1 )
         {
           selWJet1_BtagCSV = selWJet1->BtagCSV();
-          selWJet1P4_reg= selWJet1_P4*selWJet1->bRegCorr();
+          selWJet1P4_reg= selWJet1->p4_bRegCorr();
 	  selWJet1_QGDiscr = selWJet1->QGDiscr();
         }
       double dEta_bjet1_lep = TMath::Abs(selBJet1_P4.eta() - selLepton.eta());
@@ -653,21 +721,27 @@ void rankJetDoubletsMissingBJetMissingWJet(std::vector<JetQuadBase>& jetDoublets
 
 void rankJetDoubletsMissingAllWJet(std::vector<JetQuadBase>& jetDoublets, const RecoLepton& selLepton, int nJet, int nBJetMedium,
 					   const TMVAInterface& mva, const EventInfo& eventInfo) {
-
+  //std::cout << "<rankJetDoubletsMissingAllWJet>:" << std::endl;
   for ( std::vector<JetQuadBase>::iterator jetDoublet = jetDoublets.begin(); jetDoublet != jetDoublets.end(); ++jetDoublet )
     {
       assert(jetDoublet->BJet1_ && jetDoublet->BJet1_ && !jetDoublet->WJet1_ && !jetDoublet->WJet2_  );
+
+      //std::cout << "jetDoublet #" << jetDoublet - jetDoublets.begin();
+      //std::cout << " (resolved)";
+      //std::cout << ":" << std::endl;
+      //std::cout << (*jetDoublet);
+
       double selBJet1_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
       double selBJet2_BtagCSV = 0.; // CV: treat jets for which b-tagging discriminator is not available as light-quark jets
       double selBJet2_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
 
       const RecoJet* selBJet1 = getSelJetAK4(jetDoublet->BJet1_);
-      Particle::LorentzVector selBJet1_P4 = jetDoublet->BJet1_->p4();
+      //Particle::LorentzVector selBJet1_P4 = jetDoublet->BJet1_->p4();
       Particle::LorentzVector selBJet1P4_reg;
       if ( selBJet1 )
         {
 	  selBJet1_BtagCSV = selBJet1->BtagCSV();
-          selBJet1P4_reg= selBJet1_P4*selBJet1->bRegCorr();
+          selBJet1P4_reg= selBJet1->p4_bRegCorr();
         }
       const RecoJet* selBJet2 = getSelJetAK4(jetDoublet->BJet2_);
       Particle::LorentzVector selBJet2_P4 = jetDoublet->BJet2_->p4();
@@ -675,7 +749,7 @@ void rankJetDoubletsMissingAllWJet(std::vector<JetQuadBase>& jetDoublets, const 
       if ( selBJet2 )
         {
           selBJet2_BtagCSV = selBJet2->BtagCSV();
-          selBJet2P4_reg= selBJet2_P4*selBJet2->bRegCorr();
+          selBJet2P4_reg= selBJet2->p4_bRegCorr();
 	  selBJet2_QGDiscr = selBJet2->QGDiscr();
         }
       double dEta_bjet2_lep = TMath::Abs(selBJet2_P4.eta() - selLepton.eta());
@@ -692,7 +766,14 @@ void rankJetDoubletsMissingAllWJet(std::vector<JetQuadBase>& jetDoublets, const 
         {"nJet", nJet},
         {"nBJetMedium", nBJetMedium},
       };
+      //std::cout << "mvaInputVariables:" << std::endl;
+      //for ( std::map<std::string, double>::const_iterator mvaInputVariable = mvaInputVariables.begin();
+      //      mvaInputVariable != mvaInputVariables.end(); ++mvaInputVariable ) {
+      //  std::cout << " " << mvaInputVariable->first << " = " << mvaInputVariable->second << std::endl;
+      //}
+      //std::cout << "event number = " << eventInfo.event << std::endl;
       double bdtScore = mva(mvaInputVariables, eventInfo.event);
+      //std::cout << "--> bdtScore = " << bdtScore << std::endl;
       jetDoublet->bdtScore_ = bdtScore;
     }
   std::sort(jetDoublets.begin(), jetDoublets.end(), isHigherRankedByBDT);
@@ -715,7 +796,7 @@ void rankJetSingletsMissingBJetMissingAllWJet(std::vector<JetQuadBase>& jetSingl
         {
           selBJet1_BtagCSV = selBJet1->BtagCSV();
 	  selBJet1_QGDiscr = selBJet1->QGDiscr();
-          selBJet1P4_reg= selBJet1_P4*selBJet1->bRegCorr();
+          selBJet1P4_reg= selBJet1->p4_bRegCorr();
         }
 
       double dEta_bjet1_lep = TMath::Abs(selBJet1_P4.eta() - selLepton.eta());

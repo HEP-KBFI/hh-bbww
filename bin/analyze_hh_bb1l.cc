@@ -225,16 +225,18 @@ struct categoryEntryType
 void setJets_fourVector(const JetQuadBase& JetQuad, const RecoJetBase*& selJet1_Hbb, const RecoJetBase*& selJet2_Hbb, const RecoJetBase*& selJet1_Wjj, const RecoJetBase*& selJet2_Wjj,
 			double& bdtScore, bool Hbb_isBoosted = false) {
 
-  if ( !Hbb_isBoosted) {
+  //if ( !Hbb_isBoosted) {
+  //  selJet1_Hbb = JetQuad.BJet1_;
+  //  selJet2_Hbb = JetQuad.BJet2_;
+  //  selJet1_Wjj = JetQuad.WJet1_;
+  //  selJet2_Wjj = JetQuad.WJet2_;
+  //}
+  //else {
     selJet1_Hbb = JetQuad.BJet1_;
     selJet2_Hbb = JetQuad.BJet2_;
     selJet1_Wjj = JetQuad.WJet1_;
     selJet2_Wjj = JetQuad.WJet2_;
-  }
-  else {
-    selJet1_Wjj = JetQuad.WJet1_;
-    selJet2_Wjj = JetQuad.WJet2_;
-  }
+  //}
   bdtScore = JetQuad.bdtScore_;
 }
 std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs,
@@ -1915,7 +1917,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       }
       continue;
     }
-    cutFlowTable.update(Form("electron pT > %f0.0 GeV / muon pT > %f0.0 GeV", minPt_electron, minPt_muon), evtWeightRecorder.get(central_or_shift_main));
+    cutFlowTable.update(Form("electron pT > %0.0f GeV / muon pT > %0.0f GeV", minPt_electron, minPt_muon), evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("electron pT > 32 GeV / muon pT > 25 GeV", evtWeightRecorder.get(central_or_shift_main));
 
     // require exactly one lepton passing tight selection criteria, to avoid overlap with other channels
@@ -2230,13 +2232,17 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       JetQuadBase jpa_missingBJet_missingAllWJet;
 
       if ( selJetAK8_Hbb ) {
+        //std::cout << "#cleanedJetsAK4_wrtHbb = " << cleanedJetsAK4_wrtHbb.size() << std::endl;
 	jpa_4jet = selectJet_Quad(cleanedJetsAK4_wrtHbb, *selLepton, selBJetsAK4_medium.size(), metP4, genBJets_ptrs, genWJets_ptrs, mva_jpa_Hbb_isBoosted_4jet, eventInfo, selJetAK8_Hbb);
 	bdtScore_jpa_4jet  = jpa_4jet.bdtScore_;
+        //std::cout << "Saswati's JPA (boosted, 4jet):" << std::endl;
+        //std::cout << jpa_4jet;
 	jpa_missingWJet = selectJet_TripletMissingWJet(cleanedJetsAK4_wrtHbb, *selLepton, selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(),
 				       genBJets_ptrs, genWJets_ptrs, mva_jpa_Hbb_isBoosted_missingWJet, eventInfo, selJetAK8_Hbb);
 	bdtScore_jpa_missingWJet = jpa_missingWJet.bdtScore_;
       }
       else {
+        //std::cout << "#selJetsAK4 = " << selJetsAK4.size() << std::endl;
 	jpa_4jet = selectJet_Quad(selJetsAK4, *selLepton, selBJetsAK4_medium.size(), metP4, genBJets_ptrs, genWJets_ptrs, mva_jpa_4jet, eventInfo);
         bdtScore_jpa_4jet  = jpa_4jet.bdtScore_;
 
@@ -2266,15 +2272,14 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       int evt_category_ = ( !selJetAK8_Hbb ) ?
         evt_category(mva_evt_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
 		     bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
-		     eventInfo.event) :
+		     eventInfo) :
         evt_category(mva_evt_Hbb_isBoosted_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
 		     bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
-		     eventInfo.event, selJetAK8_Hbb);
+		     eventInfo, selJetAK8_Hbb);
 
       //---------------------------------------------------------------------------------------------
       // CV: new JPA code
-      std::string jpaCategory_Christian = "undefined";
-      double jpaScore_Christian = -1.;
+      JPA jpa;
       if ( selJetAK8_Hbb ) 
       {
         std::vector<JPAJet> ak4Jets_jpa;
@@ -2282,13 +2287,14 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
               ak4Jet != cleanedJetsAK4_wrtHbb.end(); ++ak4Jet ) {
           ak4Jets_jpa.push_back(convert_to_JPAJet(*ak4Jet));
         }
+        //std::cout << "#ak4Jets_jpa (boosted) = " << ak4Jets_jpa.size() << std::endl;
         std::pair<JPAJet, JPAJet> ak8jet_subjet1_and_2_jpa = convert_to_JPAJets(selJetAK8_Hbb);
-        JPA jpa = jpaInterface(
+        jpa = jpaInterface(
           ak4Jets_jpa, ak8jet_subjet1_and_2_jpa.first, ak8jet_subjet1_and_2_jpa.second, 
           selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(), 
           eventInfo.event);
-        jpaCategory_Christian = jpa.jpaCategory_string();
-        jpaScore_Christian = jpa.jpaScore();
+        std::cout << "Christian's JPA (boosted):" << std::endl;
+        std::cout << jpa;
       }
       else
       {
@@ -2297,12 +2303,13 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
               ak4Jet != selJetsAK4.end(); ++ak4Jet ) {
           ak4Jets_jpa.push_back(convert_to_JPAJet(*ak4Jet));
         }
-        JPA jpa = jpaInterface(
+        //std::cout << "#ak4Jets_jpa (resolved) = " << ak4Jets_jpa.size() << std::endl;
+        jpa = jpaInterface(
           ak4Jets_jpa,
           selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(), 
           eventInfo.event);
-        jpaCategory_Christian = jpa.jpaCategory_string();
-        jpaScore_Christian = jpa.jpaScore();
+        std::cout << "Christian's JPA (resolved):" << std::endl;
+        std::cout << jpa;
       }      
       //---------------------------------------------------------------------------------------------
 
@@ -2430,11 +2437,61 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       double jpaScore_Saswati = bdtScore;
       std::cout << "Saswati's JPA code:" << std::endl;
       std::cout << " category = " << jpaCategory_Saswati << ": score = " << jpaScore_Saswati << std::endl;
+      std::cout << "selJet1_Hbb:";
+      if ( selJet1_Hbb ) std::cout << (*selJet1_Hbb) << std::endl;
+      else std::cout << " N/A" << std::endl;
+      std::cout << "selJet2_Hbb:";
+      if ( selJet2_Hbb ) std::cout << (*selJet2_Hbb) << std::endl;
+      else std::cout << " N/A" << std::endl;
+      std::cout << "selJet1_Wjj:";
+      if ( selJet1_Wjj ) std::cout << (*selJet1_Wjj) << std::endl;
+      else std::cout << " N/A" << std::endl;
+      std::cout << "selJet2_Wjj:";
+      if ( selJet2_Wjj ) std::cout << (*selJet2_Wjj) << std::endl;
+      else std::cout << " N/A" << std::endl;
       std::cout << "Christian's JPA code:" << std::endl;
-      std::cout << " category = " << jpaCategory_Christian << ": score = " << jpaScore_Christian << std::endl;
-      if ( jpaCategory_Christian != jpaCategory_Saswati )
+      std::cout << " category = " << jpa.jpaCategory_string() << ": score = " << jpa.jpaScore() << std::endl;
+      std::cout << jpa;
+      if ( jpa.jpaCategory_string() == jpaCategory_Saswati )
       {
-        std::cout << "--> CHECK !!" << std::endl;
+        bool isSameBJet1 = ((selJet1_Hbb && jpa.bjet1() && deltaR(selJet1_Hbb->p4(), jpa.bjet1()->p4()) < 1.e-2) || (!selJet1_Hbb && !jpa.bjet1()));
+        bool isSameBJet2 = ((selJet2_Hbb && jpa.bjet2() && deltaR(selJet2_Hbb->p4(), jpa.bjet2()->p4()) < 1.e-2) || (!selJet2_Hbb && !jpa.bjet2()));
+        bool isSameWJet1 = ((selJet1_Wjj && jpa.wjet1() && deltaR(selJet1_Wjj->p4(), jpa.wjet1()->p4()) < 1.e-2) || (!selJet1_Wjj && !jpa.wjet1()));
+        bool isSameWJet2 = ((selJet2_Wjj && jpa.wjet2() && deltaR(selJet2_Wjj->p4(), jpa.wjet2()->p4()) < 1.e-2) || (!selJet2_Wjj && !jpa.wjet2()));
+        if ( !(isSameBJet1 && isSameBJet2 && isSameWJet1 && isSameWJet2) ) 
+        {
+          std::cout << "--> CHECK (case 1) !!" << std::endl;
+        }
+      }
+      else
+      {
+        std::cout << "--> CHECK (case 2) !!" << std::endl;
+        if ( selJetAK8_Hbb )
+        {
+          std::cout << "Saswati's JPA code:" << std::endl;
+          std::cout << " score(2b2W, boosted) = " << bdtScore_jpa_4jet << std::endl;
+          std::cout << " score(2b1W, boosted) = " << bdtScore_jpa_missingWJet << std::endl;
+          std::cout << "Christian's JPA code:" << std::endl;
+          std::cout << " score(2b2W, boosted) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_boosted::k2b2W) << std::endl;
+          std::cout << " score(2b1W, boosted) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_boosted::k2b1W) << std::endl;
+        }
+        else
+        {
+          std::cout << "Saswati's JPA code:" << std::endl;
+          std::cout << " score(2b2W, resolved) = " << bdtScore_jpa_4jet << std::endl;
+          std::cout << " score(2b1W, resolved) = " << bdtScore_jpa_missingWJet << std::endl;
+          std::cout << " score(2b0W, resolved) = " << bdtScore_jpa_missingAllWJet << std::endl;
+          std::cout << " score(1b2W, resolved) = " << bdtScore_jpa_missingBJet << std::endl;
+          std::cout << " score(1b1W, resolved) = " << bdtScore_jpa_missingBJet_missingWJet << std::endl;
+          std::cout << " score(1b0W, resolved) = " << bdtScore_jpa_missingBJet_missingAllWJet << std::endl;
+          std::cout << "Christian's JPA code:" << std::endl;
+          std::cout << " score(2b2W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b2W) << std::endl;
+          std::cout << " score(2b1W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b1W) << std::endl;
+          std::cout << " score(2b0W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b0W) << std::endl;
+          std::cout << " score(1b2W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b2W) << std::endl;
+          std::cout << " score(1b1W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b1W) << std::endl;
+          std::cout << " score(1b0W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b0W) << std::endl;
+        }
       }
     }
 
