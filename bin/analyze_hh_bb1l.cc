@@ -107,7 +107,6 @@
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/comp_metP4_B2G_18_008.h" // comp_metP4_B2G_18_008
 #include "hhAnalysis/bbww/interface/BM_list.h" // BMS
-#include "hhAnalysis/bbww/interface/JetQuad.h" // selectJet_Quads
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromHiggs.h" // GenParticleMatcherFromHiggs
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched 
@@ -130,9 +129,6 @@
 #include <fstream> // std::ofstream
 #include <assert.h> // assert
 
-/*TH1F* h_4jet = new TH1F("jpa_4jet","",50,0,1);
-TH1F* h_missingBJet = new TH1F("jpa_missingBJet","",50,0,1);
-TH1F* h_missingWJet = new TH1F("jpa_missingWJet","",50,0,1);*/
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
@@ -149,33 +145,9 @@ const double higgsBosonMass = 125.;
 enum { kHbb_undefined, kHbb_resolved, kHbb_boosted };
 enum { kWjj_undefined, kWjj_resolved, kWjj_boosted_lowPurity, kWjj_boosted_highPurity };
 enum { kVBF_undefined, kVBF_nottagged, kVBF_tagged };
-enum {kjpa_HbbBoosted_undefined, kjpa_HbbBoosted_2jet, kjpa_HbbBoosted_missingWJet, kjpa_HbbBoosted_restOfcat};
-std::string jpaCategory_Saswati_boosted(int jpaCategory)
-{
-  std::string jpaCategory_string;
-  if      ( jpaCategory == kjpa_HbbBoosted_undefined   ) jpaCategory_string = "undefined";
-  else if ( jpaCategory == kjpa_HbbBoosted_2jet        ) jpaCategory_string = "2b2W (boosted)";
-  else if ( jpaCategory == kjpa_HbbBoosted_missingWJet ) jpaCategory_string = "2b1W (boosted)";
-  else if ( jpaCategory == kjpa_HbbBoosted_restOfcat   ) jpaCategory_string = "2b0W (boosted)";
-  else assert(0);
-  return jpaCategory_string;
-}
-enum {kjpa_HbbResolved_undefined, kjpa_HbbResolved_4jet, kjpa_HbbResolved_missingWJet, kjpa_HbbResolved_missingBJet, kjpa_HbbResolved_missingAllWJet, 
-      kjpa_HbbResolved_missingBJet_missingWJet, kjpa_HbbResolved_missingBJet_missingAllWJet, kjpa_HbbResolved_restOfcat};
-std::string jpaCategory_Saswati_resolved(int jpaCategory)
-{
-  std::string jpaCategory_string;
-  if      ( jpaCategory == kjpa_HbbResolved_undefined                  ) jpaCategory_string = "undefined";
-  else if ( jpaCategory == kjpa_HbbResolved_4jet                       ) jpaCategory_string = "2b2W (resolved)";
-  else if ( jpaCategory == kjpa_HbbResolved_missingWJet                ) jpaCategory_string = "2b1W (resolved)";
-  else if ( jpaCategory == kjpa_HbbResolved_missingBJet                ) jpaCategory_string = "1b2W (resolved)";
-  else if ( jpaCategory == kjpa_HbbResolved_missingAllWJet             ) jpaCategory_string = "2b0W (resolved)";
-  else if ( jpaCategory == kjpa_HbbResolved_missingBJet_missingWJet    ) jpaCategory_string = "1b1W (resolved)";
-  else if ( jpaCategory == kjpa_HbbResolved_missingBJet_missingAllWJet ) jpaCategory_string = "1b0W (resolved)";
-  else if ( jpaCategory == kjpa_HbbResolved_restOfcat                  ) jpaCategory_string = "0b   (resolved)";
-  else assert(0);
-  return jpaCategory_string;
-}
+enum { kjpa_HbbBoosted_undefined, kjpa_HbbBoosted_2jet, kjpa_HbbBoosted_missingWJet, kjpa_HbbBoosted_restOfcat };
+enum { kjpa_HbbResolved_undefined, kjpa_HbbResolved_4jet, kjpa_HbbResolved_missingWJet, kjpa_HbbResolved_missingBJet, kjpa_HbbResolved_missingAllWJet, 
+       kjpa_HbbResolved_missingBJet_missingWJet, kjpa_HbbResolved_missingBJet_missingAllWJet, kjpa_HbbResolved_restOfcat };
 
 struct categoryEntryType
 {
@@ -215,30 +187,6 @@ struct categoryEntryType
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged
 };
 
-/*void addCategory_conditionally(std::vector<categoryEntryType>& categories_evt, const categoryEntryType& category, const std::vector<std::string>& evtCategories)
-{
-  if ( contains(evtCategories, category.name_) ) {
-    categories_evt.push_back(category);
-  }
-}*/
-
-void setJets_fourVector(const JetQuadBase& JetQuad, const RecoJetBase*& selJet1_Hbb, const RecoJetBase*& selJet2_Hbb, const RecoJetBase*& selJet1_Wjj, const RecoJetBase*& selJet2_Wjj,
-			double& bdtScore, bool Hbb_isBoosted = false) {
-
-  //if ( !Hbb_isBoosted) {
-  //  selJet1_Hbb = JetQuad.BJet1_;
-  //  selJet2_Hbb = JetQuad.BJet2_;
-  //  selJet1_Wjj = JetQuad.WJet1_;
-  //  selJet2_Wjj = JetQuad.WJet2_;
-  //}
-  //else {
-    selJet1_Hbb = JetQuad.BJet1_;
-    selJet2_Hbb = JetQuad.BJet2_;
-    selJet1_Wjj = JetQuad.WJet1_;
-    selJet2_Wjj = JetQuad.WJet2_;
-  //}
-  bdtScore = JetQuad.bdtScore_;
-}
 std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs,
 				bool Hbb_isBoosted = false) {
   int matchedBJet(0);
@@ -470,13 +418,15 @@ comp_mem_maxLR(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l)
   return maxLR;
 }
 
-JPAJet convert_to_JPAJet(const RecoJet* ak4Jet)
+JPAJet 
+convert_to_JPAJet(const RecoJet* ak4Jet)
 {
   JPAJet ak4Jet_jpa(ak4Jet->p4(), ak4Jet->p4_bRegCorr(), ak4Jet->BtagCSV(), ak4Jet->QGDiscr());
   return ak4Jet_jpa;
 }
 
-std::pair<JPAJet, JPAJet> convert_to_JPAJets(const RecoJetAK8* ak8Jet)
+std::pair<JPAJet, JPAJet> 
+convert_to_JPAJets(const RecoJetAK8* ak8Jet)
 {
   assert(ak8Jet->subJet1() && ak8Jet->subJet2());
 
@@ -489,6 +439,27 @@ std::pair<JPAJet, JPAJet> convert_to_JPAJets(const RecoJetAK8* ak8Jet)
   JPAJet ak8jet_subjet2_jpa(ak8jet_subjet2->p4(), ak8jet_subjet2->p4(), ak8jet_subjet2->BtagCSV(), ak8jet_subjet2_QGDiscr);
 
   return std::pair<JPAJet, JPAJet>(ak8jet_subjet1_jpa, ak8jet_subjet2_jpa);
+}
+
+const RecoJetBase*
+convert_to_RecoJet(const JPAJet* ak4Jet_jpa, const std::vector<const RecoJet*>& ak4Jets)
+{
+  const RecoJetBase* ak4Jet_matched = nullptr;
+  if ( ak4Jet_jpa )
+  {
+    double dRmatch = 1.e+3;
+    for ( std::vector<const RecoJet*>::const_iterator ak4Jet = ak4Jets.begin();
+          ak4Jet != ak4Jets.end(); ++ak4Jet ) {
+      double dR = deltaR(ak4Jet_jpa->p4(), (*ak4Jet)->p4());
+      if ( dR < 1.e-1 && dR < dRmatch )
+      {
+        ak4Jet_matched = *ak4Jet;
+        dRmatch = dR;
+      }
+    }
+    assert(ak4Jet_matched);
+  }
+  return ak4Jet_matched;
 }
 
 /**
@@ -1020,16 +991,6 @@ int main(int argc, char* argv[])
 
 //--- initialize BDT for ranking of W->jj decays
   TMVAInterface mva_Wjj = initialize_mva_Wjj();
-  TMVAInterface mva_jpa_4jet = initialize_mva_jpa_4jet();
-  TMVAInterface mva_jpa_Hbb_isBoosted_4jet = initialize_mva_jpa_4jet(true);
-  TMVAInterface mva_jpa_missingWJet = initialize_mva_jpa_missingWJet();
-  TMVAInterface mva_jpa_Hbb_isBoosted_missingWJet = initialize_mva_jpa_missingWJet(true);
-  TMVAInterface mva_jpa_missingBJet = initialize_mva_jpa_missingBJet();
-  TMVAInterface mva_jpa_missingAllWJet = initialize_mva_jpa_missingAllWJet();
-  TMVAInterface mva_jpa_missingBJetmissingWJet = initialize_mva_jpa_missingBJetmissingWJet();
-  TMVAInterface mva_jpa_missingBJetmissingAllWJet = initialize_mva_jpa_missingBJetmissingAllWJet();
-  TMVAInterface mva_evt_category = initialize_mva_evt_category();
-  TMVAInterface mva_evt_Hbb_isBoosted_category = initialize_mva_evt_category(true);
 
   JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l");
 
@@ -1402,12 +1363,13 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
          makeHistManager_cfg(process_string, Form("%s/sel/evtntuple", histogramDir.data()), era_string, central_or_shift_main)
       );
       second_bdt_filler->register_variable<float_type>(
-        "bdtScore_jpa_4jet", "bdtScore_jpa_missingWJet", "bdtScore_jpa_missingBJet",
-	"bdtScore_jpa_missingAllWJet", "bdtScore_jpa_missingBJet_missingWJet", "bdtScore_jpa_missingBJet_missingAllWJet",
+        "jpaScore_2b2W_resolved", "jpaScore_2b1W_resolved", "jpaScore_2b0W_resolved", "jpaScore_1b2W_resolved", "jpaScore_1b1W_resolved", "jpaScore_1b0W_resolved",
+        "jpaScore_2b2W_boosted", "jpaScore_2b1W_boosted",
 	"evtWeight"
       );
       second_bdt_filler->register_variable<int_type>(
-        "Hbb_isBoosted",  "target"//"jpa_4jet", "jpa_missingWJet", "jpa_missingBJet", "jpa_restOfcat"
+        "Hbb_isBoosted", 
+        "target"
       );
       second_bdt_filler->bookTree(fs);
     }
@@ -1428,7 +1390,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
        "wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass",
        "met", "mht", "met_LD",
        "HT", "STMET",
-       "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb", "eta_Hbb", "bdtScore",
+       "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb", "eta_Hbb", "jpaScore",
        //
        "m_Wjj", "dR_Wjj", "dPhi_Wjj", "pT_Wjj", "tau21_Wjj",
        "dR_Hww", "dPhi_Hww", "pT_Hww", "Smin_Hww",
@@ -2060,7 +2022,6 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const std::vector<RecoJetAK8> jets_ak8LS = jetReaderAK8LS->read();
     const std::vector<const RecoJetAK8*> jet_ptrs_ak8LS = convert_to_ptrs(jets_ak8LS);
 
-
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("uncleaned AK8 jets (Hbb)", jet_ptrs_ak8);
       printHbb(jet_ptrs_ak8, jetSelectorAK8_Hbb, genBJets);
@@ -2211,74 +2172,11 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const RecoJetBase* selJet1_Wjj = nullptr; // to use with the evt-level BDT with reco Wjj-BDT method
     const RecoJetBase* selJet2_Wjj = nullptr; // to use with the evt-level BDT with reco Wjj-BDT method
     bool WjjWasFat = false;
-    double bdtScore(0.);
+    double jpaScore(0.);
     //std::pair<int, int> matchedJets_ = ( !selJetAK8_Hbb ) ? matchedJets(selJetsAK4, genBJets_ptrs, genWJets_ptrs) : matchedJets(cleanedJetsAK4_wrtHbb, genBJets_ptrs, genWJets_ptrs, true);
     //if(!selJetAK8_Hbb)h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
-    if( select_jpa)  {
-
-      double bdtScore_jpa_4jet(-1.);
-      double bdtScore_jpa_missingBJet(-1.);
-      double bdtScore_jpa_missingWJet(-1.);
-      double bdtScore_jpa_restOfcat(-1);
-      double bdtScore_jpa_missingAllWJet(-1);
-      double bdtScore_jpa_missingBJet_missingWJet(-1);
-      double bdtScore_jpa_missingBJet_missingAllWJet(-1);
-
-      JetQuadBase jpa_4jet;
-      JetQuadBase jpa_missingWJet;
-      JetQuadBase jpa_missingBJet;
-      JetQuadBase jpa_missingAllWJet;
-      JetQuadBase jpa_missingBJet_missingWJet;
-      JetQuadBase jpa_missingBJet_missingAllWJet;
-
-      if ( selJetAK8_Hbb ) {
-        //std::cout << "#cleanedJetsAK4_wrtHbb = " << cleanedJetsAK4_wrtHbb.size() << std::endl;
-	jpa_4jet = selectJet_Quad(cleanedJetsAK4_wrtHbb, *selLepton, selBJetsAK4_medium.size(), metP4, genBJets_ptrs, genWJets_ptrs, mva_jpa_Hbb_isBoosted_4jet, eventInfo, selJetAK8_Hbb);
-	bdtScore_jpa_4jet  = jpa_4jet.bdtScore_;
-        //std::cout << "Saswati's JPA (boosted, 4jet):" << std::endl;
-        //std::cout << jpa_4jet;
-	jpa_missingWJet = selectJet_TripletMissingWJet(cleanedJetsAK4_wrtHbb, *selLepton, selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(),
-				       genBJets_ptrs, genWJets_ptrs, mva_jpa_Hbb_isBoosted_missingWJet, eventInfo, selJetAK8_Hbb);
-	bdtScore_jpa_missingWJet = jpa_missingWJet.bdtScore_;
-      }
-      else {
-        //std::cout << "#selJetsAK4 = " << selJetsAK4.size() << std::endl;
-	jpa_4jet = selectJet_Quad(selJetsAK4, *selLepton, selBJetsAK4_medium.size(), metP4, genBJets_ptrs, genWJets_ptrs, mva_jpa_4jet, eventInfo);
-        bdtScore_jpa_4jet  = jpa_4jet.bdtScore_;
-
-        jpa_missingWJet = selectJet_TripletMissingWJet(selJetsAK4, *selLepton, selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(),
-                                      genBJets_ptrs, genWJets_ptrs, mva_jpa_missingWJet, eventInfo);
-        bdtScore_jpa_missingWJet = jpa_missingWJet.bdtScore_;
-
-        jpa_missingBJet = selectJet_TripletMissingBJet(selJetsAK4, *selLepton, selJetsAK4.size(), selBJetsAK4_medium.size(),
-				      genBJets_ptrs, genWJets_ptrs, mva_jpa_missingBJet, eventInfo);
-        bdtScore_jpa_missingBJet= jpa_missingBJet.bdtScore_;
-
-        jpa_missingAllWJet = selectJet_DoubletMissingAllWJet(selJetsAK4, *selLepton, selJetsAK4.size(), selBJetsAK4_medium.size(),
-				         genBJets_ptrs, genWJets_ptrs, mva_jpa_missingAllWJet, eventInfo);
-        bdtScore_jpa_missingAllWJet= jpa_missingAllWJet.bdtScore_;
-
-        jpa_missingBJet_missingWJet = selectJet_DoubletMissingBJetMissingWJet(selJetsAK4, *selLepton,
-						 selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), (int)preselLeptons.size(),
-						 genBJets_ptrs, genWJets_ptrs, mva_jpa_missingBJetmissingWJet, eventInfo);
-        bdtScore_jpa_missingBJet_missingWJet= jpa_missingBJet_missingWJet.bdtScore_;
-
-        jpa_missingBJet_missingAllWJet = selectJet_SingletMissingBJetMissingAllWJet(selJetsAK4, *selLepton,
-						     selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(),
-						     genBJets_ptrs, genWJets_ptrs, mva_jpa_missingBJetmissingAllWJet, eventInfo);
-        bdtScore_jpa_missingBJet_missingAllWJet= jpa_missingBJet_missingAllWJet.bdtScore_;
-      }
-
-      int evt_category_ = ( !selJetAK8_Hbb ) ?
-        evt_category(mva_evt_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
-		     bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
-		     eventInfo) :
-        evt_category(mva_evt_Hbb_isBoosted_category, bdtScore_jpa_4jet, bdtScore_jpa_missingWJet, bdtScore_jpa_missingBJet,
-		     bdtScore_jpa_missingAllWJet, bdtScore_jpa_missingBJet_missingWJet, bdtScore_jpa_missingBJet_missingAllWJet,
-		     eventInfo, selJetAK8_Hbb);
-
-      //---------------------------------------------------------------------------------------------
-      // CV: new JPA code
+    if( select_jpa )
+    {
       JPA jpa;
       if ( selJetAK8_Hbb ) 
       {
@@ -2293,8 +2191,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
           ak4Jets_jpa, ak8jet_subjet1_and_2_jpa.first, ak8jet_subjet1_and_2_jpa.second, 
           selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(), 
           eventInfo.event);
-        std::cout << "Christian's JPA (boosted):" << std::endl;
-        std::cout << jpa;
+        //std::cout << "JPA (boosted):" << std::endl;
+        //std::cout << jpa;
       }
       else
       {
@@ -2308,12 +2206,12 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
           ak4Jets_jpa,
           selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(), 
           eventInfo.event);
-        std::cout << "Christian's JPA (resolved):" << std::endl;
-        std::cout << jpa;
-      }      
-      //---------------------------------------------------------------------------------------------
+        //std::cout << "JPA (resolved):" << std::endl;
+        //std::cout << jpa;
+      }   
 
       if ( second_bdt ) {
+
 	std::pair<int, int> matchedJets_ = ( !selJetAK8_Hbb ) ? matchedJets(selJetsAK4, genBJets_ptrs, genWJets_ptrs) : matchedJets(cleanedJetsAK4_wrtHbb, genBJets_ptrs, genWJets_ptrs, true);
 	//if ( !selJetAK8_Hbb ) h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
 	int target(-1);
@@ -2330,37 +2228,39 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	}
 	else {
 	  if ( (matchedJets_.first ==2 && matchedJets_.second ==2) ) {
-	    target  = kjpa_HbbResolved_4jet;
+	    target = kjpa_HbbResolved_4jet;
 	  }
 	  else if ( (matchedJets_.first ==2 && matchedJets_.second ==1) ) {
 	    target = kjpa_HbbResolved_missingWJet;
 	  }
 	  else if ( (matchedJets_.first ==1 && matchedJets_.second ==2) ) {
-	    target= kjpa_HbbResolved_missingBJet;
+	    target = kjpa_HbbResolved_missingBJet;
 	  }
 	  else if ( (matchedJets_.first == 2 && matchedJets_.second == 0 ) ) {
-            target= kjpa_HbbResolved_missingAllWJet;
+            target = kjpa_HbbResolved_missingAllWJet;
 	  }
 	  else if ( (matchedJets_.first == 1 && matchedJets_.second == 1 ) ) {
-            target= kjpa_HbbResolved_missingBJet_missingWJet;
+            target = kjpa_HbbResolved_missingBJet_missingWJet;
           }
 	  else if ( (matchedJets_.first == 1 && matchedJets_.second == 0 ) ) {
-            target= kjpa_HbbResolved_missingBJet_missingAllWJet;
+            target = kjpa_HbbResolved_missingBJet_missingAllWJet;
           }
 	  else {
 	    target =  kjpa_HbbResolved_restOfcat;
 	  }
 	}
 	second_bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
-	  ("bdtScore_jpa_4jet",                                  bdtScore_jpa_4jet)
-	  ("bdtScore_jpa_missingWJet",                           bdtScore_jpa_missingWJet)
-	  ("bdtScore_jpa_missingBJet",                           bdtScore_jpa_missingBJet)
-	  ("bdtScore_jpa_missingAllWJet",                        bdtScore_jpa_missingAllWJet)
-	  ("bdtScore_jpa_missingBJet_missingWJet",               bdtScore_jpa_missingBJet_missingWJet)
-	  ("bdtScore_jpa_missingBJet_missingAllWJet",            bdtScore_jpa_missingBJet_missingAllWJet)
-	  ("Hbb_isBoosted",                                      (selJetAK8_Hbb) ? true : false)
-	  ("target",                                             target)
-	  ("evtWeight",                                          evtWeightRecorder.get(central_or_shift_main))
+	  ("jpaScore_2b2W_resolved", jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b2W))
+	  ("jpaScore_2b1W_resolved", jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b1W))
+	  ("jpaScore_2b0W_resolved", jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b0W))
+	  ("jpaScore_1b2W_resolved", jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b2W))
+	  ("jpaScore_1b1W_resolved", jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b1W))
+	  ("jpaScore_1b0W_resolved", jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b0W))
+          ("jpaScore_2b2W_boosted",  jpaInterface.mvaOutput_1stLayer((int)JPA::Category_boosted::k2b2W))
+	  ("jpaScore_2b1W_boosted",  jpaInterface.mvaOutput_1stLayer((int)JPA::Category_boosted::k2b1W))
+	  ("Hbb_isBoosted",          (selJetAK8_Hbb) ? true : false)
+	  ("target",                 target)
+	  ("evtWeight",              evtWeightRecorder.get(central_or_shift_main))
 	  .fill()
 	  ;
 	//if(!selJetAK8_Hbb)h_genmatch->Fill(target,evt_category_);
@@ -2378,121 +2278,19 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	continue;
       }
 
-      if ( selJetAK8_Hbb ) {
-	if ( evt_category_ == kjpa_HbbBoosted_2jet ) {
-	  setJets_fourVector(jpa_4jet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore, true);
-	}
-	else if ( evt_category_ == kjpa_HbbBoosted_missingWJet ) {
-	  setJets_fourVector(jpa_missingWJet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore, true);
-	}
-	else {
-	  selJet1_Wjj = nullptr;//selJets_Wjj.first;
-	  selJet2_Wjj = nullptr;//selJets_Wjj.second;
-	}
-      }
-      else {
-	//h_genmatch->Fill(target,evt_category_);
-	if ( evt_category_ == kjpa_HbbResolved_4jet ) {
-	  setJets_fourVector(jpa_4jet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore);
-        }
-        else if ( evt_category_ == kjpa_HbbResolved_missingWJet ) {
-	  setJets_fourVector(jpa_missingWJet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore);}
-	else if ( evt_category_ == kjpa_HbbResolved_missingBJet ) {
-	  setJets_fourVector(jpa_missingBJet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore);
-	}
-	else if ( evt_category_ == kjpa_HbbResolved_missingAllWJet ) {
-	  setJets_fourVector(jpa_missingAllWJet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore);
-        }
-	else if ( evt_category_ == kjpa_HbbResolved_missingBJet_missingWJet ) {
-	  setJets_fourVector(jpa_missingBJet_missingWJet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore);
-        }
-	else if ( evt_category_ == kjpa_HbbResolved_missingBJet_missingAllWJet ) {
-	  setJets_fourVector(jpa_missingBJet_missingAllWJet, selJet1_Hbb, selJet2_Hbb, selJet1_Wjj, selJet2_Wjj,
-			     bdtScore);
-        }
-	else {
-	  selJet1_Wjj = nullptr;
-	  selJet2_Wjj = nullptr;
-	  selJet1_Hbb = nullptr;
-	  selJet2_Hbb = nullptr;
-        }
-      }
-
-      std::string jpaCategory_Saswati;
-      if ( selJetAK8_Hbb )
+      if ( selJetAK8_Hbb ) 
       {
-        jpaCategory_Saswati = jpaCategory_Saswati_boosted(evt_category_);
-      }
+        selJet1_Wjj = convert_to_RecoJet(jpa.wjet1(), cleanedJetsAK4_wrtHbb);
+        selJet2_Wjj = convert_to_RecoJet(jpa.wjet2(), cleanedJetsAK4_wrtHbb);
+      } 
       else
       {
-        jpaCategory_Saswati = jpaCategory_Saswati_resolved(evt_category_);
+        selJet1_Hbb = convert_to_RecoJet(jpa.bjet1(), selJetsAK4);
+        selJet2_Hbb = convert_to_RecoJet(jpa.bjet2(), selJetsAK4);
+        selJet1_Wjj = convert_to_RecoJet(jpa.wjet1(), selJetsAK4);
+        selJet2_Wjj = convert_to_RecoJet(jpa.wjet2(), selJetsAK4);
       }
-      double jpaScore_Saswati = bdtScore;
-      std::cout << "Saswati's JPA code:" << std::endl;
-      std::cout << " category = " << jpaCategory_Saswati << ": score = " << jpaScore_Saswati << std::endl;
-      std::cout << "selJet1_Hbb:";
-      if ( selJet1_Hbb ) std::cout << (*selJet1_Hbb) << std::endl;
-      else std::cout << " N/A" << std::endl;
-      std::cout << "selJet2_Hbb:";
-      if ( selJet2_Hbb ) std::cout << (*selJet2_Hbb) << std::endl;
-      else std::cout << " N/A" << std::endl;
-      std::cout << "selJet1_Wjj:";
-      if ( selJet1_Wjj ) std::cout << (*selJet1_Wjj) << std::endl;
-      else std::cout << " N/A" << std::endl;
-      std::cout << "selJet2_Wjj:";
-      if ( selJet2_Wjj ) std::cout << (*selJet2_Wjj) << std::endl;
-      else std::cout << " N/A" << std::endl;
-      std::cout << "Christian's JPA code:" << std::endl;
-      std::cout << " category = " << jpa.jpaCategory_string() << ": score = " << jpa.jpaScore() << std::endl;
-      std::cout << jpa;
-      if ( jpa.jpaCategory_string() == jpaCategory_Saswati )
-      {
-        bool isSameBJet1 = ((selJet1_Hbb && jpa.bjet1() && deltaR(selJet1_Hbb->p4(), jpa.bjet1()->p4()) < 1.e-2) || (!selJet1_Hbb && !jpa.bjet1()));
-        bool isSameBJet2 = ((selJet2_Hbb && jpa.bjet2() && deltaR(selJet2_Hbb->p4(), jpa.bjet2()->p4()) < 1.e-2) || (!selJet2_Hbb && !jpa.bjet2()));
-        bool isSameWJet1 = ((selJet1_Wjj && jpa.wjet1() && deltaR(selJet1_Wjj->p4(), jpa.wjet1()->p4()) < 1.e-2) || (!selJet1_Wjj && !jpa.wjet1()));
-        bool isSameWJet2 = ((selJet2_Wjj && jpa.wjet2() && deltaR(selJet2_Wjj->p4(), jpa.wjet2()->p4()) < 1.e-2) || (!selJet2_Wjj && !jpa.wjet2()));
-        if ( !(isSameBJet1 && isSameBJet2 && isSameWJet1 && isSameWJet2) ) 
-        {
-          std::cout << "--> CHECK (case 1) !!" << std::endl;
-        }
-      }
-      else
-      {
-        std::cout << "--> CHECK (case 2) !!" << std::endl;
-        if ( selJetAK8_Hbb )
-        {
-          std::cout << "Saswati's JPA code:" << std::endl;
-          std::cout << " score(2b2W, boosted) = " << bdtScore_jpa_4jet << std::endl;
-          std::cout << " score(2b1W, boosted) = " << bdtScore_jpa_missingWJet << std::endl;
-          std::cout << "Christian's JPA code:" << std::endl;
-          std::cout << " score(2b2W, boosted) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_boosted::k2b2W) << std::endl;
-          std::cout << " score(2b1W, boosted) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_boosted::k2b1W) << std::endl;
-        }
-        else
-        {
-          std::cout << "Saswati's JPA code:" << std::endl;
-          std::cout << " score(2b2W, resolved) = " << bdtScore_jpa_4jet << std::endl;
-          std::cout << " score(2b1W, resolved) = " << bdtScore_jpa_missingWJet << std::endl;
-          std::cout << " score(2b0W, resolved) = " << bdtScore_jpa_missingAllWJet << std::endl;
-          std::cout << " score(1b2W, resolved) = " << bdtScore_jpa_missingBJet << std::endl;
-          std::cout << " score(1b1W, resolved) = " << bdtScore_jpa_missingBJet_missingWJet << std::endl;
-          std::cout << " score(1b0W, resolved) = " << bdtScore_jpa_missingBJet_missingAllWJet << std::endl;
-          std::cout << "Christian's JPA code:" << std::endl;
-          std::cout << " score(2b2W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b2W) << std::endl;
-          std::cout << " score(2b1W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b1W) << std::endl;
-          std::cout << " score(2b0W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k2b0W) << std::endl;
-          std::cout << " score(1b2W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b2W) << std::endl;
-          std::cout << " score(1b1W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b1W) << std::endl;
-          std::cout << " score(1b0W, resolved) = " << jpaInterface.mvaOutput_1stLayer((int)JPA::Category_resolved::k1b0W) << std::endl;
-        }
-      }
+      jpaScore = jpa.jpaScore();
     }
 
     double selJet1_Hbb_pT(-1);
@@ -2907,7 +2705,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     //////
     double mindr_lep1_jet = comp_mindr_jet(*selLepton, selJetsAK4);
     std::map<std::string, double> mvaInputVariables_list = {
-      {"bdtScore",                bdtScore},
+      {"bdtScore",                jpaScore},
       {"lep_pt",                  selLepton->pt()},
       {"bjet1_pt",                selJetP4_Hbb_lead.pt()},
       {"mht",                     mhtP4.pt()},
@@ -3287,29 +3085,29 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
       double lep_frWeight = ( selLepton->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
-	("bdtScore",                                   bdtScore)
+	("jpaScore",                                 jpaScore)
 	("lep_pt",                                   selLepton->pt())
 	("lep_conePt",                               comp_lep_conePt(*selLepton))
 	("lep_eta",                                  selLepton->eta())
 	("lep_phi",                                  selLepton->phi())
-	("lep_mass",                                  selLepton->mass())
+	("lep_mass",                                 selLepton->mass())
 	("lep_charge",                               selLepton->charge())
 	("bjet1_pt",                                 selJetP4_Hbb_lead.pt())
 	("bjet1_eta",                                selJetP4_Hbb_lead.eta())
-	("bjet1_phi",                                 selJetP4_Hbb_lead.phi())
-	("bjet1_mass",                                selJetP4_Hbb_lead.mass())
+	("bjet1_phi",                                selJetP4_Hbb_lead.phi())
+	("bjet1_mass",                               selJetP4_Hbb_lead.mass())
 	("wjet1_pt",                                 selJetP4_Wjj_lead.pt())
 	("wjet1_eta",                                selJetP4_Wjj_lead.eta())
-        ("wjet1_phi",                                 selJetP4_Wjj_lead.phi())
-        ("wjet1_mass",                                selJetP4_Wjj_lead.mass())
+        ("wjet1_phi",                                selJetP4_Wjj_lead.phi())
+        ("wjet1_mass",                               selJetP4_Wjj_lead.mass())
 	("bjet2_pt",                                 selJetP4_Hbb_sublead.pt())
 	("bjet2_eta",                                selJetP4_Hbb_sublead.eta())
-	("bjet2_phi",                                 selJetP4_Hbb_sublead.phi())
-	("bjet2_mass",                                selJetP4_Hbb_sublead.mass())
+	("bjet2_phi",                                selJetP4_Hbb_sublead.phi())
+	("bjet2_mass",                               selJetP4_Hbb_sublead.mass())
 	("wjet2_pt",                                 selJetP4_Wjj_sublead.pt())
 	("wjet2_eta",                                selJetP4_Wjj_sublead.eta())
-        ("wjet2_phi",                                 selJetP4_Wjj_sublead.phi())
-        ("wjet2_mass",                                selJetP4_Wjj_sublead.mass())
+        ("wjet2_phi",                                selJetP4_Wjj_sublead.phi())
+        ("wjet2_mass",                               selJetP4_Wjj_sublead.mass())
 	("met",                                      metP4.pt())
 	("mht",                                      mhtP4.pt())
 	("met_LD",                                   met_LD)
@@ -3542,9 +3340,6 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 //--- manually write histograms to output file
   fs.file().cd();
   h_genmatch->Write();
-  //h_4jet->Write();
-  //h_missingWJet->Write();
-  //h_missingBJet->Write();
 
   //histogram_analyzedEntries->Write();
   //histogram_selectedEntries->Write();
