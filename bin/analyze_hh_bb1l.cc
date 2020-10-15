@@ -1453,7 +1453,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     ">= 1 sel leptons",
     "electron pT > 32 GeV / muon pT > 25 GeV",
     "<= 1 tight leptons",
-    "fakeable lepton trigger match",
+    "trigger & fakeable lepton flavor matching",
+    "trigger & dataset matching",
     "HLT filter matching",
     "#jets to make Hbb and Wjj",
     ">= 2 jets from H->bb",
@@ -1626,20 +1627,6 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
                   << ", selTrigger_1mu = " << selTrigger_1mu << ")" << std::endl;
       }
       continue;
-    }
-
-//--- rank triggers by priority and ignore triggers of lower priority if a trigger of higher priority has fired for given event;
-//    the ranking of the triggers is as follows: 1mu, 1e
-// CV: this logic is necessary to avoid that the same event is selected multiple times when processing different primary datasets
-    if ( !isMC && !isDEBUG ) {
-      if ( selTrigger_1e && isTriggered_1mu ) {
-        if ( run_lumi_eventSelector ) {
-	  std::cout << "event " << eventInfo.str() << " FAILS trigger selection." << std::endl;
-          std::cout << " (selTrigger_1e = " << selTrigger_1e
-                    << ", isTriggered_1mu = " << isTriggered_1mu << ")" << std::endl;
-        }
-        continue;
-      }
     }
     cutFlowTable.update("trigger", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("trigger", evtWeightRecorder.get(central_or_shift_main));
@@ -1893,7 +1880,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     cutFlowTable.update("<= 1 tight leptons", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("<= 1 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
-    // require that trigger paths match event category (with event category based on fakeableLeptons)
+    // require that trigger paths match lepton flavor (for fakeable leptons)
     if ( !((fakeableElectrons.size() >= 1 && selTrigger_1e) ||
            (fakeableMuons.size()     >= 1 && selTrigger_1mu)) ) {
       if ( run_lumi_eventSelector ) {
@@ -1905,8 +1892,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       }
       continue;
     }
-    cutFlowTable.update("fakeable lepton trigger match", evtWeightRecorder.get(central_or_shift_main));
-    cutFlowHistManager->fillHistograms("fakeable lepton trigger match", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowTable.update("trigger & fakeable lepton flavor matching", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("trigger & fakeable lepton flavor matching", evtWeightRecorder.get(central_or_shift_main));
 
 //--- apply HLT filter
     if ( apply_hlt_filter ) {
