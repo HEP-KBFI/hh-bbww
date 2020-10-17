@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-04-25 15:47:46 with the following command:
+# file generated at 2020-10-17 17:41:44 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_nanoAOD_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_ttbar.py -M
 
 samples_2017 = OD()
@@ -589,6 +589,49 @@ samples_2017["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17Min
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_153857"),
         ("selection", "*"),
         ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "TT_ueUp"),
+  ("process_name_specific",           "TTTo2L2Nu_ueUp_ext2"),
+  ("nof_files",                       613),
+  ("nof_db_files",                    762),
+  ("nof_events",                      {
+  }),
+  ("nof_tree_events",                 27446000),
+  ("nof_db_events",                   29890000),
+  ("fsize_local",                     59830786293), # 59.83GB, avg file size 97.60MB
+  ("fsize_db",                        1824390970121), # 1.82TB, avg file size 2.39GB
+  ("use_it",                          False),
+  ("xsection",                        88.4),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("nof_PSweights",                   4),
+  ("LHE_set",                         "LHA IDs 91400 - 91432 -> PDF4LHC15_nnlo_30_pdfas PDF set, expecting 33 weights (counted 33 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct13/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct13_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201013_102548"),
+        ("selection", "*"),
+        ("blacklist", [121, 124, 125, 131, 134, 137, 138, 181, 184, 189, 196, 197, 200, 215, 231, 236, 275, 277, 306, 320, 352, 354, 355, 356, 368, 369, 370, 384, 389, 390, 391, 392, 393, 394, 398, 400, 401, 406, 407, 408, 409, 410, 411, 412, 414, 415, 421, 436, 523, 527]),
       ]),
     ]
   ),
@@ -2714,19 +2757,20 @@ samples_2017["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIFall
 ])
 
 samples_2017["sum_events"] = [
-  [ 'TTTo2L2Nu_mtop169p5',                             'TTTo2L2Nu_mtop169p5_ext1',                         ],
-  [ 'TTTo2L2Nu_GluonMove',                             'TTTo2L2Nu_GluonMove_ext1',                         ],
-  [ 'TTTo2L2Nu_erdON',                                 'TTTo2L2Nu_erdON_ext1',                             ],
-  [ 'TTTo2L2Nu_hdampUP',                               'TTTo2L2Nu_hdampUP_ext1',                           ],
-  [ 'TTTo2L2Nu_QCDbased',                              'TTTo2L2Nu_QCDbased_ext1',                          ],
-  [ 'TTTo2L2Nu_ueDown',                                'TTTo2L2Nu_ueDown_ext1',                            ],
-  [ 'TTTo2L2Nu_ueUp',                                  'TTTo2L2Nu_ueUp_ext1',                              ],
+  [ 'TTTo2L2Nu_mtop173p5',                             'TTTo2L2Nu_mtop173p5_ext1',                         ],
   [ 'TTTo2L2Nu_mtop178p5',                             'TTTo2L2Nu_mtop178p5_PSweights',                    ],
-  [ 'TTToSemiLeptonic_mtop166p5',                      'TTToSemiLeptonic_mtop166p5_PSweights',             ],
+  [ 'TTTo2L2Nu_QCDbased',                              'TTTo2L2Nu_QCDbased_ext1',                          ],
+  [ 'TTTo2L2Nu_mtop175p5',                             'TTTo2L2Nu_mtop175p5_ext1',                        'TTTo2L2Nu_mtop175p5_ext2',                         ],
   [ 'TTToSemiLeptonic_mtop169p5',                      'TTToSemiLeptonic_mtop169p5_ext1',                  ],
+  [ 'TTTo2L2Nu_hdampDOWN',                             'TTTo2L2Nu_hdampDOWN_ext1',                        'TTTo2L2Nu_hdampDOWN_ext2',                         ],
+  [ 'TTTo2L2Nu_hdampUP',                               'TTTo2L2Nu_hdampUP_ext1',                          'TTTo2L2Nu_hdampUP_ext2',                           ],
+  [ 'TTTo2L2Nu_ueDown',                                'TTTo2L2Nu_ueDown_ext1',                           'TTTo2L2Nu_ueDown_ext2',                            ],
+  [ 'TTTo2L2Nu_GluonMove',                             'TTTo2L2Nu_GluonMove_ext1',                        'TTTo2L2Nu_GluonMove_ext2',                         ],
   [ 'TTTo2L2Nu_mtop166p5',                             'TTTo2L2Nu_mtop166p5_PSweights',                    ],
-  [ 'TTTo2L2Nu_mtop175p5',                             'TTTo2L2Nu_mtop175p5_ext1',                         ],
-  [ 'TTTo2L2Nu_hdampDOWN',                             'TTTo2L2Nu_hdampDOWN_ext1',                         ],
+  [ 'TTTo2L2Nu_erdON',                                 'TTTo2L2Nu_erdON_ext1',                            'TTTo2L2Nu_erdON_ext2',                             ],
+  [ 'TTToSemiLeptonic_mtop166p5',                      'TTToSemiLeptonic_mtop166p5_PSweights',             ],
+  [ 'TTTo2L2Nu_mtop169p5',                             'TTTo2L2Nu_mtop169p5_ext1',                        'TTTo2L2Nu_mtop169p5_ext2',                         ],
+  [ 'TTTo2L2Nu_ueUp',                                  'TTTo2L2Nu_ueUp_ext1',                             'TTTo2L2Nu_ueUp_ext2',                              ],
   [ 'TTToHadronic_mtop166p5',                          'TTToHadronic_mtop166p5_PSweights',                 ],
   [ 'TTToSemiLeptonic_mtop178p5',                      'TTToSemiLeptonic_mtop178p5_PSweights',             ],
   [ 'TTToSemiLeptonic_mtop175p5',                      'TTToSemiLeptonic_mtop175p5_ext1',                  ],
