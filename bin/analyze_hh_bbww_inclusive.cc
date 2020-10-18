@@ -56,7 +56,6 @@
 #include <TError.h> // gErrorAbortLevel, kError
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
 #include <fstream> // std::ofstream
@@ -365,8 +364,8 @@ main(int argc,
 
     snm->read(eventInfo);
     snm->read(evtWeightRecorder.get_toppt_rwgt("central"), FloatVariableType_bbww::topPt_wgt);
-    snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
-    snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
+    snm->read(eventInfo.pileupWeight,                      FloatVariableType_bbww::PU_weight);
+    snm->read(eventInfo.genWeight,                         FloatVariableType_bbww::MC_weight);
 
     snm->read({
       triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,

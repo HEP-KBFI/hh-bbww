@@ -61,7 +61,6 @@
 #include <TLorentzVector.h> // TLorentzVector
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
 #include <iostream> // std::cerr, std::fixed
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
@@ -681,7 +680,7 @@ int main(int argc,
     double evtWeight = 1.;
     if ( isMC )
     {
-      if ( apply_genWeight ) evtWeightRecorder.record_genWeight(boost::math::sign(eventInfo.genWeight));
+      if ( apply_genWeight ) evtWeightRecorder.record_genWeight(eventInfo);
       lheInfoReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
       evtWeightRecorder.record_puWeight(&eventInfo);

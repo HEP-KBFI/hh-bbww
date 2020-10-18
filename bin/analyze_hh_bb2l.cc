@@ -116,7 +116,6 @@
 #include "hhAnalysis/bbww/interface/BM_list.h" // BMS
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
 #include <iostream> // std::cerr, std::fixed
@@ -1049,7 +1048,7 @@ int main(int argc, char* argv[])
       {
         genLeptonsDY.push_back(genLepton);
       }
-      if(apply_genWeight)         evtWeightRecorder.record_genWeight(boost::math::sign(eventInfo.genWeight));
+      if(apply_genWeight)         evtWeightRecorder.record_genWeight(eventInfo);
       if(apply_DYMCReweighting)   evtWeightRecorder.record_dy_rwgt(dyReweighting, genLeptonsDY);
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
@@ -2391,7 +2390,7 @@ int main(int argc, char* argv[])
       snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
       snm->read(leptonSF_looseToTight,                  FloatVariableType_bbww::lepton_IDSF_looseToTight);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
-      snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
+      snm->read(eventInfo.genWeight,                    FloatVariableType_bbww::MC_weight);
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(pileupJetIDSF,                          FloatVariableType_bbww::PU_jetID_SF);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);

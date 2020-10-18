@@ -118,7 +118,6 @@
 #include <TROOT.h> // TROOT
 #include <TH2D.h>
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
 #include <iostream> // std::cerr, std::fixed
@@ -1582,7 +1581,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {
 	genLeptonsDY.push_back(genLepton);
       }
-      if(apply_genWeight)         evtWeightRecorder.record_genWeight(boost::math::sign(eventInfo.genWeight));
+      if(apply_genWeight)         evtWeightRecorder.record_genWeight(eventInfo);
       if(apply_DYMCReweighting)   evtWeightRecorder.record_dy_rwgt(dyReweighting, genLeptonsDY);
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
@@ -3268,7 +3267,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       snm->read(m_HH_hme,                               FloatVariableType_bbww::HME);
       snm->read(pileupJetIDSF,                          FloatVariableType_bbww::PU_jetID_SF);
       snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
-      snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
+      snm->read(eventInfo.genWeight,                    FloatVariableType_bbww::MC_weight);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
 
