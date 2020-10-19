@@ -1,4 +1,5 @@
 #include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterfaceLBN.h" // TensorFlowInterfaceLBN
+#include "tthAnalysis/HiggsToTauTau/interface/Particle.h" // Particle
 
 #include <boost/range/adaptor/map.hpp> // boost::adaptors::map_keys
 #include <boost/range/algorithm/copy.hpp> // boost::copy()
