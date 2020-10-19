@@ -256,7 +256,7 @@ int main(int argc, char* argv[])
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
   const bool doDataMCPlots = true;
 
-  bool run_hme = false; //cfg_analyze.getParameter<bool>("run_hme");
+  bool run_hme = cfg_analyze.getParameter<bool>("run_hme");
 
   if(! central_or_shifts_local.empty())
   {
