@@ -791,17 +791,6 @@ int main(int argc, char* argv[])
         selHistManager->metFilters_->bookHistograms(fs);
       }
 
-      if (apply_HH_rwgt) {
-        for(std::size_t bm_list = 0; bm_list < BMS.size() ; ++bm_list)
-        {
-          std::string bench;
-          if (bm_list == 0) bench = "SM";
-          else {
-            bench = Form("BM%s", std::to_string(bm_list).data() );
-          }
-          evt_cat_strs.push_back(bench);
-        }
-      }
       for(const std::string & evt_cat_str: evt_cat_strs)
       {
         if(skipBooking && evt_cat_str != default_cat_str)
