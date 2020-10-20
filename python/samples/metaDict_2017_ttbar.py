@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-19 14:41:46 with the following command:
+# file generated at 2020-10-20 23:30:04 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -124,13 +124,13 @@ meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("crab_string",           ""),
   ("sample_category",       "TT_hdampUp"),
   ("process_name_specific", "TTTo2L2Nu_hdampUP_ext2"),
-  ("nof_db_events",         5862000),
-  ("nof_db_files",          191),
-  ("fsize_db",              341689819538),
+  ("nof_db_events",         25797000),
+  ("nof_db_files",          541),
+  ("fsize_db",              1502993272816),
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 341.69GB; nevents: 5.86M; release: 9_4_7; last modified: 2020-10-07 05:16:00"),
+  ("comment",               "status: PRODUCTION; size: 1.50TB; nevents: 25.80M; release: 9_4_7; last modified: 2020-10-07 05:16:00"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
@@ -585,7 +585,7 @@ meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 1.69TB; nevents: 29.19M; release: 9_4_7; last modified: 2020-10-09 19:20:38"),
+  ("comment",               "status: VALID; size: 1.69TB; nevents: 29.19M; release: 9_4_7; last modified: 2020-10-19 21:01:50"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -748,13 +748,13 @@ meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("crab_string",           ""),
   ("sample_category",       "TT_mtop175p5"),
   ("process_name_specific", "TTTo2L2Nu_mtop175p5_ext2"),
-  ("nof_db_events",         10328000),
-  ("nof_db_files",          391),
-  ("fsize_db",              630810268527),
+  ("nof_db_events",         28986000),
+  ("nof_db_files",          757),
+  ("fsize_db",              1769513184228),
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 630.81GB; nevents: 10.33M; release: 9_4_7; last modified: 2020-10-09 10:13:19"),
+  ("comment",               "status: PRODUCTION; size: 1.77TB; nevents: 28.99M; release: 9_4_7; last modified: 2020-10-09 10:13:19"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
@@ -968,7 +968,7 @@ meta_dictionary["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIF
 
 # event statistics by sample category:
 # TT_hdampDown:  99.03M
-# TT_hdampUp:    70.26M
+# TT_hdampUp:    90.20M
 # TT_ueDown:     89.04M
 # TT_ueUp:       92.61M
 # TT_QCDbased:   69.97M
@@ -978,7 +978,7 @@ meta_dictionary["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIF
 # TT_mtop169p5:  91.22M
 # TT_mtop171p5:  54.94M
 # TT_mtop173p5:  69.01M
-# TT_mtop175p5:  73.16M
+# TT_mtop175p5:  91.81M
 # TT_mtop178p5:  34.76M
 # TT_widthx0p7:  24.98M
 # TT_widthx0p85: 23.38M
