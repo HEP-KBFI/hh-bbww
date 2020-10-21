@@ -243,3 +243,7 @@
   <use   name="boost"/>
   <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>
+<bin file="test_lbn.cc" name="test_lbn">
+  <use   name="tthAnalysis/HiggsToTauTau"/>
+  <Flags CXXFLAGS="-Wshadow -Werror  -Wno-unused-but-set-variable"/>
+</bin>

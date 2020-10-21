@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-19 14:23:45 with the following command:
+# file generated at 2020-10-20 22:50:22 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -1198,7 +1198,7 @@ meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgrap
 ])
 
 meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2017v2_2020Oct19_GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1"),
   ("sample_category",       "signal_ggf_nonresonant_hh_bbvv_sl"),
   ("process_name_specific", "signal_ggf_nonresonant_node_10_hh_2b2v_sl"),
   ("nof_db_events",         394997),
@@ -1207,7 +1207,7 @@ meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgra
   ("xsection",              0.109352),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 21.79GB; nevents: 395.00k; release: 9_4_7; last modified: 2020-09-11 20:56:25"),
+  ("comment",               "100.0%; status: VALID; size: 21.79GB; nevents: 395.00k; release: 9_4_7; last modified: 2020-09-11 20:56:25"),
 ])
 
 meta_dictionary["/GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
