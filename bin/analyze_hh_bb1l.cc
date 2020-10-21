@@ -1286,7 +1286,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
       for(const std::string & evt_cat_str: evt_cat_strs)
       {
-        if(skipBooking && evt_cat_str != default_cat_str)
+        if((skipBooking && !apply_HH_rwgt) && evt_cat_str != default_cat_str)
         {
           continue;
         }
@@ -2491,14 +2491,15 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
 
     std::map<std::string, double> weightMapHH;
-    std::map<std::string, double> reWeightMapHH;
+    std::map<std::string, double> reWeightMapHH_base;
+    std::map<std::string, std::map<std::string, double>> reWeightMapsHH;
     double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
 
     if(apply_HH_rwgt)
     {
       assert(HHWeight_calc);
       weightMapHH = HHWeight_calc->getWeightMap(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      reWeightMapHH = HHWeight_calc->getReWeightMap(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      reWeightMapHH_base = HHWeight_calc->getReWeightMap(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
       HHWeight = weightMapHH["Weight_SM"];
       evtWeightRecorder.record_bm(HHWeight); // SM by default
 
@@ -2508,34 +2509,38 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
           "cost "             << eventInfo.gen_cosThetaStar << " : "
           "weight = "         << HHWeight                   << '\n'
           ;
-        std::cout << "Calculated " << weightMapHH.size() << " scan weights\n";
+	std::cout << "Calculated " << weightMapHH.size() << " scan weights\n";
 	for(const auto & kv: weightMapHH)
-	{
-	  std::cout << "line = " <<kv.first << "; Weight = " <<  kv.second << '\n';
-
-	}
-	std::cout << '\n';
+        {
+          std::cout << "line = " <<kv.first << "; Weight = " <<  kv.second << '\n';
+        }
+	std::cout << "Calculated " << reWeightMapHH_base.size() << " scan reweights\n";
+	for(const auto & kv:reWeightMapHH_base)
+        {
+          std::cout << "line = " <<kv.first << "; Weight = " <<  kv.second << '\n';
+        }
+    
+        std::cout << '\n';
       }
-    }
-
-
+    }     
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
+      reWeightMapsHH[central_or_shift] = reWeightMapHH_base;
       const double evtWeight = evtWeightRecorder.get(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
       for(const std::string & evt_cat_str: evt_cat_strs)
       {
 	if(skipFilling && evt_cat_str != default_cat_str)
-        {
+	{
 	  continue;
 	}
 	if(apply_HH_rwgt)
 	{
-	  reWeightMapHH[evt_cat_str] *= evtWeight;
+	  reWeightMapsHH[central_or_shift][evt_cat_str] *= evtWeight;
 	}
 	else
 	{
-	  reWeightMapHH[evt_cat_str] = evtWeightRecorder.get(central_or_shift_main);
+	  reWeightMapsHH[central_or_shift][evt_cat_str] = evtWeight;
 	}
       }
     }
@@ -2994,7 +2999,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
           selHistManager->met_->fillHistograms(met, mhtP4, met_LD, evtWeight);
           selHistManager->metFilters_->fillHistograms(metFilters, evtWeight);
         }
-        for(const auto & kv: reWeightMapHH)
+        for(const auto & kv: reWeightMapsHH[central_or_shift])
         {
           selHistManager->evt_[kv.first]->fillHistograms(
             selElectrons.size(),
