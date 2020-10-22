@@ -1885,12 +1885,12 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     cutFlowHistManager->fillHistograms("<= 1 tight leptons", evtWeightRecorder.get(central_or_shift_main));
 
     // require that trigger paths match lepton flavor (for fakeable leptons)
-    if ( !((fakeableElectrons.size() >= 1 && selTrigger_1e) ||
-           (fakeableMuons.size()     >= 1 && selTrigger_1mu)) ) {
+    if ( !((selElectrons.size() >= 1 && selTrigger_1e) ||
+           (selMuons.size()     >= 1 && selTrigger_1mu)) ) {
       if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given fakeableLepton multiplicity." << std::endl;
-        std::cout << " (#fakeableElectrons = " << fakeableElectrons.size()
-                  << ", #fakeableMuons = " << fakeableMuons.size()
+	std::cout << "event " << eventInfo.str() << " FAILS trigger selection for given selLepton multiplicity." << std::endl;
+        std::cout << " (#selElectrons = " << selElectrons.size()
+                  << ", #selMuons = " << selMuons.size()
                   << ", selTrigger_1mu = " << selTrigger_1mu
                   << ", selTrigger_1e = " << selTrigger_1e << ")" << std::endl;
       }
