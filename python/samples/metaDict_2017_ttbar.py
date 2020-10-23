@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-20 23:30:04 with the following command:
+# file generated at 2020-10-23 11:10:27 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -576,7 +576,7 @@ meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
 ])
 
 meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2017v2_2020Oct21_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2"),
   ("sample_category",       "TT_mtop169p5"),
   ("process_name_specific", "TTTo2L2Nu_mtop169p5_ext2"),
   ("nof_db_events",         29190000),
@@ -585,7 +585,7 @@ meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 1.69TB; nevents: 29.19M; release: 9_4_7; last modified: 2020-10-19 21:01:50"),
+  ("comment",               "99.33%; status: VALID; size: 1.69TB; nevents: 29.19M; release: 9_4_7; last modified: 2020-10-19 21:01:50"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
@@ -754,7 +754,7 @@ meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 1.77TB; nevents: 28.99M; release: 9_4_7; last modified: 2020-10-09 10:13:19"),
+  ("comment",               "status: VALID; size: 1.77TB; nevents: 28.99M; release: 9_4_7; last modified: 2020-10-21 13:40:53"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([

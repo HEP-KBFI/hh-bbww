@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-17 17:08:37 with the following command:
+# file generated at 2020-10-23 14:40:33 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p python/samples/sampleLocations_2016_nanoAOD_ttbar.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_ttbar.py -M
 
 samples_2016 = OD()

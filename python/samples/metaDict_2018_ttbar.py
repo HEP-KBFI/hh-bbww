@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-20 23:33:14 with the following command:
+# file generated at 2020-10-23 11:14:35 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2018_RunIIAutumn18MiniAOD.txt -c python/samples/sampleLocations_2018_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -51,7 +51,7 @@ meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
 ])
 
 meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2020Oct21_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
   ("sample_category",       "TT_hdampDown"),
   ("process_name_specific", "TTTo2L2Nu_hdampDOWN_ext2"),
   ("nof_db_events",         29312000),
@@ -60,7 +60,7 @@ meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 1.66TB; nevents: 29.31M; release: 10_2_5; last modified: 2020-10-20 18:01:30"),
+  ("comment",               "100.0%; status: VALID; size: 1.66TB; nevents: 29.31M; release: 10_2_5; last modified: 2020-10-20 18:01:30"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -389,7 +389,7 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18Mini
 ])
 
 meta_dictionary["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2020Oct21_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
   ("sample_category",       "TT_erdON"),
   ("process_name_specific", "TTTo2L2Nu_erdON_ext2"),
   ("nof_db_events",         29155000),
@@ -398,7 +398,7 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18Mini
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 1.63TB; nevents: 29.16M; release: 10_2_5; last modified: 2020-10-19 16:42:25"),
+  ("comment",               "100.0%; status: VALID; size: 1.63TB; nevents: 29.16M; release: 10_2_5; last modified: 2020-10-19 16:42:25"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -662,7 +662,7 @@ meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
 ])
 
 meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2020Oct21_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
   ("sample_category",       "TT_mtop175p5"),
   ("process_name_specific", "TTTo2L2Nu_mtop175p5_ext2"),
   ("nof_db_events",         29370000),
@@ -671,7 +671,7 @@ meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: VALID; size: 1.65TB; nevents: 29.37M; release: 10_2_5; last modified: 2020-10-19 21:01:56"),
+  ("comment",               "100.0%; status: VALID; size: 1.65TB; nevents: 29.37M; release: 10_2_5; last modified: 2020-10-19 21:01:56"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([

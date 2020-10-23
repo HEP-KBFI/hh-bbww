@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-19 14:47:14 with the following command:
+# file generated at 2020-10-23 13:58:44 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2018_RunIIAutumn18MiniAOD.txt -c python/samples/sampleLocations_2018_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -644,13 +644,13 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_TuneCP5_PS
   ("crab_string",           ""),
   ("sample_category",       "signal_ggf_spin2_3000_hh_bbvv"),
   ("process_name_specific", "signal_ggf_spin2_3000_hh_2b2v"),
-  ("nof_db_events",         85000),
-  ("nof_db_files",          4),
-  ("fsize_db",              5725393643),
+  ("nof_db_events",         100000),
+  ("nof_db_files",          6),
+  ("fsize_db",              6743129991),
   ("xsection",              0.026422),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 5.73GB; nevents: 85.00k; release: 10_2_5; last modified: 2020-10-09 10:05:10"),
+  ("comment",               "status: PRODUCTION; size: 6.74GB; nevents: 100.00k; release: 10_2_5; last modified: 2020-10-09 10:05:10"),
 ])
 
 meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/MINIAODSIM"] =  OD([
@@ -3524,7 +3524,7 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 # signal_ggf_spin2_1750_hh_bbvv:              100.00k
 # signal_ggf_spin2_2000_hh_bbvv:              100.00k
 # signal_ggf_spin2_2500_hh_bbvv:              100.00k
-# signal_ggf_spin2_3000_hh_bbvv:              85.00k
+# signal_ggf_spin2_3000_hh_bbvv:              100.00k
 # signal_vbf_nonresonant_1_1_1_hh_bbvv:       400.00k
 # signal_vbf_nonresonant_1_1_2_hh_bbvv:       396.00k
 # signal_vbf_nonresonant_1_2_1_hh_bbvv:       400.00k
