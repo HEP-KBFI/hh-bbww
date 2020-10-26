@@ -585,7 +585,7 @@ meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "99.33%; status: VALID; size: 1.69TB; nevents: 29.19M; release: 9_4_7; last modified: 2020-10-19 21:01:50"),
+  ("comment",               "100.0%; status: VALID; size: 1.69TB; nevents: 29.19M; release: 9_4_7; last modified: 2020-10-19 21:01:50"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM"] =  OD([
