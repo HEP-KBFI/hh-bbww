@@ -21,9 +21,12 @@ def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None)
 
     if process_name.startswith((
           "TTZToQQ", "TTWJetsToQQ", "HZJ_HToWW", "WminusH_HToBB_WToLNu", "WplusH_HToBB_WToLNu",
-          "DYToLL_0J", "DYToLL_1J", "DYToLL_2J",
+          "DYToLL_0J", "DYToLL_1J", "DYToLL_2J", "ttHJetTo", "ZZTo2L2Q", "WWToLNuQQ",
         )):
       # https://gitlab.cern.ch/cms-hh-bbww/cms-hh-to-bbww/-/commit/bfb0a15b40f0b404c3ab8e79c1a1d415d07d343a
+      # https://gitlab.cern.ch/cms-hh-bbww/cms-hh-to-bbww/-/commit/03b8b47e14ca5ebabb61b5d5eb7db9c527847b50
+      # https://gitlab.cern.ch/cms-hh-bbww/cms-hh-to-bbww/-/commit/ccd4a39e7d164759e88079f8046add9c77837f29
+      # https://gitlab.cern.ch/cms-hh-bbww/cms-hh-to-bbww/-/commit/f89c7e9671c515cb4ee1b70b9edfc73f1e1aa045
       sample_info["use_it"] = True
 
     if process_name.startswith("DYJetsToLL_M-50_amcatnloFXFX"):

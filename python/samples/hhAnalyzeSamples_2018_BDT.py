@@ -1,4 +1,4 @@
-from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017 import samples_2017
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018 import samples_2018
 
 bdt_samples = [
   "signal_ggf_nonresonant_node_sm_hh_2b2v",
@@ -14,6 +14,6 @@ bdt_samples = [
   "TTToSemiLeptonic_PSweights"
 ]
 
-for sample_name, sample_info in samples_2017.items():
+for sample_name, sample_info in samples_2018.items():
   if sample_name == 'sum_events': continue
   sample_info["use_it"] = sample_info["process_name_specific"] in bdt_samples

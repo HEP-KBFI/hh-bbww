@@ -96,8 +96,6 @@
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bbWW_DYctrl.h" // EvtHistManager_hh_bbWW_DYctrl
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
-
 #include <iostream> // std::cerr, std::fixed
 #include <iomanip> // std::setprecision(), std::setw()
 #include <string> // std::string
@@ -385,6 +383,11 @@ int main(int argc, char* argv[])
 
 //--- declare event-level variables
   EventInfo eventInfo(isMC, false, false, apply_topPtReweighting);
+  if(isMC)
+  {
+    const double ref_genWeight = cfg_analyze.getParameter<double>("ref_genWeight");
+    eventInfo.set_refGetWeight(ref_genWeight);
+  }
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
   if((isMC_tH || isMC_ttH) && ! tHweights.empty())
   {
@@ -710,7 +713,7 @@ int main(int argc, char* argv[])
 
         if(eventWeightManager)
         {
-          selHistManager->genEvtHistManager_afterCuts_->bookHistograms(fs, eventWeightManager);
+          selHistManager->genEvtHistManager_afterCuts_->bookHistograms(fs, eventWeightManager, true);
         }
       }
       for(const categoryEntryType & category: categories_evt)
@@ -860,7 +863,7 @@ int main(int argc, char* argv[])
 
     if(isMC)
     {
-      if(apply_genWeight)         evtWeightRecorder.record_genWeight(boost::math::sign(eventInfo.genWeight));
+      if(apply_genWeight)         evtWeightRecorder.record_genWeight(eventInfo);
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
@@ -879,6 +882,9 @@ int main(int argc, char* argv[])
         }
         genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
           genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
+        );
+        lheInfoHistManager_beforeCuts[central_or_shift]->fillHistograms(
+          *lheInfoReader, evtWeightRecorder.get_inclusive(central_or_shift)
         );
         if(eventWeightManager)
         {
@@ -1241,10 +1247,7 @@ int main(int argc, char* argv[])
         evtWeightRecorder.record_ewk_bjet(selBJetsAK4_medium);
       }
 
-      dataToMCcorrectionInterface->setLeptons(
-        selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-        selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
-      );
+      dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead });
 
 //--- apply data/MC corrections for trigger efficiency
       evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
@@ -1256,7 +1259,7 @@ int main(int argc, char* argv[])
 //    to also pass the tight identification and isolation criteria
       if(electronSelection == kFakeable && muonSelection == kFakeable)
       {
-        evtWeightRecorder.record_leptonSF(dataToMCcorrectionInterface->getSF_leptonID_and_Iso_fakeable_to_loose());
+        evtWeightRecorder.record_leptonSF(dataToMCcorrectionInterface->getSF_leptonID_and_Iso_looseToFakeable());
       }
       else if(electronSelection >= kFakeable && muonSelection >= kFakeable)
       {
@@ -1556,7 +1559,7 @@ int main(int argc, char* argv[])
             if(eventWeightManager)
             {
               selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
-                eventWeightManager, evtWeightRecorder.get_inclusive(central_or_shift)
+                eventWeightManager, evtWeightRecorder.get_inclusive(central_or_shift), numSelJetsAK4_nonVBF, HT
               );
             }
           }
@@ -1625,6 +1628,10 @@ int main(int argc, char* argv[])
       selectedEntries_weighted_byGenMatchType[central_or_shift][process_and_genMatch] += evtWeightRecorder.get(central_or_shift);
     }
     histogram_selectedEntries->Fill(0.);
+    if(isDEBUG)
+    {
+      std::cout << evtWeightRecorder << '\n';
+    }
   }
 
   std::cout << "max num. Entries = " << inputTree -> getCumulativeMaxEventCount()

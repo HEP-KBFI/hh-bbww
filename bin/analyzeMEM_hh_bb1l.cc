@@ -78,7 +78,6 @@
 #include <TMath.h> // TMath::Abs
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
 #include <iostream> // std::cerr, std::fixed
@@ -538,7 +537,7 @@ int main(int argc, char* argv[])
 
     EvtWeightRecorderHH evtWeightRecorder({ "central" }, central_or_shift, isMC);
 
-    if ( apply_genWeight ) evtWeightRecorder.record_genWeight(boost::math::sign(eventInfo.genWeight));
+    if ( apply_genWeight ) evtWeightRecorder.record_genWeight(eventInfo.genWeight);
     lheInfoReader->read();
     evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
     evtWeightRecorder.record_puWeight(&eventInfo);

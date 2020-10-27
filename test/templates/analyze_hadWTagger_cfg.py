@@ -27,8 +27,11 @@ process.analyze_hadWTagger = cms.PSet(
 
     leptonSelection = cms.string(''),
 
+    apply_pileupJetID = cms.string('loose'),
+
     isMC = cms.bool(True),
     lumiScale = cms.VPSet(),
+    ref_genWeight = cms.double(0.),
     apply_genWeight = cms.bool(True),
 
     branchName_electrons = cms.string('Electron'),

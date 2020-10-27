@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-04-25 15:18:46 with the following command:
+# file generated at 2020-10-23 11:14:35 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2018_RunIIAutumn18MiniAOD.txt -c python/samples/sampleLocations_2018_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -9,14 +9,17 @@ meta_dictionary = OD()
 ### event sums
 
 sum_events = { 
-  ("TTTo2L2Nu_hdampDOWN", "TTTo2L2Nu_hdampDOWN_ext1"),
-  ("TTTo2L2Nu_hdampUP", "TTTo2L2Nu_hdampUP_ext1"),
+  ("TTTo2L2Nu_hdampDOWN", "TTTo2L2Nu_hdampDOWN_ext1", "TTTo2L2Nu_hdampDOWN_ext2"),
+  ("TTTo2L2Nu_hdampUP", "TTTo2L2Nu_hdampUP_ext1", "TTTo2L2Nu_hdampUP_ext2"),
   ("TTTo2L2Nu_ueDown", "TTTo2L2Nu_ueDown_ext1"),
   ("TTTo2L2Nu_ueUp", "TTTo2L2Nu_ueUp_ext1"),
-  ("TTTo2L2Nu_erdON", "TTTo2L2Nu_erdON_ext1"),
-  ("TTTo2L2Nu_mtop169p5", "TTTo2L2Nu_mtop169p5_ext1"),
+  ("TTTo2L2Nu_QCDbased", "TTTo2L2Nu_QCDbased_ext1"),
+  ("TTTo2L2Nu_GluonMove", "TTTo2L2Nu_GluonMove_ext1"),
+  ("TTTo2L2Nu_erdON", "TTTo2L2Nu_erdON_ext1", "TTTo2L2Nu_erdON_ext2"),
+  ("TTTo2L2Nu_mtop169p5", "TTTo2L2Nu_mtop169p5_ext1", "TTTo2L2Nu_mtop169p5_ext2"),
   ("TTToSemiLeptonic_mtop169p5", "TTToSemiLeptonic_mtop169p5_ext1"),
-  ("TTTo2L2Nu_mtop175p5", "TTTo2L2Nu_mtop175p5_ext1"),
+  ("TTTo2L2Nu_mtop171p5", "TTTo2L2Nu_mtop171p5_ext1"),
+  ("TTTo2L2Nu_mtop175p5", "TTTo2L2Nu_mtop175p5_ext1", "TTTo2L2Nu_mtop175p5_ext2"),
   ("TTToSemiLeptonic_mtop175p5", "TTToSemiLeptonic_mtop175p5_ext1"),
 }
 
@@ -45,6 +48,19 @@ meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("use_it",                False),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 527.74GB; nevents: 9.95M; release: 10_2_5; last modified: 2020-03-02 19:40:17"),
+])
+
+meta_dictionary["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct21_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
+  ("sample_category",       "TT_hdampDown"),
+  ("process_name_specific", "TTTo2L2Nu_hdampDOWN_ext2"),
+  ("nof_db_events",         29312000),
+  ("nof_db_files",          711),
+  ("fsize_db",              1656286256451),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 1.66TB; nevents: 29.31M; release: 10_2_5; last modified: 2020-10-20 18:01:30"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -97,6 +113,19 @@ meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Mi
   ("use_it",                False),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 529.85GB; nevents: 9.90M; release: 10_2_5; last modified: 2020-03-02 00:54:35"),
+])
+
+meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           ""),
+  ("sample_category",       "TT_hdampUp"),
+  ("process_name_specific", "TTTo2L2Nu_hdampUP_ext2"),
+  ("nof_db_events",         28448000),
+  ("nof_db_files",          606),
+  ("fsize_db",              1616122096153),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "status: PRODUCTION; size: 1.62TB; nevents: 28.45M; release: 10_2_5; last modified: 2020-10-09 10:06:43"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -242,6 +271,19 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAutumn
   ("comment",               "100.0%; status: VALID; size: 790.81GB; nevents: 14.76M; release: 10_2_5; last modified: 2020-02-15 00:49:45"),
 ])
 
+meta_dictionary["/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct17_TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2"),
+  ("sample_category",       "TT_QCDbased"),
+  ("process_name_specific", "TTTo2L2Nu_QCDbased_ext1"),
+  ("nof_db_events",         29400000),
+  ("nof_db_files",          666),
+  ("fsize_db",              1656231418505),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "98.18%; status: VALID; size: 1.66TB; nevents: 29.40M; release: 10_2_5; last modified: 2020-10-14 13:02:51"),
+])
+
 meta_dictionary["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2018_2020Apr22_TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
   ("sample_category",       "TT_QCDbased"),
@@ -279,6 +321,19 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIAutum
   ("use_it",                False),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 795.94GB; nevents: 14.96M; release: 10_2_5; last modified: 2020-03-15 10:56:25"),
+])
+
+meta_dictionary["/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct17_TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2"),
+  ("sample_category",       "TT_GluonMove"),
+  ("process_name_specific", "TTTo2L2Nu_GluonMove_ext1"),
+  ("nof_db_events",         29820000),
+  ("nof_db_files",          633),
+  ("fsize_db",              1666890855490),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "97.39%; status: VALID; size: 1.67TB; nevents: 29.82M; release: 10_2_5; last modified: 2020-10-15 14:46:13"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -331,6 +386,19 @@ meta_dictionary["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18Mini
   ("use_it",                False),
   ("genWeight",             True),
   ("comment",               "97.92%; status: VALID; size: 507.66GB; nevents: 9.53M; release: 10_2_5; last modified: 2020-02-24 21:21:45"),
+])
+
+meta_dictionary["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct21_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
+  ("sample_category",       "TT_erdON"),
+  ("process_name_specific", "TTTo2L2Nu_erdON_ext2"),
+  ("nof_db_events",         29155000),
+  ("nof_db_files",          609),
+  ("fsize_db",              1630677446546),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 1.63TB; nevents: 29.16M; release: 10_2_5; last modified: 2020-10-19 16:42:25"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -424,6 +492,19 @@ meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("comment",               "100.0%; status: VALID; size: 506.30GB; nevents: 9.55M; release: 10_2_5; last modified: 2020-02-21 17:05:57"),
 ])
 
+meta_dictionary["/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct13_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
+  ("sample_category",       "TT_mtop169p5"),
+  ("process_name_specific", "TTTo2L2Nu_mtop169p5_ext2"),
+  ("nof_db_events",         29352000),
+  ("nof_db_files",          657),
+  ("fsize_db",              1658145913039),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "94.69%; status: VALID; size: 1.66TB; nevents: 29.35M; release: 10_2_5; last modified: 2020-10-13 02:46:59"),
+])
+
 meta_dictionary["/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
   ("crab_string",           "2018_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1"),
   ("sample_category",       "TT_mtop169p5"),
@@ -474,6 +555,19 @@ meta_dictionary["/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("use_it",                False),
   ("genWeight",             True),
   ("comment",               "93.22%; status: VALID; size: 313.47GB; nevents: 5.90M; release: 10_2_5; last modified: 2019-03-01 09:59:50"),
+])
+
+meta_dictionary["/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct17_TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2"),
+  ("sample_category",       "TT_mtop171p5"),
+  ("process_name_specific", "TTTo2L2Nu_mtop171p5_ext1"),
+  ("nof_db_events",         14670000),
+  ("nof_db_files",          331),
+  ("fsize_db",              818459357936),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "99.03%; status: VALID; size: 818.46GB; nevents: 14.67M; release: 10_2_5; last modified: 2020-10-15 12:06:18"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -565,6 +659,19 @@ meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("use_it",                False),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 512.66GB; nevents: 9.60M; release: 10_2_5; last modified: 2020-02-21 17:03:10"),
+])
+
+meta_dictionary["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2018_2020Oct21_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
+  ("sample_category",       "TT_mtop175p5"),
+  ("process_name_specific", "TTTo2L2Nu_mtop175p5_ext2"),
+  ("nof_db_events",         29370000),
+  ("nof_db_files",          621),
+  ("fsize_db",              1645184092930),
+  ("xsection",              88.4),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 1.65TB; nevents: 29.37M; release: 10_2_5; last modified: 2020-10-19 21:01:56"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -751,18 +858,18 @@ meta_dictionary["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIA
 
 
 # event statistics by sample category:
-# TT_hdampDown:  67.74M
-# TT_hdampUp:    67.09M
+# TT_hdampDown:  97.05M
+# TT_hdampUp:    95.54M
 # TT_ueDown:     61.93M
 # TT_ueUp:       65.85M
-# TT_QCDbased:   68.80M
-# TT_GluonMove:  69.95M
-# TT_erdON:      67.04M
+# TT_QCDbased:   98.20M
+# TT_GluonMove:  99.77M
+# TT_erdON:      96.20M
 # TT_mtop166p5:  22.00M
-# TT_mtop169p5:  59.98M
-# TT_mtop171p5:  55.66M
+# TT_mtop169p5:  89.33M
+# TT_mtop171p5:  70.33M
 # TT_mtop173p5:  54.48M
-# TT_mtop175p5:  62.24M
+# TT_mtop175p5:  91.61M
 # TT_mtop178p5:  21.96M
 # TT_widthx0p7:  24.28M
 # TT_widthx0p85: 24.59M

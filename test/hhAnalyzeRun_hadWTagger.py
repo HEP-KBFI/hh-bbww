@@ -12,7 +12,7 @@ import getpass
 
 # E.g.: ./test/tthAnalyzeRun_hadTopTagger.py -v 2019Dec09 -m default -e 2017
 
-mode_choices     = [ 'forBDTtraining_hadWTagger', 'forBDTtraining_jpa_4jet', 'forBDTtraining_jpa_missingWJet', 'forBDTtraining_jpa_missingBJet' ]
+mode_choices     = [ 'forBDTtraining_hadWTagger', 'forBDTtraining_jpa_4jet' ]
 sys_choices      = [ 'full' ] + systematics.an_opts_hh_bbww
 systematics.full = systematics.an_hh_bbww
 
@@ -57,7 +57,7 @@ for sample_name, sample_info in samples.items():
     continue
   if sample_name.startswith(('/MuonEG/', '/Tau/')):
     sample_info["use_it"] = False
-  if sample_name.startswith(('/TTToSemiLeptonic')):
+  if sample_name.startswith(('/TTToSemiLeptonic')) and sample_info["process_name_specific"] in ["TTToSemiLeptonic"] :
     sample_info["use_it"] = True
   if sample_name.startswith(('/GluGluToHHTo2B2WToLNu2J_node_SM')):
     sample_info["use_it"] = True

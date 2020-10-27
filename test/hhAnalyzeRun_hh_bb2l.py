@@ -96,7 +96,7 @@ for systematic_label in systematics_label:
         continue
       central_or_shifts.append(central_or_shift)
 
-do_sync = mode.startswith('sync')
+do_sync = 'sync' in mode
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
@@ -117,7 +117,7 @@ if "wMEM" in mode:
 
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo_noincl', 'wjets_incl' ])
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets_incl' ])
 elif mode == "wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
@@ -126,7 +126,7 @@ elif mode == "forBDTtraining":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, [ 'dy_lo', 'wjets_noincl' ])
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets_incl' ])
 elif mode == "forBDTtraining_wMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
@@ -206,13 +206,17 @@ if __name__ == '__main__':
 
   histograms_to_fit_list                 = {
     "EventCounter"                      : {},
-    "HT"                                : {},
-    "STMET"                             : {}
+    #"HT"                                : {},
+    #"STMET"                             : {}
   }
   # add  the BDT types with subcategories to the histogram list
   for typeMVA in for_categories_map :
     for typyCat in categories_list_bins :
       histograms_to_fit_list[typeMVA + typyCat] = {}
+  if doDataMCPlots :
+    for typeMVA in for_data_MC_plots :
+      for typyCat in categories_list_bins :
+        histograms_to_fit_list[ typyCat + "_" + typeMVA ] = {}
 
   analysis = analyzeConfig_hh_bb2l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),

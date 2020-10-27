@@ -14,6 +14,8 @@ enum class FloatVariableType_bbww
 {
 //--- MET/MHT
   trigger_SF,
+  vbf_m_jj,
+  vbf_dEta_jj,
   lepton_IDSF,
   lepton_IDSF_recoToLoose,
   lepton_IDSF_looseToTight,
@@ -28,6 +30,7 @@ enum class FloatVariableType_bbww
   MEM_LR,
   MEM_LR_up,
   MEM_LR_down,
+  PU_jetID_SF,
   PU_weight,               ///< PU weight
   MC_weight                ///< MC weight
 };
@@ -49,6 +52,7 @@ public:
   void read(const std::vector<const RecoElectron *> & electrons,
             const std::vector<const RecoElectron *> & fakeable_electrons,
             const std::vector<const RecoElectron *> & tight_electrons);
+  void read(const std::vector<const RecoJet *> & jets_vbf);
   void read(const std::vector<const RecoJet *> & jets,
             int n_bjet_loose,
             int n_bjet_medium);
@@ -70,6 +74,7 @@ protected:
   const Int_t nof_mus;
   const Int_t nof_eles;
   const Int_t nof_jets;
+  const Int_t nof_jets_vbf;
   const Int_t nof_jetsAk8;
   const Int_t nof_jetsAk8LS;
 
@@ -84,6 +89,7 @@ protected:
   Int_t n_fakeablesel_ele;
   Int_t n_mvasel_ele;
   Int_t n_presel_jet;
+  Int_t n_presel_jet_vbf;
   Int_t n_presel_jetAK8;
   Int_t n_presel_jetAK8LS;
   Int_t n_loose_bjet;
@@ -155,6 +161,13 @@ protected:
   Float_t * jet_E;
   Float_t * jet_CSV;
   Float_t * jet_btagSF;
+
+  Float_t * jet_vbf_pt;
+  Float_t * jet_vbf_eta;
+  Float_t * jet_vbf_phi;
+  Float_t * jet_vbf_E;
+  Float_t * jet_vbf_CSV;
+  Float_t * jet_vbf_btagSF;
 
   Float_t * jetAk8_pt;
   Float_t * jetAk8_eta;

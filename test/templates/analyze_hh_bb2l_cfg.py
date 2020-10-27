@@ -3,6 +3,7 @@ import os
 
 from tthAnalysis.HiggsToTauTau.configs.recommendedMEtFilters_cfi import *
 from tthAnalysis.HiggsToTauTau.configs.EvtYieldHistManager_cfi import *
+from tthAnalysis.HiggsToTauTau.configs.hhWeight_cfi import hhWeight
 from tthAnalysis.HiggsToTauTau.analysisSettings import *
 
 process = cms.PSet()
@@ -46,6 +47,8 @@ process.analyze_hh_bb2l = cms.PSet(
     apply_leptonGenMatching = cms.bool(True),
     leptonChargeSelection = cms.string(''),
 
+    apply_pileupJetID = cms.string(''),
+
     applyFakeRateWeights = cms.string(""),
     leptonFakeRateWeight = cms.PSet(
         inputFileName = cms.string(""),
@@ -60,6 +63,7 @@ process.analyze_hh_bb2l = cms.PSet(
     isMC = cms.bool(True),
     central_or_shift = cms.string(''),
     lumiScale = cms.VPSet(),
+    ref_genWeight = cms.double(0.),
     apply_genWeight = cms.bool(True),
     apply_DYMCReweighting = cms.bool(False),
     apply_DYMCNormScaleFactors = cms.bool(False),
@@ -125,15 +129,5 @@ process.analyze_hh_bb2l = cms.PSet(
         branchTypeYaxis = cms.string(''),
     ),
     tHweights = cms.VPSet(),
-    hhWeight_cfg = cms.PSet(
-        denominator_file = cms.string(''),
-        klScan_file = cms.string(''),
-        ktScan_file = cms.string(''),
-        coefFile = cms.string('HHStatAnalysis/AnalyticalModels/data/coefficientsByBin_extended_3M_costHHSim_19-4.txt'),
-        histtitle = cms.string(''),
-        isDEBUG = cms.bool(False),
-        do_scan = cms.bool(True),
-        do_ktscan = cms.bool(False),
-        apply_rwgt = cms.bool(False),
-    ),
+    hhWeight_cfg = hhWeight,
 )

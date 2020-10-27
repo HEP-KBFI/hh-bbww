@@ -26,13 +26,22 @@ parser.add_rle_select()
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
-parser.add_files_per_job()
+parser.add_files_per_job(files_per_job = 15)
 parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc()
 parser.add_split_trigger_sys()
+parser.add_argument('-secondBDT', '--secondBDT',
+  dest = 'second_bdt', action = 'store_true',
+  help = 'R|doing second_bdt for jpa'
+)
+parser.add_argument('-doDataMCPlot', '--doDataMCPlot',
+  dest = 'doDataMCPlots', action = 'store_true',
+  help = 'R| do controlPlots'
+)
+
 args = parser.parse_args()
 
 # Common arguments
@@ -60,7 +69,9 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
-doDataMCPlots     = True
+doDataMCPlots     = args.doDataMCPlots
+ignore_Wjj_boosted = True
+second_bdt = args.second_bdt
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -95,10 +106,10 @@ if "sync" not in mode:
 
 if mode == "default":
   samples = load_samples(era)
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo_noincl', 'wjets_incl' ])
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, [ 'dy_lo', 'wjets_noincl' ])
+  if not second_bdt : samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
@@ -131,37 +142,59 @@ if __name__ == '__main__':
     logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection_veto, args.tau_id_wp))
     hadTau_mva_wp_veto = args.tau_id_wp
 
+
   categories_list_bins =  [
-   "_HbbFat_WjjFat_HP_e",
-   "_WjjFat_HP_e",
-   "_HbbFat_WjjFat_LP_e",
-   "_WjjFat_LP_e",
    "_HbbFat_WjjRes_allReco_e",
    "_Res_allReco_1b_e",
    "_Res_allReco_2b_e",
-   "_HbbFat_WjjFat_HP_m",
-   "_WjjFat_HP_m",
-   "_HbbFat_WjjFat_LP_m",
-   "_WjjFat_LP_m",
    "_HbbFat_WjjRes_allReco_m",
    "_Res_allReco_1b_m",
    "_Res_allReco_2b_m",
+   #"_Res_allReco_0b_m",
+   #"_Res_allReco_0b_m",
+    "_Res_restOfcat_1b_m",
+    "_Res_restOfcat_2b_m",
+    "_Res_restOfcat_1b_e",
+    "_Res_restOfcat_2b_e",
+    "_HbbFat_restOfcat_e",
+    "_HbbFat_restOfcat_m",
    "_HbbFat_WjjRes_MissJet_e",
    "_Res_MissWJet_1b_e",
    "_Res_MissWJet_2b_e",
    "_HbbFat_WjjRes_MissJet_m",
    "_Res_MissWJet_1b_m",
    "_Res_MissWJet_2b_m",
-   "_Res_MissBJet_m",
-   "_Res_MissBJet_e"
+    "_singleCat_2b_m",
+     "_singleCat_2b_e",
+    "_singleCat_1b_m",
+     "_singleCat_1b_e",
+    "_resolved_singleCat_2b_m",
+     "_resolved_singleCat_2b_e",
+    "_resolved_singleCat_1b_m",
+     "_resolved_singleCat_1b_e",
+    "_boosted_singleCat_m",
+     "_boosted_singleCat_e"
    ]
+  if not ignore_Wjj_boosted :
+      categories_list_bins = categories_list_bins + [
+       "_HbbFat_WjjFat_HP_e",
+       "_WjjFat_HP_e",
+       "_HbbFat_WjjFat_LP_e",
+       "_WjjFat_LP_e",
+       "_HbbFat_WjjFat_HP_m",
+       "_WjjFat_HP_m",
+       "_HbbFat_WjjFat_LP_m",
+       "_WjjFat_LP_m",
+       "_Res_MissBJet_m",
+       "_Res_MissBJet_e"
+       ]
 
   for_categories_map = [
   # those are for the BDT types
   "cat_jet_2BDT_Wjj_BDT_SM",
-  "cat_jet_2BDT_Wjj_simple_SM",
-  "cat_jet_2BDT_Wjj_BDT_X900GeV",
-  "cat_jet_2BDT_Wjj_simple_X900GeV"
+ # "cat_jet_2BDT_Wjj_simple_SM",
+ # "cat_jet_2BDT_Wjj_BDT_X900GeV",
+ # "cat_jet_2BDT_Wjj_simple_X900GeV"
   ]
 
   for_data_MC_plots = [
@@ -170,16 +203,14 @@ if __name__ == '__main__':
   "lep1_pt",
   "lep1_eta",
   "jet2_pt",
-  "jet2_eta"
+  "jet2_eta",
+    "MET_pT"
   ]
 
   histograms_to_fit_list                 = {
     "EventCounter"                      : {},
     #"HT"                                : {},
     #"STMET"                             : {},
-    #"MVAOutput_350"                     : {},
-    #"MVAOutput_400"                     : {},
-    #"MVAOutput_750"                     : {},
   }
   # add  the BDT types with subcategories to the histogram list
   for typeMVA in for_categories_map :
@@ -222,6 +253,8 @@ if __name__ == '__main__':
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
     submission_cmd                        = sys.argv,
+    second_bdt                            = second_bdt,
+    doDataMCPlots                         = doDataMCPlots,
   )
 
   if mode.find("forBDTtraining") != -1:

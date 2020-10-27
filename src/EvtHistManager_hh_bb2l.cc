@@ -92,21 +92,11 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["MVAOutputnohiggnessnotopness_750"] = { "*" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
   /////////
-  central_or_shiftOptions_["SM_plainVars_Xness_nocat"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_nocat"] = { "central" };
   ///////////
-  central_or_shiftOptions_["SM_plainVars_Xness_ee"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_em"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_mm"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_HME_ee"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_HME_em"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_HME_mm"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_ee"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_em"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_mm"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_HME_ee"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_HME_em"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_HME_mm"] = { "central" };
   /////
   central_or_shiftOptions_["SM_plainVars_ee_Hbb_resolved"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_em_Hbb_resolved"] = { "central" };
@@ -116,26 +106,6 @@ EvtHistManager_hh_bb2l::EvtHistManager_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["SM_plainVars_mm_Hbb_boosted"] = { "central" };
   central_or_shiftOptions_["SM_plainVars_Hbb_resolved"]   = { "central" };
   central_or_shiftOptions_["SM_plainVars_Hbb_boosted"]    = { "central" };
-  /////
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_lowMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_medMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_ee_highMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_lowMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_medMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_em_highMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_lowMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_medMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nnoMbb_noHME_mm_highMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_lowMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_medMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_ee_highMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_lowMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_medMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_em_highMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_lowMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_medMbb"] = { "central" };
-  central_or_shiftOptions_["SM_plainVars_Xness_nobb_noHME_mm_highMbb"] = { "central" };
-  /////////
 }
 
 const TH1 *
@@ -202,7 +172,6 @@ EvtHistManager_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_m_HH_                                    = book1D(dir, "m_HH",                                  150,    0., 1500.);
   histogram_m_HH_hme_                                = book1D(dir, "m_HH_hme",                              150,    0., 1500.);
 
-  histograms_SM_plainVars_Xness_nocat_       = book1D(dir, "SM_plainVars_Xness_nocat",                               100,    0., 1.);
   histograms_SM_plainVars_nocat_             = book1D(dir, "SM_plainVars_nocat",                               100,    0., 1.);
 
   histogram_MVAOutput300_                    = book1D(dir, "MVAOutput_300",                    "MVAOutput_300",                    360,   0.,    1.);
@@ -248,7 +217,6 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
                                        std::string category_check,
                                        const std::map<std::string, double> categories_map_MVAs,
                                        ////
-                                       double mva_SM_plainVars_Xness,
                                        double mva_SM_plainVars,
                                        double m_HH_hme,
                                        double m_HH,
@@ -286,7 +254,6 @@ EvtHistManager_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_m_HH_,                            m_HH,                    evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_HHvis_,                         m_HHvis,                    evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histograms_SM_plainVars_Xness_nocat_ ,           mva_SM_plainVars_Xness,                 evtWeight, evtWeightErr);
   fillWithOverFlow(histograms_SM_plainVars_nocat_,                  mva_SM_plainVars,                 evtWeight, evtWeightErr);
   ////
   for(auto typeMVA: categories_map_MVAs)

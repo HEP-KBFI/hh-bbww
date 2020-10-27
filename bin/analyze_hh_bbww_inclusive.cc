@@ -56,7 +56,6 @@
 #include <TError.h> // gErrorAbortLevel, kError
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
-#include <boost/math/special_functions/sign.hpp> // boost::math::sign()
 
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
 #include <fstream> // std::ofstream
@@ -265,6 +264,10 @@ main(int argc,
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
+
+  RecoJetCollectionSelector jetSelectorAK4_vbf(era, -1, isDEBUG);
+  jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
+
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetReaderAK8 * const jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_fatJets, branchName_subJets);
@@ -361,8 +364,8 @@ main(int argc,
 
     snm->read(eventInfo);
     snm->read(evtWeightRecorder.get_toppt_rwgt("central"), FloatVariableType_bbww::topPt_wgt);
-    snm->read(eventInfo.pileupWeight,                 FloatVariableType_bbww::PU_weight);
-    snm->read(boost::math::sign(eventInfo.genWeight), FloatVariableType_bbww::MC_weight);
+    snm->read(eventInfo.pileupWeight,                      FloatVariableType_bbww::PU_weight);
+    snm->read(eventInfo.genWeight,                         FloatVariableType_bbww::MC_weight);
 
     snm->read({
       triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
@@ -407,55 +410,41 @@ main(int argc,
     const RecoLepton *selLepton_lead, *selLepton_sublead, *selLepton3, *selLepton4;
     int selLepton_lead_type, selLepton_sublead_type, selLepton3_type, selLepton4_type;
     if(selLeptons_size) {
-      if( selLeptons_size ==1 )
+      if(selLeptons_size == 1)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta()
-	);
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead });
       }
-      else if ( selLeptons_size ==2 )
+      else if(selLeptons_size == 2)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	selLepton_sublead = selLeptons[1];
-	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta()
-        );
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        selLepton_sublead = selLeptons[1];
+        selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead });
       }
-      else if ( selLeptons_size ==3 )
+      else if(selLeptons_size == 3)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	selLepton_sublead = selLeptons[1];
-	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-	selLepton3 = selLeptons[2];
-	selLepton3_type = getLeptonType(selLepton3->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
-	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta()
-        );
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        selLepton_sublead = selLeptons[1];
+        selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+        selLepton3 = selLeptons[2];
+        selLepton3_type = getLeptonType(selLepton3->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead, selLepton3 });
       }
-      else if( selLeptons_size >=4 )
+      else if(selLeptons_size >= 4)
       {
-	selLepton_lead = selLeptons[0];
-	selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
-	selLepton_sublead = selLeptons[1];
-	selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
-	selLepton3 = selLeptons[2];
-	selLepton3_type = getLeptonType(selLepton3->pdgId());
-	selLepton4 = selLeptons[3];
-	selLepton4_type = getLeptonType(selLepton4->pdgId());
-	dataToMCcorrectionInterface->setLeptons(
-	 selLepton_lead_type, selLepton_lead->pt(), selLepton_lead->cone_pt(), selLepton_lead->eta(),
-	 selLepton_sublead_type, selLepton_sublead->pt(), selLepton_sublead->cone_pt(), selLepton_sublead->eta(),
-	 selLepton3_type, selLepton3->pt(), selLepton3->cone_pt(), selLepton3->eta(),
-	 selLepton4_type, selLepton4->pt(), selLepton4->cone_pt(), selLepton4->eta()
-	);
+        selLepton_lead = selLeptons[0];
+        selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
+        selLepton_sublead = selLeptons[1];
+        selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
+        selLepton3 = selLeptons[2];
+        selLepton3_type = getLeptonType(selLepton3->pdgId());
+        selLepton4 = selLeptons[3];
+        selLepton4_type = getLeptonType(selLepton4->pdgId());
+        dataToMCcorrectionInterface->setLeptons({ selLepton_lead, selLepton_sublead, selLepton3, selLepton4 });
       }
       
       evtWeightRecorder.record_leptonTriggerEff(dataToMCcorrectionInterface);
@@ -482,6 +471,7 @@ main(int argc,
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     std::vector<const RecoJet*> selBJets_loose = jetSelectorAK4_bTagLoose(selJets);
     std::vector<const RecoJet*> selBJets_medium = jetSelectorAK4_bTagMedium(selJets);
+    const std::vector<const RecoJet*> selJets_vbf = jetSelectorAK4_vbf(cleanedJets, isHigherPt);
     evtWeightRecorder.record_btagWeight(selJets);
     if(btagSFRatioFacility)
     {
@@ -492,6 +482,7 @@ main(int argc,
     {
       printCollection("cleanedJets", cleanedJets);
       printCollection("selJets", selJets);
+      printCollection("selJets_vbf", selJets_vbf);
     }
 
     const std::vector<RecoJetAK8> fatJets = jetReaderAK8->read();
@@ -633,6 +624,7 @@ main(int argc,
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
     snm->read(selJets, selBJets_loose.size(), selBJets_medium.size());
+    snm->read(selJets_vbf);
     // "regular" AK8 jets, selected to target H->bb decay, sorted by pT in decreasing order
     snm->read(selFatJets, false);
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection

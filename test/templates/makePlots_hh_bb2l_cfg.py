@@ -99,8 +99,9 @@ process.makePlots.distributions.extend([
         yAxisTitle = cms.string("dN/d#Delta#eta_{jj}")
     ),
     cms.PSet(
-           histogramName = cms.string("sel/evtYield/$PROCESS/evtYield"),
-           xAxisTitle = cms.string("Run Period"),
-           yAxisTitle = cms.string("Events / 1 fb^{-1}")
+        histogramName = cms.string("sel/evtYield/$PROCESS/evtYield"),
+        xAxisTitle = cms.string("Run Period"),
+        yAxisTitle = cms.string("Events / 1 fb^{-1}"),
+        divideByBinWidth = cms.bool(False)
     )
 ])

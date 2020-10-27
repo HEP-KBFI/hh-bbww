@@ -71,6 +71,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         hlt_filter        = False,
         use_home          = False,
         submission_cmd    = None,
+        second_bdt        = False,
+        doDataMCPlots     = False,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -89,7 +91,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       running_method        = running_method,
       num_parallel_jobs     = num_parallel_jobs,
       histograms_to_fit     = histograms_to_fit,
-      triggers              = [ '1e', '1mu', '2e', '2mu', '1e1mu' ],
+      triggers              = [ '1e', '1mu' ],
       verbose               = verbose,
       dry_run               = dry_run,
       do_sync               = do_sync,
@@ -97,6 +99,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
+      apply_pileupJetID     = 'loose',
     )
 
     self.lepton_selections = [ "Tight", "Fakeable" ]
@@ -115,7 +118,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
-    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ]
+    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH", "ggH", "qqH" ]
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ] + self.get_samples_categories_HH()
@@ -126,7 +129,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
-    self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ] + [ "Convs", "data_fakes" ]
+    self.make_plots_backgrounds = self.nonfake_backgrounds + [ "Convs", "data_fakes" ]
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb1l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb1l_cfg.py")
 
@@ -139,7 +142,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.evtCategory_inclusive = "hh_bb1l"
     if not self.evtCategory_inclusive in self.evtCategories:
       self.evtCategories.append(self.evtCategory_inclusive)
-
+    self.second_bdt = second_bdt
+    self.doDataMCPlots = doDataMCPlots
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
     """
@@ -166,7 +170,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     Args:
       inputFiles: list of input files (Ntuples)
       outputFile: output file of the job -- a ROOT file containing histogram
-      process: either `TT`, `TTW`, `TTZ`, `EWK`, `Rares`, `data_obs`, or `signal`
+      process: either `TT`, `TTW`, `TTZ`, `DY`, `Rares`, `data_obs`, or `signal`
       is_mc: flag indicating whether job runs on MC (True) or data (False)
       lumi_scale: event weight (= xsection * luminosity / number of events)
       central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/hhAnalysis/multilepton/bin/analyze_hh_bb1l.cc
@@ -399,10 +403,13 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'apply_hadTauVeto'         : self.apply_hadTauVeto,
                 'hadTauSelection_veto'     : self.hadTau_mva_wp_veto,
                 'applyFakeRateWeights'     : applyFakeRateWeights,
+                'apply_pileupJetID'        : self.apply_pileupJetID,
                 'central_or_shift'         : central_or_shift,
                 'central_or_shifts_local'  : central_or_shifts_local,
                 'evtCategories'            : self.evtCategories,
                 'selectBDT'                : self.isBDTtraining,
+                'secondBDT'                : self.second_bdt,
+                'doDataMCPlots'            : self.doDataMCPlots,
                 'syncOutput'               : syncOutput,
                 'syncTree'                 : syncTree,
                 'syncRLE'                  : syncRLE,

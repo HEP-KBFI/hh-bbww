@@ -286,3 +286,49 @@ selectJets_Wjj_resolved(
   }
   return retVal;
 }
+
+std::pair< const RecoJetBase*, const RecoJetBase* >
+selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtHbb,
+		       const Particle::LorentzVector metP4,
+		       const RecoLepton* selLepton,
+		       const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb)
+{
+  const Particle::LorentzVector p4zero(0,0,0,0);
+  const Particle::LorentzVector& selJetP4_Hbb_lead = ( selJet1_Hbb ) ? selJet1_Hbb->p4() : p4zero;
+  const Particle::LorentzVector& selJetP4_Hbb_sublead = ( selJet2_Hbb ) ? selJet2_Hbb->p4() : p4zero;
+  Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
+  double m_Hbb_regCorr =  HbbP4.mass();
+  if ( dynamic_cast<const RecoJet*>(selJet1_Hbb) && dynamic_cast<const RecoJet*>(selJet2_Hbb) )
+  {
+    const RecoJet* selJetAK4_Hbb_lead    = dynamic_cast<const RecoJet*>(selJet1_Hbb);
+    const RecoJet* selJetAK4_Hbb_sublead = dynamic_cast<const RecoJet*>(selJet2_Hbb);
+
+    HbbP4 = selJetAK4_Hbb_lead->p4_bRegCorr() + selJetAK4_Hbb_sublead->p4_bRegCorr();
+    m_Hbb_regCorr = HbbP4.mass();
+  }
+
+  double mass_dist_Wjj = 1000;
+  const RecoJetBase* selJet1_Wjj = nullptr;
+  const RecoJetBase* selJet2_Wjj = nullptr;
+  // take the resolved jets by the simple reco                                                                                                                                                            
+  // simpler to compare -- it is just a simple loop                                                                                                                                                       
+  // if there is a fat jet and it is not already tagged as Hbb                                                                                                                                            
+  // chose the two jets (ordered by pT, that are not the Hbb ones) with closest mass of the Hbb as the Wjj  
+  for(auto jet1_it = cleanedJetsAK4_wrtHbb.begin(); jet1_it != cleanedJetsAK4_wrtHbb.end(); ++jet1_it)
+  {
+    const RecoJetBase * jet1 = *jet1_it;
+    selJet1_Wjj = jet1;
+    for(auto jet2_it = jet1_it + 1; jet2_it != cleanedJetsAK4_wrtHbb.end(); ++jet2_it)
+    {
+      const RecoJetBase * jet2 = *jet2_it;
+      const double massdiff = std::abs((jet1->p4() + jet2->p4() + selLepton->p4() + metP4).mass() - m_Hbb_regCorr);
+      if( massdiff < mass_dist_Wjj )
+      {
+	mass_dist_Wjj = massdiff;
+	selJet1_Wjj = jet1;
+	selJet2_Wjj = jet2;
+      }
+    }
+  }
+  return std::pair<const RecoJetBase*, const RecoJetBase*> (selJet1_Wjj, selJet2_Wjj);
+}

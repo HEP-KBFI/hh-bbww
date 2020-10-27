@@ -102,6 +102,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
+      apply_pileupJetID     = 'loose',
     )
 
     self.MEMbranch = MEMbranch
@@ -123,7 +124,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
-    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ]
+    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH", "ggH", "qqH" ]
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ] + self.get_samples_categories_HH()
@@ -134,7 +135,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
-    self.make_plots_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH" ] + [ "Convs", "data_fakes" ]
+    self.make_plots_backgrounds = self.nonfake_backgrounds + [ "Convs", "data_fakes" ]
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
 
@@ -414,6 +415,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'muonSelection'              : muon_selection,
                   'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
                   'applyFakeRateWeights'       : applyFakeRateWeights,
+                  'apply_pileupJetID'          : self.apply_pileupJetID,
                   'central_or_shift'           : central_or_shift,
                   'central_or_shifts_local'    : central_or_shifts_local,
                   'evtCategories'              : self.evtCategories,
@@ -427,7 +429,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'useAssocJetBtag'            : self.do_sync,
                   'branchName_memOutput'       : branchName_memOutput,
                   'branchName_hmeOutput'       : branchName_hmeOutput,
-                  'apply_DYMCNormScaleFactors' : False,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 

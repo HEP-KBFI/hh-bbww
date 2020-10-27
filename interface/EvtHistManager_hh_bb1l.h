@@ -38,17 +38,18 @@ public:
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
-		 double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
 		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-		 double mvaoutput350, double mvaoutput400, double mvaoutput750,
-     std::string  category_mount,
-     const std::map<std::string, double> categories_map_MVAs,
+		 std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
+		 const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs,
+		 const std::map<std::string, double> exclusive_categories_map_MVAs,
      double selLepton_lead_pt, double selLepton_lead_eta,
      double selJetsAK4_0_pt,
      double selJetsAK4_1_pt,
      double selJetsAK4_0_eta,
      double selJetsAK4_1_eta,
+     double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
+		 double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH, double metpt,
      bool doDataMCPlots,
                  double evtWeight);
 
@@ -122,10 +123,6 @@ public:
   TH1 * histogram_memScore_;
   TH1 * histogram_memCpuTime_;
 
-  TH1 * histogram_MVAOutput350_;
-  TH1 * histogram_MVAOutput400_;
-  TH1 * histogram_MVAOutput750_;
-
   TH1 * histogram_EventCounter_;
 
   std::map<std::string, TH1 *> histograms_by_category_SM_plainVars_noHH_;
@@ -137,7 +134,7 @@ public:
   std::map<std::string, TH1 *> histograms_by_category_check_lep1_eta_;
   std::map<std::string, TH1 *> histograms_by_category_check_jet2_pt_;
   std::map<std::string, TH1 *> histograms_by_category_check_jet2_eta_;
-
+  std::map<std::string, TH1 *> histograms_by_category_check_metpt_;
   int option_; // flag to enable/disable booking & filling of MEM histograms
 };
 

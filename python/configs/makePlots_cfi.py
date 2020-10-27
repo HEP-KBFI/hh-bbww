@@ -49,16 +49,16 @@ process.makePlots = cms.PSet(
             xAxisTitle = cms.string("muon Multiplicity"),
             yAxisTitle = cms.string("Events")
         ),        
-        cms.PSet(
-            histogramName = cms.string('sel/evt/$PROCESS/HT'),
-            xAxisTitle = cms.string('H_{T} [GeV]'),
-            yAxisTitle = cms.string('dN/dH_{T} [1/GeV]')
-        ),
-        cms.PSet(
-            histogramName = cms.string('sel/evt/$PROCESS/STMET'),
-            xAxisTitle = cms.string('S_{T}^{MET} [GeV]'),
-            yAxisTitle = cms.string('dN/dS_{T}^{MET} [1/GeV]')
-        ),
+        ##cms.PSet(
+        ##    histogramName = cms.string('sel/evt/$PROCESS/HT'),
+        ##    xAxisTitle = cms.string('H_{T} [GeV]'),
+        ##    yAxisTitle = cms.string('dN/dH_{T} [1/GeV]')
+        ##),
+        ##cms.PSet(
+        ##    histogramName = cms.string('sel/evt/$PROCESS/STMET'),
+        ##    xAxisTitle = cms.string('S_{T}^{MET} [GeV]'),
+        ##    yAxisTitle = cms.string('dN/dS_{T}^{MET} [1/GeV]')
+        ##),
     ),
 
     nuisanceParameters = cms.PSet(
@@ -71,6 +71,8 @@ process.makePlots = cms.PSet(
             TTZ = cms.string("1.0 +/- 0.20"),
             Other = cms.string("1.0 +/- 0.20"),
             VH = cms.string("1.0 +/- 0.20"),
+            ggH = cms.string("1.0 +/- 0.20"),
+            qqH = cms.string("1.0 +/- 0.20"),
             WW = cms.string("1.0 +/- 0.20"),
             ZZ = cms.string("1.0 +/- 0.20"),
             WZ = cms.string("1.0 +/- 0.20"),

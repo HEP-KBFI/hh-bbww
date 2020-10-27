@@ -63,9 +63,6 @@ EvtHistManager_hh_bb1l::EvtHistManager_hh_bb1l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["log_memLR_div_Err"] = { "central" };
   central_or_shiftOptions_["memScore"] = { "*" };
   central_or_shiftOptions_["memCpuTime"] = { "central" };
-  central_or_shiftOptions_["MVAOutput_350"] = { "*" };
-  central_or_shiftOptions_["MVAOutput_400"] = { "*" };
-  central_or_shiftOptions_["MVAOutput_750"] = { "*" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -98,6 +95,25 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
         else
         {
           histograms_by_category_types_[name_test] = book1D(dir, name_test, category.first, 400,  0., +1.);
+	  /*histograms_by_category_types_[name_test+"_leppt"] = book1D(dir, name_test+"_leppt", category.first+"_leppt", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_bjet1pt"] = book1D(dir, name_test+"_bjet1pt", category.first+"_bjet1pt", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_mht"] = book1D(dir, name_test+"_mht", category.first+"_mht", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_m_Hbb_regCorr"] = book1D(dir, name_test+"_m_Hbb_regCorr", category.first+"_m_Hbb_regCorr", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_m_Wjj"] = book1D(dir, name_test+"_m_Wjj", category.first+"_mWjj", 50,  0., 200.);
+	  histograms_by_category_types_[name_test+"_pT_Wjj"] = book1D(dir, name_test+"_pT_Wjj", category.first+"_ptWjj", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_dR_Hww"] = book1D(dir, name_test+"_dR_Hww", category.first+"_drHww", 50,  0.,10.);
+	  histograms_by_category_types_[name_test+"_Smin_Hww"] = book1D(dir, name_test+"_SminHww", category.first+"_SminHww", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_dR_b1lep"] = book1D(dir, name_test+"_dR_b1lep", category.first+"_dR_b1lep", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_dR_b2lep"] = book1D(dir, name_test+"_dR_b2lep", category.first+"_dR_b2lep", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_pT_HH"] = book1D(dir, name_test+"_pT_HH", category.first+"_pTHH", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_mTW"] = book1D(dir, name_test+"_mTW", category.first+"_mTW", 100,  0., 50000.);
+	  histograms_by_category_types_[name_test+"_mT_top_3particle"] = book1D(dir, name_test+"_mT_top_3particle", category.first+"_mTtop3part", 100,  0., 50000.);
+	  histograms_by_category_types_[name_test+"_mindr_lep1_jet"] = book1D(dir, name_test+"_mindr_lep1_jet", category.first+"_mindrlepjet", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_avg_dr_jet_central"] = book1D(dir, name_test+"_avg_dr_jetcentral", category.first+"_avgdrjetcentral", 50,  0., 10.);
+	  histograms_by_category_types_[name_test+"_mbb_loose"] = book1D(dir, name_test+"_mbb_loose", category.first+"_mbb_loose", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_mbb_medium"] = book1D(dir, name_test+"_mbb_medium", category.first+"_mbb_medium", 50,  0., 400.);
+	  histograms_by_category_types_[name_test+"_cosThetaS_Hbb_reg"] = book1D(dir, name_test+"_costhetaS_Hbb_reg", category.first+"_costhetaS_Hbb_reg", 20,  0., 1.);
+	  histograms_by_category_types_[name_test+"_cosThetaS_HH"] = book1D(dir, name_test+"_costhetaS_HH", category.first+"_costhetasS_HH", 50,  0., 1.);*/
         }
         central_or_shiftOptions_[name_test] = { "*" };
       }
@@ -113,6 +129,7 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
         histograms_by_category_check_lep1_eta_[category.first] = book1D(dir, "lep1_eta" + category.first, category.first, 22,  -3., +3.);
         histograms_by_category_check_jet2_pt_[category.first] = book1D(dir, "jet2_pt" + category.first, category.first, 40,  0., 200.);
         histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, "jet2_eta" + category.first, category.first, 22,  -3., +3.);
+	histograms_by_category_check_metpt_[category.first] = book1D(dir, "MET_pT" + category.first, category.first, 40,  0., 200.);
         central_or_shiftOptions_[category.first] = { "*" };
     }
     }
@@ -122,7 +139,7 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
 void
 EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
 {
-  histogram_numElectrons_                = book1D(dir, "numElectrons",                5,   -0.5,  +4.5);
+  /*  histogram_numElectrons_                = book1D(dir, "numElectrons",                5,   -0.5,  +4.5);
   histogram_numMuons_                    = book1D(dir, "numMuons",                    5,   -0.5,  +4.5);
   histogram_numJets_                     = book1D(dir, "numJets",                    20,   -0.5, +19.5);
   histogram_numBJets_loose_              = book1D(dir, "numBJets_loose",             10,   -0.5,  +9.5);
@@ -167,7 +184,7 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_jet2_pt_                 = book1D(dir, "vbf_jet2_pt",                40,    0.,  200.);
   histogram_vbf_jet2_eta_                = book1D(dir, "vbf_jet2_eta",              100,   -5.0,  +5.0);
   histogram_vbf_m_jj_                    = book1D(dir, "vbf_m_jj",                  150,    0., 1500.);
-  histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               100,    0.,   10.);
+  histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               100,    0.,   10.);*/
 
   if ( option_ == kOption_memEnabled ) {
     histogram_log_memProb_signal_        = book1D(dir, "log_memProb_signal",        200, -200.,   0.);
@@ -179,10 +196,6 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
     histogram_memScore_                  = book1D(dir, "memScore",                  360,  -18.,  +18.);
     histogram_memCpuTime_                = book1D(dir, "memCpuTime",                100,    0., 1000.);
   }
-
-  histogram_MVAOutput350_                = book1D(dir, "MVAOutput_350",             360,    0.,    1.);
-  histogram_MVAOutput400_                = book1D(dir, "MVAOutput_400",             360,    0.,    1.);
-  histogram_MVAOutput750_                = book1D(dir, "MVAOutput_750",             360,    0.,    1.);
 
   histogram_EventCounter_                = book1D(dir, "EventCounter",                1,   -0.5,  +0.5);
 }
@@ -209,17 +222,18 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 				       double m_HHvis, double m_HH, double m_HH_B2G_18_008, double m_HH_hme, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
-				       double mvaOutput_Hj_tagger, double mvaOutput_Hjj_tagger,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 				       const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-				       double mvaoutput_bb1l350, double mvaoutput_bb1l400, double mvaoutput_bb1l750,
-               std::string  category_mount,
-               const std::map<std::string, double> categories_map_MVAs,
+				       std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
+				       const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs, 
+				       const std::map<std::string, double> exclusive_categories_map_MVAs,
                double selLepton_lead_pt, double selLepton_lead_eta,
                double selJetsAK4_0_pt,
                double selJetsAK4_1_pt,
                double selJetsAK4_0_eta,
-               double selJetsAK4_1_eta,
+               double selJetsAK4_1_eta, 
+	       double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
+				       double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH, double metpt,
                bool doDataMCPlots,
 				       double evtWeight)
 {
@@ -234,15 +248,52 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     }
     fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
   }
+  for(auto typeMVA: inclusive_categories_map_MVAs)
+  {
+    std::string name_test = typeMVA.first + inclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+  }
+  for(auto typeMVA: exclusive_categories_map_MVAs)
+  {
+    std::string name_test = typeMVA.first + exclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+  }  
+    /*    fillWithOverFlow(histograms_by_category_types_[name_test+"_leppt"],  selLepton_lead_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_bjet1pt"],  selJetsAK4_0_pt, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mht"],  mht, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_m_Hbb_regCorr"],  m_Hbb_regCorr, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_m_Wjj"],  m_Wjj, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_pT_Wjj"],  pT_Wjj, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_dR_Hww"],  dR_Hww, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_Smin_Hww"],  Smin_Hww, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_dR_b1lep"],  dR_b1lep, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_dR_b2lep"],  dR_b2lep, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_pT_HH"],  pT_HH, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mTW"],  mT_W, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mT_top_3particle"],  mT_top_3particle, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mindr_lep1_jet"],  mindr_lep1_jet, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_avg_dr_jet_central"],  avg_dr_jet_central, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mbb_loose"],  mbb_loose, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_mbb_medium"],  mbb_medium, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_Hbb_reg"],  cosThetaS_Hbb_reg, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_types_[name_test+"_cosThetaS_HH"],  cosThetaS_HH, evtWeight, evtWeightErr);*/
   //
-  fillWithOverFlow(histogram_numElectrons_,                     numElectrons,                       evtWeight, evtWeightErr);
+  /*fillWithOverFlow(histogram_numElectrons_,                     numElectrons,                       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numMuons_,                         numMuons,                           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numJets_,                          numJets,                            evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numBJets_loose_,                   numBJets_loose,                     evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numBJets_medium_,                  numBJets_medium,                    evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_HT_,                               HT,                                 evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_STMET_,                            STMET,                              evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_STMET_,                            STMET,                              evtWeight, evtWeightErr);*/
   /////
   if ( doDataMCPlots )
   {
@@ -256,6 +307,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histograms_by_category_check_lep1_eta_[category_mount], selLepton_lead_eta, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_check_jet2_pt_[category_mount], selJetsAK4_1_pt, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_check_jet2_eta_[category_mount], selJetsAK4_1_eta, evtWeight, evtWeightErr);
+    fillWithOverFlow(histograms_by_category_check_metpt_[category_mount], metpt, evtWeight, evtWeightErr);
   }
   /*fillWithOverFlow(histogram_m_Hbb_,                            m_Hbb,                              evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_Hbb_,                           dR_Hbb,                             evtWeight, evtWeightErr);
@@ -315,10 +367,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_memScore_,                       memResult->getScore(),              evtWeight, evtWeightErr);
     fillWithOverFlow(histogram_memCpuTime_,                     memCpuTime,                         evtWeight, evtWeightErr);
   }
-
-  fillWithOverFlow(histogram_MVAOutput350_,                     mvaoutput_bb1l350,                  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput400_,                     mvaoutput_bb1l400,                  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_MVAOutput750_,                     mvaoutput_bb1l750,                  evtWeight, evtWeightErr);*/
+  */
 
   fillWithOverFlow(histogram_EventCounter_,                     0.,                                 evtWeight, evtWeightErr);
 }

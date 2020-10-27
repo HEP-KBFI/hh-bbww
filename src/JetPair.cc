@@ -101,14 +101,14 @@ TMVAInterface initialize_mva_Wjj()
   std::string mvaFileName_Wjj_even = "hhAnalysis/bbww/data/bb1l_HH_XGB_Wjj_10Var_even.xml";
   std::string mvaFileName_Wjj_odd  = "hhAnalysis/bbww/data/bb1l_HH_XGB_Wjj_10Var_odd.xml";
   std::vector<std::string> mvaInputVariables_Wjj = {
+    "wjet1_pt",
+    "wjet1_btagCSV",
+    "wjet1_qgDiscr",
+    "wjet2_pt",
+    "wjet2_qgDiscr",
+    "dR_HadW_lep", 
+    "dR_wjet1wjet2",
     "HadW_mass",
-    "jet1_btagCSV",
-    "dr_HadW_lep",
-    "dR_jj",
-    "jet1_pt",
-    "jet1_qgDiscr",
-    "jet2_pt",
-    "jet2_qgDiscr",
     "nBJetMedium",
     "nJet"
   };
@@ -166,16 +166,16 @@ rankJetPairs_Wjj(std::vector<JetPair_Wjj>& jetPairs_Wjj,
     Particle::LorentzVector selJet2P4 = jetPair->jet2_->p4();
     Particle::LorentzVector jetPairP4 = selJet1P4 + selJet2P4; 
     std::map<std::string, double> mvaInputVariables_Wjj = {
-      { "HadW_mass",    jetPairP4.mass()                  },
-      { "jet1_btagCSV", selJet1_BtagCSV                   },
-      { "dr_HadW_lep",  deltaR(jetPairP4, selLepton.p4()) },
-      { "dR_jj",        deltaR(selJet1P4, selJet2P4)      },
-      { "jet1_pt",      selJet1P4.pt()                    },
-      { "jet1_qgDiscr", selJet1_QGDiscr                   },
-      { "jet2_pt",      selJet2P4.pt()                    },
-      { "jet2_qgDiscr", selJet2_QGDiscr                   },
-      { "nBJetMedium",  nBJetMedium                       },
-      { "nJet",         selJetsAK4_Wjj.size()             }
+      { "wjet1_pt",             selJet1P4.pt()                    },
+      { "wjet1_btagCSV",        selJet1_BtagCSV                   },
+      { "wjet1_qgDiscr",        selJet1_QGDiscr                   },
+      { "wjet2_pt",             selJet2P4.pt()                    },
+      { "wjet2_qgDiscr",        selJet2_QGDiscr                   },
+      { "dR_HadW_lep",          deltaR(jetPairP4, selLepton.p4()) },
+      { "dR_wjet1wjet2",        deltaR(selJet1P4, selJet2P4)      },
+      { "HadW_mass",            jetPairP4.mass()                  },
+      { "nBJetMedium",          nBJetMedium                       },
+      { "nJet",                 selJetsAK4_Wjj.size()             }
     };
     double bdtScore = mva_Wjj(mvaInputVariables_Wjj, eventInfo.event);
     jetPair->bdtScore_ = bdtScore;
