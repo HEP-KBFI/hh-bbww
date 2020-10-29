@@ -52,6 +52,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoHadTauCollectionSelectorTight.h" // RecoHadTauCollectionSelectorTight
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorForward.h" // RecoJetSelectorForward
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "tthAnalysis/HiggsToTauTau/interface/MEtFilterSelector.h" // MEtFilterSelector
 #include "tthAnalysis/HiggsToTauTau/interface/ElectronHistManager.h" // ElectronHistManager
@@ -860,6 +861,7 @@ int main(int argc, char* argv[])
   jetSelectorAK4_vbf.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
+  const RecoJetCollectionSelectorForward jetSelectorForward(era, -1, isDEBUG);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   jetReaderAK8->set_central_or_shift(fatJetPt_option);
@@ -1423,7 +1425,9 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
        //
        "cosThetaS_Hbb", "cosThetaS_Hbb_reg",
        "selJet1_Hbb_pT",  "selJet2_Hbb_pT", "selJet1_Hbb_eta", "selJet2_Hbb_eta",
-       "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH"
+       "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH", "mll_loose",
+       "mostFwdJet_eta", "mostFwdJet_pt", "mostFwdJet_phi", "mostFwdJet_E",
+       "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E"
       );
       bdt_filler->register_variable<int_type>(
       "lep_charge", "nElectron", "new_had_cut", "new_had_cut_fullreco", "nJet_that_not_bb",
@@ -1431,7 +1435,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity",
       "nJet_vbf", "isVBF", "WjjWasFat",
       "nMEMOutputs", "nMEMOutputs_missingBJet", "nMEMOutputs_missingHadWJet",
-      "isMatched_Wjj", "isMatched_Wjj_fat", "isMatched_Wlep"
+      "isMatched_Wjj", "isMatched_Wjj_fat", "isMatched_Wlep", "nLeptons", "nJetForward", "lepcharge", "leptype"
     );
       bdt_filler->bookTree(fs);
     }
@@ -1726,11 +1730,13 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet *> selJetsForward = jetSelectorForward(cleanedJetsAK4_wrtLeptons, isHigherPt);
 
     if ( isDEBUG || run_lumi_eventSelector ) {
       printCollection("uncleaned AK4 jets", jet_ptrs_ak4);
       printCollection("cleaned AK4 jets(wrtLeptons)", cleanedJetsAK4_wrtLeptons);
       printCollection("selected AK4 jets", selJetsAK4);
+      printCollection("selJetsForward", selJetsForward);
     }
 
 //--- build collections of generator level particles (after some cuts are applied, to save computing time)
@@ -2700,6 +2706,17 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
     //////
     double mindr_lep1_jet = comp_mindr_jet(*selLepton, selJetsAK4);
+    double min_Deta_mostfwdJet_jet = 0;
+    double min_Deta_leadfwdJet_jet = 0;
+    // take the highest eta selJetsForward
+    Particle::LorentzVector mostFwdJet = HighestEtaFwdJet(selJetsForward);
+    if (selJetsForward.size() > 0 && selJetsAK4.size() > 0)
+      {
+	min_Deta_mostfwdJet_jet = min_Deta_fwdJet_jet(mostFwdJet, selJetsAK4);
+	Particle::LorentzVector leadFwdJet = selJetsForward[0]-> p4();
+	min_Deta_leadfwdJet_jet = min_Deta_fwdJet_jet(leadFwdJet, selJetsAK4);
+      }
+
     std::map<std::string, double> mvaInputVariables_list = {
       {"bdtScore",                jpaScore},
       {"lep_pt",                  selLepton->pt()},
@@ -2723,6 +2740,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {"avg_dr_jet_central",      comp_avg_dr_jet(selJetsAK4)},
       {"mbb_loose",               selBJetsAK4_loose.size()>1  ? (selBJetsAK4_loose[0]->p4()+selBJetsAK4_loose[1]->p4()).mass() : 0 },
       {"mbb_medium",              selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0},
+      {"mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0},
       {"nJet",                    selJetsAK4.size()},
       {"mindr_lep1_jet",          mindr_lep1_jet},
       {"m_Hbb_regCorr",           m_Hbb_regCorr},
@@ -3076,7 +3094,6 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
         }
       }
     }
-
     if ( bdt_filler ) {
 
       double lep_frWeight = ( selLepton->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
@@ -3214,6 +3231,10 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	("avg_dr_jet_central",     comp_avg_dr_jet(selJetsAK4))
 	("mbb_loose",              selBJetsAK4_loose.size()>1  ? (selBJetsAK4_loose[0]->p4()+selBJetsAK4_loose[1]->p4()).mass() : 0  )
 	("mbb_medium",             selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0 )
+	("mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0)
+	("nLeptons",               preselLeptonsFull.size())
+	("lepcharge",               preselLeptonsFull.size()>1 ? preselLeptonsFull[0]->charge()+preselLeptonsFull[1]->charge() : 999)
+	("leptype",               preselLeptonsFull.size()>1 ? fabs(preselLeptonsFull[0]->pdgId())==fabs(preselLeptonsFull[1]->pdgId()) : 999)
 	("nElectron",              selElectrons.size())
 	("new_had_cut",             new_had_cut)
 	("new_had_cut_fullreco",    new_had_cut_fullreco)
@@ -3221,6 +3242,16 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	("numBJets_medium",         numBJets_medium)
 	("numBJets",          numBJets)
 	("numWJets",     numWJets)
+	("mostFwdJet_eta",      selJetsForward.size() > 0 ? std::abs(mostFwdJet.Eta()) : -1000)
+	("mostFwdJet_pt",       selJetsForward.size() > 0 ? mostFwdJet.pt() : -1000)
+	("mostFwdJet_phi",      selJetsForward.size() > 0 ? mostFwdJet.phi() : -1000)
+	("mostFwdJet_E",        selJetsForward.size() > 0 ? mostFwdJet.energy() : -1000)
+	("leadFwdJet_eta",      selJetsForward.size() > 0 ? selJetsForward[0] -> absEta() : -1000)
+	("leadFwdJet_pt",       selJetsForward.size() > 0 ? selJetsForward[0] -> pt() : -1000)
+	("leadFwdJet_phi",      selJetsForward.size() > 0 ? selJetsForward[0] -> phi() : -1000)
+	("leadFwdJet_E",        selJetsForward.size() > 0 ? selJetsForward[0] -> p4().energy() : -1000)
+	("nJetForward", selJetsForward.size())
+
 	//
 	(weightMapHH)
         .fill()
