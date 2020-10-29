@@ -43,6 +43,7 @@ public:
 		 std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
 		 const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs,
 		 const std::map<std::string, double> exclusive_categories_map_MVAs,
+		 std::string node_name, double DNNScore,
      double selLepton_lead_pt, double selLepton_lead_eta,
      double selJetsAK4_0_pt,
      double selJetsAK4_1_pt,

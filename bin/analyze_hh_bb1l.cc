@@ -187,6 +187,11 @@ struct categoryEntryType
   int type_vbf_; // 0 = either tagged or not tagged, 1 = not tagged; 2 = tagged
 };
 
+bool sortByVal(const std::pair<std::string, double> &a,
+               const std::pair<std::string, double> &b)
+{
+  return (a.second > b.second);
+}
 std::pair<int, int> matchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, const std::vector<const GenJet*>& genBJets_ptrs, const std::vector<const GenJet*>& genWJets_ptrs,
 				bool Hbb_isBoosted = false) {
   int matchedBJet(0);
@@ -1118,6 +1123,24 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
   mva_xgb_bb1l_SM_Wjj_BDT_singleCat.enableBDTTransform();
   mva_xgb_bb1l_SM_Wjj_BDT_resolved_singleCat.enableBDTTransform();
   mva_xgb_bb1l_SM_Wjj_BDT_boosted_singleCat.enableBDTTransform();
+
+  std::string mvaFileName_TensorFlow_SM_resolved = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_for_bb1l_resolved_even_1.pb";
+  std::string mvaFileName_TensorFlow_SM_boosted = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_for_bb1l_resolved_even_1.pb";
+  std::vector<std::string> mvaInputVariables_NN = {
+    "lep_pt", "lep_eta", "lep_phi", "lep_mass", "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass", "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass", "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass","wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass", "met", "mht", "m_Hbb", "eta_Hbb", "jpaScore", "m_Wjj", "Smin_Hww", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetLoose", "numBJets_medium", "pT_Hww","dR_b1lep", "pT_HHvis", "m_HH", "m_HH_B2G_18_008", "mT_W", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "cosThetaS_WW", "cosThetaS_HH", "leadFwdJet_pt"
+  };
+  // the order also matters
+  std::vector<std::string> classes_TensorFlow_SM = {"HH","TT","ST","Other", "W", "DY"};
+  TensorFlowInterface mva_NN_resolved(
+    mvaFileName_TensorFlow_SM_resolved,
+    mvaInputVariables_NN,
+    classes_TensorFlow_SM
+  );
+  TensorFlowInterface mva_NN_boosted(
+    mvaFileName_TensorFlow_SM_boosted,
+    mvaInputVariables_NN,
+    classes_TensorFlow_SM
+  );
   //
 
   ////
@@ -1175,29 +1198,34 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
   }
   const std::vector<std::string> for_categories_map =
   {
-    "cat_jet_2BDT_Wjj_BDT_SM",
-    //"cat_jet_2BDT_Wjj_simple_SM",
-    //"cat_jet_2BDT_Wjj_BDT_X900GeV",
-    //"cat_jet_2BDT_Wjj_simple_X900GeV"
+    "cat_jet_2BDT_Wjj_BDT_SM"
+  };
+  const std::vector<std::string> for_multiclassDNN_categories_map =
+  {
+    "cat_jet_2BDT_Wjj_BDT_SM_HH_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_TT_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_W_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_DY_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_ST_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_Other_node",
   };
 
   std::map<std::string, std::vector<double>> inclusive_categories_list_bins =
   {
-    {"_singleCat_1b_e",       {}},
-    {"_singleCat_1b_m",       {}},
-    {"_singleCat_2b_e",       {}},
-    {"_singleCat_2b_m",       {}},
-    {"_resolved_singleCat_1b_e",       {}},
-    {"_resolved_singleCat_1b_m",       {}},
-    {"_resolved_singleCat_2b_e",       {}},
-    {"_resolved_singleCat_2b_m",       {}},
-    {"_boosted_singleCat_m",       {}},
-    {"_boosted_singleCat_e",       {}}
+    //{"_singleCat_1b_e",       {}},
+    //{"_singleCat_1b_m",       {}},
+    //{"_singleCat_2b_e",       {}},
+    //{"_singleCat_2b_m",       {}},
+    //{"_resolved_singleCat_1b_e",       {}},
+    {"_resolved_singleCat_1b",       {}},
+    {"_resolved_singleCat_2b",       {}},
+    {"_boosted_singleCat",           {}}
+    //{"_resolved_singleCat_1b_e",       {}},
+    //{"_resolved_singleCat_2b_e",       {}},
+    //{"_resolved_singleCat_2b_m",       {}},
+    //{"_boosted_singleCat_m",       {}},
+    //{"_boosted_singleCat_e",       {}}
 
-  };
-    const std::vector<std::string> for_inclusive_categories_map =
-  {
-    "cat_jet_2BDT_Wjj_BDT_SM",
   };
   // X: I will assume that the binning by subcategory is fixed independent of the BDT
   // that may end up not being true, in that case there is some logic to work out again
@@ -1304,8 +1332,9 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift, "memDisabled"));
         selHistManager->evt_[evt_cat_str]->bookHistograms(fs);
         //
-        selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_list_bins, for_categories_map, doDataMCPlots);
-	selHistManager->evt_[evt_cat_str]->bookCategories(fs, inclusive_categories_list_bins, for_inclusive_categories_map, doDataMCPlots);
+        //selHistManager->evt_[evt_cat_str]->bookCategories(fs, categories_list_bins, for_categories_map, doDataMCPlots);
+	selHistManager->evt_[evt_cat_str]->bookCategories(fs, inclusive_categories_list_bins, for_categories_map, doDataMCPlots);
+	selHistManager->evt_[evt_cat_str]->bookCategories(fs, inclusive_categories_list_bins, for_multiclassDNN_categories_map, doDataMCPlots);
       }
 
       if(isMC && ! skipBooking)
@@ -2718,7 +2747,25 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       }
 
     std::map<std::string, double> mvaInputVariables_list = {
+      {"lep_eta",                 selLepton->eta()},
+      {"lep_phi",                 selLepton->phi()},
+      {"lep_mass",                selLepton->mass()},
+      {"bjet1_eta",               selJetP4_Hbb_lead.eta()},
+      {"bjet1_phi",               selJetP4_Hbb_lead.phi()},
+      {"bjet1_mass",              selJetP4_Hbb_lead.mass()},
+      {"bjet2_eta",               selJetP4_Hbb_sublead.eta()},
+      {"bjet2_phi",               selJetP4_Hbb_sublead.phi()},
+      {"bjet2_mass",              selJetP4_Hbb_sublead.mass()},
+      {"wjet1_pt",                selJetP4_Wjj_lead.pt()},
+      {"wjet1_eta",               selJetP4_Wjj_lead.eta()},
+      {"wjet1_phi",               selJetP4_Wjj_lead.phi()},
+      {"wjet1_mass",              selJetP4_Wjj_lead.mass()},
+      {"wjet2_pt",                selJetP4_Wjj_sublead.pt()},
+      {"wjet2_eta",               selJetP4_Wjj_sublead.eta()},
+      {"wjet2_phi",               selJetP4_Wjj_sublead.phi()},
+      {"wjet2_mass",              selJetP4_Wjj_sublead.mass()},
       {"bdtScore",                jpaScore},
+      {"jpaScore",                jpaScore},
       {"lep_pt",                  selLepton->pt()},
       {"bjet1_pt",                selJetP4_Hbb_lead.pt()},
       {"mht",                     mhtP4.pt()},
@@ -2737,10 +2784,10 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {"pT_Hww",                  pT_Hww},
       {"m_HHvis",                 m_HHvis},
       {"pT_HH",                   pT_HH},
+      {"pT_HHvis",                pT_HHvis},
       {"avg_dr_jet_central",      comp_avg_dr_jet(selJetsAK4)},
       {"mbb_loose",               selBJetsAK4_loose.size()>1  ? (selBJetsAK4_loose[0]->p4()+selBJetsAK4_loose[1]->p4()).mass() : 0 },
       {"mbb_medium",              selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0},
-      {"mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0},
       {"nJet",                    selJetsAK4.size()},
       {"mindr_lep1_jet",          mindr_lep1_jet},
       {"m_Hbb_regCorr",           m_Hbb_regCorr},
@@ -2752,6 +2799,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {"cosThetaS_WW",            cosThetaS_WW},
       {"cosThetaS_HH",            cosThetaS_HH},
       {"nBJetMedium",             selBJetsAK4_medium.size()},
+      {"numBJets_medium",         numBJets_medium},
       {"dR_b1lep",                dR_b1lep},
       {"dR_b2lep",                dR_b2lep},
       {"lep_conePt",              comp_lep_conePt(*selLepton)},
@@ -2762,7 +2810,11 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {"mT_top_3particle",        mT_top_3particle},
       {"mT_top_2particle",        mT_top_2particle},
       {"HT",                      HT},
-      {"selJet1_Hbb_eta", selJet1_Hbb_eta}
+      {"selJet1_Hbb_eta",         selJet1_Hbb_eta},
+      {"eta_Hbb",                 eta_Hbb},
+      {"m_HH_B2G_18_008",         m_HH_B2G_18_008},
+      {"leadFwdJet_pt",           selJetsForward.size() > 0 ? selJetsForward[0] -> pt() : -1000},
+      {"mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0}
     };
     //////
     double mvaoutput_bb1l_SM_Wj1                            = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list, eventInfo.event);
@@ -2789,6 +2841,26 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     double output_X900GeV_cat_jet_2BDT_Wjj_BDT    = mvaoutput_bb1l_X900GeV_Wjj_BDT_full_reco_only;
     double output_SM_cat_jet_2BDT_Wjj_BDT_singleCat = mvaoutput_bb1l_SM_singleCat;
     double output_SM_cat_jet_2BDT_Wjj_BDT_exclusive_singleCat = ( !selJetAK8_Hbb ) ? mvaoutput_bb1l_SM_resolved_singleCat : mvaoutput_bb1l_SM_boosted_singleCat;
+    std::map<std::string, double> mvaOutput_NN = ( !selJetAK8_Hbb ) ? mva_NN_resolved(mvaInputVariables_list) : mva_NN_boosted(mvaInputVariables_list);
+    if ( true ) {
+      std::cout << "event " << eventInfo.str() << "\n";
+      std::cout << "Variables :\n";
+      for(auto elem : mvaInputVariables_list) std::cout << elem.first << " " << elem.second << "\n";
+      std::cout << "\n";
+      std::cout << "result :";
+      for(auto elem : mvaOutput_NN) std::cout << elem.first << " " << elem.second << " ";
+      std::cout << "\n";
+    }
+    std::vector<std::pair<std::string, double>> vec_mva_NN;
+    std::map<std::string, double> :: iterator it2;
+    for (it2=mvaOutput_NN.begin(); it2!=mvaOutput_NN.end(); it2++) vec_mva_NN.push_back(make_pair(it2->first, it2->second));
+    sort(vec_mva_NN.begin(), vec_mva_NN.end(), sortByVal);
+    std::string node_name = (vec_mva_NN[0].first =="HH") ? "_HH_node" : 
+      ( (vec_mva_NN[0].first =="TT") ? "_TT_node" :
+	(vec_mva_NN[0].first =="W") ? "_W_node" :
+	(vec_mva_NN[0].first =="DY") ? "_DY_node" :
+	(vec_mva_NN[0].first =="ST") ? "_ST_node" :
+	"_Other_node");
     ///////
     /// making the subcategories following Christian's fluxogram
     // _HbbFat_WjjFat_HP
@@ -2911,11 +2983,11 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     {
       category_mount    += "_e";
       inclusive_category_mount += "_e";
-      exclusive_category_mount += "_e";
+      //exclusive_category_mount += "_e";
     } else {
       category_mount    += "_m";
       inclusive_category_mount    += "_m";
-      exclusive_category_mount += "_m";
+      //exclusive_category_mount += "_m";
     }
 
     if ( isDEBUG ) {
@@ -2942,6 +3014,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const std::map<std::string, double > exclusive_categories_map_MVAs =
     {
       {"cat_jet_2BDT_Wjj_BDT_SM",         output_SM_cat_jet_2BDT_Wjj_BDT_exclusive_singleCat},
+      
     };
 
     int numElectrons = ( selLepton_type == kElectron ) ?            1 : 0;
@@ -3036,6 +3109,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
             nullptr, -1.,
             category_mount, inclusive_category_mount, exclusive_category_mount,
             categories_map_MVAs, inclusive_categories_map_MVAs, exclusive_categories_map_MVAs,
+	    node_name, vec_mva_NN[0].second,
             selLepton->pt(), selLepton->eta(),
             selJetsAK4.size() > 0  ? selJetsAK4[0]->pt() : 0.,
             selJetsAK4.size() > 1  ? selJetsAK4[1]->pt() : 0.,
