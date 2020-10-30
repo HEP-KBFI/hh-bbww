@@ -90,6 +90,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
 #include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterface.h"
+#include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterfaceLBN.h"
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface_2.h" // HHWeightInterface
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
@@ -1126,8 +1127,11 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
   std::string mvaFileName_TensorFlow_SM_resolved = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_for_bb1l_resolved_even_1.pb";
   std::string mvaFileName_TensorFlow_SM_boosted = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_for_bb1l_resolved_even_1.pb";
+  std::string mvaFileName_TensorFlow_wLBN_SM_resolved = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wLBN_for_bb1l_resolved_even.pb";
+  std::string mvaFileName_TensorFlow_wLBN_SM_boosted = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wLBN_for_bb1l_resolved_even.pb";
+
   std::vector<std::string> mvaInputVariables_NN = {
-    "lep_pt", "lep_eta", "lep_phi", "lep_mass", "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass", "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass", "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass","wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass", "met", "mht", "m_Hbb", "eta_Hbb", "jpaScore", "m_Wjj", "Smin_Hww", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetLoose", "numBJets_medium", "pT_Hww","dR_b1lep", "pT_HHvis", "m_HH", "m_HH_B2G_18_008", "mT_W", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "cosThetaS_WW", "cosThetaS_HH", "leadFwdJet_pt"
+    "lep_pt", "lep_eta", "lep_phi", "lep_mass", "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass", "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass", "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass","wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass", "met", "m_Hbb", "eta_Hbb", "jpaScore", "m_Wjj", "Smin_Hww", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetLoose", "numBJets_medium", "pT_Hww","dR_b1lep", "pT_HHvis", "m_HH", "m_HH_B2G_18_008", "mT_W", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "cosThetaS_WW", "cosThetaS_HH", "leadFwdJet_pt"
   };
   // the order also matters
   std::vector<std::string> classes_TensorFlow_SM = {"HH","TT","ST","Other", "W", "DY"};
@@ -1140,6 +1144,23 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     mvaFileName_TensorFlow_SM_boosted,
     mvaInputVariables_NN,
     classes_TensorFlow_SM
+  );
+
+  const std::vector<std::string> ll_input_keys = { "bjet1", "bjet2", "wjet1", "wjet2", "lepton" };
+  const std::vector<std::string> hl_input_keys = { "mht", "HT", "m_Hbb", "jpaScore", "m_Wjj", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetMedium", "numBJets_medium", "dR_b1lep", "pT_HH", "m_HH_B2G_18_008", "mT_W", "mT_top_2particle", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "selJet2_Hbb_pT", "leadFwdJet_pt", "nLeptons", "tau21_Hbb" };
+  TensorFlowInterfaceLBN mva_wLBN_NN_resolved(
+    mvaFileName_TensorFlow_wLBN_SM_resolved,
+    ll_input_keys, hl_input_keys,
+    classes_TensorFlow_SM,
+    "",
+    true
+  );
+  TensorFlowInterfaceLBN mva_wLBN_NN_boosted(
+    mvaFileName_TensorFlow_wLBN_SM_boosted,
+    ll_input_keys, hl_input_keys,
+    classes_TensorFlow_SM,
+    "",
+    true
   );
   //
 
@@ -1208,6 +1229,12 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     "cat_jet_2BDT_Wjj_BDT_SM_DY_node",
     "cat_jet_2BDT_Wjj_BDT_SM_ST_node",
     "cat_jet_2BDT_Wjj_BDT_SM_Other_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_wLBN_HH_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_wLBN_TT_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_wLBN_W_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_wLBN_DY_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_wLBN_ST_node",
+    "cat_jet_2BDT_Wjj_BDT_SM_wLBN_Other_node",
   };
 
   std::map<std::string, std::vector<double>> inclusive_categories_list_bins =
@@ -2746,6 +2773,19 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	min_Deta_leadfwdJet_jet = min_Deta_fwdJet_jet(leadFwdJet, selJetsAK4);
       }
 
+    const std::map<std::string, Particle> ll_inputs = {
+      { "bjet1",  { selJetP4_Hbb_lead.pt(), selJetP4_Hbb_lead.eta(), selJetP4_Hbb_lead.phi(), selJetP4_Hbb_lead.mass() } },
+      { "bjet2",  { selJetP4_Hbb_sublead.pt(), selJetP4_Hbb_sublead.eta(), selJetP4_Hbb_sublead.phi(), selJetP4_Hbb_sublead.mass() } },
+      { "wjet1",  { selJetP4_Wjj_lead.pt(), selJetP4_Wjj_lead.eta(), selJetP4_Wjj_lead.phi(), selJetP4_Wjj_lead.mass() } },
+      { "wjet2",  { selJetP4_Wjj_sublead.pt(), selJetP4_Wjj_sublead.eta(), selJetP4_Wjj_sublead.phi(), selJetP4_Wjj_sublead.mass() } },
+      { "lepton", { selLepton->pt(), selLepton->eta(), selLepton->phi(), selLepton->mass() } },
+    };
+    std::map<std::string, const Particle *> ll_inputs_ptr;
+    for(const auto & kv: ll_inputs)
+      {
+	ll_inputs_ptr[kv.first] = &kv.second;
+      }
+
     std::map<std::string, double> mvaInputVariables_list = {
       {"lep_eta",                 selLepton->eta()},
       {"lep_phi",                 selLepton->phi()},
@@ -2814,7 +2854,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {"eta_Hbb",                 eta_Hbb},
       {"m_HH_B2G_18_008",         m_HH_B2G_18_008},
       {"leadFwdJet_pt",           selJetsForward.size() > 0 ? selJetsForward[0] -> pt() : -1000},
-      {"mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0}
+      {"mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0},
+      {"nLeptons",                preselLeptonsFull.size()}
     };
     //////
     double mvaoutput_bb1l_SM_Wj1                            = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list, eventInfo.event);
@@ -2842,6 +2883,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     double output_SM_cat_jet_2BDT_Wjj_BDT_singleCat = mvaoutput_bb1l_SM_singleCat;
     double output_SM_cat_jet_2BDT_Wjj_BDT_exclusive_singleCat = ( !selJetAK8_Hbb ) ? mvaoutput_bb1l_SM_resolved_singleCat : mvaoutput_bb1l_SM_boosted_singleCat;
     std::map<std::string, double> mvaOutput_NN = ( !selJetAK8_Hbb ) ? mva_NN_resolved(mvaInputVariables_list) : mva_NN_boosted(mvaInputVariables_list);
+    std::map<std::string, double> mvaOutput_wLBN_NN = ( !selJetAK8_Hbb ) ? mva_wLBN_NN_resolved(ll_inputs_ptr, mvaInputVariables_list) : mva_wLBN_NN_boosted(ll_inputs_ptr, mvaInputVariables_list);
     if ( true ) {
       std::cout << "event " << eventInfo.str() << "\n";
       std::cout << "Variables :\n";
@@ -2852,6 +2894,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       std::cout << "\n";
     }
     std::vector<std::pair<std::string, double>> vec_mva_NN;
+    std::vector<std::pair<std::string, double>> vec_mva_wLBN_NN;
     std::map<std::string, double> :: iterator it2;
     for (it2=mvaOutput_NN.begin(); it2!=mvaOutput_NN.end(); it2++) vec_mva_NN.push_back(make_pair(it2->first, it2->second));
     sort(vec_mva_NN.begin(), vec_mva_NN.end(), sortByVal);
@@ -2861,6 +2904,14 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	(vec_mva_NN[0].first =="DY") ? "_DY_node" :
 	(vec_mva_NN[0].first =="ST") ? "_ST_node" :
 	"_Other_node");
+    for (it2=mvaOutput_wLBN_NN.begin(); it2!=mvaOutput_wLBN_NN.end(); it2++) vec_mva_wLBN_NN.push_back(make_pair(it2->first, it2->second));
+    sort(vec_mva_wLBN_NN.begin(), vec_mva_wLBN_NN.end(), sortByVal);
+    std::string wLBN_node_name = (vec_mva_wLBN_NN[0].first =="HH") ? "_HH_node" :
+      ( (vec_mva_wLBN_NN[0].first =="TT") ? "_TT_node" :
+        (vec_mva_wLBN_NN[0].first =="W") ? "_W_node" :
+        (vec_mva_wLBN_NN[0].first =="DY") ? "_DY_node" :
+        (vec_mva_wLBN_NN[0].first =="ST") ? "_ST_node" :
+        "_Other_node");
     ///////
     /// making the subcategories following Christian's fluxogram
     // _HbbFat_WjjFat_HP
