@@ -1,0 +1,1 @@
+/hdfs/local/karl/ttHNtupleProduction/2016/2020Oct31_wPresel_nom_all/ntuples
