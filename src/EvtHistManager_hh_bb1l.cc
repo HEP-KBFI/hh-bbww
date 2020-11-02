@@ -228,6 +228,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs, 
 				       const std::map<std::string, double> exclusive_categories_map_MVAs,
 				       std::string node_name, double DNNScore,
+				       std::string wLBN_node_name, double wLBN_DNNScore,
                double selLepton_lead_pt, double selLepton_lead_eta,
                double selJetsAK4_0_pt,
                double selJetsAK4_1_pt,
@@ -272,6 +273,12 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
       throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
     }
     fillWithOverFlow(histograms_by_category_types_[name_test],  DNNScore, evtWeight, evtWeightErr);
+    name_test = typeMVA.first + wLBN_node_name + exclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  wLBN_DNNScore, evtWeight, evtWeightErr);
   }  
     /*    fillWithOverFlow(histograms_by_category_types_[name_test+"_leppt"],  selLepton_lead_pt, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_types_[name_test+"_bjet1pt"],  selJetsAK4_0_pt, evtWeight, evtWeightErr);
