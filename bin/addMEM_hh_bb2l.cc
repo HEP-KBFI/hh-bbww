@@ -47,6 +47,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryType.h" // branchEntryBaseType
 #include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
 
+#include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
+
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMInterface_hh_bb2l.h" // MEMInterface_hh_bb2l
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb2l.h" // MEMOutput_hh_bb2l
@@ -168,8 +170,8 @@ int main(int argc,
     throw cms::Exception(argv[0])
       << "No ParameterSet 'process' found in configuration file = " << argv[1] << " !!\n";
 
-  const edm::ParameterSet cfg        = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
-  const edm::ParameterSet cfg_addMEM = cfg.getParameter<edm::ParameterSet>("addMEM_hh_bb2l");
+  const edm::ParameterSet cfg               = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");  
+  const edm::ParameterSet cfg_addMEM        = cfg.getParameter<edm::ParameterSet>("addMEM_hh_bb2l");
   const vstring central_or_shifts_mem       = cfg_addMEM.getParameter<vstring>("central_or_shift_mem");
   const vstring central_or_shifts_hme       = cfg_addMEM.getParameter<vstring>("central_or_shift_hme");
   const std::string treeName                = cfg_addMEM.getParameter<std::string>("treeName");
@@ -178,7 +180,6 @@ int main(int argc,
   const bool isMC                           = cfg_addMEM.getParameter<bool>("isMC");
   const bool isMC_HH                        = isMC && process_string.find("hh_bbvv")!= std::string::npos;
   const bool isMC_TT                        = isMC && process_string.find("TT")     != std::string::npos;
-  std::cout << "isMC_HH = " << isMC_HH << ", isMC_TT = " << isMC_TT << std::endl;
   const bool addMEM_forGenParticles         = cfg_addMEM.getParameter<bool>("addMEM_forGenParticles");
   const bool isDEBUG                        = cfg_addMEM.getParameter<bool>("isDEBUG");
   const bool dryRun                         = cfg_addMEM.getParameter<bool>("dryRun");
@@ -190,12 +191,14 @@ int main(int argc,
   const bool method_MEM                     = cfg_addMEM.getParameter<bool>("method_mem");
   const bool method_HME                     = cfg_addMEM.getParameter<bool>("method_hme");
 
-  const std::string branchName_electrons   = cfg_addMEM.getParameter<std::string>("branchName_electrons");
-  const std::string branchName_muons       = cfg_addMEM.getParameter<std::string>("branchName_muons");
-  const std::string branchName_jets_ak4    = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
-  const std::string branchName_jets_ak8    = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
-  const std::string branchName_subjets_ak8 = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
-  const std::string branchName_met         = cfg_addMEM.getParameter<std::string>("branchName_met");
+  AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_addMEM);
+
+  const std::string branchName_electrons    = cfg_addMEM.getParameter<std::string>("branchName_electrons");
+  const std::string branchName_muons        = cfg_addMEM.getParameter<std::string>("branchName_muons");
+  const std::string branchName_jets_ak4     = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
+  const std::string branchName_jets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
+  const std::string branchName_subjets_ak8  = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
+  const std::string branchName_met          = cfg_addMEM.getParameter<std::string>("branchName_met");
 
   // branches specific to HH->bbWW signal events
   std::string branchName_genLeptons;
@@ -413,7 +416,7 @@ int main(int argc,
   std::map<std::string, branchEntryBaseType*> branchesToKeep;
   if ( copy_all_branches )
   {
-    eventInfoWriter = new EventInfoWriter(eventInfo.is_signal(), eventInfo.is_mc());
+    eventInfoWriter = new EventInfoWriter(analysisConfig.isMC_H(), analysisConfig.isMC());
     eventInfoWriter->setBranches(outputTree);
 
     muonWriter = new RecoMuonWriter(era, isMC, Form("n%s", branchName_muons.data()), branchName_muons);
