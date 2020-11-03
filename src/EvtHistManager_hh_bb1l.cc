@@ -131,7 +131,7 @@ EvtHistManager_hh_bb1l::bookCategories(TFileDirectory & dir,
         histograms_by_category_check_jet2_eta_[category.first] = book1D(dir, "jet2_eta" + category.first, category.first, 22,  -3., +3.);
 	histograms_by_category_check_metpt_[category.first] = book1D(dir, "MET_pT" + category.first, category.first, 40,  0., 200.);
         central_or_shiftOptions_[category.first] = { "*" };
-    }
+      }
     }
 }
 
@@ -227,6 +227,8 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
 				       const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs, 
 				       const std::map<std::string, double> exclusive_categories_map_MVAs,
+				       std::string node_name, double DNNScore,
+				       std::string wLBN_node_name, double wLBN_DNNScore,
                double selLepton_lead_pt, double selLepton_lead_eta,
                double selJetsAK4_0_pt,
                double selJetsAK4_1_pt,
@@ -239,7 +241,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 {
   const double evtWeightErr = 0.;
 
-  for(auto typeMVA: categories_map_MVAs)
+  /*for(auto typeMVA: categories_map_MVAs)
   {
     std::string name_test = typeMVA.first + category_mount;
     if(! histograms_by_category_types_.count( name_test ))
@@ -256,7 +258,7 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
       throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
     }
     fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
-  }
+    }*/
   for(auto typeMVA: exclusive_categories_map_MVAs)
   {
     std::string name_test = typeMVA.first + exclusive_category_mount;
@@ -265,6 +267,18 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
       throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
     }
     fillWithOverFlow(histograms_by_category_types_[name_test],  typeMVA.second, evtWeight, evtWeightErr);
+    name_test = typeMVA.first + node_name + exclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  DNNScore, evtWeight, evtWeightErr);
+    name_test = typeMVA.first + wLBN_node_name + exclusive_category_mount;
+    if(! histograms_by_category_types_.count( name_test ))
+    {
+      throw cmsException(this, __func__, __LINE__) << "Histogram of the name '" << name_test << "' was never booked";
+    }
+    fillWithOverFlow(histograms_by_category_types_[name_test],  wLBN_DNNScore, evtWeight, evtWeightErr);
   }  
     /*    fillWithOverFlow(histograms_by_category_types_[name_test+"_leppt"],  selLepton_lead_pt, evtWeight, evtWeightErr);
     fillWithOverFlow(histograms_by_category_types_[name_test+"_bjet1pt"],  selJetsAK4_0_pt, evtWeight, evtWeightErr);
