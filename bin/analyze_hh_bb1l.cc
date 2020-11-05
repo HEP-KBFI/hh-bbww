@@ -119,7 +119,9 @@
 #include <TError.h> // gErrorAbortLevel, kError
 #include <TRandom3.h> // TRandom3
 #include <TROOT.h> // TROOT
-#include <TH2D.h>
+#include <TH1.h>
+#include <TH2.h>
+#include <TProfile.h>
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
@@ -1537,6 +1539,12 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
   const edm::ParameterSet cutFlowTableCfg = makeHistManager_cfg(
     process_string, Form("%s/sel/cutFlow", histogramDir.data()), era_string, central_or_shift_main
   );
+  TProfile* histogram_btagWeight_vs_ak4JetPt  = fs.make<TProfile>("btagWeight_vs_ak4JetPt",  "btagWeight_vs_ak4JetPt",  20, 0., 1000.);
+  TProfile* histogram_btagSFRatio_vs_ak4JetPt = fs.make<TProfile>("btagSFRatio_vs_ak4JetPt", "btagSFRatio_vs_ak4JetPt", 20, 0., 1000.);
+  TProfile* histogram_get_btag_vs_ak4JetPt    = fs.make<TProfile>("get_btag_vs_ak4JetPt",    "get_btag_vs_ak4JetPt",    20, 0., 1000.);
+  TProfile* histogram_btagWeight_vs_ak8JetPt  = fs.make<TProfile>("btagWeight_vs_ak8JetPt",  "btagWeight_vs_ak8JetPt",  20, 0., 1000.);
+  TProfile* histogram_btagSFRatio_vs_ak8JetPt = fs.make<TProfile>("btagSFRatio_vs_ak8JetPt", "btagSFRatio_vs_ak8JetPt", 20, 0., 1000.);
+  TProfile* histogram_get_btag_vs_ak8JetPt    = fs.make<TProfile>("get_btag_vs_ak8JetPt",    "get_btag_vs_ak8JetPt",    20, 0., 1000.);
   //bool isDEBUG_TF = true;
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
@@ -3499,6 +3507,20 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       selectedEntries_weighted_byGenMatchType[central_or_shift][process_and_genMatch] += evtWeightRecorder.get(central_or_shift);
     }
     histogram_selectedEntries->Fill(0.);
+    if ( selJetsAK4.size() >= 1 ) 
+    {
+      const RecoJet* selJetAK4_lead = selJetsAK4[0];
+      histogram_btagWeight_vs_ak4JetPt->Fill(selJetAK4_lead->pt(), evtWeightRecorder.get_btag(central_or_shift_main)*evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      histogram_btagSFRatio_vs_ak4JetPt->Fill(selJetAK4_lead->pt(), evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      histogram_get_btag_vs_ak4JetPt->Fill(selJetAK4_lead->pt(), evtWeightRecorder.get_btag(central_or_shift_main), 1.);
+    }
+    if ( selJetsAK8.size() >= 1 ) 
+    {
+      const RecoJetAK8* selJetAK8_lead = selJetsAK8[0];
+      histogram_btagWeight_vs_ak8JetPt->Fill(selJetAK8_lead->pt(), evtWeightRecorder.get_btag(central_or_shift_main)*evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      histogram_btagSFRatio_vs_ak8JetPt->Fill(selJetAK8_lead->pt(), evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      histogram_get_btag_vs_ak8JetPt->Fill(selJetAK8_lead->pt(), evtWeightRecorder.get_btag(central_or_shift_main), 1.);
+    }
     if(isDEBUG)
     {
       std::cout << evtWeightRecorder << '\n';
