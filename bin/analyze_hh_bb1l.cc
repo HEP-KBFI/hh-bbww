@@ -888,6 +888,9 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_Wjj jetSelectorAK8_Wjj(era, -1, isDEBUG);
   RecoJetCollectionSelectorAK8 jetSelectorAK8(era);
+  RecoJetCollectionSelectorAK8 jetSelectorAK8ctrl(era);    // CV: use for making control plots to investigate data/MC diffence observed in boosted category;
+  jetSelectorAK8ctrl.getSelector().set_min_pt(200.);       //     apply same cuts on fatjet jet pT and softdrop mass
+  jetSelectorAK8ctrl.getSelector().set_min_msoftdrop(30.); //     as in the RecoJetCollectionSelectorAK8_hh_bbWW_Hbb selector class
 
   MEMOutputReader_hh_bb1l* memReader = nullptr;
   if ( !branchName_memOutput.empty() )
@@ -1282,6 +1285,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     JetHistManager* subleadJetAK4_;
     JetHistManagerAK8* jetsAK8_Hbb_;
     JetHistManagerAK8* jetsAK8_Wjj_;
+    JetHistManagerAK8* jetsAK8ctrl_;
     JetHistManager* BJetsAK4_loose_;
     JetHistManager* leadBJetAK4_loose_;
     JetHistManager* subleadBJetAK4_loose_;
@@ -1295,6 +1299,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     std::map<std::string, LHEInfoHistManager*> lheInfoHistManager_afterCuts_in_categories_;
     EvtYieldHistManager* evtYield_;
     WeightHistManager* weights_;
+    WeightHistManager* weights_boosted_;
+    WeightHistManager* weights_resolved_;    
   };
 
   std::map<std::string, GenEvtHistManager*> genEvtHistManager_beforeCuts;
@@ -1335,6 +1341,9 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
         selHistManager->jetsAK8_Wjj_ = new JetHistManagerAK8(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/jetsAK8_Wjj", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
         selHistManager->jetsAK8_Wjj_->bookHistograms(fs);
+        selHistManager->jetsAK8ctrl_ = new JetHistManagerAK8(makeHistManager_cfg(process_and_genMatch,
+          Form("%s/sel/jetsAK8ctrl", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
+        selHistManager->jetsAK8ctrl_->bookHistograms(fs);
         selHistManager->BJetsAK4_loose_ = new JetHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/BJetsAK4_loose", histogramDir.data()), era_string, central_or_shift, "allHistograms"));
         selHistManager->BJetsAK4_loose_->bookHistograms(fs);
@@ -1403,7 +1412,13 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
         selHistManager->evtYield_->bookHistograms(fs);
         selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "data_to_MC_correction", "fakeRate" });
+        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
+        selHistManager->weights_boosted_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
+          Form("%s/sel/weights_boosted", histogramDir.data()), era_string, central_or_shift));
+        selHistManager->weights_boosted_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
+        selHistManager->weights_resolved_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
+          Form("%s/sel/weights_resolved", histogramDir.data()), era_string, central_or_shift));
+        selHistManager->weights_resolved_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
       }
       selHistManagers[central_or_shift][idxLepton] = selHistManager;
     }
@@ -2101,6 +2116,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
     const std::vector<const RecoJetAK8*> selJetsAK8 = jetSelectorAK8(cleanedJetsAK8_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJetAK8*> selJetsAK8ctrl = jetSelectorAK8ctrl(cleanedJetsAK8_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherCSV);
 
     if ( !(selBJetsAK4_medium.size() >= 1 || selJetsAK8_Hbb.size() >=1 ) ) {
@@ -3150,6 +3166,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
           if ( selJetAK8_Wjj ) {
             selHistManager->jetsAK8_Wjj_->fillHistograms({ selJetAK8_Wjj }, evtWeight);
           }
+          selHistManager->jetsAK8ctrl_->fillHistograms(selJetsAK8ctrl, evtWeight);
           selHistManager->BJetsAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
           selHistManager->leadBJetAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
           selHistManager->subleadBJetAK4_loose_->fillHistograms(selBJetsAK4_loose, evtWeight);
@@ -3210,13 +3227,22 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
         if(! skipFilling)
         {
           selHistManager->evtYield_->fillHistograms(eventInfo, evtWeight);
-          selHistManager->weights_->fillHistograms("genWeight", eventInfo.genWeight);
-          selHistManager->weights_->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
-          selHistManager->weights_->fillHistograms("triggerWeight", evtWeightRecorder.get_sf_triggerEff(central_or_shift));
-          selHistManager->weights_->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
-          selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
+          for ( int idx = 0; idx < 3; ++idx ) 
+          {
+            WeightHistManager* weightHistManager = nullptr;
+            if      ( idx == 0 ) weightHistManager = selHistManager->weights_;
+            else if ( idx == 1 ) weightHistManager = selHistManager->weights_boosted_;
+            else if ( idx == 2 ) weightHistManager = selHistManager->weights_resolved_;
+            else assert(0);
+            if ( (idx == 1 && !selJetAK8_Hbb) || (idx == 2 && selJetAK8_Hbb) ) continue;
+            weightHistManager->fillHistograms("genWeight", eventInfo.genWeight);
+            weightHistManager->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
+            weightHistManager->fillHistograms("triggerWeight", evtWeightRecorder.get_sf_triggerEff(central_or_shift));
+            weightHistManager->fillHistograms("btagWeight", evtWeightRecorder.get_btag(central_or_shift)*evtWeightRecorder.get_btagSFRatio(central_or_shift));
+            weightHistManager->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
+            weightHistManager->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
+          }
         }
-
       }
     }
 
