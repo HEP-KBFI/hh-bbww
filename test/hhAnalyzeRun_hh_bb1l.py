@@ -23,6 +23,7 @@ parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_preselect() # effectively ignored, but needed by sync Ntuple workflow
 parser.add_rle_select()
+parser.add_lep_mva_wp(default_wp = 'default')
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
@@ -62,6 +63,7 @@ systematics_label = args.systematics
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
+lep_mva_wp        = args.lep_mva_wp
 files_per_job     = args.files_per_job
 use_home          = args.use_home
 tau_id            = args.tau_id
@@ -237,6 +239,7 @@ if __name__ == '__main__':
     hadTau_mva_wp_veto                    = hadTau_selection_veto,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    lep_mva_wp                            = lep_mva_wp,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
     evtCategories                         = evtCategories,
