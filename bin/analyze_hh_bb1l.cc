@@ -1148,7 +1148,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     mvaFileName_TensorFlow_SM_resolved_odd,
     mvaInputVariables_NN_resolved,
     classes_TensorFlow_SM//,
-    // mvaFileName_TensorFlow_SM_resolved_even
+    //    mvaFileName_TensorFlow_SM_resolved_even
   );
   TensorFlowInterface mva_NN_boosted(
     mvaFileName_TensorFlow_SM_boosted_odd,
@@ -1462,6 +1462,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
        "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass",
        "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass",
        "wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass",
+       "bjet1_btagCSV", "bjet2_btagCSV", "wjet1_btagCSV", "wjet2_btagCSV",
        "met", "mht", "met_LD",
        "HT", "STMET",
        "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb", "eta_Hbb", "jpaScore",
@@ -1503,7 +1504,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity",
       "nJet_vbf", "isVBF", "WjjWasFat",
       "nMEMOutputs", "nMEMOutputs_missingBJet", "nMEMOutputs_missingHadWJet",
-      "isMatched_Wjj", "isMatched_Wjj_fat", "isMatched_Wlep", "nLeptons", "nJetForward", "lepcharge", "leptype"
+      "isMatched_Wjj", "isMatched_Wjj_fat", "isMatched_Wlep", "nLeptons", "nJetForward", "lepcharge", "leptype",
+      "selLepton_charge", "selLepton_type"
     );
       bdt_filler->bookTree(fs);
     }
@@ -3237,8 +3239,16 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     if ( bdt_filler ) {
 
       double lep_frWeight = ( selLepton->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
+      double bjet1_btagCSV = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet1()->BtagCSV() : ( (selJet1_Hbb) ? dynamic_cast<const RecoJet*>(selJet1_Hbb)->BtagCSV() : -1 );
+      double bjet2_btagCSV = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet2()->BtagCSV() : ( (selJet2_Hbb) ? dynamic_cast<const RecoJet*>(selJet2_Hbb)->BtagCSV() : -1 );
+      double wjet1_btagCSV = (selJet1_Wjj) ? dynamic_cast<const RecoJet*>(selJet1_Wjj)->BtagCSV() : -1;
+      double wjet2_btagCSV = (selJet2_Wjj) ? dynamic_cast<const RecoJet*>(selJet2_Wjj)->BtagCSV() : -1;
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
 	("jpaScore",                                 jpaScore)
+	("bjet1_btagCSV",                            bjet1_btagCSV)
+	("bjet2_btagCSV",                            bjet2_btagCSV)
+	("wjet1_btagCSV",                            wjet1_btagCSV)
+        ("wjet2_btagCSV",                            wjet2_btagCSV)
 	("lep_pt",                                   selLepton->pt())
 	("lep_conePt",                               comp_lep_conePt(*selLepton))
 	("lep_eta",                                  selLepton->eta())
@@ -3374,6 +3384,8 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	("mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0)
 	("nLeptons",               preselLeptonsFull.size())
 	("lepcharge",               preselLeptonsFull.size()>1 ? preselLeptonsFull[0]->charge()+preselLeptonsFull[1]->charge() : 999)
+	("selLepton_charge",               preselLeptonsFull[0]->charge())
+	("selLepton_type",          selLepton_type)
 	("leptype",               preselLeptonsFull.size()>1 ? fabs(preselLeptonsFull[0]->pdgId())==fabs(preselLeptonsFull[1]->pdgId()) : 999)
 	("nElectron",              selElectrons.size())
 	("new_had_cut",             new_had_cut)
