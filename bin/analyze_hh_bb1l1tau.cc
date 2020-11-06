@@ -457,7 +457,7 @@ int main(int argc, char* argv[])
   std::cout << "Loaded " << inputTree->getFileCount() << " file(s)." << std::endl;
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC, isSignal, isHH_rwgt_allowed, apply_topPtReweighting);
+  EventInfo eventInfo(analysisConfig);
   if(isMC)
   {
     const double ref_genWeight = cfg_analyze.getParameter<double>("ref_genWeight");
@@ -468,7 +468,7 @@ int main(int argc, char* argv[])
 
 //--- HH scan
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
-  const bool apply_HH_rwgt = analysisConfig.isMC_HH_nonresonant() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
+  const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
   const HHWeightInterface * HHWeight_calc = nullptr;
   if(apply_HH_rwgt)
   {

@@ -305,7 +305,7 @@ int main(int argc,
             << " Entries in "         << inputTree->GetListOfFiles()->GetEntries() << " files.\n";
 
 //--- declare event-level variables
-  EventInfo eventInfo;
+  EventInfo eventInfo(analysisConfig);
   EventInfoReader eventInfoReader(&eventInfo);
   eventInfoReader.setBranchAddresses(inputTree);
 

@@ -483,7 +483,7 @@ int main(int argc, char* argv[])
   std::cout << "Loaded " << inputTree->getFileCount() << " file(s)\n";
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC, isSignal, isHH_rwgt_allowed, apply_topPtReweighting);
+  EventInfo eventInfo(analysisConfig);
   if(isMC)
   {
     const double ref_genWeight = cfg_analyze.getParameter<double>("ref_genWeight");

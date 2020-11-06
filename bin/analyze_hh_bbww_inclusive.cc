@@ -38,6 +38,7 @@
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
+#include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
@@ -94,7 +95,9 @@ main(int argc,
   }
 
   const edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
+
   const edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbww_inclusive");
+  AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_analyze);
 
   const std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
   const std::string process_string = cfg_analyze.getParameter<std::string>("process");
@@ -209,7 +212,7 @@ main(int argc,
   });
 
 //--- declare event-level variables
-  EventInfo eventInfo(isMC, isSignal, isHH_rwgt_allowed, apply_topPtReweighting);
+  EventInfo eventInfo(analysisConfig);
   EventInfoReader eventInfoReader(&eventInfo);
   if(apply_topPtReweighting)
   {
