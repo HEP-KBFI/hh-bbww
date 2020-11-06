@@ -49,6 +49,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
+#include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
 
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/MEMInterface_hh_bb1l.h" // MEMInterface_hh_bb1l
@@ -191,6 +192,8 @@ int main(int argc,
   const bool useNonNominal_jetmet              = useNonNominal || ! isMC;
   const bool method_MEM                        = cfg_addMEM.getParameter<bool>("method_mem");
 
+  AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_addMEM);
+
   const std::string branchName_electrons       = cfg_addMEM.getParameter<std::string>("branchName_electrons");
   const std::string branchName_muons           = cfg_addMEM.getParameter<std::string>("branchName_muons");
   const std::string branchName_jets_ak4        = cfg_addMEM.getParameter<std::string>("branchName_jets_ak4");
@@ -199,7 +202,7 @@ int main(int argc,
   const std::string branchName_jets_ak8LS      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8LS");
   const std::string branchName_subjets_ak8LS   = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8LS");
   const std::string branchName_met             = cfg_addMEM.getParameter<std::string>("branchName_met");
-
+  
   const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");
   const int mem_maxWJets = cfg_addMEM.getParameter<int>("mem_maxWJets");
 
@@ -303,7 +306,7 @@ int main(int argc,
             << " Entries in "         << inputTree->GetListOfFiles()->GetEntries() << " files.\n";
   
 //--- declare event-level variables
-  EventInfo eventInfo;
+  EventInfo eventInfo(analysisConfig);
   EventInfoReader eventInfoReader(&eventInfo);
   eventInfoReader.setBranchAddresses(inputTree);
 
@@ -438,7 +441,7 @@ int main(int argc,
   std::map<std::string, branchEntryBaseType*> branchesToKeep;
   if ( copy_all_branches )
   {
-    eventInfoWriter = new EventInfoWriter(eventInfo.is_signal(), eventInfo.is_mc());
+    eventInfoWriter = new EventInfoWriter(analysisConfig.isMC_H(), analysisConfig.isMC());
     eventInfoWriter->setBranches(outputTree);
 
     muonWriter = new RecoMuonWriter(era, isMC, Form("n%s", branchName_muons.data()), branchName_muons);

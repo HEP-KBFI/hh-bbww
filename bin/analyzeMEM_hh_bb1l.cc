@@ -52,6 +52,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetCollectionSelector.h" // GenJetCollectionSelector
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
+#include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
@@ -182,6 +183,7 @@ int main(int argc, char* argv[])
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
   edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyzeMEM_hh_bb1l");
+  AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_analyze);
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
@@ -195,9 +197,6 @@ int main(int argc, char* argv[])
   bool isMC = true;
   bool isMC_HH = isMC && process_string.find("hh_bbvv")!= std::string::npos;
   bool isMC_TT = isMC && process_string.find("TT")     != std::string::npos;
-  bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  //bool isHH_rwgt_allowed = boost::starts_with(process_string, "signal_ggf_nonresonant_") && process_string.find("cHHH") == std::string::npos;
-  bool isHH_rwgt_allowed = false; // CV: temporary work-around, as branch "mHH_lhe" is missing in Ntuple containing AK4LS jets produced by Karl
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift = "central";
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
@@ -248,7 +247,7 @@ int main(int argc, char* argv[])
   std::cout << "Loaded " << inputTree->getFileCount() << " file(s)\n";
 
 //--- declare event-level variables
-  EventInfo eventInfo(true, isSignal, isHH_rwgt_allowed);
+  EventInfo eventInfo(analysisConfig);
   const std::string default_cat_str = "default";
   std::vector<std::string> evt_cat_strs = { default_cat_str };
 
@@ -537,7 +536,7 @@ int main(int argc, char* argv[])
 
     EvtWeightRecorderHH evtWeightRecorder({ "central" }, central_or_shift, isMC);
 
-    if ( apply_genWeight ) evtWeightRecorder.record_genWeight(eventInfo.genWeight);
+    if ( apply_genWeight ) evtWeightRecorder.record_genWeight(eventInfo);
     lheInfoReader->read();
     evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
     evtWeightRecorder.record_puWeight(&eventInfo);
