@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-11-01 12:30:48 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2018_hh.py -p python/samples/sampleLocations_2018_preselected.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_hh_preselected.py -M
+# file generated at 2020-11-07 20:49:40 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2018_hh.py -p python/samples/sampleLocations_2018_preselected.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_hh_preselected.py -M -q /hdfs/local/karl/count_final/2020Nov07/count_2018.root
 
 samples_2018 = OD()
 samples_2018["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/MINIAODSIM"] = OD([
@@ -2543,6 +2543,58 @@ samples_2018["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_TuneCP5_PSWei
     [
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2020Oct31_wPresel_nom_all/ntuples/signal_ggf_spin2_2500_hh_2b2v"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin2_3000_hh_bbvv"),
+  ("process_name_specific",           "signal_ggf_spin2_3000_hh_2b2v"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    6),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 100000, ],
+    'CountWeighted'                                                                  : [ 9.99772734e+04, 9.99828438e+04, 9.99768516e+04, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 9.99772734e+04, 9.99772734e+04, ],
+    'CountWeightedPSWeight'                                                          : [ 9.99789250e+05, 9.99789250e+05, 9.99789250e+05, 9.99789250e+05, 9.99789250e+05, 9.99789250e+05, ],
+    'CountWeightedPSWeightOriginalXWGTUP'                                            : [ 9.99315078e+04, 9.99852188e+04, 1.46419266e+05, 1.00031938e+05, 9.97218203e+04, 5.87396719e+04, ],
+    'CountWeightedFull'                                                              : [ 9.99445312e+04, 9.99498281e+04, 9.99440859e+04, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 9.99445312e+04, 9.99445312e+04, ],
+    'CountWeightedFullPSWeight'                                                      : [ 9.99462375e+05, 9.99462375e+05, 9.99462375e+05, 9.99462375e+05, 9.99462375e+05, 9.99462375e+05, ],
+    'CountWeightedFullPSWeightOriginalXWGTUP'                                        : [ 9.99018750e+04, 9.99513672e+04, 1.46371000e+05, 9.99999375e+04, 9.96905703e+04, 5.87214375e+04, ],
+  }),
+  ("nof_tree_events",                 22776),
+  ("nof_db_events",                   100000),
+  ("fsize_local",                     114001382), # 114.00MB, avg file size 114.00MB
+  ("fsize_db",                        6743129991), # 6.74GB, avg file size 1.12GB
+  ("use_it",                          True),
+  ("xsection",                        0.026422),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         False),
+  ("nof_PSweights",                   4),
+  ("LHE_set",                         "LHEPdfWeight[nLHEPdfWeight]/F"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2020Nov05_wPresel_nom_all/ntuples/signal_ggf_spin2_3000_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
