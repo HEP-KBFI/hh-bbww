@@ -846,7 +846,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/201031_123049"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [306, 307, 308, 309, 310]),
       ]),
     ]
   ),
