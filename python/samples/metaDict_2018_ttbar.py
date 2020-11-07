@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-23 11:14:35 with the following command:
+# file generated at 2020-11-02 20:26:27 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_ttbar_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_ttbar.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_ttbar_2018_RunIIAutumn18MiniAOD.txt -c python/samples/sampleLocations_2018_nanoAOD_ttbar.txt
 
 meta_dictionary = OD()
@@ -116,16 +116,16 @@ meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Mi
 ])
 
 meta_dictionary["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2020Oct31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2"),
   ("sample_category",       "TT_hdampUp"),
   ("process_name_specific", "TTTo2L2Nu_hdampUP_ext2"),
-  ("nof_db_events",         28448000),
-  ("nof_db_files",          606),
-  ("fsize_db",              1616122096153),
+  ("nof_db_events",         29844000),
+  ("nof_db_files",          633),
+  ("fsize_db",              1695421298947),
   ("xsection",              88.4),
   ("use_it",                False),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 1.62TB; nevents: 28.45M; release: 10_2_5; last modified: 2020-10-09 10:06:43"),
+  ("comment",               "100.0%; status: VALID; size: 1.70TB; nevents: 29.84M; release: 10_2_5; last modified: 2020-10-27 18:46:03"),
 ])
 
 meta_dictionary["/TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
@@ -859,7 +859,7 @@ meta_dictionary["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIA
 
 # event statistics by sample category:
 # TT_hdampDown:  97.05M
-# TT_hdampUp:    95.54M
+# TT_hdampUp:    96.94M
 # TT_ueDown:     61.93M
 # TT_ueUp:       65.85M
 # TT_QCDbased:   98.20M

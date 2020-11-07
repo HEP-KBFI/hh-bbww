@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-10-23 13:58:44 with the following command:
+# file generated at 2020-11-02 20:19:35 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2018_RunIIAutumn18MiniAOD.txt -m python/samples/metaDict_2018_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2018_RunIIAutumn18MiniAOD.txt -c python/samples/sampleLocations_2018_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -641,7 +641,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_TuneCP5_PS
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] =  OD([
-  ("crab_string",           ""),
+  ("crab_string",           "2018_2020Oct31_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_reali"),
   ("sample_category",       "signal_ggf_spin2_3000_hh_bbvv"),
   ("process_name_specific", "signal_ggf_spin2_3000_hh_2b2v"),
   ("nof_db_events",         100000),
@@ -650,7 +650,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_TuneCP5_PS
   ("xsection",              0.026422),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "status: PRODUCTION; size: 6.74GB; nevents: 100.00k; release: 10_2_5; last modified: 2020-10-09 10:05:10"),
+  ("comment",               "100.0%; status: VALID; size: 6.74GB; nevents: 100.00k; release: 10_2_5; last modified: 2020-10-26 01:21:21"),
 ])
 
 meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/MINIAODSIM"] =  OD([
