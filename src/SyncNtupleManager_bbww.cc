@@ -6,8 +6,10 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetAK8.h" // RecoJetAK8
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath
 #include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // as_integer()
+#include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h"  // format_vdouble()
 
-#include <TFile.h> // TFile
+#include <TFile.h>   // TFile
+#include <TString.h> // TString, Form
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 
@@ -225,6 +227,22 @@ SyncNtupleManager_bbww::initializeBranches()
     jetAk8Ls_subjet1_phi,     "subjet1_phi",
     jetAk8Ls_subjet1_CSV,     "subjet1_CSV"
   );
+
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
+  {
+    std::string branchName_suffix = TString(get_jpaCategory_string(jpaCategory).data()).ReplaceAll(" ", "").ReplaceAll("(", "_").ReplaceAll(")", "").Data();
+    if ( jpaCategory <= (int)JPA::Category_resolved::k1b0W )
+    {
+      setBranches(jpaMap_1stLayer[jpaCategory], Form("jpa_1stLayer_%s", branchName_suffix.data()));
+    }
+    setBranches(jpaMap_2ndLayer[jpaCategory], Form("jpa_2ndLayer_%s", branchName_suffix.data()));
+  }
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  {
+    std::string branchName_suffix = TString(get_jpaCategory_string(jpaCategory).data()).ReplaceAll(" ", "").ReplaceAll("(", "_").ReplaceAll(")", "").Data();
+    setBranches(jpaMap_1stLayer[jpaCategory], Form("jpa_1stLayer_%s", branchName_suffix.data()));
+    setBranches(jpaMap_2ndLayer[jpaCategory], Form("jpa_2ndLayer_%s", branchName_suffix.data()));
+  }
 
   resetBranches();
 }
@@ -520,6 +538,41 @@ SyncNtupleManager_bbww::read(bool is_ee,
   flag_ss = is_ss;
 }
 
+//namespace
+//{
+//  std::vector<double>
+//  convert_to_vdouble(const std::map<int, Float_t>& jpaMap)
+//  {
+//    std::vector<double> jpaValues;
+//    for ( auto jpaIter : jpaMap )
+//    {
+//      jpaValues.push_back(jpaIter.second);
+//    }
+//    return jpaValues;
+//  }
+//}
+
+void 
+SyncNtupleManager_bbww::read(const JPAInterface & jpaInterface)
+{
+  //std::cout << "<SyncNtupleManager_bbww::read>:" << std::endl;
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
+  {
+    if ( jpaCategory <= (int)JPA::Category_resolved::k1b0W ) 
+    {
+      jpaMap_1stLayer[jpaCategory] = jpaInterface.mvaOutput_1stLayer(jpaCategory);
+    }
+    jpaMap_2ndLayer[jpaCategory] = jpaInterface.mvaOutput_2ndLayer(jpaCategory);
+  }
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  {
+    jpaMap_1stLayer[jpaCategory] = jpaInterface.mvaOutput_1stLayer(jpaCategory);
+    jpaMap_2ndLayer[jpaCategory] = jpaInterface.mvaOutput_2ndLayer(jpaCategory);
+  }
+  //std::cout << "jpaMap_1stLayer = " << format_vdouble(convert_to_vdouble(jpaMap_1stLayer)) << std::endl;
+  //std::cout << "jpaMap_2ndLayer = " << format_vdouble(convert_to_vdouble(jpaMap_2ndLayer)) << std::endl;
+}
+
 void
 SyncNtupleManager_bbww::resetBranches()
 {
@@ -668,6 +721,20 @@ SyncNtupleManager_bbww::resetBranches()
     jetAk8Ls_subjet1_phi,
     jetAk8Ls_subjet1_CSV
   );
+
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
+  {
+    if ( jpaCategory <= (int)JPA::Category_resolved::k1b0W )
+    {
+      jpaMap_1stLayer[jpaCategory] = -1.;
+    }
+    jpaMap_2ndLayer[jpaCategory] = -1.;
+  }
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  {
+    jpaMap_1stLayer[jpaCategory] = -1.;
+    jpaMap_2ndLayer[jpaCategory] = -1.;
+  }
 
   for(auto & kv: hltMap)
   {
