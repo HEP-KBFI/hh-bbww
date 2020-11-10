@@ -15,6 +15,25 @@ const double higgsBosonMass = 125.;
 
 const double jpaScore_default = 0.;
 
+std::string get_jpaCategory_string(int jpaCategory)
+{ 
+  std::string jpaCategory_string;
+  if      ( jpaCategory == (int)JPA::Category_resolved::kUndefined ) jpaCategory_string = "undefined";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k2b2W      ) jpaCategory_string = "2b2W (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k2b1W      ) jpaCategory_string = "2b1W (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k2b0W      ) jpaCategory_string = "2b0W (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k1b2W      ) jpaCategory_string = "1b2W (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k1b1W      ) jpaCategory_string = "1b1W (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k1b0W      ) jpaCategory_string = "1b0W (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_resolved::k0b        ) jpaCategory_string = "0b   (resolved)";
+  else if ( jpaCategory == (int)JPA::Category_boosted::kUndefined  ) jpaCategory_string = "undefined";
+  else if ( jpaCategory == (int)JPA::Category_boosted::k2b2W       ) jpaCategory_string = "2b2W (boosted)";
+  else if ( jpaCategory == (int)JPA::Category_boosted::k2b1W       ) jpaCategory_string = "2b1W (boosted)";
+  else if ( jpaCategory == (int)JPA::Category_boosted::k2b0W       ) jpaCategory_string = "2b0W (boosted)";
+  else assert(0);
+  return jpaCategory_string;
+}
+
 JPAInterface::JPAInterface(const std::string& mvaInputFilePath, bool isDEBUG)
   : isDEBUG_(isDEBUG)
 {
@@ -161,15 +180,15 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath, bool isDEBUG)
     mvas_1stLayer_[jpaCategory] = mva;
   }
 
-  mvaInputFileNames_2ndLayer_even_[kBoosted]  = "bb1l_jpa_evtCat_boosted_even.xml";
-  mvaInputFileNames_2ndLayer_odd_[kBoosted]   = "bb1l_jpa_evtCat_boosted_odd.xml";
-  mvaInputVariables_2ndLayer_[kBoosted]       = { 
+  mvaInputFileNames_2ndLayer_even_[JPA::kBoosted]  = "bb1l_jpa_evtCat_boosted_even.xml";
+  mvaInputFileNames_2ndLayer_odd_[JPA::kBoosted]   = "bb1l_jpa_evtCat_boosted_odd.xml";
+  mvaInputVariables_2ndLayer_[JPA::kBoosted]       = { 
     "bdtScore_jpa_4jet",
     "bdtScore_jpa_missingWJet"
   };
-  mvaInputFileNames_2ndLayer_even_[kResolved] = "bb1l_jpa_evtCat_resolved_even.xml";
-  mvaInputFileNames_2ndLayer_odd_[kResolved]  = "bb1l_jpa_evtCat_resolved_odd.xml";
-  mvaInputVariables_2ndLayer_[kResolved]      = { 
+  mvaInputFileNames_2ndLayer_even_[JPA::kResolved] = "bb1l_jpa_evtCat_resolved_even.xml";
+  mvaInputFileNames_2ndLayer_odd_[JPA::kResolved]  = "bb1l_jpa_evtCat_resolved_odd.xml";
+  mvaInputVariables_2ndLayer_[JPA::kResolved]      = { 
     "bdtScore_jpa_4jet", 
     "bdtScore_jpa_missingWJet", 
     "bdtScore_jpa_missingBJet", 
@@ -177,7 +196,7 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath, bool isDEBUG)
     "bdtScore_jpa_missingBJet_missingWJet", 
     "bdtScore_jpa_missingBJet_missingAllWJet" 
   };
-  for ( int jpaCategory = kResolved; jpaCategory <= kBoosted; ++jpaCategory ) 
+  for ( int jpaCategory = JPA::kResolved; jpaCategory <= JPA::kBoosted; ++jpaCategory ) 
   {
     TMVAInterface* mva = new TMVAInterface(
       mvaInputFilePath_ + mvaInputFileNames_2ndLayer_odd_[jpaCategory], 
@@ -221,6 +240,24 @@ JPAInterface::set(const JPA::LorentzVector& leptonP4, int numLeptons, int numJet
   event_number_ = event_number;
 }
 
+void
+JPAInterface::reset_mvaOutputs()
+{
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
+  {
+    if ( jpaCategory <= (int)JPA::Category_resolved::k1b0W )
+    {
+      mvaOutputs_1stLayer_[jpaCategory] = -1.;
+    }
+    mvaOutputs_2ndLayer_[jpaCategory] = -1.;
+  }
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  {
+    mvaOutputs_1stLayer_[jpaCategory] = -1.;
+    mvaOutputs_2ndLayer_[jpaCategory] = -1.;
+  }
+}
+
 JPA
 JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
                          const JPA::LorentzVector& leptonP4, int numLeptons, int numJets, int numBJets_loose, int numBJets_medium, double metPx, double metPy, 
@@ -234,6 +271,7 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
   ak8jet_subjet1_ = JPAJet();
   ak8jet_subjet2_ = JPAJet();
   set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
+  reset_mvaOutputs();
   std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets_);
   for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
   {
@@ -249,7 +287,7 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
   mvaInputVariables["bdtScore_jpa_missingAllWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_resolved::k2b0W];
   mvaInputVariables["bdtScore_jpa_missingBJet_missingWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_resolved::k1b1W];
   mvaInputVariables["bdtScore_jpa_missingBJet_missingAllWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_resolved::k1b0W];
-  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[kResolved])(mvaInputVariables, event_number_, true)) + 1;
+  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[JPA::kResolved])(mvaInputVariables, event_number_, true)) + 1;
   if ( isDEBUG_ )
   {
     std::cout << "mvaInputVariables:" << std::endl;
@@ -259,19 +297,25 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets,
     }
     std::cout << "mvaOutput_2ndLayer = " << mvaOutput_2ndLayer << std::endl;
   }
-  int jpaCategory = (int)JPA::Category_resolved::kUndefined;
-  if      ( mvaOutput_2ndLayer == 1 ) jpaCategory = (int)JPA::Category_resolved::k2b2W;
-  else if ( mvaOutput_2ndLayer == 2 ) jpaCategory = (int)JPA::Category_resolved::k2b1W;
-  else if ( mvaOutput_2ndLayer == 3 ) jpaCategory = (int)JPA::Category_resolved::k1b2W;
-  else if ( mvaOutput_2ndLayer == 4 ) jpaCategory = (int)JPA::Category_resolved::k2b0W;
-  else if ( mvaOutput_2ndLayer == 5 ) jpaCategory = (int)JPA::Category_resolved::k1b1W;
-  else if ( mvaOutput_2ndLayer == 6 ) jpaCategory = (int)JPA::Category_resolved::k1b0W;
-  else if ( mvaOutput_2ndLayer == 7 ) jpaCategory = (int)JPA::Category_resolved::k0b;
+  int best_jpaCategory = (int)JPA::Category_resolved::kUndefined;
+  if      ( mvaOutput_2ndLayer == 1 ) best_jpaCategory = (int)JPA::Category_resolved::k2b2W;
+  else if ( mvaOutput_2ndLayer == 2 ) best_jpaCategory = (int)JPA::Category_resolved::k2b1W;
+  else if ( mvaOutput_2ndLayer == 3 ) best_jpaCategory = (int)JPA::Category_resolved::k1b2W;
+  else if ( mvaOutput_2ndLayer == 4 ) best_jpaCategory = (int)JPA::Category_resolved::k2b0W;
+  else if ( mvaOutput_2ndLayer == 5 ) best_jpaCategory = (int)JPA::Category_resolved::k1b1W;
+  else if ( mvaOutput_2ndLayer == 6 ) best_jpaCategory = (int)JPA::Category_resolved::k1b0W;
+  else if ( mvaOutput_2ndLayer == 7 ) best_jpaCategory = (int)JPA::Category_resolved::k0b;
   else assert(0);
-  mvaOutputs_2ndLayer_[kResolved] = mvaOutput_2ndLayer;
-  if ( jpas_[jpaCategory].size() >= 1 )
+  const std::vector<float>& mvamulticlsOutput = mvas_2ndLayer_[JPA::kResolved]->mvamulticlsOutput();
+  int idx = 0;
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
   {
-    return jpas_[jpaCategory].front();
+    mvaOutputs_2ndLayer_[jpaCategory] = mvamulticlsOutput[idx];
+    ++idx;
+  }
+  if ( jpas_[best_jpaCategory].size() >= 1 )
+  {
+    return jpas_[best_jpaCategory].front();
   }
   else 
   {
@@ -293,6 +337,7 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
   ak8jet_subjet1_ = ak8jet_subjet1;
   ak8jet_subjet2_ = ak8jet_subjet2;
   set(leptonP4, numLeptons, numJets, numBJets_loose, numBJets_medium, metPx, metPy, event_number);
+  reset_mvaOutputs();
   std::vector<const JPAJet*> ak4Jets_ptrs = convert_to_ptrs(ak4Jets_);
   for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
   {
@@ -304,7 +349,7 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
   std::map<std::string, double> mvaInputVariables;
   mvaInputVariables["bdtScore_jpa_4jet"] = mvaOutputs_1stLayer_[(int)JPA::Category_boosted::k2b2W];
   mvaInputVariables["bdtScore_jpa_missingWJet"] = mvaOutputs_1stLayer_[(int)JPA::Category_boosted::k2b1W];
-  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[kBoosted])(mvaInputVariables, event_number_, true)) + 1;
+  int mvaOutput_2ndLayer = TMath::Nint((*mvas_2ndLayer_[JPA::kBoosted])(mvaInputVariables, event_number_, true)) + 1;
   if ( isDEBUG_ )
   {
     std::cout << "mvaInputVariables:" << std::endl;
@@ -314,15 +359,21 @@ JPAInterface::operator()(const std::vector<JPAJet>& ak4Jets, const JPAJet& ak8je
     }
     std::cout << "mvaOutput_2ndLayer = " << mvaOutput_2ndLayer << std::endl;
   }
-  int jpaCategory = (int)JPA::Category_boosted::kUndefined;
-  if      ( mvaOutput_2ndLayer == 1 ) jpaCategory = (int)JPA::Category_boosted::k2b2W;
-  else if ( mvaOutput_2ndLayer == 2 ) jpaCategory = (int)JPA::Category_boosted::k2b1W;
-  else if ( mvaOutput_2ndLayer == 3 ) jpaCategory = (int)JPA::Category_boosted::k2b0W;
+  int best_jpaCategory = (int)JPA::Category_boosted::kUndefined;
+  if      ( mvaOutput_2ndLayer == 1 ) best_jpaCategory = (int)JPA::Category_boosted::k2b2W;
+  else if ( mvaOutput_2ndLayer == 2 ) best_jpaCategory = (int)JPA::Category_boosted::k2b1W;
+  else if ( mvaOutput_2ndLayer == 3 ) best_jpaCategory = (int)JPA::Category_boosted::k2b0W;
   else assert(0);
-  mvaOutputs_2ndLayer_[kBoosted] = mvaOutput_2ndLayer;
-  if ( jpas_[jpaCategory].size() >= 1 ) 
+  const std::vector<float>& mvamulticlsOutput = mvas_2ndLayer_[JPA::kBoosted]->mvamulticlsOutput();
+  int idx = 0;
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
   {
-    return jpas_[jpaCategory].front();
+    mvaOutputs_2ndLayer_[jpaCategory] = mvamulticlsOutput[idx];
+    ++idx;
+  }
+  if ( jpas_[best_jpaCategory].size() >= 1 ) 
+  {
+    return jpas_[best_jpaCategory].front();
   }
   else 
   {
