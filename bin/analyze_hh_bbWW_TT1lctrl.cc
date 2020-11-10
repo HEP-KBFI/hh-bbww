@@ -284,7 +284,7 @@ int main(int argc, char* argv[])
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
   edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbWW_TT1lctrl");
-  AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_analyze);
+  AnalysisConfig analysisConfig("HH->bbWW TT1lctrl", cfg_analyze);
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 

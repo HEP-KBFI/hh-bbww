@@ -193,7 +193,7 @@ int main(int argc, char* argv[])
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
   edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbWW_DYctrl");
-  AnalysisConfig_hh analysisConfig("HH->multilepton", cfg_analyze);
+  AnalysisConfig analysisConfig("HH->bbWW DYctrl", cfg_analyze);
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
