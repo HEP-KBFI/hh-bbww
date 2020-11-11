@@ -97,6 +97,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface_2.h" // HHWeightInterface
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
+#include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8_hh_Wjj
@@ -118,6 +119,7 @@
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched 
 #include "hhAnalysis/bbww/interface/JPAInterface.h" // JPA, JPAJet, JPAInterface
+#include "hhAnalysis/bbww/interface/jpaAuxFunctions.h" // convert_to_JPAJet, convert_to_JPAJets, convert_to_RecoJet
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
 #include <TError.h> // gErrorAbortLevel, kError
@@ -429,50 +431,6 @@ comp_mem_maxLR(const std::vector<MEMOutput_hh_bb1l>& memOutputs_hh_bb1l)
     }
   }
   return maxLR;
-}
-
-JPAJet 
-convert_to_JPAJet(const RecoJet* ak4Jet)
-{
-  JPAJet ak4Jet_jpa(ak4Jet->p4(), ak4Jet->p4_bRegCorr(), ak4Jet->BtagCSV(), ak4Jet->QGDiscr());
-  return ak4Jet_jpa;
-}
-
-std::pair<JPAJet, JPAJet> 
-convert_to_JPAJets(const RecoJetAK8* ak8Jet)
-{
-  assert(ak8Jet->subJet1() && ak8Jet->subJet2());
-
-  const RecoSubjetAK8* ak8jet_subjet1 = ak8Jet->subJet1();
-  double ak8jet_subjet1_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
-  JPAJet ak8jet_subjet1_jpa(ak8jet_subjet1->p4(), ak8jet_subjet1->p4(), ak8jet_subjet1->BtagCSV(), ak8jet_subjet1_QGDiscr);
-
-  const RecoSubjetAK8* ak8jet_subjet2 = ak8Jet->subJet2();
-  double ak8jet_subjet2_QGDiscr = 1.; // CV: treat jets for which quark/gluon discriminator is not available as quark jets
-  JPAJet ak8jet_subjet2_jpa(ak8jet_subjet2->p4(), ak8jet_subjet2->p4(), ak8jet_subjet2->BtagCSV(), ak8jet_subjet2_QGDiscr);
-
-  return std::pair<JPAJet, JPAJet>(ak8jet_subjet1_jpa, ak8jet_subjet2_jpa);
-}
-
-const RecoJetBase*
-convert_to_RecoJet(const JPAJet* ak4Jet_jpa, const std::vector<const RecoJet*>& ak4Jets)
-{
-  const RecoJetBase* ak4Jet_matched = nullptr;
-  if ( ak4Jet_jpa )
-  {
-    double dRmatch = 1.e+3;
-    for ( std::vector<const RecoJet*>::const_iterator ak4Jet = ak4Jets.begin();
-          ak4Jet != ak4Jets.end(); ++ak4Jet ) {
-      double dR = deltaR(ak4Jet_jpa->p4(), (*ak4Jet)->p4());
-      if ( dR < 1.e-1 && dR < dRmatch )
-      {
-        ak4Jet_matched = *ak4Jet;
-        dRmatch = dR;
-      }
-    }
-    assert(ak4Jet_matched);
-  }
-  return ak4Jet_matched;
 }
 
 /**
@@ -1569,6 +1527,12 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
   TProfile* histogram_btagWeight_vs_ak8JetPt  = fs.make<TProfile>("btagWeight_vs_ak8JetPt",  "btagWeight_vs_ak8JetPt",  20, 0., 1000.);
   TProfile* histogram_btagSFRatio_vs_ak8JetPt = fs.make<TProfile>("btagSFRatio_vs_ak8JetPt", "btagSFRatio_vs_ak8JetPt", 20, 0., 1000.);
   TProfile* histogram_get_btag_vs_ak8JetPt    = fs.make<TProfile>("get_btag_vs_ak8JetPt",    "get_btag_vs_ak8JetPt",    20, 0., 1000.);
+  TH1*      histogram_btagWeight_boosted      = fs.make<TH1D>("btagWeight_boosted",   "btagWeight_boosted",  60, 0., 3.);
+  TH1*      histogram_btagSFRatio_boosted     = fs.make<TH1D>("btagSFRatio_boosted",  "btagWeight_boosted",  60, 0., 3.);
+  TH1*      histogram_get_btag_boosted        = fs.make<TH1D>("get_btag_boosted",     "get_btag_boosted",    60, 0., 3.);
+  TH1*      histogram_btagWeight_resolved     = fs.make<TH1D>("btagWeight_resolved",  "btagWeight_resolved", 60, 0., 3.);
+  TH1*      histogram_btagSFRatio_resolved    = fs.make<TH1D>("btagSFRatio_resolved", "btagWeight_resolved", 60, 0., 3.);
+  TH1*      histogram_get_btag_resolved       = fs.make<TH1D>("get_btag_resolved",    "get_btag_resolved",   60, 0., 3.);
   //bool isDEBUG_TF = true;
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
@@ -2301,9 +2265,9 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     double jpaScore(0.);
     //std::pair<int, int> matchedJets_ = ( !selJetAK8_Hbb ) ? matchedJets(selJetsAK4, genBJets_ptrs, genWJets_ptrs) : matchedJets(cleanedJetsAK4_wrtHbb, genBJets_ptrs, genWJets_ptrs, true);
     //if(!selJetAK8_Hbb)h_genmatch->Fill(matchedJets_.first, matchedJets_.second);
+    JPA jpa;
     if( select_jpa )
     {
-      JPA jpa;
       if ( selJetAK8_Hbb ) 
       {
         std::vector<JPAJet> ak4Jets_jpa;
@@ -3190,7 +3154,22 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
       const double evtWeight = evtWeightRecorder.get(central_or_shift);
-
+//if ( selJetAK8_Hbb )
+//{
+//std::cout << "central_or_shift = " << central_or_shift << ": evtWeight = " << evtWeight << std::endl;
+//std::cout << "numElectrons = " << numElectrons << ", numMuons = " << numMuons << std::endl;
+//std::cout << "#selJetsAK4 = " << selJetsAK4.size() << std::endl;
+//if ( selJetsAK4.size() >= 1 ) 
+//{
+//  const RecoJet* selJetAK4_lead = selJetsAK4[0];
+//  std::cout << "selJetAK4_lead: pT = " << selJetAK4_lead->pt() << std::endl;
+//} 
+//else
+//{
+//  std::cout << "selJetAK4_lead: N/A" << std::endl;
+//}
+//std::cout << evtWeightRecorder;
+//}
       const bool skipFilling = central_or_shift != central_or_shift_main;
       for (const GenMatchEntry* genMatch : genMatches)
       {
@@ -3219,6 +3198,10 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
         }
         for(const auto & kv: reWeightMapsHH[central_or_shift])
         {
+//if ( selJetAK8_Hbb )
+//{
+//std::cout << kv.first << ": evtWeight = " << kv.second << std::endl;
+//}
           selHistManager->evt_[kv.first]->fillHistograms(
             selElectrons.size(),
             selMuons.size(),
@@ -3548,6 +3531,10 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       snm->read(eventInfo.genWeight,                    FloatVariableType_bbww::MC_weight);
       snm->read(met.pt(),                               FloatVariableType_bbww::PFMET);
       snm->read(met.phi(),                              FloatVariableType_bbww::PFMETphi);
+      if ( jpa.jpaCategory() != (int)JPA::Category_resolved::kUndefined )
+      {
+        snm->read(jpaInterface);
+      }
 
       if(isGenMatched)
       {
@@ -3581,6 +3568,18 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       histogram_btagWeight_vs_ak8JetPt->Fill(selJetAK8_lead->pt(), evtWeightRecorder.get_btag(central_or_shift_main)*evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
       histogram_btagSFRatio_vs_ak8JetPt->Fill(selJetAK8_lead->pt(), evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
       histogram_get_btag_vs_ak8JetPt->Fill(selJetAK8_lead->pt(), evtWeightRecorder.get_btag(central_or_shift_main), 1.);
+    }
+    if ( selJetAK8_Hbb )
+    {
+      fillWithOverFlow(histogram_btagWeight_boosted, evtWeightRecorder.get_btag(central_or_shift_main)*evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      fillWithOverFlow(histogram_btagSFRatio_boosted, evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      fillWithOverFlow(histogram_get_btag_boosted, evtWeightRecorder.get_btag(central_or_shift_main), 1.);
+    }
+    else
+    {
+      fillWithOverFlow(histogram_btagWeight_resolved, evtWeightRecorder.get_btag(central_or_shift_main)*evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      fillWithOverFlow(histogram_btagSFRatio_resolved, evtWeightRecorder.get_btagSFRatio(central_or_shift_main), 1.);
+      fillWithOverFlow(histogram_get_btag_resolved, evtWeightRecorder.get_btag(central_or_shift_main), 1.);
     }
     if(isDEBUG)
     {

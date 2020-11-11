@@ -3,6 +3,8 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/SyncNtupleManagerBase.h"
 
+#include "hhAnalysis/bbww/interface/JPAInterface.h"
+
 // forward declarations
 class RecoMuon;
 class RecoElectron;
@@ -68,6 +70,7 @@ public:
             bool is_mm,
             bool is_em,
             int  is_ss);
+  void read(const JPAInterface & jpaInterface);
   void resetBranches() override;
 
 protected:
@@ -202,6 +205,9 @@ protected:
   Float_t * jetAk8Ls_subjet1_CSV;
 
   std::map<std::string, Int_t> hltMap;
+
+  std::map<int, Float_t> jpaMap_1stLayer;
+  std::map<int, Float_t> jpaMap_2ndLayer;
 
   std::map<FloatVariableType_bbww, Float_t> floatMap;
 };

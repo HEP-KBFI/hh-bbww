@@ -12,12 +12,15 @@
 class JPAJet;
 std::ostream& operator<<(std::ostream&, const JPAJet&);
 
+std::string get_jpaCategory_string(int jpaCategory);
+
 class JPA
 {
  public:
   typedef math::PtEtaPhiMLorentzVector LorentzVector;
   enum class Category_resolved { kUndefined = 0, k2b2W = 1, k2b1W = 2, k2b0W = 3, k1b2W = 4, k1b1W = 5, k1b0W = 6, k0b = 7 };
   enum class Category_boosted { kUndefined = 0, k2b2W = 11, k2b1W = 12, k2b0W = 13 };
+  enum { kResolved, kBoosted };
   JPA()
     : bjet1_(nullptr)
     , bjet2_(nullptr)
@@ -47,21 +50,7 @@ class JPA
   int jpaCategory() const { return jpaCategory_; }
   std::string jpaCategory_string() const 
   { 
-    std::string jpaCategory_string;
-    if      ( jpaCategory_ == (int)Category_resolved::kUndefined ) jpaCategory_string = "undefined";
-    else if ( jpaCategory_ == (int)Category_resolved::k2b2W      ) jpaCategory_string =  "2b2W (resolved)";
-    else if ( jpaCategory_ == (int)Category_resolved::k2b1W      ) jpaCategory_string =  "2b1W (resolved)";
-    else if ( jpaCategory_ == (int)Category_resolved::k2b0W      ) jpaCategory_string =  "2b0W (resolved)";
-    else if ( jpaCategory_ == (int)Category_resolved::k1b2W      ) jpaCategory_string =  "1b2W (resolved)";
-    else if ( jpaCategory_ == (int)Category_resolved::k1b1W      ) jpaCategory_string =  "1b1W (resolved)";
-    else if ( jpaCategory_ == (int)Category_resolved::k1b0W      ) jpaCategory_string =  "1b0W (resolved)";
-    else if ( jpaCategory_ == (int)Category_resolved::k0b        ) jpaCategory_string =  "0b   (resolved)";
-    else if ( jpaCategory_ == (int)Category_boosted::kUndefined  ) jpaCategory_string =  "undefined";
-    else if ( jpaCategory_ == (int)Category_boosted::k2b2W       ) jpaCategory_string =  "2b2W (boosted)";
-    else if ( jpaCategory_ == (int)Category_boosted::k2b1W       ) jpaCategory_string =  "2b1W (boosted)";
-    else if ( jpaCategory_ == (int)Category_boosted::k2b0W       ) jpaCategory_string =  "2b0W (boosted)";
-    else assert(0);
-    return jpaCategory_string;
+    return get_jpaCategory_string(jpaCategory_);
   }
   bool isBoosted() const { return isBoosted_; }
 
@@ -151,6 +140,9 @@ class JPAInterface
   void
   set(const JPA::LorentzVector& leptonP4, int numLeptons, int numJets, int numBJets_loose, int numBJets_medium, double metPx, double metPy, int event_number);
   
+  void
+  reset_mvaOutputs();
+
   std::map<std::string, double>
   compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, const JPAJet* wjet1, const JPAJet* wjet2);
 
@@ -177,7 +169,6 @@ class JPAInterface
   std::map<int, TMVAInterface*> mvas_1stLayer_;
   std::map<int, double> mvaOutputs_1stLayer_;
 
-  enum { kResolved, kBoosted };
   std::map<int, std::string> mvaInputFileNames_2ndLayer_even_;
   std::map<int, std::string> mvaInputFileNames_2ndLayer_odd_;
   std::map<int, std::vector<std::string>> mvaInputVariables_2ndLayer_;

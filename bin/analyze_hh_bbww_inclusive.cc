@@ -42,6 +42,8 @@
 
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
+#include "hhAnalysis/bbww/interface/JPAInterface.h" // JPA, JPAJet, JPAInterface
+#include "hhAnalysis/bbww/interface/jpaAuxFunctions.h" // convert_to_JPAJet, convert_to_JPAJets
 
 #include <FWCore/ParameterSet/interface/ParameterSet.h> // edm::ParameterSet
 #include <DataFormats/FWLite/interface/InputSource.h> // fwlite::InputSource
@@ -265,6 +267,7 @@ main(int argc,
   inputTree->registerReader(jetReader);
   const RecoJetCollectionGenMatcher jetGenMatcher;
   const RecoJetCollectionCleaner jetCleaner(0.4, isDEBUG);
+  const RecoJetCollectionCleaner jetCleaner_dR12(1.2, isDEBUG);
   const RecoJetCollectionCleanerByIndex jetCleanerByIndex(isDEBUG);
   const RecoJetCollectionSelector jetSelector(era, -1, isDEBUG);
 
@@ -331,6 +334,8 @@ main(int argc,
       inputTree -> registerReader(genPhotonReader);
     }
   }
+
+  JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l");
 
   int analyzedEntries = 0;
   int selectedEntries = 0;
@@ -617,6 +622,48 @@ main(int argc,
       }
     }
 
+    JPA jpa;
+    if ( fakeableLeptons.size() >= 1 )
+    {
+      const RecoLepton * fakeableLepton = preselLeptons[0];
+      if ( selFatJets.size() >= 1 ) 
+      {
+        const RecoJetAK8 * fatJet = selFatJets[0];
+        const std::vector<const RecoJet*> cleanedJets_wrtHbb = jetCleaner_dR12(selJets, std::vector<const RecoJetBase*>({ fatJet }));
+        if ( cleanedJets_wrtHbb.size() >= 1 )
+        {
+          std::vector<JPAJet> ak4Jets_jpa;
+          for ( std::vector<const RecoJet*>::const_iterator ak4Jet = cleanedJets_wrtHbb.begin();
+                ak4Jet != cleanedJets_wrtHbb.end(); ++ak4Jet ) {
+            ak4Jets_jpa.push_back(convert_to_JPAJet(*ak4Jet));
+          }
+          //std::cout << "#ak4Jets_jpa (boosted) = " << ak4Jets_jpa.size() << std::endl;
+          std::pair<JPAJet, JPAJet> ak8jet_subjet1_and_2_jpa = convert_to_JPAJets(fatJet);
+          jpa = jpaInterface(
+            ak4Jets_jpa, ak8jet_subjet1_and_2_jpa.first, ak8jet_subjet1_and_2_jpa.second, 
+            fakeableLepton->p4(), preselLeptons.size(), selJets.size(), selBJets_loose.size(), selBJets_medium.size(), met.p4().px(), met.p4().py(), 
+            eventInfo.event);
+          //std::cout << "JPA (boosted):" << std::endl;
+          //std::cout << jpa;
+        }
+      }
+      else if ( selJets.size() >= 3 ) 
+      {
+        std::vector<JPAJet> ak4Jets_jpa;
+         for ( std::vector<const RecoJet*>::const_iterator ak4Jet = selJets.begin();
+              ak4Jet != selJets.end(); ++ak4Jet ) {
+          ak4Jets_jpa.push_back(convert_to_JPAJet(*ak4Jet));
+        }
+        //std::cout << "#ak4Jets_jpa (resolved) = " << ak4Jets_jpa.size() << std::endl;
+        jpa = jpaInterface(
+          ak4Jets_jpa,
+          fakeableLepton->p4(), preselLeptons.size(), selJets.size(), selBJets_loose.size(), selBJets_medium.size(), met.p4().px(), met.p4().py(), 
+          eventInfo.event);
+        //std::cout << "JPA (resolved):" << std::endl;
+        //std::cout << jpa;
+      }
+    }
+
     snm->read(trigger_SF, FloatVariableType_bbww::trigger_SF);
     snm->read(lepton_IDSF, FloatVariableType_bbww::lepton_IDSF);
     snm->read(lepton_IDSF_recoToLoose, FloatVariableType_bbww::lepton_IDSF_recoToLoose);
@@ -636,6 +683,10 @@ main(int argc,
     snm->read(met.pt(),  FloatVariableType_bbww::PFMET);
     snm->read(met.phi(), FloatVariableType_bbww::PFMETphi);
     snm->read(evtWeightRecorder.get_l1PreFiringWeight("central"), FloatVariableType_bbww::L1prefire);
+    if ( jpa.jpaCategory() != (int)JPA::Category_resolved::kUndefined )
+    {
+      snm->read(jpaInterface);
+    }
 
     snm->fill();
 
