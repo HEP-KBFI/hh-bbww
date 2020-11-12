@@ -1454,7 +1454,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
        "lep_pt", "lep_conePt", "lep_eta", "lep_phi", "lep_mass",
        "lep_e", "lep_px", "lep_py", "lep_pz",
        "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass",
-       "bjet1_e", "bjet1_pz", "bjet1_pz", "bjet1_pz",
+       "bjet1_e", "bjet1_px", "bjet1_py", "bjet1_pz",
        "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass",
        "bjet2_e", "bjet2_px", "bjet2_py", "bjet2_pz",
        "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass",
@@ -3307,6 +3307,10 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	("lep_phi",                                  selLepton->phi())
 	("lep_mass",                                 selLepton->mass())
 	("lep_charge",                               selLepton->charge())
+	("lep_e",                                  selLepton->p4().e())
+        ("lep_px",                                  selLepton->p4().px())
+        ("lep_py",                                 selLepton->p4().py())
+        ("lep_pz",                               selLepton->p4().pz())
 	("bjet1_pt",                                 selJetP4_Hbb_lead.pt())
 	("bjet1_eta",                                selJetP4_Hbb_lead.eta())
 	("bjet1_phi",                                selJetP4_Hbb_lead.phi())
