@@ -1452,10 +1452,15 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       }
       bdt_filler->register_variable<float_type>(
        "lep_pt", "lep_conePt", "lep_eta", "lep_phi", "lep_mass",
+       "lep_e", "lep_px", "lep_py", "lep_pz",
        "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass",
+       "bjet1_e", "bjet1_px", "bjet1_py", "bjet1_pz",
        "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass",
+       "bjet2_e", "bjet2_px", "bjet2_py", "bjet2_pz",
        "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass",
+       "wjet1_e", "wjet1_px", "wjet1_py", "wjet1_pz",
        "wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass",
+       "wjet2_e", "wjet2_px", "wjet2_py", "wjet2_pz",
        "bjet1_btagCSV", "bjet2_btagCSV", "wjet1_btagCSV", "wjet2_btagCSV",
        "met", "mht", "met_LD",
        "HT", "STMET",
@@ -3303,22 +3308,42 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	("lep_phi",                                  selLepton->phi())
 	("lep_mass",                                 selLepton->mass())
 	("lep_charge",                               selLepton->charge())
+	("lep_e",                                  selLepton->p4().e())
+        ("lep_px",                                  selLepton->p4().px())
+        ("lep_py",                                 selLepton->p4().py())
+        ("lep_pz",                               selLepton->p4().pz())
 	("bjet1_pt",                                 selJetP4_Hbb_lead.pt())
 	("bjet1_eta",                                selJetP4_Hbb_lead.eta())
 	("bjet1_phi",                                selJetP4_Hbb_lead.phi())
 	("bjet1_mass",                               selJetP4_Hbb_lead.mass())
+	("bjet1_e",                                 selJetP4_Hbb_lead.energy())
+        ("bjet1_px",                                selJetP4_Hbb_lead.px())
+        ("bjet1_py",                                selJetP4_Hbb_lead.py())
+        ("bjet1_pz",                               selJetP4_Hbb_lead.pz())
 	("wjet1_pt",                                 selJetP4_Wjj_lead.pt())
 	("wjet1_eta",                                selJetP4_Wjj_lead.eta())
         ("wjet1_phi",                                selJetP4_Wjj_lead.phi())
         ("wjet1_mass",                               selJetP4_Wjj_lead.mass())
+	("wjet1_e",                                 selJetP4_Wjj_lead.energy())
+        ("wjet1_px",                                selJetP4_Wjj_lead.px())
+        ("wjet1_py",                                selJetP4_Wjj_lead.py())
+        ("wjet1_pz",                               selJetP4_Wjj_lead.pz())
 	("bjet2_pt",                                 selJetP4_Hbb_sublead.pt())
 	("bjet2_eta",                                selJetP4_Hbb_sublead.eta())
 	("bjet2_phi",                                selJetP4_Hbb_sublead.phi())
 	("bjet2_mass",                               selJetP4_Hbb_sublead.mass())
+	("bjet2_e",                                 selJetP4_Hbb_sublead.energy())
+        ("bjet2_px",                                selJetP4_Hbb_sublead.px())
+        ("bjet2_py",                                selJetP4_Hbb_sublead.py())
+        ("bjet2_pz",                               selJetP4_Hbb_sublead.pz())
 	("wjet2_pt",                                 selJetP4_Wjj_sublead.pt())
 	("wjet2_eta",                                selJetP4_Wjj_sublead.eta())
         ("wjet2_phi",                                selJetP4_Wjj_sublead.phi())
         ("wjet2_mass",                               selJetP4_Wjj_sublead.mass())
+	("wjet2_e",                                 selJetP4_Wjj_sublead.energy())
+        ("wjet2_px",                                selJetP4_Wjj_sublead.px())
+        ("wjet2_py",                                selJetP4_Wjj_sublead.py())
+        ("wjet2_pz",                               selJetP4_Wjj_sublead.pz())
 	("met",                                      metP4.pt())
 	("mht",                                      mhtP4.pt())
 	("met_LD",                                   met_LD)

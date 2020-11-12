@@ -206,9 +206,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     """
 
     for sample_name, sample_info in self.samples.items():
+      if self.isBDTtraining and sample_info["sample_category"] == 'data_obs' :
+        sample_info["use_it"] = False
       if not sample_info["use_it"]:
         continue
-
       sample_category = sample_info["sample_category"]
       is_mc = (sample_info["type"] == "mc")
       process_name = sample_info["process_name_specific"]
