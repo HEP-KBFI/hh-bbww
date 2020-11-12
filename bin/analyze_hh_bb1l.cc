@@ -3227,6 +3227,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 	    selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0,
 	    cosThetaS_Hbb_reg,  cosThetaS_HH, metP4.pt(),
             doDataMCPlots,
+            jpa, selJetAK8_Hbb,
             kv.second
           );
         }
