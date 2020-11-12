@@ -11,8 +11,10 @@
  */
 
 #include "tthAnalysis/HiggsToTauTau/interface/HistManagerBase.h" // HistManagerBase
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetAK8.h"      // RecoJetAK8
 
 #include "hhAnalysis/bbwwMEM/interface/MEMResult.h" // MEMbbwwResultSingleLepton
+#include "hhAnalysis/bbww/interface/JPAInterface.h" // JPA
 
 class EvtHistManager_hh_bb1l
   : public HistManagerBase
@@ -40,19 +42,20 @@ public:
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
 		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 		 const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-		 std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
-		 const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs,
-		 const std::map<std::string, double> exclusive_categories_map_MVAs,
-		 std::string node_name, double DNNScore,
-		 std::string wLBN_node_name, double wLBN_DNNScore,
-     double selLepton_lead_pt, double selLepton_lead_eta,
-     double selJetsAK4_0_pt,
-     double selJetsAK4_1_pt,
-     double selJetsAK4_0_eta,
-     double selJetsAK4_1_eta,
-     double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
+		 const std::string& category_mount, const std::string& inclusive_category_mount, const std::string& exclusive_category_mount,
+		 const std::map<std::string, double>& categories_map_MVAs, const std::map<std::string, double>& inclusive_categories_map_MVAs,
+		 const std::map<std::string, double>& exclusive_categories_map_MVAs,
+		 const std::string& node_name, double DNNScore,
+		 const std::string& wLBN_node_name, double wLBN_DNNScore,
+                 double selLepton_lead_pt, double selLepton_lead_eta,
+                 double selJetsAK4_0_pt,
+                 double selJetsAK4_1_pt,
+                 double selJetsAK4_0_eta,
+                 double selJetsAK4_1_eta,
+                 double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
 		 double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH, double metpt,
-     bool doDataMCPlots,
+                 bool doDataMCPlots,
+                 const JPA& jpa, const RecoJetAK8* selJetAK8_Hbb,
                  double evtWeight);
 
   const TH1 *
@@ -138,6 +141,9 @@ public:
   std::map<std::string, TH1 *> histograms_by_category_check_jet2_eta_;
   std::map<std::string, TH1 *> histograms_by_category_check_metpt_;
   int option_; // flag to enable/disable booking & filling of MEM histograms
+
+  TH1 * histogram_jpaCategory_; // event category on JPA level
+  TH1 * histogram_evtCategory_; // event category on datacard level
 };
 
 #endif
