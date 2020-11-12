@@ -110,7 +110,7 @@ if mode == "default":
   samples = load_samples(era)
   samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining":
-  samples = load_samples(era, suffix = "BDT")
+  samples = load_samples(era)
   if not second_bdt : samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
