@@ -107,8 +107,6 @@ main(int argc,
   const std::string era_string = cfg_analyze.getParameter<std::string>("era");
   const Era era = get_era(era_string);
 
-  bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  bool isHH_rwgt_allowed = boost::starts_with(process_string, "signal_ggf_nonresonant_") && process_string.find("cHHH") == std::string::npos;
   vstring triggerNames_1e = cfg_analyze.getParameter<vstring>("triggers_1e");
   std::vector<hltPath*> triggers_1e = create_hltPaths(triggerNames_1e);
   vstring triggerNames_2e = cfg_analyze.getParameter<vstring>("triggers_2e");
