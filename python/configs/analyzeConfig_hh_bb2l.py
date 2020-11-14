@@ -129,7 +129,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH", "ggH", "qqH" ]
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
-    self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ] + self.get_samples_categories_HH()
+    self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
     self.prep_dcard_signals = []
     for sample_name, sample_info in self.samples.items():
       if not sample_info["use_it"]:
