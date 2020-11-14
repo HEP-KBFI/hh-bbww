@@ -206,6 +206,8 @@ protected:
 
   std::map<std::string, Int_t> hltMap;
 
+  std::map<int, std::vector<std::string>> jpaInputNames;
+  std::map<int, std::map<std::string, Float_t>> jpaInputs_1stLayer;
   std::map<int, Float_t> jpaMap_1stLayer;
   std::map<int, Float_t> jpaMap_2ndLayer;
 
