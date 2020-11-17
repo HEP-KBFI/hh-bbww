@@ -120,10 +120,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
-    self.nonfake_backgrounds = [ "ZZ", "WZ", "WW", "TT", "ST", "TTW", "TTWW", "TTZ", "DY", "W", "Other", "VH", "TTH", "TH", "ggH", "qqH" ]
+    self.nonfake_backgrounds = self.get_nonfake_backgrounds()
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
-    self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
     self.prep_dcard_signals = []
     for sample_name, sample_info in self.samples.items():
       if not sample_info["use_it"]:
@@ -131,7 +130,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.append(sample_category)
-    self.make_plots_backgrounds = self.nonfake_backgrounds + [ "Convs", "data_fakes" ]
+    self.make_plots_backgrounds = self.get_makeplots_backgrounds()
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb1l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb1l_cfg.py")
 
@@ -605,6 +604,46 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     logging.info("Creating configuration files to run 'prepareDatacards'")
     for category in self.evtCategories:
       for histogramToFit in self.histograms_to_fit:
+        logging.info(" ...  for category %s, histogram %s" % (category, histogramToFit))
+
+        prep_dcard_HH = set()
+        for sample_name, sample_info in self.samples.items():
+          if not sample_info["use_it"]:
+            continue
+          sample_category = sample_info["sample_category"]
+          if sample_category.startswith("signal"):
+            sample_category = sample_info["sample_category_hh"]
+            doAdd = False
+            if "BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit:
+              if ("SM" in histogramToFit or "BM" in histogramToFit) and 'nonresonant' in sample_category:
+                doAdd = True
+              if "spin0" in histogramToFit and "spin0" in sample_category and "_%s_" % histogramToFit[9:histogramToFit.find("_", 9)] in sample_category:
+                doAdd = True
+              if "spin2" in histogramToFit and "spin2" in sample_category and "_%s_" % histogramToFit[9:histogramToFit.find("_", 9)] in sample_category:
+                doAdd = True
+            else:
+              doAdd = True
+            if doAdd:
+              if "bbvv" in sample_category:
+                prep_dcard_HH.add(sample_category.replace("bbvv", "bbzz"))
+                prep_dcard_HH.add(sample_category.replace("bbvv", "bbww"))
+              elif "bbtt" in sample_category:
+                prep_dcard_HH.add(sample_category)
+              else:
+                raise ValueError("Failed to identify relevant HH decay mode(s) for 'sample_category' = %s !!" % sample_category)
+        prep_dcard_HH = list(prep_dcard_HH)
+        prep_dcard_H = []
+        prep_dcard_other_nonfake_backgrounds = []
+        for process in self.nonfake_backgrounds:
+          if process in [ "VH", "WH", "ZH", "TH", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
+            prep_dcard_H.append("%s_hww" % process)
+            prep_dcard_H.append("%s_hzz" % process)
+            prep_dcard_H.append("%s_htt" % process)
+            prep_dcard_H.append("%s_hbb" % process)
+          else:
+            prep_dcard_other_nonfake_backgrounds.append(process)
+        self.prep_dcard_processesToCopy = [ "data_obs" ] + prep_dcard_HH + prep_dcard_H + prep_dcard_other_nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
+
         key_hadd_stage2_job = getKey(category, get_lepton_selection_and_frWeight("Tight", "disabled"))
         key_prep_dcard_dir = getKey("prepareDatacards")
         prep_dcard_job_tuple = (self.channel, category, histogramToFit)
