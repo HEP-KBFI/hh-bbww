@@ -114,7 +114,35 @@ process.analyze_hh_bb1l = cms.PSet(
     selectBDT = cms.bool(False),
 
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
+    mvaInfo_res = cms.PSet(
+        BDT_xml_FileName_even_spin2 = cms.string('hhAnalysis/multilepton/data/1l_3tau_odd_half_model_spin2.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+        BDT_xml_FileName_odd_spin2 = cms.string('hhAnalysis/multilepton/data/1l_3tau_even_half_model_spin2.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+        fitFunctionFileName_spin2 = cms.string('hhAnalysis/multilepton/data/1l_3tau_TProfile_signal_fit_func_spin2.root'),  ## File contaning the fitted TF1s
+        inputVars_spin2 = cms.vstring(
+            'diHiggsVisMass', 'diHiggsMass', 'dr_lep_tau1', 'dr_lep_tau2',
+            'dr_lep_tau3', 'dr_tau1_tau2', 'dr_tau1_tau3', 'dr_tau2_tau3',
+            'mT_lep', 'gen_mHH'
+        ),
+        BDT_xml_FileName_even_spin0 = cms.string('hhAnalysis/multilepton/data/1l_3tau_odd_half_model_spin0.xml'),
+        BDT_xml_FileName_odd_spin0 = cms.string('hhAnalysis/multilepton/data/1l_3tau_even_half_model_spin0.xml'),
+        fitFunctionFileName_spin0 = cms.string('hhAnalysis/multilepton/data/1l_3tau_TProfile_signal_fit_func_spin0.root'),
+        inputVars_spin0 = cms.vstring(
+            'diHiggsVisMass', 'diHiggsMass', 'dr_lep_tau1', 'dr_lep_tau2',
+            'dr_lep_tau3', 'dr_tau1_tau2', 'dr_tau1_tau3', 'dr_tau2_tau3',
+            'mT_lep', 'gen_mHH'
+        ),
+    ),
     nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    mvaInfo_nonres = cms.PSet(
+        BDT_xml_FileName_even_nonres = cms.string('hhAnalysis/multilepton/data/1l_3tau_odd_model_nonres.xml'),
+        BDT_xml_FileName_odd_nonres = cms.string('hhAnalysis/multilepton/data/1l_3tau_even_model_nonres.xml'),
+        inputVars_nonres = cms.vstring(
+            'lep_pt', 'lep_phi', 'tau1_pt', 'tau2_pt', 'tau3_pt', 'met', 'diHiggsVisMass',
+            'diHiggsMass', 'dr_lep_tau3', 'dr_tau1_tau2', 'dr_tau1_tau3', 'dr_tau2_tau3',
+            'm_lep_tau1', 'pt_HH_recoil', 'mT_lep',
+            'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
+        ), ## No Need to add BM indices they will be added for the  non-reso case on the fly
+    ),
 
     syncNtuple = cms.PSet(
         tree = cms.string(''),
