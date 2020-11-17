@@ -557,8 +557,8 @@ int main(int argc, char* argv[])
   std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
   std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
   std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
-  std::cerr << "LBN not implemented yet -> ABORTING !!" << std::endl;
-  assert(0);
+//std::cerr << "LBN not implemented yet -> ABORTING !!" << std::endl;
+//assert(0);
 
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
   std::cout << "selEventsFileName_input = " << selEventsFileName_input << std::endl;
