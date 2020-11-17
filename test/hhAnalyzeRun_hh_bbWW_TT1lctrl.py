@@ -28,7 +28,7 @@ parser.add_use_home()
 parser.add_stitched([ 'dy_nlo', 'wjets' ])
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
-parser.enable_regrouped_jerc()
+parser.enable_regrouped_jerc(default = 'jes')
 parser.add_split_trigger_sys()
 args = parser.parse_args()
 
@@ -60,7 +60,14 @@ split_trigger_sys = args.split_trigger_sys
 if regroup_jerc:
   if 'full' not in systematics_label:
     raise RuntimeError("Regrouped JEC or split JER was enabled but not running with full systematics")
-  systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
+  if regroup_jerc == 'both':
+    systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
+  elif regroup_jerc == 'jes':
+    systematics.full.extend(systematics.JEC_regrouped)
+  elif regroup_jerc == 'jer':
+    systematics.full.extend(systematics.JER_split)
+  else:
+    raise RuntimeError("Invalid choice: %s" % regroup_jerc)
 if split_trigger_sys == 'yes':
   for trigger_sys in systematics.triggerSF:
     del systematics.internal[systematics.internal.index(trigger_sys)]
