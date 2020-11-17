@@ -513,37 +513,45 @@ int main(int argc, char* argv[])
   bool selectBDT = ( cfg_analyze.exists("selectBDT") ) ? cfg_analyze.getParameter<bool>("selectBDT") : false;
   bool second_bdt = ( cfg_analyze.exists("secondBDT") ) ? cfg_analyze.getParameter<bool>("secondBDT") : false;
 
-  // Resonant info
-  const edm::ParameterSet mvaInfo_res = cfg_analyze.getParameter<edm::ParameterSet>("mvaInfo_res");
+  // BDT-based signal extraction for resonant HH signal
+  const edm::ParameterSet mvaInfo_resonant = cfg_analyze.getParameter<edm::ParameterSet>("mvaInfo_res");
   std::vector<double> gen_mHH = analysisConfig.get_HH_resonant_mass_points();
-  std::string BDTFileName_even_spin2 = mvaInfo_res.getParameter<std::string>("BDT_xml_FileName_even_spin2");
-  std::string BDTFileName_odd_spin2 = mvaInfo_res.getParameter<std::string>("BDT_xml_FileName_odd_spin2");
-  std::string fitFunctionFileName_spin2 = mvaInfo_res.getParameter<std::string>("fitFunctionFileName_spin2");
-  std::vector<std::string> BDTInputVariables_spin2 = mvaInfo_res.getParameter<std::vector<std::string>>("inputVars_spin2");
-  std::string BDTFileName_even_spin0 = mvaInfo_res.getParameter<std::string>("BDT_xml_FileName_even_spin0");
-  std::string BDTFileName_odd_spin0 = mvaInfo_res.getParameter<std::string>("BDT_xml_FileName_odd_spin0");
-  std::string fitFunctionFileName_spin0 = mvaInfo_res.getParameter<std::string>("fitFunctionFileName_spin0");
-  std::vector<std::string> BDTInputVariables_spin0 = mvaInfo_res.getParameter<std::vector<std::string>>("inputVars_spin0");
-  // Non Resonant Info
-  const edm::ParameterSet mvaInfo_nonres = cfg_analyze.getParameter<edm::ParameterSet>("mvaInfo_nonres");
+  std::string bdtFileName_resonant_spin2_even = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_even_spin2");
+  std::string bdtFileName_resonant_spin2_odd = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_odd_spin2");
+  std::string fitFunctionFileName_resonant_spin2 = mvaInfo_resonant.getParameter<std::string>("fitFunctionFileName_spin2");
+  std::vector<std::string> bdtInputVariables_resonant_spin2 = mvaInfo_resonant.getParameter<std::vector<std::string>>("inputVars_spin2");
+  std::string bdtFileName_resonant_spin0_even = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_even_spin0");
+  std::string bdtFileName_resonant_spin0_odd = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_odd_spin0");
+  std::string fitFunctionFileName_resonant_spin0 = mvaInfo_resonant.getParameter<std::string>("fitFunctionFileName_spin0");
+  std::vector<std::string> bdtInputVariables_resonant_spin0 = mvaInfo_resonant.getParameter<std::vector<std::string>>("inputVars_spin0");
+  // BDT-based signal extraction for non-resonant HH signal
+  const edm::ParameterSet mvaInfo_nonresonant = cfg_analyze.getParameter<edm::ParameterSet>("mvaInfo_nonres");
   std::vector<double> nonRes_BMs = cfg_analyze.getParameter<std::vector<double>>("nonRes_BMs");
-  std::string BDTFileName_even_nonres = mvaInfo_nonres.getParameter<std::string>("BDT_xml_FileName_even_nonres");
-  std::string BDTFileName_odd_nonres = mvaInfo_nonres.getParameter<std::string>("BDT_xml_FileName_odd_nonres");
-  std::vector<std::string> BDTInputVariables_nonres = mvaInfo_nonres.getParameter<std::vector<std::string>>("inputVars_nonres"); // Include all Input Var.s except BM indices
+  std::string bdtFileName_nonresonant_even = mvaInfo_nonresonant.getParameter<std::string>("BDT_xml_FileName_even_nonres");
+  std::string bdtFileName_nonresonant_odd = mvaInfo_nonresonant.getParameter<std::string>("BDT_xml_FileName_odd_nonres");
+  std::vector<std::string> bdtInputVariables_nonresonant = mvaInfo_nonresonant.getParameter<std::vector<std::string>>("inputVars_nonres"); // Include all Input Var.s except BM indices
 
-  assert(BDTFileName_odd_spin2 != "" && BDTFileName_even_spin2 != "" && fitFunctionFileName_spin2 != "" && BDTInputVariables_spin2.size() != 0);
-  TMVAInterface* BDT_spin2 = new TMVAInterface(BDTFileName_odd_spin2, BDTFileName_even_spin2, BDTInputVariables_spin2, fitFunctionFileName_spin2);
-  BDT_spin2->disableBDTTransform();
+  assert(bdtFileName_resonant_spin2_odd != "" && bdtFileName_resonant_spin2_even != "" && fitFunctionFileName_resonant_spin2 != "" && bdtInputVariables_resonant_spin2.size() != 0);
+  TMVAInterface* BDT_resonant_spin2 = new TMVAInterface(
+    bdtFileName_resonant_spin2_odd, bdtFileName_resonant_spin2_even, 
+    bdtInputVariables_resonant_spin2,
+    fitFunctionFileName_resonant_spin2);
+  BDT_resonant_spin2->disableBDTTransform();
   std::map<std::string, double> bdtOutputs_resonant_spin2;
 
-  assert(BDTFileName_odd_spin0 != "" && BDTFileName_even_spin0 != "" && fitFunctionFileName_spin0 != "" && BDTInputVariables_spin0.size() != 0);
-  TMVAInterface* BDT_spin0 = new TMVAInterface(BDTFileName_odd_spin0, BDTFileName_even_spin0, BDTInputVariables_spin0, fitFunctionFileName_spin0);
-  BDT_spin0->disableBDTTransform();
+  assert(bdtFileName_resonant_spin0_odd != "" && bdtFileName_resonant_spin0_even != "" && fitFunctionFileName_resonant_spin0 != "" && bdtInputVariables_resonant_spin0.size() != 0);
+  TMVAInterface* BDT_resonant_spin0 = new TMVAInterface(
+    bdtFileName_resonant_spin0_odd, bdtFileName_resonant_spin0_even, 
+    bdtInputVariables_resonant_spin0,
+    fitFunctionFileName_resonant_spin0);
+  BDT_resonant_spin0->disableBDTTransform();
   std::map<std::string, double> bdtOutputs_resonant_spin0;
 
-  assert(BDTFileName_odd_nonres != "" && BDTFileName_even_nonres != "" && BDTInputVariables_nonres.size() != 0);
-  TMVAInterface* BDT_nonres = new TMVAInterface(BDTFileName_odd_nonres, BDTFileName_even_nonres, BDTInputVariables_nonres);
-  BDT_nonres->disableBDTTransform();
+  assert(bdtFileName_nonresonant_even != "" && bdtFileName_nonresonant_odd != "" && bdtInputVariables_nonresonant.size() != 0);
+  TMVAInterface* BDT_nonresonant = new TMVAInterface(
+    bdtFileName_nonresonant_even, bdtFileName_nonresonant_odd,
+    bdtInputVariables_nonresonant);
+  BDT_nonresonant->disableBDTTransform();
   std::map<std::string, double> bdtOutputs_nonresonant;
 
   std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
