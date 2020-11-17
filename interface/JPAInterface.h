@@ -13,6 +13,7 @@ class JPAJet;
 std::ostream& operator<<(std::ostream&, const JPAJet&);
 
 std::string get_jpaCategory_string(int jpaCategory);
+std::vector<std::string> get_jpaInputs(int jpaCategory);
 
 class JPA
 {
@@ -30,7 +31,14 @@ class JPA
     , jpaCategory_((int)Category_resolved::kUndefined)
     , isBoosted_(false)
   {}
-  JPA(const JPAJet* bjet1, const JPAJet* bjet2, const JPAJet* wjet1, const JPAJet* wjet2, double jpaScore, int jpaCategory, bool isBoosted)
+  JPA(const JPAJet* bjet1,
+      const JPAJet* bjet2,
+      const JPAJet* wjet1,
+      const JPAJet* wjet2,
+      double jpaScore,
+      int jpaCategory,
+      bool isBoosted,
+      std::map<std::string, double> mvaInputVars)
     : bjet1_(bjet1)
     , bjet2_(bjet2)
     , wjet1_(wjet1)
@@ -38,6 +46,7 @@ class JPA
     , jpaScore_(jpaScore)
     , jpaCategory_(jpaCategory)
     , isBoosted_(isBoosted)
+    , mvaInputVars_(mvaInputVars)
   {}
   ~JPA() {}
 
@@ -53,6 +62,7 @@ class JPA
     return get_jpaCategory_string(jpaCategory_);
   }
   bool isBoosted() const { return isBoosted_; }
+  std::map<std::string, double> mvaInputVars() const { return mvaInputVars_; }
 
   friend std::ostream&
   operator<<(std::ostream& os, const JPA& jpa)
@@ -80,6 +90,7 @@ class JPA
   double jpaScore_;
   int jpaCategory_;
   bool isBoosted_;
+  std::map<std::string, double> mvaInputVars_;
 };
 
 class JPAJet
@@ -136,6 +147,10 @@ class JPAInterface
   mvaOutput_1stLayer(int jpaCategory) const;
   double 
   mvaOutput_2ndLayer(int jpaCategory) const;
+
+  std::map<std::string, double>
+  get_mvaInputs_1stLayer(int jpaCategory) const;
+
  private:
   void
   set(const JPA::LorentzVector& leptonP4, int numLeptons, int numJets, int numBJets_loose, int numBJets_medium, double metPx, double metPy, int event_number);
@@ -146,10 +161,13 @@ class JPAInterface
   std::map<std::string, double>
   compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, const JPAJet* wjet1, const JPAJet* wjet2);
 
-  std::vector<JPA> 
+  std::vector<JPA>
   makeJPAs_resolved(const std::vector<const JPAJet*>& ak4Jets, int jpaCategory);
-  std::vector<JPA> 
+  std::vector<JPA>
   makeJPAs_boosted(const std::vector<const JPAJet*>& ak4Jets, const JPAJet* ak8jet_subjet1, const JPAJet* ak8jet_subjet2, int jpaCategory);
+
+  std::map<std::string, double>
+  select_mvaInputVariables(const std::map<std::string, double> & mvaInputVariables, int jpaCategory) const;
 
   std::string mvaInputFilePath_;
 
@@ -166,6 +184,7 @@ class JPAInterface
   std::map<int, std::string> mvaInputFileNames_1stLayer_even_;
   std::map<int, std::string> mvaInputFileNames_1stLayer_odd_;
   std::map<int, std::vector<std::string>> mvaInputVariables_1stLayer_;
+  std::map<int, std::map<std::string, double>> mvaInputVariableValues_1stLayer_;
   std::map<int, TMVAInterface*> mvas_1stLayer_;
   std::map<int, double> mvaOutputs_1stLayer_;
 

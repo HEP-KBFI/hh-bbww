@@ -131,6 +131,11 @@ hadTauWP_veto_map = {
 }
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
 
+for sample_name, sample_info in samples.items():
+  if sample_name == 'sum_events': continue
+  if sample_info["type"] == "data":
+    sample_info["use_it"] = sample_name.startswith(("/SingleElectron/", "/SingleMuon/", "/EGamma/"))
+
 if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \

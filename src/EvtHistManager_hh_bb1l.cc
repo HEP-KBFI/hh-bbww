@@ -2,7 +2,9 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/cmsException.h" // cmsException()
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow(), fillWithOverFlow2d()
+#include "hhAnalysis/bbww/interface/JPAInterface.h" // get_jpaCategory_string, JPA::Category_resolved, JPA::Category_boosted
 
+#include <TAxis.h> // TAxis
 #include <TMath.h> // TMath::Pi()
 
 EvtHistManager_hh_bb1l::EvtHistManager_hh_bb1l(const edm::ParameterSet & cfg)
@@ -63,6 +65,8 @@ EvtHistManager_hh_bb1l::EvtHistManager_hh_bb1l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["log_memLR_div_Err"] = { "central" };
   central_or_shiftOptions_["memScore"] = { "*" };
   central_or_shiftOptions_["memCpuTime"] = { "central" };
+  central_or_shiftOptions_["jpaCategory"] = { "central" };
+  central_or_shiftOptions_["evtCategory"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -187,7 +191,7 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_dEta_jj_                 = book1D(dir, "vbf_dEta_jj",               100,    0.,   10.);*/
 
   if ( option_ == kOption_memEnabled ) {
-    histogram_log_memProb_signal_        = book1D(dir, "log_memProb_signal",        200, -200.,   0.);
+    histogram_log_memProb_signal_        = book1D(dir, "log_memProb_signal",        200, -200.,    0.);
     histogram_log_memProbErr_signal_     = book1D(dir, "log_memProbErr_signal",     200, -200.,    0.);
     histogram_log_memProb_background_    = book1D(dir, "log_memProb_background",    200, -200.,    0.);
     histogram_log_memProbErr_background_ = book1D(dir, "log_memProbErr_background", 200, -200.,    0.);
@@ -196,6 +200,26 @@ EvtHistManager_hh_bb1l::bookHistograms(TFileDirectory & dir)
     histogram_memScore_                  = book1D(dir, "memScore",                  360,  -18.,  +18.);
     histogram_memCpuTime_                = book1D(dir, "memCpuTime",                100,    0., 1000.);
   }
+
+  histogram_jpaCategory_                 = book1D(dir, "jpaCategory",                15,   -0.5, +14.5);
+  TAxis* xAxis_jpaCategory = histogram_jpaCategory_->GetXaxis();
+  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
+  {
+    int idxBin = xAxis_jpaCategory->FindBin(jpaCategory);
+    xAxis_jpaCategory->SetBinLabel(idxBin, get_jpaCategory_string(jpaCategory).data());
+  }
+  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+  {
+    int idxBin = xAxis_jpaCategory->FindBin(jpaCategory);
+    xAxis_jpaCategory->SetBinLabel(idxBin, get_jpaCategory_string(jpaCategory).data());
+  }
+
+  histogram_evtCategory_                 = book1D(dir, "evtCategory",                 4,   -0.5,  +3.5);
+  TAxis* xAxis_evtCategory = histogram_evtCategory_->GetXaxis();
+  xAxis_evtCategory->SetBinLabel(1, "Undefined");
+  xAxis_evtCategory->SetBinLabel(1, "Resolved 2b");
+  xAxis_evtCategory->SetBinLabel(1, "Resolved 1b");
+  xAxis_evtCategory->SetBinLabel(1, "Boosted");
 
   histogram_EventCounter_                = book1D(dir, "EventCounter",                1,   -0.5,  +0.5);
 }
@@ -224,19 +248,20 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
 				       double mT_W, double mT_top_2particle, double mT_top_3particle,
 				       double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
 				       const MEMbbwwResultSingleLepton* memResult, double memCpuTime,
-				       std::string  category_mount, std::string inclusive_category_mount, std::string exclusive_category_mount,
-				       const std::map<std::string, double> categories_map_MVAs, const std::map<std::string, double> inclusive_categories_map_MVAs, 
-				       const std::map<std::string, double> exclusive_categories_map_MVAs,
-				       std::string node_name, double DNNScore,
-				       std::string wLBN_node_name, double wLBN_DNNScore,
-               double selLepton_lead_pt, double selLepton_lead_eta,
-               double selJetsAK4_0_pt,
-               double selJetsAK4_1_pt,
-               double selJetsAK4_0_eta,
-               double selJetsAK4_1_eta, 
-	       double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
+				       const std::string& category_mount, const std::string& inclusive_category_mount, const std::string& exclusive_category_mount,
+				       const std::map<std::string, double>& categories_map_MVAs, const std::map<std::string, double>& inclusive_categories_map_MVAs, 
+				       const std::map<std::string, double>& exclusive_categories_map_MVAs,
+				       const std::string& node_name, double DNNScore,
+				       const std::string& wLBN_node_name, double wLBN_DNNScore,
+               			       double selLepton_lead_pt, double selLepton_lead_eta,
+               			       double selJetsAK4_0_pt,
+               			       double selJetsAK4_1_pt,
+               			       double selJetsAK4_0_eta,
+               			       double selJetsAK4_1_eta, 
+	       			       double mht, double m_Hbb_regCorr, double dR_b1lep, double dR_b2lep,
 				       double mindr_lep1_jet, double avg_dr_jet_central, double mbb_loose, double mbb_medium, double cosThetaS_Hbb_reg, double cosThetaS_HH, double metpt,
-               bool doDataMCPlots,
+               			       bool doDataMCPlots,
+                                       const JPA& jpa, const RecoJetAK8* selJetAK8_Hbb,
 				       double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -382,6 +407,13 @@ EvtHistManager_hh_bb1l::fillHistograms(int numElectrons,
     fillWithOverFlow(histogram_memCpuTime_,                     memCpuTime,                         evtWeight, evtWeightErr);
   }
   */
+
+  fillWithOverFlow(histogram_jpaCategory_,                      jpa.jpaCategory(),                  evtWeight, evtWeightErr);
+  int evtCategory = 0;
+  if      ( selJetAK8_Hbb        ) evtCategory = 3;
+  else if ( numBJets_medium >= 2 ) evtCategory = 2;
+  else if ( numBJets_medium >= 1 ) evtCategory = 1;
+  fillWithOverFlow(histogram_evtCategory_,                      evtCategory,                        evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_EventCounter_,                     0.,                                 evtWeight, evtWeightErr);
 }
