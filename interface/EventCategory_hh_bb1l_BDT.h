@@ -23,6 +23,7 @@ class EventCategory_hh_bb1l_BDT
  public:
   enum { 
     kUndefined = -1, 
+    kInclusive,
     kBoosted, kResolved_2b, kResolved_2b_vbf, kResolved_2b_nonvbf, kResolved_1b 
   };
   EventCategory_hh_bb1l_BDT();
