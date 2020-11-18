@@ -159,6 +159,41 @@ enum { kjpa_HbbBoosted_undefined, kjpa_HbbBoosted_2jet, kjpa_HbbBoosted_missingW
 enum { kjpa_HbbResolved_undefined, kjpa_HbbResolved_4jet, kjpa_HbbResolved_missingWJet, kjpa_HbbResolved_missingBJet, kjpa_HbbResolved_missingAllWJet, 
        kjpa_HbbResolved_missingBJet_missingWJet, kjpa_HbbResolved_missingBJet_missingAllWJet, kjpa_HbbResolved_restOfcat };
 
+TMVAInterface *
+makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant)
+{
+  std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
+  std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
+  std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
+  TMVAInterface * retVal = nullptr;
+  //if ( is_nonresonant )
+  //{
+    assert(xmlFileName_even != "" && xmlFileName_odd != "" && inputVariables.size() != 0);
+    retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables);
+  //}
+  //else
+  //{
+  //  std::string fitFileName = cfg.getParameter<std::string>("fitFileName");
+  //  assert(xmlFileName_odd != "" && xmlFileName_even != "" && fitFileName != "" && inputVariables.size() != 0);
+  //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
+  //}
+  retVal->disableBDTTransform();
+  return retVal;
+}
+
+TensorFlowInterfaceLBN *
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg)
+{
+  std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
+  std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
+  std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
+  std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
+  std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
+  assert(pbFileName_even != "" && pbFileName_odd != "" && ll_inputVariables.size() != 0 && hl_inputVariables.size() != 0 && classes.size() != 0);
+  TensorFlowInterfaceLBN * retVal = new TensorFlowInterfaceLBN(pbFileName_odd, ll_inputVariables, hl_inputVariables, classes, pbFileName_even);
+  return retVal;
+}
+
 std::pair<int, int> 
 getMatchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, 
                const std::vector<const GenJet*>& genBJets_ptrs, 
@@ -513,53 +548,45 @@ int main(int argc, char* argv[])
   bool selectBDT = ( cfg_analyze.exists("selectBDT") ) ? cfg_analyze.getParameter<bool>("selectBDT") : false;
   bool second_bdt = ( cfg_analyze.exists("secondBDT") ) ? cfg_analyze.getParameter<bool>("secondBDT") : false;
 
-  // BDT-based signal extraction for resonant HH signal
-  const edm::ParameterSet mvaInfo_resonant = cfg_analyze.getParameter<edm::ParameterSet>("mvaInfo_res");
   std::vector<double> gen_mHH = analysisConfig.get_HH_resonant_mass_points();
-  std::string bdtFileName_resonant_spin2_even = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_even_spin2");
-  std::string bdtFileName_resonant_spin2_odd = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_odd_spin2");
-  std::string fitFunctionFileName_resonant_spin2 = mvaInfo_resonant.getParameter<std::string>("fitFunctionFileName_spin2");
-  std::vector<std::string> bdtInputVariables_resonant_spin2 = mvaInfo_resonant.getParameter<std::vector<std::string>>("inputVars_spin2");
-  std::string bdtFileName_resonant_spin0_even = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_even_spin0");
-  std::string bdtFileName_resonant_spin0_odd = mvaInfo_resonant.getParameter<std::string>("BDT_xml_FileName_odd_spin0");
-  std::string fitFunctionFileName_resonant_spin0 = mvaInfo_resonant.getParameter<std::string>("fitFunctionFileName_spin0");
-  std::vector<std::string> bdtInputVariables_resonant_spin0 = mvaInfo_resonant.getParameter<std::vector<std::string>>("inputVars_spin0");
-  // BDT-based signal extraction for non-resonant HH signal
-  const edm::ParameterSet mvaInfo_nonresonant = cfg_analyze.getParameter<edm::ParameterSet>("mvaInfo_nonres");
   std::vector<double> nonRes_BMs = cfg_analyze.getParameter<std::vector<double>>("nonRes_BMs");
-  std::string bdtFileName_nonresonant_even = mvaInfo_nonresonant.getParameter<std::string>("BDT_xml_FileName_even_nonres");
-  std::string bdtFileName_nonresonant_odd = mvaInfo_nonresonant.getParameter<std::string>("BDT_xml_FileName_odd_nonres");
-  std::vector<std::string> bdtInputVariables_nonresonant = mvaInfo_nonresonant.getParameter<std::vector<std::string>>("inputVars_nonres"); // Include all Input Var.s except BM indices
 
-  assert(bdtFileName_resonant_spin2_odd != "" && bdtFileName_resonant_spin2_even != "" && fitFunctionFileName_resonant_spin2 != "" && bdtInputVariables_resonant_spin2.size() != 0);
-  TMVAInterface* BDT_resonant_spin2 = new TMVAInterface(
-    bdtFileName_resonant_spin2_odd, bdtFileName_resonant_spin2_even, 
-    bdtInputVariables_resonant_spin2,
-    fitFunctionFileName_resonant_spin2);
-  BDT_resonant_spin2->disableBDTTransform();
-  std::map<std::string, double> bdtOutputs_resonant_spin2;
+  // initialize BDT-based signal extraction for resonant and non-resonant HH signal
+  edm::ParameterSet cfg_BDT = cfg_analyze.getParameter<edm::ParameterSet>("BDT");
 
-  assert(bdtFileName_resonant_spin0_odd != "" && bdtFileName_resonant_spin0_even != "" && fitFunctionFileName_resonant_spin0 != "" && bdtInputVariables_resonant_spin0.size() != 0);
-  TMVAInterface* BDT_resonant_spin0 = new TMVAInterface(
-    bdtFileName_resonant_spin0_odd, bdtFileName_resonant_spin0_even, 
-    bdtInputVariables_resonant_spin0,
-    fitFunctionFileName_resonant_spin0);
-  BDT_resonant_spin0->disableBDTTransform();
-  std::map<std::string, double> bdtOutputs_resonant_spin0;
+  edm::ParameterSet cfg_BDT_resonant_spin2_boosted = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
+  TMVAInterface * BDT_resonant_spin2_boosted = makeTMVAInterface(cfg_BDT_resonant_spin2_boosted, false);
+  edm::ParameterSet cfg_BDT_resonant_spin2_resolved = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
+  TMVAInterface * BDT_resonant_spin2_resolved = makeTMVAInterface(cfg_BDT_resonant_spin2_resolved, false);
 
-  assert(bdtFileName_nonresonant_even != "" && bdtFileName_nonresonant_odd != "" && bdtInputVariables_nonresonant.size() != 0);
-  TMVAInterface* BDT_nonresonant = new TMVAInterface(
-    bdtFileName_nonresonant_even, bdtFileName_nonresonant_odd,
-    bdtInputVariables_nonresonant);
-  BDT_nonresonant->disableBDTTransform();
-  std::map<std::string, double> bdtOutputs_nonresonant;
+  edm::ParameterSet cfg_BDT_resonant_spin0_boosted = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
+  TMVAInterface * BDT_resonant_spin0_boosted = makeTMVAInterface(cfg_BDT_resonant_spin0_boosted, false);
+  edm::ParameterSet cfg_BDT_resonant_spin0_resolved = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
+  TMVAInterface * BDT_resonant_spin0_resolved = makeTMVAInterface(cfg_BDT_resonant_spin0_resolved, false);
 
-  std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
-  std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
-  std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
-  std::cerr << "LBN not implemented yet -> ABORTING !!" << std::endl;
-  assert(0);
+  edm::ParameterSet cfg_BDT_nonresonant_boosted = cfg_BDT.getParameter<edm::ParameterSet>("nonresonant_boosted");
+  TMVAInterface * BDT_nonresonant_boosted = makeTMVAInterface(cfg_BDT_nonresonant_boosted, true);
+  edm::ParameterSet cfg_BDT_nonresonant_resolved = cfg_BDT.getParameter<edm::ParameterSet>("nonresonant_resolved");
+  TMVAInterface * BDT_nonresonant_resolved = makeTMVAInterface(cfg_BDT_nonresonant_resolved, true);
 
+  // initialize LBN-based signal extraction for resonant and non-resonant HH signal
+  edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
+
+  edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
+  TensorFlowInterfaceLBN * LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted);
+  edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
+  TensorFlowInterfaceLBN * LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved);
+
+  edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
+  TensorFlowInterfaceLBN * LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted);
+  edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
+  TensorFlowInterfaceLBN * LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved);
+
+  edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
+  TensorFlowInterfaceLBN * LBN_nonresonant_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_boosted);
+  edm::ParameterSet cfg_LBN_nonresonant_resolved = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved");
+  TensorFlowInterfaceLBN * LBN_nonresonant_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_resolved);
+  
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
   std::cout << "selEventsFileName_input = " << selEventsFileName_input << std::endl;
   GenParticleMatcherFromHiggs genParticleMatcherFromHiggs;
@@ -606,6 +633,7 @@ int main(int argc, char* argv[])
 
 //--- HH coupling scan
   std::vector<std::string> HHWeightNames;
+  std::vector<std::string> HHBMNames;
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
   const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
   const HHWeightInterface2* HHWeight_calc = nullptr;
@@ -613,6 +641,7 @@ int main(int argc, char* argv[])
   {
     HHWeight_calc = new HHWeightInterface2(hhWeight_cfg);
     HHWeightNames = HHWeight_calc->get_weight_names();
+    HHBMNames = HHWeight_calc->get_bm_names();
   }
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
@@ -1044,45 +1073,44 @@ int main(int argc, char* argv[])
 	bdt_filler->register_variable<float_type>(Form(evt_cat_str.c_str()));
       }
       bdt_filler->register_variable<float_type>(
-       "lep_pt", "lep_conePt", "lep_eta", "lep_phi", "lep_mass",
-       "lep_e", "lep_px", "lep_py", "lep_pz",
-       "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass",
-       "bjet1_e", "bjet1_px", "bjet1_py", "bjet1_pz",
-       "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass",
-       "bjet2_e", "bjet2_px", "bjet2_py", "bjet2_pz",
-       "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass",
-       "wjet1_e", "wjet1_px", "wjet1_py", "wjet1_pz",
-       "wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass",
-       "wjet2_e", "wjet2_px", "wjet2_py", "wjet2_pz",
-       "bjet1_btagCSV", "bjet2_btagCSV", "wjet1_btagCSV", "wjet2_btagCSV",
-       "met", "mht", "met_LD",
-       "HT", "STMET",
-       "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb", "eta_Hbb", "jpaScore",
-       "m_Wjj", "dR_Wjj", "dPhi_Wjj", "pT_Wjj", "tau21_Wjj",
-       "dR_Hww", "dPhi_Hww", "pT_Hww", "Smin_Hww",
-       "dR_b1lep", "dR_b2lep",
-       "m_HHvis", "pT_HHvis", "dPhi_HHvis",
-       "m_HH", "m_HH_B2G_18_008", "pT_HH", "dPhi_HH", "Smin_HH",
-       "mT_W", "mT_top_2particle", "mT_top_3particle",
-       "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
-       "genWeight", "evtWeight",
-       "mhh_gen", "costS_gen",
-       "mindr_lep1_jet", "avg_dr_jet_central", "mbb_loose", "mbb_medium",
-       "dR_HH",
-       "tau21_Hbb",
-       "genDR_Wjj",  "genDR_Wlep",
-       "cosThetaS_Hbb", "cosThetaS_Hbb_reg",
-       "selJet1_Hbb_pT",  "selJet2_Hbb_pT", "selJet1_Hbb_eta", "selJet2_Hbb_eta",
-       "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH", "mll_loose",
-       "mostFwdJet_eta", "mostFwdJet_pt", "mostFwdJet_phi", "mostFwdJet_E",
-       "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E"
+        "lep_pt", "lep_conePt", "lep_eta", "lep_phi", "lep_mass",
+        "lep_e", "lep_px", "lep_py", "lep_pz",
+        "lep_frWeight",
+        "bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass",
+        "bjet1_e", "bjet1_px", "bjet1_py", "bjet1_pz",
+        "bjet2_pt", "bjet2_eta", "bjet2_phi", "bjet2_mass",
+        "bjet2_e", "bjet2_px", "bjet2_py", "bjet2_pz",
+        "wjet1_pt", "wjet1_eta", "wjet1_phi", "wjet1_mass",
+        "wjet1_e", "wjet1_px", "wjet1_py", "wjet1_pz",
+        "wjet2_pt", "wjet2_eta", "wjet2_phi", "wjet2_mass",
+        "wjet2_e", "wjet2_px", "wjet2_py", "wjet2_pz",
+        "bjet1_btagCSV", "bjet2_btagCSV", "wjet1_btagCSV", "wjet2_btagCSV",
+        "met", "mht", "met_LD",
+        "HT", "STMET",
+        "m_Hbb", "m_Hbb_regCorr", "m_Hbb_regRes", "dR_Hbb", "dPhi_Hbb", "pT_Hbb", "eta_Hbb", "jpaScore",
+        "m_Wjj", "dR_Wjj", "dPhi_Wjj", "pT_Wjj", "tau21_Wjj",
+        "dR_Hww", "dPhi_Hww", "pT_Hww", "Smin_Hww",
+        "dR_b1lep", "dR_b2lep",
+        "m_HHvis", "pT_HHvis", "dPhi_HHvis",
+        "m_HH", "m_HH_B2G_18_008", "pT_HH", "dPhi_HH", "Smin_HH",
+        "mT_W", "mT_top_2particle", "mT_top_3particle",
+        "vbf_jet1_pt", "vbf_jet1_eta", "vbf_jet2_pt", "vbf_jet2_eta", "vbf_m_jj", "vbf_dEta_jj",
+        "genWeight", "evtWeight",
+        "mhh_gen", "costS_gen",
+        "mindr_lep1_jet", "avg_dr_jet_central", "mbb_loose", "mbb_medium",
+        "dR_HH",
+        "tau21_Hbb",
+        "cosThetaS_Hbb", "cosThetaS_Hbb_reg",
+        "cosThetaS_Wjj", "cosThetaS_WW", "cosThetaS_HH", "mll_loose",
+        "mostFwdJet_eta", "mostFwdJet_pt", "mostFwdJet_phi", "mostFwdJet_E",
+        "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E"
       );
       bdt_filler->register_variable<int_type>(
-        "lep_charge", "nElectron", "new_had_cut", "new_had_cut_fullreco", "nJet_that_not_bb",
-        "nJet", "nBJetLoose", "nBJetMedium", "numBJets_loose", "numBJets_medium", "numBJets", "numWJets",
-        "isHbb_boosted", "isWjj_boosted", "isWjj_boosted_highPurity",
-        "nJet_vbf", "isVBF", "WjjWasFat",
-        "numLeptons", "numJetsForward", "lepPairCharge_loose", "lepPairType_loose",
+        "lep_charge", "numElectrons",
+        "numJets", "numBJets_loose", "numBJets_medium", "numBJets", "numWJets",
+        "isHbb_boosted", "isWjj_boosted",
+        "numJets_vbf", "isVBF",
+        "numElectrons", "numLeptons_loose", "numJetsForward", "lepPairCharge_loose", "lepPairType_loose",
         "selLepton_charge", "selLepton_type"
       );
       bdt_filler->bookTree(fs);
@@ -2201,17 +2229,22 @@ int main(int argc, char* argv[])
     }
 
     const std::map<std::string, Particle> ll_inputs = {
-      { "bjet1",  { selJetP4_Hbb_lead.pt(), selJetP4_Hbb_lead.eta(), selJetP4_Hbb_lead.phi(), selJetP4_Hbb_lead.mass() } },
-      { "bjet2",  { selJetP4_Hbb_sublead.pt(), selJetP4_Hbb_sublead.eta(), selJetP4_Hbb_sublead.phi(), selJetP4_Hbb_sublead.mass() } },
-      { "wjet1",  { selJetP4_Wjj_lead.pt(), selJetP4_Wjj_lead.eta(), selJetP4_Wjj_lead.phi(), selJetP4_Wjj_lead.mass() } },
-      { "wjet2",  { selJetP4_Wjj_sublead.pt(), selJetP4_Wjj_sublead.eta(), selJetP4_Wjj_sublead.phi(), selJetP4_Wjj_sublead.mass() } },
-      { "lepton", { selLepton->pt(), selLepton->eta(), selLepton->phi(), selLepton->mass() } },
+      { "bjet1",  Particle(selJetP4_Hbb_lead)    },
+      { "bjet2",  Particle(selJetP4_Hbb_sublead) },
+      { "wjet1",  Particle(selJetP4_Wjj_lead)    },
+      { "wjet2",  Particle(selJetP4_Wjj_sublead) },
+      { "lep",    Particle(selLepton->p4())      }
     };
     std::map<std::string, const Particle *> ll_inputs_ptr;
     for( const auto & kv: ll_inputs )
     {
       ll_inputs_ptr[kv.first] = &kv.second;
     }
+
+    double bjet1_btagCSV = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet1()->BtagCSV() : ( (selJet1_Hbb) ? dynamic_cast<const RecoJet*>(selJet1_Hbb)->BtagCSV() : -1 );
+    double bjet2_btagCSV = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet2()->BtagCSV() : ( (selJet2_Hbb) ? dynamic_cast<const RecoJet*>(selJet2_Hbb)->BtagCSV() : -1 );
+    double wjet1_btagCSV = (selJet1_Wjj) ? dynamic_cast<const RecoJet*>(selJet1_Wjj)->BtagCSV() : -1;
+    double wjet2_btagCSV = (selJet2_Wjj) ? dynamic_cast<const RecoJet*>(selJet2_Wjj)->BtagCSV() : -1;
 
     std::map<std::string, double> mvaInputVariables_list = {
       {"lep_pt",                  selLepton->pt()},
@@ -2223,25 +2256,29 @@ int main(int argc, char* argv[])
       {"bjet1_eta",               selJetP4_Hbb_lead.eta()},
       {"bjet1_phi",               selJetP4_Hbb_lead.phi()},
       {"bjet1_mass",              selJetP4_Hbb_lead.mass()},
+      {"bjet1_btagCSV",           bjet1_btagCSV},
       {"bjet2_pt",                selJetP4_Hbb_sublead.pt()},
       {"bjet2_eta",               selJetP4_Hbb_sublead.eta()},
       {"bjet2_phi",               selJetP4_Hbb_sublead.phi()},
       {"bjet2_mass",              selJetP4_Hbb_sublead.mass()},
+      {"bjet2_btagCSV",           bjet2_btagCSV},
       {"wjet1_pt",                selJetP4_Wjj_lead.pt()},
       {"wjet1_eta",               selJetP4_Wjj_lead.eta()},
       {"wjet1_phi",               selJetP4_Wjj_lead.phi()},
       {"wjet1_mass",              selJetP4_Wjj_lead.mass()},
+      {"wjet1_btagCSV",           wjet1_btagCSV},
       {"wjet2_pt",                selJetP4_Wjj_sublead.pt()},
       {"wjet2_eta",               selJetP4_Wjj_sublead.eta()},
       {"wjet2_phi",               selJetP4_Wjj_sublead.phi()},
       {"wjet2_mass",              selJetP4_Wjj_sublead.mass()},
+      {"wjet2_btagCSV",           wjet2_btagCSV},
       {"jpaScore",                jpaScore},
       {"mht",                     mhtP4.pt()},
       {"pT_Wjj",                  pT_Wjj},
       {"m_Hbb",                   m_Hbb},
       {"Smin_Hww",                Smin_Hww},
       {"tau21_Hbb",               tau21_Hbb},
-      {"numBJetsLoose",           selBJetsAK4_loose.size()},
+      {"numBJets_loose",          selBJetsAK4_loose.size()},
       {"dR_Hbb",                  dR_Hbb},
       {"met",                     metP4.pt()},
       {"cosThetaS_Hbb_reg",       cosThetaS_Hbb_reg},
@@ -2275,11 +2312,58 @@ int main(int argc, char* argv[])
       {"mT_top_2particle",        mT_top_2particle},
       {"HT",                      HT},
       {"eta_Hbb",                 eta_Hbb},
-      {"m_HH",                    m_HH},
       {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
       {"mll_loose",               preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->p4() + preselLeptonsFull[1]->p4()).mass() : 0.},
-      {"numLeptons",              preselLeptonsFull.size()}
+      {"numLeptons",              preselLeptonsFull.size()},
+      {"vbf_dEta_jj",             vbf_dEta_jj},
+      {"vbf_m_jj",                vbf_m_jj}
     };
+
+//--- compute event-level BDT outputs
+    std::map<std::string, double> bdtOutputs_resonant_spin2;
+    std::map<std::string, double> bdtOutputs_resonant_spin0;
+    std::map<std::string, double> bdtOutputs_nonresonant;
+    if ( selJetAK8_Hbb )
+    {
+      std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted->mvaInputVariables(), true); // FIXME: set to false
+      bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
+      std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted->mvaInputVariables(), true); // FIXME: set to false
+      bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
+      std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted->mvaInputVariables(), true);
+      bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
+    }
+    else
+    {
+      std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved->mvaInputVariables(), true); // FIXME: set to false
+      bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
+      std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved->mvaInputVariables(), true); // FIXME: set to false
+      bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
+      std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved->mvaInputVariables(), true);
+      bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
+    }
+
+//--- compute event-level LBN outputs
+    std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
+    std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
+    std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
+    if ( selJetAK8_Hbb )
+    {
+      std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted->hl_mvaInputVariables(), true); // FIXME: set to false
+      lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
+      std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted->hl_mvaInputVariables(), true); // FIXME: set to false
+      lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
+      std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted->hl_mvaInputVariables(), true);
+      lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
+    }
+    else
+    {
+      std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved->hl_mvaInputVariables(), true); // FIXME: set to false
+      lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
+      std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved->hl_mvaInputVariables(), true); // FIXME: set to false
+      lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
+      std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved->hl_mvaInputVariables(), true);
+      lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
+    }
 
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
@@ -2404,11 +2488,6 @@ int main(int argc, char* argv[])
 
       double lep_frWeight = ( selLepton->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
 
-      double bjet1_btagCSV = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet1()->BtagCSV() : ( (selJet1_Hbb) ? dynamic_cast<const RecoJet*>(selJet1_Hbb)->BtagCSV() : -1 );
-      double bjet2_btagCSV = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet2()->BtagCSV() : ( (selJet2_Hbb) ? dynamic_cast<const RecoJet*>(selJet2_Hbb)->BtagCSV() : -1 );
-      double wjet1_btagCSV = (selJet1_Wjj) ? dynamic_cast<const RecoJet*>(selJet1_Wjj)->BtagCSV() : -1;
-      double wjet2_btagCSV = (selJet2_Wjj) ? dynamic_cast<const RecoJet*>(selJet2_Wjj)->BtagCSV() : -1;
-
       int numWJets = 0;
       if ( selJet1_Wjj ) ++numWJets;
       if ( selJet2_Wjj ) ++numWJets;
@@ -2420,9 +2499,9 @@ int main(int argc, char* argv[])
       if(apply_HH_rwgt)
       {
         assert(HHWeight_calc);
-        for(auto bmName : HHWeightNames)
+        for(unsigned int i =0; i < HHWeightNames.size();i++)
         {
-          weightMapHH[bmName] = HHWeight_calc->getWeight(bmName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          weightMapHH[HHWeightNames[i]] = HHWeight_calc->getWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
         }
       }
 
@@ -2503,6 +2582,7 @@ int main(int argc, char* argv[])
 	("pT_HHvis",             pT_HHvis)
 	("dPhi_HHvis",           dPhi_HHvis)
 	("m_HH",                 m_HH)
+        ("m_HH_B2G_18_008",      m_HH_B2G_18_008)
 	("pT_HH",                pT_HH)
 	("dPhi_HH",              dPhi_HH)
 	("Smin_HH",              Smin_HH)
@@ -2525,6 +2605,7 @@ int main(int argc, char* argv[])
 	("evtWeight",            evtWeightRecorder.get(central_or_shift_main))
 	("numJets",              comp_n_jet25_recl(selJetsAK4))
 	("isHbb_boosted",        selJetAK8_Hbb ? true : false)
+        ("isWjj_boosted",        selJetsAK8_Wjj.size() >= 1 ? true : false)
 	("isVBF",                isVBF)
 	("mhh_gen",              eventInfo.gen_mHH)
 	("costS_gen",            eventInfo.gen_cosThetaStar)
@@ -2533,7 +2614,7 @@ int main(int argc, char* argv[])
 	("mbb_loose",            selBJetsAK4_loose.size() >= 2 ? (selBJetsAK4_loose[0]->p4() + selBJetsAK4_loose[1]->p4()).mass() : 0)
 	("mbb_medium",           selBJetsAK4_medium.size() >= 2 ? (selBJetsAK4_medium[0]->p4() + selBJetsAK4_medium[1]->p4()).mass() : 0)
 	("mll_loose",            preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->p4() + preselLeptonsFull[1]->p4()).mass() : 0)
-	("numLeptons",           preselLeptonsFull.size())
+	("numLeptons_loose",     preselLeptonsFull.size())
 	("lepPairCharge_loose",  preselLeptonsFull.size() >= 2 ? preselLeptonsFull[0]->charge() + preselLeptonsFull[1]->charge() : 999)
 	("selLepton_charge",     preselLeptonsFull[0]->charge())
 	("selLepton_type",       selLepton_type)

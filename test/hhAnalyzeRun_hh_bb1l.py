@@ -32,7 +32,7 @@ parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
-parser.enable_regrouped_jerc()
+parser.enable_regrouped_jerc(default = 'jes')
 parser.add_split_trigger_sys()
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
@@ -78,7 +78,14 @@ second_bdt = args.second_bdt
 if regroup_jerc:
   if 'full' not in systematics_label:
     raise RuntimeError("Regrouped JEC or split JER was enabled but not running with full systematics")
-  systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
+  if regroup_jerc == 'both':
+    systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
+  elif regroup_jerc == 'jes':
+    systematics.full.extend(systematics.JEC_regrouped)
+  elif regroup_jerc == 'jer':
+    systematics.full.extend(systematics.JER_split)
+  else:
+    raise RuntimeError("Invalid choice: %s" % regroup_jerc)
 if split_trigger_sys == 'yes':
   for trigger_sys in systematics.triggerSF:
     del systematics.internal[systematics.internal.index(trigger_sys)]
@@ -271,7 +278,7 @@ if __name__ == '__main__':
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
-    executable_analyze                    = "analyze_hh_bb1l",
+    executable_analyze                    = "analyze2_hh_bb1l",
     cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
     samples                               = samples,
     apply_hadTauVeto                      = False,
