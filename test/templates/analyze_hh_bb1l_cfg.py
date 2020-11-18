@@ -113,36 +113,96 @@ process.analyze_hh_bb1l = cms.PSet(
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
 
+    BDT = cms.PSet(
+        resonant_spin2_resolved = cms.PSet(
+
+        ),
+        resonant_spin2_boosted = cms.PSet(
+
+        ),
+        resonant_spin0_resolved = cms.PSet(
+
+        ),
+        resonant_spin0_boosted = cms.PSet(
+
+        ),
+        nonresonant_resolved = cms.PSet(
+            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_resolved_nonres.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                'lep_pt', 'bjet1_pt', 'bjet2_pt', 'met', 'm_Hbb_regCorr',
+                'dR_Hbb', 'pT_Hbb', 'm_Wjj', 'dR_Hww', 'pT_Hww',
+                'Smin_Hww', 'dR_b1lep', 'dR_b2lep', 'pT_HH', 'mT_W',
+                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mbb_loose', 'mbb_medium',
+                'dR_HH', 'cosThetaS_HH', 'mht', 'jpaScore', 'bjet1_btagCSV',
+                'wjet1_btagCSV', 'vbf_m_jj', 'vbf_dEta_jj',
+                'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
+            ),
+        ),
+        nonresonant_boosted = cms.PSet(
+            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_boosted_nonres.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                'bjet2_pt', 'met', 'm_Hbb', 'dR_Hbb', 'm_HHvis',
+                'pT_HH', 'mT_W', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mbb_loose',
+                'mbb_medium', 'tau21_Hbb', 'numJets', 'numBJets_loose', 'numBJets_medium', 
+                'lep_pt', 'Smin_Hww', 'dR_b1lep', 'pT_Hww', 'mT_top_2particle', 
+                'pT_Hbb', 'dR_Wjj', 'cosThetaS_HH', 'bjet1_btagCSV', 
+                'wjet1_btagCSV', 'vbf_m_jj', 'vbf_dEta_jj',
+                'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', ##'BM9', 'BM10', 'BM11', 'BM12'
+            ),
+        )
+    ),
+    LBN = cms.PSet(
+        resonant_spin2_resolved = cms.PSet(
+
+        ),
+        resonant_spin2_boosted = cms.PSet(
+
+        ),
+        resonant_spin0_resolved = cms.PSet(
+
+        ),
+        resonant_spin0_boosted = cms.PSet(
+
+        ),
+        nonresonant_resolved = cms.PSet(
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_nonres.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
+            ),
+            hl_inputVariables = cms.vstring(
+                'met', 'm_Hbb', 'eta_Hbb', 'jpaScore', 'm_Wjj', 
+                'Smin_Hww', 'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 
+                'numBJets_loose', 'numBJets_medium', 'pT_Hww', 'dR_b1lep', 'pT_HHvis', 
+                'm_HH', 'm_HH_B2G_18_008', 'mT_W', 'mindr_lep1_jet', 'avg_dr_jet_central', 
+                'mll_loose', 'cosThetaS_WW', 'cosThetaS_HH', 'leadFwdJet_pt', 'vbf_m_jj', 
+                'vbf_dEta_jj', 'bjet1_btagCSV', 'wjet1_btagCSV',
+                'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        ),
+        nonresonant_boosted = cms.PSet(
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_nonres.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
+            ),
+            hl_inputVariables = cms.vstring(
+                'mht', 'HT', 'm_Hbb', 'jpaScore', 'm_Wjj', 
+                'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 'numBJets_medium', 
+                'numBJets_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
+                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose', 'bjet2_pt', 
+                'leadFwdJet_pt', 'numLeptons', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
+                'bjet1_btagCSV', 'wjet1_btagCSV',
+                'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        )
+    ),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
-    mvaInfo_res = cms.PSet(
-        BDT_xml_FileName_even_spin2 = cms.string('hhAnalysis/multilepton/data/1l_3tau_odd_half_model_spin2.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-        BDT_xml_FileName_odd_spin2 = cms.string('hhAnalysis/multilepton/data/1l_3tau_even_half_model_spin2.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
-        fitFunctionFileName_spin2 = cms.string('hhAnalysis/multilepton/data/1l_3tau_TProfile_signal_fit_func_spin2.root'),  ## File contaning the fitted TF1s
-        inputVars_spin2 = cms.vstring(
-            'diHiggsVisMass', 'diHiggsMass', 'dr_lep_tau1', 'dr_lep_tau2',
-            'dr_lep_tau3', 'dr_tau1_tau2', 'dr_tau1_tau3', 'dr_tau2_tau3',
-            'mT_lep', 'gen_mHH'
-        ),
-        BDT_xml_FileName_even_spin0 = cms.string('hhAnalysis/multilepton/data/1l_3tau_odd_half_model_spin0.xml'),
-        BDT_xml_FileName_odd_spin0 = cms.string('hhAnalysis/multilepton/data/1l_3tau_even_half_model_spin0.xml'),
-        fitFunctionFileName_spin0 = cms.string('hhAnalysis/multilepton/data/1l_3tau_TProfile_signal_fit_func_spin0.root'),
-        inputVars_spin0 = cms.vstring(
-            'diHiggsVisMass', 'diHiggsMass', 'dr_lep_tau1', 'dr_lep_tau2',
-            'dr_lep_tau3', 'dr_tau1_tau2', 'dr_tau1_tau3', 'dr_tau2_tau3',
-            'mT_lep', 'gen_mHH'
-        ),
-    ),
     nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-    mvaInfo_nonres = cms.PSet(
-        BDT_xml_FileName_even_nonres = cms.string('hhAnalysis/multilepton/data/1l_3tau_odd_model_nonres.xml'),
-        BDT_xml_FileName_odd_nonres = cms.string('hhAnalysis/multilepton/data/1l_3tau_even_model_nonres.xml'),
-        inputVars_nonres = cms.vstring(
-            'lep_pt', 'lep_phi', 'tau1_pt', 'tau2_pt', 'tau3_pt', 'met', 'diHiggsVisMass',
-            'diHiggsMass', 'dr_lep_tau3', 'dr_tau1_tau2', 'dr_tau1_tau3', 'dr_tau2_tau3',
-            'm_lep_tau1', 'pt_HH_recoil', 'mT_lep',
-            'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
-        ), ## No Need to add BM indices they will be added for the  non-reso case on the fly
-    ),
 
     syncNtuple = cms.PSet(
         tree = cms.string(''),
@@ -169,3 +229,18 @@ process.analyze_hh_bb1l = cms.PSet(
     tHweights = cms.VPSet(),
     hhWeight_cfg = hhWeight,
 )
+
+#----------------------------------------------------------------------------------------------------
+# CV: temporary work-around; 
+#     neccessary because Saswati has not finished BDT and LBN training for resonant HH signal yet
+process.analyze_hh_bb1l.BDT.resonant_spin2_resolved = process.analyze_hh_bb1l.BDT.nonresonant_resolved
+process.analyze_hh_bb1l.BDT.resonant_spin2_boosted  = process.analyze_hh_bb1l.BDT.nonresonant_boosted
+process.analyze_hh_bb1l.BDT.resonant_spin0_resolved = process.analyze_hh_bb1l.BDT.nonresonant_resolved
+process.analyze_hh_bb1l.BDT.resonant_spin0_boosted  = process.analyze_hh_bb1l.BDT.nonresonant_boosted
+process.analyze_hh_bb1l.LBN.resonant_spin2_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
+process.analyze_hh_bb1l.LBN.resonant_spin2_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
+process.analyze_hh_bb1l.LBN.resonant_spin0_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
+process.analyze_hh_bb1l.LBN.resonant_spin0_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
+process.fwliteInput.maxEvents = cms.int32(10000)
+process.fwliteInput.outputEvery = cms.uint32(1000)
+#----------------------------------------------------------------------------------------------------
