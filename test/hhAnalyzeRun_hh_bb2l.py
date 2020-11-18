@@ -35,7 +35,7 @@ parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
-parser.enable_regrouped_jerc()
+parser.enable_regrouped_jerc(default = 'jes')
 parser.add_split_trigger_sys()
 parser.add_argument('-hme', '--hmeBr',
   dest = 'add_hmeBr', action = 'store_true',
@@ -80,7 +80,14 @@ if lep_mva_wp != "default" and use_preselected:
 if regroup_jerc:
   if 'full' not in systematics_label:
     raise RuntimeError("Regrouped JEC or split JER was enabled but not running with full systematics")
-  systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
+  if regroup_jerc == 'both':
+    systematics.full.extend(systematics.JEC_regrouped + systematics.JER_split)
+  elif regroup_jerc == 'jes':
+    systematics.full.extend(systematics.JEC_regrouped)
+  elif regroup_jerc == 'jer':
+    systematics.full.extend(systematics.JER_split)
+  else:
+    raise RuntimeError("Invalid choice: %s" % regroup_jerc)
 if split_trigger_sys == 'yes':
   for trigger_sys in systematics.triggerSF:
     del systematics.internal[systematics.internal.index(trigger_sys)]
