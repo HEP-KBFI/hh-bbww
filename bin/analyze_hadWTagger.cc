@@ -666,13 +666,14 @@ int main(int argc,
   int analyzedEntries = 0;
   int selectedEntries = 0;
   cutFlowTableType cutFlowTable;
+  long numRows_total = 0;
   while ( inputTree->hasNextEvent() && (! run_lumi_eventSelector || (run_lumi_eventSelector && ! run_lumi_eventSelector -> areWeDone())) ) {
     if ( inputTree -> canReport(reportEvery) ) {
       std::cout << "processing Entry " << inputTree -> getCurrentMaxEventIdx()
                 << " or " << inputTree -> getCurrentEventIdx() << " entry in #"
                 << (inputTree -> getProcessedFileCount() - 1)
                 << " (" << eventInfo
-                << ") file (" << selectedEntries << " Entries selected)\n";
+                << ") file (" << selectedEntries << " Entries selected, " << numRows_total << " Rows written to output Ntuple)\n";
     }
     ++analyzedEntries;
 
@@ -916,6 +917,7 @@ int main(int argc,
 	     isGenMatched((*selJet_Wjj)->eta(), (*selJet_Wjj)->phi(), genWJets_ptrs),
 	     evtWeight);
 	  ++idxRow;
+          ++numRows_total;
 	}
       }
       else if ( HbbBoosted_matchedJets_.second == 2 ) {
@@ -939,6 +941,7 @@ int main(int argc,
 	      isGenMatched((*selJet2_Wjj)->eta(), (*selJet2_Wjj)->phi(), genWJets_ptrs),
 	      evtWeight);
 	    ++idxRow;
+            ++numRows_total;
 	  }
 	}
       }
@@ -968,6 +971,7 @@ int main(int argc,
             isGenMatched((*selJet2_Wjj)->eta(), (*selJet2_Wjj)->phi(), genWJets_ptrs),
             evtWeight);
           ++idxRow;
+          ++numRows_total;
         }
       }
     }
@@ -1003,6 +1007,7 @@ int main(int argc,
                 isGenMatched((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets_ptrs),
                 evtWeight);
 	      ++idxRow;
+              ++numRows_total;
 	    }
           }
         }
@@ -1036,6 +1041,7 @@ int main(int argc,
               isGenMatched((*selWJet2)->eta(), (*selWJet2)->phi(), genWJets_ptrs),
               evtWeight);
             ++idxRow;
+            ++numRows_total;
           }
         }
       }
@@ -1067,6 +1073,7 @@ int main(int argc,
               isGenMatched((*selWJet1)->eta(), (*selWJet1)->phi(), genWJets_ptrs),
               evtWeight);
             ++idxRow;
+            ++numRows_total;
           }
         }
       }
@@ -1092,6 +1099,7 @@ int main(int argc,
 	     isGenMatched((*selWJet)->eta(), (*selWJet)->phi(), genWJets_ptrs),
 	     evtWeight);
 	  ++idxRow;
+          ++numRows_total;
 	}
       }
     }
@@ -1116,6 +1124,7 @@ int main(int argc,
 	    isGenMatched((*selBJet2)->eta(), (*selBJet2)->phi(), genBJets_ptrs) ,
 	    evtWeight);
 	  ++idxRow;
+          ++numRows_total;
 	} 
       }
     }
@@ -1136,8 +1145,9 @@ int main(int argc,
 	   isGenMatched((*selBJet)->eta(), (*selBJet)->phi(), genBJets_ptrs),
 	   evtWeight);
 	++idxRow;
+        ++numRows_total;
       }
-      }
+    }
     else if ( mode == kMode_jpa_restOfcat ) {
       continue;
     }
