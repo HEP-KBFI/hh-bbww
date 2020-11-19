@@ -15,6 +15,7 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h" // RecoLepton
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetAK8.h" // RecoJetAK8
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMEt.h" // RecoMEt
 #include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h" // GenLepton
 #include "tthAnalysis/HiggsToTauTau/interface/GenJet.h" // GenJet
@@ -90,17 +91,15 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle::comp_mT
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle::comp_mT
-#include "tthAnalysis/HiggsToTauTau/interface/XGBInterface.h" // XGBInterface
-#include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterface.h"
-#include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterfaceLBN.h"
+#include "tthAnalysis/HiggsToTauTau/interface/TMVAInterface.h" // TMVAInterface
+#include "tthAnalysis/HiggsToTauTau/interface/TensorFlowInterfaceLBN.h" // TensorFlowInterfaceLBN
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface2.h" // HHWeightInterface2
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
-#include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8_hh_Wjj
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 #include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
 #include "hhAnalysis/multilepton/interface/DatacardHistManager_hh.h" // DatacardHistManager_hh
@@ -124,6 +123,8 @@
 #include "hhAnalysis/bbww/interface/jpaAuxFunctions.h" // convert_to_JPAJet, convert_to_JPAJets, convert_to_RecoJet
 #include "hhAnalysis/bbww/interface/EventCategory_hh_bb1l_BDT.h" // EventCategory_hh_bb1l_BDT
 #include "hhAnalysis/bbww/interface/EventCategory_hh_bb1l_LBN.h" // EventCategory_hh_bb1l_LBN
+#include "hhAnalysis/bbww/interface/analysisAuxFunctions_hh_bbWW.h" // makeTMVAInterface, makeTensorFlowInterfaceLBN, printHbb, printWjj
+#include "hhAnalysis/bbww/interface/dumpGenParticles.h" // dumpGenParticles
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -159,41 +160,6 @@ enum { kjpa_HbbBoosted_undefined, kjpa_HbbBoosted_2jet, kjpa_HbbBoosted_missingW
 enum { kjpa_HbbResolved_undefined, kjpa_HbbResolved_4jet, kjpa_HbbResolved_missingWJet, kjpa_HbbResolved_missingBJet, kjpa_HbbResolved_missingAllWJet, 
        kjpa_HbbResolved_missingBJet_missingWJet, kjpa_HbbResolved_missingBJet_missingAllWJet, kjpa_HbbResolved_restOfcat };
 
-TMVAInterface *
-makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant)
-{
-  std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
-  std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
-  std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
-  TMVAInterface * retVal = nullptr;
-  //if ( is_nonresonant )
-  //{
-    assert(xmlFileName_even != "" && xmlFileName_odd != "" && inputVariables.size() != 0);
-    retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables);
-  //}
-  //else
-  //{
-  //  std::string fitFileName = cfg.getParameter<std::string>("fitFileName");
-  //  assert(xmlFileName_odd != "" && xmlFileName_even != "" && fitFileName != "" && inputVariables.size() != 0);
-  //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
-  //}
-  retVal->disableBDTTransform();
-  return retVal;
-}
-
-TensorFlowInterfaceLBN *
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg)
-{
-  std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
-  std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
-  std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
-  std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
-  std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
-  assert(pbFileName_even != "" && pbFileName_odd != "" && ll_inputVariables.size() != 0 && hl_inputVariables.size() != 0 && classes.size() != 0);
-  TensorFlowInterfaceLBN * retVal = new TensorFlowInterfaceLBN(pbFileName_odd, ll_inputVariables, hl_inputVariables, classes, pbFileName_even);
-  return retVal;
-}
-
 std::pair<int, int> 
 getMatchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons, 
                const std::vector<const GenJet*>& genBJets_ptrs, 
@@ -216,98 +182,7 @@ getMatchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
   return std::pair<int, int>(matchedBJet, matchedWJet);
 }
 
-void dumpGenParticles(const std::string& label, const std::vector<GenParticle>& particles)
-{
-  for ( size_t idxParticle = 0; idxParticle < particles.size(); ++idxParticle ) {
-    std::cout << label << " #" << idxParticle << ":" << " ";
-    std::cout << particles[idxParticle];
-    std::cout << std::endl;
-  }
-}
 
-void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
-	      const std::vector<GenParticle>& genBJets)
-{
-  std::cout << "<printHbb>:" << std::endl;
-  std::cout << "#genBJets = " << genBJets.size() << std::endl;
-  for ( size_t idxBJet = 0; idxBJet < genBJets.size(); ++idxBJet ) {
-    const GenParticle& genBJet = genBJets[idxBJet];
-    std::cout << " genBJet #" << idxBJet << ": pT = " << genBJet.pt() << ", eta = " << genBJet.eta() << ", phi = " << genBJet.phi() << std::endl;
-  }
-  if ( genBJets.size() == 2 ) {
-    bool isMatched = false;
-    Particle::LorentzVector genHbbP4 = genBJets[0].p4() + genBJets[1].p4();
-    std::cout << "genHbb: pT = " << genHbbP4.pt() << ", eta = " << genHbbP4.eta() << ", phi = " << genHbbP4.phi() << std::endl;
-    for ( std::vector<const RecoJetAK8*>::const_iterator jet_ak8 = jets_ak8.begin();
-	  jet_ak8 != jets_ak8.end(); ++jet_ak8 ) {
-      double dR = deltaR(genHbbP4, (*jet_ak8)->p4());
-      if ( dR < 0.8 ) {
-	std::cout << "matches reconstructed AK8 jet: pT = " << (*jet_ak8)->pt() << ", eta = " << (*jet_ak8)->eta() << ", phi = " << (*jet_ak8)->phi() << ", which ";
-	if ( jetSelectorAK8_Hbb.getSelector()(**jet_ak8) ) {
-	  std::cout << "PASSES";
-	  isMatched = true;
-	} else {
-	  std::cout << "FAILS";
-	}
-	std::cout << " the H->bb jet selection." << std::endl;
-      }
-    }
-    if ( genHbbP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Hbb) !!" << std::endl;
-  }
-}
-
-void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8_Wjj,
-	      const std::vector<GenParticle>& genWBosons, const std::vector<GenParticle>& genWJets)
-{
-  std::cout << "<printWjj>:" << std::endl;
-  std::cout << "#genWBosons = " << genWBosons.size() << std::endl;
-  for ( size_t idxWBoson = 0; idxWBoson < genWBosons.size(); ++idxWBoson ) {
-    const GenParticle& genWBoson = genWBosons[idxWBoson];
-    std::cout << " genWBoson #" << idxWBoson << ": pT = " << genWBoson.pt() << ", eta = " << genWBoson.eta() << ", phi = " << genWBoson.phi() << std::endl;
-  }
-  std::cout << "#genWJets = " << genWJets.size() << std::endl;
-  for ( size_t idxWJet = 0; idxWJet < genWJets.size(); ++idxWJet ) {
-    const GenParticle& genWJet = genWJets[idxWJet];
-    std::cout << " genWJet #" << idxWJet << ": pT = " << genWJet.pt() << ", eta = " << genWJet.eta() << ", phi = " << genWJet.phi() << std::endl;
-  }
-  if ( genWBosons.size() == 1 ) {
-    bool isMatched = false;
-    Particle::LorentzVector genWjjP4 = genWBosons[0].p4();
-    std::cout << "genWjj: pT = " << genWjjP4.pt() << ", eta = " << genWjjP4.eta() << ", phi = " << genWjjP4.phi() << std::endl;
-    for ( std::vector<const RecoJetAK8*>::const_iterator jet_ak8 = jets_ak8.begin();
-	  jet_ak8 != jets_ak8.end(); ++jet_ak8 ) {
-      double dR = deltaR(genWjjP4, (*jet_ak8)->p4());
-      if ( dR < 0.8 ) {
-	std::cout << "matches reconstructed AK8 jet: pT = " << (*jet_ak8)->pt() << ", eta = " << (*jet_ak8)->eta() << ", phi = " << (*jet_ak8)->phi() << ","
-		  << " msoftdrop = " << (*jet_ak8)->msoftdrop() << ", tau21 = " << (*jet_ak8)->tau2()/(*jet_ak8)->tau1() << ", which ";
-	if ( jetSelectorAK8_Wjj.getSelector()(**jet_ak8) ) {
-	  std::cout << "PASSES";
-	  isMatched = true;
-	} else {
-	  std::cout << "FAILS";
-	}
-	std::cout << " the W->jj jet selection." << std::endl;
-	std::cout << "generator-level subjets:" << std::endl;
-	for ( std::vector<GenParticle>::const_iterator genWJet1 = genWJets.begin();
-	      genWJet1 != genWJets.end(); ++genWJet1 ) {
-	  for ( std::vector<GenParticle>::const_iterator genWJet2 = genWJet1 + 1;
-		genWJet2 != genWJets.end(); ++genWJet2 ) {
-	    if ( deltaR(genWJet1->p4() + genWJet2->p4(), genWjjP4) < 1.e-1 && std::fabs((genWJet1->p4() + genWJet2->p4()).mass() - genWjjP4.mass()) < 1.e+1 ) {
-	      std::cout << " genWJet #1: pT = " << genWJet1->pt() << ", eta = " << genWJet1->eta() << ", phi = " << genWJet1->phi() << std::endl;
-	      std::cout << " genWJet #2: pT = " << genWJet2->pt() << ", eta = " << genWJet2->eta() << ", phi = " << genWJet2->phi() << std::endl;
-	    }
-	  }
-	}
-	std::cout << "reconstructed subjets:" << std::endl;
-	const RecoSubjetAK8* subjet1 = (*jet_ak8)->subJet1();
-	if ( subjet1 ) std::cout << " subjet #1: pT = " << subjet1->pt() << ", eta = " << subjet1->eta() << ", phi = " << subjet1->phi() << std::endl;
-	const RecoSubjetAK8* subjet2 = (*jet_ak8)->subJet2();
-	if ( subjet2 ) std::cout << " subjet #2: pT = " << subjet2->pt() << ", eta = " << subjet2->eta() << ", phi = " << subjet2->phi() << std::endl;
-      }
-    }
-    if ( genWjjP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Wjj) !!" << std::endl;
-  }
-}
 
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
@@ -768,28 +643,6 @@ int main(int argc, char* argv[])
   jetSelectorAK8ctrl.getSelector().set_min_pt(200.);       //     apply same cuts on fatjet jet pT and softdrop mass
   jetSelectorAK8ctrl.getSelector().set_min_msoftdrop(30.); //     as in the RecoJetCollectionSelectorAK8_hh_bbWW_Hbb selector class
 
-  MEMOutputReader_hh_bb1l* memReader = nullptr;
-  if ( !branchName_memOutput.empty() )
-  {
-    memReader = new MEMOutputReader_hh_bb1l(
-      Form("n%s", branchName_memOutput.data()), branchName_memOutput);
-    inputTree->registerReader(memReader);
-  }
-  MEMOutputReader_hh_bb1l* memReader_missingBJet = nullptr;
-  if ( !branchName_memOutput_missingBJet.empty() )
-  {
-    memReader_missingBJet = new MEMOutputReader_hh_bb1l(
-      Form("n%s", branchName_memOutput_missingBJet.data()), branchName_memOutput_missingBJet);
-    inputTree->registerReader(memReader_missingBJet);
-  }
-  MEMOutputReader_hh_bb1l* memReader_missingHadWJet = nullptr;
-  if ( !branchName_memOutput_missingHadWJet.empty() )
-  {
-    memReader_missingHadWJet = new MEMOutputReader_hh_bb1l(
-      Form("n%s", branchName_memOutput_missingHadWJet.data()), branchName_memOutput_missingHadWJet);
-    inputTree->registerReader(memReader_missingHadWJet);
-  }
-
   GenParticleReader* genBJetReader = nullptr;
   GenParticleReader* genWBosonReader = nullptr;
   GenParticleReader* genWJetReader = nullptr;
@@ -891,6 +744,7 @@ int main(int argc, char* argv[])
   std::ostream* selEventsFile = ( selEventsFileName_output != "" ) ? new std::ofstream(selEventsFileName_output.data(), std::ios::out) : 0;
   std::cout << "selEventsFileName_output = " << selEventsFileName_output << std::endl;
 
+//--- declare histograms
   struct selHistManagerType
   {
     ElectronHistManager* electrons_;
@@ -1025,7 +879,7 @@ int main(int argc, char* argv[])
       genEvtHistManager_afterCuts[central_or_shift] = new GenEvtHistManager(makeHistManager_cfg(process_string,
         Form("%s/sel/genEvt", histogramDir.data()), era_string, central_or_shift));
       genEvtHistManager_afterCuts[central_or_shift]->bookHistograms(fs);
-       lheInfoHistManager[central_or_shift] = new LHEInfoHistManager(makeHistManager_cfg(process_string,
+      lheInfoHistManager[central_or_shift] = new LHEInfoHistManager(makeHistManager_cfg(process_string,
         Form("%s/sel/lheInfo", histogramDir.data()), era_string, central_or_shift));
       lheInfoHistManager[central_or_shift]->bookHistograms(fs);
 
@@ -1037,7 +891,6 @@ int main(int argc, char* argv[])
     }
   }
 
-  std::cout << "Book BDT filling" << std::endl;
   NtupleFillerBDT<float, int>* bdt_filler = nullptr;
   typedef std::remove_pointer<decltype(bdt_filler)>::type::float_type float_type;
   typedef std::remove_pointer<decltype(bdt_filler)>::type::int_type int_type;
@@ -1069,8 +922,8 @@ int main(int argc, char* argv[])
       );
       for ( const std::string & evt_cat_str: HHWeightNames )
       {
-	if (!apply_HH_rwgt) continue;
-	bdt_filler->register_variable<float_type>(Form(evt_cat_str.c_str()));
+        if (!apply_HH_rwgt) continue;
+        bdt_filler->register_variable<float_type>(Form(evt_cat_str.c_str()));
       }
       bdt_filler->register_variable<float_type>(
         "lep_pt", "lep_conePt", "lep_eta", "lep_phi", "lep_mass",
@@ -1107,7 +960,8 @@ int main(int argc, char* argv[])
       );
       bdt_filler->register_variable<int_type>(
         "lep_charge", "numElectrons",
-        "numJets", "numBJets_loose", "numBJets_medium", "numBJets", "numWJets",
+        "numJets", "numBJets_loose", "numBJets_medium", 
+        "numBJets_jpa_loose", "numBJets_jpa_medium", "numBJets_jpa", "numWJets_jpa",
         "isHbb_boosted", "isWjj_boosted",
         "numJets_vbf", "isVBF",
         "numElectrons", "numLeptons_loose", "numJetsForward", "lepPairCharge_loose", "lepPairType_loose",
@@ -1242,7 +1096,6 @@ int main(int argc, char* argv[])
       }
     }
 
-    eventInfo.reset_productionMode();
     std::vector<GenParticle> genBJets;
     std::vector<GenParticle> genWBosons;
     std::vector<GenParticle> genWJets;
@@ -1250,16 +1103,19 @@ int main(int argc, char* argv[])
       genBJets = genBJetReader->read();
       genWBosons = genWBosonReader->read();
       genWJets = genWJetReader->read();
-
-      if(analysisConfig.isMC_VH())
-      {
-        eventInfo.set_productionMode(get_VH_productionMode(genWBosons));
-      }
     }
     if ( isDEBUG ) {
       dumpGenParticles("genBJet", genBJets);
       dumpGenParticles("genWBoson", genWBosons);
       dumpGenParticles("genWJet", genWJets);
+    }
+
+    eventInfo.reset_productionMode();
+    if ( isMC ) {
+      if(analysisConfig.isMC_VH())
+      {
+        eventInfo.set_productionMode(get_VH_productionMode(genWBosons));
+      }
     }
 
     std::vector<GenParticle> genLeptonsDY;
@@ -1420,11 +1276,6 @@ int main(int argc, char* argv[])
       jetCleanerAK4_byIndex(jet_ptrs_ak4, fakeableLeptons) :
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
-
-    const RecoMEt met_uncorr = metReader->read();
-    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
-    const Particle::LorentzVector& metP4 = met.p4();
-
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -1437,6 +1288,10 @@ int main(int argc, char* argv[])
       printCollection("selected AK4 jets", selJetsAK4);
       printCollection("selJetsForward", selJetsForward);
     }
+
+    const RecoMEt met_uncorr = metReader->read();
+    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
+    const Particle::LorentzVector& metP4 = met.p4();
 
 //--- build collections of generator level particles (after some cuts are applied, to save computing time)
     if ( isMC && redoGenMatching && !fillGenEvtHistograms )
@@ -2246,6 +2101,15 @@ int main(int argc, char* argv[])
     double wjet1_btagCSV = (selJet1_Wjj) ? dynamic_cast<const RecoJet*>(selJet1_Wjj)->BtagCSV() : -1;
     double wjet2_btagCSV = (selJet2_Wjj) ? dynamic_cast<const RecoJet*>(selJet2_Wjj)->BtagCSV() : -1;
 
+    int numBJets_jpa_loose, numBJets_jpa_medium;
+    countBJets_jpa(selJetAK8_Hbb, selJet1_Hbb, selJet2_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_jpa_loose, numBJets_jpa_medium);
+    int numWJets_jpa = 0;
+    if ( selJet1_Wjj ) ++numWJets_jpa;
+    if ( selJet2_Wjj ) ++numWJets_jpa;
+    int numBJets_jpa = 0;
+    if ( selJet1_Hbb ) ++numBJets_jpa;
+    if ( selJet2_Hbb ) ++numBJets_jpa;
+
     std::map<std::string, double> mvaInputVariables_list = {
       {"lep_pt",                  selLepton->pt()},
       {"lep_conePt",              comp_lep_conePt(*selLepton)},
@@ -2350,7 +2214,7 @@ int main(int argc, char* argv[])
     {
       std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted->hl_mvaInputVariables(), true); // FIXME: set to false
       lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
-      std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted->hl_mvaInputVariables(), true); // FIXME: set to false
+      std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted->hl_mvaInputVariables(), false);
       lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
       std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted->hl_mvaInputVariables(), true);
       lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
@@ -2359,7 +2223,7 @@ int main(int argc, char* argv[])
     {
       std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved->hl_mvaInputVariables(), true); // FIXME: set to false
       lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
-      std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved->hl_mvaInputVariables(), true); // FIXME: set to false
+      std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved->hl_mvaInputVariables(), false);
       lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
       std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved->hl_mvaInputVariables(), true);
       lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
@@ -2488,13 +2352,6 @@ int main(int argc, char* argv[])
 
       double lep_frWeight = ( selLepton->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
 
-      int numWJets = 0;
-      if ( selJet1_Wjj ) ++numWJets;
-      if ( selJet2_Wjj ) ++numWJets;
-      int numBJets = 0;
-      if ( selJet1_Hbb ) ++numBJets;
-      if ( selJet2_Hbb ) ++numBJets;
-
       std::map<std::string, double> weightMapHH;
       if(apply_HH_rwgt)
       {
@@ -2622,8 +2479,10 @@ int main(int argc, char* argv[])
 	("numElectrons",         selElectrons.size())
 	("numBJets_loose",       selBJetsAK4_loose.size())
 	("numBJets_medium",      selBJetsAK4_medium.size())
-	("numBJets",             numBJets)
-	("numWJets",             numWJets)
+        ("numBJets_jpa_loose",   numBJets_jpa_loose)
+        ("numBJets_jpa_medium",  numBJets_jpa_medium)
+	("numBJets_jpa",         numBJets_jpa)
+	("numWJets_jpa",         numWJets_jpa)
         ("numJets_vbf",          selJetsAK4_vbf.size())
 	("mostFwdJet_eta",       selJetsForward.size() >= 1 ? std::abs(mostFwdJet.Eta()) : -1000)
 	("mostFwdJet_pt",        selJetsForward.size() >= 1 ? mostFwdJet.pt() : -1000)
