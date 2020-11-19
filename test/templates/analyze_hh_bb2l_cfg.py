@@ -100,12 +100,156 @@ process.analyze_hh_bb2l = cms.PSet(
     genMatchingByIndex = cms.bool(True),
     jetCleaningByIndex = cms.bool(True),
 
+    branchName_genBJets = cms.string('GenBQuarkFromTop'),
+    branchName_genWBosons = cms.string('GenVbosons'),
+
     branchName_memOutput = cms.string(''),
     branchName_hmeOutput = cms.string(''),
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
+
+    fillHistograms_BDT = cms.bool(False),
+    BDT = cms.PSet(
+        resonant_spin2_resolved = cms.PSet(
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
+        ),
+        resonant_spin2_boosted = cms.PSet(
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
+        ),
+        resonant_spin0_resolved = cms.PSet(
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
+        ),
+        resonant_spin0_boosted = cms.PSet(
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
+        ),
+        nonresonant_resolved = cms.PSet(
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
+        ),
+        nonresonant_boosted = cms.PSet(
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
+        )
+    ),
+    fillHistograms_LBN = cms.bool(False),
+    LBN = cms.PSet(
+        resonant_spin2_resolved = cms.PSet(
+            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'lep1', 'lep2'
+            ),
+            hl_inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        ),
+        resonant_spin2_boosted = cms.PSet(
+            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'lep1', 'lep2'
+            ),
+            hl_inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        ),
+        resonant_spin0_resolved = cms.PSet(
+            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'lep1', 'lep2'
+            ),
+            hl_inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        ),
+        resonant_spin0_boosted = cms.PSet(
+            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'lep1', 'lep2'
+            ),
+            hl_inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        ),
+        nonresonant_resolved = cms.PSet(
+            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'lep1', 'lep2'
+            ),
+            hl_inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        ),
+        nonresonant_boosted = cms.PSet(
+            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'lep1', 'lep2'
+            ),
+            hl_inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+        )
+    ),
+    gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
+    nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
 
     syncNtuple = cms.PSet(
         tree = cms.string(''),
