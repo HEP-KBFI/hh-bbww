@@ -33,7 +33,8 @@ EventCategory_hh_bb1l_BDT::isSelected(int for_category) const
 {
   if ( !isInitialized_ )
     throw cmsException(this, __func__, __LINE__)
-            << "EventCategory_hh_bb1l_BDT object has not been initialized. You need to call the 'set' function before calling the 'isSelected' function !!\n";
+            << "EventCategory_hh_bb1l_LBN object has not been initialized." 
+            << " You need to call the 'set' function before calling the 'isSelected' function !!\n";
   if      ( for_category == (int)kUndefined          ) return false;
   else if ( for_category == (int)kInclusive          ) return true;
   else if ( for_category == (int)kBoosted            ) return  isBoosted_;
