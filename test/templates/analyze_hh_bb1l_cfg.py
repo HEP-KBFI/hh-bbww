@@ -113,6 +113,7 @@ process.analyze_hh_bb1l = cms.PSet(
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
 
+    fillHistograms_BDT = cms.bool(True),
     BDT = cms.PSet(
         resonant_spin2_resolved = cms.PSet(
 
@@ -165,6 +166,7 @@ process.analyze_hh_bb1l = cms.PSet(
             )
         )
     ),
+    fillHistograms_LBN = cms.bool(True),
     LBN = cms.PSet(
         resonant_spin2_resolved = cms.PSet(
 
