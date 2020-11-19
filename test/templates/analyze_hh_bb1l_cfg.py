@@ -121,10 +121,22 @@ process.analyze_hh_bb1l = cms.PSet(
 
         ),
         resonant_spin0_resolved = cms.PSet(
-
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
         ),
         resonant_spin0_boosted = cms.PSet(
-
+            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            inputVariables = cms.vstring(
+                '', '', '', '', '',
+                '', '', '', '', '',
+                '', '', '', '', ''
+            )
         ),
         nonresonant_resolved = cms.PSet(
             xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
@@ -137,7 +149,7 @@ process.analyze_hh_bb1l = cms.PSet(
                 'dR_HH', 'cosThetaS_HH', 'mht', 'jpaScore', 'bjet1_btagCSV',
                 'wjet1_btagCSV', 'vbf_m_jj', 'vbf_dEta_jj',
                 'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
-            ),
+            )
         ),
         nonresonant_boosted = cms.PSet(
             xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
@@ -150,7 +162,7 @@ process.analyze_hh_bb1l = cms.PSet(
                 'pT_Hbb', 'dR_Wjj', 'cosThetaS_HH', 'bjet1_btagCSV', 
                 'wjet1_btagCSV', 'vbf_m_jj', 'vbf_dEta_jj',
                 'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', ##'BM9', 'BM10', 'BM11', 'BM12'
-            ),
+            )
         )
     ),
     LBN = cms.PSet(
@@ -161,10 +173,36 @@ process.analyze_hh_bb1l = cms.PSet(
 
         ),
         resonant_spin0_resolved = cms.PSet(
-
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_res_spin0.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_res_spin0.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
+            ),
+            hl_inputVariables = cms.vstring(
+                'met', 'm_Hbb', 'eta_Hbb', 'jpaScore', 'm_Wjj', 
+                'Smin_Hww', 'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 
+                'numBJets_loose', 'numBJets_medium', 'pT_Hww', 'dR_b1lep', 'pT_HHvis', 
+                'm_HH', 'm_HH_B2G_18_008', 'mT_W', 'mindr_lep1_jet', 'avg_dr_jet_central', 
+                'mll_loose', 'cosThetaS_WW', 'cosThetaS_HH', 'leadFwdJet_pt', 'vbf_m_jj', 
+                'vbf_dEta_jj', 'bjet1_btagCSV', 'wjet1_btagCSV', 'gen_mHH'
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
         ),
         resonant_spin0_boosted = cms.PSet(
-
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_res_spin0.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_res_spin0.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
+            ),
+            hl_inputVariables = cms.vstring(
+                'mht', 'HT', 'm_Hbb', 'jpaScore', 'm_Wjj', 
+                'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 'numBJets_medium', 
+                'numBJets_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
+                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose', 'bjet2_pt', 
+                'leadFwdJet_pt', 'numLeptons', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
+                'bjet1_btagCSV', 'wjet1_btagCSV', 'gen_mHH'
+            ),
+            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
         ),
         nonresonant_resolved = cms.PSet(
             pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
@@ -239,8 +277,8 @@ process.analyze_hh_bb1l.BDT.resonant_spin0_resolved = process.analyze_hh_bb1l.BD
 process.analyze_hh_bb1l.BDT.resonant_spin0_boosted  = process.analyze_hh_bb1l.BDT.nonresonant_boosted
 process.analyze_hh_bb1l.LBN.resonant_spin2_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
 process.analyze_hh_bb1l.LBN.resonant_spin2_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
-process.analyze_hh_bb1l.LBN.resonant_spin0_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
-process.analyze_hh_bb1l.LBN.resonant_spin0_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
-process.fwliteInput.maxEvents = cms.int32(10000)
-process.fwliteInput.outputEvery = cms.uint32(1000)
+##process.analyze_hh_bb1l.LBN.resonant_spin0_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
+##process.analyze_hh_bb1l.LBN.resonant_spin0_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
+##process.fwliteInput.maxEvents = cms.int32(10000)
+##process.fwliteInput.outputEvery = cms.uint32(1000)
 #----------------------------------------------------------------------------------------------------

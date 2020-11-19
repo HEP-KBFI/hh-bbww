@@ -92,7 +92,7 @@
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bbWW_Wctrl.h" // EvtHistManager_hh_bbWW_Wctrl
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
 #include "hhAnalysis/bbww/interface/JetPair.h" // initialize_mva_Wjj
-#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb, selectJets_Wjj
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, selectJets_Wjj
 #include "hhAnalysis/bbww/interface/comp_metP4_B2G_18_008.h" // comp_metP4_B2G_18_008
 
 #include <TBenchmark.h> // TBenchmark

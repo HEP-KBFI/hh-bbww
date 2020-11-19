@@ -41,7 +41,8 @@ EventCategory_hh_bb1l_LBN::isSelected(int for_category, const std::string & for_
 {
   if ( !isInitialized_ )
     throw cmsException(this, __func__, __LINE__)
-            << "EventCategory_hh_bb1l_BDT object has not been initialized. You need to call the 'set' function before calling the 'isSelected' function !!\n";
+            << "EventCategory_hh_bb1l_BDT object has not been initialized." 
+            << " You need to call the 'set' function before calling the 'isSelected' function !!\n";
   if      ( for_category == (int)kUndefined             ) return false;
   else if ( for_category == (int)kHH_boosted            ) return for_class == "HH"    &&  isBoosted_;
   else if ( for_category == (int)kHH_resolved_2b        ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 2;
