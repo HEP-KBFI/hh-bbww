@@ -1111,10 +1111,10 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
   std::string mvaFileName_TensorFlow_SM_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wnn_for_bb1l_boosted_even_data.pb";
   std::string mvaFileName_TensorFlow_SM_resolved_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wnn_for_bb1l_resolved_odd_data.pb";
   std::string mvaFileName_TensorFlow_SM_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wnn_for_bb1l_boosted_odd_data.pb";
-  std::string mvaFileName_TensorFlow_wLBN_SM_resolved_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data.pb";
-  std::string mvaFileName_TensorFlow_wLBN_SM_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data.pb";
-  std::string mvaFileName_TensorFlow_wLBN_SM_resolved_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data.pb";
-  std::string mvaFileName_TensorFlow_wLBN_SM_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data.pb";
+  std::string mvaFileName_TensorFlow_wLBN_SM_resolved_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_nonres.pb";//multiclass_DNN_wlbn_for_bb1l_resolved_even_data.pb";
+  std::string mvaFileName_TensorFlow_wLBN_SM_boosted_even = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres.pb";//multiclass_DNN_wlbn_for_bb1l_boosted_even_data.pb";
+  std::string mvaFileName_TensorFlow_wLBN_SM_resolved_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres.pb";//multiclass_DNN_wlbn_for_bb1l_resolved_odd_data.pb";
+  std::string mvaFileName_TensorFlow_wLBN_SM_boosted_odd = "hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres.pb";//multiclass_DNN_wlbn_for_bb1l_boosted_odd_data.pb";
 
 
   std::vector<std::string> mvaInputVariables_NN_resolved = {
@@ -1141,9 +1141,9 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
 
   const std::vector<std::string> ll_input_keys = { "bjet1", "bjet2", "wjet1", "wjet2", "lepton" };
   const std::vector<std::string> hl_input_keys_resolved = {
-    "met", "m_Hbb", "eta_Hbb", "jpaScore", "m_Wjj", "Smin_Hww", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetLoose", "numBJets_medium", "pT_Hww", "dR_b1lep", "pT_HHvis", "m_HH", "m_HH_B2G_18_008", "mT_W", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "cosThetaS_WW", "cosThetaS_HH", "leadFwdJet_pt"
+    "met", "m_Hbb", "eta_Hbb", "jpaScore", "m_Wjj", "Smin_Hww", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetLoose", "numBJets_medium", "pT_Hww", "dR_b1lep", "pT_HHvis", "m_HH", "m_HH_B2G_18_008", "mT_W", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "cosThetaS_WW", "cosThetaS_HH", "leadFwdJet_pt", "vbf_m_jj", "vbf_dEta_jj", "bjet1_btagCSV", "wjet1_btagCSV", "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12"
   };
-  const std::vector<std::string> hl_input_keys_boosted = { "mht", "HT", "m_Hbb", "jpaScore", "m_Wjj", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetMedium", "numBJets_medium", "dR_b1lep", "pT_HH", "m_HH_B2G_18_008", "mT_W", "mT_top_2particle", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "selJet2_Hbb_pT", "leadFwdJet_pt", "nLeptons", "tau21_Hbb" };
+  const std::vector<std::string> hl_input_keys_boosted = { "mht", "HT", "m_Hbb", "jpaScore", "m_Wjj", "dR_HH", "mbb_loose", "mbb_medium", "nJet", "nBJetMedium", "numBJets_medium", "dR_b1lep", "pT_HH", "m_HH_B2G_18_008", "mT_W", "mT_top_2particle", "mindr_lep1_jet", "avg_dr_jet_central", "mll_loose", "selJet2_Hbb_pT", "leadFwdJet_pt", "nLeptons", "tau21_Hbb", "vbf_m_jj", "vbf_dEta_jj", "bjet1_btagCSV", "wjet1_btagCSV", "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" };
   TensorFlowInterfaceLBN mva_wLBN_NN_resolved(
     mvaFileName_TensorFlow_wLBN_SM_resolved_odd,
     ll_input_keys, hl_input_keys_resolved,
@@ -2892,7 +2892,24 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {"m_HH_B2G_18_008",         m_HH_B2G_18_008},
       {"leadFwdJet_pt",           selJetsForward.size() > 0 ? selJetsForward[0] -> pt() : -1000},
       {"mll_loose",               preselLeptonsFull.size()>1 ? (preselLeptonsFull[0]->p4()+preselLeptonsFull[1]->p4()).mass() : 0},
-      {"nLeptons",                preselLeptonsFull.size()}
+      {"nLeptons",                preselLeptonsFull.size()},
+      {"vbf_m_jj",                vbf_m_jj},
+      {"vbf_dEta_jj",             vbf_dEta_jj},
+      {"bjet1_btagCSV",           ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet1()->BtagCSV() : ( (selJet1_Hbb) ? dynamic_cast<const RecoJet*>(selJet1_Hbb)->BtagCSV() : -1 )},
+      {"wjet1_btagCSV",           (selJet1_Wjj) ? dynamic_cast<const RecoJet*>(selJet1_Wjj)->BtagCSV() : -1},
+      {"SM",                      1},
+      {"BM1",                     0},
+      {"BM2",                     0},
+      {"BM3",                     0},
+      {"BM4",                     0},
+      {"BM5",                     0},
+      {"BM6",                     0},
+      {"BM7",                     0},
+      {"BM8",                     0},
+      {"BM9",                     0},
+      {"BM10",                    0},
+      {"BM11",                    0},
+      {"BM12",                    0}
     };
     //////
     double mvaoutput_bb1l_SM_Wj1                            = mva_xgb_bb1l_SM_Wj1(mvaInputVariables_list, eventInfo.event);
