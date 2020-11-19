@@ -101,12 +101,12 @@ selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
 }
 
 void
-countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
-                   const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
-                   const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
-                   const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
-                   int& numBJets_loose,
-                   int& numBJets_medium)
+countBJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
+               const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
+               const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
+               const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
+               int& numBJets_loose,
+               int& numBJets_medium)
 {
 //--- count jets from H->bb decay that pass Loose and Medium b-tagging discriminators
 
@@ -128,6 +128,37 @@ countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
     if ( dynamic_cast<const RecoJet*>(selJets_Hbb.jet_or_subjet2_) ) jets.push_back(dynamic_cast<const RecoJet*>(selJets_Hbb.jet_or_subjet2_));
     numBJets_loose = jetSelectorAK4_bTagLoose(jets, isHigherPt).size();
     numBJets_medium = jetSelectorAK4_bTagMedium(jets, isHigherPt).size();
+  }
+}
+
+void
+countBJets_jpa(const RecoJetAK8* selJetAK8_Hbb, const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb,
+               const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
+               const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
+               const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
+               int& numBJets_jpa_loose,
+               int& numBJets_jpa_medium)
+{
+//--- count jets, which are associated to H->bb decay by JPA, that pass Loose and Medium b-tagging discriminators
+  if ( selJetAK8_Hbb )
+  {
+    assert(selJetAK8_Hbb->subJet1() && selJetAK8_Hbb->subJet2());
+    numBJets_jpa_loose = 0;
+    double min_BtagCSV_loose = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_loose();
+    if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_jpa_loose;
+    if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_loose  ) ++numBJets_jpa_loose;
+    numBJets_jpa_medium = 0;
+    double min_BtagCSV_medium = jetSelectorAK8_Hbb.getSelector().get_min_BtagCSV_medium();
+    if ( selJetAK8_Hbb->subJet1()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_jpa_medium;
+    if ( selJetAK8_Hbb->subJet2()->BtagCSV() >= min_BtagCSV_medium ) ++numBJets_jpa_medium;
+  }
+  else
+  {
+    std::vector<const RecoJet*> jets;
+    if ( dynamic_cast<const RecoJet*>(selJet1_Hbb) ) jets.push_back(dynamic_cast<const RecoJet*>(selJet1_Hbb));
+    if ( dynamic_cast<const RecoJet*>(selJet2_Hbb) ) jets.push_back(dynamic_cast<const RecoJet*>(selJet2_Hbb));
+    numBJets_jpa_loose = jetSelectorAK4_bTagLoose(jets, isHigherPt).size();
+    numBJets_jpa_medium = jetSelectorAK4_bTagMedium(jets, isHigherPt).size();
   }
 }
 

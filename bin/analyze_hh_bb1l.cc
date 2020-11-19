@@ -111,7 +111,7 @@
 #include "hhAnalysis/bbww/interface/MEMOutput_hh_bb1l.h" // MEMOutput_hh_bb1l
 #include "hhAnalysis/bbww/interface/MEMOutputReader_hh_bb1l.h" // MEMOutputReader_hh_bb1l
 #include "hhAnalysis/bbww/interface/JetPair.h" // initialize_mva_Wjj
-#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb, selectJets_Wjj
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJets_Hbb, selectJets_Wjj
 #include "hhAnalysis/bbww/interface/SyncNtupleManager_bbww.h" // SyncNtupleManager_bbww
 #include "hhAnalysis/bbww/interface/comp_metP4_B2G_18_008.h" // comp_metP4_B2G_18_008
 #include "hhAnalysis/bbww/interface/BM_list.h" // BMS
@@ -2414,7 +2414,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       selJetT_Hbb->jet_or_subjet1_ = selJet2_Hbb;
     }
     int numBJets_loose, numBJets_medium;
-    countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
+    countBJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     int numWJets = ( selJet1_Wjj && selJet2_Wjj ) ? 2 : ( ( selJet1_Wjj ) ? 1 : 0);
     int numBJets = ( selJet1_Hbb && selJet2_Hbb ) ? 2 : ( ( selJet1_Hbb ) ? 1 : 0);
 

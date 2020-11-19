@@ -41,12 +41,20 @@ selectJets_Hbb(const std::vector<const RecoJetAK8*>& selJetsAK8_Hbb,
                bool isDEBUG = false);
 
 void
-countBJetsJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
-                   const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
-                   const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
-                   const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
-                   int& numBJets_loose,
-                   int& numBJets_medium);
+countBJets_Hbb(const selJetsType_Hbb& selJets_Hbb,
+               const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
+               const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
+               const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
+               int& numBJets_loose,
+               int& numBJets_medium);
+
+void
+countBJets_jpa(const RecoJetAK8* selJetAK8_Hbb, const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb, 
+               const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
+               const RecoJetCollectionSelectorBtagLoose& jetSelectorAK4_bTagLoose,
+               const RecoJetCollectionSelectorBtagMedium& jetSelectorAK4_bTagMedium,
+               int& numBJets_jpa_loose,
+               int& numBJets_jpa_medium);
 
 struct selJetsType_Wjj
 {

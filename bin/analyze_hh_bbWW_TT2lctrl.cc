@@ -93,7 +93,7 @@
 
 #include "hhAnalysis/bbww/interface/EvtHistManager_hh_bbWW_TT2lctrl.h" // EvtHistManager_hh_bbWW_TT2lctrl
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
-#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJetsJets_Hbb
+#include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJets_Hbb
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // isGenMatched, selectGenMatchedParticles
 #include "hhAnalysis/bbww/interface/GenParticleMatcherFromTop.h" // GenParticleMatcherFromTop, getLeptonFrom(Anti)Top, getBQuarksFrom(Anti)Top
 #include "hhAnalysis/bbww/interface/genBoostedAuxFunctions.h" // compSumP4
@@ -1440,7 +1440,7 @@ int main(int argc, char* argv[])
     const Particle::LorentzVector& selJetP4_Hbb_sublead = selJet_Hbb_sublead->p4();
 
     int numBJets_loose, numBJets_medium;
-    countBJetsJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
+    countBJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
     if ( !(numBJets_medium >= 1) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 2 medium b-jets selection\n";
