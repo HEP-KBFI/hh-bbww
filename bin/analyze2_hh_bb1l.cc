@@ -2318,6 +2318,7 @@ int main(int argc, char* argv[])
             bdtOutputs_resonant_spin2,
             bdtOutputs_resonant_spin0,
             bdtOutputs_nonresonant,
+            -1., // CV: bdtOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
@@ -2328,6 +2329,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
+            { { "HH", -1.} }, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
