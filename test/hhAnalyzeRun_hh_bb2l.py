@@ -137,7 +137,8 @@ elif mode == "wMEM":
 elif mode == "forBDTtraining":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
-  samples = load_samples(era, suffix = "BDT")
+  ##samples = load_samples(era, suffix = "BDT")
+  samples = load_samples(era)
   samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets_incl' ])
 elif mode == "forBDTtraining_wMEM":
   if use_preselected:
