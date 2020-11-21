@@ -129,7 +129,7 @@ if "wMEM" in mode:
 
 if mode == "default":
   samples = load_samples(era, suffix = "preselected" if use_preselected else "")
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets_incl' ])
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "wMEM":
   if not use_preselected:
     raise ValueError("MEM branches can be read only from preselected Ntuples")
@@ -139,7 +139,7 @@ elif mode == "forBDTtraining":
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
   ##samples = load_samples(era, suffix = "BDT")
   samples = load_samples(era)
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets_incl' ])
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining_wMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
