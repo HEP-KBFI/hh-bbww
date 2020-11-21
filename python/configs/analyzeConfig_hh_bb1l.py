@@ -120,7 +120,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
-    self.nonfake_backgrounds = self.get_nonfake_backgrounds()
+    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_vh = False, split_th = False)
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_signals = []
