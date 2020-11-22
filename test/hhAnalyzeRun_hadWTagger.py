@@ -59,8 +59,10 @@ for sample_name, sample_info in samples.items():
     sample_info["use_it"] = False
   if sample_name.startswith(('/TTToSemiLeptonic')) and sample_info["process_name_specific"] in ["TTToSemiLeptonic"] :
     sample_info["use_it"] = True
-  if sample_name.startswith(('/GluGluToHHTo2B2WToLNu2J_node_SM')):
+  elif sample_info['process_name_specific'].find('signal_ggf') != -1 and sample_info['process_name_specific'].find('_sl') != -1:
     sample_info["use_it"] = True
+  else :
+    sample_info["use_it"] = False
 
 if __name__ == '__main__':
 

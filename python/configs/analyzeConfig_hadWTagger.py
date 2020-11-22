@@ -89,7 +89,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
     branchName_genBJets = None
     if jobOptions['sample_name'].startswith(('/TTToSemiLeptonic')):
       branchName_genBJets = "GenBQuarkFromTop"
-    elif jobOptions['sample_name'].startswith(('/GluGluToHHTo2B2WToLNu2J_node_SM')):
+    elif jobOptions['sample_category'].find('signal') != -1 and jobOptions['sample_category'].find('_sl') != -1:
       branchName_genBJets = "GenHiggsDaughters"
     else:
       raise ValueError("Invalid Configuration parameter 'sample_name' = '%s' !!" % jobOptions['sample_name'])
@@ -193,6 +193,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
 
           self.jobOptions_analyze[key_analyze_job] = {
             'sample_name'              : sample_name,
+            'sample_category'          : sample_category,
             'ntupleFiles'              : ntupleFiles,
             'mode'                     : self.mode,
             'cfgFile_modified'         : cfgFile_modified_path,
