@@ -3,7 +3,7 @@ from hhAnalysis.multilepton.samples.reclassifySamples import reclassifySamples a
 def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None, separate_ST = False):
 
   # reuse the sample classification defined in HH multilepton analysis
-  samples = reclassifySamples_multilepton(samples_era_hh, samples_era_bkg, samples_era_ttbar)
+  samples = reclassifySamples_multilepton(samples_era_hh, samples_era_bkg, samples_era_ttbar, separate_th = False)
 
   from collections import OrderedDict as OD
 
