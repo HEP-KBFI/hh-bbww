@@ -144,7 +144,8 @@
 #include <cstdlib> // EXIT_SUCCESS, EXIT_FAILURE
 #include <fstream> // std::ofstream
 #include <assert.h> // assert
-
+/*TH2D* h_genmatch = new TH2D("genmatch", "" , 7, 0.5,7.5, 7, 0.5, 7.5);
+  TH2D* h_genmatchBoosted = new TH2D("genmatch_boosted", "" , 3, 0.5,3.5, 3, 0.5, 3.5);*/
 typedef math::PtEtaPhiMLorentzVector LV;
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
@@ -220,6 +221,7 @@ int main(int argc, char* argv[])
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
+  std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
   const bool isMC_tH  = process_string == "TH";
   const bool isMC_ttH = process_string == "TTH";
   const bool isMC_EWK = process_string == "WZ" || process_string == "ZZ";
@@ -266,7 +268,7 @@ int main(int argc, char* argv[])
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
+  bool isSignal = boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
   bool isMC_TT = isMC && process_string.find("TT") != std::string::npos;
   
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
@@ -1880,6 +1882,12 @@ int main(int argc, char* argv[])
         ("evtWeight",              evtWeightRecorder.get(central_or_shift_main))
         .fill()
       ;
+      /*if(!selJetAK8_Hbb) {
+	h_genmatch->Fill(gen_jpaCategory, jpaInterface.getevtCat());
+      }
+      else {
+	h_genmatchBoosted->Fill(gen_jpaCategory, jpaInterface.getevtCat());
+	}*/
     }
 
     const RecoJetBase* selJet1_Wjj = nullptr;
@@ -2646,6 +2654,18 @@ int main(int argc, char* argv[])
 
 //--- manually write histograms to output file
   fs.file().cd();
+  /*h_genmatch->GetXaxis()->SetTitle("target");
+  h_genmatch->GetYaxis()->SetTitle("evtCategory");
+  std::string binlabel[] = {"jpa_4jet", "jpa_missingWjet", "jpa_missingBjet", "jpa_missingAllWjet", "jpa_missingBjetmissingWjet", "jpa_missingBjetmissingAllWjet", "jpa_restOfcat"};
+  for(int i=0; i<h_genmatch->GetNbinsX(); i++) h_genmatch->GetXaxis()->SetBinLabel(i+1, binlabel[i].data());
+  for(int i=0; i<h_genmatch->GetNbinsY(); i++) h_genmatch->GetYaxis()->SetBinLabel(i+1, binlabel[i].data());
+  h_genmatch->Write();
+  h_genmatchBoosted->GetXaxis()->SetTitle("target");
+  h_genmatchBoosted->GetYaxis()->SetTitle("evtCategory");
+  std::string boosted_binlabel[] = {"jpa_4jet", "jpa_missingWjet", "jpa_restOfcat"};
+  for(int i=0; i<h_genmatchBoosted->GetNbinsX(); i++) h_genmatchBoosted->GetXaxis()->SetBinLabel(i+1, boosted_binlabel[i].data());
+  for(int i=0; i<h_genmatchBoosted->GetNbinsY(); i++) h_genmatchBoosted->GetYaxis()->SetBinLabel(i+1, boosted_binlabel[i].data());
+  h_genmatchBoosted->Write();*/
 
   //histogram_analyzedEntries->Write();
   //histogram_selectedEntries->Write();
