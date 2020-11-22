@@ -150,13 +150,16 @@ class JPAInterface
 
   std::map<std::string, double>
   get_mvaInputs_1stLayer(int jpaCategory) const;
-
+  int getevtCat() const;
  private:
   void
   set(const JPA::LorentzVector& leptonP4, int numLeptons, int numJets, int numBJets_loose, int numBJets_medium, double metPx, double metPy, int event_number);
   
   void
   reset_mvaOutputs();
+
+  void
+    reset_mva2ndOutput();
 
   std::map<std::string, double>
   compMVAInputVariables(const JPAJet* bjet1, const JPAJet* bjet2, const JPAJet* wjet1, const JPAJet* wjet2);
@@ -204,6 +207,7 @@ class JPAInterface
   int event_number_;
 
   bool isDEBUG_;
+  int mvaOutput_2ndLayer_;
 };
 
 #endif
