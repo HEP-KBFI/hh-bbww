@@ -112,13 +112,28 @@ if "sync" not in mode:
     importlib.import_module("tthAnalysis.HiggsToTauTau.samples.stitch"),
     "samples_to_stitch_{}".format(era)
   )
-
+blacklisted_categories = []
 if mode == "default":
   samples = load_samples(era)
   samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era)
   if not second_bdt : samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
+  if second_bdt :
+    for sample_name, sample_info in samples.items():
+      if sample_name == 'sum_events':
+        continue
+      if sample_info["sample_category"] in blacklisted_categories:
+        sample_info["use_it"] = False
+        continue
+      if sample_name.startswith(('/MuonEG/', '/Tau/')):
+        sample_info["use_it"] = False
+      if sample_name.startswith(('/TTToSemiLeptonic')) and sample_info["process_name_specific"] in ["TTToSemiLeptonic"]:
+        sample_info["use_it"] = True
+      elif sample_info['process_name_specific'].find('signal_ggf') != -1 and sample_info['process_name_specific'].find('_sl') != -1:
+        sample_info["use_it"] = True
+      else :
+        sample_info["use_it"] = False
 elif mode == "hh_sync":
   samples = load_samples(era, suffix = "sync")
 elif mode == "ttbar_sync":
