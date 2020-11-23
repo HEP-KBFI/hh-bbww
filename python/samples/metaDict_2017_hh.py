@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-11-02 20:11:56 with the following command:
+# file generated at 2020-11-22 14:16:27 with the following command:
 # find_samples.py -V -i ../../tthAnalysis/NanoAOD/test/datasets/txt/datasets_hh_bbww_mc_2017_RunIIFall17MiniAODv2.txt -m python/samples/metaDict_2017_hh.py -s ../../tthAnalysis/NanoAOD/test/datasets/txt/sum_datasets_hh_bbww_2017_RunIIFall17MiniAODv2.txt -c python/samples/sampleLocations_2017_nanoAOD_hh_bbww.txt
 
 meta_dictionary = OD()
@@ -755,6 +755,19 @@ meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSw
   ("comment",               "100.0%; status: VALID; size: 25.02GB; nevents: 396.00k; release: 9_4_7; last modified: 2020-10-26 06:40:31"),
 ])
 
+meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2020Nov18_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m"),
+  ("sample_category",       "signal_vbf_nonresonant_1_1_1_hh_bbvv_dipoleRecoilOn"),
+  ("process_name_specific", "signal_vbf_nonresonant_1_1_1_hh_2b2v_dipoleRecoilOn"),
+  ("nof_db_events",         385999),
+  ("nof_db_files",          24),
+  ("fsize_db",              23711199034),
+  ("xsection",              4.55695e-05),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 23.71GB; nevents: 386.00k; release: 9_4_7; last modified: 2020-09-30 09:05:32"),
+])
+
 meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2020Oct17_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_"),
   ("sample_category",       "signal_vbf_nonresonant_1_1_2_hh_bbvv"),
@@ -779,6 +792,19 @@ meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSw
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 27.53GB; nevents: 398.00k; release: 9_4_7; last modified: 2020-10-03 06:23:49"),
+])
+
+meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2020Nov18_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m"),
+  ("sample_category",       "signal_vbf_nonresonant_1_2_1_hh_bbvv_dipoleRecoilOn"),
+  ("process_name_specific", "signal_vbf_nonresonant_1_2_1_hh_2b2v_dipoleRecoilOn"),
+  ("nof_db_events",         388000),
+  ("nof_db_files",          21),
+  ("fsize_db",              26117725972),
+  ("xsection",              0.0003753816),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 26.12GB; nevents: 388.00k; release: 9_4_7; last modified: 2020-10-03 06:21:34"),
 ])
 
 meta_dictionary["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
@@ -2614,6 +2640,19 @@ meta_dictionary["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSw
   ("comment",               "100.0%; status: VALID; size: 24.12GB; nevents: 396.99k; release: 9_4_7; last modified: 2020-09-30 04:13:31"),
 ])
 
+meta_dictionary["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2020Nov18_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m"),
+  ("sample_category",       "signal_vbf_nonresonant_1_1_1_hh_bbvv_sl_dipoleRecoilOn"),
+  ("process_name_specific", "signal_vbf_nonresonant_1_1_1_hh_2b2v_sl_dipoleRecoilOn"),
+  ("nof_db_events",         399996),
+  ("nof_db_files",          23),
+  ("fsize_db",              23633627123),
+  ("xsection",              0.0001886003),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 23.63GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-10-03 06:14:04"),
+])
+
 meta_dictionary["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_"),
   ("sample_category",       "signal_vbf_nonresonant_1_1_2_hh_bbvv_sl"),
@@ -2638,6 +2677,19 @@ meta_dictionary["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSw
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 28.00GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-09-24 15:16:50"),
+])
+
+meta_dictionary["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2020Nov18_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m"),
+  ("sample_category",       "signal_vbf_nonresonant_1_2_1_hh_bbvv_sl_dipoleRecoilOn"),
+  ("process_name_specific", "signal_vbf_nonresonant_1_2_1_hh_2b2v_sl_dipoleRecoilOn"),
+  ("nof_db_events",         399999),
+  ("nof_db_files",          23),
+  ("fsize_db",              26058535306),
+  ("xsection",              0.0015535777),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 26.06GB; nevents: 400.00k; release: 9_4_7; last modified: 2020-10-03 06:15:34"),
 ])
 
 meta_dictionary["/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
@@ -3953,6 +4005,19 @@ meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweight
   ("comment",               "100.0%; status: VALID; size: 124.20GB; nevents: 1.99M; release: 9_4_7; last modified: 2020-09-16 03:01:57"),
 ])
 
+meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2020Nov18_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017"),
+  ("sample_category",       "signal_vbf_nonresonant_1_1_1_hh_bbtt_dipoleRecoilOn"),
+  ("process_name_specific", "signal_vbf_nonresonant_1_1_1_hh_2b2t_dipoleRecoilOn"),
+  ("nof_db_events",         1000000),
+  ("nof_db_files",          25),
+  ("fsize_db",              58047895517),
+  ("xsection",              0.0001260006),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 58.05GB; nevents: 1.00M; release: 9_4_7; last modified: 2020-09-14 08:46:53"),
+])
+
 meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
   ("crab_string",           "2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201"),
   ("sample_category",       "signal_vbf_nonresonant_1_1_2_hh_bbtt"),
@@ -3977,6 +4042,19 @@ meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweight
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "100.0%; status: VALID; size: 136.13GB; nevents: 2.00M; release: 9_4_7; last modified: 2020-09-16 16:53:55"),
+])
+
+meta_dictionary["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
+  ("crab_string",           "2017v2_2020Nov18_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017"),
+  ("sample_category",       "signal_vbf_nonresonant_1_2_1_hh_bbtt_dipoleRecoilOn"),
+  ("process_name_specific", "signal_vbf_nonresonant_1_2_1_hh_2b2t_dipoleRecoilOn"),
+  ("nof_db_events",         996000),
+  ("nof_db_files",          32),
+  ("fsize_db",              66046361175),
+  ("xsection",              0.0010379183),
+  ("use_it",                False),
+  ("genWeight",             True),
+  ("comment",               "100.0%; status: VALID; size: 66.05GB; nevents: 996.00k; release: 9_4_7; last modified: 2020-09-16 13:43:52"),
 ])
 
 meta_dictionary["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] =  OD([
@@ -4176,238 +4254,244 @@ meta_dictionary["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
 
 
 # event statistics by sample category:
-# signal_vbf_spin0_300_hh_bbvv:               280.00k
-# signal_vbf_spin0_350_hh_bbvv:               285.00k
-# signal_vbf_spin0_400_hh_bbvv:               100.00k
-# signal_vbf_spin0_750_hh_bbvv:               100.00k
-# signal_ggf_spin0_250_hh_bbvv:               400.00k
-# signal_ggf_spin0_260_hh_bbvv:               400.00k
-# signal_ggf_spin0_270_hh_bbvv:               388.00k
-# signal_ggf_spin0_280_hh_bbvv:               384.00k
-# signal_ggf_spin0_320_hh_bbvv:               300.00k
-# signal_ggf_spin0_350_hh_bbvv:               300.00k
-# signal_ggf_spin0_400_hh_bbvv:               292.00k
-# signal_ggf_spin0_450_hh_bbvv:               300.00k
-# signal_ggf_spin0_500_hh_bbvv:               200.00k
-# signal_ggf_spin0_600_hh_bbvv:               200.00k
-# signal_ggf_spin0_650_hh_bbvv:               200.00k
-# signal_ggf_spin0_700_hh_bbvv:               200.00k
-# signal_ggf_spin0_750_hh_bbvv:               200.00k
-# signal_ggf_spin0_800_hh_bbvv:               197.00k
-# signal_ggf_spin0_850_hh_bbvv:               200.00k
-# signal_ggf_spin0_900_hh_bbvv:               100.00k
-# signal_ggf_spin0_1000_hh_bbvv:              100.00k
-# signal_ggf_spin0_1250_hh_bbvv:              100.00k
-# signal_ggf_spin0_1500_hh_bbvv:              100.00k
-# signal_ggf_spin0_1750_hh_bbvv:              100.00k
-# signal_ggf_spin0_2000_hh_bbvv:              100.00k
-# signal_ggf_spin0_2500_hh_bbvv:              97.00k
-# signal_ggf_spin0_3000_hh_bbvv:              98.00k
-# signal_ggf_spin2_250_hh_bbvv:               400.00k
-# signal_ggf_spin2_260_hh_bbvv:               400.00k
-# signal_ggf_spin2_270_hh_bbvv:               400.00k
-# signal_ggf_spin2_280_hh_bbvv:               400.00k
-# signal_ggf_spin2_300_hh_bbvv:               400.00k
-# signal_ggf_spin2_320_hh_bbvv:               294.00k
-# signal_ggf_spin2_350_hh_bbvv:               282.00k
-# signal_ggf_spin2_400_hh_bbvv:               298.00k
-# signal_ggf_spin2_450_hh_bbvv:               300.00k
-# signal_ggf_spin2_500_hh_bbvv:               200.00k
-# signal_ggf_spin2_550_hh_bbvv:               200.00k
-# signal_ggf_spin2_600_hh_bbvv:               192.00k
-# signal_ggf_spin2_650_hh_bbvv:               200.00k
-# signal_ggf_spin2_700_hh_bbvv:               200.00k
-# signal_ggf_spin2_750_hh_bbvv:               198.00k
-# signal_ggf_spin2_800_hh_bbvv:               200.00k
-# signal_ggf_spin2_850_hh_bbvv:               200.00k
-# signal_ggf_spin2_900_hh_bbvv:               100.00k
-# signal_ggf_spin2_1000_hh_bbvv:              100.00k
-# signal_ggf_spin2_1250_hh_bbvv:              100.00k
-# signal_ggf_spin2_1500_hh_bbvv:              100.00k
-# signal_ggf_spin2_1750_hh_bbvv:              100.00k
-# signal_ggf_spin2_2000_hh_bbvv:              100.00k
-# signal_ggf_spin2_2500_hh_bbvv:              98.00k
-# signal_ggf_spin2_3000_hh_bbvv:              100.00k
-# signal_vbf_nonresonant_1_1_1_hh_bbvv:       396.00k
-# signal_vbf_nonresonant_1_1_2_hh_bbvv:       400.00k
-# signal_vbf_nonresonant_1_2_1_hh_bbvv:       398.00k
-# signal_vbf_nonresonant_1_1_0_hh_bbvv:       400.00k
-# signal_vbf_nonresonant_1p5_1_1_hh_bbvv:     400.00k
-# signal_vbf_nonresonant_0p5_1_1_hh_bbvv:     396.00k
-# signal_vbf_nonresonant_1_0_1_hh_bbvv:       396.00k
-# signal_ggf_nonresonant_hh_bbvv:             5.13M
-# signal_ggf_nonresonant_cHHH0_hh_bbvv:       400.00k
-# signal_ggf_nonresonant_cHHH1_hh_bbvv:       395.00k
-# signal_ggf_nonresonant_cHHH2p45_hh_bbvv:    397.40k
-# signal_ggf_nonresonant_cHHH5_hh_bbvv:       400.00k
-# signal_ggf_nonresonant_hh_bbvv_sl:          5.86M
-# signal_ggf_nonresonant_cHHH0_hh_bbvv_sl:    392.60k
-# signal_ggf_nonresonant_cHHH1_hh_bbvv_sl:    399.99k
-# signal_ggf_nonresonant_cHHH2p45_hh_bbvv_sl: 400.00k
-# signal_ggf_nonresonant_cHHH5_hh_bbvv_sl:    396.00k
-# signal_ggf_spin0_250_hh_bbvv_sl:            799.99k
-# signal_ggf_spin0_260_hh_bbvv_sl:            800.00k
-# signal_ggf_spin0_270_hh_bbvv_sl:            792.00k
-# signal_ggf_spin0_280_hh_bbvv_sl:            799.99k
-# signal_ggf_spin0_300_hh_bbvv_sl:            585.99k
-# signal_ggf_spin0_320_hh_bbvv_sl:            600.00k
-# signal_ggf_spin0_350_hh_bbvv_sl:            589.99k
-# signal_ggf_spin0_400_hh_bbvv_sl:            587.00k
-# signal_ggf_spin0_450_hh_bbvv_sl:            567.99k
-# signal_ggf_spin0_500_hh_bbvv_sl:            491.00k
-# signal_ggf_spin0_550_hh_bbvv_sl:            480.00k
-# signal_ggf_spin0_600_hh_bbvv_sl:            399.99k
-# signal_ggf_spin0_650_hh_bbvv_sl:            386.00k
-# signal_ggf_spin0_700_hh_bbvv_sl:            399.99k
-# signal_ggf_spin0_750_hh_bbvv_sl:            399.99k
-# signal_ggf_spin0_800_hh_bbvv_sl:            400.00k
-# signal_ggf_spin0_850_hh_bbvv_sl:            368.00k
-# signal_ggf_spin0_900_hh_bbvv_sl:            300.00k
-# signal_ggf_spin0_1000_hh_bbvv_sl:           200.00k
-# signal_ggf_spin0_1250_hh_bbvv_sl:           200.00k
-# signal_ggf_spin0_1500_hh_bbvv_sl:           200.00k
-# signal_ggf_spin0_1750_hh_bbvv_sl:           200.00k
-# signal_ggf_spin0_2000_hh_bbvv_sl:           200.00k
-# signal_ggf_spin0_2500_hh_bbvv_sl:           196.00k
-# signal_ggf_spin0_3000_hh_bbvv_sl:           199.99k
-# signal_ggf_spin2_250_hh_bbvv_sl:            800.00k
-# signal_ggf_spin2_260_hh_bbvv_sl:            761.00k
-# signal_ggf_spin2_270_hh_bbvv_sl:            799.99k
-# signal_ggf_spin2_280_hh_bbvv_sl:            775.99k
-# signal_ggf_spin2_300_hh_bbvv_sl:            599.99k
-# signal_ggf_spin2_320_hh_bbvv_sl:            590.00k
-# signal_ggf_spin2_350_hh_bbvv_sl:            599.99k
-# signal_ggf_spin2_400_hh_bbvv_sl:            599.99k
-# signal_ggf_spin2_450_hh_bbvv_sl:            600.00k
-# signal_ggf_spin2_500_hh_bbvv_sl:            600.00k
-# signal_ggf_spin2_550_hh_bbvv_sl:            579.99k
-# signal_ggf_spin2_600_hh_bbvv_sl:            392.00k
-# signal_ggf_spin2_650_hh_bbvv_sl:            386.00k
-# signal_ggf_spin2_700_hh_bbvv_sl:            382.00k
-# signal_ggf_spin2_750_hh_bbvv_sl:            372.00k
-# signal_ggf_spin2_800_hh_bbvv_sl:            386.00k
-# signal_ggf_spin2_850_hh_bbvv_sl:            391.99k
-# signal_ggf_spin2_900_hh_bbvv_sl:            300.00k
-# signal_ggf_spin2_1000_hh_bbvv_sl:           186.00k
-# signal_ggf_spin2_1250_hh_bbvv_sl:           195.00k
-# signal_ggf_spin2_1500_hh_bbvv_sl:           200.00k
-# signal_ggf_spin2_1750_hh_bbvv_sl:           191.99k
-# signal_ggf_spin2_2000_hh_bbvv_sl:           198.00k
-# signal_ggf_spin2_2500_hh_bbvv_sl:           200.00k
-# signal_ggf_spin2_3000_hh_bbvv_sl:           168.00k
-# signal_vbf_nonresonant_1_1_0_hh_bbvv_sl:    390.00k
-# signal_vbf_nonresonant_1_1_1_hh_bbvv_sl:    396.99k
-# signal_vbf_nonresonant_1_1_2_hh_bbvv_sl:    400.00k
-# signal_vbf_nonresonant_1_2_1_hh_bbvv_sl:    400.00k
-# signal_vbf_nonresonant_0p5_1_1_hh_bbvv_sl:  400.00k
-# signal_vbf_nonresonant_1p5_1_1_hh_bbvv_sl:  400.00k
-# signal_vbf_nonresonant_1_0_1_hh_bbvv_sl:    399.99k
-# signal_vbf_spin0_250_hh_bbtt:               400.00k
-# signal_vbf_spin0_260_hh_bbtt:               388.00k
-# signal_vbf_spin0_270_hh_bbtt:               384.00k
-# signal_vbf_spin0_280_hh_bbtt:               400.00k
-# signal_vbf_spin0_300_hh_bbtt:               300.00k
-# signal_vbf_spin0_320_hh_bbtt:               300.00k
-# signal_vbf_spin0_350_hh_bbtt:               300.00k
-# signal_vbf_spin0_400_hh_bbtt:               100.00k
-# signal_vbf_spin0_450_hh_bbtt:               300.00k
-# signal_vbf_spin0_500_hh_bbtt:               290.00k
-# signal_vbf_spin0_550_hh_bbtt:               300.00k
-# signal_vbf_spin0_600_hh_bbtt:               200.00k
-# signal_vbf_spin0_650_hh_bbtt:               200.00k
-# signal_vbf_spin0_700_hh_bbtt:               200.00k
-# signal_vbf_spin0_750_hh_bbtt:               100.00k
-# signal_vbf_spin0_800_hh_bbtt:               200.00k
-# signal_vbf_spin0_850_hh_bbtt:               200.00k
-# signal_vbf_spin0_900_hh_bbtt:               100.00k
-# signal_vbf_spin0_1000_hh_bbtt:              100.00k
-# signal_vbf_spin0_1250_hh_bbtt:              100.00k
-# signal_vbf_spin0_1500_hh_bbtt:              100.00k
-# signal_vbf_spin0_1750_hh_bbtt:              100.00k
-# signal_vbf_spin0_2000_hh_bbtt:              100.00k
-# signal_vbf_spin0_3000_hh_bbtt:              100.00k
-# signal_vbf_spin2_250_hh_bbtt:               386.00k
-# signal_vbf_spin2_260_hh_bbtt:               400.00k
-# signal_vbf_spin2_270_hh_bbtt:               400.00k
-# signal_vbf_spin2_280_hh_bbtt:               400.00k
-# signal_vbf_spin2_300_hh_bbtt:               282.00k
-# signal_vbf_spin2_320_hh_bbtt:               300.00k
-# signal_vbf_spin2_350_hh_bbtt:               300.00k
-# signal_vbf_spin2_400_hh_bbtt:               292.00k
-# signal_vbf_spin2_450_hh_bbtt:               300.00k
-# signal_vbf_spin2_500_hh_bbtt:               300.00k
-# signal_vbf_spin2_600_hh_bbtt:               200.00k
-# signal_vbf_spin2_650_hh_bbtt:               197.00k
-# signal_vbf_spin2_700_hh_bbtt:               200.00k
-# signal_vbf_spin2_750_hh_bbtt:               200.00k
-# signal_vbf_spin2_850_hh_bbtt:               200.00k
-# signal_vbf_spin2_900_hh_bbtt:               100.00k
-# signal_vbf_spin2_1000_hh_bbtt:              100.00k
-# signal_vbf_spin2_1200_hh_bbtt:              100.00k
-# signal_vbf_spin2_1750_hh_bbtt:              100.00k
-# signal_vbf_spin2_2000_hh_bbtt:              100.00k
-# signal_ggf_spin0_250_hh_bbtt:               390.00k
-# signal_ggf_spin0_260_hh_bbtt:               360.00k
-# signal_ggf_spin0_270_hh_bbtt:               392.00k
-# signal_ggf_spin0_280_hh_bbtt:               398.00k
-# signal_ggf_spin0_300_hh_bbtt:               300.00k
-# signal_ggf_spin0_320_hh_bbtt:               300.00k
-# signal_ggf_spin0_340_hh_bbtt:               300.00k
-# signal_ggf_spin0_350_hh_bbtt:               300.00k
-# signal_ggf_spin0_400_hh_bbtt:               296.00k
-# signal_ggf_spin0_450_hh_bbtt:               272.00k
-# signal_ggf_spin0_500_hh_bbtt:               190.00k
-# signal_ggf_spin0_550_hh_bbtt:               200.00k
-# signal_ggf_spin0_600_hh_bbtt:               200.00k
-# signal_ggf_spin0_650_hh_bbtt:               188.00k
-# signal_ggf_spin0_700_hh_bbtt:               200.00k
-# signal_ggf_spin0_750_hh_bbtt:               196.00k
-# signal_ggf_spin0_800_hh_bbtt:               200.00k
-# signal_ggf_spin0_850_hh_bbtt:               192.00k
-# signal_ggf_spin0_900_hh_bbtt:               95.00k
-# signal_ggf_spin0_1000_hh_bbtt:              100.00k
-# signal_ggf_spin0_1250_hh_bbtt:              100.00k
-# signal_ggf_spin0_1500_hh_bbtt:              100.00k
-# signal_ggf_spin0_1750_hh_bbtt:              100.00k
-# signal_ggf_spin0_2000_hh_bbtt:              92.00k
-# signal_ggf_spin0_2500_hh_bbtt:              100.00k
-# signal_ggf_spin0_3000_hh_bbtt:              100.00k
-# signal_ggf_spin2_250_hh_bbtt:               400.00k
-# signal_ggf_spin2_260_hh_bbtt:               384.00k
-# signal_ggf_spin2_270_hh_bbtt:               390.00k
-# signal_ggf_spin2_280_hh_bbtt:               379.00k
-# signal_ggf_spin2_300_hh_bbtt:               300.00k
-# signal_ggf_spin2_320_hh_bbtt:               300.00k
-# signal_ggf_spin2_340_hh_bbtt:               300.00k
-# signal_ggf_spin2_350_hh_bbtt:               300.00k
-# signal_ggf_spin2_400_hh_bbtt:               300.00k
-# signal_ggf_spin2_450_hh_bbtt:               300.00k
-# signal_ggf_spin2_500_hh_bbtt:               200.00k
-# signal_ggf_spin2_550_hh_bbtt:               192.00k
-# signal_ggf_spin2_600_hh_bbtt:               200.00k
-# signal_ggf_spin2_650_hh_bbtt:               188.00k
-# signal_ggf_spin2_700_hh_bbtt:               188.00k
-# signal_ggf_spin2_750_hh_bbtt:               200.00k
-# signal_ggf_spin2_800_hh_bbtt:               192.00k
-# signal_ggf_spin2_850_hh_bbtt:               200.00k
-# signal_ggf_spin2_900_hh_bbtt:               200.00k
-# signal_ggf_spin2_1000_hh_bbtt:              100.00k
-# signal_ggf_spin2_1250_hh_bbtt:              100.00k
-# signal_ggf_spin2_1500_hh_bbtt:              100.00k
-# signal_ggf_spin2_1750_hh_bbtt:              100.00k
-# signal_ggf_spin2_2000_hh_bbtt:              100.00k
-# signal_ggf_spin2_2500_hh_bbtt:              100.00k
-# signal_ggf_spin2_3000_hh_bbtt:              100.00k
-# signal_vbf_nonresonant_1_1_0_hh_bbtt:       1.00M
-# signal_vbf_nonresonant_1_1_1_hh_bbtt:       1.99M
-# signal_vbf_nonresonant_1_1_2_hh_bbtt:       1.00M
-# signal_vbf_nonresonant_1_2_1_hh_bbtt:       2.00M
-# signal_vbf_nonresonant_1p5_1_1_hh_bbtt:     1.00M
-# signal_vbf_nonresonant_0p5_1_1_hh_bbtt:     1.00M
-# signal_vbf_nonresonant_1_0_1_hh_bbtt:       2.50M
-# signal_ggf_nonresonant_hh_bbtt:             2.74M
-# signal_ggf_nonresonant_cHHH0_hh_bbtt:       971.00k
-# signal_ggf_nonresonant_cHHH1_hh_bbtt:       973.40k
-# signal_ggf_nonresonant_cHHH2p45_hh_bbtt:    967.10k
-# signal_ggf_nonresonant_cHHH5_hh_bbtt:       974.70k
+# signal_vbf_spin0_300_hh_bbvv:                           280.00k
+# signal_vbf_spin0_350_hh_bbvv:                           285.00k
+# signal_vbf_spin0_400_hh_bbvv:                           100.00k
+# signal_vbf_spin0_750_hh_bbvv:                           100.00k
+# signal_ggf_spin0_250_hh_bbvv:                           400.00k
+# signal_ggf_spin0_260_hh_bbvv:                           400.00k
+# signal_ggf_spin0_270_hh_bbvv:                           388.00k
+# signal_ggf_spin0_280_hh_bbvv:                           384.00k
+# signal_ggf_spin0_320_hh_bbvv:                           300.00k
+# signal_ggf_spin0_350_hh_bbvv:                           300.00k
+# signal_ggf_spin0_400_hh_bbvv:                           292.00k
+# signal_ggf_spin0_450_hh_bbvv:                           300.00k
+# signal_ggf_spin0_500_hh_bbvv:                           200.00k
+# signal_ggf_spin0_600_hh_bbvv:                           200.00k
+# signal_ggf_spin0_650_hh_bbvv:                           200.00k
+# signal_ggf_spin0_700_hh_bbvv:                           200.00k
+# signal_ggf_spin0_750_hh_bbvv:                           200.00k
+# signal_ggf_spin0_800_hh_bbvv:                           197.00k
+# signal_ggf_spin0_850_hh_bbvv:                           200.00k
+# signal_ggf_spin0_900_hh_bbvv:                           100.00k
+# signal_ggf_spin0_1000_hh_bbvv:                          100.00k
+# signal_ggf_spin0_1250_hh_bbvv:                          100.00k
+# signal_ggf_spin0_1500_hh_bbvv:                          100.00k
+# signal_ggf_spin0_1750_hh_bbvv:                          100.00k
+# signal_ggf_spin0_2000_hh_bbvv:                          100.00k
+# signal_ggf_spin0_2500_hh_bbvv:                          97.00k
+# signal_ggf_spin0_3000_hh_bbvv:                          98.00k
+# signal_ggf_spin2_250_hh_bbvv:                           400.00k
+# signal_ggf_spin2_260_hh_bbvv:                           400.00k
+# signal_ggf_spin2_270_hh_bbvv:                           400.00k
+# signal_ggf_spin2_280_hh_bbvv:                           400.00k
+# signal_ggf_spin2_300_hh_bbvv:                           400.00k
+# signal_ggf_spin2_320_hh_bbvv:                           294.00k
+# signal_ggf_spin2_350_hh_bbvv:                           282.00k
+# signal_ggf_spin2_400_hh_bbvv:                           298.00k
+# signal_ggf_spin2_450_hh_bbvv:                           300.00k
+# signal_ggf_spin2_500_hh_bbvv:                           200.00k
+# signal_ggf_spin2_550_hh_bbvv:                           200.00k
+# signal_ggf_spin2_600_hh_bbvv:                           192.00k
+# signal_ggf_spin2_650_hh_bbvv:                           200.00k
+# signal_ggf_spin2_700_hh_bbvv:                           200.00k
+# signal_ggf_spin2_750_hh_bbvv:                           198.00k
+# signal_ggf_spin2_800_hh_bbvv:                           200.00k
+# signal_ggf_spin2_850_hh_bbvv:                           200.00k
+# signal_ggf_spin2_900_hh_bbvv:                           100.00k
+# signal_ggf_spin2_1000_hh_bbvv:                          100.00k
+# signal_ggf_spin2_1250_hh_bbvv:                          100.00k
+# signal_ggf_spin2_1500_hh_bbvv:                          100.00k
+# signal_ggf_spin2_1750_hh_bbvv:                          100.00k
+# signal_ggf_spin2_2000_hh_bbvv:                          100.00k
+# signal_ggf_spin2_2500_hh_bbvv:                          98.00k
+# signal_ggf_spin2_3000_hh_bbvv:                          100.00k
+# signal_vbf_nonresonant_1_1_1_hh_bbvv:                   396.00k
+# signal_vbf_nonresonant_1_1_1_hh_bbvv_dipoleRecoilOn:    386.00k
+# signal_vbf_nonresonant_1_1_2_hh_bbvv:                   400.00k
+# signal_vbf_nonresonant_1_2_1_hh_bbvv:                   398.00k
+# signal_vbf_nonresonant_1_2_1_hh_bbvv_dipoleRecoilOn:    388.00k
+# signal_vbf_nonresonant_1_1_0_hh_bbvv:                   400.00k
+# signal_vbf_nonresonant_1p5_1_1_hh_bbvv:                 400.00k
+# signal_vbf_nonresonant_0p5_1_1_hh_bbvv:                 396.00k
+# signal_vbf_nonresonant_1_0_1_hh_bbvv:                   396.00k
+# signal_ggf_nonresonant_hh_bbvv:                         5.13M
+# signal_ggf_nonresonant_cHHH0_hh_bbvv:                   400.00k
+# signal_ggf_nonresonant_cHHH1_hh_bbvv:                   395.00k
+# signal_ggf_nonresonant_cHHH2p45_hh_bbvv:                397.40k
+# signal_ggf_nonresonant_cHHH5_hh_bbvv:                   400.00k
+# signal_ggf_nonresonant_hh_bbvv_sl:                      5.86M
+# signal_ggf_nonresonant_cHHH0_hh_bbvv_sl:                392.60k
+# signal_ggf_nonresonant_cHHH1_hh_bbvv_sl:                399.99k
+# signal_ggf_nonresonant_cHHH2p45_hh_bbvv_sl:             400.00k
+# signal_ggf_nonresonant_cHHH5_hh_bbvv_sl:                396.00k
+# signal_ggf_spin0_250_hh_bbvv_sl:                        799.99k
+# signal_ggf_spin0_260_hh_bbvv_sl:                        800.00k
+# signal_ggf_spin0_270_hh_bbvv_sl:                        792.00k
+# signal_ggf_spin0_280_hh_bbvv_sl:                        799.99k
+# signal_ggf_spin0_300_hh_bbvv_sl:                        585.99k
+# signal_ggf_spin0_320_hh_bbvv_sl:                        600.00k
+# signal_ggf_spin0_350_hh_bbvv_sl:                        589.99k
+# signal_ggf_spin0_400_hh_bbvv_sl:                        587.00k
+# signal_ggf_spin0_450_hh_bbvv_sl:                        567.99k
+# signal_ggf_spin0_500_hh_bbvv_sl:                        491.00k
+# signal_ggf_spin0_550_hh_bbvv_sl:                        480.00k
+# signal_ggf_spin0_600_hh_bbvv_sl:                        399.99k
+# signal_ggf_spin0_650_hh_bbvv_sl:                        386.00k
+# signal_ggf_spin0_700_hh_bbvv_sl:                        399.99k
+# signal_ggf_spin0_750_hh_bbvv_sl:                        399.99k
+# signal_ggf_spin0_800_hh_bbvv_sl:                        400.00k
+# signal_ggf_spin0_850_hh_bbvv_sl:                        368.00k
+# signal_ggf_spin0_900_hh_bbvv_sl:                        300.00k
+# signal_ggf_spin0_1000_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin0_1250_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin0_1500_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin0_1750_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin0_2000_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin0_2500_hh_bbvv_sl:                       196.00k
+# signal_ggf_spin0_3000_hh_bbvv_sl:                       199.99k
+# signal_ggf_spin2_250_hh_bbvv_sl:                        800.00k
+# signal_ggf_spin2_260_hh_bbvv_sl:                        761.00k
+# signal_ggf_spin2_270_hh_bbvv_sl:                        799.99k
+# signal_ggf_spin2_280_hh_bbvv_sl:                        775.99k
+# signal_ggf_spin2_300_hh_bbvv_sl:                        599.99k
+# signal_ggf_spin2_320_hh_bbvv_sl:                        590.00k
+# signal_ggf_spin2_350_hh_bbvv_sl:                        599.99k
+# signal_ggf_spin2_400_hh_bbvv_sl:                        599.99k
+# signal_ggf_spin2_450_hh_bbvv_sl:                        600.00k
+# signal_ggf_spin2_500_hh_bbvv_sl:                        600.00k
+# signal_ggf_spin2_550_hh_bbvv_sl:                        579.99k
+# signal_ggf_spin2_600_hh_bbvv_sl:                        392.00k
+# signal_ggf_spin2_650_hh_bbvv_sl:                        386.00k
+# signal_ggf_spin2_700_hh_bbvv_sl:                        382.00k
+# signal_ggf_spin2_750_hh_bbvv_sl:                        372.00k
+# signal_ggf_spin2_800_hh_bbvv_sl:                        386.00k
+# signal_ggf_spin2_850_hh_bbvv_sl:                        391.99k
+# signal_ggf_spin2_900_hh_bbvv_sl:                        300.00k
+# signal_ggf_spin2_1000_hh_bbvv_sl:                       186.00k
+# signal_ggf_spin2_1250_hh_bbvv_sl:                       195.00k
+# signal_ggf_spin2_1500_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin2_1750_hh_bbvv_sl:                       191.99k
+# signal_ggf_spin2_2000_hh_bbvv_sl:                       198.00k
+# signal_ggf_spin2_2500_hh_bbvv_sl:                       200.00k
+# signal_ggf_spin2_3000_hh_bbvv_sl:                       168.00k
+# signal_vbf_nonresonant_1_1_0_hh_bbvv_sl:                390.00k
+# signal_vbf_nonresonant_1_1_1_hh_bbvv_sl:                396.99k
+# signal_vbf_nonresonant_1_1_1_hh_bbvv_sl_dipoleRecoilOn: 400.00k
+# signal_vbf_nonresonant_1_1_2_hh_bbvv_sl:                400.00k
+# signal_vbf_nonresonant_1_2_1_hh_bbvv_sl:                400.00k
+# signal_vbf_nonresonant_1_2_1_hh_bbvv_sl_dipoleRecoilOn: 400.00k
+# signal_vbf_nonresonant_0p5_1_1_hh_bbvv_sl:              400.00k
+# signal_vbf_nonresonant_1p5_1_1_hh_bbvv_sl:              400.00k
+# signal_vbf_nonresonant_1_0_1_hh_bbvv_sl:                399.99k
+# signal_vbf_spin0_250_hh_bbtt:                           400.00k
+# signal_vbf_spin0_260_hh_bbtt:                           388.00k
+# signal_vbf_spin0_270_hh_bbtt:                           384.00k
+# signal_vbf_spin0_280_hh_bbtt:                           400.00k
+# signal_vbf_spin0_300_hh_bbtt:                           300.00k
+# signal_vbf_spin0_320_hh_bbtt:                           300.00k
+# signal_vbf_spin0_350_hh_bbtt:                           300.00k
+# signal_vbf_spin0_400_hh_bbtt:                           100.00k
+# signal_vbf_spin0_450_hh_bbtt:                           300.00k
+# signal_vbf_spin0_500_hh_bbtt:                           290.00k
+# signal_vbf_spin0_550_hh_bbtt:                           300.00k
+# signal_vbf_spin0_600_hh_bbtt:                           200.00k
+# signal_vbf_spin0_650_hh_bbtt:                           200.00k
+# signal_vbf_spin0_700_hh_bbtt:                           200.00k
+# signal_vbf_spin0_750_hh_bbtt:                           100.00k
+# signal_vbf_spin0_800_hh_bbtt:                           200.00k
+# signal_vbf_spin0_850_hh_bbtt:                           200.00k
+# signal_vbf_spin0_900_hh_bbtt:                           100.00k
+# signal_vbf_spin0_1000_hh_bbtt:                          100.00k
+# signal_vbf_spin0_1250_hh_bbtt:                          100.00k
+# signal_vbf_spin0_1500_hh_bbtt:                          100.00k
+# signal_vbf_spin0_1750_hh_bbtt:                          100.00k
+# signal_vbf_spin0_2000_hh_bbtt:                          100.00k
+# signal_vbf_spin0_3000_hh_bbtt:                          100.00k
+# signal_vbf_spin2_250_hh_bbtt:                           386.00k
+# signal_vbf_spin2_260_hh_bbtt:                           400.00k
+# signal_vbf_spin2_270_hh_bbtt:                           400.00k
+# signal_vbf_spin2_280_hh_bbtt:                           400.00k
+# signal_vbf_spin2_300_hh_bbtt:                           282.00k
+# signal_vbf_spin2_320_hh_bbtt:                           300.00k
+# signal_vbf_spin2_350_hh_bbtt:                           300.00k
+# signal_vbf_spin2_400_hh_bbtt:                           292.00k
+# signal_vbf_spin2_450_hh_bbtt:                           300.00k
+# signal_vbf_spin2_500_hh_bbtt:                           300.00k
+# signal_vbf_spin2_600_hh_bbtt:                           200.00k
+# signal_vbf_spin2_650_hh_bbtt:                           197.00k
+# signal_vbf_spin2_700_hh_bbtt:                           200.00k
+# signal_vbf_spin2_750_hh_bbtt:                           200.00k
+# signal_vbf_spin2_850_hh_bbtt:                           200.00k
+# signal_vbf_spin2_900_hh_bbtt:                           100.00k
+# signal_vbf_spin2_1000_hh_bbtt:                          100.00k
+# signal_vbf_spin2_1200_hh_bbtt:                          100.00k
+# signal_vbf_spin2_1750_hh_bbtt:                          100.00k
+# signal_vbf_spin2_2000_hh_bbtt:                          100.00k
+# signal_ggf_spin0_250_hh_bbtt:                           390.00k
+# signal_ggf_spin0_260_hh_bbtt:                           360.00k
+# signal_ggf_spin0_270_hh_bbtt:                           392.00k
+# signal_ggf_spin0_280_hh_bbtt:                           398.00k
+# signal_ggf_spin0_300_hh_bbtt:                           300.00k
+# signal_ggf_spin0_320_hh_bbtt:                           300.00k
+# signal_ggf_spin0_340_hh_bbtt:                           300.00k
+# signal_ggf_spin0_350_hh_bbtt:                           300.00k
+# signal_ggf_spin0_400_hh_bbtt:                           296.00k
+# signal_ggf_spin0_450_hh_bbtt:                           272.00k
+# signal_ggf_spin0_500_hh_bbtt:                           190.00k
+# signal_ggf_spin0_550_hh_bbtt:                           200.00k
+# signal_ggf_spin0_600_hh_bbtt:                           200.00k
+# signal_ggf_spin0_650_hh_bbtt:                           188.00k
+# signal_ggf_spin0_700_hh_bbtt:                           200.00k
+# signal_ggf_spin0_750_hh_bbtt:                           196.00k
+# signal_ggf_spin0_800_hh_bbtt:                           200.00k
+# signal_ggf_spin0_850_hh_bbtt:                           192.00k
+# signal_ggf_spin0_900_hh_bbtt:                           95.00k
+# signal_ggf_spin0_1000_hh_bbtt:                          100.00k
+# signal_ggf_spin0_1250_hh_bbtt:                          100.00k
+# signal_ggf_spin0_1500_hh_bbtt:                          100.00k
+# signal_ggf_spin0_1750_hh_bbtt:                          100.00k
+# signal_ggf_spin0_2000_hh_bbtt:                          92.00k
+# signal_ggf_spin0_2500_hh_bbtt:                          100.00k
+# signal_ggf_spin0_3000_hh_bbtt:                          100.00k
+# signal_ggf_spin2_250_hh_bbtt:                           400.00k
+# signal_ggf_spin2_260_hh_bbtt:                           384.00k
+# signal_ggf_spin2_270_hh_bbtt:                           390.00k
+# signal_ggf_spin2_280_hh_bbtt:                           379.00k
+# signal_ggf_spin2_300_hh_bbtt:                           300.00k
+# signal_ggf_spin2_320_hh_bbtt:                           300.00k
+# signal_ggf_spin2_340_hh_bbtt:                           300.00k
+# signal_ggf_spin2_350_hh_bbtt:                           300.00k
+# signal_ggf_spin2_400_hh_bbtt:                           300.00k
+# signal_ggf_spin2_450_hh_bbtt:                           300.00k
+# signal_ggf_spin2_500_hh_bbtt:                           200.00k
+# signal_ggf_spin2_550_hh_bbtt:                           192.00k
+# signal_ggf_spin2_600_hh_bbtt:                           200.00k
+# signal_ggf_spin2_650_hh_bbtt:                           188.00k
+# signal_ggf_spin2_700_hh_bbtt:                           188.00k
+# signal_ggf_spin2_750_hh_bbtt:                           200.00k
+# signal_ggf_spin2_800_hh_bbtt:                           192.00k
+# signal_ggf_spin2_850_hh_bbtt:                           200.00k
+# signal_ggf_spin2_900_hh_bbtt:                           200.00k
+# signal_ggf_spin2_1000_hh_bbtt:                          100.00k
+# signal_ggf_spin2_1250_hh_bbtt:                          100.00k
+# signal_ggf_spin2_1500_hh_bbtt:                          100.00k
+# signal_ggf_spin2_1750_hh_bbtt:                          100.00k
+# signal_ggf_spin2_2000_hh_bbtt:                          100.00k
+# signal_ggf_spin2_2500_hh_bbtt:                          100.00k
+# signal_ggf_spin2_3000_hh_bbtt:                          100.00k
+# signal_vbf_nonresonant_1_1_0_hh_bbtt:                   1.00M
+# signal_vbf_nonresonant_1_1_1_hh_bbtt:                   1.99M
+# signal_vbf_nonresonant_1_1_1_hh_bbtt_dipoleRecoilOn:    1.00M
+# signal_vbf_nonresonant_1_1_2_hh_bbtt:                   1.00M
+# signal_vbf_nonresonant_1_2_1_hh_bbtt:                   2.00M
+# signal_vbf_nonresonant_1_2_1_hh_bbtt_dipoleRecoilOn:    996.00k
+# signal_vbf_nonresonant_1p5_1_1_hh_bbtt:                 1.00M
+# signal_vbf_nonresonant_0p5_1_1_hh_bbtt:                 1.00M
+# signal_vbf_nonresonant_1_0_1_hh_bbtt:                   2.50M
+# signal_ggf_nonresonant_hh_bbtt:                         2.74M
+# signal_ggf_nonresonant_cHHH0_hh_bbtt:                   971.00k
+# signal_ggf_nonresonant_cHHH1_hh_bbtt:                   973.40k
+# signal_ggf_nonresonant_cHHH2p45_hh_bbtt:                967.10k
+# signal_ggf_nonresonant_cHHH5_hh_bbtt:                   974.70k
 
