@@ -89,7 +89,7 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
     branchName_genBJets = None
     if jobOptions['sample_name'].startswith(('/TTToSemiLeptonic')):
       branchName_genBJets = "GenBQuarkFromTop"
-    elif jobOptions['sample_category'].find('signal') != -1 and jobOptions['sample_category'].find('_sl') != -1:
+    elif jobOptions['sample_name'].find('HHTo2B2WToLNu2J') != -1:
       branchName_genBJets = "GenHiggsDaughters"
     else:
       raise ValueError("Invalid Configuration parameter 'sample_name' = '%s' !!" % jobOptions['sample_name'])
@@ -107,7 +107,6 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
       if not sample_info["use_it"]:
         continue
 
-      sample_category = sample_info["sample_category"]
       is_mc = (sample_info["type"] == "mc")
       process_name = sample_info["process_name_specific"]
 
@@ -173,7 +172,6 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
         logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
         inputFileList = inputFileLists[sample_name]
 
-        sample_category = sample_info["sample_category"]
         is_mc = (sample_info["type"] == "mc")
         
         # build config files for executing analysis code
@@ -193,7 +191,6 @@ class analyzeConfig_hadWTagger(analyzeConfig_hh):
 
           self.jobOptions_analyze[key_analyze_job] = {
             'sample_name'              : sample_name,
-            'sample_category'          : sample_category,
             'ntupleFiles'              : ntupleFiles,
             'mode'                     : self.mode,
             'cfgFile_modified'         : cfgFile_modified_path,
