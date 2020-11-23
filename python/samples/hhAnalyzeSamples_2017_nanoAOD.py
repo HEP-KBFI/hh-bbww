@@ -2285,7 +2285,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweig
 
 samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_vbf_nonresonant_1_1_1_hh_bbvv_dipoleRecoilOn"),
+  ("sample_category",                 "signal_vbf_nonresonant_1_1_1_hh_dipoleRecoilOn_bbvv"),
   ("process_name_specific",           "signal_vbf_nonresonant_1_1_1_hh_2b2v_dipoleRecoilOn"),
   ("nof_files",                       19),
   ("nof_db_files",                    24),
@@ -2414,7 +2414,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweig
 
 samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_vbf_nonresonant_1_2_1_hh_bbvv_dipoleRecoilOn"),
+  ("sample_category",                 "signal_vbf_nonresonant_1_2_1_hh_dipoleRecoilOn_bbvv"),
   ("process_name_specific",           "signal_vbf_nonresonant_1_2_1_hh_2b2v_dipoleRecoilOn"),
   ("nof_files",                       16),
   ("nof_db_files",                    21),
@@ -8520,7 +8520,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweig
 
 samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_vbf_nonresonant_1_1_1_hh_bbvv_sl_dipoleRecoilOn"),
+  ("sample_category",                 "signal_vbf_nonresonant_1_1_1_hh_dipoleRecoilOn_bbvv_sl"),
   ("process_name_specific",           "signal_vbf_nonresonant_1_1_1_hh_2b2v_sl_dipoleRecoilOn"),
   ("nof_files",                       21),
   ("nof_db_files",                    23),
@@ -8649,7 +8649,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweig
 
 samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_vbf_nonresonant_1_2_1_hh_bbvv_sl_dipoleRecoilOn"),
+  ("sample_category",                 "signal_vbf_nonresonant_1_2_1_hh_dipoleRecoilOn_bbvv_sl"),
   ("process_name_specific",           "signal_vbf_nonresonant_1_2_1_hh_2b2v_sl_dipoleRecoilOn"),
   ("nof_files",                       20),
   ("nof_db_files",                    23),
@@ -13035,7 +13035,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_1
 
 samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_vbf_nonresonant_1_1_1_hh_bbtt_dipoleRecoilOn"),
+  ("sample_category",                 "signal_vbf_nonresonant_1_1_1_hh_dipoleRecoilOn_bbtt"),
   ("process_name_specific",           "signal_vbf_nonresonant_1_1_1_hh_2b2t_dipoleRecoilOn"),
   ("nof_files",                       20),
   ("nof_db_files",                    25),
@@ -13164,7 +13164,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_1
 
 samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
   ("type",                            "mc"),
-  ("sample_category",                 "signal_vbf_nonresonant_1_2_1_hh_bbtt_dipoleRecoilOn"),
+  ("sample_category",                 "signal_vbf_nonresonant_1_2_1_hh_dipoleRecoilOn_bbtt"),
   ("process_name_specific",           "signal_vbf_nonresonant_1_2_1_hh_2b2t_dipoleRecoilOn"),
   ("nof_files",                       20),
   ("nof_db_files",                    32),
