@@ -465,13 +465,14 @@ int main(int argc,
   const edm::ParameterSet cfg_analyze       = cfg.getParameter<edm::ParameterSet>("analyze_hadWTagger");
   const std::string treeName                = cfg_analyze.getParameter<std::string>("treeName");
   const std::string process_string          = cfg_analyze.getParameter<std::string>("process");
+  std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
   const std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
   const bool isDEBUG                        = cfg_analyze.getParameter<bool>("isDEBUG");
 
   const std::string mode_string             = cfg_analyze.getParameter<std::string>("mode");
 
   const bool isMC                           = cfg_analyze.getParameter<bool>("isMC");
-  bool isMC_HH = isMC && process_string.find("hh_bbvv")!= std::string::npos;
+  bool isMC_HH = isMC && process_string_hh.find("hh_bbvv")!= std::string::npos;
   bool isMC_TT = isMC && process_string.find("TT")     != std::string::npos;
   bool hasLHE                               = cfg_analyze.getParameter<bool>("hasLHE");
   std::string central_or_shift              = "central";
