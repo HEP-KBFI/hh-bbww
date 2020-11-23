@@ -23,9 +23,9 @@ EvtHistManager2_hh_bb2l::EvtHistManager2_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["dR_ll"] = { "central" };
   central_or_shiftOptions_["dPhi_ll"] = { "central" };
   central_or_shiftOptions_["pT_ll"] = { "central" };
-  central_or_shiftOptions_["m_HHvis"] = { "*" };
+  central_or_shiftOptions_["m_HHvis"] = { "central" };
   central_or_shiftOptions_["m_HH"] = { "central" };
-  central_or_shiftOptions_["m_HH_hme"] = { "*" };
+  central_or_shiftOptions_["m_HH_hme"] = { "central" };
   central_or_shiftOptions_["hmeCpuTime"] = { "central" };
   central_or_shiftOptions_["vbf_jet1_pt"] = { "central" };
   central_or_shiftOptions_["vbf_jet1_eta"] = { "central" };
