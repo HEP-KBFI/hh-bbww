@@ -130,7 +130,7 @@ class JPAJet
 class JPAInterface
 {
  public:
-  JPAInterface(const std::string& mvaInputFilePath, bool isDEBUG = false);
+  JPAInterface(const std::string& mvaInputFilePath, const std::string era, bool isDEBUG = false);
   ~JPAInterface();
 
   JPA

@@ -760,7 +760,7 @@ int main(int argc, char* argv[])
 //--- initialize BDT for ranking of W->jj decays
   TMVAInterface mva_Wjj = initialize_mva_Wjj();
 
-  JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l");
+  JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l", era_string);
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
   std::ostream* selEventsFile = ( selEventsFileName_output != "" ) ? new std::ofstream(selEventsFileName_output.data(), std::ios::out) : 0;
@@ -1888,6 +1888,7 @@ int main(int argc, char* argv[])
       else {
 	h_genmatchBoosted->Fill(gen_jpaCategory, jpaInterface.getevtCat());
 	}*/
+      continue;
     }
 
     const RecoJetBase* selJet1_Wjj = nullptr;

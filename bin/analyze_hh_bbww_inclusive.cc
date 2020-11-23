@@ -333,7 +333,7 @@ main(int argc,
     }
   }
 
-  JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l");
+  JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l", era_string);
 
   int analyzedEntries = 0;
   int selectedEntries = 0;
