@@ -751,8 +751,6 @@ int main(int argc, char* argv[])
     DatacardHistManager_hh_multiclass* datacard_LBN_;
     EvtYieldHistManager* evtYield_;
     WeightHistManager* weights_;
-    WeightHistManager* weights_boosted_;
-    WeightHistManager* weights_resolved_;
   };
 
   EventCategory_hh_bb2l_BDT eventCategory_BDT;
@@ -860,12 +858,6 @@ int main(int argc, char* argv[])
         selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
         selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
-        selHistManager->weights_boosted_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/weights_boosted", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->weights_boosted_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
-        selHistManager->weights_resolved_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/weights_resolved", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->weights_resolved_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
       }
       selHistManagers[central_or_shift][idxLepton] = selHistManager;
     }
@@ -2229,21 +2221,12 @@ int main(int argc, char* argv[])
         if(! skipFilling)
         {
           selHistManager->evtYield_->fillHistograms(eventInfo, evtWeight);
-          for ( int idx = 0; idx < 3; ++idx ) 
-          {
-            WeightHistManager* weightHistManager = nullptr;
-            if      ( idx == 0 ) weightHistManager = selHistManager->weights_;
-            else if ( idx == 1 ) weightHistManager = selHistManager->weights_boosted_;
-            else if ( idx == 2 ) weightHistManager = selHistManager->weights_resolved_;
-            else assert(0);
-            if ( (idx == 1 && !selJetAK8_Hbb) || (idx == 2 && selJetAK8_Hbb) ) continue;
-            weightHistManager->fillHistograms("genWeight", eventInfo.genWeight);
-            weightHistManager->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
-            weightHistManager->fillHistograms("triggerWeight", evtWeightRecorder.get_sf_triggerEff(central_or_shift));
-            weightHistManager->fillHistograms("btagWeight", evtWeightRecorder.get_btag(central_or_shift)*evtWeightRecorder.get_btagSFRatio(central_or_shift));
-            weightHistManager->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
-            weightHistManager->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
-          }
+          selHistManager->weights_->fillHistograms("genWeight", eventInfo.genWeight);
+          selHistManager->weights_->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
+          selHistManager->weights_->fillHistograms("triggerWeight", evtWeightRecorder.get_sf_triggerEff(central_or_shift));
+          selHistManager->weights_->fillHistograms("btagWeight", evtWeightRecorder.get_btag(central_or_shift)*evtWeightRecorder.get_btagSFRatio(central_or_shift));
+          selHistManager->weights_->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
+          selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
         }
       }
 

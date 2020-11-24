@@ -71,7 +71,7 @@ process.analyze_hh_bb2l = cms.PSet(
     apply_l1PreFireWeight = cms.bool(True),
     apply_hlt_filter = cms.bool(False),
     apply_met_filters = cms.bool(True),
-    run_hme           = cms.bool(False),
+    run_hme = cms.bool(False),
     cfgMEtFilter = cms.PSet(),
     triggerWhiteList = cms.PSet(),
 
