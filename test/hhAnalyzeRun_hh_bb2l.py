@@ -159,14 +159,52 @@ elif mode == "ttbar_sync":
 else:
   raise ValueError("Internal logic error")
 
-
 for sample_name, sample_info in samples.items():
   if sample_name == 'sum_events':
     continue
   if "CHH" in sample_name:
     sample_info["use_it"] = False
 
-evtCategories = None
+histograms_to_fit = {
+  "EventCounter" : {}
+}
+masspoints = [ 250., 260., 270., 280., 300., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
+for masspoint in masspoints:
+  # CV: add histograms for BDT-based extraction of resonant HH signal,
+  #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
+  categories = [ "boosted", "resolved_2b", "resolved_1b" ]
+  for category in categories:
+    histograms_to_fit.update({ "datacard/BDT/$PROCESS/MVAOutput_%0.0f_hypo_spin0" % masspoint : {} })
+    histograms_to_fit.update({ "datacard/BDT/$PROCESS/MVAOutput_%0.0f_hypo_spin2" % masspoint : {} })
+  # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
+  #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+  categories = [ 
+    "HH_boosted", "HH_resolved_2b", "HH_resolved_1b", 
+    "TT_boosted", "TT_resolved", 
+    "W_boosted", "W_resolved", 
+    "DY_boosted", "DY_resolved", 
+    "SingleTop_boosted", "SingleTop_resolved", 
+    "Other" 
+  ]
+  for category in categories:
+    histograms_to_fit.update({ "datacard/LBN/$PROCESS/MVAOutput_%0.0f_hypo_spin0" % masspoint : {} })
+    histograms_to_fit.update({ "datacard/LBN/$PROCESS/MVAOutput_%0.0f_hypo_spin2" % masspoint : {} })
+bmNames = [ "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" ]
+for bmName in bmNames:
+  categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
+  for category in categories:
+    histograms_to_fit.update({ "datacard/BDT/$PROCESS/MVAOutput_%s" % bmName : {} })
+  categories = [ 
+    "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b", 
+    "TT_boosted", "TT_resolved", 
+    "W_boosted", "W_resolved", 
+    "DY_boosted", "DY_resolved", 
+    "SingleTop_boosted", "SingleTop_resolved", 
+    "Other" 
+  ]
+  for category in categories:
+    histograms_to_fit.update({ "datacard/LBN/$PROCESS/MVAOutput_%s" % bmName : {} })
+
 evtCategories = []
 
 if sideband == 'disabled':
@@ -189,48 +227,6 @@ if __name__ == '__main__':
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
 
-  categories_list_bins =  [
-     "cat_ee_1b",
-     "cat_em_1b",
-     "cat_mm_1b",
-     "cat_ee_2b",
-     "cat_em_2b",
-     "cat_mm_2b",
-     "cat_ee_Hbb_boosted",
-     "cat_em_Hbb_boosted",
-     "cat_mm_Hbb_boosted"
-   ]
-
-  for_categories_map = [
-  # those are for the BDT types
-  "SM_plainVars_"
-  ]
-
-  for_data_MC_plots = [
-  "jet1_pt",
-  "jet1_eta",
-  "lep1_pt",
-  "lep1_eta",
-  "jet2_pt",
-  "jet2_eta",
-  "lep2_pt",
-  "lep2_eta"
-  ]
-
-  histograms_to_fit_list                 = {
-    "EventCounter"                      : {},
-    #"HT"                                : {},
-    #"STMET"                             : {}
-  }
-  # add  the BDT types with subcategories to the histogram list
-  for typeMVA in for_categories_map :
-    for typyCat in categories_list_bins :
-      histograms_to_fit_list[typeMVA + typyCat] = {}
-  if doDataMCPlots :
-    for typeMVA in for_data_MC_plots :
-      for typyCat in categories_list_bins :
-        histograms_to_fit_list[ typyCat + "_" + typeMVA ] = {}
-
   analysis = analyzeConfig_hh_bb2l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
@@ -245,7 +241,7 @@ if __name__ == '__main__':
     lep_mva_wp                            = lep_mva_wp,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
-    evtCategories                         = evtCategories,
+    evtCategories                         = [],
     max_files_per_job                     = files_per_job,
     era                                   = era,
     use_lumi                              = True,
@@ -256,7 +252,7 @@ if __name__ == '__main__':
     executable_addSysTT                   = "addSysTT",
     executable_addBackgrounds             = "addBackgrounds",
     executable_addFakes                   = "addBackgroundLeptonFakes",
-    histograms_to_fit                     = histograms_to_fit_list,
+    histograms_to_fit                     = histograms_to_fit,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,

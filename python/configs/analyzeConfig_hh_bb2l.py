@@ -640,13 +640,24 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
           key_prep_dcard_dir = getKey("prepareDatacards")
           prep_dcard_job_tuple = (self.channel, category, lepton_charge_selection, histogramToFit)
-          key_prep_dcard_job = getKey(category, lepton_charge_selection, histogramToFit)
+          key_prep_dcard_job = getKey(category, lepton_charge_selection, histogramToFit)        
+          # CV: Temporary workaround to implement event categories 
+          #     implemented in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc and hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+          #     The datacard extraction for these event categories needs to be implemented more properly later !!
+          histogramDir_modified = None
+          histogramToFit_modified = None
+          if histogramToFit.find("/") != -1:
+            histogramDir_modified = getHistogramDir(category, "Tight", "disabled", lepton_charge_selection) + "/" + histogramToFit[:histogramToFit.rfind("/")]
+            histogramToFit_modified = histogramToFit[histogramToFit.rfind("/") + 1:]
+          else:
+            histogramDir_modified = getHistogramDir(category, "Tight", "disabled", lepton_charge_selection)
+            histogramToFit_modified = histogramToFit           
           self.jobOptions_prep_dcard[key_prep_dcard_job] = {
             'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
             'cfgFile_modified' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_%s_%s_%s_cfg.py" % prep_dcard_job_tuple),
             'datacardFile' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s_%s_%s_%s.root" % prep_dcard_job_tuple),
-            'histogramDir' : getHistogramDir(category, "Tight", "disabled", lepton_charge_selection),
-            'histogramToFit' : histogramToFit
+            'histogramDir' : histogramDir_modified,
+            'histogramToFit' : histogramToFit_modified
           }
           self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
           # add shape templates for the following systematic uncertainties:
