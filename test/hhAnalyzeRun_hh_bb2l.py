@@ -174,8 +174,8 @@ for masspoint in masspoints:
   #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
   categories = [ "boosted", "resolved_2b", "resolved_1b" ]
   for category in categories:
-    histograms_to_fit.update({ "datacard/BDT/$PROCESS/MVAOutput_%0.0f_hypo_spin0" % masspoint : {} })
-    histograms_to_fit.update({ "datacard/BDT/$PROCESS/MVAOutput_%0.0f_hypo_spin2" % masspoint : {} })
+    histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_spin0" % (category, masspoint) : {} })
+    histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_spin2" % (category, masspoint) : {} })
   # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
   #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
   categories = [ 
@@ -187,13 +187,13 @@ for masspoint in masspoints:
     "Other" 
   ]
   for category in categories:
-    histograms_to_fit.update({ "datacard/LBN/$PROCESS/MVAOutput_%0.0f_hypo_spin0" % masspoint : {} })
-    histograms_to_fit.update({ "datacard/LBN/$PROCESS/MVAOutput_%0.0f_hypo_spin2" % masspoint : {} })
+    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_spin0" % (category, masspoint) : {} })
+    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_spin2" % (category, masspoint) : {} })
 bmNames = [ "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" ]
 for bmName in bmNames:
   categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
   for category in categories:
-    histograms_to_fit.update({ "datacard/BDT/$PROCESS/MVAOutput_%s" % bmName : {} })
+    histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
   categories = [ 
     "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b", 
     "TT_boosted", "TT_resolved", 
@@ -203,7 +203,7 @@ for bmName in bmNames:
     "Other" 
   ]
   for category in categories:
-    histograms_to_fit.update({ "datacard/LBN/$PROCESS/MVAOutput_%s" % bmName : {} })
+    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
 
 evtCategories = []
 

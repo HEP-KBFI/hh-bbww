@@ -634,9 +634,53 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
 
     logging.info("Creating configuration files to run 'prepareDatacards'")
+    histogramsToFit = self.histograms_to_fit.keys()
     for lepton_charge_selection in self.lepton_charge_selections:
       for category in self.evtCategories:
-        for histogramToFit in self.histograms_to_fit:
+        for histogramToFit in histogramsToFit:
+          logging.info(" ...  for category %s, histogram %s" % (category, histogramToFit))
+
+          prep_dcard_HH = set()
+          for sample_name, sample_info in self.samples.items():
+            if not sample_info["use_it"]:
+              continue
+            sample_category = sample_info["sample_category"]
+            if sample_category.startswith("signal"):
+              sample_category = sample_info["sample_category_hh"]
+              doAdd = False
+              if "BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit:
+                if ("SM" in histogramToFit or "BM" in histogramToFit) and 'nonresonant' in sample_category:
+                  doAdd = True
+                startpos = histogramToFit.find("MVAOutput_") + len("MVAOutput_")
+                endpos = histogramToFit.find("_", startpos)
+                massPoint = histogramToFit[startpos:endpos]
+                if "spin0" in histogramToFit and "spin0" in sample_category and "_%s_" % massPoint in sample_category:
+                  doAdd = True
+                if "spin2" in histogramToFit and "spin2" in sample_category and "_%s_" % massPoint in sample_category:
+                  doAdd = True
+              else:
+                doAdd = True
+              if doAdd:
+                if "bbvv" in sample_category:
+                  prep_dcard_HH.add(sample_category.replace("bbvv", "bbzz"))
+                  prep_dcard_HH.add(sample_category.replace("bbvv", "bbww"))
+                elif "bbtt" in sample_category:
+                  prep_dcard_HH.add(sample_category)
+                else:
+                  raise ValueError("Failed to identify relevant HH decay mode(s) for 'sample_category' = %s !!" % sample_category)
+          prep_dcard_HH = list(prep_dcard_HH)
+          prep_dcard_H = []
+          prep_dcard_other_nonfake_backgrounds = []
+          for process in self.nonfake_backgrounds:
+            if process in [ "VH", "WH", "ZH", "TH", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
+              prep_dcard_H.append("%s_hww" % process)
+              prep_dcard_H.append("%s_hzz" % process)
+              prep_dcard_H.append("%s_htt" % process)
+              prep_dcard_H.append("%s_hbb" % process)
+            else:
+              prep_dcard_other_nonfake_backgrounds.append(process)
+          self.prep_dcard_processesToCopy = [ "data_obs" ] + prep_dcard_HH + prep_dcard_H + prep_dcard_other_nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
+
           key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
           key_prep_dcard_dir = getKey("prepareDatacards")
           prep_dcard_job_tuple = (self.channel, category, lepton_charge_selection, histogramToFit)
@@ -646,18 +690,33 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           #     The datacard extraction for these event categories needs to be implemented more properly later !!
           histogramDir_modified = None
           histogramToFit_modified = None
+          cfgFile_modified = None
+          datacardFile = None
+          datacardCategory = None
           if histogramToFit.find("/") != -1:
             histogramDir_modified = getHistogramDir(category, "Tight", "disabled", lepton_charge_selection) + "/" + histogramToFit[:histogramToFit.rfind("/")]
+            histogramDir_modified = histogramDir_modified.replace("/$PROCESS", "")
             histogramToFit_modified = histogramToFit[histogramToFit.rfind("/") + 1:]
+            # CV: propagate histogram (re)binning options
+            self.histograms_to_fit[histogramToFit_modified] = self.histograms_to_fit[histogramToFit]
+            suffix = "%s_%s_%s_%s" % (self.channel, category, lepton_charge_selection, histogramToFit.replace("/$PROCESS", "").replace("/", "_"))
+            cfgFile_modified = os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_cfg.py" % suffix)
+            datacardFile = os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s.root" % suffix)
+            datacardCategory = histogramToFit[:histogramToFit.rfind("/$PROCESS")]
+            datacardCategory = category + "_" + datacardCategory[datacardCategory.rfind("/") + 1:]
           else:
             histogramDir_modified = getHistogramDir(category, "Tight", "disabled", lepton_charge_selection)
             histogramToFit_modified = histogramToFit           
+            cfgFile_modified = os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_%s_%s_%s_cfg.py" % prep_dcard_job_tuple)
+            datacardFile = os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s_%s_%s_%s.root" % prep_dcard_job_tuple)
+            datacardCategory = category
           self.jobOptions_prep_dcard[key_prep_dcard_job] = {
             'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-            'cfgFile_modified' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_%s_%s_%s_cfg.py" % prep_dcard_job_tuple),
-            'datacardFile' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s_%s_%s_%s.root" % prep_dcard_job_tuple),
+            'cfgFile_modified' : cfgFile_modified,
+            'datacardFile' : datacardFile,
             'histogramDir' : histogramDir_modified,
-            'histogramToFit' : histogramToFit_modified
+            'histogramToFit' : histogramToFit_modified,
+            'category' : datacardCategory
           }
           self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
           # add shape templates for the following systematic uncertainties:
@@ -668,29 +727,44 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           key_add_syst_fakerate_dir = getKey("addSystFakeRates")
           add_syst_fakerate_job_tuple = (self.channel, category, lepton_charge_selection, histogramToFit)
           key_add_syst_fakerate_job = getKey(category, lepton_charge_selection, histogramToFit)
+          cfgFile_modified = None
+          outputFile = None
+          if histogramToFit.find("/") != -1:
+            suffix = "%s_%s_%s_%s" % (self.channel, category, lepton_charge_selection, histogramToFit.replace("/$PROCESS", "").replace("/", "_"))
+            cfgFile_modified = os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_CFGS], "addSystFakeRates_%s.py" % suffix)
+            outputFile = os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_DCRD], "addSystFakeRates_%s.root" % suffix)
+          else:
+            cfgFile_modified = os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_CFGS], "addSystFakeRates_%s_%s_%s_%s_cfg.py" % add_syst_fakerate_job_tuple)
+            outputFile = os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_DCRD], "addSystFakeRates_%s_%s_%s_%s.root" % add_syst_fakerate_job_tuple)
           self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job] = {
             'inputFile' : self.jobOptions_prep_dcard[key_prep_dcard_job]['datacardFile'],
-            'cfgFile_modified' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_CFGS], "addSystFakeRates_%s_%s_%s_%s_cfg.py" % add_syst_fakerate_job_tuple),
-            'outputFile' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_DCRD], "addSystFakeRates_%s_%s_%s_%s.root" % add_syst_fakerate_job_tuple),
-            'category' : category,
-            'histogramToFit' : histogramToFit,
+            'cfgFile_modified' : cfgFile_modified,
+            'outputFile' : outputFile,
+            'category' : datacardCategory,
+            'histogramToFit' : histogramToFit_modified,
             'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png")
           }
-          histogramDir_nominal = getHistogramDir(category, "Tight", "disabled", lepton_charge_selection)
           for lepton_type in [ 'e', 'm' ]:
             lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type
             if lepton_mcClosure not in self.lepton_selections:
               continue
             lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_mcClosure, "enabled")
             key_addBackgrounds_job_fakes = getKey("fakes_mc", category, lepton_charge_selection, lepton_selection_and_frWeight)
+            histogramDir_nominal = histogramDir_modified
             histogramDir_mcClosure = self.mcClosure_dir[lepton_mcClosure]
             histogramDir_mcClosure = histogramDir_mcClosure.replace(self.evtCategory_inclusive, category)
+            if histogramToFit.find("/") != -1:
+              histogramDir_mcClosure = histogramDir_mcClosure + "/" + histogramToFit[:histogramToFit.rfind("/")]
+              histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "fakes_mc")
+            else:
+              histogramDir_nominal = histogramDir_nominal + "/sel/evt/fakes_mc"
+              histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/fakes_mc"
             self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
               'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
               'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-              'histogramName_nominal_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_nominal, histogramToFit),
+              'histogramName_nominal_%s' % lepton_type : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
               'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
-              'histogramName_mcClosure_%s' % lepton_type : "%s/sel/evt/fakes_mc/%s" % (histogramDir_mcClosure, histogramToFit)
+              'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
             })
           self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
 
