@@ -296,7 +296,7 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze2_hh_bb1l",
     cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
     samples                               = samples,
-    apply_hadTauVeto                      = False,
+    apply_hadTauVeto                      = True,
     hadTau_mva_wp_veto                    = hadTau_selection_veto,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
