@@ -1295,6 +1295,8 @@ int main(int argc, char* argv[])
 
     if ( isDEBUG || run_lumi_eventSelector ) 
     {
+      printCollection("hadTau_ptrs", hadTau_ptrs);
+      printCollection("cleanedHadTaus", cleanedHadTaus);
       printCollection("vetoHadTaus", vetoHadTaus);
       printCollection("uncleaned AK4 jets", jet_ptrs_ak4);
       printCollection("cleaned AK4 jets(wrtLeptons)", cleanedJetsAK4_wrtLeptons);
