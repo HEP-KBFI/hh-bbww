@@ -205,8 +205,6 @@ for bmName in bmNames:
   for category in categories:
     histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
 
-evtCategories = []
-
 if sideband == 'disabled':
   chargeSumSelections = [ "OS" ]
 elif sideband == 'enabled':
@@ -241,7 +239,6 @@ if __name__ == '__main__':
     lep_mva_wp                            = lep_mva_wp,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
-    evtCategories                         = [],
     max_files_per_job                     = files_per_job,
     era                                   = era,
     use_lumi                              = True,

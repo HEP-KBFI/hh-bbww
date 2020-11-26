@@ -181,8 +181,6 @@ for bmName in bmNames:
   for category in categories:
     histograms_to_fit.update({ "sel/datacard/LBN/$PROCESS/MVAOutput_%s" % bmName : {} })
 
-evtCategories = []
-
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
   'deepVSj' : 'Medium',
@@ -220,7 +218,6 @@ if __name__ == '__main__':
     lep_mva_wp                            = lep_mva_wp,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
-    evtCategories                         = evtCategories,
     max_files_per_job                     = files_per_job,
     era                                   = era,
     use_lumi                              = True,
@@ -240,8 +237,7 @@ if __name__ == '__main__':
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
     submission_cmd                        = sys.argv,
-    second_bdt                            = second_bdt,
-    doDataMCPlots                         = doDataMCPlots,
+    second_bdt                            = second_bdt
   )
 
   if mode.find("forBDTtraining") != -1:
