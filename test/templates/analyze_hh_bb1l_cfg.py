@@ -140,8 +140,12 @@ process.analyze_hh_bb1l = cms.PSet(
             )
         ),
         nonresonant_resolved = cms.PSet(
-            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_resolved_nonres.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres_2016.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_resolved_nonres_2016.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres_2017.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_resolved_nonres_2017.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres_2018.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_resolved_nonres_2018.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
                 'lep_pt', 'bjet1_pt', 'bjet2_pt', 'met', 'm_Hbb_regCorr',
                 'dR_Hbb', 'pT_Hbb', 'm_Wjj', 'dR_Hww', 'pT_Hww',
@@ -153,8 +157,12 @@ process.analyze_hh_bb1l = cms.PSet(
             )
         ),
         nonresonant_boosted = cms.PSet(
-            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_boosted_nonres.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres_2016.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_boosted_nonres_2016.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres_2017.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_boosted_nonres_2017.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres_2018.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_boosted_nonres_2018.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
                 'bjet2_pt', 'met', 'm_Hbb', 'dR_Hbb', 'm_HHvis',
                 'pT_HH', 'mT_W', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mbb_loose',
@@ -175,10 +183,14 @@ process.analyze_hh_bb1l = cms.PSet(
 
         ),
         resonant_spin0_resolved = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_res_spin0.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_res_spin0.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_res_spin0_2016.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_res_spin0_2016.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_res_spin0_2017.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even\ evt no.
+            pbFileName_odd_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_res_spin0_2017.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd \evt no.
+            pbFileName_even_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_res_spin0_2018.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even\ evt no.
+            pbFileName_odd_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_res_spin0_2018.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd \evt no.
             ll_inputVariables = cms.vstring(
-                'bjet1', 'bjet2', 'wjet1', 'wjet2', 'lep'
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
             ),
             hl_inputVariables = cms.vstring(
                 'met', 'm_Hbb', 'eta_Hbb', 'jpaScore', 'm_Wjj', 
@@ -188,29 +200,38 @@ process.analyze_hh_bb1l = cms.PSet(
                 'mll_loose', 'cosThetaS_WW', 'cosThetaS_HH', 'leadFwdJet_pt', 'vbf_m_jj', 
                 'vbf_dEta_jj', 'bjet1_btagCSV', 'wjet1_btagCSV', 'gen_mHH'
             ),
-            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY', 'VBF')
         ),
         resonant_spin0_boosted = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_res_spin0.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_res_spin0.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_res_spin0_2016.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_res_spin0_2016.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_res_spin0_2017.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even \evt no.
+            pbFileName_odd_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_res_spin0_2017.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd e\vt no.
+            pbFileName_even_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_res_spin0_2018.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even \evt no.
+            pbFileName_odd_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_res_spin0_2018.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd e\vt no.
+            
             ll_inputVariables = cms.vstring(
-                'bjet1', 'bjet2', 'wjet1', 'wjet2', 'lep'
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
             ),
             hl_inputVariables = cms.vstring(
                 'mht', 'HT', 'm_Hbb', 'jpaScore', 'm_Wjj', 
                 'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 'numBJets_medium', 
-                'numBJets_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
-                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose', 'bjet2_pt', 
-                'leadFwdJet_pt', 'numLeptons', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
+                'numBJets_jpa_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
+                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose',
+                'leadFwdJet_pt', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
                 'bjet1_btagCSV', 'wjet1_btagCSV', 'gen_mHH'
             ),
-            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY', 'VBF')
         ),
         nonresonant_resolved = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_nonres.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres_2016.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_nonres_2016.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres_2017.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even ev\t no.
+            pbFileName_odd_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_nonres_2017.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt\ no
+            pbFileName_even_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_odd_data_nonres_2018.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even ev\t no.
+            pbFileName_odd_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_resolved_even_data_nonres_2018.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt\no
             ll_inputVariables = cms.vstring(
-                'bjet1', 'bjet2', 'wjet1', 'wjet2', 'lep'
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
             ),
             hl_inputVariables = cms.vstring(
                 'met', 'm_Hbb', 'eta_Hbb', 'jpaScore', 'm_Wjj', 
@@ -221,24 +242,28 @@ process.analyze_hh_bb1l = cms.PSet(
                 'vbf_dEta_jj', 'bjet1_btagCSV', 'wjet1_btagCSV',
                 'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
             ),
-            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY', 'VBF')
         ),
         nonresonant_boosted = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_nonres.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_nonres_2016.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd_2016 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres_2016.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_nonres_2017.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt\no.
+            pbFileName_odd_2017 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres_2017.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt \no.
+            pbFileName_even_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_nonres_2018.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt\ no.
+            pbFileName_odd_2018 = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_even_data_nonres_2018.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt \no.
             ll_inputVariables = cms.vstring(
-                'bjet1', 'bjet2', 'wjet1', 'wjet2', 'lep'
+                'lep', 'bjet1', 'bjet2', 'wjet1', 'wjet2'
             ),
             hl_inputVariables = cms.vstring(
                 'mht', 'HT', 'm_Hbb', 'jpaScore', 'm_Wjj', 
                 'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 'numBJets_medium', 
-                'numBJets_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
-                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose', 'bjet2_pt', 
-                'leadFwdJet_pt', 'numLeptons', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
+                'numBJets_jpa_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
+                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose',
+                'leadFwdJet_pt', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
                 'bjet1_btagCSV', 'wjet1_btagCSV',
                 'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
             ),
-            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY', 'VBF')
         )
     ),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
