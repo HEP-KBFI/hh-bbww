@@ -97,7 +97,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         lep_mva_wp,
         jet_cleaning_by_index,
         gen_matching_by_index,
-        evtCategories,
         max_files_per_job,
         era,
         use_lumi,
@@ -191,7 +190,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.evtCategory_inclusive = "hh_bb2l"
 
     self.histogramOptions = parseHistogramNames(self.histograms_to_fit.keys())
-    self.datacard_categories = set()    
+    self.datacard_categories = set()
     for histogramOption in self.histogramOptions.values():
       self.datacard_categories.add(histogramOption['category'])
     self.datacard_categories.add('makePlots')
@@ -876,7 +875,18 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       self.addToMakefile_addSysTT(lines_makefile, make_target = "phony_addSysTT", make_dependency = "phony_hadd_stage1_5")
       assert (self.make_dependency_hadd_stage2)
       self.make_dependency_hadd_stage2 += " phony_addSysTT"  # note the space!
+    #----------------------------------------------------------------------------
+    # CV: run hadd_stage2 jobs on quasar,
+    #     as the memory consumption of hadd_stage2 jobs exceeds the memory limit (1.8 Gb) for batch jobs
+    ##is_sbatch_bak = self.is_sbatch
+    ##self.is_sbatch = False
+    ##is_makefile_bak = self.is_makefile
+    ##self.is_makefile = True
+    ##self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
     self.addToMakefile_hadd_stage2(lines_makefile)
+    ##self.is_sbatch = is_sbatch_bak
+    ##self.is_makefile = is_makefile_bak
+    #----------------------------------------------------------------------------
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)
