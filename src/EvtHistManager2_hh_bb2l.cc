@@ -102,6 +102,9 @@ EvtHistManager2_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_numBJets_loose_,   numBJets_loose,    evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numBJets_medium_,  numBJets_medium,   evtWeight, evtWeightErr);
 
+  fillWithOverFlow(histogram_HT_,               HT,                evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_STMET_,            STMET,             evtWeight, evtWeightErr);
+
   fillWithOverFlow(histogram_m_Hbb_,            m_Hbb,             evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_Hbb_,           dR_Hbb,            evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_Hbb_,         dPhi_Hbb,          evtWeight, evtWeightErr);

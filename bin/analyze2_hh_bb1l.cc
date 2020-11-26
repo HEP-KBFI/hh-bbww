@@ -851,22 +851,22 @@ int main(int argc, char* argv[])
         selHistManager->evt_->bookHistograms(fs);
       }
 
-      if ( fillHistograms_BDT )
-      {
+      //if ( fillHistograms_BDT )
+      //{
         selHistManager->datacard_BDT_ = new DatacardHistManager_hh(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/BDT", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, &eventCategory_BDT,
           isDEBUG);
         selHistManager->datacard_BDT_->bookHistograms(fs);
-      }
-      if ( fillHistograms_LBN )
-      {
+      //}
+      //if ( fillHistograms_LBN )
+      //{
         selHistManager->datacard_LBN_ = new DatacardHistManager_hh_multiclass(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/LBN", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, &eventCategory_LBN,
           isDEBUG);
         selHistManager->datacard_LBN_->bookHistograms(fs);
-      }
+      //}
 
       if(! skipBooking)
       {
@@ -1295,6 +1295,8 @@ int main(int argc, char* argv[])
 
     if ( isDEBUG || run_lumi_eventSelector ) 
     {
+      printCollection("hadTau_ptrs", hadTau_ptrs);
+      printCollection("cleanedHadTaus", cleanedHadTaus);
       printCollection("vetoHadTaus", vetoHadTaus);
       printCollection("uncleaned AK4 jets", jet_ptrs_ak4);
       printCollection("cleaned AK4 jets(wrtLeptons)", cleanedJetsAK4_wrtLeptons);

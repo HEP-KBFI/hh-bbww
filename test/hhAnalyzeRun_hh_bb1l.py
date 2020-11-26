@@ -141,11 +141,47 @@ elif mode == "ttbar_sync":
 else:
   raise ValueError("Internal logic error")
 
-if mode == "default" and len(central_or_shifts) <= 1:
-  evtCategories = []
-else:
-  evtCategories = []
+histograms_to_fit = {
+  "EventCounter" : {}
+}
+masspoints = [ 250., 260., 270., 280., 300., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
+for masspoint in masspoints:
+  # CV: add histograms for BDT-based extraction of resonant HH signal,
+  #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
+  categories = [ "boosted", "resolved_2b", "resolved_1b" ]
+  for category in categories:
+    histograms_to_fit.update({ "sel/datacard/BDT/$PROCESS/MVAOutput_%0.0f_hypo_spin0" % masspoint : {} })
+    histograms_to_fit.update({ "sel/datacard/BDT/$PROCESS/MVAOutput_%0.0f_hypo_spin2" % masspoint : {} })
+  # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
+  #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+  categories = [ 
+    "HH_boosted", "HH_resolved_2b", "HH_resolved_1b", 
+    "TT_boosted", "TT_resolved", 
+    "W_boosted", "W_resolved", 
+    "DY_boosted", "DY_resolved", 
+    "SingleTop_boosted", "SingleTop_resolved", 
+    "Other" 
+  ]
+  for category in categories:
+    histograms_to_fit.update({ "sel/datacard/LBN/$PROCESS/MVAOutput_%0.0f_hypo_spin0" % masspoint : {} })
+    histograms_to_fit.update({ "sel/datacard/LBN/$PROCESS/MVAOutput_%0.0f_hypo_spin2" % masspoint : {} })
+bmNames = [ "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" ]
+for bmName in bmNames:
+  categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
+  for category in categories:
+    histograms_to_fit.update({ "sel/datacard/BDT/$PROCESS/MVAOutput_%s" % bmName : {} })
+  categories = [ 
+    "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b", 
+    "TT_boosted", "TT_resolved", 
+    "W_boosted", "W_resolved", 
+    "DY_boosted", "DY_resolved", 
+    "SingleTop_boosted", "SingleTop_resolved", 
+    "Other" 
+  ]
+  for category in categories:
+    histograms_to_fit.update({ "sel/datacard/LBN/$PROCESS/MVAOutput_%s" % bmName : {} })
 
+evtCategories = []
 
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
@@ -171,125 +207,6 @@ if __name__ == '__main__':
     logging.info("Changing tau ID working point: %s -> %s" % (hadTau_selection_veto, args.tau_id_wp))
     hadTau_mva_wp_veto = args.tau_id_wp
 
-
-  categories_list_bins =  [
-    #"_HbbFat_WjjRes_allReco_e",
-   #"_Res_allReco_1b_e",
-   #"_Res_allReco_2b_e",
-   #"_HbbFat_WjjRes_allReco_m",
-   #"_Res_allReco_1b_m",
-   #"_Res_allReco_2b_m",
-   #"_Res_allReco_0b_m",
-   #"_Res_allReco_0b_m",
-   # "_Res_restOfcat_1b_m",
-    #"_Res_restOfcat_2b_m",
-    #"_Res_restOfcat_1b_e",
-    #"_Res_restOfcat_2b_e",
-    #"_HbbFat_restOfcat_e",
-    #"_HbbFat_restOfcat_m",
-   #"_HbbFat_WjjRes_MissJet_e",
-   #"_Res_MissWJet_1b_e",
-   #"_Res_MissWJet_2b_e",
-   #"_HbbFat_WjjRes_MissJet_m",
-   #"_Res_MissWJet_1b_m",
-   #"_Res_MissWJet_2b_m",
-   # "_singleCat_2b_m",
-    # "_singleCat_2b_e",
-    #"_singleCat_1b_m",
-     #"_singleCat_1b_e",
-    #"_resolved_singleCat_2b_m",
-     #"_resolved_singleCat_2b_e",
-    #"_resolved_singleCat_1b_m",
-     #"_resolved_singleCat_1b_e",
-    #"_boosted_singleCat_m",
-     #"_boosted_singleCat_e"
-    "_boosted_singleCat",
-    "_resolved_singleCat_1b",
-    "_resolved_singleCat_2b",
-    "_HH_node_boosted_singleCat",
-    "_HH_node_resolved_singleCat_1b",
-    "_HH_node_resolved_singleCat_2b",
-    "_TT_node_boosted_singleCat",
-    "_TT_node_resolved_singleCat_1b",
-    "_TT_node_resolved_singleCat_2b",
-    "_DY_node_boosted_singleCat",
-    "_DY_node_resolved_singleCat_1b",
-    "_DY_node_resolved_singleCat_2b",
-    "_ST_node_boosted_singleCat",
-    "_ST_node_resolved_singleCat_1b",
-    "_ST_node_resolved_singleCat_2b",
-    "_W_node_boosted_singleCat",
-    "_W_node_resolved_singleCat_1b",
-    "_W_node_resolved_singleCat_2b",
-    "_Other_node_boosted_singleCat",
-    "_Other_node_resolved_singleCat_1b",
-    "_Other_node_resolved_singleCat_2b",
-    "_wLBN_HH_node_boosted_singleCat",
-    "_wLBN_HH_node_resolved_singleCat_1b",
-    "_wLBN_HH_node_resolved_singleCat_2b",
-    "_wLBN_TT_node_boosted_singleCat",
-    "_wLBN_TT_node_resolved_singleCat_1b",
-    "_wLBN_TT_node_resolved_singleCat_2b",
-    "_wLBN_DY_node_boosted_singleCat",
-    "_wLBN_DY_node_resolved_singleCat_1b",
-    "_wLBN_DY_node_resolved_singleCat_2b",
-    "_wLBN_ST_node_boosted_singleCat",
-    "_wLBN_ST_node_resolved_singleCat_1b",
-    "_wLBN_ST_node_resolved_singleCat_2b",
-    "_wLBN_W_node_boosted_singleCat",
-    "_wLBN_W_node_resolved_singleCat_1b",
-    "_wLBN_W_node_resolved_singleCat_2b",
-    "_wLBN_Other_node_boosted_singleCat",
-    "_wLBN_Other_node_resolved_singleCat_1b",
-    "_wLBN_Other_node_resolved_singleCat_2b",
-
-   ]
-  if not ignore_Wjj_boosted :
-      categories_list_bins = categories_list_bins + [
-       "_HbbFat_WjjFat_HP_e",
-       "_WjjFat_HP_e",
-       "_HbbFat_WjjFat_LP_e",
-       "_WjjFat_LP_e",
-       "_HbbFat_WjjFat_HP_m",
-       "_WjjFat_HP_m",
-       "_HbbFat_WjjFat_LP_m",
-       "_WjjFat_LP_m",
-       "_Res_MissBJet_m",
-       "_Res_MissBJet_e"
-       ]
-
-  for_categories_map = [
-  # those are for the BDT types
-  "cat_jet_2BDT_Wjj_BDT_SM",
- # "cat_jet_2BDT_Wjj_simple_SM",
- # "cat_jet_2BDT_Wjj_BDT_X900GeV",
- # "cat_jet_2BDT_Wjj_simple_X900GeV"
-  ]
-
-  for_data_MC_plots = [
-  "jet1_pt",
-  "jet1_eta",
-  "lep1_pt",
-  "lep1_eta",
-  "jet2_pt",
-  "jet2_eta",
-    "MET_pT"
-  ]
-
-  histograms_to_fit_list                 = {
-    "EventCounter"                      : {},
-    #"HT"                                : {},
-    #"STMET"                             : {},
-  }
-  # add  the BDT types with subcategories to the histogram list
-  for typeMVA in for_categories_map :
-    for typyCat in categories_list_bins :
-      histograms_to_fit_list[typeMVA + typyCat] = {}
-  if doDataMCPlots :
-    for typeMVA in for_data_MC_plots :
-      for typyCat in categories_list_bins :
-        histograms_to_fit_list[typeMVA + typyCat] = {}
-
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
@@ -311,9 +228,9 @@ if __name__ == '__main__':
     check_output_files                    = check_output_files,
     running_method                        = running_method,
     num_parallel_jobs                     = num_parallel_jobs,
-    executable_addBackgrounds             = "addBackgrounds",
+    executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes",
-    histograms_to_fit                     = histograms_to_fit_list,
+    histograms_to_fit                     = histograms_to_fit,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,
