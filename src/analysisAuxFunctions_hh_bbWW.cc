@@ -1,10 +1,12 @@
 #include "hhAnalysis/bbww/interface/analysisAuxFunctions_hh_bbWW.h"
 
 TMVAInterface *
-makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant)
+makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant, std::string era)
 {
-  std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
-  std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
+  std::string filename_odd = Form("xmlFileName_odd_%s", era.data());
+  std::string filename_even = Form("xmlFileName_even_%s", era.data());
+  std::string xmlFileName_odd = cfg.getParameter<std::string>(filename_odd);
+  std::string xmlFileName_even = cfg.getParameter<std::string>(filename_even);
   std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
   TMVAInterface * retVal = nullptr;
   //if ( is_nonresonant )
@@ -23,10 +25,12 @@ makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant)
 }
 
 TensorFlowInterfaceLBN *
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg)
+    makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, std::string era)
 {
-  std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
-  std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
+  std::string filename_odd = Form("pbFileName_odd_%s", era.data());
+  std::string filename_even = Form("pbFileName_even_%s", era.data());
+  std::string pbFileName_odd = cfg.getParameter<std::string>(filename_odd);
+  std::string pbFileName_even = cfg.getParameter<std::string>(filename_even);
   std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
   std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
   std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");

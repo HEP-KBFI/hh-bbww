@@ -441,19 +441,19 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_BDT = cfg_analyze.getParameter<edm::ParameterSet>("BDT");
 
     edm::ParameterSet cfg_BDT_resonant_spin2_boosted = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
-    BDT_resonant_spin2_boosted = makeTMVAInterface(cfg_BDT_resonant_spin2_boosted, false);
+    BDT_resonant_spin2_boosted = makeTMVAInterface(cfg_BDT_resonant_spin2_boosted, false, era_string);
     edm::ParameterSet cfg_BDT_resonant_spin2_resolved = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
-    BDT_resonant_spin2_resolved = makeTMVAInterface(cfg_BDT_resonant_spin2_resolved, false);
+    BDT_resonant_spin2_resolved = makeTMVAInterface(cfg_BDT_resonant_spin2_resolved, false, era_string);
 
     edm::ParameterSet cfg_BDT_resonant_spin0_boosted = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
-    BDT_resonant_spin0_boosted = makeTMVAInterface(cfg_BDT_resonant_spin0_boosted, false);
+    BDT_resonant_spin0_boosted = makeTMVAInterface(cfg_BDT_resonant_spin0_boosted, false, era_string);
     edm::ParameterSet cfg_BDT_resonant_spin0_resolved = cfg_BDT.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
-    BDT_resonant_spin0_resolved = makeTMVAInterface(cfg_BDT_resonant_spin0_resolved, false);
+    BDT_resonant_spin0_resolved = makeTMVAInterface(cfg_BDT_resonant_spin0_resolved, false, era_string);
 
     edm::ParameterSet cfg_BDT_nonresonant_boosted = cfg_BDT.getParameter<edm::ParameterSet>("nonresonant_boosted");
-    BDT_nonresonant_boosted = makeTMVAInterface(cfg_BDT_nonresonant_boosted, true);
+    BDT_nonresonant_boosted = makeTMVAInterface(cfg_BDT_nonresonant_boosted, true, era_string);
     edm::ParameterSet cfg_BDT_nonresonant_resolved = cfg_BDT.getParameter<edm::ParameterSet>("nonresonant_resolved");
-    BDT_nonresonant_resolved = makeTMVAInterface(cfg_BDT_nonresonant_resolved, true);
+    BDT_nonresonant_resolved = makeTMVAInterface(cfg_BDT_nonresonant_resolved, true, era_string);
   }
 
   // initialize LBN-based signal extraction for resonant and non-resonant HH signal
@@ -469,19 +469,19 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
 
     edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
-    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted);
+    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted, era_string);
     edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
-    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved);
+    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved, era_string);
 
     edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
-    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted);
+    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted, era_string);
     edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
-    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved);
+    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved, era_string);
 
     edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
-    LBN_nonresonant_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_boosted);
+    LBN_nonresonant_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_boosted, era_string);
     edm::ParameterSet cfg_LBN_nonresonant_resolved = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved");
-    LBN_nonresonant_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_resolved);
+    LBN_nonresonant_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_resolved, era_string);
   }  
 
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
@@ -2132,6 +2132,7 @@ int main(int argc, char* argv[])
     if ( selJet2_Hbb ) ++numBJets_jpa;
 
     std::map<std::string, double> mvaInputVariables_list = {
+      {"numBJets_jpa_medium",     numBJets_jpa_medium},
       {"lep_pt",                  selLepton->pt()},
       {"lep_conePt",              comp_lep_conePt(*selLepton)},
       {"lep_eta",                 selLepton->eta()},
