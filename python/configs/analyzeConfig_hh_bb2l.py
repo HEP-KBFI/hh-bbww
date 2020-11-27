@@ -199,7 +199,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       self.copyHistogram_histogramDirs[category] = []
       for histogramOption in self.histogramOptions.values():
         self.copyHistogram_histogramDirs[category].append(histogramOption['histogramDir'])
-    self.copyHistogram_histogramDirs['makePlots'] = [
+    self.copyHistogram_histogramDirs['makePlots_data'] = [
       'sel/electrons',
       'sel/leadElectron',
       'sel/subleadElectron',
@@ -219,12 +219,15 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       'sel/evt',
       'sel/evtYield',
       'sel/weights',
-      'sel/cutFlow',
+      'sel/cutFlow'      
+    ]
+    self.copyHistogram_histogramDirs['makePlots_mc'] = [
       'sel/genEvt',
       'sel/lheInfo',
       'unbiased/genEvt'
     ]
-
+    self.copyHistogram_histogramDirs['makePlots_mc'].extend(self.copyHistogram_histogramDirs['makePlots_data'])
+ 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
     """
@@ -531,12 +534,18 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               cfgFile_modified = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_CFGS], "copyHistograms_%s_%s_%s_%s_cfg.py" % copyHistograms_job_tuple)
               outputFile = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_HIST], "copyHistograms_%s_%s_%s_%s.root" % copyHistograms_job_tuple)
               histogramDir_part1 = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection)
+              key_copyHistogram_histogramDirs = category
+              if category == "makePlots":
+                if is_mc:
+                  key_copyHistogram_histogramDirs += "_mc"
+                else:
+                  key_copyHistogram_histogramDirs += "_data"
               self.jobOptions_copyHistograms[key_copyHistograms_job] = {
                 'inputFile' : self.outputFile_hadd_stage1[key_hadd_stage1_job],
                 'cfgFile_modified' : cfgFile_modified,
                 'outputFile' : outputFile,
                 'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                'categories' : [ histogramDir_part1 + '/' + histogramDir_part2 for histogramDir_part2 in self.copyHistogram_histogramDirs[category] ]
+                'categories' : [ histogramDir_part1 + '/' + histogramDir_part2 for histogramDir_part2 in self.copyHistogram_histogramDirs[key_copyHistogram_histogramDirs] ]
               }
               self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
             #----------------------------------------------------------------------------

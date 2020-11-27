@@ -192,7 +192,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       self.copyHistogram_histogramDirs[category] = []
       for histogramOption in self.histogramOptions.values():
         self.copyHistogram_histogramDirs[category].append(histogramOption['histogramDir'])
-    self.copyHistogram_histogramDirs['makePlots'] = [
+    self.copyHistogram_histogramDirs['makePlots_data'] = [
       'sel/electrons',
       'sel/muons',
       'sel/jetsAK4',
@@ -209,11 +209,14 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       'sel/evt',
       'sel/evtYield',
       'sel/weights',
-      'sel/cutFlow',
+      'sel/cutFlow'
+    ]
+    self.copyHistogram_histogramDirs['makePlots_mc'] = [
       'sel/genEvt',
       'sel/lheInfo',
       'unbiased/genEvt'
     ]
+    self.copyHistogram_histogramDirs['makePlots_mc'].extend(self.copyHistogram_histogramDirs['makePlots_data'])
 
     self.second_bdt = second_bdt
 
@@ -515,12 +518,18 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             cfgFile_modified = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_CFGS], "copyHistograms_%s_%s_%s_cfg.py" % copyHistograms_job_tuple)
             outputFile = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_HIST], "copyHistograms_%s_%s_%s.root" % copyHistograms_job_tuple)
             histogramDir_part1 = getHistogramDir(category, lepton_selection, lepton_frWeight)
+            key_copyHistogram_histogramDirs = category
+            if category == "makePlots":
+              if is_mc:
+                key_copyHistogram_histogramDirs += "_mc"
+              else:
+                key_copyHistogram_histogramDirs += "_data"
             self.jobOptions_copyHistograms[key_copyHistograms_job] = {
               'inputFile' : self.outputFile_hadd_stage1[key_hadd_stage1_job],
               'cfgFile_modified' : cfgFile_modified,
               'outputFile' : outputFile,
               'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-              'categories' : [ histogramDir_part1 + '/' + histogramDir_part2 for histogramDir_part2 in self.copyHistogram_histogramDirs[category] ]
+              'categories' : [ histogramDir_part1 + '/' + histogramDir_part2 for histogramDir_part2 in self.copyHistogram_histogramDirs[key_copyHistogram_histogramDirs] ]
             }
             self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
           #----------------------------------------------------------------------------
@@ -823,7 +832,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_mcClosure_%s.png" % self.channel)
         }
         self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job])
-
 
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
