@@ -1,10 +1,14 @@
 #include "hhAnalysis/bbww/interface/analysisAuxFunctions_hh_bbWW.h"
 
+#include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
+
 TMVAInterface *
-makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant)
+makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
 {
   std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
+  xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "%s", era);
   std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
+  xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "%s", era);
   std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
   TMVAInterface * retVal = nullptr;
   //if ( is_nonresonant )
@@ -23,10 +27,12 @@ makeTMVAInterface(const edm::ParameterSet & cfg, bool is_nonresonant)
 }
 
 TensorFlowInterfaceLBN *
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg)
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era)
 {
   std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
+  pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "%s", era);
   std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
+  pbFileName_even = boost::replace_all_copy(pbFileName_even, "%s", era);
   std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
   std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
   std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
