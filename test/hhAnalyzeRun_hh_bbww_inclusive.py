@@ -20,6 +20,7 @@ parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_rle_select()
+parser.add_lep_mva_wp(default_wp = 'hh_multilepton')
 parser.add_nonnominal()
 parser.add_use_home()
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
@@ -48,6 +49,7 @@ mode              = args.mode
 rle_select        = os.path.expanduser(args.rle_select)
 systematics_label = args.systematics
 use_nonnominal    = args.original_central
+lep_mva_wp        = args.lep_mva_wp
 use_home          = args.use_home
 jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
@@ -110,6 +112,7 @@ if __name__ == '__main__':
     outputDir               = outputDir,
     executable_analyze      = "analyze_hh_bbww_inclusive",
     cfgFile_analyze         = "analyze_hh_bbww_inclusive_cfg.py",
+    lep_mva_wp              = lep_mva_wp,
     samples                 = samples,
     era                     = era,
     output_tree             = output_tree,
