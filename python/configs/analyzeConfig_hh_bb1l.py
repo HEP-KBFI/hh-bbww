@@ -189,9 +189,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.datacard_categories.add('makePlots')
     self.copyHistogram_histogramDirs = collections.OrderedDict()
     for category in self.datacard_categories:
-      self.copyHistogram_histogramDirs[category] = []
+      self.copyHistogram_histogramDirs[category] = set()
       for histogramOption in self.histogramOptions.values():
-        self.copyHistogram_histogramDirs[category].append(histogramOption['histogramDir'])
+        if histogramOption['category'] == category:
+          self.copyHistogram_histogramDirs[category].add(histogramOption['histogramDir'])
     self.copyHistogram_histogramDirs['makePlots_data'] = [
       'sel/electrons',
       'sel/muons',
