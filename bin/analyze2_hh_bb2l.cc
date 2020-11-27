@@ -2273,10 +2273,10 @@ int main(int argc, char* argv[])
       double lep2_frWeight  = ( selLepton_sublead->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_sublead(central_or_shift_main);
       
       std::map<std::string, double> weightMapHH;
-      if(apply_HH_rwgt)
+      if ( apply_HH_rwgt )
       {
         assert(HHWeight_calc);
-        for(unsigned int i =0; i < HHWeightNames.size();i++)
+        for ( unsigned int i = 0; i < HHWeightNames.size(); i++ )
         {
           weightMapHH[HHWeightNames[i]] = HHWeight_calc->getWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
         }

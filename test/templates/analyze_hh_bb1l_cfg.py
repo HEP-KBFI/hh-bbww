@@ -199,9 +199,9 @@ process.analyze_hh_bb1l = cms.PSet(
             hl_inputVariables = cms.vstring(
                 'mht', 'HT', 'm_Hbb', 'jpaScore', 'm_Wjj', 
                 'dR_HH', 'mbb_loose', 'mbb_medium', 'numJets', 'numBJets_medium', 
-                'numBJets_jpa_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
-                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose',
-                'leadFwdJet_pt', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
+                'numBJets_medium', 'dR_b1lep', 'pT_HH', 'm_HH_B2G_18_008', 'mT_W', 
+                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mll_loose', 'bjet2_pt',
+                'leadFwdJet_pt', 'numJets', 'tau21_Hbb', 'vbf_m_jj', 'vbf_dEta_jj', 
                 'bjet1_btagCSV', 'wjet1_btagCSV', 'gen_mHH'
             ),
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY', 'VBF')
@@ -279,8 +279,6 @@ process.analyze_hh_bb1l.BDT.resonant_spin0_resolved = process.analyze_hh_bb1l.BD
 process.analyze_hh_bb1l.BDT.resonant_spin0_boosted  = process.analyze_hh_bb1l.BDT.nonresonant_boosted
 process.analyze_hh_bb1l.LBN.resonant_spin2_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
 process.analyze_hh_bb1l.LBN.resonant_spin2_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
-##process.analyze_hh_bb1l.LBN.resonant_spin0_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
-##process.analyze_hh_bb1l.LBN.resonant_spin0_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
-##process.fwliteInput.maxEvents = cms.int32(10000)
-##process.fwliteInput.outputEvery = cms.uint32(1000)
+process.analyze_hh_bb1l.LBN.resonant_spin0_resolved = process.analyze_hh_bb1l.LBN.nonresonant_resolved
+process.analyze_hh_bb1l.LBN.resonant_spin0_boosted  = process.analyze_hh_bb1l.LBN.nonresonant_boosted
 #----------------------------------------------------------------------------------------------------
