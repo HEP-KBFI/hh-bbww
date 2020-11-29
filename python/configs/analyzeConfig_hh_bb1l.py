@@ -101,6 +101,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
+        executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
         histograms_to_fit,
@@ -158,6 +159,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.pruneSystematics()
     self.internalizeSystematics()
 
+    self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
 
@@ -518,7 +520,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             key_copyHistograms_job = getKey(*copyHistograms_job_tuple)
             cfgFile_modified = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_CFGS], "copyHistograms_%s_%s_%s_cfg.py" % copyHistograms_job_tuple)
             outputFile = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_HIST], "copyHistograms_%s_%s_%s.root" % copyHistograms_job_tuple)
-            histogramDir_part1 = getHistogramDir(category, lepton_selection, lepton_frWeight)
+            histogramDir_part1 = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight)
             key_copyHistogram_histogramDirs = category
             if category == "makePlots":
               if is_mc:
@@ -845,6 +847,10 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_copyHistograms)
       self.sbatchFile_copyHistograms = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_copyHistograms_%s.py" % self.channel)
       self.createScript_sbatch_copyHistograms(self.executable_copyHistograms, self.sbatchFile_copyHistograms, self.jobOptions_copyHistograms)
+      if self.ttbar_syst_enabled:
+        logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addSysTT)
+        self.sbatchFile_addSysTT = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addSysTT_%s.py" % self.channel)
+        self.createScript_sbatch_addSysTT(self.executable_addSysTT, self.sbatchFile_addSysTT, self.jobOptions_addSysTT)
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addBackgrounds)
       self.sbatchFile_addBackgrounds = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addBackgrounds_%s.py" % self.channel)
       self.createScript_sbatch_addBackgrounds(self.executable_addBackgrounds, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
