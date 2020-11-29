@@ -225,6 +225,7 @@ if __name__ == '__main__':
     check_output_files                    = check_output_files,
     running_method                        = running_method,
     num_parallel_jobs                     = num_parallel_jobs,
+    executable_addSysTT                   = "addSysTT",
     executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes",
     histograms_to_fit                     = histograms_to_fit,
