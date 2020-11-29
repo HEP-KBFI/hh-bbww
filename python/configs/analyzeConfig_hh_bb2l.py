@@ -44,7 +44,7 @@ def parseHistogramNames(histograms_to_fit):
       for idx, item in enumerate(items):
         if item == "BDT" or item == "LBN":
           category = "%s_%s" % (items[idx], items[idx + 1])
-      if histogramToFit.find("spin0") == -1 and histogramToFit.find("spin2"):
+      if histogramToFit.find("spin0") == -1 and histogramToFit.find("spin2") == -1:
         type = "nonresonant"
       else:
         type = "resonant"
@@ -171,13 +171,13 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
-    self.prep_dcard_signals = []
+    self.prep_dcard_signals = set()
     for sample_name, sample_info in self.samples.items():
       if not sample_info["use_it"]:
         continue
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
-        self.prep_dcard_signals.append(sample_category)
+        self.prep_dcard_signals.add(sample_category)
     self.make_plots_backgrounds = self.get_makeplots_backgrounds()
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
@@ -744,18 +744,22 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             else:
               doAdd = True
             if doAdd:
-              if "bbvv" in sample_category:
-                prep_dcard_HH.add(sample_category.replace("bbvv", "bbzz"))
-                prep_dcard_HH.add(sample_category.replace("bbvv", "bbww"))
-              elif "bbtt" in sample_category:
-                prep_dcard_HH.add(sample_category)
+              if "_bbvv" in sample_category:
+                prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbzz").replace("_sl", ""))
+                prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbww").replace("_sl", ""))
+                if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
+                  prep_dcard_HH.add(sample_category.replace("_bbvv", "").replace("_sl", ""))
+              elif "_bbtt" in sample_category:
+                prep_dcard_HH.add(sample_category.replace("_sl", ""))
+                if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
+                  prep_dcard_HH.add(sample_category.replace("_bbtt", "").replace("_sl", ""))
               else:
                 raise ValueError("Failed to identify relevant HH decay mode(s) for 'sample_category' = %s !!" % sample_category)
         prep_dcard_HH = list(prep_dcard_HH)
         prep_dcard_H = []
         prep_dcard_other_nonfake_backgrounds = []
         for process in self.nonfake_backgrounds:
-          if process in [ "VH", "WH", "ZH", "TH", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
+          if process in [ "VH", "WH", "ZH", "TH", "tHq", "tHW", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
             prep_dcard_H.append("%s_hww" % process)
             prep_dcard_H.append("%s_hzz" % process)
             prep_dcard_H.append("%s_htt" % process)
@@ -773,7 +777,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         histogramDir_modified = None
         histogramToFit_modified = None
         if histogramToFit.find("/") != -1:
-          histogramDir_modified = histogramOptions['histogramDir']
+          histogramDir_modified = getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection) + "/" + histogramOptions['histogramDir']
           histogramToFit_modified = histogramOptions['histogramName']
           # CV: propagate histogram (re)binning options
           self.histograms_to_fit[histogramToFit_modified] = self.histograms_to_fit[histogramToFit]
