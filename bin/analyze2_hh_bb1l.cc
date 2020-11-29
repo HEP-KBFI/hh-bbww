@@ -156,6 +156,10 @@ const int hadTauSelection_veto_antiMuon = -1; // not applied
 
 const double higgsBosonMass = 125.;
 
+// CV: limit number of jets considered for building JPAs to avoid that a single noisy event can increase the number of JPAs by a lot
+//    (for resolved events, the numbers of JPAs scales like numJets**4, while for boosted events, the number of JPA scales like numJets**2)
+const int max_numJets = 50;
+
 enum { kjpa_HbbBoosted_undefined, kjpa_HbbBoosted_2jet, kjpa_HbbBoosted_missingWJet, kjpa_HbbBoosted_restOfcat };
 enum { kjpa_HbbResolved_undefined, kjpa_HbbResolved_4jet, kjpa_HbbResolved_missingWJet, kjpa_HbbResolved_missingBJet, kjpa_HbbResolved_missingAllWJet, 
        kjpa_HbbResolved_missingBJet_missingWJet, kjpa_HbbResolved_missingBJet_missingAllWJet, kjpa_HbbResolved_restOfcat };
@@ -850,22 +854,22 @@ int main(int argc, char* argv[])
         selHistManager->evt_->bookHistograms(fs);
       }
 
-      //if ( fillHistograms_BDT )
-      //{
+      if ( fillHistograms_BDT )
+      {
         selHistManager->datacard_BDT_ = new DatacardHistManager_hh(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/BDT", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, &eventCategory_BDT,
           isDEBUG);
         selHistManager->datacard_BDT_->bookHistograms(fs);
-      //}
-      //if ( fillHistograms_LBN )
-      //{
+      }
+      if ( fillHistograms_LBN )
+      {
         selHistManager->datacard_LBN_ = new DatacardHistManager_hh_multiclass(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/LBN", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, &eventCategory_LBN,
           isDEBUG);
         selHistManager->datacard_LBN_->bookHistograms(fs);
-      //}
+      }
 
       if(! skipBooking)
       {
@@ -1283,10 +1287,11 @@ int main(int argc, char* argv[])
 //--- build collections of jets and select subset of jets passing b-tagging criteria
     const std::vector<RecoJet> jets_ak4 = jetReaderAK4->read();
     const std::vector<const RecoJet*> jet_ptrs_ak4 = convert_to_ptrs(jets_ak4);
-    const std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = jetCleaningByIndex ?
+    const std::vector<const RecoJet*> tmpJetsAK4 = jetCleaningByIndex ?
       jetCleanerAK4_byIndex(jet_ptrs_ak4, fakeableLeptons) :
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
+    std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = pickFirstNobjects(tmpJetsAK4, max_numJets);
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -2367,6 +2372,7 @@ int main(int argc, char* argv[])
         bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
         std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted->mvaInputVariables(), true); // FIXME: set to false
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
+
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
       }
@@ -2376,6 +2382,7 @@ int main(int argc, char* argv[])
         bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
         std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved->mvaInputVariables(), true); // FIXME: set to false
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
+
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
       }
@@ -2393,6 +2400,7 @@ int main(int argc, char* argv[])
         lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
         std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted->hl_mvaInputVariables(), true); // FIXME: set to false
         lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
+
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted->hl_mvaInputVariables(), true);
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
       }
@@ -2402,6 +2410,7 @@ int main(int argc, char* argv[])
         lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
         std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved->hl_mvaInputVariables(), true); // FIXME: set to false
         lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
+
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved->hl_mvaInputVariables(), true);
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
       }
