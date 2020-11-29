@@ -298,7 +298,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             continue
 
           lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-          central_or_shift_extensions = ["", "hadd", "copyHistograms", "addBackgrounds"]
+          central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSysTT", "addBackgrounds"]
           central_or_shift_dedicated = self.central_or_shifts if self.runTHweights(sample_info) else self.central_or_shifts_external
           central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
           for central_or_shift_or_dummy in central_or_shifts_extended:
@@ -308,7 +308,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 continue
               evtcategories_extended = [""]
               evtcategories_extended.extend(self.datacard_categories)
-              if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
+              if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addSysTT", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
                 continue
 
               if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
@@ -328,7 +328,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                   self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                               "_".join([ lepton_selection_and_frWeight ]), process_name_or_dummy)
 
-    for subdirectory in [ "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
