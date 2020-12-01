@@ -227,6 +227,7 @@ if __name__ == '__main__':
     num_parallel_jobs                     = num_parallel_jobs,
     executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes",
+    executable_addSysTT                   = "addSysTT",
     histograms_to_fit                     = histograms_to_fit,
     select_rle_output                     = True,
     dry_run                               = dry_run,
