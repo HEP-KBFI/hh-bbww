@@ -35,4 +35,7 @@ def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None,
     if sample_name.startswith('/ST') and separate_ST :
       sample_info["sample_category"] = "ST"
 
+    if 'dipoleRecoilOn' in sample_info["sample_category"] and sample_info["sample_category"].endswith(('bbvv', 'bbvv_sl', 'bbtt')):
+      sample_info["use_it"] = True
+
   return samples

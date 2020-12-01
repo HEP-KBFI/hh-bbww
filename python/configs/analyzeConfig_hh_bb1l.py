@@ -42,7 +42,7 @@ def parseHistogramNames(histograms_to_fit):
       for idx, item in enumerate(items):
         if item == "BDT" or item == "LBN":
           category = "%s_%s" % (items[idx], items[idx + 1])
-      if histogramToFit.find("spin0") == -1 and histogramToFit.find("spin2"):
+      if histogramToFit.find("spin0") == -1 and histogramToFit.find("spin2") == -1:
         type = "nonresonant"
       else:
         type = "resonant"
@@ -101,6 +101,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
+        executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
         executable_addSysTT,
@@ -159,6 +160,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.pruneSystematics()
     self.internalizeSystematics()
 
+    self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
     self.executable_addSysTT = executable_addSysTT
@@ -166,13 +168,13 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_vh = False, split_th = False, split_ST = True)
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
-    self.prep_dcard_signals = []
+    self.prep_dcard_signals = set()
     for sample_name, sample_info in self.samples.items():
       if not sample_info["use_it"]:
         continue
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
-        self.prep_dcard_signals.append(sample_category)
+        self.prep_dcard_signals.add(sample_category)
     self.make_plots_backgrounds = self.get_makeplots_backgrounds()
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb1l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb1l_cfg.py")
@@ -300,7 +302,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             continue
 
           lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-          central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSyTT", "addBackgrounds"]
+          central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSysTT", "addBackgrounds"]
           central_or_shift_dedicated = self.central_or_shifts if self.runTHweights(sample_info) else self.central_or_shifts_external
           central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
           for central_or_shift_or_dummy in central_or_shifts_extended:
@@ -330,7 +332,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                   self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                               "_".join([ lepton_selection_and_frWeight ]), process_name_or_dummy)
 
-    for subdirectory in ["addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
@@ -520,7 +522,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             key_copyHistograms_job = getKey(*copyHistograms_job_tuple)
             cfgFile_modified = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_CFGS], "copyHistograms_%s_%s_%s_cfg.py" % copyHistograms_job_tuple)
             outputFile = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_HIST], "copyHistograms_%s_%s_%s.root" % copyHistograms_job_tuple)
-            histogramDir_part1 = getHistogramDir(category, lepton_selection, lepton_frWeight)
+            histogramDir_part1 = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight)
             key_copyHistogram_histogramDirs = category
             if category == "makePlots":
               if is_mc:
@@ -728,18 +730,22 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           else:
             doAdd = True
           if doAdd:
-            if "bbvv" in sample_category:
-              prep_dcard_HH.add(sample_category.replace("bbvv", "bbzz"))
-              prep_dcard_HH.add(sample_category.replace("bbvv", "bbww"))
-            elif "bbtt" in sample_category:
-              prep_dcard_HH.add(sample_category)
+            if "_bbvv" in sample_category:
+              prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbzz").replace("_sl", ""))
+              prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbww").replace("_sl", ""))
+              if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
+                prep_dcard_HH.add(sample_category.replace("_bbvv", "").replace("_sl", ""))
+            elif "_bbtt" in sample_category:
+              prep_dcard_HH.add(sample_category.replace("_sl", ""))
+              if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
+                prep_dcard_HH.add(sample_category.replace("_bbtt", "").replace("_sl", ""))
             else:
               raise ValueError("Failed to identify relevant HH decay mode(s) for 'sample_category' = %s !!" % sample_category)
       prep_dcard_HH = list(prep_dcard_HH)
       prep_dcard_H = []
       prep_dcard_other_nonfake_backgrounds = []
       for process in self.nonfake_backgrounds:
-        if process in [ "VH", "WH", "ZH", "TH", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
+        if process in [ "VH", "WH", "ZH", "TH", "tHq", "tHW", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
           prep_dcard_H.append("%s_hww" % process)
           prep_dcard_H.append("%s_hzz" % process)
           prep_dcard_H.append("%s_htt" % process)
@@ -757,7 +763,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       histogramDir_modified = None
       histogramToFit_modified = None
       if histogramToFit.find("/") != -1:
-        histogramDir_modified = histogramOptions['histogramDir']
+        histogramDir_modified = getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled") + "/" + histogramOptions['histogramDir']
         histogramToFit_modified = histogramOptions['histogramName']
         # CV: propagate histogram (re)binning options
         self.histograms_to_fit[histogramToFit_modified] = self.histograms_to_fit[histogramToFit]
@@ -849,7 +855,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addSysTT)
         self.sbatchFile_addSysTT = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addSysTT_%s.py" % self.channel)
         self.createScript_sbatch_addSysTT(self.executable_addSysTT, self.sbatchFile_addSysTT, self.jobOptions_addSysTT)
-      logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addBackgrounds)
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addBackgrounds)
       self.sbatchFile_addBackgrounds = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addBackgrounds_%s.py" % self.channel)
       self.createScript_sbatch_addBackgrounds(self.executable_addBackgrounds, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
