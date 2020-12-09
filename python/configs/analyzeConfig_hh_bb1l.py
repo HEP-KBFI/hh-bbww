@@ -801,8 +801,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         histogramDir_nominal = histogramDir_modified
         histogramDir_mcClosure = self.mcClosure_dir[lepton_mcClosure]
         if histogramToFit.find("/") != -1:
+          histogramDir_nominal = histogramDir_nominal + "/fakes_mc"
           histogramDir_mcClosure = histogramDir_mcClosure + "/" + histogramToFit[:histogramToFit.rfind("/")]
-          histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "fakes_mc")
+          histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/fakes_mc")
         else:
           histogramDir_nominal = histogramDir_nominal + "/sel/evt/fakes_mc"
           histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/fakes_mc"
