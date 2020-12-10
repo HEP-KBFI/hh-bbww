@@ -105,6 +105,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         executable_addBackgrounds,
         executable_addFakes,
         histograms_to_fit,
+        max_depth_recursion,
         select_rle_output = False,
         verbose           = False,
         dry_run           = False,
@@ -162,6 +163,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
+
+    self.max_depth_recursion = max_depth_recursion
 
     self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_vh = False, split_th = False, split_ST = True)
 
@@ -587,7 +590,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s.log" % addBackgrounds_job_fakes_tuple),
             'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight) ],
             'processes_input' : processes_input,
-            'process_output' : "fakes_mc"
+            'process_output' : "fakes_mc",
+            'max_depth_recursion' : self.max_depth_recursion
           }
           self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes])
 
@@ -608,7 +612,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s.log" % addBackgrounds_job_Convs_tuple),
             'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight) ],
             'processes_input' : processes_input,
-            'process_output' : "Convs"
+            'process_output' : "Convs",
+            'max_depth_recursion' : self.max_depth_recursion
           }
           self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs])
 
@@ -633,7 +638,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s.log" % addBackgrounds_job_signal_tuple),
                 'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight) ],
                 'processes_input' : processes_input,
-                'process_output' : process_output
+                'process_output' : process_output,
+                'max_depth_recursion' : self.max_depth_recursion
               }
               self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal])
               key_hadd_stage2_job = getKey(category, lepton_selection_and_frWeight)
@@ -694,7 +700,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           'outputFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_HIST], "addBackgroundLeptonFakes_%s.root" % addFakes_job_tuple),
           'logFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_LOGS], "addBackgroundLeptonFakes_%s.log" % addFakes_job_tuple),
           'category_signal' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled"),
-          'category_sideband' : getHistogramDir(self.evtCategory_inclusive, "Fakeable", "enabled")
+          'category_sideband' : getHistogramDir(self.evtCategory_inclusive, "Fakeable", "enabled"),
+          'max_depth_recursion' : self.max_depth_recursion
         }
       self.createCfg_addFakes(self.jobOptions_addFakes[key_addFakes_job])
       key_hadd_stage2_job = getKey(category, get_lepton_selection_and_frWeight("Tight", "disabled"))
@@ -790,7 +797,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'outputFile' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_DCRD], "addSystFakeRates_%s_%s_%s.root" % add_syst_fakerate_job_tuple),
         'category' : category,
         'histogramToFit' : histogramToFit_modified,
-        'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png")
+        'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png"),
+        'max_depth_recursion' : self.max_depth_recursion
       }
       for lepton_type in [ 'e', 'm' ]:
         lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type

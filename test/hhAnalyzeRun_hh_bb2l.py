@@ -250,6 +250,7 @@ if __name__ == '__main__':
     executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes2",
     histograms_to_fit                     = histograms_to_fit,
+    max_depth_recursion                   = 5,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,
