@@ -101,7 +101,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
-        executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
         executable_addSysTT,
