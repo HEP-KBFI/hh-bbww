@@ -92,20 +92,20 @@ namespace
     std::string histname = hist_central->GetName();
     for ( int i = 0; i < hist_central->GetNbinsX(); ++i ) 
     {
-      float bincont = hist_central->GetBinContent(i+1);
-      float bincontErr = hist_central->GetBinError(i+1);
-      float bincontup = hist_up->GetBinContent(i+1);
-      float bincontupErr = hist_up->GetBinError(i+1);
-      float bincontdn = hist_dn->GetBinContent(i+1);
-      float bincontdnErr = hist_dn->GetBinError(i+1);
-      float bincontnew = bincont + 0.5*(bincontup-bincontdn);
+      float bincont = hist_central->GetBinContent(i + 1);
+      float bincontErr = hist_central->GetBinError(i + 1);
+      float bincontup = hist_up->GetBinContent(i + 1);
+      float bincontupErr = hist_up->GetBinError(i + 1);
+      float bincontdn = hist_dn->GetBinContent(i + 1);
+      float bincontdnErr = hist_dn->GetBinError(i + 1);
+      float bincontnew = bincont + 0.5*(bincontup - bincontdn);
       float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
-      hist_up->SetBinContent(i+1,bincontnew);
-      hist_up->SetBinError(i+1,bincontnewErr);
+      hist_up->SetBinContent(i + 1,bincontnew);
+      hist_up->SetBinError(i + 1,bincontnewErr);
       bincontnew = bincont - 0.5*(bincontup-bincontdn);
       bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
-      hist_dn->SetBinContent(i+1, bincontnew);
-      hist_dn->SetBinError(i+1, bincontnewErr);
+      hist_dn->SetBinContent(i + 1, bincontnew);
+      hist_dn->SetBinError(i + 1, bincontnewErr);
     }
     setHistName(hist_up);
     setHistName(hist_dn);
@@ -139,13 +139,13 @@ namespace
     std::vector<std::pair<float, float> > hist_diff;
     for ( int i = 0; i < hist_central->GetNbinsX(); ++i ) 
     {
-      float bincont = hist_central->GetBinContent(i+1);
-      float bincontErr = hist_central->GetBinError(i+1);
+      float bincont = hist_central->GetBinContent(i + 1);
+      float bincontErr = hist_central->GetBinError(i + 1);
       hist_diff.clear();
       for ( size_t hist_cr = 0; hist_cr < hists_cr.size(); ++hist_cr ) 
       {
-        float bincont_shift = hists_cr[hist_cr]->GetBinContent(i+1);
-        float bincont_shiftErr = hists_cr[hist_cr]->GetBinError(i+1);
+        float bincont_shift = hists_cr[hist_cr]->GetBinContent(i + 1);
+        float bincont_shiftErr = hists_cr[hist_cr]->GetBinError(i + 1);
         float bin_diff = fabs(bincont-bincont_shift);
         float bin_diffErr = std::sqrt( sqr(bincontErr) + sqr(bincont_shiftErr));
         hist_diff.push_back(std::make_pair(bin_diff, bin_diffErr));
@@ -157,12 +157,12 @@ namespace
       float maxdiffErr = hist_diff[0].second;
       float bincontnew = bincont + maxdiff*funcvalue_;
       float bincontnewErr = std::sqrt( sqr(bincontErr) + sqr(funcvalue_) * sqr(maxdiffErr) );
-      hist_up->SetBinContent(i+1, bincontnew);
-      hist_up->SetBinError(i+1, bincontnewErr);
+      hist_up->SetBinContent(i + 1, bincontnew);
+      hist_up->SetBinError(i + 1, bincontnewErr);
       bincontnew = bincont - maxdiff*funcvalue_;
       bincontnewErr = std::sqrt( sqr(bincontErr) + sqr(funcvalue_) * sqr(maxdiffErr) );
-      hist_dn->SetBinContent(i+1, bincontnew);
-      hist_dn->SetBinError(i+1, bincontnewErr);
+      hist_dn->SetBinContent(i + 1, bincontnew);
+      hist_dn->SetBinError(i + 1, bincontnewErr);
     }
   }
 
@@ -170,6 +170,7 @@ namespace
                                        const TDirectory* dir, const std::string& dirName, 
                                        const vstring& processes_input, const std::string& process_output, 
                                        const vstring& central_or_shifts,
+                                       int depth_recursion, int max_depth_recursion,
                                        bool isDEBUG = false)
   {
     if ( isDEBUG )
@@ -270,9 +271,26 @@ namespace
 
     // recursively process all subdirectories
     std::vector<const TDirectory*> subdirs = getSubdirectories(dir);
-    for ( std::vector<const TDirectory*>::iterator subdir = subdirs.begin();
-          subdir != subdirs.end(); ++subdir ) {
-      processSubdirectory_recursively(fs, *subdir, dirName + "/" + (*subdir)->GetName(), processes_input, process_output, central_or_shifts, isDEBUG);
+    bool stopRecursion = ( max_depth_recursion != -1 && depth_recursion >= max_depth_recursion ) ? true : false;
+    if ( !stopRecursion )
+    {
+      for ( std::vector<const TDirectory*>::iterator subdir = subdirs.begin();
+            subdir != subdirs.end(); ++subdir ) {
+        processSubdirectory_recursively(
+          fs, *subdir, dirName + "/" + (*subdir)->GetName(), 
+          processes_input, process_output, 
+          central_or_shifts, 
+          depth_recursion + 1, max_depth_recursion,
+          isDEBUG
+        );
+      }
+    }
+    else
+    {
+      if ( isDEBUG )
+      {
+        std::cout << "aborting recursion, because maximum-recursion-depth = " << max_depth_recursion << " has been reached." << std::endl;
+      }
     }
     for ( const TDirectory* subdir: subdirs )
     {
@@ -315,6 +333,9 @@ int main(int argc, char* argv[])
   vstring processes_input = cfg_addSysTT.getParameter<vstring>("processes_input");
   std::string process_output = cfg_addSysTT.getParameter<std::string>("process_output");
 
+  int max_depth_recursion = cfg_addSysTT.exists("max_depth_recursion") ? cfg_addSysTT.getParameter<int>("max_depth_recursion") : -1;
+  //int max_depth_recursion = cfg_addSysTT.getParameter<int>("max_depth_recursion");
+
   bool isDEBUG = cfg_addSysTT.exists("isDEBUG") ? cfg_addSysTT.getParameter<bool>("isDEBUG") : false;
   //bool isDEBUG = cfg_addSysTT.getParameter<bool>("isDEBUG");
 
@@ -338,7 +359,13 @@ int main(int argc, char* argv[])
     TDirectory* dir = getDirectory(inputFile, category, true);
     assert(dir);
 
-    processSubdirectory_recursively(fs, dir, category, processes_input, process_output, central_or_shifts, isDEBUG);
+    processSubdirectory_recursively(
+      fs, dir, category, 
+      processes_input, process_output, 
+      central_or_shifts, 
+      1, max_depth_recursion,
+      isDEBUG
+    );
   } // categories
 
   //---------------------------------------------------------------------------------------------------

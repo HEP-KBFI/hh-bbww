@@ -88,16 +88,16 @@ process.makePlots.distributions.extend([
         xAxisTitle = cms.string("m_{T}^{top} [GeV]"),
         yAxisTitle = cms.string("dN/dm_{T}^{top} [1/GeV]")
     ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/mvaOutput_Hj_tagger"),
-        xAxisTitle = cms.string("MVA Discriminant Hj Tagger"),
-        yAxisTitle = cms.string("dN/dMVA")
-    ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/mvaOutput_Hjj_tagger"),
-        xAxisTitle = cms.string("MVA Discriminant Hjj Tagger"),
-        yAxisTitle = cms.string("dN/dMVA")
-    ),
+##    cms.PSet(
+##        histogramName = cms.string("sel/evt/$PROCESS/mvaOutput_Hj_tagger"),
+##        xAxisTitle = cms.string("MVA Discriminant Hj Tagger"),
+##        yAxisTitle = cms.string("dN/dMVA")
+##    ),
+##    cms.PSet(
+##        histogramName = cms.string("sel/evt/$PROCESS/mvaOutput_Hjj_tagger"),
+##        xAxisTitle = cms.string("MVA Discriminant Hjj Tagger"),
+##        yAxisTitle = cms.string("dN/dMVA")
+##    ),
 ##     cms.PSet(
 ##         histogramName = cms.string("sel/evt/$PROCESS/vbf_jet1_pt"),
 ##         xAxisTitle = cms.string("leading VBF jet p_{T} [GeV]"),

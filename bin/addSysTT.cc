@@ -51,17 +51,19 @@ bool sortbyfirstmax(const std::pair<float,float> &a,
   return (a.first > b.first);
 }
 
-float sqr(float x) {
+float sqr(float x) 
+{
   return x*x;
 }
 
-float funcvalue(float bincenter, float xmin, float xmax) {
+float funcvalue(float bincenter, float xmin, float xmax) 
+{
   float funcvalue_ = (bincenter - 0.5*(xmin+xmax))*2/(xmax-xmin);
   return funcvalue_;
 }
 
-void setHistName(TH1* hist) {
-
+void setHistName(TH1* hist) 
+{
   TString histName = hist->GetName();
   TString histNameReplace;
   if(histName.Contains("mtop173p5")) {
@@ -76,13 +78,11 @@ void setHistName(TH1* hist) {
   else if( histName.Contains("CMS_ttHl")) {
     histNameReplace = histName.ReplaceAll("CMS_ttHl", "CMS_HHbbww");
   }
-  
   hist->SetName(histNameReplace);
-
 }
 
-std::pair<TH1*, TH1*> add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn) {
-
+std::pair<TH1*, TH1*> add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn) 
+{
   std::string histname = hist_central->GetName();
   for(int i=0; i<hist_central->GetNbinsX(); i++) {
     float bincont = hist_central->GetBinContent(i+1);
@@ -105,8 +105,8 @@ std::pair<TH1*, TH1*> add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn)
   return std::make_pair(hist_up,hist_dn);
 }
 
-void add_sysCR(TH1* hist_central, std::vector<std::string> histNames, const TDirectory* dir, std::string process_input) {
-
+void add_sysCR(TH1* hist_central, std::vector<std::string> histNames, const TDirectory* dir, std::string process_input) 
+{
   std::vector<TH1*> hists_cr;
 
   for(unsigned int ihistName=0; ihistName<histNames.size(); ihistName++) {

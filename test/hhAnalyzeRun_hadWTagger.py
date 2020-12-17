@@ -14,7 +14,7 @@ import getpass
 
 mode_choices     = [ 'forBDTtraining_hadWTagger', 'forBDTtraining_jpa_4jet' ]
 sys_choices      = [ 'full' ] + systematics.an_opts_hh_bbww
-systematics.full = systematics.an_hh_bbww
+systematics.full = systematics.an_tth
 
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)

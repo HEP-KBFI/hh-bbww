@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bb2l import analyzeConfig_hh_bb2l
+from hhAnalysis.bbww.analysisSettings import systematics_bbww_dl as systematics
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
-from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
+from tthAnalysis.HiggsToTauTau.analysisSettings import get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples, load_samples_stitched
 
 import os
 import sys
 import getpass
-import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
@@ -18,8 +18,8 @@ mode_choices     = [
   'ttbar_sync', 'ttbar_sync_wMEM',
 ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww + [ 'MEM_bb2l' ]
-systematics.full = systematics.an_hh_bbww
-systematics.internal = systematics.an_internal_no_mem
+systematics.full = systematics.an_full_hh_bbww
+systematics.internal = systematics.an_internal_hh_bbww
 
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
@@ -36,7 +36,7 @@ parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes')
-parser.add_split_trigger_sys()
+parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_argument('-hme', '--hmeBr',
   dest = 'add_hmeBr', action = 'store_true',
   help = 'R|add hme branch'
@@ -71,7 +71,7 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
-add_hmeBr            =args.add_hmeBr
+add_hmeBr         = args.add_hmeBr
 doDataMCPlots     = True
 
 if lep_mva_wp != "default" and use_preselected:
@@ -250,6 +250,7 @@ if __name__ == '__main__':
     executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes2",
     histograms_to_fit                     = histograms_to_fit,
+    max_depth_recursion                   = 5,
     select_rle_output                     = True,
     dry_run                               = dry_run,
     do_sync                               = do_sync,
