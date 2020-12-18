@@ -22,7 +22,7 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
   //  assert(xmlFileName_odd != "" && xmlFileName_even != "" && fitFileName != "" && inputVariables.size() != 0);
   //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
   //}
-  retVal->disableBDTTransform();
+  retVal->enableBDTTransform();
   return retVal;
 }
 
