@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 from hhAnalysis.bbww.configs.analyzeConfig_hh_bb1l import analyzeConfig_hh_bb1l
+from hhAnalysis.bbww.analysisSettings import systematics_bbww_sl as systematics
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
-from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
+from tthAnalysis.HiggsToTauTau.analysisSettings import get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples, load_samples_stitched
 
@@ -15,8 +16,8 @@ import importlib
 
 mode_choices     = [ 'default', 'forBDTtraining', 'hh_sync', 'ttbar_sync' ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
-systematics.full = systematics.an_hh_bbww
-systematics.internal = systematics.an_internal_no_mem
+systematics.full = systematics.an_full_hh_bbww
+systematics.internal = systematics.an_internal_hh_bbww
 
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
@@ -33,7 +34,7 @@ parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes')
-parser.add_split_trigger_sys()
+parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
   help = 'R|doing second_bdt for jpa'
@@ -91,8 +92,8 @@ if split_trigger_sys == 'yes':
     del systematics.internal[systematics.internal.index(trigger_sys)]
     del systematics.full[systematics.full.index(trigger_sys)]
 if split_trigger_sys in [ 'yes', 'both' ]:
-  systematics.internal.extend(systematics.triggerSF_2lss)
-  systematics.full.extend(systematics.triggerSF_2lss)
+  systematics.internal.extend(systematics.triggerSF_1l)
+  systematics.full.extend(systematics.triggerSF_1l)
 
 # Use the arguments
 central_or_shifts = []

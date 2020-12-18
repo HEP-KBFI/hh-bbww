@@ -101,9 +101,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         check_output_files,
         running_method,
         num_parallel_jobs,
-        executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
+        executable_addSysTT,
         histograms_to_fit,
         max_depth_recursion,
         select_rle_output = False,
@@ -163,6 +163,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
+    self.executable_addSysTT = executable_addSysTT
 
     self.max_depth_recursion = max_depth_recursion
 
@@ -659,6 +660,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
           self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
+          if self.ttbar_syst_enabled:
+              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
           self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
                                                                           "hadd_stage2_%s_%s.root" % hadd_stage2_job_tuple)
 
