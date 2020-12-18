@@ -95,6 +95,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface2.h" // HHWeightInterface2
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticleReader.h" // LHEParticleReader
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8
@@ -104,6 +106,7 @@
 #include "hhAnalysis/multilepton/interface/DatacardHistManager_hh_multiclass.h" // DatacardHistManager_hh_multiclass
 #include "hhAnalysis/multilepton/interface/RecoElectronCollectionSelectorFakeable_hh_multilepton.h" // RecoElectronCollectionSelectorFakeable_hh_multilepton
 #include "hhAnalysis/multilepton/interface/RecoMuonCollectionSelectorFakeable_hh_multilepton.h" // RecoMuonCollectionSelectorFakeable_hh_multilepton
+#include "hhAnalysis/multilepton/interface/HHGenKinematicsHistManager.h"
 
 #include "hhAnalysis/bbww/interface/EvtHistManager2_hh_bb1l.h" // EvtHistManager2_hh_bb1l
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
@@ -223,9 +226,12 @@ int main(int argc, char* argv[])
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
   std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
-  const bool isMC_tH  = process_string == "TH";
-  const bool isMC_ttH = process_string == "TTH";
-  const bool isMC_EWK = process_string == "WZ" || process_string == "ZZ";
+  bool isMC = cfg_analyze.getParameter<bool>("isMC");
+  bool isSignal = isMC && boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
+  bool isMC_tH  = isMC && process_string == "TH";
+  bool isMC_ttH = isMC && process_string == "TTH";
+  bool isMC_EWK = isMC && (process_string == "WZ" || process_string == "ZZ");
+  bool isMC_TT  = isMC && process_string.find("TT") != std::string::npos;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -268,10 +274,6 @@ int main(int argc, char* argv[])
   vstring evtCategoryNames = cfg_analyze.getParameter<vstring>("evtCategories");
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
-  bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isSignal = boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
-  bool isMC_TT = isMC && process_string.find("TT") != std::string::npos;
-  
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
   bool useAssocJetBtag = cfg_analyze.getParameter<bool>("useAssocJetBtag");
@@ -664,9 +666,9 @@ int main(int argc, char* argv[])
   GenParticleReader* genBJetReader = nullptr;
   GenParticleReader* genWBosonReader = nullptr;
   GenParticleReader* genWJetReader = nullptr;
-  GenParticleReader * genParticleFromHiggsReader = nullptr;
-  GenParticleReader * genBJetFromTopReader       = nullptr;
-  GenParticleReader * genWJetFromTopReader       = nullptr;
+  GenParticleReader* genParticleFromHiggsReader = nullptr;
+  GenParticleReader* genBJetFromTopReader = nullptr;
+  GenParticleReader* genWJetFromTopReader = nullptr;
 
   if ( isMC ) {
     genBJetReader = new GenParticleReader(branchName_genBJets);
@@ -705,6 +707,7 @@ int main(int argc, char* argv[])
   GenPhotonReader * genPhotonReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
+  LHEParticleReader * lheParticleReader = nullptr;
   PSWeightReader * psWeightReader = nullptr;
 
   GenParticleReader * genMatchToMuonReader     = nullptr;
@@ -749,6 +752,11 @@ int main(int argc, char* argv[])
     }
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
+    if ( isSignal ) 
+    {
+      lheParticleReader = new LHEParticleReader();
+      inputTree->registerReader(lheParticleReader);
+    }
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
     inputTree -> registerReader(psWeightReader);
   }
@@ -779,6 +787,7 @@ int main(int argc, char* argv[])
     MEtHistManager* met_;
     MEtFilterHistManager* metFilters_;
     EvtHistManager2_hh_bb1l* evt_;
+    HHGenKinematicsHistManager* genKinematics_HH_;
     DatacardHistManager_hh* datacard_BDT_;
     DatacardHistManager_hh_multiclass* datacard_LBN_;
     EvtYieldHistManager* evtYield_;
@@ -848,6 +857,10 @@ int main(int argc, char* argv[])
         selHistManager->evt_ = new EvtHistManager2_hh_bb1l(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift));
         selHistManager->evt_->bookHistograms(fs);
+        selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_and_genMatch,
+          Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
+          analysisConfig, eventInfo, HHWeight_calc);
+        selHistManager->genKinematics_HH_->bookHistograms(fs);
       }
 
       if ( fillHistograms_BDT )
@@ -1130,6 +1143,7 @@ int main(int argc, char* argv[])
     }
 
     std::vector<GenParticle> genLeptonsDY;
+    std::vector<LHEParticle> lheParticles;
     if ( isMC )
     {
       for ( const GenParticle & genLepton : genLeptons )
@@ -1142,6 +1156,10 @@ int main(int argc, char* argv[])
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
       lheInfoReader->read();
+      if ( lheParticleReader )
+      {
+        lheParticles = lheParticleReader->read();
+      }
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
       evtWeightRecorder.record_psWeight(psWeightReader);
@@ -2456,6 +2474,10 @@ int main(int argc, char* argv[])
             jpa, selJetAK8_Hbb,
             evtWeight
           );
+          if ( isSignal )
+          {
+            selHistManager->genKinematics_HH_->fillHistograms(lheParticles, evtWeight);
+          }
         }
 
         if ( fillHistograms_BDT )

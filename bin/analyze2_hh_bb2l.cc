@@ -100,6 +100,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface2.h" // HHWeightInterface2
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticleReader.h" // LHEParticleReader
 
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 
@@ -109,6 +111,7 @@
 #include "hhAnalysis/multilepton/interface/DatacardHistManager_hh_multiclass.h" // DatacardHistManager_hh_multiclass
 #include "hhAnalysis/multilepton/interface/RecoElectronCollectionSelectorFakeable_hh_multilepton.h" // RecoElectronCollectionSelectorFakeable_hh_multilepton
 #include "hhAnalysis/multilepton/interface/RecoMuonCollectionSelectorFakeable_hh_multilepton.h" // RecoMuonCollectionSelectorFakeable_hh_multilepton
+#include "hhAnalysis/multilepton/interface/HHGenKinematicsHistManager.h"
 
 #include "hhAnalysis/bbww/interface/EvtHistManager2_hh_bb2l.h" // EvtHistManager2_hh_bb2l
 #include "hhAnalysis/bbww/interface/MEMHistManager_hh_bb2l.h" // MEMHistManager_hh_bb2l
@@ -178,9 +181,12 @@ int main(int argc, char* argv[])
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
-  const bool isMC_tH = process_string == "TH";
-  const bool isMC_ttH = process_string == "TTH";
-  const bool isMC_EWK = process_string == "WZ" || process_string == "ZZ";
+  std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
+  bool isMC = cfg_analyze.getParameter<bool>("isMC");
+  bool isSignal = isMC && boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
+  bool isMC_tH  = isMC && process_string == "TH";
+  bool isMC_ttH = isMC && process_string == "TTH";
+  bool isMC_EWK = isMC && (process_string == "WZ" || process_string == "ZZ");
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
@@ -237,8 +243,6 @@ int main(int argc, char* argv[])
 
   const std::string apply_pileupJetID_string = cfg_analyze.getParameter<std::string>("apply_pileupJetID");
   const pileupJetID apply_pileupJetID = get_pileupJetID(apply_pileupJetID_string);
-
-  bool isMC = cfg_analyze.getParameter<bool>("isMC");
 
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
@@ -674,6 +678,7 @@ int main(int argc, char* argv[])
   GenPhotonReader * genPhotonReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
+  LHEParticleReader * lheParticleReader = nullptr;
   PSWeightReader * psWeightReader = nullptr;
 
   GenParticleReader * genMatchToMuonReader     = nullptr;
@@ -713,6 +718,11 @@ int main(int argc, char* argv[])
     }
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
+    if ( isSignal ) 
+    {
+      lheParticleReader = new LHEParticleReader();
+      inputTree->registerReader(lheParticleReader);
+    }
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
     inputTree -> registerReader(psWeightReader);
   }
@@ -746,6 +756,7 @@ int main(int argc, char* argv[])
     MEtFilterHistManager* metFilters_;
     EvtHistManager2_hh_bb2l* evt_;
     //MEMHistManager_hh_bb2l* mem_;
+    HHGenKinematicsHistManager* genKinematics_HH_;
     DatacardHistManager_hh* datacard_BDT_;
     DatacardHistManager_hh_multiclass* datacard_LBN_;
     EvtYieldHistManager* evtYield_;
@@ -827,6 +838,10 @@ int main(int argc, char* argv[])
         //selHistManager->mem_ = new MEMHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
         //  Form("%s/sel/mem", histogramDir.data()), era_string, central_or_shift));
         //selHistManager->mem_->bookHistograms(fs);
+        selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_and_genMatch,
+          Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
+          analysisConfig, eventInfo, HHWeight_calc);
+        selHistManager->genKinematics_HH_->bookHistograms(fs);
       }
 
       //if ( fillHistograms_BDT )
@@ -1086,6 +1101,7 @@ int main(int argc, char* argv[])
     }
 
     std::vector<GenParticle> genLeptonsDY;
+    std::vector<LHEParticle> lheParticles;
     if(isMC)
     {
       for(const GenParticle & genLepton: genLeptons)
@@ -1098,6 +1114,10 @@ int main(int argc, char* argv[])
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
       lheInfoReader->read();
+      if ( lheParticleReader )
+      {
+        lheParticles = lheParticleReader->read();
+      }
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
       evtWeightRecorder.record_psWeight(psWeightReader);
@@ -2192,6 +2212,10 @@ int main(int argc, char* argv[])
           //    evtWeight
           //  );
           //}
+          if ( isSignal )
+          {
+            selHistManager->genKinematics_HH_->fillHistograms(lheParticles, evtWeight);
+          }
         }
 
         if ( fillHistograms_BDT )
