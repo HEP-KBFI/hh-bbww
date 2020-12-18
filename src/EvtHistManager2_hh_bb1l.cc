@@ -103,25 +103,29 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_dEta_jj_      = book1D(dir, "vbf_dEta_jj",      100,  0.,   10.);
 
   histogram_jpaCategory_      = book1D(dir, "jpaCategory",       15, -0.5, +14.5);
-  TAxis* xAxis_jpaCategory = histogram_jpaCategory_->GetXaxis();
-  for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
-  {
-    int idxBin = xAxis_jpaCategory->FindBin(jpaCategory);
-    xAxis_jpaCategory->SetBinLabel(idxBin, get_jpaCategory_string(jpaCategory).data());
-  }
-  for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
-  {
-    int idxBin = xAxis_jpaCategory->FindBin(jpaCategory);
-    xAxis_jpaCategory->SetBinLabel(idxBin, get_jpaCategory_string(jpaCategory).data());
+  if ( histogram_jpaCategory_ ) {
+    TAxis* xAxis_jpaCategory = histogram_jpaCategory_->GetXaxis();
+    for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k0b; ++jpaCategory )
+    {
+      int idxBin = xAxis_jpaCategory->FindBin(jpaCategory);
+      xAxis_jpaCategory->SetBinLabel(idxBin, get_jpaCategory_string(jpaCategory).data());
+    }
+    for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b0W; ++jpaCategory )
+    {
+      int idxBin = xAxis_jpaCategory->FindBin(jpaCategory);
+      xAxis_jpaCategory->SetBinLabel(idxBin, get_jpaCategory_string(jpaCategory).data());
+    }
   }
 
   histogram_evtCategory_      = book1D(dir, "evtCategory",        4, -0.5,  +3.5);
-  TAxis* xAxis_evtCategory = histogram_evtCategory_->GetXaxis();
-  xAxis_evtCategory->SetBinLabel(1, "Undefined");
-  xAxis_evtCategory->SetBinLabel(2, "Resolved 2b");
-  xAxis_evtCategory->SetBinLabel(3, "Resolved 1b");
-  xAxis_evtCategory->SetBinLabel(4, "Boosted");
-
+  if ( histogram_evtCategory_ )
+  {
+    TAxis* xAxis_evtCategory = histogram_evtCategory_->GetXaxis();
+    xAxis_evtCategory->SetBinLabel(1, "Undefined");
+    xAxis_evtCategory->SetBinLabel(2, "Resolved 2b");
+    xAxis_evtCategory->SetBinLabel(3, "Resolved 1b");
+    xAxis_evtCategory->SetBinLabel(4, "Boosted");
+  }
   histogram_EventCounter_     = book1D(dir, "EventCounter",       1, -0.5,  +0.5);
 }
 
