@@ -170,7 +170,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.max_depth_recursion = max_depth_recursion
 
-    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_vh = False, split_th = False, split_ST = True)
+    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = False, split_ST = True)
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]

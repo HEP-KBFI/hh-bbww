@@ -167,7 +167,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
     self.max_depth_recursion = max_depth_recursion
 
-    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_vh = False, split_th = False, split_ST = True)
+    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = False, split_ST = True)
 
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_signals = set()
