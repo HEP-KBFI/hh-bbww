@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-11-12 10:34:32 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_nanoAOD_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_ttbar.py -M
+# file generated at 2020-12-19 22:20:12 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_nanoAOD_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_ttbar.py -M -l /hdfs/local/karl/lost_ntuples.txt
 
 samples_2017 = OD()
 samples_2017["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
@@ -829,9 +829,9 @@ samples_2017["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17
   ("nof_db_files",                    469),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 27108792),
+  ("nof_tree_events",                 27008552),
   ("nof_db_events",                   27108792),
-  ("fsize_local",                     62235965113), # 62.24GB, avg file size 227.97MB
+  ("fsize_local",                     62005721145), # 62.01GB, avg file size 227.13MB
   ("fsize_db",                        1500611986746), # 1.50TB, avg file size 3.20GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -846,7 +846,7 @@ samples_2017["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_154140"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [92]),
       ]),
     ]
   ),
@@ -958,9 +958,9 @@ samples_2017["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
   ("nof_db_files",                    546),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 27125000),
+  ("nof_tree_events",                 27025000),
   ("nof_db_events",                   27125000),
-  ("fsize_local",                     61220572832), # 61.22GB, avg file size 225.08MB
+  ("fsize_local",                     60994898318), # 60.99GB, avg file size 224.25MB
   ("fsize_db",                        1498188372333), # 1.50TB, avg file size 2.74GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -975,7 +975,7 @@ samples_2017["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154634"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [107]),
       ]),
     ]
   ),
@@ -1087,9 +1087,9 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("nof_db_files",                    258),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 9818000),
+  ("nof_tree_events",                 9718000),
   ("nof_db_events",                   9818000),
-  ("fsize_local",                     21102976436), # 21.10GB, avg file size 185.11MB
+  ("fsize_local",                     20888457241), # 20.89GB, avg file size 183.23MB
   ("fsize_db",                        530494659584), # 530.49GB, avg file size 2.06GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -1104,7 +1104,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_155123"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [70]),
       ]),
     ]
   ),
@@ -2033,9 +2033,9 @@ samples_2017["/TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("nof_db_files",                    429),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 25000000),
+  ("nof_tree_events",                 24900725),
   ("nof_db_events",                   25000000),
-  ("fsize_local",                     56661662447), # 56.66GB, avg file size 112.42MB
+  ("fsize_local",                     56436855911), # 56.44GB, avg file size 111.98MB
   ("fsize_db",                        1354549562121), # 1.35TB, avg file size 3.16GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -2050,7 +2050,7 @@ samples_2017["/TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200422_131022"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [131, 311]),
       ]),
     ]
   ),
@@ -2205,9 +2205,9 @@ samples_2017["/TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("nof_db_files",                    400),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 24132305),
+  ("nof_tree_events",                 24083799),
   ("nof_db_events",                   24132305),
-  ("fsize_local",                     54924618315), # 54.92GB, avg file size 112.78MB
+  ("fsize_local",                     54813996167), # 54.81GB, avg file size 112.55MB
   ("fsize_db",                        1310413301099), # 1.31TB, avg file size 3.28GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -2222,7 +2222,7 @@ samples_2017["/TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200422_131207"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [71]),
       ]),
     ]
   ),
@@ -2248,9 +2248,9 @@ samples_2017["/TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("nof_db_files",                    529),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 24373000),
+  ("nof_tree_events",                 24323000),
   ("nof_db_events",                   24373000),
-  ("fsize_local",                     56687005320), # 56.69GB, avg file size 116.16MB
+  ("fsize_local",                     56570685929), # 56.57GB, avg file size 115.92MB
   ("fsize_db",                        1353482022084), # 1.35TB, avg file size 2.56GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -2265,7 +2265,7 @@ samples_2017["/TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200422_131322"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [140]),
       ]),
     ]
   ),
@@ -2678,9 +2678,9 @@ samples_2017["/TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("nof_db_files",                    192),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 9986177),
+  ("nof_tree_events",                 9886593),
   ("nof_db_events",                   9986177),
-  ("fsize_local",                     22675250301), # 22.68GB, avg file size 224.51MB
+  ("fsize_local",                     22449134124), # 22.45GB, avg file size 222.27MB
   ("fsize_db",                        545083161451), # 545.08GB, avg file size 2.84GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -2695,7 +2695,7 @@ samples_2017["/TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_164154"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [69]),
       ]),
     ]
   ),
