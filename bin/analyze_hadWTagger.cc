@@ -42,6 +42,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // createSubdirectory_recursively(), fillWithOverFlow()
 #include "tthAnalysis/HiggsToTauTau/interface/NtupleFillerBDT.h" // NtupleFillerBDT
 #include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 
@@ -491,6 +493,7 @@ int main(int argc,
   const std::string branchName_jets_ak8     = cfg_analyze.getParameter<std::string>("branchName_jets_ak8");
   const std::string branchName_subjets_ak8  = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8");
   const std::string branchName_met          = cfg_analyze.getParameter<std::string>("branchName_met");
+  std::string branchName_vertex             = cfg_analyze.getParameter<std::string>("branchName_vertex");
 
   edm::ParameterSet cfg_branchNames_genParticles = cfg_analyze.getParameter<edm::ParameterSet>("branchNames_genParticles");
   // branches specific to HH->bbWW signal events
@@ -557,6 +560,10 @@ int main(int argc,
   EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
 
+  RecoVertex vertex;
+  RecoVertexReader vertexReader(&vertex, branchName_vertex);
+  inputTree -> registerReader(&vertexReader);
+
 //--- declare particle collections
   const bool readGenObjects = isMC;
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
@@ -597,6 +604,7 @@ int main(int argc,
 
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
   metReader->setMEt_central_or_shift(kJetMET_central);
+  metReader->set_phiModulationCorrDetails(&eventInfo, &vertex);
   inputTree->registerReader(metReader);
 
 //--- declare genParticle readers

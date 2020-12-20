@@ -46,6 +46,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryTypeAuxFunctions.h" // copyBranches_singleType(), copyBranches_vectorType()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryType.h" // branchEntryBaseType
 #include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 
 #include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
 
@@ -199,6 +201,7 @@ int main(int argc,
   const std::string branchName_jets_ak8     = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8");
   const std::string branchName_subjets_ak8  = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
   const std::string branchName_met          = cfg_addMEM.getParameter<std::string>("branchName_met");
+  const std::string branchName_vertex       = cfg_addMEM.getParameter<std::string>("branchName_vertex");
 
   // branches specific to HH->bbWW signal events
   std::string branchName_genLeptons;
@@ -309,6 +312,10 @@ int main(int argc,
   EventInfoReader eventInfoReader(&eventInfo);
   eventInfoReader.setBranchAddresses(inputTree);
 
+  RecoVertex vertex;
+  RecoVertexReader vertexReader(&vertex, branchName_vertex);
+  vertexReader.setBranchAddresses(inputTree);
+
   const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName("hh_bb2l", leptonSelection_string);
 
 //--- declare particle collections
@@ -349,6 +356,7 @@ int main(int argc,
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
   metReader->setMEt_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   metReader->read_ptPhi_systematics(isMC);
+  metReader->set_phiModulationCorrDetails(&eventInfo, &vertex);
   metReader->setBranchAddresses(inputTree);
 
 //--- declare genParticle readers

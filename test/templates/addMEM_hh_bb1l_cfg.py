@@ -32,6 +32,7 @@ process.addMEM_hh_bb1l = cms.PSet(
     branchName_jets_ak8LS = cms.string('FatJetAK8LSLoose'),
     branchName_subjets_ak8LS = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
+    branchName_vertex = cms.string('PV'),
 
     mem_maxWJetPairs = cms.int32(3),
     mem_maxWJets = cms.int32(5),
