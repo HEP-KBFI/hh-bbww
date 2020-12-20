@@ -47,8 +47,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryTypeAuxFunctions.h" // copyBranches_singleType(), copyBranches_vectorType()
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryType.h" // branchEntryBaseType
 #include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
-#include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
-#include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
@@ -204,7 +202,6 @@ int main(int argc,
   const std::string branchName_jets_ak8LS      = cfg_addMEM.getParameter<std::string>("branchName_jets_ak8LS");
   const std::string branchName_subjets_ak8LS   = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8LS");
   const std::string branchName_met             = cfg_addMEM.getParameter<std::string>("branchName_met");
-  const std::string branchName_vertex          = cfg_addMEM.getParameter<std::string>("branchName_vertex");
   
   const int mem_maxWJetPairs = cfg_addMEM.getParameter<int>("mem_maxWJetPairs");
   const int mem_maxWJets = cfg_addMEM.getParameter<int>("mem_maxWJets");
@@ -313,10 +310,6 @@ int main(int argc,
   EventInfoReader eventInfoReader(&eventInfo);
   eventInfoReader.setBranchAddresses(inputTree);
 
-  RecoVertex vertex;
-  RecoVertexReader vertexReader(&vertex, branchName_vertex);
-  vertexReader.setBranchAddresses(inputTree);
-
   //const std::string branchName_maxPermutations_addMEM = get_memPermutationBranchName("hh_bb1l", leptonSelection_string);
   const std::string branchName_maxPermutations_addMEM = cfg_addMEM.getParameter<std::string>("branchName_maxPermutations_addMEM");
 
@@ -369,7 +362,6 @@ int main(int argc,
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
   metReader->setMEt_central_or_shift(useNonNominal_jetmet ? kJetMET_central_nonNominal : kJetMET_central);
   metReader->read_ptPhi_systematics(isMC);
-  metReader->set_phiModulationCorrDetails(&eventInfo, &vertex);
   metReader->setBranchAddresses(inputTree);
 
 //--- declare genParticle readers
