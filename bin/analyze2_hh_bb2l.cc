@@ -952,7 +952,7 @@ int main(int argc, char* argv[])
       "m_Hww", "mT_Hww", "pT_Hww", "Smin_Hww",
       "met_pt_proj",
       "dR_b1lep1", "dR_b1lep2", "dR_b2lep1", "dR_b2lep2",
-      "m_HHvis", "pT_HHvis", "dPhi_HHvis",
+      "m_HHvis", "pT_HHvis", "eta_HHvis", "dPhi_HHvis",
       "m_HH", "pT_HH", "dPhi_HH", "Smin_HH", "dR_HH",
       "mT2_W", "mT2_top_2particle", "mT2_top_3particle",
       "m_HH_hme",
@@ -1873,6 +1873,7 @@ int main(int argc, char* argv[])
     Particle::LorentzVector HHvisP4 = HbbP4 + selLeptonP4_lead + selLeptonP4_sublead;
     double m_HHvis = HHvisP4.mass();
     double pT_HHvis = HHvisP4.pt();
+    double eta_HHvis = HHvisP4.eta();
     double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (selLeptonP4_lead + selLeptonP4_sublead).phi()));
     Particle::LorentzVector HHP4 = HbbP4 + HwwP4;
     double m_HH = HHP4.mass();
@@ -2416,6 +2417,7 @@ int main(int argc, char* argv[])
         ("dR_b2lep2",                   dR_b2lep2)
         ("m_HHvis",                     m_HHvis)
         ("pT_HHvis",                    pT_HHvis)
+        ("eta_HHvis",                   eta_HHvis)
         ("dPhi_HHvis",                  dPhi_HHvis)
         ("m_HH",                        m_HH)
         ("pT_HH",                       pT_HH)
