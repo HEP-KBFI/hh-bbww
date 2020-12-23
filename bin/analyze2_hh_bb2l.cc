@@ -657,9 +657,9 @@ int main(int argc, char* argv[])
   jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
   jetSelectorAK4_vbf.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelector jetSelectorAK4_vbf_woPileupJetId(era, -1, isDEBUG);
-  jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
-  jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
-  jetSelectorAK4_vbf.getSelector().set_pileupJetId(kPileupJetID_disabled);
+  jetSelectorAK4_vbf_woPileupJetId.getSelector().set_min_pt(30.);
+  jetSelectorAK4_vbf_woPileupJetId.getSelector().set_max_absEta(4.7);
+  jetSelectorAK4_vbf_woPileupJetId.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetCollectionSelectorForward jetSelectorForward(era, -1, isDEBUG);
