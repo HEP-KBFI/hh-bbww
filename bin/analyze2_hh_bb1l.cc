@@ -233,7 +233,6 @@ int main(int argc, char* argv[])
   bool isSignal = isMC && boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
   bool isMC_tH  = isMC && process_string == "TH";
   bool isMC_ttH = isMC && process_string == "TTH";
-  bool isMC_EWK = isMC && (process_string == "WZ" || process_string == "ZZ");
   bool isMC_TT  = isMC && process_string.find("TT") != std::string::npos;
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
@@ -656,6 +655,10 @@ int main(int argc, char* argv[])
   jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
   jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
   jetSelectorAK4_vbf.getSelector().set_pileupJetId(apply_pileupJetID);
+  RecoJetCollectionSelector jetSelectorAK4_vbf_woPileupJetId(era, -1, isDEBUG);
+  jetSelectorAK4_vbf.getSelector().set_min_pt(30.);
+  jetSelectorAK4_vbf.getSelector().set_max_absEta(4.7);
+  jetSelectorAK4_vbf.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
   RecoJetCollectionSelectorForward jetSelectorForward(era, -1, isDEBUG);
@@ -1318,6 +1321,11 @@ int main(int argc, char* argv[])
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
     std::vector<const RecoJet*> cleanedJetsAK4_wrtLeptons = pickFirstNobjects(tmpJetsAK4, max_numJets);
+    const std::vector<const RecoJet*> selJetsAK4_vbf_beforeCleaning = jetSelectorAK4_vbf(jet_ptrs_ak4, isHigherPt);
+    const std::vector<const RecoJet*> selJetsAK4_vbf_postLeptonCleaning = jetCleaningByIndex ?
+      jetCleanerAK4_byIndex(selJetsAK4_vbf_beforeCleaning, fakeableLeptons) :
+      jetCleanerAK4_dR04   (selJetsAK4_vbf_beforeCleaning, fakeableLeptons)
+    ;
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -1383,9 +1391,9 @@ int main(int argc, char* argv[])
         hadTauGenMatcher.addGenHadTauMatch(cleanedHadTaus, genHadTaus);
         hadTauGenMatcher.addGenJetMatch(cleanedHadTaus, genJets);
 
-        jetGenMatcherAK4.addGenLeptonMatch(cleanedJetsAK4_wrtLeptons, genLeptons);
-        jetGenMatcherAK4.addGenHadTauMatch(cleanedJetsAK4_wrtLeptons, genHadTaus);
-        jetGenMatcherAK4.addGenJetMatchByIndex(cleanedJetsAK4_wrtLeptons, jetGenMatch);
+        jetGenMatcherAK4.addGenLeptonMatch(jet_ptrs_ak4, genLeptons);
+        jetGenMatcherAK4.addGenHadTauMatch(jet_ptrs_ak4, genHadTaus);
+        jetGenMatcherAK4.addGenJetMatchByIndex(jet_ptrs_ak4, jetGenMatch);
       }
       else
       {
@@ -1402,9 +1410,9 @@ int main(int argc, char* argv[])
         hadTauGenMatcher.addGenHadTauMatch(cleanedHadTaus, genHadTaus);
         hadTauGenMatcher.addGenJetMatch(cleanedHadTaus, genJets);
 
-        jetGenMatcherAK4.addGenLeptonMatch(cleanedJetsAK4_wrtLeptons, genLeptons);
-        jetGenMatcherAK4.addGenHadTauMatch(cleanedJetsAK4_wrtLeptons, genHadTaus);
-        jetGenMatcherAK4.addGenJetMatch(cleanedJetsAK4_wrtLeptons, genJets);
+        jetGenMatcherAK4.addGenLeptonMatch(jet_ptrs_ak4, genLeptons);
+        jetGenMatcherAK4.addGenHadTauMatch(jet_ptrs_ak4, genHadTaus);
+        jetGenMatcherAK4.addGenJetMatch(jet_ptrs_ak4, genJets);
       }
     }
     GenParticleMatcherBase* genParticleMatcher = nullptr;
@@ -1616,18 +1624,20 @@ int main(int argc, char* argv[])
         evtWeightRecorder.record_btagSFRatio(btagSFRatioFacility, selJetsAK4.size());
       }
 
-      if ( isMC_EWK )
-      {
-        evtWeightRecorder.record_ewk_jet(selJetsAK4);
-        evtWeightRecorder.record_ewk_bjet(selBJetsAK4_medium);
-      }
-
       dataToMCcorrectionInterface->setLeptons({ selLepton });
 
       if ( apply_pileupJetID != kPileupJetID_disabled )
       {
         const std::vector<const RecoJet*> selJetsAK4_woPileupJetId = jetSelectorAK4_woPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
-        dataToMCcorrectionInterface->setJets(selJetsAK4_woPileupJetId);
+        const std::vector<const RecoJet*> selJetsAK4_vbf_woPileupJetId = jetSelectorAK4_vbf_woPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
+        const std::vector<const RecoJet*> selJetsAK4_forPUjetIDSF = mergeCollections(selJetsAK4_woPileupJetId, selJetsAK4_vbf_woPileupJetId, isHigherPt);
+        if(isDEBUG)
+        {
+          printCollection("selJetsAK4_woPileupJetId", selJetsAK4_woPileupJetId);
+          printCollection("selJetsAK4_vbf_woPileupJetId", selJetsAK4_vbf_woPileupJetId);
+          printCollection("selJetsAK4_forPUjetIDSF", selJetsAK4_forPUjetIDSF);
+        }
+        dataToMCcorrectionInterface->setJets(selJetsAK4_forPUjetIDSF);
         evtWeightRecorder.record_pileupJetIDSF(dataToMCcorrectionInterface);
       }
 
@@ -1700,13 +1710,19 @@ int main(int argc, char* argv[])
       }
     }
     std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
+    std::vector<const RecoJet*> cleanedJetsAK4_vbf_wrtHbb;
     if ( selJetAK8_Hbb )
     {
       cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(selJetsAK4, std::vector<const RecoJetBase*>({ selJetAK8_Hbb }));
+      cleanedJetsAK4_vbf_wrtHbb = jetCleanerAK4_dR12(selJetsAK4_vbf_postLeptonCleaning, std::vector<const RecoJetBase*>({ selJetAK8_Hbb }));
     } 
     else 
     {
-      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(selJetsAK4, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+      std::vector<const RecoJetBase*> overlaps;
+      if ( selJet1_Hbb ) { overlaps.push_back(selJet1_Hbb); }
+      if ( selJet2_Hbb ) { overlaps.push_back(selJet2_Hbb); }
+      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(selJetsAK4, overlaps);
+      cleanedJetsAK4_vbf_wrtHbb = jetCleanerAK4_dR04(selJetsAK4_vbf_postLeptonCleaning, overlaps);
     }
     if ( !(selJet1_Hbb && selJet2_Hbb) ) 
     {
@@ -1785,12 +1801,13 @@ int main(int argc, char* argv[])
       std::vector<const RecoJetAK8*> cleanedJetsAK8LS_wrtHbb;
       if ( selJetAK8_Hbb ) 
       {
-        std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
+        const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
         cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR16(jet_ptrs_ak8LS, overlaps); // CV: do *not* clean W->jj "fat" jet collection with respect to leptons!
       }
       else 
       {
-        cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8LS, std::vector<const RecoJetBase*>({ selJet1_Hbb, selJet2_Hbb }));
+        const std::vector<const RecoJetBase*> overlaps = { selJet1_Hbb, selJet2_Hbb };
+        cleanedJetsAK8LS_wrtHbb = jetCleanerAK8_dR12(jet_ptrs_ak8LS, overlaps);
       }
       if ( selLepton && selJet1_Hbb && selJet2_Hbb )
       {
@@ -1947,21 +1964,24 @@ int main(int argc, char* argv[])
     if ( selJet_Wjj_sublead ) selJetP4_Wjj_sublead = selJet_Wjj_sublead->p4();
 
     // select VBF jet candidates
-    std::vector<const RecoJet*> cleanedJetsAK4_vbf;
+    std::vector<const RecoJet*> selJetsAK4_vbf;
     if ( selJetAK8_Hbb ) {
       std::vector<const RecoJetBase*> overlaps;
       if ( selJet1_Wjj ) overlaps.push_back(selJet1_Wjj);
       if ( selJet2_Wjj ) overlaps.push_back(selJet2_Wjj);
-      cleanedJetsAK4_vbf = jetCleanerAK4_dR08(cleanedJetsAK4_wrtHbb, overlaps);
+      selJetsAK4_vbf = jetCleanerAK4_dR08(cleanedJetsAK4_vbf_wrtHbb, overlaps);
     } else {
       std::vector<const RecoJetBase*> overlaps;
       if ( selJet1_Hbb ) overlaps.push_back(selJet1_Hbb);
       if ( selJet2_Hbb ) overlaps.push_back(selJet2_Hbb);
       if ( selJet1_Wjj ) overlaps.push_back(selJet1_Wjj);
       if ( selJet2_Wjj ) overlaps.push_back(selJet2_Wjj);
-      cleanedJetsAK4_vbf = jetCleanerAK4_dR08(cleanedJetsAK4_wrtLeptons, overlaps);
+      selJetsAK4_vbf = jetCleanerAK4_dR08(selJetsAK4_vbf_postLeptonCleaning, overlaps);
     }
-    const std::vector<const RecoJet*> selJetsAK4_vbf = jetSelectorAK4_vbf(cleanedJetsAK4_vbf, isHigherPt);
+    if(isDEBUG)
+    {
+      printCollection("selJetsAK4_vbf", selJetsAK4_vbf);
+    }
 
 //--- compute MHT and linear MET discriminant (met_LD)
     const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -2742,7 +2762,12 @@ int main(int argc, char* argv[])
       std::vector<const RecoJet*> tmpJets_vbf;
       if(selJet_vbf_lead)    { tmpJets_vbf.push_back(selJet_vbf_lead);    }
       if(selJet_vbf_sublead) { tmpJets_vbf.push_back(selJet_vbf_sublead); }
-      snm->read(tmpJets_vbf);
+      snm->read(
+        selJetsAK4_vbf_beforeCleaning,
+        tmpJets_vbf,
+        selJetsAK4_vbf_postLeptonCleaning.size(),
+        selJetsAK4_vbf.size()
+      );
       if ( isVBF )
       {
         snm->read(vbf_m_jj,    FloatVariableType_bbww::vbf_m_jj);

@@ -54,7 +54,10 @@ public:
   void read(const std::vector<const RecoElectron *> & electrons,
             const std::vector<const RecoElectron *> & fakeable_electrons,
             const std::vector<const RecoElectron *> & tight_electrons);
-  void read(const std::vector<const RecoJet *> & jets_vbf);
+  void read(const std::vector<const RecoJet *> & jets_vbf,
+            const std::vector<const RecoJet *> & jets_vbf_pair,
+            int n_presel_vbf_postLep,
+            int n_presel_vbf_postJet);
   void read(const std::vector<const RecoJet *> & jets,
             int n_bjet_loose,
             int n_bjet_medium);
@@ -78,6 +81,7 @@ protected:
   const Int_t nof_eles;
   const Int_t nof_jets;
   const Int_t nof_jets_vbf;
+  const Int_t nof_jets_vbf_pair;
   const Int_t nof_jetsAk8;
   const Int_t nof_jetsAk8LS;
 
@@ -93,6 +97,9 @@ protected:
   Int_t n_mvasel_ele;
   Int_t n_presel_jet;
   Int_t n_presel_jet_vbf;
+  Int_t n_presel_jet_vbfPairs;
+  Int_t n_presel_jet_vbfPostLepClean;
+  Int_t n_presel_jet_vbfPostJetClean;
   Int_t n_presel_jetAK8;
   Int_t n_presel_jetAK8LS;
   Int_t n_loose_bjet;
@@ -171,6 +178,13 @@ protected:
   Float_t * jet_vbf_E;
   Float_t * jet_vbf_CSV;
   Float_t * jet_vbf_btagSF;
+
+  Float_t * jet_vbf_pair_pt;
+  Float_t * jet_vbf_pair_eta;
+  Float_t * jet_vbf_pair_phi;
+  Float_t * jet_vbf_pair_E;
+  Float_t * jet_vbf_pair_CSV;
+  Float_t * jet_vbf_pair_btagSF;
 
   Float_t * jetAk8_pt;
   Float_t * jetAk8_eta;
