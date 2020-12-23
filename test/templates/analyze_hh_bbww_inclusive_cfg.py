@@ -52,6 +52,7 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
     branchName_fatJetsLS = cms.string('FatJetAK8LSLoose'),
     branchName_subJetsLS = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
+    branchName_vertex = cms.string('PV'),
 
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genHadTaus = cms.string('GenVisTau'),

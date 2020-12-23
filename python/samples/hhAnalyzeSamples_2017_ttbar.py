@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-11-13 13:41:31 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_ttbar.py -M -q /hdfs/local/karl/count_final/2020Nov13/count_2017.root
+# file generated at 2020-12-19 21:21:09 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_ttbar.py -M -q /hdfs/local/karl/count_final/2020Nov13/count_2017.root -l /hdfs/local/karl/lost_ntuples.txt
 
 samples_2017 = OD()
 samples_2017["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
@@ -10303,9 +10303,9 @@ samples_2017["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
     'CountWeightedFullPSWeightOriginalXWGTUPL1PrefireNomHighPtTopPtRwgtSF'           : [ 2.24210719e+10, 2.24209367e+10, 2.24210719e+10, 2.24210719e+10, 2.24123228e+10, 2.24121836e+10, ],
     'CountWeightedFullPSWeightOriginalXWGTUPL1PrefireNomHighPtTopPtRwgtSFSquared'    : [ 2.25005752e+10, 2.25004421e+10, 2.25005752e+10, 2.25005752e+10, 2.24918712e+10, 2.24917361e+10, ],
   }),
-  ("nof_tree_events",                 29190000),
+  ("nof_tree_events",                 28940000),
   ("nof_db_events",                   29190000),
-  ("fsize_local",                     119934901275), # 119.93GB, avg file size 991.20MB
+  ("fsize_local",                     118907932620), # 118.91GB, avg file size 982.71MB
   ("fsize_db",                        1691547863971), # 1.69TB, avg file size 2.81GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -10320,7 +10320,7 @@ samples_2017["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2020Oct28_woPresel_nom_all/ntuples/TTTo2L2Nu_mtop169p5_ext2"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [110]),
       ]),
     ]
   ),

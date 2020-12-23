@@ -40,6 +40,7 @@ process.analyze_hadWTagger = cms.PSet(
     branchName_jets_ak8 = cms.string('FatJet'),
     branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
+    branchName_vertex = cms.string('PV'),
 
     branchNames_genParticles = cms.PSet(
         # branches specific to HH->bbWW signal events
