@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-12-17 01:17:49 with the following command:
+# file generated at 2020-12-24 16:10:05 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2017_hh.py -p python/samples/sampleLocations_2017_nanoAOD_hh_bbww.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD.py -M
 
 samples_2017 = OD()
@@ -9167,13 +9167,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_450_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_450_hh_2b2t"),
-  ("nof_files",                       6),
+  ("nof_files",                       3),
   ("nof_db_files",                    16),
   ("nof_events",                      {
   }),
   ("nof_tree_events",                 300000),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     963346411), # 963.35MB, avg file size 160.56MB
+  ("fsize_local",                     957821854), # 957.82MB, avg file size 319.27MB
   ("fsize_db",                        20167217854), # 20.17GB, avg file size 1.26GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9186,7 +9186,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_193818"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Dec20/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2020Dec20_VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/201219_201613"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9296,13 +9296,13 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIIFall17Mi
   ("type",                            "mc"),
   ("sample_category",                 "signal_vbf_spin0_600_hh_bbtt"),
   ("process_name_specific",           "signal_vbf_spin0_600_hh_2b2t"),
-  ("nof_files",                       4),
+  ("nof_files",                       2),
   ("nof_db_files",                    12),
   ("nof_events",                      {
   }),
   ("nof_tree_events",                 200000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     687261847), # 687.26MB, avg file size 171.82MB
+  ("fsize_local",                     683550273), # 683.55MB, avg file size 341.78MB
   ("fsize_db",                        13957904944), # 13.96GB, avg file size 1.16GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9315,7 +9315,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194254"),
+        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Dec20/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2020Dec20_VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/201219_201720"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
