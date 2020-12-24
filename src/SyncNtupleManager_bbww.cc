@@ -21,7 +21,8 @@ SyncNtupleManager_bbww::SyncNtupleManager_bbww(const std::string & outputFileNam
   , nof_mus(2)
   , nof_eles(2)
   , nof_jets(4)
-  , nof_jets_vbf(2)
+  , nof_jets_vbf(5)
+  , nof_jets_vbf_pair(2)
   , nof_jetsAk8(2)
   , nof_jetsAk8LS(2)
 {
@@ -48,47 +49,54 @@ SyncNtupleManager_bbww::initializeBranches()
   const char * estr      = "ele";
   const char * jstr      = "ak4Jet";
   const char * jvbfstr   = "ak4JetVBF";
+  const char * jvbfpstr  = "ak4JetVBFPair";
   const char * jstrAk8   = "ak8Jet";
   const char * jstrAk8Ls = "ak8lsJet";
   const char * bjstr     = "ak4BJet";
 
-  const std::string n_sel_lep_str         = Form("n_%s",             lstr);
-  const std::string n_presel_mu_str       = Form("n_presel_%s",      mstr);
-  const std::string n_fakeablesel_mu_str  = Form("n_fakeablesel_%s", mstr);
-  const std::string n_mvasel_mu_str       = Form("n_mvasel_%s",      mstr);
-  const std::string n_presel_ele_str      = Form("n_presel_%s",      estr);
-  const std::string n_fakeablesel_ele_str = Form("n_fakeablesel_%s", estr);
-  const std::string n_mvasel_ele_str      = Form("n_mvasel_%s",      estr);
-  const std::string n_presel_jet_str      = Form("n_presel_%s",      jstr);
-  const std::string n_presel_jet_vbf_str  = Form("n_presel_%s",      jvbfstr);
-  const std::string n_presel_jetAK8_str   = Form("n_presel_%s",      jstrAk8);
-  const std::string n_presel_jetAK8LS_str = Form("n_presel_%s",      jstrAk8Ls);
-  const std::string n_loose_bjet_str      = Form("n_loose_%s",       bjstr);
-  const std::string n_medium_bjet_str     = Form("n_medium_%s",      bjstr);
+  const std::string n_sel_lep_str                = Form("n_%s",                     lstr);
+  const std::string n_presel_mu_str              = Form("n_presel_%s",              mstr);
+  const std::string n_fakeablesel_mu_str         = Form("n_fakeablesel_%s",         mstr);
+  const std::string n_mvasel_mu_str              = Form("n_mvasel_%s",              mstr);
+  const std::string n_presel_ele_str             = Form("n_presel_%s",              estr);
+  const std::string n_fakeablesel_ele_str        = Form("n_fakeablesel_%s",         estr);
+  const std::string n_mvasel_ele_str             = Form("n_mvasel_%s",              estr);
+  const std::string n_presel_jet_str             = Form("n_presel_%s",              jstr);
+  const std::string n_presel_jet_vbf_str         = Form("n_presel_%s",              jvbfstr);
+  const std::string n_presel_jet_vbf_pairs_str   = Form("n_presel_%spairs",         jvbfstr);
+  const std::string n_presel_jet_vbf_postlep_str = Form("n_presel_%s_postLepClean", jvbfstr);
+  const std::string n_presel_jet_vbf_postjet_str = Form("n_presel_%s_postJetClean", jvbfstr);
+  const std::string n_presel_jetAK8_str          = Form("n_presel_%s",              jstrAk8);
+  const std::string n_presel_jetAK8LS_str        = Form("n_presel_%s",              jstrAk8Ls);
+  const std::string n_loose_bjet_str             = Form("n_loose_%s",               bjstr);
+  const std::string n_medium_bjet_str            = Form("n_medium_%s",              bjstr);
 
   setBranches(
-    nEvent,                   "event",
-    ls,                       "ls",
-    run,                      "run",
-    flag_boosted,             "is_boosted",
-    flag_semiboosted,         "is_semiboosted",
-    flag_resolved,            "is_resolved",
-    flag_ee,                  "is_ee",
-    flag_mm,                  "is_mm",
-    flag_em,                  "is_em",
-    flag_ss,                  "is_ss",
-    n_presel_mu,              n_presel_mu_str,
-    n_fakeablesel_mu,         n_fakeablesel_mu_str,
-    n_mvasel_mu,              n_mvasel_mu_str,
-    n_presel_ele,             n_presel_ele_str,
-    n_fakeablesel_ele,        n_fakeablesel_ele_str,
-    n_mvasel_ele,             n_mvasel_ele_str,
-    n_presel_jet,             n_presel_jet_str,
-    n_presel_jet_vbf,         n_presel_jet_vbf_str,
-    n_presel_jetAK8,          n_presel_jetAK8_str,
-    n_presel_jetAK8LS,        n_presel_jetAK8LS_str,
-    n_loose_bjet,             n_loose_bjet_str,
-    n_medium_bjet,            n_medium_bjet_str,
+    nEvent,                       "event",
+    ls,                           "ls",
+    run,                          "run",
+    flag_boosted,                 "is_boosted",
+    flag_semiboosted,             "is_semiboosted",
+    flag_resolved,                "is_resolved",
+    flag_ee,                      "is_ee",
+    flag_mm,                      "is_mm",
+    flag_em,                      "is_em",
+    flag_ss,                      "is_ss",
+    n_presel_mu,                  n_presel_mu_str,
+    n_fakeablesel_mu,             n_fakeablesel_mu_str,
+    n_mvasel_mu,                  n_mvasel_mu_str,
+    n_presel_ele,                 n_presel_ele_str,
+    n_fakeablesel_ele,            n_fakeablesel_ele_str,
+    n_mvasel_ele,                 n_mvasel_ele_str,
+    n_presel_jet,                 n_presel_jet_str,
+    n_presel_jet_vbf,             n_presel_jet_vbf_str,
+    n_presel_jet_vbfPairs,        n_presel_jet_vbf_pairs_str,
+    n_presel_jet_vbfPostLepClean, n_presel_jet_vbf_postlep_str,
+    n_presel_jet_vbfPostJetClean, n_presel_jet_vbf_postjet_str,
+    n_presel_jetAK8,              n_presel_jetAK8_str,
+    n_presel_jetAK8LS,            n_presel_jetAK8LS_str,
+    n_loose_bjet,                 n_loose_bjet_str,
+    n_medium_bjet,                n_medium_bjet_str,
 
 //--- MET/MHT
     floatMap[FloatVariableType_bbww::trigger_SF],               "trigger_SF",
@@ -178,6 +186,16 @@ SyncNtupleManager_bbww::initializeBranches()
     jet_E,                    "E",
     jet_CSV,                  "CSV",
     jet_btagSF,               "btagSF"
+  );
+
+  setBranches(
+    jvbfpstr, nof_jets_vbf_pair,
+    jet_vbf_pair_pt,              "pt",
+    jet_vbf_pair_eta,             "eta",
+    jet_vbf_pair_phi,             "phi",
+    jet_vbf_pair_E,               "E",
+    jet_vbf_pair_CSV,             "CSV",
+    jet_vbf_pair_btagSF,          "btagSF"
   );
 
   setBranches(
@@ -406,10 +424,29 @@ SyncNtupleManager_bbww::read(const std::vector<const RecoElectron *> & electrons
 }
 
 void
-SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets_vbf)
+SyncNtupleManager_bbww::read(const std::vector<const RecoJet *> & jets_vbf,
+                             const std::vector<const RecoJet *> & jets_vbf_pair,
+                             int n_presel_vbf_postLep,
+                             int n_presel_vbf_postJet)
 {
   n_presel_jet_vbf = jets_vbf.size();
-  const Int_t nof_iterations = std::min(n_presel_jet_vbf, nof_jets_vbf);
+  n_presel_jet_vbfPairs = static_cast<int>(static_cast<bool>(jets_vbf_pair.size()));
+  n_presel_jet_vbfPostLepClean = n_presel_vbf_postLep;
+  n_presel_jet_vbfPostJetClean = n_presel_vbf_postJet;
+
+  const Int_t nof_iterations_pair = std::min(static_cast<int>(jets_vbf_pair.size()), nof_jets_vbf_pair);
+  for(Int_t i = 0; i < nof_iterations_pair; ++i)
+  {
+    const RecoJet * const jet = jets_vbf_pair[i];
+    jet_vbf_pair_pt[i] = jet -> pt();
+    jet_vbf_pair_eta[i] = jet -> eta();
+    jet_vbf_pair_phi[i] = jet -> phi();
+    jet_vbf_pair_E[i] = (jet -> p4()).E();
+    jet_vbf_pair_CSV[i] = std::max(jet -> BtagCSV(), 0.);
+    jet_vbf_pair_btagSF[i] = jet -> BtagWeight();
+  }
+
+  const Int_t nof_iterations = std::min(static_cast<int>(jets_vbf.size()), nof_jets_vbf);
   for(Int_t i = 0; i < nof_iterations; ++i)
   {
     const RecoJet * const jet = jets_vbf[i];
@@ -609,6 +646,9 @@ SyncNtupleManager_bbww::resetBranches()
     n_mvasel_ele,
     n_presel_jet,
     n_presel_jet_vbf,
+    n_presel_jet_vbfPairs,
+    n_presel_jet_vbfPostLepClean,
+    n_presel_jet_vbfPostJetClean,
     n_presel_jetAK8,
     n_presel_jetAK8LS,
     n_loose_bjet,
@@ -685,6 +725,16 @@ SyncNtupleManager_bbww::resetBranches()
     jet_E,
     jet_CSV,
     jet_btagSF
+  );
+
+  reset(
+    nof_jets_vbf_pair,
+    jet_vbf_pair_pt,
+    jet_vbf_pair_eta,
+    jet_vbf_pair_phi,
+    jet_vbf_pair_E,
+    jet_vbf_pair_CSV,
+    jet_vbf_pair_btagSF
   );
 
   reset(

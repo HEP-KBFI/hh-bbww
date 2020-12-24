@@ -2397,7 +2397,7 @@ int main(int argc, char* argv[])
       std::vector<const RecoJet*> tmpJets_vbf;
       if(selJet_vbf_lead)    { tmpJets_vbf.push_back(selJet_vbf_lead);    }
       if(selJet_vbf_sublead) { tmpJets_vbf.push_back(selJet_vbf_sublead); }
-      snm->read(tmpJets_vbf);
+      snm->read({}, tmpJets_vbf, 0, 0);
       if(isVBF)
       {
         snm->read(vbf_m_jj,    FloatVariableType_bbww::vbf_m_jj);
