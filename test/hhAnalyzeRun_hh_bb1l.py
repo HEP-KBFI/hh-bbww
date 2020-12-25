@@ -33,7 +33,7 @@ parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
-parser.enable_regrouped_jerc(default = 'jes')
+parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
@@ -85,6 +85,12 @@ if regroup_jerc:
     systematics.full.extend(systematics.JEC_regrouped)
   elif regroup_jerc == 'jer':
     systematics.full.extend(systematics.JER_split)
+  elif regroup_jerc == 'jes_ak8':
+    systematics.full.extend(systematics.AK8_JEC_regrouped)
+  elif regroup_jerc == 'jes_all':
+    systematics.full.extend(systematics.JEC_regrouped_ALL)
+  elif regroup_jerc == 'all':
+    systematics.full.extend(systematics.JEC_regrouped_ALL + systematics.JER_split_ALL)
   else:
     raise RuntimeError("Invalid choice: %s" % regroup_jerc)
 if split_trigger_sys == 'yes':
