@@ -97,7 +97,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 #include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
-#include "tthAnalysis/HiggsToTauTau/interface/LHEParticleReader.h" // LHEParticleReader
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 
@@ -726,7 +725,6 @@ int main(int argc, char* argv[])
   GenPhotonReader * genPhotonReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
-  LHEParticleReader * lheParticleReader = nullptr;
   PSWeightReader * psWeightReader = nullptr;
 
   GenParticleReader * genMatchToMuonReader     = nullptr;
@@ -771,11 +769,6 @@ int main(int argc, char* argv[])
     }
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
-    if ( isSignal ) 
-    {
-      lheParticleReader = new LHEParticleReader();
-      inputTree->registerReader(lheParticleReader);
-    }
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
     inputTree -> registerReader(psWeightReader);
   }
@@ -1162,7 +1155,6 @@ int main(int argc, char* argv[])
     }
 
     std::vector<GenParticle> genLeptonsDY;
-    std::vector<LHEParticle> lheParticles;
     if ( isMC )
     {
       for ( const GenParticle & genLepton : genLeptons )
@@ -1175,10 +1167,6 @@ int main(int argc, char* argv[])
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
       lheInfoReader->read();
-      if ( lheParticleReader )
-      {
-        lheParticles = lheParticleReader->read();
-      }
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
       evtWeightRecorder.record_psWeight(psWeightReader);
@@ -2523,7 +2511,7 @@ int main(int argc, char* argv[])
           );
           if ( isSignal )
           {
-            selHistManager->genKinematics_HH_->fillHistograms(lheParticles, evtWeight);
+            selHistManager->genKinematics_HH_->fillHistograms(evtWeight);
           }
         }
 
