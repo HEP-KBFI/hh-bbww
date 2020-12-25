@@ -1815,8 +1815,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
 
-    const RecoMEt met_uncorr = metReader->read();
-    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
+    const RecoMEt met = metReader->read();
     const Particle::LorentzVector& metP4 = met.p4();
 
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);

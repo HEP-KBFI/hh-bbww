@@ -1643,8 +1643,7 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms("m(ltau) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
 
 //--- compute MHT and linear MET discriminant (met_LD)
-    const RecoMEt met_uncorr = metReader->read();
-    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
+    const RecoMEt met = metReader->read();
     const Particle::LorentzVector& metP4 = met.p4();
     const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4(cleanedJetsAK4_wrtLeptons_and_hadTaus, isHigherPt);
     Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, fakeableHadTaus, selJetsAK4_mht);

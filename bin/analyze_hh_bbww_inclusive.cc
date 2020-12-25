@@ -590,8 +590,7 @@ main(int argc,
     std::sort(selJets.begin(), selJets.end(), isHigherPt);
     std::sort(selFatJets.begin(), selFatJets.end(), isHigherPt);
 //--- compute MHT and linear MET discriminant (met_LD)
-    const RecoMEt met_uncorr = metReader->read();
-    const RecoMEt met = recompute_met(met_uncorr, jets, met_option, isDEBUG);
+    const RecoMEt met = metReader->read();
 
     if(isMC && ! readGenObjects)
     {
