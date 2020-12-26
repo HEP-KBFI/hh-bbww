@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-12-26 00:44:19 with the following command:
+# file generated at 2020-12-26 17:39:35 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2017_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2017/2020Dec25_woPresel_nonNom_hh_bbww_sync_hh_multilepton/ntuples -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_sync.py -M
 
 samples_2017 = OD()
@@ -25,7 +25,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_corre
   }),
   ("nof_tree_events",                 52000),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     296891577), # 296.89MB, avg file size 296.89MB
+  ("fsize_local",                     336996439), # 337.00MB, avg file size 337.00MB
   ("fsize_db",                        11931037531), # 11.93GB, avg file size 1.08GB
   ("use_it",                          True),
   ("xsection",                        0.026422),
