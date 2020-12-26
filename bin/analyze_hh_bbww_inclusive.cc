@@ -35,6 +35,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EventInfoReader.h" // EventInfoReader
 #include "tthAnalysis/HiggsToTauTau/interface/L1PreFiringWeightReader.h" // L1PreFiringWeightReader
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
@@ -157,6 +159,7 @@ main(int argc,
   const std::string branchName_fatJetsLS = cfg_analyze.getParameter<std::string>("branchName_fatJetsLS");
   const std::string branchName_subJetsLS = cfg_analyze.getParameter<std::string>("branchName_subJetsLS");
   const std::string branchName_met       = cfg_analyze.getParameter<std::string>("branchName_met");
+  const std::string branchName_vertex    = cfg_analyze.getParameter<std::string>("branchName_vertex");
 
   const std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   const std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
@@ -226,6 +229,10 @@ main(int argc,
     eventInfoReader.setTopPtRwgtBranchName(apply_topPtReweighting_str);
   }
   inputTree->registerReader(&eventInfoReader);
+
+  RecoVertex vertex;
+  RecoVertexReader vertexReader(&vertex, branchName_vertex);
+  inputTree -> registerReader(&vertexReader);
 
   hltPathReader hltPathReader_instance({
     triggers_1e, triggers_1mu, triggers_2e, triggers_1e1mu, triggers_2mu,
@@ -305,6 +312,7 @@ main(int argc,
 //--- declare missing transverse energy
   RecoMEtReader * const metReader = new RecoMEtReader(era, isMC, branchName_met);
   metReader->setMEt_central_or_shift(met_option);
+  metReader->set_phiModulationCorrDetails(&eventInfo, &vertex);
   inputTree->registerReader(metReader);
 
   GenLeptonReader * genLeptonReader = nullptr;
@@ -496,7 +504,11 @@ main(int argc,
     std::vector<const RecoJet *> selJets  = jetSelector(cleanedJets, isHigherPt);
     std::vector<const RecoJet*> selBJets_loose = jetSelectorAK4_bTagLoose(selJets);
     std::vector<const RecoJet*> selBJets_medium = jetSelectorAK4_bTagMedium(selJets);
-    const std::vector<const RecoJet*> selJets_vbf = jetSelectorAK4_vbf(cleanedJets, isHigherPt);
+    const std::vector<const RecoJet*> selJets_vbf_beforeCleaning = jetSelectorAK4_vbf(jet_ptrs, isHigherPt);
+    const std::vector<const RecoJet*> selJets_vbf = jetCleaningByIndex ?
+      jetCleanerByIndex(selJets_vbf_beforeCleaning, fakeableLeptons) :
+      jetCleaner       (selJets_vbf_beforeCleaning, fakeableLeptons)
+    ;
     evtWeightRecorder.record_btagWeight(selJets);
     if(btagSFRatioFacility)
     {
@@ -691,7 +703,7 @@ main(int argc,
     snm->read(preselElectrons, fakeableElectrons, tightElectrons);
     // preselected AK4 jets, sorted by pT in decreasing order
     snm->read(selJets, selBJets_loose.size(), selBJets_medium.size());
-    snm->read(selJets_vbf);
+    snm->read(selJets_vbf_beforeCleaning, selJets_vbf, selJets_vbf.size(), selJets_vbf.size());
     // "regular" AK8 jets, selected to target H->bb decay, sorted by pT in decreasing order
     snm->read(selFatJets, false);
     // lepton-subtracted AK8 jets in which the leptons that are subtracted from pass loose preselection

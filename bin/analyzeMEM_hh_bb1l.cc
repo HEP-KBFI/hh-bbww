@@ -50,6 +50,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 #include "tthAnalysis/HiggsToTauTau/interface/GenLeptonCollectionSelector.h" // GenLeptonCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetCollectionSelector.h" // GenJetCollectionSelector
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
+#include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 #include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
@@ -213,6 +215,7 @@ int main(int argc, char* argv[])
   std::string branchName_jets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_jets_ak8LS");
   std::string branchName_subjets_ak8LS = cfg_analyze.getParameter<std::string>("branchName_subjets_ak8LS");
   std::string branchName_met = cfg_analyze.getParameter<std::string>("branchName_met");
+  std::string branchName_vertex = cfg_analyze.getParameter<std::string>("branchName_vertex");
 
   std::string branchName_memOutput = cfg_analyze.getParameter<std::string>("branchName_memOutput");
   std::string branchName_memOutput_missingBJet = cfg_analyze.getParameter<std::string>("branchName_memOutput_missingBJet");
@@ -253,6 +256,10 @@ int main(int argc, char* argv[])
 
   EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
+
+  RecoVertex vertex;
+  RecoVertexReader vertexReader(&vertex, branchName_vertex);
+  inputTree -> registerReader(&vertexReader);
 
 //--- declare particle collections
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, false);
@@ -390,6 +397,7 @@ int main(int argc, char* argv[])
 
 //--- declare missing transverse energy
   RecoMEtReader* metReader = new RecoMEtReader(era, isMC, branchName_met);
+  metReader->set_phiModulationCorrDetails(&eventInfo, &vertex);
   inputTree->registerReader(metReader);
 
 //--- declare generator level information

@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2020-11-12 10:25:39 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p python/samples/sampleLocations_2016_nanoAOD_ttbar.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_ttbar.py -M
+# file generated at 2020-12-19 22:10:46 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p python/samples/sampleLocations_2016_nanoAOD_ttbar.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_ttbar.py -M -l /hdfs/local/karl/lost_ntuples.txt
 
 samples_2016 = OD()
 samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] = OD([
@@ -12,9 +12,9 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("nof_db_files",                    143),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 9963900),
+  ("nof_tree_events",                 9763900),
   ("nof_db_events",                   9963900),
-  ("fsize_local",                     21285995182), # 21.29GB, avg file size 212.86MB
+  ("fsize_local",                     20858645198), # 20.86GB, avg file size 208.59MB
   ("fsize_db",                        440499394219), # 440.50GB, avg file size 3.08GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -29,7 +29,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_130304"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [46, 82]),
       ]),
     ]
   ),
@@ -184,9 +184,9 @@ samples_2016["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("nof_db_files",                    411),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 28900700),
+  ("nof_tree_events",                 28800000),
   ("nof_db_events",                   28900700),
-  ("fsize_local",                     66089324256), # 66.09GB, avg file size 218.12MB
+  ("fsize_local",                     65858834465), # 65.86GB, avg file size 217.36MB
   ("fsize_db",                        1338002370689), # 1.34TB, avg file size 3.26GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -201,7 +201,7 @@ samples_2016["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/200331_133751"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [278]),
       ]),
     ]
   ),
@@ -227,9 +227,9 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("nof_db_files",                    143),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 9923800),
+  ("nof_tree_events",                 9824300),
   ("nof_db_events",                   9923800),
-  ("fsize_local",                     21429245481), # 21.43GB, avg file size 214.29MB
+  ("fsize_local",                     21214511998), # 21.21GB, avg file size 212.15MB
   ("fsize_db",                        440216123353), # 440.22GB, avg file size 3.08GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -244,7 +244,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_134230"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [49]),
       ]),
     ]
   ),
@@ -356,9 +356,9 @@ samples_2016["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
   ("nof_db_files",                    385),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 26872200),
+  ("nof_tree_events",                 26772400),
   ("nof_db_events",                   29671272),
-  ("fsize_local",                     60741474503), # 60.74GB, avg file size 203.83MB
+  ("fsize_local",                     60515614165), # 60.52GB, avg file size 203.07MB
   ("fsize_db",                        1349067910706), # 1.35TB, avg file size 3.50GB
   ("use_it",                          False),
   ("xsection",                        365.52),
@@ -373,7 +373,7 @@ samples_2016["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_140232"),
         ("selection", "*"),
-        ("blacklist", [56, 59, 97, 106, 129, 131, 133, 136, 147, 156, 168, 170, 171, 174, 179, 188, 190, 193, 194, 195, 205, 206, 210, 219, 246, 277, 281, 282]),
+        ("blacklist", [22, 56, 59, 97, 106, 129, 131, 133, 136, 147, 156, 168, 170, 171, 174, 179, 188, 190, 193, 194, 195, 205, 206, 210, 219, 246, 277, 281, 282]),
       ]),
     ]
   ),
@@ -614,9 +614,9 @@ samples_2016["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISumm
   ("nof_db_files",                    372),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 27921200),
+  ("nof_tree_events",                 27821600),
   ("nof_db_events",                   27921200),
-  ("fsize_local",                     64125432442), # 64.13GB, avg file size 217.37MB
+  ("fsize_local",                     63896956016), # 63.90GB, avg file size 216.60MB
   ("fsize_db",                        1289925205797), # 1.29TB, avg file size 3.47GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -631,7 +631,7 @@ samples_2016["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISumm
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141512"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [88]),
       ]),
     ]
   ),
@@ -700,9 +700,9 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("nof_db_files",                    79),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 4987600),
+  ("nof_tree_events",                 4887600),
   ("nof_db_events",                   4987600),
-  ("fsize_local",                     10731893266), # 10.73GB, avg file size 214.64MB
+  ("fsize_local",                     10516912273), # 10.52GB, avg file size 210.34MB
   ("fsize_db",                        220909282587), # 220.91GB, avg file size 2.80GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -717,7 +717,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_141928"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [49]),
       ]),
     ]
   ),
@@ -872,9 +872,9 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("nof_db_files",                    186),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 14846400),
+  ("nof_tree_events",                 14446400),
   ("nof_db_events",                   14846400),
-  ("fsize_local",                     32128404386), # 32.13GB, avg file size 215.63MB
+  ("fsize_local",                     31262469082), # 31.26GB, avg file size 209.82MB
   ("fsize_db",                        663165284807), # 663.17GB, avg file size 3.57GB
   ("use_it",                          False),
   ("xsection",                        88.4),
@@ -889,7 +889,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142421"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [79, 82, 83, 104]),
       ]),
     ]
   ),
@@ -1001,9 +1001,9 @@ samples_2016["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
   ("nof_db_files",                    352),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 27446200),
+  ("nof_tree_events",                 27388200),
   ("nof_db_events",                   27446200),
-  ("fsize_local",                     63651575951), # 63.65GB, avg file size 215.77MB
+  ("fsize_local",                     63515957350), # 63.52GB, avg file size 215.31MB
   ("fsize_db",                        1287103451975), # 1.29TB, avg file size 3.66GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -1018,7 +1018,7 @@ samples_2016["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142733"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [13]),
       ]),
     ]
   ),
@@ -1388,9 +1388,9 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
   ("nof_db_files",                    424),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 27338000),
+  ("nof_tree_events",                 27238000),
   ("nof_db_events",                   27338000),
-  ("fsize_local",                     63050801671), # 63.05GB, avg file size 219.69MB
+  ("fsize_local",                     62820554574), # 62.82GB, avg file size 218.89MB
   ("fsize_db",                        1273462459025), # 1.27TB, avg file size 3.00GB
   ("use_it",                          False),
   ("xsection",                        377.85),
@@ -1405,7 +1405,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_144020"),
         ("selection", "*"),
-        ("blacklist", []),
+        ("blacklist", [24]),
       ]),
     ]
   ),

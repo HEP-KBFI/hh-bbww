@@ -29,6 +29,7 @@ process.analyzeMEM_hh_bb2l = cms.PSet(
     branchName_jets_ak8 = cms.string('FatJet'),
     branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
+    branchName_vertex = cms.string('PV'),
 
     branchName_memOutput = cms.string('memObjects_hh_bb2l_lepFakeable_central'),
     branchName_memOutput_missingBJet = cms.string('memObjects_hh_bb2l_lepFakeable_missingBJet_central'),

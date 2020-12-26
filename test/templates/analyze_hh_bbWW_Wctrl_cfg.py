@@ -72,6 +72,7 @@ process.analyze_hh_bbWW_Wctrl = cms.PSet(
     branchName_jets_ak8LS = cms.string('FatJetAK8LSLoose'),
     branchName_subjets_ak8LS = cms.string('SubJetAK8LSLoose'),
     branchName_met = cms.string('MET'),
+    branchName_vertex = cms.string('PV'),
 
     branchName_muonGenMatch = cms.string('MuonGenMatch'),
     branchName_electronGenMatch = cms.string('ElectronGenMatch'),
