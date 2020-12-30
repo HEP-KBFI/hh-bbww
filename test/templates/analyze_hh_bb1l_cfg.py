@@ -144,26 +144,26 @@ process.analyze_hh_bb1l = cms.PSet(
             xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_resolved_nonres_%s.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
             xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_resolved_nonres_%s.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
-                'lep_pt', 'bjet1_pt', 'bjet2_pt', 'met', 'm_Hbb_regCorr',
-                'dR_Hbb', 'pT_Hbb', 'm_Wjj', 'dR_Hww', 'pT_Hww',
-                'Smin_Hww', 'dR_b1lep', 'dR_b2lep', 'pT_HH', 'mT_W',
-                'mT_top_2particle', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mbb_loose', 'mbb_medium',
-                'dR_HH', 'cosThetaS_HH', 'mht', 'jpaScore', 'bjet1_btagCSV',
-                'wjet1_btagCSV', 'vbf_m_jj', 'vbf_dEta_jj',
-                'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
+            'mindr_lep1_jet', 'm_Hbb_regCorr', 'dR_b1lep', 'bjet1_pt',
+            'dR_b2lep', 'bjet1_btagCSV', 'mbb_medium', 'mT_top_2particle', 'pT_HH',
+            'met', 'mT_W', 'pT_Hbb', 'jpaScore',
+            'mll_loose', 'lep_pt', 'wjet1_pt', 'mbb_loose',
+            'Smin_Hww', 'dR_Hbb', 'm_HHvis', 'dR_HH',
+            'leadFwdJet_pt', "wjet1_btagCSV", "mht", "lep_e",
+            'wjet2_pt', 'bjet1_e', 'SM'
             )
         ),
         nonresonant_boosted = cms.PSet(
             xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_odd_half_model_boosted_nonres_%s.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
             xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/bb1l_bdt_even_half_model_boosted_nonres_%s.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
-                'bjet2_pt', 'met', 'm_Hbb', 'dR_Hbb', 'm_HHvis',
-                'pT_HH', 'mT_W', 'mindr_lep1_jet', 'avg_dr_jet_central', 'mbb_loose',
-                'mbb_medium', 'tau21_Hbb', 'numJets', 'numBJets_loose', 'numBJets_medium', 
-                'lep_pt', 'Smin_Hww', 'dR_b1lep', 'pT_Hww', 'mT_top_2particle', 
-                'pT_Hbb', 'dR_Wjj', 'cosThetaS_HH', 'bjet1_btagCSV', 
-                'wjet1_btagCSV', 'vbf_m_jj', 'vbf_dEta_jj',
-                'SM', 'BM1', 'BM2', 'BM3', 'BM4', 'BM5', 'BM6', 'BM7', 'BM8', 'BM9', 'BM10', 'BM11', 'BM12'
+               'm_Hbb', 'bjet2_btagCSV', 'mbb_medium',
+                'mindr_lep1_jet', 'jpaScore', 'met', 'bjet1_btagCSV', 'mbb_loose',
+                'lep_pt', 'dR_b1lep', 'pT_HH', 'pT_Hbb', 'tau21_Hbb',
+                'mll_loose', 'dPhi_HHvis', 'leadFwdJet_pt', 'avg_dr_jet_central', 'Smin_Hww',
+                'wjet1_pt', 'mT_W', 'mT_top_3particle', 'Smin_HH',
+                'lep_e', 'dR_HH', 'bjet2_pt',
+                'pT_Hww', 'dR_Hbb', 'SM'
             )
         )
     ),
