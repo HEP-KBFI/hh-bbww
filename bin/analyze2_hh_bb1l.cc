@@ -2175,7 +2175,7 @@ int main(int argc, char* argv[])
       {"lep_pt",                  selLepton->pt()},
       {"lep_conePt",              comp_lep_conePt(*selLepton)},
       {"lep_eta",                 selLepton->eta()},
-      {"lep_e",                 selLepton->e()},
+      {"lep_e",                 selLepton->p4().energy()},
       {"lep_phi",                 selLepton->phi()},
       {"lep_mass",                selLepton->mass()},
       {"bjet1_e",                selJetP4_Hbb_lead.e()},
@@ -2215,6 +2215,7 @@ int main(int argc, char* argv[])
       {"dR_Wjj",                  dR_Wjj},
       {"pT_Hww",                  pT_Hww},
       {"m_HHvis",                 m_HHvis},
+      {"dPhi_HHvis",              dPhi_HHvis},
       {"pT_HH",                   pT_HH},
       {"pT_HHvis",                pT_HHvis},
       {"avg_dr_jet_central",      comp_avg_dr_jet(selJetsAK4)},
@@ -2243,6 +2244,8 @@ int main(int argc, char* argv[])
       {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
       {"mll_loose",               preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->p4() + preselLeptonsFull[1]->p4()).mass() : 0.},
       {"numLeptons",              preselLeptonsFull.size()},
+      {"STMET",                   STMET},
+      {"Smin_HH",                 Smin_HH},
       {"vbf_dEta_jj",             vbf_dEta_jj},
       {"vbf_m_jj",                vbf_m_jj}
     };
