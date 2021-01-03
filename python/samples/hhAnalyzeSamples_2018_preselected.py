@@ -1,4 +1,4 @@
-from tthAnalysis.HiggsToTauTau.samples.tthAnalyzeSamples_2018_preselected_base import samples_2018 as samples_2018_bkg
+from hhAnalysis.multilepton.samples.tthAnalyzeSamples_2018_preselected_base import samples_2018 as samples_2018_bkg
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_hh_preselected import samples_2018 as samples_2018_hh
 from hhAnalysis.bbww.samples.hhAnalyzeSamples_2018_ttbar_preselected import samples_2018 as samples_2018_ttbar
 
