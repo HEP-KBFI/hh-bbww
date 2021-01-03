@@ -22,6 +22,7 @@ mode_choices = {
 parser = tthAnalyzeParser(isAddMEM = True)
 parser.add_modes(mode_choices.keys())
 parser.add_preselect()
+parser.add_lep_mva_wp(default_wp = 'hh_multilepton')
 parser.add_nonnominal()
 parser.add_use_home(False)
 parser.add_sys(sys_choices)
@@ -68,6 +69,7 @@ mode                  = args.mode
 systematics_label     = args.systematics
 systematics_label_hme = args.systematics_hme
 use_preselected       = args.use_preselected
+lep_mva_wp            = args.lep_mva_wp
 use_nonnominal        = args.original_central
 use_home              = args.use_home
 jet_cleaning          = args.jet_cleaning
@@ -144,6 +146,7 @@ if __name__ == '__main__':
     leptonSelection          = "Fakeable",
     isDebug                  = debug,
     central_or_shift         = central_or_shifts,
+    lep_mva_wp               = lep_mva_wp,
     central_or_shift_hme     = central_or_shifts_hme,
     jet_cleaning_by_index    = jet_cleaning_by_index,
     dry_run                  = dry_run,

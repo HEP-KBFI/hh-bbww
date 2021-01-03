@@ -152,6 +152,9 @@ int main(int argc, char* argv[])
   std::string central_or_shift = "central";
   bool apply_genWeight = cfg_analyze.getParameter<bool>("apply_genWeight");
 
+  const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
+  const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
+
   bool isDEBUG = cfg_analyze.getParameter<bool>("isDEBUG");
   if ( isDEBUG ) std::cout << "Warning: DEBUG mode enabled -> trigger selection will not be applied for data !!" << std::endl;
 
@@ -206,12 +209,14 @@ int main(int argc, char* argv[])
 
 //--- declare particle collections
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, false);
+  muonReader->set_mvaTTH_wp(lep_mva_cut_mu);
   inputTree->registerReader(muonReader);
   RecoMuonCollectionGenMatcher muonGenMatcher;
   RecoMuonCollectionSelectorLoose preselMuonSelector(era, -1, isDEBUG);
   RecoMuonCollectionSelectorTight tightMuonSelector(era, -1, isDEBUG);
 
   RecoElectronReader* electronReader = new RecoElectronReader(era, branchName_electrons, isMC, false);
+  electronReader->set_mvaTTH_wp(lep_mva_cut_e);
   inputTree->registerReader(electronReader);
   RecoElectronCollectionGenMatcher electronGenMatcher;
   RecoElectronCollectionCleaner electronCleaner(0.3, isDEBUG);

@@ -18,6 +18,7 @@ systematics.full = systematics.an_tth
 
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
+parser.add_lep_mva_wp(default_wp = 'hh_multilepton')
 parser.add_sys(sys_choices)
 parser.add_rle_select()
 parser.add_files_per_job() 
@@ -39,6 +40,7 @@ running_method     = args.running_method
 # Additional arguments
 mode              = args.mode
 rle_select        = os.path.expanduser(args.rle_select)
+lep_mva_wp        = args.lep_mva_wp
 files_per_job     = args.files_per_job
 use_home          = args.use_home
 jet_cleaning      = args.jet_cleaning
@@ -77,6 +79,7 @@ if __name__ == '__main__':
     samples                               = samples,
     mode                                  = mode,
     central_or_shifts                     = [ "central" ],
+    lep_mva_wp                            = lep_mva_wp,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     max_files_per_job                     = files_per_job,
     era                                   = era,

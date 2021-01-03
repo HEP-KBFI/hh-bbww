@@ -22,6 +22,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
         num_parallel_jobs,
         isDebug,
         central_or_shift,
+        lep_mva_wp,
         central_or_shift_hme,
         jet_cleaning_by_index,
         dry_run,
@@ -54,6 +55,7 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
       use_nonnominal           = use_nonnominal,
       use_home                 = use_home,
       channel                  = "hh_bb2l",
+      lep_mva_wp               = lep_mva_wp,
       submission_cmd           = submission_cmd,
       pool_id                  = pool_id,
     )
@@ -110,5 +112,8 @@ class addMEMConfig_hh_bb2l(addMEMConfig):
     lines.append("process.addMEM_hh_bb2l.useNonNominal = cms.bool(%s)" % self.use_nonnominal)
     lines.append("process.addMEM_hh_bb2l.method_mem = cms.bool(%s)" % self.method_mem)
     lines.append("process.addMEM_hh_bb2l.method_hme = cms.bool(%s)" % self.method_hme)
+    lines.append("process.addMEM_hh_bb2l.lep_mva_wp = cms.string('%s')" % self.lep_mva_wp)
+    lines.append("process.addMEM_hh_bb2l.lep_mva_cut_mu = cms.double(%s)" % self.lep_mva_cut_mu)
+    lines.append("process.addMEM_hh_bb2l.lep_mva_cut_e = cms.double(%s)" % self.lep_mva_cut_e)
 
     create_cfg(self.cfgFile_addMEM_original, cfgFile_modified, lines)
