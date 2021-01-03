@@ -47,6 +47,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/branchEntryType.h" // branchEntryBaseType
 #include "tthAnalysis/HiggsToTauTau/interface/copyHistograms.h" // copyHistograms
 
+#include "hhAnalysis/multilepton/interface/RecoElectronCollectionSelectorFakeable_hh_multilepton.h" // RecoElectronCollectionSelectorFakeable_hh_multilepton
+#include "hhAnalysis/multilepton/interface/RecoMuonCollectionSelectorFakeable_hh_multilepton.h" // RecoMuonCollectionSelectorFakeable_hh_multilepton
 #include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
 
 #include "hhAnalysis/bbww/interface/RecoJetCollectionSelectorAK8_hh_bbWW_Hbb.h" // RecoJetSelectorAK8_hh_bbWW_Hbb
@@ -200,6 +202,10 @@ int main(int argc,
   const std::string branchName_subjets_ak8  = cfg_addMEM.getParameter<std::string>("branchName_subjets_ak8");
   const std::string branchName_met          = cfg_addMEM.getParameter<std::string>("branchName_met");
 
+  const double lep_mva_cut_mu = cfg_addMEM.getParameter<double>("lep_mva_cut_mu");
+  const double lep_mva_cut_e  = cfg_addMEM.getParameter<double>("lep_mva_cut_e");
+  const std::string lep_mva_wp = cfg_addMEM.getParameter<std::string>("lep_mva_wp");
+
   // branches specific to HH->bbWW signal events
   std::string branchName_genLeptons;
   std::string branchName_genNeutrinos;
@@ -313,16 +319,20 @@ int main(int argc,
 
 //--- declare particle collections
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
+  muonReader->set_mvaTTH_wp(lep_mva_cut_mu);
   muonReader->setBranchAddresses(inputTree);
   const RecoMuonCollectionSelectorLoose    preselMuonSelector  (era);
-  const RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era);
+  const RecoMuonCollectionSelectorFakeable fakeableMuonSelector_default(era);
+  const RecoMuonCollectionSelectorFakeable_hh_multilepton fakeableMuonSelector_hh_multilepton(era);
   const RecoMuonCollectionSelectorTight    tightMuonSelector   (era);
 
   RecoElectronReader* electronReader = new RecoElectronReader(era, branchName_electrons, isMC, readGenObjects);
+  electronReader->set_mvaTTH_wp(lep_mva_cut_e);
   electronReader->setBranchAddresses(inputTree);
   const RecoElectronCollectionCleaner electronCleaner(0.3);
   const RecoElectronCollectionSelectorLoose    preselElectronSelector  (era);
-  const RecoElectronCollectionSelectorFakeable fakeableElectronSelector(era);
+  const RecoElectronCollectionSelectorFakeable fakeableElectronSelector_default(era);
+  const RecoElectronCollectionSelectorFakeable_hh_multilepton fakeableElectronSelector_hh_multilepton(era);
   const RecoElectronCollectionSelectorTight    tightElectronSelector   (era);
 
   RecoJetReader* jetReaderAK4 = new RecoJetReader(era, isMC, branchName_jets_ak4, readGenObjects);
@@ -629,7 +639,10 @@ int main(int argc,
     // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
     const std::vector<const RecoMuon *> cleanedMuons  = muon_ptrs;
     const std::vector<const RecoMuon *> preselMuons   = preselMuonSelector  (cleanedMuons,  isHigherConePt);
-    const std::vector<const RecoMuon *> fakeableMuons = fakeableMuonSelector(preselMuons,   isHigherConePt);
+    const std::vector<const RecoMuon *> fakeableMuons = lep_mva_wp == "hh_multilepton" ?
+      fakeableMuonSelector_hh_multilepton(preselMuons, isHigherConePt) :
+      fakeableMuonSelector_default(preselMuons, isHigherConePt)
+    ;
     const std::vector<const RecoMuon *> tightMuons    = tightMuonSelector   (fakeableMuons, isHigherConePt);
     const std::vector<const RecoMuon *> selMuons      = selectObjects(
       leptonSelection, preselMuons, fakeableMuons, tightMuons
@@ -644,7 +657,10 @@ int main(int argc,
     const std::vector<const RecoElectron *> cleanedElectrons  = electronCleaner(electron_ptrs, fakeableMuons);
     const std::vector<const RecoElectron *> preselElectronsUncleaned = preselElectronSelector  (electron_ptrs,     isHigherConePt);
     const std::vector<const RecoElectron *> preselElectrons          = preselElectronSelector  (cleanedElectrons,  isHigherConePt);
-    const std::vector<const RecoElectron *> fakeableElectrons        = fakeableElectronSelector(preselElectrons,   isHigherConePt);
+    const std::vector<const RecoElectron *> fakeableElectrons        = lep_mva_wp == "hh_multilepton" ?
+      fakeableElectronSelector_hh_multilepton(preselElectrons, isHigherConePt) :
+      fakeableElectronSelector_default(preselElectrons, isHigherConePt)
+    ;
     const std::vector<const RecoElectron *> tightElectrons           = tightElectronSelector   (fakeableElectrons, isHigherConePt);
     const std::vector<const RecoElectron *> selElectrons             = selectObjects(
       leptonSelection, preselElectrons, fakeableElectrons, tightElectrons

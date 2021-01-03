@@ -1330,8 +1330,7 @@ int main(int argc, char* argv[])
       printCollection("selJetsForward", selJetsForward);
     }
 
-    const RecoMEt met_uncorr = metReader->read();
-    const RecoMEt met = recompute_met(met_uncorr, jets_ak4, met_option, isDEBUG);
+    const RecoMEt met = metReader->read();
     const Particle::LorentzVector& metP4 = met.p4();
 
 //--- build collections of generator level particles (after some cuts are applied, to save computing time)

@@ -22,7 +22,7 @@ systematics.internal = systematics.an_internal_hh_bbww
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
-parser.add_preselect() # effectively ignored, but needed by sync Ntuple workflow
+parser.add_preselect()
 parser.add_rle_select()
 parser.add_lep_mva_wp(default_wp = 'hh_multilepton')
 parser.add_nonnominal()
@@ -33,7 +33,7 @@ parser.add_use_home()
 parser.add_tau_id()
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
-parser.enable_regrouped_jerc(default = 'jes')
+parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
@@ -61,6 +61,7 @@ running_method     = args.running_method
 # Additional arguments
 mode              = args.mode
 systematics_label = args.systematics
+use_preselected   = args.use_preselected
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
@@ -76,6 +77,9 @@ doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
 second_bdt = args.second_bdt
 
+if lep_mva_wp != "hh_multilepton" and use_preselected:
+  raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
+
 if regroup_jerc:
   if 'full' not in systematics_label:
     raise RuntimeError("Regrouped JEC or split JER was enabled but not running with full systematics")
@@ -85,6 +89,12 @@ if regroup_jerc:
     systematics.full.extend(systematics.JEC_regrouped)
   elif regroup_jerc == 'jer':
     systematics.full.extend(systematics.JER_split)
+  elif regroup_jerc == 'jes_ak8':
+    systematics.full.extend(systematics.AK8_JEC_regrouped)
+  elif regroup_jerc == 'jes_all':
+    systematics.full.extend(systematics.JEC_regrouped_ALL)
+  elif regroup_jerc == 'all':
+    systematics.full.extend(systematics.JEC_regrouped_ALL + systematics.JER_split_ALL)
   else:
     raise RuntimeError("Invalid choice: %s" % regroup_jerc)
 if split_trigger_sys == 'yes':
@@ -115,7 +125,7 @@ if "sync" not in mode:
   )
 blacklisted_categories = []
 if mode == "default":
-  samples = load_samples(era)
+  samples = load_samples(era, suffix = "preselected_sl" if use_preselected else "")
   samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era)

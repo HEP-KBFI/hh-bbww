@@ -21,6 +21,7 @@ parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_preselect()
+parser.add_lep_mva_wp(default_wp = 'hh_multilepton')
 parser.add_nonnominal()
 parser.add_tau_id_wp()
 parser.add_hlt_filter()
@@ -52,6 +53,7 @@ systematics_label = args.systematics
 use_preselected   = args.use_preselected
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
+lep_mva_wp        = args.lep_mva_wp
 files_per_job     = args.files_per_job
 use_home          = args.use_home
 sideband          = args.sideband
@@ -60,6 +62,9 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
+
+if lep_mva_wp != "hh_multilepton" and use_preselected:
+  raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -157,6 +162,7 @@ if __name__ == '__main__':
     chargeSumSelections                   = chargeSumSelections,
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
+    lep_mva_wp                            = lep_mva_wp,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
     evtCategories                         = evtCategories,

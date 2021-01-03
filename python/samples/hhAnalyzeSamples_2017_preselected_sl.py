@@ -1,0 +1,6 @@
+from hhAnalysis.bbww.samples.tthAnalyzeSamples_2017_preselected_sl import samples_2017 as samples_2017_bkg
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_hh_preselected_sl import samples_2017 as samples_2017_hh
+from hhAnalysis.bbww.samples.hhAnalyzeSamples_2017_ttbar_preselected_sl import samples_2017 as samples_2017_ttbar
+
+from hhAnalysis.bbww.samples.reclassifySamples import reclassifySamples
+samples_2017 = reclassifySamples(samples_2017_hh, samples_2017_bkg, samples_2017_ttbar)

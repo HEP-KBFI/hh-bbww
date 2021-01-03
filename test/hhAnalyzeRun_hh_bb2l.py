@@ -35,7 +35,7 @@ parser.add_sideband(default_choice = 'enabled')
 parser.add_tau_id() # compatibility with sync Ntuple workflow, otherwise ignored
 parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
-parser.enable_regrouped_jerc(default = 'jes')
+parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_argument('-hme', '--hmeBr',
   dest = 'add_hmeBr', action = 'store_true',
@@ -74,8 +74,8 @@ split_trigger_sys = args.split_trigger_sys
 add_hmeBr         = args.add_hmeBr
 doDataMCPlots     = True
 
-if lep_mva_wp != "default" and use_preselected:
-  raise RuntimeError("Cannot use skimmed samples while relaxing the prompt lepton MVA cut")
+if lep_mva_wp != "hh_multilepton" and use_preselected:
+  raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -86,6 +86,12 @@ if regroup_jerc:
     systematics.full.extend(systematics.JEC_regrouped)
   elif regroup_jerc == 'jer':
     systematics.full.extend(systematics.JER_split)
+  elif regroup_jerc == 'jes_ak8':
+    systematics.full.extend(systematics.AK8_JEC_regrouped)
+  elif regroup_jerc == 'jes_all':
+    systematics.full.extend(systematics.JEC_regrouped_ALL)
+  elif regroup_jerc == 'all':
+    systematics.full.extend(systematics.JEC_regrouped_ALL + systematics.JER_split_ALL)
   else:
     raise RuntimeError("Invalid choice: %s" % regroup_jerc)
 if split_trigger_sys == 'yes':
