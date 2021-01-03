@@ -22,7 +22,7 @@ systematics.internal = systematics.an_internal_hh_bbww
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
-parser.add_preselect() # effectively ignored, but needed by sync Ntuple workflow
+parser.add_preselect()
 parser.add_rle_select()
 parser.add_lep_mva_wp(default_wp = 'hh_multilepton')
 parser.add_nonnominal()
@@ -61,6 +61,7 @@ running_method     = args.running_method
 # Additional arguments
 mode              = args.mode
 systematics_label = args.systematics
+use_preselected   = args.use_preselected
 rle_select        = os.path.expanduser(args.rle_select)
 use_nonnominal    = args.original_central
 hlt_filter        = args.hlt_filter
@@ -75,6 +76,9 @@ split_trigger_sys = args.split_trigger_sys
 doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
 second_bdt = args.second_bdt
+
+if lep_mva_wp != "hh_multilepton" and use_preselected:
+  raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
 
 if regroup_jerc:
   if 'full' not in systematics_label:
@@ -121,7 +125,7 @@ if "sync" not in mode:
   )
 blacklisted_categories = []
 if mode == "default":
-  samples = load_samples(era)
+  samples = load_samples(era, suffix = "preselected_sl" if use_preselected else "")
   samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining":
   samples = load_samples(era)
