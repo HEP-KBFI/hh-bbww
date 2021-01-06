@@ -2,7 +2,8 @@
 
 from hhAnalysis.bbww.configs.analyzeConfig_hadWTagger import analyzeConfig_hadWTagger
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
-from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
+from hhAnalysis.bbww.analysisSettings import systematics_bbww_sl as systematics
+from tthAnalysis.HiggsToTauTau.analysisSettings import get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples
 
