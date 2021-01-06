@@ -2103,16 +2103,40 @@ int main(int argc, char* argv[])
       {"pT_ll",                   pT_ll},
       {"m_Hbb",                   m_Hbb},
       {"pT_Hbb",                  pT_Hbb},
+      {"pT_HH",                   pT_HH},
+      {"pT_Hww",                   pT_Hww},
       {"numBJets_medium",         selBJetsAK4_medium.size()},
       {"met_pt_proj",             met_pt_proj},
       {"m_HHvis",                 m_HHvis},
+      {"dPhi_HHvis",                 dPhi_HHvis},
       {"m_HH_hme",                m_HH_hme},
       {"mT2_W",                   mT2_W},
       {"mT2_top_3particle",       mT2_top_3particle},
+      {"mT2_top_2particle",       mT2_top_2particle},
       {"met_LD",                  met_LD > 0},
       {"min_dR_blep",             std::min({dR_b1lep1, dR_b1lep2, dR_b2lep1, dR_b2lep2})},
       {"logTopness_fixedChi2",    logTopness_fixedChi2 < 50 ? -0.01 : logTopness_fixedChi2  },
-      {"logHiggsness_fixedChi2",  logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2}
+      {"logHiggsness_fixedChi2",  logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2},
+      {"logTopness_publishedChi2", logTopness_publishedChi2},
+      {"m_Hbb_regCorr",           m_Hbb_regCorr},
+      {"Smin_Hww",                Smin_Hww},
+      {"mbb_loose",               selBJetsAK4_loose.size()>1  ? (selBJetsAK4_loose[0]->p4()+selBJetsAK4_loose[1]->p4()).mass() : 0},
+      {"dR_ll",                   dR_ll},
+      {"mht",                     mhtP4.pt()},
+      {"mbb_medium",                  selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0},
+      {"lep2_pt",                 selLepton_sublead->pt()},
+      {"dR_Hbb",                  dR_Hbb},
+      {"dPhi_Hbb",                dPhi_Hbb},
+      {"dPhi_HH",                dPhi_HH},
+      {"mindr_lep1_jet",           comp_mindr_jet(*selLepton_lead, selJetsAK4)},
+      {"max_dPhi_lepMEt",        max_dPhi_lepMEt},
+      {"tau21_Hbb",        tau21_Hbb},
+      {"STMET",            STMET},
+      {"bjet2_pt",                    selJetP4_Hbb_sublead.pt()},
+      {"avg_dr_jet_central",          comp_avg_dr_jet(selJetsAK4)},
+      {"lep1_e",                      selLepton_lead->p4().e()},
+      {"eta_HHvis",                   eta_HHvis},
+      {"dR_b1lep2",                   dR_b1lep2}
     };
 
 //--- compute event-level BDT outputs
@@ -2123,18 +2147,18 @@ int main(int argc, char* argv[])
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted->mvaInputVariables(), false);
+        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted->mvaInputVariables(), true);
         bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted->mvaInputVariables(), false);
+        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted->mvaInputVariables(), true);
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
       }
       else
       {
-        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved->mvaInputVariables(), false);
+        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved->mvaInputVariables(), true);
         bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved->mvaInputVariables(), false);
+        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved->mvaInputVariables(), true);
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
