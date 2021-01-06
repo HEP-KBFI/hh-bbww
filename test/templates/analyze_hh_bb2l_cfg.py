@@ -84,7 +84,6 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_jets_ak8 = cms.string('FatJet'),
     branchName_subjets_ak8 = cms.string('SubJet'),
     branchName_met = cms.string('MET'),
-    branchName_vertex = cms.string('PV'),
 
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genHadTaus = cms.string('GenVisTau'),
@@ -96,6 +95,7 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_electronGenMatch = cms.string('ElectronGenMatch'),
     branchName_hadTauGenMatch = cms.string('TauGenMatch'),
     branchName_jetGenMatch = cms.string('JetGenMatch'),
+    branchName_vertex = cms.string('PV'),
 
     redoGenMatching = cms.bool(False),
     genMatchingByIndex = cms.bool(True),
@@ -111,7 +111,7 @@ process.analyze_hh_bb2l = cms.PSet(
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
 
-    fillHistograms_BDT = cms.bool(False),
+    fillHistograms_BDT = cms.bool(True),
     BDT = cms.PSet(
         resonant_spin2_resolved = cms.PSet(
             xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
@@ -150,21 +150,24 @@ process.analyze_hh_bb2l = cms.PSet(
             )
         ),
         nonresonant_resolved = cms.PSet(
-            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_resolved_nonres_%s.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_even_half_model_resolved_nonres_%s.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
-                '', '', '', '', '',
-                '', '', '', '', '',
-                '', '', '', '', ''
+                'm_Hbb_regCorr', 'm_ll', 'Smin_Hww', 'mbb_loose', 'm_HHvis',
+                'dR_ll', 'logTopness_publishedChi2', 'mT2_top_2particle', 'mht', 'logTopness_fixedChi2',
+                'mbb_medium', 'pT_HH', 'logHiggsness_fixedChi2', 'pT_Hbb', 'pT_Hww',
+                'lep2_pt', 'dR_Hbb', 'dPhi_Hbb', 'pT_ll', 'met_pt_proj', 'SM'
             )
         ),
         nonresonant_boosted = cms.PSet(
-            xmlFileName_even = cms.string(''), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-            xmlFileName_odd = cms.string(''), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_boosted_nonres_%s.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_boosted_nonres_%s.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
-                '', '', '', '', '',
-                '', '', '', '', '',
-                '', '', '', '', ''
+                'm_ll', 'm_Hbb', 'mbb_loose', 'dR_ll', 'mbb_medium',
+                'Smin_Hww', 'mindr_lep1_jet', 'max_dPhi_lepMEt', 'dR_Hbb', 'tau21_Hbb',
+                'STMET', 'pT_HH', 'bjet2_pt', 'avg_dr_jet_central', 'lep1_e',
+                'mht', 'm_HHvis', 'pT_ll', 'dPhi_HH', 'logHiggsness_fixedChi2', 'dPhi_HHvis',
+                'lep2_pt', 'eta_HHvis', 'dR_b1lep2', 'logTopness_fixedChi2', 'SM'
             )
         )
     ),
@@ -276,3 +279,12 @@ process.analyze_hh_bb2l = cms.PSet(
     tHweights = cms.VPSet(),
     hhWeight_cfg = hhWeight,
 )
+
+process.analyze_hh_bb2l.BDT.resonant_spin2_resolved = process.analyze_hh_bb2l.BDT.nonresonant_resolved
+process.analyze_hh_bb2l.BDT.resonant_spin2_boosted  = process.analyze_hh_bb2l.BDT.nonresonant_boosted
+process.analyze_hh_bb2l.BDT.resonant_spin0_resolved = process.analyze_hh_bb2l.BDT.nonresonant_resolved
+process.analyze_hh_bb2l.BDT.resonant_spin0_boosted  = process.analyze_hh_bb2l.BDT.nonresonant_boosted
+process.analyze_hh_bb2l.LBN.resonant_spin2_resolved = process.analyze_hh_bb2l.LBN.nonresonant_resolved
+process.analyze_hh_bb2l.LBN.resonant_spin2_boosted  = process.analyze_hh_bb2l.LBN.nonresonant_boosted
+process.analyze_hh_bb2l.LBN.resonant_spin0_resolved = process.analyze_hh_bb2l.LBN.nonresonant_resolved
+process.analyze_hh_bb2l.LBN.resonant_spin0_boosted  = process.analyze_hh_bb2l.LBN.nonresonant_boosted
