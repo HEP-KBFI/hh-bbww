@@ -179,10 +179,10 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath, const std::strin
   mvaInputFilePath_ = mvaInputFilePath;
   if ( mvaInputFilePath_.find_last_of("/") != (mvaInputFilePath_.size() - 1) ) mvaInputFilePath_.append("/");
 
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b2W]  = Form("bb1l_jpa_4jet_boosted_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b2W]   = Form("bb1l_jpa_4jet_boosted_odd_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b1W]  = Form("bb1l_jpa_missingWJet_boosted_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b1W]   = Form("bb1l_jpa_missingWJet_boosted_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b2W]  = Form("bb1l_jpa_4jet_boosted_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b2W]   = Form("bb1l_jpa_4jet_boosted_even_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_boosted::k2b1W]  = Form("bb1l_jpa_missingWJet_boosted_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_boosted::k2b1W]   = Form("bb1l_jpa_missingWJet_boosted_even_all_mass_all_node_%s.xml", era.data());
 
   for ( int jpaCategory = (int)JPA::Category_boosted::k2b2W; jpaCategory <= (int)JPA::Category_boosted::k2b1W; ++jpaCategory )
   {
@@ -196,18 +196,18 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath, const std::strin
     mvas_1stLayer_[jpaCategory] = mva;
   }
 
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b2W] = Form("bb1l_jpa_4jet_resolved_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b2W]  = Form("bb1l_jpa_4jet_resolved_odd_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b1W] = Form("bb1l_jpa_missingWJet_resolved_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b1W]  = Form("bb1l_jpa_missingWJet_resolved_odd_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b0W] = Form("bb1l_jpa_missingAllWJet_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b0W]  = Form("bb1l_jpa_missingAllWJet_odd_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b2W] = Form("bb1l_jpa_missingBJet_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b2W]  = Form("bb1l_jpa_missingBJet_odd_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b1W] = Form("bb1l_jpa_missingBJet_missingWJet_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b1W]  = Form("bb1l_jpa_missingBJet_missingWJet_odd_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b0W] = Form("bb1l_jpa_missingBJet_missingAllWJet_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b0W]  = Form("bb1l_jpa_missingBJet_missingAllWJet_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b2W] = Form("bb1l_jpa_4jet_resolved_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b2W]  = Form("bb1l_jpa_4jet_resolved_even_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b1W] = Form("bb1l_jpa_missingWJet_resolved_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b1W]  = Form("bb1l_jpa_missingWJet_resolved_even_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k2b0W] = Form("bb1l_jpa_missingAllWJet_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k2b0W]  = Form("bb1l_jpa_missingAllWJet_even_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b2W] = Form("bb1l_jpa_missingBJet_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b2W]  = Form("bb1l_jpa_missingBJet_even_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b1W] = Form("bb1l_jpa_missingBJet_missingWJet_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b1W]  = Form("bb1l_jpa_missingBJet_missingWJet_even_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_even_[(int)JPA::Category_resolved::k1b0W] = Form("bb1l_jpa_missingBJet_missingAllWJet_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_1stLayer_odd_[(int)JPA::Category_resolved::k1b0W]  = Form("bb1l_jpa_missingBJet_missingAllWJet_even_all_mass_all_node_%s.xml", era.data());
 
   for ( int jpaCategory = (int)JPA::Category_resolved::k2b2W; jpaCategory <= (int)JPA::Category_resolved::k1b0W; ++jpaCategory )
   {
@@ -221,14 +221,14 @@ JPAInterface::JPAInterface(const std::string& mvaInputFilePath, const std::strin
     mvas_1stLayer_[jpaCategory] = mva;
   }
 
-  mvaInputFileNames_2ndLayer_even_[JPA::kBoosted]  = Form("bb1l_jpa_evtCat_boosted_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_2ndLayer_odd_[JPA::kBoosted]   = Form("bb1l_jpa_evtCat_boosted_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_2ndLayer_even_[JPA::kBoosted]  = Form("bb1l_jpa_evtCat_boosted_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_2ndLayer_odd_[JPA::kBoosted]   = Form("bb1l_jpa_evtCat_boosted_even_all_mass_all_node_%s.xml", era.data());
   mvaInputVariables_2ndLayer_[JPA::kBoosted]       = { 
     "jpaScore_2b2W_boosted",
     "jpaScore_2b1W_boosted"
   };
-  mvaInputFileNames_2ndLayer_even_[JPA::kResolved] = Form("bb1l_jpa_evtCat_resolved_even_all_mass_all_node_%s.xml", era.data());
-  mvaInputFileNames_2ndLayer_odd_[JPA::kResolved]  = Form("bb1l_jpa_evtCat_resolved_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_2ndLayer_even_[JPA::kResolved] = Form("bb1l_jpa_evtCat_resolved_odd_all_mass_all_node_%s.xml", era.data());
+  mvaInputFileNames_2ndLayer_odd_[JPA::kResolved]  = Form("bb1l_jpa_evtCat_resolved_even_all_mass_all_node_%s.xml", era.data());
   mvaInputVariables_2ndLayer_[JPA::kResolved]      = { 
     "jpaScore_2b2W_resolved",
     "jpaScore_2b1W_resolved",
