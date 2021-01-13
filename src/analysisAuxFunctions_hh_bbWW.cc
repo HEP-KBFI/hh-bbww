@@ -2,43 +2,58 @@
 
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
-TMVAInterface *
+std::vector<TMVAInterface *>
 makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
 {
-  std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
-  xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "%s", era);
-  std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
-  xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "%s", era);
-  std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
-  TMVAInterface * retVal = nullptr;
-  //if ( is_nonresonant )
-  //{
+  std::vector<TMVAInterface *> retVals;
+  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12"};
+  for ( auto BM: BMpoints) {
+    std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
+    xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "era", era);
+    xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "BM", BM);
+    std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
+    xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "era", era);
+    xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "BM", BM);
+    std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
+    //inputVariables.push_back(BM);
+    //if ( is_nonresonant )
+    //{
+    TMVAInterface* retVal = nullptr;
     assert(xmlFileName_even != "" && xmlFileName_odd != "" && inputVariables.size() != 0);
     retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables);
-  //}
-  //else
-  //{
-  //  std::string fitFileName = cfg.getParameter<std::string>("fitFileName");
-  //  assert(xmlFileName_odd != "" && xmlFileName_even != "" && fitFileName != "" && inputVariables.size() != 0);
-  //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
-  //}
-  retVal->enableBDTTransform();
-  return retVal;
+    //}
+    //else
+    //{
+    //  std::string fitFileName = cfg.getParameter<std::string>("fitFileName");
+    //  assert(xmlFileName_odd != "" && xmlFileName_even != "" && fitFileName != "" && inputVariables.size() != 0);
+    //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
+    //}
+    retVal->enableBDTTransform();
+    retVals.push_back(retVal);
+  }
+  return retVals;
 }
 
-TensorFlowInterfaceLBN *
+std::vector<TensorFlowInterfaceLBN *>
 makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era)
 {
-  std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
-  pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "%s", era);
-  std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
-  pbFileName_even = boost::replace_all_copy(pbFileName_even, "%s", era);
-  std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
-  std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
-  std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
-  assert(pbFileName_even != "" && pbFileName_odd != "" && ll_inputVariables.size() != 0 && hl_inputVariables.size() != 0 && classes.size() != 0);
-  TensorFlowInterfaceLBN * retVal = new TensorFlowInterfaceLBN(pbFileName_odd, ll_inputVariables, hl_inputVariables, classes, pbFileName_even);
-  return retVal;
+  std::vector<TensorFlowInterfaceLBN *> retVals;
+  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12"};
+  for ( auto BM: BMpoints) {
+    std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
+    pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "era", era);
+    pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "BM", BM);
+    std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
+    pbFileName_even = boost::replace_all_copy(pbFileName_even, "era", era);
+    pbFileName_even = boost::replace_all_copy(pbFileName_even, "BM", BM);
+    std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
+    std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
+    std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
+    assert(pbFileName_even != "" && pbFileName_odd != "" && ll_inputVariables.size() != 0 && hl_inputVariables.size() != 0 && classes.size() != 0);
+    TensorFlowInterfaceLBN * retVal = new TensorFlowInterfaceLBN(pbFileName_odd, ll_inputVariables, hl_inputVariables, classes, pbFileName_even);
+    retVals.push_back(retVal);
+  }
+  return retVals;
 }
 
 void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
