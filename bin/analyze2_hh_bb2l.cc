@@ -402,12 +402,12 @@ int main(int argc, char* argv[])
 
   // initialize BDT-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_BDT = cfg_analyze.getParameter<bool>("fillHistograms_BDT");
-  TMVAInterface * BDT_resonant_spin2_boosted  = nullptr;
-  TMVAInterface * BDT_resonant_spin2_resolved = nullptr;
-  TMVAInterface * BDT_resonant_spin0_boosted  = nullptr;
-  TMVAInterface * BDT_resonant_spin0_resolved = nullptr;
-  TMVAInterface * BDT_nonresonant_boosted     = nullptr;
-  TMVAInterface * BDT_nonresonant_resolved    = nullptr;
+  std::vector<TMVAInterface *> BDT_resonant_spin2_boosted;//  = nullptr;
+  std::vector<TMVAInterface *> BDT_resonant_spin2_resolved;
+  std::vector<TMVAInterface *> BDT_resonant_spin0_boosted;
+  std::vector<TMVAInterface *> BDT_resonant_spin0_resolved;
+  std::vector<TMVAInterface *> BDT_nonresonant_boosted;
+  std::vector<TMVAInterface *> BDT_nonresonant_resolved;
   if ( fillHistograms_BDT )
   {
     edm::ParameterSet cfg_BDT = cfg_analyze.getParameter<edm::ParameterSet>("BDT");
@@ -430,12 +430,12 @@ int main(int argc, char* argv[])
 
   // initialize LBN-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_LBN = cfg_analyze.getParameter<bool>("fillHistograms_LBN");
-  TensorFlowInterfaceLBN * LBN_resonant_spin2_boosted  = nullptr;
-  TensorFlowInterfaceLBN * LBN_resonant_spin2_resolved = nullptr;
-  TensorFlowInterfaceLBN * LBN_resonant_spin0_boosted  = nullptr;
-  TensorFlowInterfaceLBN * LBN_resonant_spin0_resolved = nullptr;
-  TensorFlowInterfaceLBN * LBN_nonresonant_boosted     = nullptr;
-  TensorFlowInterfaceLBN * LBN_nonresonant_resolved    = nullptr;
+  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin2_boosted;
+  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin2_resolved;
+  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin0_boosted;
+  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin0_resolved;
+  std::vector<TensorFlowInterfaceLBN *> LBN_nonresonant_boosted;
+  std::vector<TensorFlowInterfaceLBN *> LBN_nonresonant_resolved;
   if ( fillHistograms_LBN )
   {
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
@@ -2139,6 +2139,171 @@ int main(int argc, char* argv[])
       {"dR_b1lep2",                   dR_b1lep2}
     };
 
+    if ( bdt_filler )
+      {
+        double bjet1_btagCSV  = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet1()->BtagCSV() : ( (selJet1_Hbb) ? dynamic_cast<const RecoJet*>(selJet1_Hbb)->BtagCSV() : -1 );
+        double bjet2_btagCSV  = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet2()->BtagCSV() : ( (selJet2_Hbb) ? dynamic_cast<const RecoJet*>(selJet2_Hbb)->BtagCSV() : -1 );
+
+        double mindr_lep1_jet = comp_mindr_jet(*selLepton_lead, selJetsAK4);
+        double mindr_lep2_jet = comp_mindr_jet(*selLepton_sublead, selJetsAK4);
+
+        double lep1_frWeight  = ( selLepton_lead->genLepton()    ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
+        double lep2_frWeight  = ( selLepton_sublead->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_sublead(central_or_shift_main);
+
+        std::map<std::string, double> weightMapHH;
+        if ( apply_HH_rwgt || apply_HH_rwgt_LOtoNLO )
+          {
+            for ( unsigned int i = 0; i < HHWeightNames.size(); i++ )
+              {
+                double HHReweight = 1.;
+                if ( apply_HH_rwgt )
+                  {
+                    assert(HHWeight_calc);
+                    HHReweight = HHWeight_calc->getWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+                  }
+                if ( apply_HH_rwgt_LOtoNLO )
+                  {
+                    assert(HHWeight_calc_LOtoNLO);
+                    HHReweight *= HHWeight_calc_LOtoNLO->getReWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+                  }
+                weightMapHH[HHWeightNames[i]] = HHReweight;
+              }
+          }
+
+        bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
+          ("bjet1_btagCSV",               bjet1_btagCSV)
+          ("bjet2_btagCSV",               bjet2_btagCSV)
+          ("lep1_pt",                     selLepton_lead->pt())
+          ("lep1_conePt",                 comp_lep_conePt(*selLepton_lead))
+          ("lep1_eta",                    selLepton_lead->eta())
+          ("lep1_phi",                    selLepton_lead->phi())
+          ("lep1_mass",                   selLepton_lead->mass())
+          ("lep1_charge",                 selLepton_lead->charge())
+          ("lep1_e",                      selLepton_lead->p4().e())
+          ("lep1_px",                     selLepton_lead->p4().px())
+          ("lep1_py",                     selLepton_lead->p4().py())
+          ("lep1_pz",                     selLepton_lead->p4().pz())
+          ("lep1_frWeight",               lep1_frWeight)
+          ("lep2_pt",                     selLepton_sublead->pt())
+          ("lep2_conePt",                 comp_lep_conePt(*selLepton_sublead))
+          ("lep2_eta",                    selLepton_sublead->eta())
+          ("lep2_phi",                    selLepton_sublead->phi())
+          ("lep2_mass",                   selLepton_sublead->mass())
+          ("lep2_charge",                 selLepton_sublead->charge())
+          ("lep2_e",                      selLepton_sublead->p4().e())
+          ("lep2_px",                     selLepton_sublead->p4().px())
+          ("lep2_py",                     selLepton_sublead->p4().py())
+          ("lep2_pz",                     selLepton_sublead->p4().pz())
+          ("lep2_frWeight",               lep2_frWeight)
+          ("bjet1_pt",                    selJetP4_Hbb_lead.pt())
+          ("bjet1_eta",                   selJetP4_Hbb_lead.eta())
+          ("bjet1_phi",                   selJetP4_Hbb_lead.phi())
+          ("bjet1_mass",                  selJetP4_Hbb_lead.mass())
+          ("bjet1_e",                     selJetP4_Hbb_lead.energy())
+          ("bjet1_px",                    selJetP4_Hbb_lead.px())
+          ("bjet1_py",                    selJetP4_Hbb_lead.py())
+          ("bjet1_pz",                    selJetP4_Hbb_lead.pz())
+          ("bjet2_pt",                    selJetP4_Hbb_sublead.pt())
+          ("bjet2_eta",                   selJetP4_Hbb_sublead.eta())
+          ("bjet2_phi",                   selJetP4_Hbb_sublead.phi())
+          ("bjet2_mass",                  selJetP4_Hbb_sublead.mass())
+          ("bjet2_e",                     selJetP4_Hbb_sublead.energy())
+          ("bjet2_px",                    selJetP4_Hbb_sublead.px())
+          ("bjet2_py",                    selJetP4_Hbb_sublead.py())
+          ("bjet2_pz",                    selJetP4_Hbb_sublead.pz())
+          ("mindr_lep1_jet",              mindr_lep1_jet)
+          ("mindr_lep2_jet",              mindr_lep2_jet)
+          ("avg_dr_jet_central",          comp_avg_dr_jet(selJetsAK4))
+          ("mbb_loose",                   selBJetsAK4_loose.size()>1  ? (selBJetsAK4_loose[0]->p4()+selBJetsAK4_loose[1]->p4()).mass() : 0)
+          ("mbb_medium",                  selBJetsAK4_medium.size()>1 ? (selBJetsAK4_medium[0]->p4()+selBJetsAK4_medium[1]->p4()).mass() : 0 )
+          ("numElectrons",                selElectrons.size())
+          ("sum_Lep_charge",              selLepton_lead -> charge() + selLepton_sublead -> charge())
+          ("massLT",                      comp_massL2(selLepton_lead, selLepton_sublead, metP4.pt(), metP4.phi()))
+          ("max_Lep_eta",                 TMath::Max(std::abs(selLepton_lead -> eta()), std::abs(selLepton_sublead -> eta())))
+          ("dR_HH",                       dR_HH)
+          ("met",                         metP4.pt())
+          ("mht",                         mhtP4.pt())
+          ("met_LD",                      met_LD)
+          ("HT",                          HT)
+          ("STMET",                       STMET)
+          ("m_Hbb",                       m_Hbb)
+          ("m_Hbb_regCorr",               m_Hbb_regCorr)
+          ("m_Hbb_regRes",                m_Hbb_regRes)
+          ("dR_Hbb",                      dR_Hbb)
+          ("dPhi_Hbb",                    dPhi_Hbb)
+          ("pT_Hbb",                      pT_Hbb)
+          ("eta_Hbb",                     eta_Hbb)
+          ("tau21_Hbb",                   tau21_Hbb)
+          ("cosThetaS_Hbb",               cosThetaS_Hbb)
+          ("cosThetaS_Hbb_reg",           cosThetaS_Hbb_reg)
+          ("m_ll",                        m_ll)
+          ("dR_ll",                       dR_ll)
+          ("dPhi_ll",                     dPhi_ll)
+          ("dEta_ll",                     dEta_ll)
+          ("pT_ll",                       pT_ll)
+          ("min_dPhi_lepMEt",             min_dPhi_lepMEt)
+          ("max_dPhi_lepMEt",             max_dPhi_lepMEt)
+          ("m_Hww",                       m_Hww)
+          ("mT_Hww",                      mT_Hww)
+          ("Smin_Hww",                    Smin_Hww)
+          ("pT_Hww",                      pT_Hww)
+          ("met_pt_proj",                 met_pt_proj)
+          ("dR_b1lep1",                   dR_b1lep1)
+          ("dR_b1lep2",                   dR_b1lep2)
+          ("dR_b2lep1",                   dR_b2lep1)
+          ("dR_b2lep2",                   dR_b2lep2)
+          ("m_HHvis",                     m_HHvis)
+          ("pT_HHvis",                    pT_HHvis)
+          ("eta_HHvis",                   eta_HHvis)
+          ("dPhi_HHvis",                  dPhi_HHvis)
+          ("m_HH",                        m_HH)
+          ("pT_HH",                       pT_HH)
+          ("dPhi_HH",                     dPhi_HH)
+          ("Smin_HH",                     Smin_HH)
+          ("mT2_W",                       mT2_W)
+          ("mT2_top_2particle",           mT2_top_2particle)
+          ("mT2_top_3particle",           mT2_top_3particle)
+          ("m_HH_hme",                    m_HH_hme)
+          ("logTopness_publishedChi2",    logTopness_publishedChi2)
+          ("logHiggsness_publishedChi2",  logHiggsness_publishedChi2)
+          ("logTopness_fixedChi2",        logTopness_fixedChi2)
+          ("logHiggsness_fixedChi2",      logHiggsness_fixedChi2)
+          ("vbf_jet1_pt",                 vbf_jet1_pt)
+          ("vbf_jet1_eta",                vbf_jet1_eta)
+          ("vbf_jet2_pt",                 vbf_jet2_pt)
+          ("vbf_jet2_eta",                vbf_jet2_eta)
+          ("vbf_dEta_jj",                 vbf_dEta_jj)
+          ("vbf_m_jj",                    vbf_m_jj)
+          ("genWeight",                   eventInfo.genWeight)
+          ("evtWeight",                   evtWeightRecorder.get(central_or_shift_main))
+          ("numJets",                     comp_n_jet25_recl(selJetsAK4))
+          ("numBJets_loose",              selBJetsAK4_loose.size())
+          ("numBJets_medium",             selBJetsAK4_medium.size())
+          ("numJets_vbf",                 selJetsAK4_vbf.size())
+          ("isHbb_boosted",               selJetAK8_Hbb ? true : false)
+          ("isVBF",                       isVBF)
+          ("mhh_gen",                     eventInfo.gen_mHH)
+          ("costS_gen",                   eventInfo.gen_cosThetaStar)
+          //(memweight_signal,              "memweight_signal")
+          //(memweight_background,          "memweight_background")
+          //(memOutput_LR_toBDT,            "memOutput_LR")                                                                                                                                                   
+          //(memOutput_LR_missingBjet,      "memOutput_LR_missingBjet")                                                                                                                                       
+          ("mostFwdJet_eta",              selJetsForward.size() >= 1 ? std::abs(mostFwdJet.Eta()) : -1000)
+          ("mostFwdJet_pt",               selJetsForward.size() >= 1 ? mostFwdJet.pt() : -1000)
+          ("mostFwdJet_phi",              selJetsForward.size() >= 1 ? mostFwdJet.phi() : -1000)
+          ("mostFwdJet_E",                selJetsForward.size() >= 1 ? mostFwdJet.energy() : -1000)
+          ("leadFwdJet_eta",              selJetsForward.size() >= 1 ? selJetsForward[0] -> absEta() : -1000)
+          ("leadFwdJet_pt",               selJetsForward.size() >= 1 ? selJetsForward[0] -> pt() : -1000)
+          ("leadFwdJet_phi",              selJetsForward.size() >= 1 ? selJetsForward[0] -> phi() : -1000)
+          ("leadFwdJet_E",                selJetsForward.size() >= 1 ? selJetsForward[0] -> p4().energy() : -1000)
+          ("numJetsForward",              selJetsForward.size())
+          ("lepPairType",                 fabs(selLepton_lead->pdgId()) == fabs(selLepton_sublead->pdgId()))
+          (weightMapHH)
+          .fill()
+          ;
+        continue;
+      }
+
 //--- compute event-level BDT outputs
     std::map<std::string, double> bdtOutputs_resonant_spin2;
     std::map<std::string, double> bdtOutputs_resonant_spin0;
@@ -2147,20 +2312,20 @@ int main(int argc, char* argv[])
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted->mvaInputVariables(), true);
+        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted[0]->mvaInputVariables(), true);
         bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted->mvaInputVariables(), true);
+        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted[0]->mvaInputVariables(), true);
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
-        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted->mvaInputVariables(), true);
+        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted[0]->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
       }
       else
       {
-        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved->mvaInputVariables(), true);
+        std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved[0]->mvaInputVariables(), true);
         bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved->mvaInputVariables(), true);
+        std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved[0]->mvaInputVariables(), true);
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
-        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved->mvaInputVariables(), true);
+        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved[0]->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
       }
     }
@@ -2173,20 +2338,20 @@ int main(int argc, char* argv[])
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted[0]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted[0]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
-        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted->hl_mvaInputVariables(), true);
+        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted[0]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
       }
       else
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved[0]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved[0]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
-        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved->hl_mvaInputVariables(), true);
+        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved[0]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
       }
     }
@@ -2326,7 +2491,7 @@ int main(int argc, char* argv[])
       }
     }
 
-    if ( bdt_filler ) 
+    /*if ( bdt_filler ) 
     {
       double bjet1_btagCSV  = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet1()->BtagCSV() : ( (selJet1_Hbb) ? dynamic_cast<const RecoJet*>(selJet1_Hbb)->BtagCSV() : -1 );
       double bjet2_btagCSV  = ( selJetAK8_Hbb ) ? selJetAK8_Hbb->subJet2()->BtagCSV() : ( (selJet2_Hbb) ? dynamic_cast<const RecoJet*>(selJet2_Hbb)->BtagCSV() : -1 );
@@ -2488,7 +2653,7 @@ int main(int argc, char* argv[])
         (weightMapHH)
         .fill()
       ;
-    }
+      }*/
 
     if(snm)
     {
@@ -2646,6 +2811,55 @@ int main(int argc, char* argv[])
   {
     delete kv.second;
   }
+  for(auto & bdt: BDT_resonant_spin2_boosted)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: BDT_resonant_spin0_boosted)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: BDT_nonresonant_boosted)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: BDT_resonant_spin2_resolved)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: BDT_resonant_spin0_resolved)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: BDT_nonresonant_resolved)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: LBN_resonant_spin2_boosted)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: LBN_resonant_spin0_boosted)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: LBN_nonresonant_boosted)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: LBN_resonant_spin2_resolved)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: LBN_resonant_spin0_resolved)
+  {
+    delete bdt;
+  }
+  for(auto & bdt: LBN_nonresonant_resolved)
+  {
+    delete bdt;
+  }
+
   delete eventWeightManager;
 
   delete HHWeight_calc;
