@@ -89,6 +89,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         executable_analyze,
         cfgFile_analyze,
         samples,
+        fillHistograms_BDT,
+        fillHistograms_LBN,
         MEMbranch,
         hmebranch,
         lepton_charge_selections,
@@ -149,6 +151,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       apply_pileupJetID     = 'loose',
     )
 
+    self.fillHistograms_BDT = fillHistograms_BDT
+    self.fillHistograms_LBN = fillHistograms_LBN
     self.MEMbranch = MEMbranch
     self.hmebranch = hmebranch
 
@@ -512,6 +516,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'useAssocJetBtag'            : self.do_sync,
                   'branchName_memOutput'       : branchName_memOutput,
                   'branchName_hmeOutput'       : branchName_hmeOutput,
+                  'fillHistograms_BDT'         : self.fillHistograms_BDT,
+                  'fillHistograms_LBN'         : self.fillHistograms_LBN
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
