@@ -143,9 +143,12 @@ elif mode == "wMEM":
 elif mode == "forBDTtraining":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
-  ##samples = load_samples(era, suffix = "BDT")
-  samples = load_samples(era)
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
+  samples = load_samples(era, suffix = "BDT")
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo'])
+  fillHistograms_BDT = False
+  fillHistograms_LBN = False
+  #samples = load_samples(era)
+  #samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining_wMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
@@ -179,9 +182,9 @@ for masspoint in masspoints:
   # CV: add histograms for BDT-based extraction of resonant HH signal,
   #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
   categories = [ "boosted", "resolved_2b", "resolved_1b" ]
-  for category in categories:
+  '''for category in categories:
     histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_spin0" % (category, masspoint) : {} })
-    histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_spin2" % (category, masspoint) : {} })
+    histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_spin2" % (category, masspoint) : {} })'''
   # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
   #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
   categories = [ 
@@ -192,9 +195,9 @@ for masspoint in masspoints:
     "SingleTop_boosted", "SingleTop_resolved", 
     "Other" 
   ]
-  for category in categories:
+  '''for category in categories:
     histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_spin0" % (category, masspoint) : {} })
-    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_spin2" % (category, masspoint) : {} })
+    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_spin2" % (category, masspoint) : {} })'''
 bmNames = [ "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" ]
 for bmName in bmNames:
   categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
@@ -208,8 +211,8 @@ for bmName in bmNames:
     "SingleTop_boosted", "SingleTop_resolved", 
     "Other" 
   ]
-  for category in categories:
-    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
+  '''for category in categories:
+    histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })'''
 
 if sideband == 'disabled':
   chargeSumSelections = [ "OS" ]
@@ -237,6 +240,8 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze2_hh_bb2l",
     cfgFile_analyze                       = "analyze_hh_bb2l_cfg.py",
     samples                               = samples,
+    fillHistograms_BDT                    = fillHistograms_BDT,
+    fillHistograms_LBN                    = fillHistograms_LBN,
     MEMbranch                             = MEMbranch,
     hmebranch                             = hmebranch,
     lepton_charge_selections              = chargeSumSelections,
