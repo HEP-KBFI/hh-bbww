@@ -400,6 +400,10 @@ int main(int argc, char* argv[])
   std::vector<double> gen_mHH = analysisConfig.get_HH_resonant_mass_points();
   std::vector<double> nonRes_BMs = cfg_analyze.getParameter<std::vector<double>>("nonRes_BMs");
 
+  bool fillHistograms_nonresonant = cfg_analyze.getParameter<bool>("fillHistograms_nonresonant");
+  bool fillHistograms_resonant_spin0 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin0");
+  bool fillHistograms_resonant_spin2 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin2");
+
   // initialize BDT-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_BDT = cfg_analyze.getParameter<bool>("fillHistograms_BDT");
   std::vector<TMVAInterface *> BDT_resonant_spin2_boosted;//  = nullptr;
@@ -861,7 +865,8 @@ int main(int argc, char* argv[])
         selHistManager->datacard_BDT_ = new DatacardHistManager_hh(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/BDT", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, HHWeight_calc_LOtoNLO, &eventCategory_BDT,
-          isDEBUG);
+          isDEBUG, 
+          fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
         selHistManager->datacard_BDT_->bookHistograms(fs);
       //}
       //if ( fillHistograms_LBN )
@@ -869,7 +874,8 @@ int main(int argc, char* argv[])
         selHistManager->datacard_LBN_ = new DatacardHistManager_hh_multiclass(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/LBN", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, HHWeight_calc_LOtoNLO, &eventCategory_LBN,
-          isDEBUG);
+          isDEBUG, 
+          fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
         selHistManager->datacard_LBN_->bookHistograms(fs);
       //}
 
