@@ -91,6 +91,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         samples,
         fillHistograms_BDT,
         fillHistograms_LBN,
+        fillHistograms_resonant,
+        fillHistograms_spin0,
+        fillHistograms_spin2,
         MEMbranch,
         hmebranch,
         lepton_charge_selections,
@@ -153,6 +156,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.fillHistograms_BDT = fillHistograms_BDT
     self.fillHistograms_LBN = fillHistograms_LBN
+    self.fillHistograms_resonant = fillHistograms_resonant
+    self.fillHistograms_spin0 = fillHistograms_spin0
+    self.fillHistograms_spin2 = fillHistograms_spin2
     self.MEMbranch = MEMbranch
     self.hmebranch = hmebranch
 
@@ -517,7 +523,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                   'branchName_memOutput'       : branchName_memOutput,
                   'branchName_hmeOutput'       : branchName_hmeOutput,
                   'fillHistograms_BDT'         : self.fillHistograms_BDT,
-                  'fillHistograms_LBN'         : self.fillHistograms_LBN
+                  'fillHistograms_LBN'         : self.fillHistograms_LBN,
+                  'fillHistograms_resonant'    : self.fillHistograms_resonant,
+                  'fillHistograms_spin0'       : self.fillHistograms_spin0,
+                  'fillHistograms_spin2'       : self.fillHistograms_spin2,
                 }
                 self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
