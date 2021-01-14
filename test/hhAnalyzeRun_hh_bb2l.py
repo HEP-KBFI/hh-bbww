@@ -13,6 +13,8 @@ import getpass
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
+training_choices = [ 'BDT', 'LBN' ]
+signal_choices   = [ 'nonres', 'spin0', 'spin2' ]
 mode_choices     = [
   'default', 'wMEM', 'forBDTtraining', 'forBDTtraining_wMEM', 'hh_sync', 'hh_sync_wMEM',
   'ttbar_sync', 'ttbar_sync_wMEM',
@@ -40,6 +42,14 @@ parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-depen
 parser.add_argument('-hme', '--hmeBr',
   dest = 'add_hmeBr', action = 'store_true',
   help = 'R|add hme branch'
+)
+parser.add_argument('-M', '--training-method',
+  type = str, nargs = '+', dest = 'training_method', metavar = 'method', choices = training_choices, required = True,
+  help = 'R|Fill histograms for either or both of the methods: %s' % tthAnalyzeParser.cat(training_choices),
+)
+parser.add_argument('-F', '--fill-spin',
+  type = str, nargs = '+', dest = 'fill_spin', metavar = 'spin', choices = signal_choices, required = False, default = [ 'nonres' ],
+  help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
 )
 
 args = parser.parse_args()
@@ -73,6 +83,8 @@ regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 add_hmeBr         = args.add_hmeBr
 doDataMCPlots     = True
+training_method   = args.training_method
+fill_spin         = args.fill_spin
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -124,6 +136,13 @@ hmebranch = ''
 MEMbranch_base = "memObjects_hh_bb2l"
 HMEbranch_base = "hmeObjects_hh_bb2l"
 MEMsample_base = "addMEM_hh_bb2l"
+
+fillHistograms_BDT = 'BDT' in training_method
+fillHistograms_LBN = 'LBN' in training_method
+
+fillHistograms_resonant = 'nonres' in fill_spin
+fillHistograms_spin0    = 'spin0' in fill_spin
+fillHistograms_spin2    = 'spin2' in fill_spin
 
 # the Ntuples that currently have the MEM scores are computed with fakebale lepton selection
 if add_hmeBr:
@@ -242,6 +261,9 @@ if __name__ == '__main__':
     samples                               = samples,
     fillHistograms_BDT                    = fillHistograms_BDT,
     fillHistograms_LBN                    = fillHistograms_LBN,
+    fillHistograms_resonant               = fillHistograms_resonant,
+    fillHistograms_spin0                  = fillHistograms_spin0,
+    fillHistograms_spin2                  = fillHistograms_spin2,
     MEMbranch                             = MEMbranch,
     hmebranch                             = hmebranch,
     lepton_charge_selections              = chargeSumSelections,

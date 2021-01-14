@@ -14,6 +14,8 @@ import importlib
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
 
+training_choices = [ 'BDT', 'LBN' ]
+signal_choices   = [ 'nonres', 'spin0', 'spin2' ]
 mode_choices     = [ 'default', 'forBDTtraining', 'hh_sync', 'ttbar_sync' ]
 sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
 systematics.full = systematics.an_full_hh_bbww
@@ -42,6 +44,14 @@ parser.add_argument('-secondBDT', '--secondBDT',
 parser.add_argument('-doDataMCPlot', '--doDataMCPlot',
   dest = 'doDataMCPlots', action = 'store_true',
   help = 'R| do controlPlots'
+)
+parser.add_argument('-M', '--training-method',
+  type = str, nargs = '+', dest = 'training_method', metavar = 'method', choices = training_choices, required = True,
+  help = 'R|Fill histograms for either or both of the methods: %s' % tthAnalyzeParser.cat(training_choices),
+)
+parser.add_argument('-F', '--fill-spin',
+  type = str, nargs = '+', dest = 'fill_spin', metavar = 'spin', choices = signal_choices, required = False, default = [ 'nonres' ],
+  help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
 )
 
 args = parser.parse_args()
@@ -75,7 +85,9 @@ regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
-second_bdt = args.second_bdt
+second_bdt         = args.second_bdt
+training_method    = args.training_method
+fill_spin          = args.fill_spin
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -117,6 +129,13 @@ do_sync = 'sync' in mode
 lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
+
+fillHistograms_BDT = 'BDT' in training_method
+fillHistograms_LBN = 'LBN' in training_method
+
+fillHistograms_resonant = 'nonres' in fill_spin
+fillHistograms_spin0    = 'spin0' in fill_spin
+fillHistograms_spin2    = 'spin2' in fill_spin
 
 if "sync" not in mode:
   samples_to_stitch = getattr(
@@ -222,6 +241,11 @@ if __name__ == '__main__':
     executable_analyze                    = "analyze2_hh_bb1l",
     cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
     samples                               = samples,
+    fillHistograms_BDT                    = fillHistograms_BDT,
+    fillHistograms_LBN                    = fillHistograms_LBN,
+    fillHistograms_resonant               = fillHistograms_resonant,
+    fillHistograms_spin0                  = fillHistograms_spin0,
+    fillHistograms_spin2                  = fillHistograms_spin2,
     apply_hadTauVeto                      = True,
     hadTau_mva_wp_veto                    = hadTau_selection_veto,
     applyFakeRateWeights                  = "enabled",

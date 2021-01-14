@@ -87,6 +87,11 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         executable_analyze,
         cfgFile_analyze,
         samples,
+        fillHistograms_BDT,
+        fillHistograms_LBN,
+        fillHistograms_resonant,
+        fillHistograms_spin0,
+        fillHistograms_spin2,
         apply_hadTauVeto,
         hadTau_mva_wp_veto,
         applyFakeRateWeights,
@@ -146,6 +151,12 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       submission_cmd        = submission_cmd,
       apply_pileupJetID     = 'loose',
     )
+
+    self.fillHistograms_BDT = fillHistograms_BDT
+    self.fillHistograms_LBN = fillHistograms_LBN
+    self.fillHistograms_resonant = fillHistograms_resonant
+    self.fillHistograms_spin0 = fillHistograms_spin0
+    self.fillHistograms_spin2 = fillHistograms_spin2
 
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
@@ -500,6 +511,11 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'useNonNominal'            : self.use_nonnominal,
                 'fillGenEvtHistograms'     : True,
                 'useAssocJetBtag'          : self.do_sync,
+                'fillHistograms_BDT'       : self.fillHistograms_BDT,
+                'fillHistograms_LBN'       : self.fillHistograms_LBN,
+                'fillHistograms_resonant'  : self.fillHistograms_resonant,
+                'fillHistograms_spin0'     : self.fillHistograms_spin0,
+                'fillHistograms_spin2'     : self.fillHistograms_spin2,
               }
               self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
