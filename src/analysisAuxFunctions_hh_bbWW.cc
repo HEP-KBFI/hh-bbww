@@ -6,7 +6,7 @@ std::vector<TMVAInterface *>
 makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
 {
   std::vector<TMVAInterface *> retVals;
-  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12"};
+  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
   for ( auto BM: BMpoints) {
     std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
     xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "era", era);
@@ -38,7 +38,7 @@ std::vector<TensorFlowInterfaceLBN *>
 makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era)
 {
   std::vector<TensorFlowInterfaceLBN *> retVals;
-  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12"};
+  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
   for ( auto BM: BMpoints) {
     std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
     pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "era", era);

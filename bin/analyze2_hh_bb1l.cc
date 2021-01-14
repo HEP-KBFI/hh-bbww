@@ -2418,6 +2418,7 @@ int main(int argc, char* argv[])
     std::map<std::string, double> bdtOutputs_resonant_spin2;
     std::map<std::string, double> bdtOutputs_resonant_spin0;
     std::map<std::string, double> bdtOutputs_nonresonant;
+    double bdtOutputs_nonresonant_all(-1.);
     if ( fillHistograms_BDT )
     {
       if ( selJetAK8_Hbb )
@@ -2429,6 +2430,7 @@ int main(int argc, char* argv[])
 
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted[0]->mvaInputVariables());
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
+        bdtOutputs_nonresonant_all = (*BDT_nonresonant_boosted[BDT_nonresonant_boosted.size()-1])(bdtInputs_nonresonant, eventInfo.event);
       }
       else
       {
@@ -2439,6 +2441,7 @@ int main(int argc, char* argv[])
 
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved[0]->mvaInputVariables());
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
+        bdtOutputs_nonresonant_all = (*BDT_nonresonant_resolved[BDT_nonresonant_resolved.size()-1])(bdtInputs_nonresonant, eventInfo.event);
         //assert(0);
       }
     }
@@ -2447,6 +2450,7 @@ int main(int argc, char* argv[])
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
+    std::map<std::string, double> lbnOutputs_nonresonant_all;
     if ( fillHistograms_LBN )
     {
       if ( selJetAK8_Hbb )
@@ -2458,6 +2462,7 @@ int main(int argc, char* argv[])
 
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted[0]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
+        lbnOutputs_nonresonant_all = (*LBN_nonresonant_boosted[LBN_nonresonant_boosted.size()-1])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
       }
       else
       {
@@ -2468,6 +2473,8 @@ int main(int argc, char* argv[])
 
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved[0]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
+        lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved[LBN_nonresonant_resolved.size()-1])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
+        //        assert(0);
       }
     }
 
@@ -2532,7 +2539,7 @@ int main(int argc, char* argv[])
             bdtOutputs_resonant_spin2,
             bdtOutputs_resonant_spin0,
             bdtOutputs_nonresonant,
-            -1., // CV: bdtOutput for nonresonant_allBMs case not implemented yet !!
+            bdtOutputs_nonresonant_all, // CV: bdtOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
@@ -2543,7 +2550,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            { { "HH", -1.} }, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
