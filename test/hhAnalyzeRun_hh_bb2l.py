@@ -192,7 +192,10 @@ for sample_name, sample_info in samples.items():
     continue
   if "CHH" in sample_name:
     sample_info["use_it"] = False
-
+  if 'nonres' in fill_spin:
+    sample_info["use_it"] = not 'spin' in sample_info['process_name_specific']
+  if 'spin' in fill_spin:
+    sample_info["use_it"] = not 'nonres' in sample_info['process_name_specific']
 histograms_to_fit = {
   "EventCounter" : {}
 }
