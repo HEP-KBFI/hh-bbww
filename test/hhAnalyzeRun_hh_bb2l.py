@@ -194,7 +194,9 @@ for sample_name, sample_info in samples.items():
     sample_info["use_it"] = False
   if 'nonres' in fill_spin and 'spin' in sample_info['process_name_specific']:
     sample_info["use_it"] = False
-  if 'spin' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+  if 'spin0' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+    sample_info["use_it"] = False
+  if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
     sample_info["use_it"] = False
 histograms_to_fit = {
   "EventCounter" : {}
