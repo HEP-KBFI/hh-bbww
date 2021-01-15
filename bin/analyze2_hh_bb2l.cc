@@ -2314,6 +2314,7 @@ int main(int argc, char* argv[])
     std::map<std::string, double> bdtOutputs_resonant_spin2;
     std::map<std::string, double> bdtOutputs_resonant_spin0;
     std::map<std::string, double> bdtOutputs_nonresonant;
+    double bdtOutputs_nonresonant_all(-.1);
     if ( fillHistograms_BDT )
     {
       if ( selJetAK8_Hbb )
@@ -2324,6 +2325,7 @@ int main(int argc, char* argv[])
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted[0]->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
+        bdtOutputs_nonresonant_all = (*BDT_nonresonant_boosted[BDT_nonresonant_boosted.size()-1])(bdtInputs_nonresonant, eventInfo.event);
       }
       else
       {
@@ -2333,6 +2335,7 @@ int main(int argc, char* argv[])
         bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved[0]->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
+        bdtOutputs_nonresonant_all = (*BDT_nonresonant_resolved[BDT_nonresonant_resolved.size()-1])(bdtInputs_nonresonant, eventInfo.event);
       }
     }
 
@@ -2437,7 +2440,7 @@ int main(int argc, char* argv[])
             bdtOutputs_resonant_spin2,
             bdtOutputs_resonant_spin0,
             bdtOutputs_nonresonant,
-            -1., // CV: bdtOutput for nonresonant_allBMs case not implemented yet !!
+            bdtOutputs_nonresonant_all, // CV: bdtOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
