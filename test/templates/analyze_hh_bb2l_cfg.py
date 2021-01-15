@@ -150,24 +150,24 @@ process.analyze_hh_bb2l = cms.PSet(
             )
         ),
         nonresonant_resolved = cms.PSet(
-            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_resolved_nonres_%s.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_even_half_model_resolved_nonres_%s.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_resolved_nonres_BM_era.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_even_half_model_resolved_nonres_BM_era.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
                 'm_Hbb_regCorr', 'm_ll', 'Smin_Hww', 'mbb_loose', 'm_HHvis',
                 'dR_ll', 'logTopness_publishedChi2', 'mT2_top_2particle', 'mht', 'logTopness_fixedChi2',
                 'mbb_medium', 'pT_HH', 'logHiggsness_fixedChi2', 'pT_Hbb', 'pT_Hww',
-                'lep2_pt', 'dR_Hbb', 'dPhi_Hbb', 'pT_ll', 'met_pt_proj', 'SM'
+                'lep2_pt', 'dR_Hbb', 'dPhi_Hbb', 'pT_ll', 'met_pt_proj'
             )
         ),
         nonresonant_boosted = cms.PSet(
-            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_boosted_nonres_%s.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
-            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_boosted_nonres_%s.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
+            xmlFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_boosted_nonres_BM_era.xml'), ## "BDT .xml -> Odd train:Even test" to be used for even evt no.
+            xmlFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/bb2l_bdt_odd_half_model_boosted_nonres_BM_era.xml'), ## "BDT .xml -> Even train:Odd test" to be used for odd evt no.
             inputVariables = cms.vstring(
                 'm_ll', 'm_Hbb', 'mbb_loose', 'dR_ll', 'mbb_medium',
                 'Smin_Hww', 'mindr_lep1_jet', 'max_dPhi_lepMEt', 'dR_Hbb', 'tau21_Hbb',
                 'STMET', 'pT_HH', 'bjet2_pt', 'avg_dr_jet_central', 'lep1_e',
                 'mht', 'm_HHvis', 'pT_ll', 'dPhi_HH', 'logHiggsness_fixedChi2', 'dPhi_HHvis',
-                'lep2_pt', 'eta_HHvis', 'dR_b1lep2', 'logTopness_fixedChi2', 'SM'
+                'lep2_pt', 'eta_HHvis', 'dR_b1lep2', 'logTopness_fixedChi2'
             )
         )
     ),
@@ -252,7 +252,7 @@ process.analyze_hh_bb2l = cms.PSet(
             classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
         )
     ),
-    gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
+    gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700),#750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
     nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
 
     fillHistograms_nonresonant = cms.bool(True),
