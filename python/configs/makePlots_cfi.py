@@ -19,9 +19,9 @@ process.makePlots = cms.PSet(
     divideByBinWidth = cms.bool(True),
     processData = cms.string("data_obs"),
     processesBackground = cms.vstring(),
-    processSignal = cms.string("signal_ggf_spin0_400_hh"),
+    processSignal = cms.string("signal_ggf_nonresonant_hh"),
     scaleSignal = cms.double(scaleSignal),
-    legendEntrySignal = cms.string("%dx GGF#rightarrow X(400;spin0)#rightarrow HH#rightarrow bbWW" % scaleSignal),
+    legendEntrySignal = cms.string("%dx GGF#rightarrow HH#rightarrow bbWW" % scaleSignal),
     categories = cms.VPSet(),
     distributions = cms.VPSet(
         cms.PSet(
