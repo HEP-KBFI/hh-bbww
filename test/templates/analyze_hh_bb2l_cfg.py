@@ -226,30 +226,34 @@ process.analyze_hh_bb2l = cms.PSet(
             classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
         ),
         nonresonant_resolved = cms.PSet(
-            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_odd_data_nonres_BM_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_even_data_nonres_BM_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
             ll_inputVariables = cms.vstring(
                 'bjet1', 'bjet2', 'lep1', 'lep2'
             ),
             hl_inputVariables = cms.vstring(
-                '', '', '', '', '',
-                '', '', '', '', '',
-                '', '', '', '', ''
+                'm_Hbb_regCorr', 'm_ll', 'Smin_Hww', 'mbb_loose', 'm_HHvis', 
+                'dR_ll', 'logTopness_publishedChi2', 'mT2_top_2particle', 'mht', 
+                'logTopness_fixedChi2', 'mbb_medium', 'pT_HH', 'logHiggsness_fixedChi2',
+                'pT_Hbb', 'pT_Hww', 'lep2_pt', 'dR_Hbb', 'dPhi_Hbb', 'pT_ll', 
+                'met_pt_proj', 'leadFwdJet_pt'
             ),
-            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
         ),
         nonresonant_boosted = cms.PSet(
-            pbFileName_even = cms.string(''), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string(''), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_boosted_odd_data_nonres_BM_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_boosted_even_data_nonres_BM_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
             ll_inputVariables = cms.vstring(
                 'bjet1', 'bjet2', 'lep1', 'lep2'
             ),
             hl_inputVariables = cms.vstring(
-                '', '', '', '', '',
-                '', '', '', '', '',
-                '', '', '', '', ''
+                'm_ll', 'm_Hbb', 'mbb_loose', 'dR_ll', 'mbb_medium', 
+                'Smin_Hww', 'mindr_lep1_jet', 'max_dPhi_lepMEt', 'dR_Hbb',
+                'tau21_Hbb', 'STMET', 'pT_HH', 'bjet2_pt', 'avg_dr_jet_central', 
+                'mht', 'm_HHvis', 'pT_ll', 'dPhi_HH', 'logHiggsness_fixedChi2', 
+                'dPhi_HHvis', 'lep2_pt', 'eta_HHvis', 'dR_b1lep2', 'logTopness_fixedChi2'
             ),
-            classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
         )
     ),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700),#750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
