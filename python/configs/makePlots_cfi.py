@@ -86,6 +86,7 @@ process.makePlots = cms.PSet(
             data_flips = cms.string("1.0 +/- 0.20"),
             Convs = cms.string("1.0 +/- 0.20"),
             signal_ggf_spin0_400_hh = cms.string("1.0 +/- 0.20"),
+            signal_ggf_nonresonant_hh = cms.string("1.0 +/- 0.20"),
         ),
         shape = cms.PSet(
             CMS_ttHl_btag_HF = cms.string("0.00 +/- 1.00"),
