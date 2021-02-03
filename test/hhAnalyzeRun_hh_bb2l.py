@@ -214,7 +214,6 @@ if fill_spin in ['spin0', 'spin2']:
       categories = [
         "HH_boosted", "HH_resolved_2b", "HH_resolved_1b",
         "TT_boosted", "TT_resolved",
-        "W_boosted", "W_resolved",
         "DY_boosted", "DY_resolved",
         "SingleTop_boosted", "SingleTop_resolved",
         "Other"
@@ -232,7 +231,6 @@ if 'nonres' in fill_spin:
       categories = [
         "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b",
         "TT_boosted", "TT_resolved",
-        "W_boosted", "W_resolved",
         "DY_boosted", "DY_resolved",
         "SingleTop_boosted", "SingleTop_resolved",
         "Other"
