@@ -663,8 +663,11 @@ int main(int argc, char* argv[])
   jetSelectorAK4_vbf_woPileupJetId.getSelector().set_max_absEta(4.7);
   jetSelectorAK4_vbf_woPileupJetId.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
+  jetSelectorAK4_bTagLoose.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
+  jetSelectorAK4_bTagMedium.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorForward jetSelectorForward(era, -1, isDEBUG);
+  jetSelectorForward.getSelector().set_pileupJetId(apply_pileupJetID);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   jetReaderAK8->set_central_or_shift(fatJetPt_option);
