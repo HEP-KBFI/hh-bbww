@@ -16,8 +16,6 @@ EventCategory_hh_bb2l_LBN::EventCategory_hh_bb2l_LBN()
     { kHH_resolved_1b,         "HH_resolved_1b"        },
     { kTT_boosted,             "TT_boosted"            },
     { kTT_resolved,            "TT_resolved"           },
-    { kW_boosted,              "W_boosted"             },
-    { kW_resolved,             "W_resolved"            },
     { kDY_boosted,             "DY_boosted"            },
     { kDY_resolved,            "DY_resolved"           },
     { kSingleTop_boosted,      "SingleTop_boosted"     },
@@ -51,8 +49,6 @@ EventCategory_hh_bb2l_LBN::isSelected(int for_category, const std::string & for_
   else if ( for_category == (int)kHH_resolved_1b        ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 1;
   else if ( for_category == (int)kTT_boosted            ) return for_class == "TT"    &&  isBoosted_;
   else if ( for_category == (int)kTT_resolved           ) return for_class == "TT"    && !isBoosted_;
-  else if ( for_category == (int)kW_boosted             ) return for_class == "W"     &&  isBoosted_;
-  else if ( for_category == (int)kW_resolved            ) return for_class == "W"     && !isBoosted_;
   else if ( for_category == (int)kDY_boosted            ) return for_class == "DY"    &&  isBoosted_;
   else if ( for_category == (int)kDY_resolved           ) return for_class == "DY"    && !isBoosted_;
   else if ( for_category == (int)kSingleTop_boosted     ) return for_class == "ST"    &&  isBoosted_;

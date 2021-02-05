@@ -664,8 +664,11 @@ int main(int argc, char* argv[])
   jetSelectorAK4_vbf_woPileupJetId.getSelector().set_max_absEta(4.7);
   jetSelectorAK4_vbf_woPileupJetId.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
+  jetSelectorAK4_bTagLoose.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
+  jetSelectorAK4_bTagMedium.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorForward jetSelectorForward(era, -1, isDEBUG);
+  jetSelectorForward.getSelector().set_pileupJetId(apply_pileupJetID);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   jetReaderAK8->set_central_or_shift(fatJetPt_option);
@@ -2142,7 +2145,8 @@ int main(int argc, char* argv[])
       {"avg_dr_jet_central",          comp_avg_dr_jet(selJetsAK4)},
       {"lep1_e",                      selLepton_lead->p4().e()},
       {"eta_HHvis",                   eta_HHvis},
-      {"dR_b1lep2",                   dR_b1lep2}
+      {"dR_b1lep2",                   dR_b1lep2},
+      {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.}
     };
 
     if ( bdt_filler )
@@ -2343,6 +2347,7 @@ int main(int argc, char* argv[])
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
+    std::map<std::string, double> lbnOutputs_nonresonant_all;
     if ( fillHistograms_LBN )
     {
       if ( selJetAK8_Hbb )
@@ -2353,6 +2358,7 @@ int main(int argc, char* argv[])
         lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted[0]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
+        lbnOutputs_nonresonant_all = (*LBN_nonresonant_boosted[LBN_nonresonant_boosted.size()-1])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
       }
       else
       {
@@ -2362,6 +2368,7 @@ int main(int argc, char* argv[])
         lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved[0]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
+        lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved[LBN_nonresonant_resolved.size()-1])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
       }
     }
 
@@ -2451,7 +2458,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            { { "HH", -1.} }, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
