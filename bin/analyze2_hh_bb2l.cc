@@ -185,9 +185,9 @@ int main(int argc, char* argv[])
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
   std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isSignal = isMC && boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
-  bool isMC_tH  = isMC && process_string == "TH";
-  bool isMC_ttH = isMC && process_string == "TTH";
+  bool isSignal = analysisConfig.isMC_HH();
+  bool isMC_tH  = analysisConfig.isMC_tH();
+  bool isMC_ttH = analysisConfig.isMC_ttH();
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
