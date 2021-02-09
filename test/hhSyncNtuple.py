@@ -44,7 +44,7 @@ parser.add_argument('-M', '--training-method',
 )
 parser.add_argument('-F', '--fill-spin',
   type = str, nargs = '+', dest = 'fill_spin', metavar = 'spin', choices = signal_choices, required = False,
-  default = [ 'nonres' ],
+  default = [ 'spin0' ],
   help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
 )
 args = parser.parse_args()
