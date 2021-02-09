@@ -12,6 +12,8 @@ channel_choices = [
   'hh_bbww_inclusive', 'hh_bb2l', 'hh_bb1l'
 ]
 mode_choices = [ 'hh', 'ttbar' ]
+training_choices = [ 'BDT', 'LBN' ]
+signal_choices = [ 'nonres', 'spin0', 'spin2' ]
 
 parser = tthAnalyzeParser()
 parser.add_modes(mode_choices)
@@ -35,6 +37,16 @@ parser.add_argument('-o', '--output',
 parser.add_argument('-X', '--clean',
   dest = 'clean', action = 'store_true', default = False, help = 'R|Remove all output files',
 )
+parser.add_argument('-M', '--training-method',
+  type = str, nargs = '+', dest = 'training_method', metavar = 'method', choices = training_choices, required = False,
+  default = [ 'BDT' ],
+  help = 'R|Fill histograms for either or both of the methods: %s' % tthAnalyzeParser.cat(training_choices),
+)
+parser.add_argument('-F', '--fill-spin',
+  type = str, nargs = '+', dest = 'fill_spin', metavar = 'spin', choices = signal_choices, required = False,
+  default = [ 'nonres' ],
+  help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
+)
 args = parser.parse_args()
 
 # Common arguments
@@ -56,6 +68,8 @@ use_home          = args.use_home
 hlt_filter        = args.hlt_filter
 systematics_label = args.systematics
 tau_id            = args.tau_id
+training_method   = args.training_method
+fill_spin         = args.fill_spin
 
 # Custom arguments
 channels = args.channels
@@ -101,6 +115,8 @@ if __name__ == '__main__':
     suffix             = 'bbww_{}'.format(mode),
     submission_cmd     = sys.argv,
     mode               = mode,
+    method             = training_method,
+    spin               = fill_spin,
   )
 
   job_statistics = analysis.create()
