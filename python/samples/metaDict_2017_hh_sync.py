@@ -19,7 +19,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_co
   ("nof_db_events",         200000),
   ("nof_db_files",          11),
   ("fsize_db",              11931037531),
-  ("xsection",              0.026422),
+  ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
   ("comment",               "status: VALID; size: 11.93GB; nevents: 200.00k; release: 9_4_7; last modified: 2018-10-06 03:20:04"),
