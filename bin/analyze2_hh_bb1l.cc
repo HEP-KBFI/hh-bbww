@@ -607,7 +607,7 @@ int main(int argc, char* argv[])
 
 //--- declare particle collections
   const bool readGenObjects = isMC && !redoGenMatching;
-  LHEParticleReader* lheparticleReader = new LHEParticleReader("LHEPart");
+  LHEParticleReader* lheparticleReader = new LHEParticleReader();
   inputTree->registerReader(lheparticleReader);
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
   inputTree->registerReader(muonReader);
@@ -1234,17 +1234,18 @@ int main(int argc, char* argv[])
       fakeableElectronSelector_default.enable_offline_e_trigger_cuts();
     }
 
-    const std::vector<LHEParticle> lheparticles = lheparticleReader->read();
-    std::vector<Particle::LorentzVector> vbf_lhe_p4;
-    for (auto particle : lheparticles) {
-      if ( particle.pdgId() !=25 ) vbf_lhe_p4.push_back(Particle::LorentzVector(particle.pt(), particle.eta(), particle.phi(), particle.mass()));
-    }
-    if ( process_string_hh.find("vbf") != std::string::npos ) assert( vbf_lhe_p4.size() ==2 );
     double vbf_lhe_m_jj(-1.);
     double vbf_lhe_dEta_jj(-1.);
-    if ( process_string_hh.find("vbf") != std::string::npos ) {
-      vbf_lhe_m_jj = (vbf_lhe_p4[0] + vbf_lhe_p4[1]).mass();
-      vbf_lhe_dEta_jj = (vbf_lhe_p4[0].eta() - vbf_lhe_p4[1].eta());
+    if ( isMC && process_string_hh.find("vbf") != std::string::npos )
+    {
+      const std::vector<LHEParticle> lheparticles = lheparticleReader->read();
+      std::vector<Particle::LorentzVector> vbf_lhe_p4;
+      for (const auto & particle: lheparticles) {
+        if ( particle.pdgId() !=25 ) vbf_lhe_p4.push_back(Particle::LorentzVector(particle.pt(), particle.eta(), particle.phi(), particle.mass()));
+      }
+    assert( vbf_lhe_p4.size() ==2 );
+    vbf_lhe_m_jj = (vbf_lhe_p4[0] + vbf_lhe_p4[1]).mass();
+    vbf_lhe_dEta_jj = TMath::Abs((vbf_lhe_p4[0].eta() - vbf_lhe_p4[1].eta()));
     }
 //--- build collections of electrons, muons and hadronic taus;
 //    resolve overlaps in order of priority: muon, electron,
