@@ -40,7 +40,7 @@ public:
 		 double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 		 double m_HHvis, double m_HH, double m_HH_B2G_18_008, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 		 double mT_W, double mT_top_2particle, double mT_top_3particle,
-		 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
+                 double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj, double vbf_lhe_m_jj, double vbf_lhe_dEta_jj,
                  const JPA& jpa, const RecoJetAK8* selJetAK8_Hbb,
                  double evtWeight);
 
@@ -93,6 +93,8 @@ public:
   TH1 * histogram_vbf_jet2_eta_;
   TH1 * histogram_vbf_m_jj_;
   TH1 * histogram_vbf_dEta_jj_;
+  TH1 * histogram_vbf_lhe_m_jj_;
+  TH1 * histogram_vbf_lhe_dEta_jj_;
 
   TH1 * histogram_jpaCategory_; // event category on JPA level
   TH1 * histogram_evtCategory_; // event category on datacard level
