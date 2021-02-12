@@ -37,6 +37,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonReader.h" // GenPhotonReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h" // GenJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoReader.h" // LHEInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticleReader.h" // LHEParticleReader
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
 #include "tthAnalysis/HiggsToTauTau/interface/PSWeightReader.h" // PSWeightReader
 #include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicityReader.h" // ObjectMultiplicityReader
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
@@ -605,6 +607,8 @@ int main(int argc, char* argv[])
 
 //--- declare particle collections
   const bool readGenObjects = isMC && !redoGenMatching;
+  LHEParticleReader* lheparticleReader = new LHEParticleReader();
+  inputTree->registerReader(lheparticleReader);
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
   inputTree->registerReader(muonReader);
   RecoMuonCollectionGenMatcher muonGenMatcher;
@@ -1230,6 +1234,19 @@ int main(int argc, char* argv[])
       fakeableElectronSelector_default.enable_offline_e_trigger_cuts();
     }
 
+    double vbf_lhe_m_jj(-1.);
+    double vbf_lhe_dEta_jj(-1.);
+    if ( isMC && process_string_hh.find("vbf") != std::string::npos )
+    {
+      const std::vector<LHEParticle> lheparticles = lheparticleReader->read();
+      std::vector<Particle::LorentzVector> vbf_lhe_p4;
+      for (const auto & particle: lheparticles) {
+        if ( particle.pdgId() !=25 ) vbf_lhe_p4.push_back(Particle::LorentzVector(particle.pt(), particle.eta(), particle.phi(), particle.mass()));
+      }
+    assert( vbf_lhe_p4.size() ==2 );
+    vbf_lhe_m_jj = (vbf_lhe_p4[0] + vbf_lhe_p4[1]).mass();
+    vbf_lhe_dEta_jj = TMath::Abs((vbf_lhe_p4[0].eta() - vbf_lhe_p4[1].eta()));
+    }
 //--- build collections of electrons, muons and hadronic taus;
 //    resolve overlaps in order of priority: muon, electron,
     const std::vector<RecoMuon> muons = muonReader->read();
@@ -2531,7 +2548,7 @@ int main(int argc, char* argv[])
             dR_Hww, dPhi_Hww, pT_Hww, Smin_Hww,
             m_HHvis, m_HH, m_HH_B2G_18_008, dR_HH, dPhi_HH, pT_HH, Smin_HH,
             mT_W, mT_top_2particle, mT_top_3particle,
-            vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+            vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj, vbf_lhe_m_jj, vbf_lhe_dEta_jj,
             jpa, selJetAK8_Hbb,
             evtWeight
           );
@@ -2795,6 +2812,7 @@ int main(int argc, char* argv[])
       const double leptonSF = evtWeightRecorder.get_leptonIDSF("central");
       const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
       const double btagSF = evtWeightRecorder.get_btag("central");
+      const double btagSF_ratio = evtWeightRecorder.get_btagSFRatio("central");
       const double topPtWeight = evtWeightRecorder.get_toppt_rwgt("central");
       const double fakeRate = evtWeightRecorder.get_FR("central");
       const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
@@ -2806,6 +2824,7 @@ int main(int argc, char* argv[])
       snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
       snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
       snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
+      snm->read(btagSF_ratio,                           FloatVariableType_bbww::btag_SF_ratio);
       snm->read(topPtWeight,                            FloatVariableType_bbww::topPt_wgt);
       snm->read(l1Prefire,                              FloatVariableType_bbww::L1prefire);
       snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
