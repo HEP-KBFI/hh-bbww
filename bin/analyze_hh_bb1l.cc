@@ -546,8 +546,9 @@ int main(int argc, char* argv[])
   MEtFilterSelector metFilterSelector(cfgMEtFilter, isMC);
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
-  std::string apply_genPhotonFilter = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
-  GenPhotonFilter genPhotonFilter(apply_genPhotonFilter);
+  std::string apply_genPhotonFilter_string = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
+  GenPhotonFilter genPhotonFilter(apply_genPhotonFilter_string);
+  bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -952,6 +953,7 @@ int main(int argc, char* argv[])
 
   if(isMC)
   {
+    bool readGenPhotons = apply_genPhotonFilter;
     if(! readGenObjects)
     {
       genLeptonReader = new GenLeptonReader(branchName_genLeptons);
@@ -981,10 +983,16 @@ int main(int argc, char* argv[])
       }
       else
       {
-        genPhotonReader = new GenPhotonReader(branchName_genPhotons);
-        inputTree -> registerReader(genPhotonReader);
+        readGenPhotons = true;
       }
     }
+
+    if(readGenPhotons) 
+    { 
+      genPhotonReader = new GenPhotonReader(branchName_genPhotons);
+      inputTree -> registerReader(genPhotonReader);
+    }
+
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
@@ -1624,7 +1632,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
     std::vector<GenParticle> electronGenMatch;
     std::vector<GenParticle> hadTauGenMatch;
     std::vector<GenParticle> jetGenMatch;
-    if(isMC && fillGenEvtHistograms)
+    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter))
     {
       if(genLeptonReader)
       {
