@@ -98,6 +98,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow()
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8_hh_Wjj
@@ -545,6 +546,8 @@ int main(int argc, char* argv[])
   MEtFilterSelector metFilterSelector(cfgMEtFilter, isMC);
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
+  std::string apply_genPhotonFilter = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
+  GenPhotonFilter genPhotonFilter(apply_genPhotonFilter);
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -1542,6 +1545,7 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
     "object multiplicity",
+    "gen photon filter",
     "trigger",
     ">= 1 presel leptons",
     ">= 1 sel leptons",
@@ -1649,9 +1653,21 @@ TMVAInterface mva_xgb_bb1l_X900GeV_Wjj_BDT_boosted( xgbFileName_bb1l_X900GeV_Wjj
       {
         printCollection("genLeptons", genLeptons);
         printCollection("genHadTaus", genHadTaus);
+        printCollection("genPhotons", genPhotons);
         printCollection("genJets", genJets);
       }
     }
+
+    if(!genPhotonFilter(genPhotons))
+    {
+      if(isDEBUG || run_lumi_eventSelector)
+      {
+        std::cout << "event " << eventInfo.str() << " FAILS gen photon filter\n";
+      }
+      continue;
+    }
+    cutFlowTable.update("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
 
     std::vector<GenParticle> genBJets;
     std::vector<GenParticle> genWBosons;
