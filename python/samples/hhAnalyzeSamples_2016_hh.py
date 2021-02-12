@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2021-02-07 14:08:15 with the following command:
+# file generated at 2021-02-12 14:18:11 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2016_hh.py -p python/samples/sampleLocations_2016.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_hh.py -M
 
 samples_2016 = OD()
@@ -2973,7 +2973,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-p
   }),
   ("nof_tree_events",                 396798),
   ("nof_db_events",                   396798),
-  ("fsize_local",                     2210125586), # 2.21GB, avg file size 368.35MB
+  ("fsize_local",                     2497121888), # 2.50GB, avg file size 416.19MB
   ("fsize_db",                        17674000555), # 17.67GB, avg file size 198.58MB
   ("use_it",                          True),
   ("xsection",                        0.000858569),
@@ -2986,7 +2986,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2020Dec27_woPresel_nom_all_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Feb11_woPresel_nom_all_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
