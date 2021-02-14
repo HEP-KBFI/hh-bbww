@@ -182,7 +182,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.nonfake_backgrounds = list(set(self.nonfake_backgrounds) - set(["ggZZ", "qqZZ", "WZ", "WW"]))
     self.nonfake_backgrounds.append('VV')
     self.nonfake_backgrounds.append('VVV')
-    print '**************', self.nonfake_backgrounds
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.prep_dcard_signals = set()
     for sample_name, sample_info in self.samples.items():
