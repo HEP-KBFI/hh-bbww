@@ -2812,6 +2812,7 @@ int main(int argc, char* argv[])
       const double leptonSF = evtWeightRecorder.get_leptonIDSF("central");
       const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
       const double btagSF = evtWeightRecorder.get_btag("central");
+      const double btagSF_ratio = evtWeightRecorder.get_btagSFRatio("central");
       const double topPtWeight = evtWeightRecorder.get_toppt_rwgt("central");
       const double fakeRate = evtWeightRecorder.get_FR("central");
       const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
@@ -2823,6 +2824,7 @@ int main(int argc, char* argv[])
       snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
       snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
       snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
+      snm->read(btagSF_ratio,                           FloatVariableType_bbww::btag_SF_ratio);
       snm->read(topPtWeight,                            FloatVariableType_bbww::topPt_wgt);
       snm->read(l1Prefire,                              FloatVariableType_bbww::L1prefire);
       snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);
