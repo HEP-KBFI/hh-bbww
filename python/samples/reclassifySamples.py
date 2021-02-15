@@ -38,6 +38,8 @@ def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None,
       sample_info["sample_category"] = "VVV"
     if sample_info["sample_category"] in [ 'WW', 'WZ', 'ZZ', 'ggZZ', 'qqZZ' ]:
       sample_info["sample_category"] = 'VV'
+    if sample_info["process_name_specific"].startswith(('TTWH', 'TTZH')):
+      sample_info["sample_category"] = 'Other'
 
     if 'dipoleRecoilOn' in sample_info["sample_category"] and sample_info["sample_category"].endswith(('bbvv', 'bbvv_sl', 'bbtt')):
       sample_info["use_it"] = True
