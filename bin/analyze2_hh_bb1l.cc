@@ -101,6 +101,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8
@@ -239,6 +240,7 @@ int main(int argc, char* argv[])
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
   bool isMCClosure_m = histogramDir.find("mcClosure_m") != std::string::npos;
+  std::cout << "isMCClosure: e = " << isMCClosure_e << ", mu = " << isMCClosure_m << std::endl;
 
   std::string era_string = cfg_analyze.getParameter<std::string>("era");
   const Era era = get_era(era_string);
@@ -298,6 +300,9 @@ int main(int argc, char* argv[])
   MEtFilterSelector metFilterSelector(cfgMEtFilter, isMC);
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
+  std::string apply_genPhotonFilter_string = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
+  GenPhotonFilter genPhotonFilter(apply_genPhotonFilter_string);
+  bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -745,6 +750,7 @@ int main(int argc, char* argv[])
 
   if ( isMC )
   {
+    bool readGenPhotons = apply_genPhotonFilter;
     if ( !readGenObjects )
     {
       genLeptonReader = new GenLeptonReader(branchName_genLeptons);
@@ -774,10 +780,16 @@ int main(int argc, char* argv[])
       }
       else
       {
-        genPhotonReader = new GenPhotonReader(branchName_genPhotons);
-        inputTree -> registerReader(genPhotonReader);
+        readGenPhotons = true;
       }
     }
+
+    if(readGenPhotons) 
+    {
+      genPhotonReader = new GenPhotonReader(branchName_genPhotons);
+      inputTree -> registerReader(genPhotonReader);
+    }
+
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
@@ -1112,7 +1124,7 @@ int main(int argc, char* argv[])
     std::vector<GenParticle> electronGenMatch;
     std::vector<GenParticle> hadTauGenMatch;
     std::vector<GenParticle> jetGenMatch;
-    if ( isMC && fillGenEvtHistograms )
+    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter))
     {
       if ( genLeptonReader )
       {
@@ -1141,9 +1153,21 @@ int main(int argc, char* argv[])
       {
         printCollection("genLeptons", genLeptons);
         printCollection("genHadTaus", genHadTaus);
+        printCollection("genPhotons", genPhotons);
         printCollection("genJets", genJets);
       }
     }
+
+    if(!genPhotonFilter(genPhotons))
+    {
+      if(isDEBUG || run_lumi_eventSelector)
+      {
+        std::cout << "event " << eventInfo.str() << " FAILS gen photon filter\n";
+      }
+      continue;
+    }
+    cutFlowTable.update("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
 
     std::vector<GenParticle> genBJets;
     std::vector<GenParticle> genWBosons;
@@ -1301,19 +1325,19 @@ int main(int argc, char* argv[])
       // for SR, flip region and fake CR
       // doesn't matter if we supply electronSelection or muonSelection here
       selLeptons = selectObjects(muonSelection, preselLeptons, fakeableLeptons, tightLeptons);
-      selMuons = getIntersection(preselMuons, selLeptons, isHigherConePt);
-      selElectrons = getIntersection(preselElectrons, selLeptons, isHigherConePt);
     } 
     else 
     {
       // for MC closure
       // make sure that neither electron nor muon selections are loose
       assert(electronSelection != kLoose && muonSelection != kLoose);
-      selMuons = selectObjects(muonSelection, preselMuons, fakeableMuons, tightMuons);
-      selElectrons = selectObjects(electronSelection, preselElectrons, fakeableElectrons, tightElectrons);
-      const std::vector<const RecoLepton*> selLeptons_full = mergeLeptonCollections(selElectrons, selMuons, isHigherConePt);
-      selLeptons = getIntersection(fakeableLeptons, selLeptons_full, isHigherConePt);
+      const std::vector<const RecoMuon*> selMuons_tmp = selectObjects(muonSelection, preselMuons, fakeableMuons, tightMuons);
+      const std::vector<const RecoElectron*> selElectrons_tmp = selectObjects(electronSelection, preselElectrons, fakeableElectrons, tightElectrons);
+      const std::vector<const RecoLepton*> selLeptons_tmp = mergeLeptonCollections(selElectrons_tmp, selMuons_tmp, isHigherConePt);
+      selLeptons = getIntersection(fakeableLeptons, selLeptons_tmp, isHigherConePt);
     }
+    selMuons = getIntersection(preselMuons, selLeptons, isHigherConePt);
+    selElectrons = getIntersection(preselElectrons, selLeptons, isHigherConePt);
 
     if ( isDEBUG || run_lumi_eventSelector ) 
     {
@@ -2297,6 +2321,7 @@ int main(int argc, char* argv[])
           {
             assert(HHWeight_calc_LOtoNLO);
             HHReweight *= HHWeight_calc_LOtoNLO->getReWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+            //HHReweight *= HHWeight_calc_LOtoNLO->getReWeight_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           }
           weightMapHH[HHWeightNames[i]] = HHReweight;
         }
