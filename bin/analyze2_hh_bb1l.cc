@@ -607,8 +607,12 @@ int main(int argc, char* argv[])
 
 //--- declare particle collections
   const bool readGenObjects = isMC && !redoGenMatching;
-  LHEParticleReader* lheparticleReader = new LHEParticleReader();
-  inputTree->registerReader(lheparticleReader);
+  LHEParticleReader* lheparticleReader = nullptr;
+  if ( isMC && process_string_hh.find("vbf") != std::string::npos)
+  {
+    lheparticleReader = new LHEParticleReader();
+    inputTree->registerReader(lheparticleReader);
+  }
   RecoMuonReader* muonReader = new RecoMuonReader(era, branchName_muons, isMC, readGenObjects);
   inputTree->registerReader(muonReader);
   RecoMuonCollectionGenMatcher muonGenMatcher;
@@ -2079,7 +2083,6 @@ int main(int argc, char* argv[])
       pT_Hww = HwwP4.pt();
       Smin_Hww = comp_Smin(WjjP4 + selLeptonP4, metP4.px(), metP4.py());
     }
-
     double dR_b1lep = ( selJet_Hbb_lead ) ? deltaR(selJetP4_Hbb_lead, selLeptonP4) : -1;
     double dR_b2lep = ( selJet_Hbb_sublead ) ? deltaR(selJetP4_Hbb_sublead, selLeptonP4) : -1;
     Particle::LorentzVector HHvisP4 = HbbP4 + WjjP4 + selLeptonP4;
