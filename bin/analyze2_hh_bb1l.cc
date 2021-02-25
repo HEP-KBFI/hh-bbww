@@ -555,10 +555,11 @@ int main(int argc, char* argv[])
     HHBMNames = HHWeight_calc->get_bm_names();
   }
   const bool apply_HH_rwgt_LOtoNLO = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_LOtoNLO");
+  const bool apply_HH_coupling_fix_CMS = hhWeight_cfg.getParameter<bool>("apply_coupling_fix_Run2");
   const HHWeightInterfaceLOtoNLO* HHWeight_calc_LOtoNLO = nullptr;
   if(apply_HH_rwgt_LOtoNLO)
   {
-    HHWeight_calc_LOtoNLO = new HHWeightInterfaceLOtoNLO(10., isDEBUG);
+    HHWeight_calc_LOtoNLO = new HHWeightInterfaceLOtoNLO(era, apply_HH_coupling_fix_CMS, 10., isDEBUG);
   }
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
