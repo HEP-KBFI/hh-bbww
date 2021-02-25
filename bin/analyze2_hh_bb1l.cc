@@ -98,7 +98,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLOtoNLO.h" // HHWeightInterfaceLOtoNLO
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
-#include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
@@ -191,8 +190,6 @@ getMatchedJets(const std::vector<const RecoJet*>& cleanedJetsAK4_wrtLeptons,
   }
   return std::pair<int, int>(matchedBJet, matchedWJet);
 }
-
-
 
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
