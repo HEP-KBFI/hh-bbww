@@ -40,6 +40,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonReader.h" // GenPhotonReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h" // GenJetReader
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoReader.h" // LHEInfoReader
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticleReader.h" // LHEParticleReader
+#include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
 #include "tthAnalysis/HiggsToTauTau/interface/PSWeightReader.h" // PSWeightReader
 #include "tthAnalysis/HiggsToTauTau/interface/ObjectMultiplicityReader.h" // ObjectMultiplicityReader
 #include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h" // convert_to_ptrs
@@ -101,9 +103,9 @@
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLOtoNLO.h" // HHWeightInterfaceLOtoNLO
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
-#include "tthAnalysis/HiggsToTauTau/interface/LHEParticle.h" // LHEParticle
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 
@@ -185,13 +187,14 @@ int main(int argc, char* argv[])
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
   std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isSignal = isMC && boost::starts_with(process_string_hh, "signal_") && process_string_hh.find("_hh_") != std::string::npos;
-  bool isMC_tH  = isMC && process_string == "TH";
-  bool isMC_ttH = isMC && process_string == "TTH";
+  bool isSignal = analysisConfig.isMC_HH();
+  bool isMC_tH  = analysisConfig.isMC_tH();
+  bool isMC_ttH = analysisConfig.isMC_ttH();
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;
   bool isMCClosure_m = histogramDir.find("mcClosure_m") != std::string::npos;
+  std::cout << "isMCClosure: e = " << isMCClosure_e << ", mu = " << isMCClosure_m << std::endl;
 
   std::string era_string = cfg_analyze.getParameter<std::string>("era");
   const Era era = get_era(era_string);
@@ -266,6 +269,9 @@ int main(int argc, char* argv[])
   MEtFilterSelector metFilterSelector(cfgMEtFilter, isMC);
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
+  std::string apply_genPhotonFilter_string = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
+  GenPhotonFilter genPhotonFilter(apply_genPhotonFilter_string);
+  bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -516,10 +522,11 @@ int main(int argc, char* argv[])
     HHBMNames = HHWeight_calc->get_bm_names();
   }
   const bool apply_HH_rwgt_LOtoNLO = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_LOtoNLO");
+  const bool apply_HH_coupling_fix_CMS = hhWeight_cfg.getParameter<bool>("apply_coupling_fix_Run2");
   const HHWeightInterfaceLOtoNLO* HHWeight_calc_LOtoNLO = nullptr;
   if(apply_HH_rwgt_LOtoNLO)
   {
-    HHWeight_calc_LOtoNLO = new HHWeightInterfaceLOtoNLO(10., isDEBUG);
+    HHWeight_calc_LOtoNLO = new HHWeightInterfaceLOtoNLO(era, apply_HH_coupling_fix_CMS, 10., isDEBUG);
   }
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
@@ -664,8 +671,11 @@ int main(int argc, char* argv[])
   jetSelectorAK4_vbf_woPileupJetId.getSelector().set_max_absEta(4.7);
   jetSelectorAK4_vbf_woPileupJetId.getSelector().set_pileupJetId(kPileupJetID_disabled);
   RecoJetCollectionSelectorBtagLoose jetSelectorAK4_bTagLoose(era, -1, isDEBUG);
+  jetSelectorAK4_bTagLoose.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorBtagMedium jetSelectorAK4_bTagMedium(era, -1, isDEBUG);
+  jetSelectorAK4_bTagMedium.getSelector().set_pileupJetId(apply_pileupJetID);
   RecoJetCollectionSelectorForward jetSelectorForward(era, -1, isDEBUG);
+  jetSelectorForward.getSelector().set_pileupJetId(apply_pileupJetID);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   jetReaderAK8->set_central_or_shift(fatJetPt_option);
@@ -708,6 +718,7 @@ int main(int argc, char* argv[])
 
   if(isMC)
   {
+    bool readGenPhotons = apply_genPhotonFilter;
     if(! readGenObjects)
     {
       genLeptonReader = new GenLeptonReader(branchName_genLeptons);
@@ -733,10 +744,16 @@ int main(int argc, char* argv[])
       }
       else
       {
-        genPhotonReader = new GenPhotonReader(branchName_genPhotons);
-        inputTree -> registerReader(genPhotonReader);
+        readGenPhotons = true;
       }
     }
+
+    if(readGenPhotons) 
+    { 
+      genPhotonReader = new GenPhotonReader(branchName_genPhotons);
+      inputTree -> registerReader(genPhotonReader);
+    }
+
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
@@ -1067,7 +1084,7 @@ int main(int argc, char* argv[])
     std::vector<GenParticle> muonGenMatch;
     std::vector<GenParticle> electronGenMatch;
     std::vector<GenParticle> jetGenMatch;
-    if(isMC && fillGenEvtHistograms)
+    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter))
     {
       if(genLeptonReader)
       {
@@ -1095,9 +1112,21 @@ int main(int argc, char* argv[])
       {
         printCollection("genLeptons", genLeptons);
         printCollection("genHadTaus", genHadTaus);
+        printCollection("genPhotons", genPhotons);
         printCollection("genJets", genJets);
       }
     }
+
+    if(!genPhotonFilter(genPhotons))
+    {
+      if(isDEBUG || run_lumi_eventSelector)
+      {
+        std::cout << "event " << eventInfo.str() << " FAILS gen photon filter\n";
+      }
+      continue;
+    }
+    cutFlowTable.update("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
 
     std::vector<GenParticle> genBJets;
     std::vector<GenParticle> genWBosons;
@@ -2171,7 +2200,7 @@ int main(int argc, char* argv[])
                 if ( apply_HH_rwgt_LOtoNLO )
                   {
                     assert(HHWeight_calc_LOtoNLO);
-                    HHReweight *= HHWeight_calc_LOtoNLO->getReWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+                    HHReweight *= HHWeight_calc_LOtoNLO->getReWeight_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
                   }
                 weightMapHH[HHWeightNames[i]] = HHReweight;
               }
@@ -2706,6 +2735,7 @@ int main(int argc, char* argv[])
       const double leptonSF = evtWeightRecorder.get_leptonIDSF("central");
       const double triggerSF = evtWeightRecorder.get_sf_triggerEff("central");
       const double btagSF = evtWeightRecorder.get_btag("central");
+      const double btagSF_ratio = evtWeightRecorder.get_btagSFRatio("central");
       const double topPtWeight = evtWeightRecorder.get_toppt_rwgt("central");
       const double fakeRate = evtWeightRecorder.get_FR("central");
       const double l1Prefire = evtWeightRecorder.get_l1PreFiringWeight("central");
@@ -2717,6 +2747,7 @@ int main(int argc, char* argv[])
       snm->read(fakeRate,                               FloatVariableType_bbww::fakeRate);
       snm->read(leptonSF,                               FloatVariableType_bbww::lepton_IDSF);
       snm->read(btagSF,                                 FloatVariableType_bbww::btag_SF);
+      snm->read(btagSF_ratio,                           FloatVariableType_bbww::btag_SF_ratio);
       snm->read(topPtWeight,                            FloatVariableType_bbww::topPt_wgt);
       snm->read(l1Prefire,                              FloatVariableType_bbww::L1prefire);
       snm->read(leptonSF_recoToLoose,                   FloatVariableType_bbww::lepton_IDSF_recoToLoose);

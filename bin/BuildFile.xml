@@ -1,20 +1,3 @@
-<bin file="analyze_hh_bb1l.cc" name="analyze_hh_bb1l">
-  <use   name="FWCore/FWLite"/>
-  <use   name="FWCore/ParameterSet"/>
-  <use   name="FWCore/ParameterSetReader"/>
-  <use   name="FWCore/PythonParameterSet"/>
-  <use   name="FWCore/Utilities"/>
-  <use   name="DataFormats/FWLite"/>
-  <use   name="DataFormats/Math"/>
-  <use   name="PhysicsTools/FWLite"/>
-  <use   name="tthAnalysis/HiggsToTauTau"/>
-  <use   name="hhAnalysis/bbww"/>
-  <use   name="hhAnalysis/multilepton"/>
-  <use   name="root"/>
-  <use   name="roottmva"/>
-  <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
-</bin>
 <bin file="analyze2_hh_bb1l.cc" name="analyze2_hh_bb1l">
   <use   name="FWCore/FWLite"/>
   <use   name="FWCore/ParameterSet"/>
@@ -45,24 +28,6 @@
   <use   name="hhAnalysis/bbww"/>
   <use   name="hhAnalysis/multilepton"/>
   <use   name="TauAnalysis/ClassicSVfit"/>
-  <use   name="root"/>
-  <use   name="roottmva"/>
-  <use   name="boost"/>
-  <Flags CXXFLAGS="-g -Wshadow -Werror -Wno-unused-but-set-variable"/>
-</bin>
-<bin file="analyze_hh_bb2l.cc" name="analyze_hh_bb2l">
-  <use   name="FWCore/FWLite"/>
-  <use   name="FWCore/ParameterSet"/>
-  <use   name="FWCore/ParameterSetReader"/>
-  <use   name="FWCore/PythonParameterSet"/>
-  <use   name="FWCore/Utilities"/>
-  <use   name="DataFormats/FWLite"/>
-  <use   name="DataFormats/Math"/>
-  <use   name="PhysicsTools/FWLite"/>
-  <use   name="tthAnalysis/HiggsToTauTau"/>
-  <use   name="hhAnalysis/bbww"/>
-  <use   name="hhAnalysis/multilepton"/>
-  <use   name="hhAnalysis/Heavymassestimator"/>
   <use   name="root"/>
   <use   name="roottmva"/>
   <use   name="boost"/>
@@ -299,4 +264,21 @@
 <bin file="test_lbn.cc" name="test_lbn">
   <use   name="tthAnalysis/HiggsToTauTau"/>
   <Flags CXXFLAGS="-Wshadow -Werror  -Wno-unused-but-set-variable"/>
+</bin>
+<bin file="analyze_HHatLOvsNLO.cc" name="analyze_HHatLOvsNLO">
+  <use   name="FWCore/FWLite"/>
+  <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
+  <use   name="FWCore/PythonParameterSet"/>
+  <use   name="FWCore/Utilities"/>
+  <use   name="DataFormats/FWLite"/>
+  <use   name="DataFormats/Math"/>
+  <use   name="PhysicsTools/FWLite"/>
+  <use   name="tthAnalysis/HiggsToTauTau"/>
+  <use   name="hhAnalysis/bbww"/>
+  <use   name="hhAnalysis/multilepton"/>
+  <use   name="root"/>
+  <use   name="roottmva"/>
+  <use   name="boost"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>

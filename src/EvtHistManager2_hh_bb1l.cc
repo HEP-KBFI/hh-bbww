@@ -45,6 +45,8 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["vbf_jet2_eta"] = { "central" };
   central_or_shiftOptions_["vbf_m_jj"] = { "central" };
   central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
+  central_or_shiftOptions_["vbf_lhe_m_jj"] = { "central" };
+  central_or_shiftOptions_["vbf_lhe_dEta_jj"] = { "central" };
   central_or_shiftOptions_["jpaCategory"] = { "central" };
   central_or_shiftOptions_["evtCategory"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
@@ -101,6 +103,8 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_jet2_eta_     = book1D(dir, "vbf_jet2_eta",     100, -5.0,  +5.0);
   histogram_vbf_m_jj_         = book1D(dir, "vbf_m_jj",         150,  0., 1500.);
   histogram_vbf_dEta_jj_      = book1D(dir, "vbf_dEta_jj",      100,  0.,   10.);
+  histogram_vbf_lhe_m_jj_         = book1D(dir, "vbf_lhe_m_jj",         150,  0., 1500.);
+  histogram_vbf_lhe_dEta_jj_      = book1D(dir, "vbf_lhe_dEta_jj",      100,  0.,   10.);
 
   histogram_jpaCategory_      = book1D(dir, "jpaCategory",       15, -0.5, +14.5);
   if ( histogram_jpaCategory_ ) {
@@ -142,7 +146,7 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numElectrons,
 				        double dR_Hww, double dPhi_Hww, double pT_Hww, double Smin_Hww,
 				        double m_HHvis, double m_HH, double m_HH_B2G_18_008, double dR_HH, double dPhi_HH, double pT_HH, double Smin_HH,
 				        double mT_W, double mT_top_2particle, double mT_top_3particle,
-				        double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
+                                        double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj, double vbf_lhe_m_jj, double vbf_lhe_dEta_jj,
                                         const JPA& jpa, const RecoJetAK8* selJetAK8_Hbb,
 				        double evtWeight)
 {
@@ -194,6 +198,8 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numElectrons,
   }
   fillWithOverFlow(histogram_vbf_m_jj_,         vbf_m_jj,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_vbf_dEta_jj_,      vbf_dEta_jj,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_vbf_lhe_m_jj_,         vbf_lhe_m_jj,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_vbf_lhe_dEta_jj_,      vbf_lhe_dEta_jj,       evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_jpaCategory_,      jpa.jpaCategory(), evtWeight, evtWeightErr);
   int evtCategory = 0;

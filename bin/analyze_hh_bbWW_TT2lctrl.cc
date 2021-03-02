@@ -273,10 +273,10 @@ int main(int argc, char* argv[])
 
   std::string process_string = cfg_analyze.getParameter<std::string>("process");  
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  const bool isMC_tH = process_string == "TH";
+  const bool isMC_tH = analysisConfig.isMC_tH();
   const bool isMC_TT = isMC && process_string.find("TT") != std::string::npos;
-  const bool isMC_ttH = process_string == "TTH";
-  const bool isMC_EWK = process_string == "WZ" || process_string == "ZZ";
+  const bool isMC_ttH = analysisConfig.isMC_tH();
+  const bool isMC_EWK = analysisConfig.isMC_EWK();
 
   std::string histogramDir = cfg_analyze.getParameter<std::string>("histogramDir");
   bool isMCClosure_e = histogramDir.find("mcClosure_e") != std::string::npos;

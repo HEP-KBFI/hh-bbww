@@ -64,6 +64,7 @@ process.analyze_hh_bb1l = cms.PSet(
     apply_met_filters = cms.bool(True),
     cfgMEtFilter = cms.PSet(),
     triggerWhiteList = cms.PSet(),
+    apply_genPhotonFilter = cms.string("disabled"),
 
     fillGenEvtHistograms = cms.bool(False),
     cfgEvtYieldHistManager = cms.PSet(),
