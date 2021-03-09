@@ -2484,7 +2484,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+            {{"HH", -1}}, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
