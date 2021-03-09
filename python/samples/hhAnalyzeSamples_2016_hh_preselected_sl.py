@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2021-02-07 14:08:18 with the following command:
+# file generated at 2021-03-07 12:45:36 with the following command:
 # create_dictionary.py -m python/samples/metaDict_2016_hh.py -p python/samples/sampleLocations_2016_preselected_sl.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_hh_preselected_sl.py -M
 
 samples_2016 = OD()
@@ -29,7 +29,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 123461),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     599070033), # 599.07MB, avg file size 599.07MB
+  ("fsize_local",                     642729085), # 642.73MB, avg file size 642.73MB
   ("fsize_db",                        11821300223), # 11.82GB, avg file size 2.96GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -42,7 +42,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_260_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_260_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -87,7 +87,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 125361),
   ("nof_db_events",                   294629),
-  ("fsize_local",                     619888965), # 619.89MB, avg file size 619.89MB
+  ("fsize_local",                     664558475), # 664.56MB, avg file size 664.56MB
   ("fsize_db",                        11694604529), # 11.69GB, avg file size 3.90GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -100,7 +100,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_270_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_270_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -145,7 +145,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 139768),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     728168084), # 728.17MB, avg file size 728.17MB
+  ("fsize_local",                     779502909), # 779.50MB, avg file size 779.50MB
   ("fsize_db",                        12121761327), # 12.12GB, avg file size 3.03GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -158,7 +158,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -203,7 +203,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 150971),
   ("nof_db_events",                   295149),
-  ("fsize_local",                     841839853), # 841.84MB, avg file size 841.84MB
+  ("fsize_local",                     902746757), # 902.75MB, avg file size 902.75MB
   ("fsize_db",                        12270587874), # 12.27GB, avg file size 2.45GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -216,7 +216,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_350_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_350_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -261,7 +261,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 162915),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     958026437), # 958.03MB, avg file size 958.03MB
+  ("fsize_local",                     1023717536), # 1.02GB, avg file size 1.02GB
   ("fsize_db",                        12763369067), # 12.76GB, avg file size 3.19GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -274,7 +274,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_400_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_400_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -319,7 +319,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 166972),
   ("nof_db_events",                   296256),
-  ("fsize_local",                     1022738216), # 1.02GB, avg file size 1.02GB
+  ("fsize_local",                     1091019436), # 1.09GB, avg file size 1.09GB
   ("fsize_db",                        12817875328), # 12.82GB, avg file size 3.20GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -332,7 +332,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_450_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_450_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -377,7 +377,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 172851),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     1092637532), # 1.09GB, avg file size 1.09GB
+  ("fsize_local",                     1164130972), # 1.16GB, avg file size 1.16GB
   ("fsize_db",                        13281765633), # 13.28GB, avg file size 2.66GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -390,7 +390,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_500_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_500_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -435,7 +435,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 176295),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1143758032), # 1.14GB, avg file size 1.14GB
+  ("fsize_local",                     1216748747), # 1.22GB, avg file size 1.22GB
   ("fsize_db",                        13529956556), # 13.53GB, avg file size 2.71GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -448,7 +448,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -493,7 +493,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 178304),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1182877455), # 1.18GB, avg file size 1.18GB
+  ("fsize_local",                     1257327809), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        13674104858), # 13.67GB, avg file size 3.42GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -506,7 +506,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_600_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_600_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -551,7 +551,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 179052),
   ("nof_db_events",                   299538),
-  ("fsize_local",                     1205332646), # 1.21GB, avg file size 1.21GB
+  ("fsize_local",                     1280735754), # 1.28GB, avg file size 1.28GB
   ("fsize_db",                        13997216210), # 14.00GB, avg file size 2.80GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -564,7 +564,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_650_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_650_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -609,7 +609,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 179087),
   ("nof_db_events",                   298727),
-  ("fsize_local",                     1228592172), # 1.23GB, avg file size 1.23GB
+  ("fsize_local",                     1304807104), # 1.30GB, avg file size 1.30GB
   ("fsize_db",                        13966996917), # 13.97GB, avg file size 4.66GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -622,7 +622,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_750_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_750_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -667,7 +667,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 178547),
   ("nof_db_events",                   299705),
-  ("fsize_local",                     1232393159), # 1.23GB, avg file size 1.23GB
+  ("fsize_local",                     1308727657), # 1.31GB, avg file size 1.31GB
   ("fsize_db",                        14140095303), # 14.14GB, avg file size 4.71GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -680,7 +680,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_800_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_800_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -725,7 +725,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/Ru
   }),
   ("nof_tree_events",                 176148),
   ("nof_db_events",                   298733),
-  ("fsize_local",                     1229554704), # 1.23GB, avg file size 1.23GB
+  ("fsize_local",                     1305160062), # 1.31GB, avg file size 1.31GB
   ("fsize_db",                        14389658695), # 14.39GB, avg file size 4.80GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -738,7 +738,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -783,7 +783,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/R
   }),
   ("nof_tree_events",                 173952),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1227734427), # 1.23GB, avg file size 1.23GB
+  ("fsize_local",                     1302886868), # 1.30GB, avg file size 1.30GB
   ("fsize_db",                        14685031472), # 14.69GB, avg file size 3.67GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -796,7 +796,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1000_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1000_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -841,7 +841,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 124085),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     617602343), # 617.60MB, avg file size 617.60MB
+  ("fsize_local",                     661893290), # 661.89MB, avg file size 661.89MB
   ("fsize_db",                        12205401208), # 12.21GB, avg file size 4.07GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -854,7 +854,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_260_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_260_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -899,7 +899,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 129627),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     656650736), # 656.65MB, avg file size 656.65MB
+  ("fsize_local",                     703717803), # 703.72MB, avg file size 703.72MB
   ("fsize_db",                        12216222977), # 12.22GB, avg file size 4.07GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -912,7 +912,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_270_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_270_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -957,7 +957,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 142881),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     768306135), # 768.31MB, avg file size 768.31MB
+  ("fsize_local",                     821735789), # 821.74MB, avg file size 821.74MB
   ("fsize_db",                        12432044182), # 12.43GB, avg file size 4.14GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -970,7 +970,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_300_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_300_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1015,7 +1015,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 159715),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     921328621), # 921.33MB, avg file size 921.33MB
+  ("fsize_local",                     985791750), # 985.79MB, avg file size 985.79MB
   ("fsize_db",                        12931701996), # 12.93GB, avg file size 3.23GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1028,7 +1028,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_350_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_350_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1073,7 +1073,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 170464),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     1035723504), # 1.04GB, avg file size 1.04GB
+  ("fsize_local",                     1104343609), # 1.10GB, avg file size 1.10GB
   ("fsize_db",                        13138610285), # 13.14GB, avg file size 4.38GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1086,7 +1086,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_400_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_400_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1131,7 +1131,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 177360),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1121459131), # 1.12GB, avg file size 1.12GB
+  ("fsize_local",                     1193933863), # 1.19GB, avg file size 1.19GB
   ("fsize_db",                        13501491108), # 13.50GB, avg file size 3.38GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1144,7 +1144,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_450_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_450_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1189,7 +1189,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 181379),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1184544709), # 1.18GB, avg file size 1.18GB
+  ("fsize_local",                     1259455669), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        13733577571), # 13.73GB, avg file size 4.58GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1202,7 +1202,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_500_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_500_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1247,7 +1247,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 184659),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1238465712), # 1.24GB, avg file size 1.24GB
+  ("fsize_local",                     1315330625), # 1.32GB, avg file size 1.32GB
   ("fsize_db",                        13919729330), # 13.92GB, avg file size 4.64GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1260,7 +1260,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_550_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_550_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1305,7 +1305,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 186009),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1271490745), # 1.27GB, avg file size 1.27GB
+  ("fsize_local",                     1348918424), # 1.35GB, avg file size 1.35GB
   ("fsize_db",                        14074430864), # 14.07GB, avg file size 4.69GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1318,7 +1318,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_600_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_600_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1363,7 +1363,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 185445),
   ("nof_db_events",                   298806),
-  ("fsize_local",                     1281685364), # 1.28GB, avg file size 1.28GB
+  ("fsize_local",                     1359512901), # 1.36GB, avg file size 1.36GB
   ("fsize_db",                        14346261466), # 14.35GB, avg file size 2.39GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1376,7 +1376,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_650_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_650_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1421,7 +1421,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 186130),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1293499616), # 1.29GB, avg file size 1.29GB
+  ("fsize_local",                     1371967119), # 1.37GB, avg file size 1.37GB
   ("fsize_db",                        14636315935), # 14.64GB, avg file size 4.88GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1434,7 +1434,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_700_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_700_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1479,7 +1479,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 183508),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1286890671), # 1.29GB, avg file size 1.29GB
+  ("fsize_local",                     1364899674), # 1.36GB, avg file size 1.36GB
   ("fsize_db",                        14673528101), # 14.67GB, avg file size 3.67GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1492,7 +1492,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_800_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_800_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1537,7 +1537,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 179966),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1273588032), # 1.27GB, avg file size 1.27GB
+  ("fsize_local",                     1350308882), # 1.35GB, avg file size 1.35GB
   ("fsize_db",                        15011560063), # 15.01GB, avg file size 5.00GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1550,7 +1550,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_900_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_900_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1595,7 +1595,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgrap
   }),
   ("nof_tree_events",                 175557),
   ("nof_db_events",                   299118),
-  ("fsize_local",                     1252653330), # 1.25GB, avg file size 1.25GB
+  ("fsize_local",                     1327568848), # 1.33GB, avg file size 1.33GB
   ("fsize_db",                        15065557472), # 15.07GB, avg file size 5.02GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -1608,7 +1608,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1000_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1000_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1657,7 +1657,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 174243),
   ("nof_db_events",                   398999),
-  ("fsize_local",                     991427410), # 991.43MB, avg file size 991.43MB
+  ("fsize_local",                     1067153529), # 1.07GB, avg file size 1.07GB
   ("fsize_db",                        18513625499), # 18.51GB, avg file size 1.03GB
   ("use_it",                          True),
   ("xsection",                        4.773e-05),
@@ -1670,7 +1670,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_1_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_1_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1719,7 +1719,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 170874),
   ("nof_db_events",                   396799),
-  ("fsize_local",                     1044748816), # 1.04GB, avg file size 1.04GB
+  ("fsize_local",                     1124562431), # 1.12GB, avg file size 1.12GB
   ("fsize_db",                        19203455679), # 19.20GB, avg file size 738.59MB
   ("use_it",                          True),
   ("xsection",                        3.9562e-05),
@@ -1732,7 +1732,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_2_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_2_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1781,7 +1781,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 198762),
   ("nof_db_events",                   399200),
-  ("fsize_local",                     1331908884), # 1.33GB, avg file size 1.33GB
+  ("fsize_local",                     1422465575), # 1.42GB, avg file size 1.42GB
   ("fsize_db",                        20560010155), # 20.56GB, avg file size 822.40MB
   ("use_it",                          True),
   ("xsection",                        0.000398001),
@@ -1794,7 +1794,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_2_1_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_2_1_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1843,7 +1843,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 180084),
   ("nof_db_events",                   399999),
-  ("fsize_local",                     1021009132), # 1.02GB, avg file size 1.02GB
+  ("fsize_local",                     1099344003), # 1.10GB, avg file size 1.10GB
   ("fsize_db",                        18665186777), # 18.67GB, avg file size 777.72MB
   ("use_it",                          True),
   ("xsection",                        0.000126972),
@@ -1856,7 +1856,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_0_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_0_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1905,7 +1905,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   }),
   ("nof_tree_events",                 190024),
   ("nof_db_events",                   398799),
-  ("fsize_local",                     1175304042), # 1.18GB, avg file size 1.18GB
+  ("fsize_local",                     1260923629), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        19328505325), # 19.33GB, avg file size 1.29GB
   ("use_it",                          True),
   ("xsection",                        0.001834377),
@@ -1918,7 +1918,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1p5_1_1_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1p5_1_1_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1967,7 +1967,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   }),
   ("nof_tree_events",                 197669),
   ("nof_db_events",                   399097),
-  ("fsize_local",                     1295398252), # 1.30GB, avg file size 1.30GB
+  ("fsize_local",                     1384085432), # 1.38GB, avg file size 1.38GB
   ("fsize_db",                        20226758825), # 20.23GB, avg file size 842.78MB
   ("use_it",                          True),
   ("xsection",                        0.000300811),
@@ -1980,7 +1980,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_0p5_1_1_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_0p5_1_1_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2029,7 +2029,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 192248),
   ("nof_db_events",                   396800),
-  ("fsize_local",                     1219263872), # 1.22GB, avg file size 1.22GB
+  ("fsize_local",                     1304192307), # 1.30GB, avg file size 1.30GB
   ("fsize_db",                        19702706677), # 19.70GB, avg file size 820.95MB
   ("use_it",                          True),
   ("xsection",                        0.000753069),
@@ -2042,7 +2042,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2v_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2v_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2087,7 +2087,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2/RunIISummer16Mi
   }),
   ("nof_tree_events",                 165798),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1033705864), # 1.03GB, avg file size 1.03GB
+  ("fsize_local",                     1103028445), # 1.10GB, avg file size 1.10GB
   ("fsize_db",                        13376661186), # 13.38GB, avg file size 2.68GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2100,7 +2100,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2145,7 +2145,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2/RunIISummer16M
   }),
   ("nof_tree_events",                 161359),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     978714276), # 978.71MB, avg file size 978.71MB
+  ("fsize_local",                     1045896192), # 1.05GB, avg file size 1.05GB
   ("fsize_db",                        13225066454), # 13.23GB, avg file size 4.41GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2158,7 +2158,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_box_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_box_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2203,7 +2203,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 161967),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1029282409), # 1.03GB, avg file size 1.03GB
+  ("fsize_local",                     1097362270), # 1.10GB, avg file size 1.10GB
   ("fsize_db",                        13519407617), # 13.52GB, avg file size 3.38GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2216,7 +2216,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_1_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_1_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2261,7 +2261,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 4565),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     32185243), # 32.19MB, avg file size 32.19MB
+  ("fsize_local",                     34094449), # 34.09MB, avg file size 34.09MB
   ("fsize_db",                        14649063726), # 14.65GB, avg file size 3.66GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2274,7 +2274,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_2_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_2_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2319,7 +2319,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 166465),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     1051022004), # 1.05GB, avg file size 1.05GB
+  ("fsize_local",                     1120559078), # 1.12GB, avg file size 1.12GB
   ("fsize_db",                        13601999029), # 13.60GB, avg file size 4.53GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2332,7 +2332,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_3_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_3_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2377,7 +2377,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 160748),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     984522903), # 984.52MB, avg file size 984.52MB
+  ("fsize_local",                     1051449150), # 1.05GB, avg file size 1.05GB
   ("fsize_db",                        13322107044), # 13.32GB, avg file size 4.44GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2390,7 +2390,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_4_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_4_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2435,7 +2435,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 167651),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1111409295), # 1.11GB, avg file size 1.11GB
+  ("fsize_local",                     1181642563), # 1.18GB, avg file size 1.18GB
   ("fsize_db",                        14057961060), # 14.06GB, avg file size 3.51GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2448,7 +2448,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_5_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_5_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2493,7 +2493,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 154230),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     935547368), # 935.55MB, avg file size 935.55MB
+  ("fsize_local",                     1000389438), # 1.00GB, avg file size 1.00GB
   ("fsize_db",                        13143785774), # 13.14GB, avg file size 3.29GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2506,7 +2506,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_6_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_6_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2551,7 +2551,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 144012),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     802429753), # 802.43MB, avg file size 802.43MB
+  ("fsize_local",                     859710700), # 859.71MB, avg file size 859.71MB
   ("fsize_db",                        12803480606), # 12.80GB, avg file size 3.20GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2564,7 +2564,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_7_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_7_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2609,7 +2609,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 162672),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     1026768432), # 1.03GB, avg file size 1.03GB
+  ("fsize_local",                     1094867673), # 1.09GB, avg file size 1.09GB
   ("fsize_db",                        13552950610), # 13.55GB, avg file size 4.52GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2622,7 +2622,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_8_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_8_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2667,7 +2667,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2/RunIISummer16Min
   }),
   ("nof_tree_events",                 169318),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     1106903226), # 1.11GB, avg file size 1.11GB
+  ("fsize_local",                     1177747283), # 1.18GB, avg file size 1.18GB
   ("fsize_db",                        13997106004), # 14.00GB, avg file size 4.67GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2680,7 +2680,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_9_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_9_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2725,7 +2725,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2/RunIISummer16Mi
   }),
   ("nof_tree_events",                 143249),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     811718251), # 811.72MB, avg file size 811.72MB
+  ("fsize_local",                     868986861), # 868.99MB, avg file size 868.99MB
   ("fsize_db",                        12822566212), # 12.82GB, avg file size 3.21GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2738,7 +2738,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_10_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_10_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2783,7 +2783,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2/RunIISummer16Mi
   }),
   ("nof_tree_events",                 153175),
   ("nof_db_events",                   299364),
-  ("fsize_local",                     922717167), # 922.72MB, avg file size 922.72MB
+  ("fsize_local",                     986424154), # 986.42MB, avg file size 986.42MB
   ("fsize_db",                        13315340669), # 13.32GB, avg file size 2.66GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2796,7 +2796,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_11_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_11_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2841,7 +2841,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/RunIISummer16Mi
   }),
   ("nof_tree_events",                 152094),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     883975988), # 883.98MB, avg file size 883.98MB
+  ("fsize_local",                     945811020), # 945.81MB, avg file size 945.81MB
   ("fsize_db",                        13025018010), # 13.03GB, avg file size 3.26GB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -2854,7 +2854,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_12_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_12_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2907,7 +2907,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-p
   }),
   ("nof_tree_events",                 195117),
   ("nof_db_events",                   399999),
-  ("fsize_local",                     1099894340), # 1.10GB, avg file size 1.10GB
+  ("fsize_local",                     1176428643), # 1.18GB, avg file size 1.18GB
   ("fsize_db",                        16972955311), # 16.97GB, avg file size 385.75MB
   ("use_it",                          True),
   ("xsection",                        0.001928162),
@@ -2920,7 +2920,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH0_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH0_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2973,7 +2973,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-p
   }),
   ("nof_tree_events",                 198729),
   ("nof_db_events",                   396798),
-  ("fsize_local",                     1151823353), # 1.15GB, avg file size 1.15GB
+  ("fsize_local",                     1229490720), # 1.23GB, avg file size 1.23GB
   ("fsize_db",                        17674000555), # 17.67GB, avg file size 198.58MB
   ("use_it",                          True),
   ("xsection",                        0.000858569),
@@ -2986,7 +2986,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3039,7 +3039,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 192589),
   ("nof_db_events",                   398400),
-  ("fsize_local",                     1124124763), # 1.12GB, avg file size 1.12GB
+  ("fsize_local",                     1200939935), # 1.20GB, avg file size 1.20GB
   ("fsize_db",                        16864768372), # 16.86GB, avg file size 674.59MB
   ("use_it",                          True),
   ("xsection",                        0.000362916),
@@ -3052,7 +3052,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH2p45_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH2p45_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3105,7 +3105,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-p
   }),
   ("nof_tree_events",                 172460),
   ("nof_db_events",                   394800),
-  ("fsize_local",                     905893475), # 905.89MB, avg file size 905.89MB
+  ("fsize_local",                     969358308), # 969.36MB, avg file size 969.36MB
   ("fsize_db",                        16232250597), # 16.23GB, avg file size 386.48MB
   ("use_it",                          True),
   ("xsection",                        0.002521218),
@@ -3118,7 +3118,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2v"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3167,7 +3167,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madg
   }),
   ("nof_tree_events",                 77495),
   ("nof_db_events",                   299996),
-  ("fsize_local",                     483201070), # 483.20MB, avg file size 483.20MB
+  ("fsize_local",                     518872645), # 518.87MB, avg file size 518.87MB
   ("fsize_db",                        13854390389), # 13.85GB, avg file size 532.86MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3180,7 +3180,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3229,7 +3229,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 75809),
   ("nof_db_events",                   297895),
-  ("fsize_local",                     461358576), # 461.36MB, avg file size 461.36MB
+  ("fsize_local",                     495712435), # 495.71MB, avg file size 495.71MB
   ("fsize_db",                        13390936467), # 13.39GB, avg file size 704.79MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3242,7 +3242,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_1_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_1_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3291,7 +3291,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 59458),
   ("nof_db_events",                   298398),
-  ("fsize_local",                     412710546), # 412.71MB, avg file size 412.71MB
+  ("fsize_local",                     440068817), # 440.07MB, avg file size 440.07MB
   ("fsize_db",                        14956599323), # 14.96GB, avg file size 679.85MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3304,7 +3304,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_2_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_2_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3353,7 +3353,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 72789),
   ("nof_db_events",                   287898),
-  ("fsize_local",                     455586245), # 455.59MB, avg file size 455.59MB
+  ("fsize_local",                     488499583), # 488.50MB, avg file size 488.50MB
   ("fsize_db",                        13260878078), # 13.26GB, avg file size 663.04MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3366,7 +3366,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_3_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_3_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3415,7 +3415,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 74178),
   ("nof_db_events",                   293698),
-  ("fsize_local",                     451503940), # 451.50MB, avg file size 451.50MB
+  ("fsize_local",                     484961073), # 484.96MB, avg file size 484.96MB
   ("fsize_db",                        13281373082), # 13.28GB, avg file size 664.07MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3428,7 +3428,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_4_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_4_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3477,7 +3477,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 67503),
   ("nof_db_events",                   299098),
-  ("fsize_local",                     453016181), # 453.02MB, avg file size 453.02MB
+  ("fsize_local",                     483471011), # 483.47MB, avg file size 483.47MB
   ("fsize_db",                        14447245371), # 14.45GB, avg file size 760.38MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3490,7 +3490,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_5_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_5_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3539,7 +3539,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 77142),
   ("nof_db_events",                   298896),
-  ("fsize_local",                     474381003), # 474.38MB, avg file size 474.38MB
+  ("fsize_local",                     509514022), # 509.51MB, avg file size 509.51MB
   ("fsize_db",                        13518884270), # 13.52GB, avg file size 844.93MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3552,7 +3552,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_6_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_6_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3601,7 +3601,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 76592),
   ("nof_db_events",                   298398),
-  ("fsize_local",                     467073658), # 467.07MB, avg file size 467.07MB
+  ("fsize_local",                     501718744), # 501.72MB, avg file size 501.72MB
   ("fsize_db",                        13451681242), # 13.45GB, avg file size 747.32MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3614,7 +3614,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_7_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_7_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3663,7 +3663,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 76440),
   ("nof_db_events",                   298899),
-  ("fsize_local",                     463902587), # 463.90MB, avg file size 463.90MB
+  ("fsize_local",                     498354511), # 498.35MB, avg file size 498.35MB
   ("fsize_db",                        13370755539), # 13.37GB, avg file size 703.72MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3676,7 +3676,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_8_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_8_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3725,7 +3725,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgr
   }),
   ("nof_tree_events",                 71881),
   ("nof_db_events",                   299996),
-  ("fsize_local",                     476300269), # 476.30MB, avg file size 476.30MB
+  ("fsize_local",                     508806026), # 508.81MB, avg file size 508.81MB
   ("fsize_db",                        14367121107), # 14.37GB, avg file size 684.15MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3738,7 +3738,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_9_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_9_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3787,7 +3787,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madg
   }),
   ("nof_tree_events",                 76153),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     464595200), # 464.60MB, avg file size 464.60MB
+  ("fsize_local",                     498979874), # 498.98MB, avg file size 498.98MB
   ("fsize_db",                        13467941180), # 13.47GB, avg file size 792.23MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3800,7 +3800,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_10_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_10_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3849,7 +3849,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madg
   }),
   ("nof_tree_events",                 76258),
   ("nof_db_events",                   298398),
-  ("fsize_local",                     474894279), # 474.89MB, avg file size 474.89MB
+  ("fsize_local",                     509591371), # 509.59MB, avg file size 509.59MB
   ("fsize_db",                        13629128068), # 13.63GB, avg file size 757.17MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3862,7 +3862,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_11_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_11_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3911,7 +3911,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madg
   }),
   ("nof_tree_events",                 74966),
   ("nof_db_events",                   295397),
-  ("fsize_local",                     454789107), # 454.79MB, avg file size 454.79MB
+  ("fsize_local",                     488575858), # 488.58MB, avg file size 488.58MB
   ("fsize_db",                        13215460281), # 13.22GB, avg file size 734.19MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -3924,7 +3924,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_12_hh_2b2v_sl_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_12_hh_2b2v_sl_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3977,7 +3977,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-pow
   }),
   ("nof_tree_events",                 103197),
   ("nof_db_events",                   398394),
-  ("fsize_local",                     607242102), # 607.24MB, avg file size 607.24MB
+  ("fsize_local",                     649778071), # 649.78MB, avg file size 649.78MB
   ("fsize_db",                        16886138632), # 16.89GB, avg file size 649.47MB
   ("use_it",                          True),
   ("xsection",                        0.0076246),
@@ -3990,7 +3990,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH0_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH0_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4043,7 +4043,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-pow
   }),
   ("nof_tree_events",                 104989),
   ("nof_db_events",                   398998),
-  ("fsize_local",                     637937610), # 637.94MB, avg file size 637.94MB
+  ("fsize_local",                     681401226), # 681.40MB, avg file size 681.40MB
   ("fsize_db",                        17448307042), # 17.45GB, avg file size 405.77MB
   ("use_it",                          True),
   ("xsection",                        0.00339506),
@@ -4056,7 +4056,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4109,7 +4109,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-
   }),
   ("nof_tree_events",                 97776),
   ("nof_db_events",                   391395),
-  ("fsize_local",                     595284192), # 595.28MB, avg file size 595.28MB
+  ("fsize_local",                     635662796), # 635.66MB, avg file size 635.66MB
   ("fsize_db",                        16836087533), # 16.84GB, avg file size 732.00MB
   ("use_it",                          True),
   ("xsection",                        0.00143508),
@@ -4122,7 +4122,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH2p45_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH2p45_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4175,7 +4175,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-pow
   }),
   ("nof_tree_events",                 92214),
   ("nof_db_events",                   396596),
-  ("fsize_local",                     495476513), # 495.48MB, avg file size 495.48MB
+  ("fsize_local",                     531544449), # 531.54MB, avg file size 531.54MB
   ("fsize_db",                        16437001616), # 16.44GB, avg file size 400.90MB
   ("use_it",                          True),
   ("xsection",                        0.00996974),
@@ -4188,7 +4188,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4233,7 +4233,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 61737),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     295961685), # 295.96MB, avg file size 295.96MB
+  ("fsize_local",                     319091381), # 319.09MB, avg file size 319.09MB
   ("fsize_db",                        12143344410), # 12.14GB, avg file size 2.43GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4246,7 +4246,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_250_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_250_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4291,7 +4291,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 64623),
   ("nof_db_events",                   299402),
-  ("fsize_local",                     316528399), # 316.53MB, avg file size 316.53MB
+  ("fsize_local",                     341149301), # 341.15MB, avg file size 341.15MB
   ("fsize_db",                        12033567447), # 12.03GB, avg file size 2.41GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4304,7 +4304,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_260_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_260_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4349,7 +4349,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 67774),
   ("nof_db_events",                   299995),
-  ("fsize_local",                     338727846), # 338.73MB, avg file size 338.73MB
+  ("fsize_local",                     365215047), # 365.22MB, avg file size 365.22MB
   ("fsize_db",                        12073887370), # 12.07GB, avg file size 2.41GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4362,7 +4362,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_270_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_270_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4407,7 +4407,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 74525),
   ("nof_db_events",                   299996),
-  ("fsize_local",                     394854550), # 394.85MB, avg file size 394.85MB
+  ("fsize_local",                     424303870), # 424.30MB, avg file size 424.30MB
   ("fsize_db",                        12250780111), # 12.25GB, avg file size 3.06GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4420,7 +4420,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4465,7 +4465,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 82729),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     474859181), # 474.86MB, avg file size 474.86MB
+  ("fsize_local",                     509512026), # 509.51MB, avg file size 509.51MB
   ("fsize_db",                        12822147007), # 12.82GB, avg file size 2.56GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4478,7 +4478,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_350_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_350_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4523,7 +4523,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 87175),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     532019920), # 532.02MB, avg file size 532.02MB
+  ("fsize_local",                     569084540), # 569.08MB, avg file size 569.08MB
   ("fsize_db",                        13147855533), # 13.15GB, avg file size 2.63GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4536,7 +4536,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_400_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_400_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4581,7 +4581,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 86947),
   ("nof_db_events",                   292028),
-  ("fsize_local",                     558341536), # 558.34MB, avg file size 558.34MB
+  ("fsize_local",                     597003750), # 597.00MB, avg file size 597.00MB
   ("fsize_db",                        13118198421), # 13.12GB, avg file size 3.28GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4594,7 +4594,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_450_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_450_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4639,7 +4639,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 89850),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     601183565), # 601.18MB, avg file size 601.18MB
+  ("fsize_local",                     643261563), # 643.26MB, avg file size 643.26MB
   ("fsize_db",                        13799384403), # 13.80GB, avg file size 2.76GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4652,7 +4652,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_500_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_500_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4697,7 +4697,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 88994),
   ("nof_db_events",                   299996),
-  ("fsize_local",                     614110024), # 614.11MB, avg file size 614.11MB
+  ("fsize_local",                     656017637), # 656.02MB, avg file size 656.02MB
   ("fsize_db",                        13970691602), # 13.97GB, avg file size 3.49GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4710,7 +4710,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4755,7 +4755,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 88183),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     624089387), # 624.09MB, avg file size 624.09MB
+  ("fsize_local",                     666122868), # 666.12MB, avg file size 666.12MB
   ("fsize_db",                        14217239886), # 14.22GB, avg file size 2.84GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4768,7 +4768,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_600_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_600_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4813,7 +4813,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 85848),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     618762639), # 618.76MB, avg file size 618.76MB
+  ("fsize_local",                     659497496), # 659.50MB, avg file size 659.50MB
   ("fsize_db",                        14421548407), # 14.42GB, avg file size 2.88GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4826,7 +4826,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_650_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_650_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4871,7 +4871,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 82880),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     604274155), # 604.27MB, avg file size 604.27MB
+  ("fsize_local",                     643174684), # 643.17MB, avg file size 643.17MB
   ("fsize_db",                        14467187735), # 14.47GB, avg file size 3.62GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4884,7 +4884,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_700_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_700_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4929,7 +4929,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 77018),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     571875159), # 571.88MB, avg file size 571.88MB
+  ("fsize_local",                     608672313), # 608.67MB, avg file size 608.67MB
   ("fsize_db",                        14975865562), # 14.98GB, avg file size 3.00GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -4942,7 +4942,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_800_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_800_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4987,7 +4987,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunII
   }),
   ("nof_tree_events",                 70389),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     529195429), # 529.20MB, avg file size 529.20MB
+  ("fsize_local",                     562856385), # 562.86MB, avg file size 562.86MB
   ("fsize_db",                        15010963358), # 15.01GB, avg file size 3.75GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5000,7 +5000,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5045,7 +5045,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 62917),
   ("nof_db_events",                   299469),
-  ("fsize_local",                     477521453), # 477.52MB, avg file size 477.52MB
+  ("fsize_local",                     507076944), # 507.08MB, avg file size 507.08MB
   ("fsize_db",                        15303436616), # 15.30GB, avg file size 3.06GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5058,7 +5058,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1000_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1000_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5103,7 +5103,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 61694),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     302850814), # 302.85MB, avg file size 302.85MB
+  ("fsize_local",                     326223923), # 326.22MB, avg file size 326.22MB
   ("fsize_db",                        12270543882), # 12.27GB, avg file size 2.45GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5116,7 +5116,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_250_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_250_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5161,7 +5161,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 65521),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     329270622), # 329.27MB, avg file size 329.27MB
+  ("fsize_local",                     354940206), # 354.94MB, avg file size 354.94MB
   ("fsize_db",                        12407686965), # 12.41GB, avg file size 3.10GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5174,7 +5174,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_260_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_260_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5219,7 +5219,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 68833),
   ("nof_db_events",                   299231),
-  ("fsize_local",                     354703306), # 354.70MB, avg file size 354.70MB
+  ("fsize_local",                     381517737), # 381.52MB, avg file size 381.52MB
   ("fsize_db",                        12387077839), # 12.39GB, avg file size 2.48GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5232,7 +5232,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_270_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_270_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5277,7 +5277,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 76626),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     420869255), # 420.87MB, avg file size 420.87MB
+  ("fsize_local",                     451373355), # 451.37MB, avg file size 451.37MB
   ("fsize_db",                        12692339481), # 12.69GB, avg file size 3.17GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5290,7 +5290,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_300_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_300_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5335,7 +5335,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 84920),
   ("nof_db_events",                   299402),
-  ("fsize_local",                     506025344), # 506.03MB, avg file size 506.03MB
+  ("fsize_local",                     542140388), # 542.14MB, avg file size 542.14MB
   ("fsize_db",                        13215909741), # 13.22GB, avg file size 3.30GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5348,7 +5348,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_350_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_350_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5393,7 +5393,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 90369),
   ("nof_db_events",                   299993),
-  ("fsize_local",                     573922710), # 573.92MB, avg file size 573.92MB
+  ("fsize_local",                     613621137), # 613.62MB, avg file size 613.62MB
   ("fsize_db",                        13636388128), # 13.64GB, avg file size 3.41GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5406,7 +5406,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_400_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_400_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5451,7 +5451,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 92171),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     616265911), # 616.27MB, avg file size 616.27MB
+  ("fsize_local",                     659188145), # 659.19MB, avg file size 659.19MB
   ("fsize_db",                        13995682190), # 14.00GB, avg file size 2.80GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5464,7 +5464,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_450_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_450_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5509,7 +5509,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 92966),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     646769466), # 646.77MB, avg file size 646.77MB
+  ("fsize_local",                     690765842), # 690.77MB, avg file size 690.77MB
   ("fsize_db",                        14208882340), # 14.21GB, avg file size 3.55GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5522,7 +5522,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_500_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_500_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5567,7 +5567,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 91479),
   ("nof_db_events",                   299995),
-  ("fsize_local",                     657075168), # 657.08MB, avg file size 657.08MB
+  ("fsize_local",                     700346027), # 700.35MB, avg file size 700.35MB
   ("fsize_db",                        14478664969), # 14.48GB, avg file size 3.62GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5580,7 +5580,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_550_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_550_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5625,7 +5625,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 88692),
   ("nof_db_events",                   299995),
-  ("fsize_local",                     652294117), # 652.29MB, avg file size 652.29MB
+  ("fsize_local",                     693880048), # 693.88MB, avg file size 693.88MB
   ("fsize_db",                        14654413374), # 14.65GB, avg file size 3.66GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5638,7 +5638,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_600_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_600_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5683,7 +5683,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 85627),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     638448390), # 638.45MB, avg file size 638.45MB
+  ("fsize_local",                     679271531), # 679.27MB, avg file size 679.27MB
   ("fsize_db",                        14989654961), # 14.99GB, avg file size 3.00GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5696,7 +5696,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_650_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_650_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5741,7 +5741,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 81767),
   ("nof_db_events",                   299995),
-  ("fsize_local",                     614228149), # 614.23MB, avg file size 614.23MB
+  ("fsize_local",                     652692587), # 652.69MB, avg file size 652.69MB
   ("fsize_db",                        15100949761), # 15.10GB, avg file size 3.02GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5754,7 +5754,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_700_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_700_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5799,7 +5799,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 73732),
   ("nof_db_events",                   299998),
-  ("fsize_local",                     561810282), # 561.81MB, avg file size 561.81MB
+  ("fsize_local",                     596292799), # 596.29MB, avg file size 596.29MB
   ("fsize_db",                        15643527631), # 15.64GB, avg file size 2.61GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5812,7 +5812,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_800_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_800_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5857,7 +5857,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph
   }),
   ("nof_tree_events",                 64830),
   ("nof_db_events",                   299999),
-  ("fsize_local",                     497825634), # 497.83MB, avg file size 497.83MB
+  ("fsize_local",                     528007412), # 528.01MB, avg file size 528.01MB
   ("fsize_db",                        15836490873), # 15.84GB, avg file size 2.64GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5870,7 +5870,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_900_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_900_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5915,7 +5915,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgrap
   }),
   ("nof_tree_events",                 56563),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     436891077), # 436.89MB, avg file size 436.89MB
+  ("fsize_local",                     463052648), # 463.05MB, avg file size 463.05MB
   ("fsize_db",                        15848133420), # 15.85GB, avg file size 3.17GB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -5928,7 +5928,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1000_hh_2b2v_sl"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1000_hh_2b2v_sl"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5977,7 +5977,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 95756),
   ("nof_db_events",                   398999),
-  ("fsize_local",                     558333811), # 558.33MB, avg file size 558.33MB
+  ("fsize_local",                     602578352), # 602.58MB, avg file size 602.58MB
   ("fsize_db",                        18635165335), # 18.64GB, avg file size 1.43GB
   ("use_it",                          True),
   ("xsection",                        0.000502091),
@@ -5990,7 +5990,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_0_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_0_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6039,7 +6039,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 92809),
   ("nof_db_events",                   399998),
-  ("fsize_local",                     541907759), # 541.91MB, avg file size 541.91MB
+  ("fsize_local",                     584639386), # 584.64MB, avg file size 584.64MB
   ("fsize_db",                        18828525571), # 18.83GB, avg file size 818.63MB
   ("use_it",                          True),
   ("xsection",                        0.000188741),
@@ -6052,7 +6052,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_1_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_1_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6101,7 +6101,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 89426),
   ("nof_db_events",                   395494),
-  ("fsize_local",                     560208639), # 560.21MB, avg file size 560.21MB
+  ("fsize_local",                     603304903), # 603.30MB, avg file size 603.30MB
   ("fsize_db",                        19284295734), # 19.28GB, avg file size 803.51MB
   ("use_it",                          True),
   ("xsection",                        0.000156443),
@@ -6114,7 +6114,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_2_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_2_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6163,7 +6163,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 82767),
   ("nof_db_events",                   398193),
-  ("fsize_local",                     590798506), # 590.80MB, avg file size 590.80MB
+  ("fsize_local",                     631281099), # 631.28MB, avg file size 631.28MB
   ("fsize_db",                        20938124623), # 20.94GB, avg file size 1.05GB
   ("use_it",                          True),
   ("xsection",                        0.001573824),
@@ -6176,7 +6176,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_2_1_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_2_1_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6225,7 +6225,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   }),
   ("nof_tree_events",                 87564),
   ("nof_db_events",                   399994),
-  ("fsize_local",                     605567965), # 605.57MB, avg file size 605.57MB
+  ("fsize_local",                     647644793), # 647.64MB, avg file size 647.64MB
   ("fsize_db",                        20402821916), # 20.40GB, avg file size 2.55GB
   ("use_it",                          True),
   ("xsection",                        0.001189508),
@@ -6238,7 +6238,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_0p5_1_1_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_0p5_1_1_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6287,7 +6287,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   }),
   ("nof_tree_events",                 91518),
   ("nof_db_events",                   395494),
-  ("fsize_local",                     586508317), # 586.51MB, avg file size 586.51MB
+  ("fsize_local",                     630095502), # 630.10MB, avg file size 630.10MB
   ("fsize_db",                        19666709618), # 19.67GB, avg file size 819.45MB
   ("use_it",                          True),
   ("xsection",                        0.007253737),
@@ -6300,7 +6300,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1p5_1_1_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1p5_1_1_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6349,7 +6349,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   }),
   ("nof_tree_events",                 89710),
   ("nof_db_events",                   399096),
-  ("fsize_local",                     592615941), # 592.62MB, avg file size 592.62MB
+  ("fsize_local",                     635610093), # 635.61MB, avg file size 635.61MB
   ("fsize_db",                        20236728193), # 20.24GB, avg file size 749.51MB
   ("use_it",                          True),
   ("xsection",                        0.002977884),
@@ -6362,7 +6362,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2v_sl_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2v_sl_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6411,7 +6411,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 45022),
   ("nof_db_events",                   399200),
-  ("fsize_local",                     326630481), # 326.63MB, avg file size 326.63MB
+  ("fsize_local",                     352300094), # 352.30MB, avg file size 352.30MB
   ("fsize_db",                        21299446883), # 21.30GB, avg file size 3.55GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6424,7 +6424,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6473,7 +6473,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 48046),
   ("nof_db_events",                   395000),
-  ("fsize_local",                     353352738), # 353.35MB, avg file size 353.35MB
+  ("fsize_local",                     381297664), # 381.30MB, avg file size 381.30MB
   ("fsize_db",                        21209489911), # 21.21GB, avg file size 4.24GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6486,7 +6486,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_260_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_260_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6535,7 +6535,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 51324),
   ("nof_db_events",                   395700),
-  ("fsize_local",                     381539604), # 381.54MB, avg file size 381.54MB
+  ("fsize_local",                     411982286), # 411.98MB, avg file size 411.98MB
   ("fsize_db",                        21337721793), # 21.34GB, avg file size 3.05GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6548,7 +6548,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_270_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_270_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6597,7 +6597,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 54010),
   ("nof_db_events",                   396400),
-  ("fsize_local",                     406050656), # 406.05MB, avg file size 406.05MB
+  ("fsize_local",                     437648556), # 437.65MB, avg file size 437.65MB
   ("fsize_db",                        21531514022), # 21.53GB, avg file size 4.31GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6610,7 +6610,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_280_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_280_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6659,7 +6659,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 44584),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     342994477), # 342.99MB, avg file size 342.99MB
+  ("fsize_local",                     369653245), # 369.65MB, avg file size 369.65MB
   ("fsize_db",                        16521214810), # 16.52GB, avg file size 3.30GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6672,7 +6672,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_300_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_300_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6721,7 +6721,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 47419),
   ("nof_db_events",                   299200),
-  ("fsize_local",                     372236936), # 372.24MB, avg file size 372.24MB
+  ("fsize_local",                     400574371), # 400.57MB, avg file size 400.57MB
   ("fsize_db",                        16662151278), # 16.66GB, avg file size 3.33GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6734,7 +6734,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_320_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_320_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6783,7 +6783,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 51250),
   ("nof_db_events",                   298000),
-  ("fsize_local",                     415135565), # 415.14MB, avg file size 415.14MB
+  ("fsize_local",                     446102341), # 446.10MB, avg file size 446.10MB
   ("fsize_db",                        16908533930), # 16.91GB, avg file size 2.11GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6796,7 +6796,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_350_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_350_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6845,7 +6845,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 55878),
   ("nof_db_events",                   298400),
-  ("fsize_local",                     469934589), # 469.93MB, avg file size 469.93MB
+  ("fsize_local",                     504043690), # 504.04MB, avg file size 504.04MB
   ("fsize_db",                        17255325259), # 17.26GB, avg file size 3.45GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6858,7 +6858,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_400_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_400_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6907,7 +6907,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 59631),
   ("nof_db_events",                   298400),
-  ("fsize_local",                     517663340), # 517.66MB, avg file size 517.66MB
+  ("fsize_local",                     554532301), # 554.53MB, avg file size 554.53MB
   ("fsize_db",                        17580406855), # 17.58GB, avg file size 5.86GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6920,7 +6920,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_450_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_450_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6969,7 +6969,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 62859),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     560519752), # 560.52MB, avg file size 560.52MB
+  ("fsize_local",                     600265868), # 600.27MB, avg file size 600.27MB
   ("fsize_db",                        17956939093), # 17.96GB, avg file size 5.99GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -6982,7 +6982,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7031,7 +7031,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 65564),
   ("nof_db_events",                   299300),
-  ("fsize_local",                     596161400), # 596.16MB, avg file size 596.16MB
+  ("fsize_local",                     638083474), # 638.08MB, avg file size 638.08MB
   ("fsize_db",                        18237199185), # 18.24GB, avg file size 3.04GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7044,7 +7044,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_550_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_550_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7093,7 +7093,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 45276),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     421016221), # 421.02MB, avg file size 421.02MB
+  ("fsize_local",                     449473762), # 449.47MB, avg file size 449.47MB
   ("fsize_db",                        12377694096), # 12.38GB, avg file size 2.48GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7106,7 +7106,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_600_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_600_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7155,7 +7155,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 46375),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     437695471), # 437.70MB, avg file size 437.70MB
+  ("fsize_local",                     467020471), # 467.02MB, avg file size 467.02MB
   ("fsize_db",                        12477486812), # 12.48GB, avg file size 3.12GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7168,7 +7168,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_650_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_650_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7217,7 +7217,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 47767),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     456425124), # 456.43MB, avg file size 456.43MB
+  ("fsize_local",                     487076246), # 487.08MB, avg file size 487.08MB
   ("fsize_db",                        12617931333), # 12.62GB, avg file size 4.21GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7230,7 +7230,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_700_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_700_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7279,7 +7279,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 48385),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     467081458), # 467.08MB, avg file size 467.08MB
+  ("fsize_local",                     498279124), # 498.28MB, avg file size 498.28MB
   ("fsize_db",                        12763317309), # 12.76GB, avg file size 3.19GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7292,7 +7292,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7341,7 +7341,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 48846),
   ("nof_db_events",                   199300),
-  ("fsize_local",                     475920120), # 475.92MB, avg file size 475.92MB
+  ("fsize_local",                     507623844), # 507.62MB, avg file size 507.62MB
   ("fsize_db",                        12855127044), # 12.86GB, avg file size 3.21GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7354,7 +7354,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_800_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_800_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7403,7 +7403,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 49496),
   ("nof_db_events",                   199400),
-  ("fsize_local",                     485801994), # 485.80MB, avg file size 485.80MB
+  ("fsize_local",                     518054016), # 518.05MB, avg file size 518.05MB
   ("fsize_db",                        12962982116), # 12.96GB, avg file size 2.59GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7416,7 +7416,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_850_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_850_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7465,7 +7465,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV
   }),
   ("nof_tree_events",                 50180),
   ("nof_db_events",                   199600),
-  ("fsize_local",                     495450819), # 495.45MB, avg file size 495.45MB
+  ("fsize_local",                     528193567), # 528.19MB, avg file size 528.19MB
   ("fsize_db",                        13038158901), # 13.04GB, avg file size 3.26GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7478,7 +7478,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_900_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_900_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7527,7 +7527,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 25289),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     253654506), # 253.65MB, avg file size 253.65MB
+  ("fsize_local",                     270383312), # 270.38MB, avg file size 270.38MB
   ("fsize_db",                        6644043956), # 6.64GB, avg file size 2.21GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7540,7 +7540,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7589,7 +7589,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 24711),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     250750732), # 250.75MB, avg file size 250.75MB
+  ("fsize_local",                     266969837), # 266.97MB, avg file size 266.97MB
   ("fsize_db",                        6799676332), # 6.80GB, avg file size 2.27GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7602,7 +7602,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7651,7 +7651,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 22954),
   ("nof_db_events",                   99700),
-  ("fsize_local",                     234434840), # 234.43MB, avg file size 234.43MB
+  ("fsize_local",                     249506410), # 249.51MB, avg file size 249.51MB
   ("fsize_db",                        6898339776), # 6.90GB, avg file size 1.72GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7664,7 +7664,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7713,7 +7713,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 20385),
   ("nof_db_events",                   99500),
-  ("fsize_local",                     209241620), # 209.24MB, avg file size 209.24MB
+  ("fsize_local",                     222591783), # 222.59MB, avg file size 222.59MB
   ("fsize_db",                        6898552202), # 6.90GB, avg file size 6.90GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7726,7 +7726,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_1750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7775,7 +7775,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 18055),
   ("nof_db_events",                   99600),
-  ("fsize_local",                     185442264), # 185.44MB, avg file size 185.44MB
+  ("fsize_local",                     197602485), # 197.60MB, avg file size 197.60MB
   ("fsize_db",                        6975912136), # 6.98GB, avg file size 6.98GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7788,7 +7788,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_2000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_2000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7837,7 +7837,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13Te
   }),
   ("nof_tree_events",                 11376),
   ("nof_db_events",                   99600),
-  ("fsize_local",                     117040260), # 117.04MB, avg file size 117.04MB
+  ("fsize_local",                     124894979), # 124.89MB, avg file size 124.89MB
   ("fsize_db",                        7186439272), # 7.19GB, avg file size 2.40GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7850,7 +7850,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_3000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin0_3000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7899,7 +7899,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 35485),
   ("nof_db_events",                   399300),
-  ("fsize_local",                     264022192), # 264.02MB, avg file size 264.02MB
+  ("fsize_local",                     282224426), # 282.22MB, avg file size 282.22MB
   ("fsize_db",                        21665085461), # 21.67GB, avg file size 4.33GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7912,7 +7912,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7961,7 +7961,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 45167),
   ("nof_db_events",                   399000),
-  ("fsize_local",                     297294122), # 297.29MB, avg file size 297.29MB
+  ("fsize_local",                     319550456), # 319.55MB, avg file size 319.55MB
   ("fsize_db",                        19965168763), # 19.97GB, avg file size 3.33GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -7974,7 +7974,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_260_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_260_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8023,7 +8023,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 48652),
   ("nof_db_events",                   399100),
-  ("fsize_local",                     321520478), # 321.52MB, avg file size 321.52MB
+  ("fsize_local",                     345200900), # 345.20MB, avg file size 345.20MB
   ("fsize_db",                        19965470447), # 19.97GB, avg file size 2.85GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8036,7 +8036,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_270_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_270_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8085,7 +8085,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 51714),
   ("nof_db_events",                   399200),
-  ("fsize_local",                     342133507), # 342.13MB, avg file size 342.13MB
+  ("fsize_local",                     367236839), # 367.24MB, avg file size 367.24MB
   ("fsize_db",                        19918920031), # 19.92GB, avg file size 3.32GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8098,7 +8098,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_280_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_280_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8147,7 +8147,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 42797),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     284794545), # 284.79MB, avg file size 284.79MB
+  ("fsize_local",                     305613331), # 305.61MB, avg file size 305.61MB
   ("fsize_db",                        14933126905), # 14.93GB, avg file size 2.99GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8160,7 +8160,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_300_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_300_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8209,7 +8209,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 45837),
   ("nof_db_events",                   299000),
-  ("fsize_local",                     305388439), # 305.39MB, avg file size 305.39MB
+  ("fsize_local",                     327814944), # 327.81MB, avg file size 327.81MB
   ("fsize_db",                        14844734816), # 14.84GB, avg file size 2.97GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8222,7 +8222,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_320_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_320_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8271,7 +8271,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 49642),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     331638780), # 331.64MB, avg file size 331.64MB
+  ("fsize_local",                     356249638), # 356.25MB, avg file size 356.25MB
   ("fsize_db",                        14849340648), # 14.85GB, avg file size 2.12GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8284,7 +8284,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_350_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_350_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8333,7 +8333,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 54301),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     365112023), # 365.11MB, avg file size 365.11MB
+  ("fsize_local",                     391863863), # 391.86MB, avg file size 391.86MB
   ("fsize_db",                        14759908108), # 14.76GB, avg file size 4.92GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8346,7 +8346,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_400_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_400_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8395,7 +8395,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 56353),
   ("nof_db_events",                   295800),
-  ("fsize_local",                     381828316), # 381.83MB, avg file size 381.83MB
+  ("fsize_local",                     409025879), # 409.03MB, avg file size 409.03MB
   ("fsize_db",                        14543528828), # 14.54GB, avg file size 4.85GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8408,7 +8408,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_450_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_450_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8457,7 +8457,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 59377),
   ("nof_db_events",                   299100),
-  ("fsize_local",                     405974235), # 405.97MB, avg file size 405.97MB
+  ("fsize_local",                     434923297), # 434.92MB, avg file size 434.92MB
   ("fsize_db",                        14761989473), # 14.76GB, avg file size 2.95GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8470,7 +8470,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8519,7 +8519,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 42405),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     294901512), # 294.90MB, avg file size 294.90MB
+  ("fsize_local",                     315264486), # 315.26MB, avg file size 315.26MB
   ("fsize_db",                        9898141934), # 9.90GB, avg file size 2.47GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8532,7 +8532,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_600_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_600_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8581,7 +8581,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 43021),
   ("nof_db_events",                   197300),
-  ("fsize_local",                     300788054), # 300.79MB, avg file size 300.79MB
+  ("fsize_local",                     321180765), # 321.18MB, avg file size 321.18MB
   ("fsize_db",                        9750259439), # 9.75GB, avg file size 3.25GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8594,7 +8594,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_650_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_650_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8643,7 +8643,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 44518),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     312423582), # 312.42MB, avg file size 312.42MB
+  ("fsize_local",                     334010707), # 334.01MB, avg file size 334.01MB
   ("fsize_db",                        9931172424), # 9.93GB, avg file size 1.99GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8656,7 +8656,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_700_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_700_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8705,7 +8705,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 44978),
   ("nof_db_events",                   198000),
-  ("fsize_local",                     316523380), # 316.52MB, avg file size 316.52MB
+  ("fsize_local",                     338339201), # 338.34MB, avg file size 338.34MB
   ("fsize_db",                        9850444030), # 9.85GB, avg file size 1.97GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8718,7 +8718,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8767,7 +8767,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 46468),
   ("nof_db_events",                   197200),
-  ("fsize_local",                     328595392), # 328.60MB, avg file size 328.60MB
+  ("fsize_local",                     350738805), # 350.74MB, avg file size 350.74MB
   ("fsize_db",                        9850192498), # 9.85GB, avg file size 1.97GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8780,7 +8780,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_850_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_850_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8829,7 +8829,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights
   }),
   ("nof_tree_events",                 47553),
   ("nof_db_events",                   199100),
-  ("fsize_local",                     337313789), # 337.31MB, avg file size 337.31MB
+  ("fsize_local",                     359789257), # 359.79MB, avg file size 359.79MB
   ("fsize_db",                        9914302589), # 9.91GB, avg file size 2.48GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8842,7 +8842,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_900_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_900_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8891,7 +8891,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeight
   }),
   ("nof_tree_events",                 24445),
   ("nof_db_events",                   99200),
-  ("fsize_local",                     174563893), # 174.56MB, avg file size 174.56MB
+  ("fsize_local",                     186326527), # 186.33MB, avg file size 186.33MB
   ("fsize_db",                        4992199922), # 4.99GB, avg file size 1.66GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8904,7 +8904,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_1000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_1000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8953,7 +8953,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeight
   }),
   ("nof_tree_events",                 25365),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     180920431), # 180.92MB, avg file size 180.92MB
+  ("fsize_local",                     193213434), # 193.21MB, avg file size 193.21MB
   ("fsize_db",                        5054132277), # 5.05GB, avg file size 1.68GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -8966,7 +8966,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_1200_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_1200_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9015,7 +9015,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeight
   }),
   ("nof_tree_events",                 22737),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     158326337), # 158.33MB, avg file size 158.33MB
+  ("fsize_local",                     168310246), # 168.31MB, avg file size 168.31MB
   ("fsize_db",                        5078291014), # 5.08GB, avg file size 1.69GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9028,7 +9028,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_1750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_1750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9077,7 +9077,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeight
   }),
   ("nof_tree_events",                 20229),
   ("nof_db_events",                   99300),
-  ("fsize_local",                     139724985), # 139.72MB, avg file size 139.72MB
+  ("fsize_local",                     148525902), # 148.53MB, avg file size 148.53MB
   ("fsize_db",                        5051593636), # 5.05GB, avg file size 1.68GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9090,7 +9090,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_2000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_spin2_2000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9135,7 +9135,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 5585),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     28599821), # 28.60MB, avg file size 28.60MB
+  ("fsize_local",                     30740549), # 30.74MB, avg file size 30.74MB
   ("fsize_db",                        1962681716), # 1.96GB, avg file size 1.96GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9148,7 +9148,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9193,7 +9193,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 6158),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     32071453), # 32.07MB, avg file size 32.07MB
+  ("fsize_local",                     34411767), # 34.41MB, avg file size 34.41MB
   ("fsize_db",                        1978376178), # 1.98GB, avg file size 1.98GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9206,7 +9206,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_260_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_260_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9251,7 +9251,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 6544),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     34464840), # 34.46MB, avg file size 34.46MB
+  ("fsize_local",                     36960956), # 36.96MB, avg file size 36.96MB
   ("fsize_db",                        1992599467), # 1.99GB, avg file size 1.99GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9264,7 +9264,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_270_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_270_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9309,7 +9309,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 6669),
   ("nof_db_events",                   49600),
-  ("fsize_local",                     35520011), # 35.52MB, avg file size 35.52MB
+  ("fsize_local",                     38077365), # 38.08MB, avg file size 38.08MB
   ("fsize_db",                        1985262651), # 1.99GB, avg file size 1.99GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9322,7 +9322,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_280_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_280_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9367,7 +9367,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 66742),
   ("nof_db_events",                   450000),
-  ("fsize_local",                     356632977), # 356.63MB, avg file size 356.63MB
+  ("fsize_local",                     382194484), # 382.19MB, avg file size 382.19MB
   ("fsize_db",                        18335508201), # 18.34GB, avg file size 2.62GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9380,7 +9380,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9425,7 +9425,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 7859),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     44531789), # 44.53MB, avg file size 44.53MB
+  ("fsize_local",                     47574364), # 47.57MB, avg file size 47.57MB
   ("fsize_db",                        2102297139), # 2.10GB, avg file size 1.05GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9438,7 +9438,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_320_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_320_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9483,7 +9483,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 7864),
   ("nof_db_events",                   48000),
-  ("fsize_local",                     45763825), # 45.76MB, avg file size 45.76MB
+  ("fsize_local",                     48892281), # 48.89MB, avg file size 48.89MB
   ("fsize_db",                        1955847184), # 1.96GB, avg file size 1.96GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9496,7 +9496,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_340_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_340_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9541,7 +9541,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 8629),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     50594857), # 50.59MB, avg file size 50.59MB
+  ("fsize_local",                     54011819), # 54.01MB, avg file size 54.01MB
   ("fsize_db",                        2167356346), # 2.17GB, avg file size 2.17GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9554,7 +9554,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_350_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_350_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9599,7 +9599,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 47954),
   ("nof_db_events",                   250000),
-  ("fsize_local",                     287731101), # 287.73MB, avg file size 287.73MB
+  ("fsize_local",                     307572468), # 307.57MB, avg file size 307.57MB
   ("fsize_db",                        10749996877), # 10.75GB, avg file size 3.58GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9612,7 +9612,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_400_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_400_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9657,7 +9657,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 20467),
   ("nof_db_events",                   99600),
-  ("fsize_local",                     129401566), # 129.40MB, avg file size 129.40MB
+  ("fsize_local",                     137843197), # 137.84MB, avg file size 137.84MB
   ("fsize_db",                        4411305292), # 4.41GB, avg file size 2.21GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9670,7 +9670,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_450_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_450_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9715,7 +9715,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 21517),
   ("nof_db_events",                   99200),
-  ("fsize_local",                     140630022), # 140.63MB, avg file size 140.63MB
+  ("fsize_local",                     150120822), # 150.12MB, avg file size 150.12MB
   ("fsize_db",                        4435751146), # 4.44GB, avg file size 2.22GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9728,7 +9728,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9773,7 +9773,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 22955),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     154455270), # 154.46MB, avg file size 154.46MB
+  ("fsize_local",                     164495509), # 164.50MB, avg file size 164.50MB
   ("fsize_db",                        4499327267), # 4.50GB, avg file size 2.25GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9786,7 +9786,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9831,7 +9831,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 23520),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     162319695), # 162.32MB, avg file size 162.32MB
+  ("fsize_local",                     172546089), # 172.55MB, avg file size 172.55MB
   ("fsize_db",                        4581235338), # 4.58GB, avg file size 2.29GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9844,7 +9844,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_600_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_600_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9889,7 +9889,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 24416),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     171502434), # 171.50MB, avg file size 171.50MB
+  ("fsize_local",                     182223588), # 182.22MB, avg file size 182.22MB
   ("fsize_db",                        4742625025), # 4.74GB, avg file size 2.37GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9902,7 +9902,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_650_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_650_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9951,7 +9951,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13
   }),
   ("nof_tree_events",                 49765),
   ("nof_db_events",                   199000),
-  ("fsize_local",                     339487726), # 339.49MB, avg file size 339.49MB
+  ("fsize_local",                     361617834), # 361.62MB, avg file size 361.62MB
   ("fsize_db",                        9589956271), # 9.59GB, avg file size 3.20GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -9964,7 +9964,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_700_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_700_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10013,7 +10013,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13
   }),
   ("nof_tree_events",                 50599),
   ("nof_db_events",                   198200),
-  ("fsize_local",                     349178061), # 349.18MB, avg file size 349.18MB
+  ("fsize_local",                     372011073), # 372.01MB, avg file size 372.01MB
   ("fsize_db",                        9653223921), # 9.65GB, avg file size 2.41GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10026,7 +10026,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10071,7 +10071,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 26008),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     189423144), # 189.42MB, avg file size 189.42MB
+  ("fsize_local",                     201176078), # 201.18MB, avg file size 201.18MB
   ("fsize_db",                        4845795202), # 4.85GB, avg file size 2.42GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10084,7 +10084,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_800_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_800_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10133,7 +10133,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13
   }),
   ("nof_tree_events",                 52818),
   ("nof_db_events",                   199100),
-  ("fsize_local",                     371162416), # 371.16MB, avg file size 371.16MB
+  ("fsize_local",                     395518995), # 395.52MB, avg file size 395.52MB
   ("fsize_db",                        9884082889), # 9.88GB, avg file size 1.65GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10146,7 +10146,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_850_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_850_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10191,7 +10191,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/RunIISumme
   }),
   ("nof_tree_events",                 27316),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     202261151), # 202.26MB, avg file size 202.26MB
+  ("fsize_local",                     214774024), # 214.77MB, avg file size 214.77MB
   ("fsize_db",                        4858199935), # 4.86GB, avg file size 2.43GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10204,7 +10204,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10253,7 +10253,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13
   }),
   ("nof_tree_events",                 54022),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     382083287), # 382.08MB, avg file size 382.08MB
+  ("fsize_local",                     406952189), # 406.95MB, avg file size 406.95MB
   ("fsize_db",                        9988346129), # 9.99GB, avg file size 2.00GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10266,7 +10266,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2t_PSWeights"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_900_hh_2b2t_PSWeights"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10315,7 +10315,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 27677),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     199297097), # 199.30MB, avg file size 199.30MB
+  ("fsize_local",                     212029962), # 212.03MB, avg file size 212.03MB
   ("fsize_db",                        5075552784), # 5.08GB, avg file size 1.69GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10328,7 +10328,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10377,7 +10377,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 28509),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     208984190), # 208.98MB, avg file size 208.98MB
+  ("fsize_local",                     222107716), # 222.11MB, avg file size 222.11MB
   ("fsize_db",                        5140097093), # 5.14GB, avg file size 5.14GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10390,7 +10390,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10439,7 +10439,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 27015),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     197293588), # 197.29MB, avg file size 197.29MB
+  ("fsize_local",                     209308416), # 209.31MB, avg file size 209.31MB
   ("fsize_db",                        5315508364), # 5.32GB, avg file size 1.77GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10452,7 +10452,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10501,7 +10501,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 23825),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     173513754), # 173.51MB, avg file size 173.51MB
+  ("fsize_local",                     183758700), # 183.76MB, avg file size 183.76MB
   ("fsize_db",                        5358389208), # 5.36GB, avg file size 5.36GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10514,7 +10514,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_1750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10563,7 +10563,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 19822),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     144643632), # 144.64MB, avg file size 144.64MB
+  ("fsize_local",                     153113585), # 153.11MB, avg file size 153.11MB
   ("fsize_db",                        5409168825), # 5.41GB, avg file size 2.70GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10576,7 +10576,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_2000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_2000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10625,7 +10625,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 15127),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     111048091), # 111.05MB, avg file size 111.05MB
+  ("fsize_local",                     117874170), # 117.87MB, avg file size 117.87MB
   ("fsize_db",                        5464121471), # 5.46GB, avg file size 5.46GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10638,7 +10638,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_2500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_2500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10687,7 +10687,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_1
   }),
   ("nof_tree_events",                 12082),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     88596492), # 88.60MB, avg file size 88.60MB
+  ("fsize_local",                     93567272), # 93.57MB, avg file size 93.57MB
   ("fsize_db",                        5545454639), # 5.55GB, avg file size 1.85GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10700,7 +10700,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_3000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin0_3000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10745,7 +10745,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 5759),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     29980080), # 29.98MB, avg file size 29.98MB
+  ("fsize_local",                     32189834), # 32.19MB, avg file size 32.19MB
   ("fsize_db",                        1970267888), # 1.97GB, avg file size 1.97GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10758,7 +10758,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10803,7 +10803,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 6011),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     31918789), # 31.92MB, avg file size 31.92MB
+  ("fsize_local",                     34222465), # 34.22MB, avg file size 34.22MB
   ("fsize_db",                        2021288641), # 2.02GB, avg file size 2.02GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10816,7 +10816,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_260_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_260_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10861,7 +10861,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 6513),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     34998612), # 35.00MB, avg file size 35.00MB
+  ("fsize_local",                     37500356), # 37.50MB, avg file size 37.50MB
   ("fsize_db",                        2049006927), # 2.05GB, avg file size 2.05GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10874,7 +10874,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_270_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_270_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10919,7 +10919,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 6827),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     37316575), # 37.32MB, avg file size 37.32MB
+  ("fsize_local",                     39959822), # 39.96MB, avg file size 39.96MB
   ("fsize_db",                        2024724980), # 2.02GB, avg file size 2.02GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10932,7 +10932,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_280_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_280_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10977,7 +10977,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 68301),
   ("nof_db_events",                   447400),
-  ("fsize_local",                     374232983), # 374.23MB, avg file size 374.23MB
+  ("fsize_local",                     401077133), # 401.08MB, avg file size 401.08MB
   ("fsize_db",                        18368864093), # 18.37GB, avg file size 3.67GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -10990,7 +10990,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_300_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_300_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11035,7 +11035,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 8297),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     48277435), # 48.28MB, avg file size 48.28MB
+  ("fsize_local",                     51547352), # 51.55MB, avg file size 51.55MB
   ("fsize_db",                        2056109122), # 2.06GB, avg file size 2.06GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11048,7 +11048,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_320_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_320_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11093,7 +11093,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 8774),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     52109916), # 52.11MB, avg file size 52.11MB
+  ("fsize_local",                     55552845), # 55.55MB, avg file size 55.55MB
   ("fsize_db",                        2082210498), # 2.08GB, avg file size 2.08GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11106,7 +11106,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_340_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_340_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11151,7 +11151,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 9061),
   ("nof_db_events",                   50000),
-  ("fsize_local",                     54490984), # 54.49MB, avg file size 54.49MB
+  ("fsize_local",                     58120420), # 58.12MB, avg file size 58.12MB
   ("fsize_db",                        2097870831), # 2.10GB, avg file size 2.10GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11164,7 +11164,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_350_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_350_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11209,7 +11209,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 50857),
   ("nof_db_events",                   250000),
-  ("fsize_local",                     314297472), # 314.30MB, avg file size 314.30MB
+  ("fsize_local",                     335538881), # 335.54MB, avg file size 335.54MB
   ("fsize_db",                        10695129460), # 10.70GB, avg file size 3.57GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11222,7 +11222,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_400_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_400_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11267,7 +11267,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 21954),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     142523753), # 142.52MB, avg file size 142.52MB
+  ("fsize_local",                     152151481), # 152.15MB, avg file size 152.15MB
   ("fsize_db",                        4416939298), # 4.42GB, avg file size 2.21GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11280,7 +11280,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_450_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_450_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11325,7 +11325,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 23442),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     158017735), # 158.02MB, avg file size 158.02MB
+  ("fsize_local",                     168144688), # 168.14MB, avg file size 168.14MB
   ("fsize_db",                        4450805287), # 4.45GB, avg file size 4.45GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11338,7 +11338,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11383,7 +11383,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 24495),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     170020420), # 170.02MB, avg file size 170.02MB
+  ("fsize_local",                     180652750), # 180.65MB, avg file size 180.65MB
   ("fsize_db",                        4675550080), # 4.68GB, avg file size 2.34GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11396,7 +11396,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_550_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_550_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11441,7 +11441,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 25509),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     180783060), # 180.78MB, avg file size 180.78MB
+  ("fsize_local",                     191919806), # 191.92MB, avg file size 191.92MB
   ("fsize_db",                        4653469892), # 4.65GB, avg file size 2.33GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11454,7 +11454,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_600_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_600_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11499,7 +11499,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 26409),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     190855345), # 190.86MB, avg file size 190.86MB
+  ("fsize_local",                     202627683), # 202.63MB, avg file size 202.63MB
   ("fsize_db",                        4740249400), # 4.74GB, avg file size 2.37GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11512,7 +11512,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_650_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_650_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11561,7 +11561,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeig
   }),
   ("nof_tree_events",                 53664),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     375044832), # 375.04MB, avg file size 375.04MB
+  ("fsize_local",                     399089917), # 399.09MB, avg file size 399.09MB
   ("fsize_db",                        10228456255), # 10.23GB, avg file size 2.56GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11574,7 +11574,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_700_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_700_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11619,7 +11619,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 27734),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     203411185), # 203.41MB, avg file size 203.41MB
+  ("fsize_local",                     215861232), # 215.86MB, avg file size 215.86MB
   ("fsize_db",                        4895097500), # 4.90GB, avg file size 2.45GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11632,7 +11632,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11677,7 +11677,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunI
   }),
   ("nof_tree_events",                 28329),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     209579534), # 209.58MB, avg file size 209.58MB
+  ("fsize_local",                     222415359), # 222.42MB, avg file size 222.42MB
   ("fsize_db",                        4784663508), # 4.78GB, avg file size 4.78GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11690,7 +11690,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_800_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_800_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11739,7 +11739,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeig
   }),
   ("nof_tree_events",                 57032),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     407951709), # 407.95MB, avg file size 407.95MB
+  ("fsize_local",                     434600145), # 434.60MB, avg file size 434.60MB
   ("fsize_db",                        10438711009), # 10.44GB, avg file size 2.61GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11752,7 +11752,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_850_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_850_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11801,7 +11801,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeig
   }),
   ("nof_tree_events",                 58174),
   ("nof_db_events",                   200000),
-  ("fsize_local",                     419063886), # 419.06MB, avg file size 419.06MB
+  ("fsize_local",                     445782573), # 445.78MB, avg file size 445.78MB
   ("fsize_db",                        10490939882), # 10.49GB, avg file size 2.62GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11814,7 +11814,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_900_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_900_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11863,7 +11863,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 29539),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     215332882), # 215.33MB, avg file size 215.33MB
+  ("fsize_local",                     228865987), # 228.87MB, avg file size 228.87MB
   ("fsize_db",                        5306653973), # 5.31GB, avg file size 1.77GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11876,7 +11876,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11925,7 +11925,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 29942),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     220326871), # 220.33MB, avg file size 220.33MB
+  ("fsize_local",                     233908435), # 233.91MB, avg file size 233.91MB
   ("fsize_db",                        5407629175), # 5.41GB, avg file size 1.80GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -11938,7 +11938,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1250_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1250_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11987,7 +11987,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 27296),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     198214805), # 198.21MB, avg file size 198.21MB
+  ("fsize_local",                     209886755), # 209.89MB, avg file size 209.89MB
   ("fsize_db",                        5408366589), # 5.41GB, avg file size 5.41GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12000,7 +12000,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12049,7 +12049,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 22433),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     161647890), # 161.65MB, avg file size 161.65MB
+  ("fsize_local",                     170872412), # 170.87MB, avg file size 170.87MB
   ("fsize_db",                        5424783618), # 5.42GB, avg file size 5.42GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12062,7 +12062,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1750_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_1750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12111,7 +12111,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 16935),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     122655094), # 122.66MB, avg file size 122.66MB
+  ("fsize_local",                     129574886), # 129.57MB, avg file size 129.57MB
   ("fsize_db",                        5460445376), # 5.46GB, avg file size 5.46GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12124,7 +12124,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_2000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_2000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12173,7 +12173,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 11454),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     82847604), # 82.85MB, avg file size 82.85MB
+  ("fsize_local",                     87536054), # 87.54MB, avg file size 87.54MB
   ("fsize_db",                        5576170410), # 5.58GB, avg file size 1.86GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12186,7 +12186,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_2500_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_2500_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12235,7 +12235,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWei
   }),
   ("nof_tree_events",                 9288),
   ("nof_db_events",                   100000),
-  ("fsize_local",                     66682155), # 66.68MB, avg file size 66.68MB
+  ("fsize_local",                     70243716), # 70.24MB, avg file size 70.24MB
   ("fsize_db",                        5581992893), # 5.58GB, avg file size 5.58GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12248,7 +12248,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_3000_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_spin2_3000_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12297,7 +12297,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweig
   }),
   ("nof_tree_events",                 163376),
   ("nof_db_events",                   993600),
-  ("fsize_local",                     942373517), # 942.37MB, avg file size 942.37MB
+  ("fsize_local",                     1016396500), # 1.02GB, avg file size 1.02GB
   ("fsize_db",                        45541341311), # 45.54GB, avg file size 1.17GB
   ("use_it",                          True),
   ("xsection",                        0.000335439),
@@ -12310,7 +12310,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_0_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_0_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12359,7 +12359,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   }),
   ("nof_tree_events",                 318439),
   ("nof_db_events",                   1996000),
-  ("fsize_local",                     1842115412), # 1.84GB, avg file size 1.84GB
+  ("fsize_local",                     1986174162), # 1.99GB, avg file size 1.99GB
   ("fsize_db",                        90436757989), # 90.44GB, avg file size 5.32GB
   ("use_it",                          True),
   ("xsection",                        0.00025219),
@@ -12372,7 +12372,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_1_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_1_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12421,7 +12421,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweig
   }),
   ("nof_tree_events",                 154692),
   ("nof_db_events",                   998000),
-  ("fsize_local",                     963017374), # 963.02MB, avg file size 963.02MB
+  ("fsize_local",                     1036778005), # 1.04GB, avg file size 1.04GB
   ("fsize_db",                        46741447242), # 46.74GB, avg file size 5.19GB
   ("use_it",                          True),
   ("xsection",                        0.000104517),
@@ -12434,7 +12434,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_2_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_1_2_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12483,7 +12483,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   }),
   ("nof_tree_events",                 489329),
   ("nof_db_events",                   1996000),
-  ("fsize_local",                     3391871259), # 3.39GB, avg file size 3.39GB
+  ("fsize_local",                     3620024964), # 3.62GB, avg file size 3.62GB
   ("fsize_db",                        99308407017), # 99.31GB, avg file size 5.23GB
   ("use_it",                          True),
   ("xsection",                        0.001051448),
@@ -12496,7 +12496,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_2_1_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_2_1_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12545,7 +12545,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSwe
   }),
   ("nof_tree_events",                 201976),
   ("nof_db_events",                   995500),
-  ("fsize_local",                     1290806331), # 1.29GB, avg file size 1.29GB
+  ("fsize_local",                     1385147944), # 1.39GB, avg file size 1.39GB
   ("fsize_db",                        47063460066), # 47.06GB, avg file size 4.28GB
   ("use_it",                          True),
   ("xsection",                        0.004846112),
@@ -12558,7 +12558,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1p5_1_1_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1p5_1_1_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12607,7 +12607,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSwe
   }),
   ("nof_tree_events",                 232713),
   ("nof_db_events",                   999000),
-  ("fsize_local",                     1580340042), # 1.58GB, avg file size 1.58GB
+  ("fsize_local",                     1689603681), # 1.69GB, avg file size 1.69GB
   ("fsize_db",                        49082808579), # 49.08GB, avg file size 2.89GB
   ("use_it",                          True),
   ("xsection",                        0.000794692),
@@ -12620,7 +12620,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_0p5_1_1_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_0p5_1_1_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12669,7 +12669,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   }),
   ("nof_tree_events",                 434382),
   ("nof_db_events",                   1998600),
-  ("fsize_local",                     2855792570), # 2.86GB, avg file size 2.86GB
+  ("fsize_local",                     3055167861), # 3.06GB, avg file size 3.06GB
   ("fsize_db",                        95935612009), # 95.94GB, avg file size 5.05GB
   ("use_it",                          True),
   ("xsection",                        0.00198948),
@@ -12682,7 +12682,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2t_dipoleRecoilOff"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2t_dipoleRecoilOff"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12731,7 +12731,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   }),
   ("nof_tree_events",                 108662),
   ("nof_db_events",                   496500),
-  ("fsize_local",                     715899206), # 715.90MB, avg file size 715.90MB
+  ("fsize_local",                     765807517), # 765.81MB, avg file size 765.81MB
   ("fsize_db",                        24277893809), # 24.28GB, avg file size 899.18MB
   ("use_it",                          True),
   ("xsection",                        0.00198948),
@@ -12744,7 +12744,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2t_dipoleRecoilOff_ext1"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_vbf_nonresonant_1_0_1_hh_2b2t_dipoleRecoilOff_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12789,7 +12789,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph/RunIISummer16MiniAODv3-
   }),
   ("nof_tree_events",                 60713),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     391026750), # 391.03MB, avg file size 391.03MB
+  ("fsize_local",                     417632825), # 417.63MB, avg file size 417.63MB
   ("fsize_db",                        13013254769), # 13.01GB, avg file size 4.34GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12802,7 +12802,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12847,7 +12847,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_box_13TeV-madgraph/RunIISummer16MiniAODv3
   }),
   ("nof_tree_events",                 53131),
   ("nof_db_events",                   277140),
-  ("fsize_local",                     332998790), # 333.00MB, avg file size 333.00MB
+  ("fsize_local",                     355839012), # 355.84MB, avg file size 355.84MB
   ("fsize_db",                        11969129912), # 11.97GB, avg file size 3.99GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12860,7 +12860,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_box_13TeV-madgraph/RunIISummer16MiniAODv3
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_box_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_box_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12909,7 +12909,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 76820),
   ("nof_db_events",                   400000),
-  ("fsize_local",                     461855520), # 461.86MB, avg file size 461.86MB
+  ("fsize_local",                     493846291), # 493.85MB, avg file size 493.85MB
   ("fsize_db",                        17178531370), # 17.18GB, avg file size 2.45GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12922,7 +12922,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_1_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_1_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12967,7 +12967,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph/RunIISummer16MiniAODv3-P
   }),
   ("nof_tree_events",                 55051),
   ("nof_db_events",                   291000),
-  ("fsize_local",                     353758605), # 353.76MB, avg file size 353.76MB
+  ("fsize_local",                     377702687), # 377.70MB, avg file size 377.70MB
   ("fsize_db",                        12693181737), # 12.69GB, avg file size 4.23GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -12980,7 +12980,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph/RunIISummer16MiniAODv3-P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_2_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_2_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13029,7 +13029,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 80584),
   ("nof_db_events",                   396700),
-  ("fsize_local",                     499911974), # 499.91MB, avg file size 499.91MB
+  ("fsize_local",                     533957223), # 533.96MB, avg file size 533.96MB
   ("fsize_db",                        17304942771), # 17.30GB, avg file size 2.88GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13042,7 +13042,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_3_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_3_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13091,7 +13091,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 77379),
   ("nof_db_events",                   400000),
-  ("fsize_local",                     466462911), # 466.46MB, avg file size 466.46MB
+  ("fsize_local",                     499033628), # 499.03MB, avg file size 499.03MB
   ("fsize_db",                        17171599807), # 17.17GB, avg file size 2.86GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13104,7 +13104,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_4_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_4_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13153,7 +13153,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 90020),
   ("nof_db_events",                   394500),
-  ("fsize_local",                     602477182), # 602.48MB, avg file size 602.48MB
+  ("fsize_local",                     643247168), # 643.25MB, avg file size 643.25MB
   ("fsize_db",                        18014461194), # 18.01GB, avg file size 3.00GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13166,7 +13166,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_5_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_5_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13215,7 +13215,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 78459),
   ("nof_db_events",                   400000),
-  ("fsize_local",                     475219086), # 475.22MB, avg file size 475.22MB
+  ("fsize_local",                     508136020), # 508.14MB, avg file size 508.14MB
   ("fsize_db",                        17277119464), # 17.28GB, avg file size 2.47GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13228,7 +13228,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_6_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_6_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13277,7 +13277,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 76911),
   ("nof_db_events",                   397000),
-  ("fsize_local",                     462007264), # 462.01MB, avg file size 462.01MB
+  ("fsize_local",                     494110149), # 494.11MB, avg file size 494.11MB
   ("fsize_db",                        17033242389), # 17.03GB, avg file size 3.41GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13290,7 +13290,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_7_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_7_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13339,7 +13339,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   }),
   ("nof_tree_events",                 76940),
   ("nof_db_events",                   398900),
-  ("fsize_local",                     461383601), # 461.38MB, avg file size 461.38MB
+  ("fsize_local",                     493109037), # 493.11MB, avg file size 493.11MB
   ("fsize_db",                        16954806742), # 16.95GB, avg file size 3.39GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13352,7 +13352,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_8_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_8_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13397,7 +13397,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph/RunIISummer16MiniAODv3-P
   }),
   ("nof_tree_events",                 51583),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     313411361), # 313.41MB, avg file size 313.41MB
+  ("fsize_local",                     335117836), # 335.12MB, avg file size 335.12MB
   ("fsize_db",                        12554774019), # 12.55GB, avg file size 4.18GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13410,7 +13410,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph/RunIISummer16MiniAODv3-P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_9_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_9_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13455,7 +13455,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/RunIISummer16MiniAODv3-
   }),
   ("nof_tree_events",                 54925),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     340926281), # 340.93MB, avg file size 340.93MB
+  ("fsize_local",                     364391139), # 364.39MB, avg file size 364.39MB
   ("fsize_db",                        12953354252), # 12.95GB, avg file size 3.24GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13468,7 +13468,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_10_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_10_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13513,7 +13513,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/RunIISummer16MiniAODv3-
   }),
   ("nof_tree_events",                 58682),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     387859302), # 387.86MB, avg file size 387.86MB
+  ("fsize_local",                     413305116), # 413.31MB, avg file size 413.31MB
   ("fsize_db",                        13042878478), # 13.04GB, avg file size 4.35GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13526,7 +13526,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_11_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_11_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13571,7 +13571,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/RunIISummer16MiniAODv3-
   }),
   ("nof_tree_events",                 66134),
   ("nof_db_events",                   298800),
-  ("fsize_local",                     450833136), # 450.83MB, avg file size 450.83MB
+  ("fsize_local",                     480583537), # 480.58MB, avg file size 480.58MB
   ("fsize_db",                        13370108309), # 13.37GB, avg file size 4.46GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13584,7 +13584,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_12_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_12_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13629,7 +13629,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAODv3-
   }),
   ("nof_tree_events",                 69396),
   ("nof_db_events",                   300000),
-  ("fsize_local",                     480957525), # 480.96MB, avg file size 480.96MB
+  ("fsize_local",                     512363059), # 512.36MB, avg file size 512.36MB
   ("fsize_db",                        13600771777), # 13.60GB, avg file size 4.53GB
   ("use_it",                          True),
   ("xsection",                        0.073056),
@@ -13642,7 +13642,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_13_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_node_13_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13695,7 +13695,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg
   }),
   ("nof_tree_events",                 178613),
   ("nof_db_events",                   947200),
-  ("fsize_local",                     1025314301), # 1.03GB, avg file size 1.03GB
+  ("fsize_local",                     1095699392), # 1.10GB, avg file size 1.10GB
   ("fsize_db",                        38664951189), # 38.66GB, avg file size 1.17GB
   ("use_it",                          True),
   ("xsection",                        0.00509388),
@@ -13708,7 +13708,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH0_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH0_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13761,7 +13761,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg
   }),
   ("nof_tree_events",                 200326),
   ("nof_db_events",                   999400),
-  ("fsize_local",                     1179931063), # 1.18GB, avg file size 1.18GB
+  ("fsize_local",                     1262126492), # 1.26GB, avg file size 1.26GB
   ("fsize_db",                        41235766334), # 41.24GB, avg file size 1.42GB
   ("use_it",                          True),
   ("xsection",                        0.00226819),
@@ -13774,7 +13774,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH1_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13827,7 +13827,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-pow
   }),
   ("nof_tree_events",                 182719),
   ("nof_db_events",                   951000),
-  ("fsize_local",                     1095036335), # 1.10GB, avg file size 1.10GB
+  ("fsize_local",                     1171622729), # 1.17GB, avg file size 1.17GB
   ("fsize_db",                        39424683698), # 39.42GB, avg file size 1.27GB
   ("use_it",                          True),
   ("xsection",                        0.00095876),
@@ -13840,7 +13840,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH2p45_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH2p45_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13893,7 +13893,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg
   }),
   ("nof_tree_events",                 149873),
   ("nof_db_events",                   984200),
-  ("fsize_local",                     805151358), # 805.15MB, avg file size 805.15MB
+  ("fsize_local",                     862928557), # 862.93MB, avg file size 862.93MB
   ("fsize_db",                        38800257105), # 38.80GB, avg file size 1.39GB
   ("use_it",                          True),
   ("xsection",                        0.00666064),
@@ -13906,7 +13906,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Jan01_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2t"),
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
