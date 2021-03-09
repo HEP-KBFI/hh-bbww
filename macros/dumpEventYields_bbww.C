@@ -70,7 +70,6 @@ compIntegralErr(const TH1 * histogram,
 
 std::string 
 find_MVAtype(std::string inputfile) {
-  std::string MVAtype = "";
   if ( inputfile.find("BDT") != std::string::npos ) {
     return "BDT";
   }
@@ -80,8 +79,13 @@ find_MVAtype(std::string inputfile) {
   return "";
 }
 
+bool cmp(pair<std::string, pair<double,double>>& a,
+         pair<std::string, pair<double,double>>& b)
+{
+  return a.second.first > b.second.first;
+}
 
-void dumpEventYields_1(int era, std::string category, std::string inputfile)
+void dumpEventYields_1(std::string era, std::string category, std::string inputfile)
 {
   std::string MVAtype = find_MVAtype(inputfile); //hadd_stage1_5_BDT_resolved_2b_nonvbf_Tight.root
   std::vector<std::string> evtcats;
@@ -94,7 +98,12 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
   else if ( MVAtype == "LBN" ) {
     evtcats.push_back("HH_resolved_2b_nonvbf");
     evtcats.push_back("HH_resolved_2b_vbf");
-    evtcats.push_back("HH_resolved_1b");
+    evtcats.push_back("HH_resolved_1b_vbf");
+    evtcats.push_back("HH_resolved_1b_nonvbf");
+    /*evtcats.push_back("GGF_HH_resolved_2b");
+    evtcats.push_back("VBF_HH_resolved_2b");
+    evtcats.push_back("GGF_HH_resolved_1b");
+    evtcats.push_back("VBF_HH_resolved_1b");*/
     evtcats.push_back("HH_boosted");
     evtcats.push_back("TT_resolved");
     evtcats.push_back("TT_boosted");
@@ -102,13 +111,13 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
     evtcats.push_back("W_boosted");
     evtcats.push_back("DY_resolved");
     evtcats.push_back("DY_boosted");
-    evtcats.push_back("ST_resolved");
-    evtcats.push_back("ST_boosted");
+    evtcats.push_back("SingleTop_resolved");
+    evtcats.push_back("SingleTop_boosted");
     evtcats.push_back("Other");
   }
   
   //  std::cout << BDT_evtcat << std::endl;
-  ofstream myfile (Form("eventYield_%d.txt", era));
+  ofstream myfile (Form("eventYield_%s.txt", era.c_str()));
   if ( !myfile.is_open() ) {
     std::cerr << "output file couldn't be opened !!" << std::endl;
     assert(0);
@@ -142,8 +151,8 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
   hhbrs.push_back("bbzz");
   hhbrs.push_back("bbtt");
   for (auto inclusive_proc: inclusive_signal_processes) {
-    signal_processes.push_back(Form("%s_Convs", inclusive_proc.data()));
-    signal_processes.push_back(Form("%s_fake", inclusive_proc.data()));
+    //signal_processes.push_back(Form("%s_Convs", inclusive_proc.data()));
+    //signal_processes.push_back(Form("%s_fake", inclusive_proc.data()));
     for ( auto br: hhbrs ) {
       signal_processes.push_back(Form("%s_%s", inclusive_proc.data(), br.data()));
     }
@@ -156,45 +165,56 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
   background_processes.push_back("DY");
   background_processes.push_back("data_fakes");
   background_processes.push_back("TTZ");
-  background_processes.push_back("TTH");
   background_processes.push_back("TTW");
-  background_processes.push_back("ZZ");
   background_processes.push_back("TTWW");
-  background_processes.push_back("WZ");
+  background_processes.push_back("VV");
+  background_processes.push_back("VVV");
   background_processes.push_back("Convs");
   background_processes.push_back("Other");
+  background_processes.push_back("WZ");
+  background_processes.push_back("WW");
   background_processes.push_back("qqZZ");
   background_processes.push_back("ggZZ");
-  background_processes.push_back("WW");
   vstring inclusive_procss;
   inclusive_procss.push_back("TH");
-  inclusive_procss.push_back("TW");
   inclusive_procss.push_back("ggH");
   inclusive_procss.push_back("qqH");
   inclusive_procss.push_back("ZH");
   inclusive_procss.push_back("WH");
+  inclusive_procss.push_back("tHq");
+  inclusive_procss.push_back("tHW");
+  inclusive_procss.push_back("TTH");
   vstring brs;
   brs.push_back("hww");
   brs.push_back("hbb");
   brs.push_back("hzz");
   brs.push_back("htt");
   for (auto inclusive_proc: inclusive_procss) {
-    background_processes.push_back(Form("%s_fake", inclusive_proc.data()));
-    background_processes.push_back(Form("%s_Convs", inclusive_proc.data()));
     for ( auto br: brs ) {
       background_processes.push_back(Form("%s_%s", inclusive_proc.data(), br.data()));
     }
   }
   std::vector<std::string> background_process_parts;
   background_process_parts.push_back("");
-  background_process_parts.push_back("_Convs");
-  background_process_parts.push_back("_fake");
+  //background_process_parts.push_back("_Convs");
+  //background_process_parts.push_back("_fake");
   TString inputFileName_full = inputfile.data();
   TFile* inputFile;
   std::size_t pos = inputfile.rfind(MVAtype);
+  double totSig(0.);
+  double totBkg(0.);
+  double totTT(0.);
+  double totST(0.);
+  double totW(0.);
+  double totDY(0.);
+  double totfake(0);
+  double totSingleH(0.);
+  double totData(0.);
   for (auto evtcat: evtcats) {
     Double_t total_bkg(0);
     Double_t total_sig(0);
+    Double_t total_sig_conv(0.);
+    std::vector<std::pair<string, std::pair<double, double>> > cat_yield;
     inputfile = inputfile.replace( inputfile.begin()+pos+MVAtype.length(), inputfile.end(), "_"+evtcat+"_OS_Tight.root");
     myfile << "evtcat: " << evtcat  << std::endl;
     inputFile = new TFile(inputfile.data());
@@ -219,29 +239,24 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
           double integralErr = compIntegralErr(histogram);
           integralErr_parts[signal_process_part] = integralErr;
           integralErr2_sum += square(integralErr); 
-          total_sig +=integral;
+          if ( histogramName.find("Convs") != std::string::npos ) {
+            total_sig_conv +=integral;
+          }
+          else {
+            total_sig +=integral;
+          }
         }
       }
       double integralErr_sum = TMath::Sqrt(integralErr2_sum);
       myfile << signal_process << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
       if ( integral_parts.size() > 1 ) {
         myfile << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
-               << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
+          //<< " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
                << " conversion = " << integral_parts["_Convs"] << " +/- " << integralErr_parts["_Convs"] << ")" << std::endl;
       }
     }
-    double integral_THsum = 0.;
-    double integralErr2_THsum = 0.;
-    double integral_WHsum = 0.;
-    double integralErr2_WHsum = 0.;
-    double integral_ZHsum = 0.;
-    double integralErr2_ZHsum = 0.;
-    double integral_TWsum = 0.;
-    double integralErr2_TWsum = 0.;
-    double integral_qqHsum = 0.;
-    double integralErr2_qqHsum = 0.;
-    double integral_ggHsum = 0.;
-    double integralErr2_ggHsum = 0.;
+    double integral_SingleHsum = 0.;
+    double integralErr2_SingleHsum = 0;
     for ( auto background_process: background_processes) {
       std::map<std::string, double> integral_parts;
       std::map<std::string, double> integralErr_parts;
@@ -252,35 +267,21 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
           category.data(), MVAtype.data(), evtcat.data(), background_process.data(), background_process_part.data(), histogram.data());
         TH1* histogram = loadHistogram(inputFile, histogramName);
         if ( histogram ) {
-          if ( histogramName.find("TH") != std::string::npos ) {
-            integral_THsum += compIntegral(histogram);
-            integralErr2_THsum += compIntegralErr(histogram);
-            total_bkg +=integral_THsum;
-          }
-          else if ( histogramName.find("WH") != std::string::npos ) {
-            integral_WHsum += compIntegral(histogram);
-            integralErr2_WHsum += compIntegralErr(histogram);
-            total_bkg +=integral_WHsum;
-          }
-          else if ( histogramName.find("ZH") != std::string::npos ) {
-            integral_ZHsum += compIntegral(histogram);
-            integralErr2_ZHsum += compIntegralErr(histogram);
-            total_bkg +=integral_ZHsum;
-          }
-          else if ( histogramName.find("TW") != std::string::npos ) {
-            integral_TWsum += compIntegral(histogram);
-            integralErr2_TWsum += compIntegralErr(histogram);
-            total_bkg +=integral_TWsum;
-          }
-          else if ( histogramName.find("qqH") != std::string::npos ) {
-            integral_qqHsum += compIntegral(histogram);
-            integralErr2_qqHsum += compIntegralErr(histogram);
-            total_bkg +=integral_qqHsum;
-          }
-          else if ( histogramName.find("ggH") != std::string::npos ) {
-            integral_ggHsum += compIntegral(histogram);
-            integralErr2_ggHsum += compIntegralErr(histogram);
-            total_bkg +=integral_ggHsum;
+          if ( histogramName.find("TH") != std::string::npos ||
+               histogramName.find("TTH") != std::string::npos ||
+               histogramName.find("WH") != std::string::npos ||
+               histogramName.find("ZH") != std::string::npos ||
+               histogramName.find("qqH") != std::string::npos ||
+               histogramName.find("ggH") != std::string::npos ||
+               histogramName.find("tHq") != std::string::npos ||
+               histogramName.find("tHW") != std::string::npos )
+            {
+            double integral = compIntegral(histogram);
+            integral_SingleHsum += integral;
+            double integral_Err = compIntegralErr(histogram);
+            integralErr2_SingleHsum += square(integral_Err);
+            total_bkg +=integral;
+            totSingleH += integral;
           }
           else {
             double integral = compIntegral(histogram);
@@ -295,39 +296,62 @@ void dumpEventYields_1(int era, std::string category, std::string inputfile)
       }
       double integralErr_sum = TMath::Sqrt(integralErr2_sum);
       if ( (background_process.find("TH") == std::string::npos) && (background_process.find("WH") == std::string::npos) &&
-           (background_process.find("ZH") == std::string::npos) && (background_process.find("TW") == std::string::npos) &&
-           (background_process.find("qqH") == std::string::npos) && (background_process.find("ggH") == std::string::npos) ) 
+           (background_process.find("ZH") == std::string::npos) &&
+           (background_process.find("qqH") == std::string::npos) && (background_process.find("ggH") == std::string::npos) &&
+           (background_process.find("tHW") == std::string::npos) && (background_process.find("tHq") == std::string::npos) ) 
         {
-          myfile << background_process << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
-          if ( integral_parts.size() > 1 ) {
-            myfile << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
-                   << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
-                   << " conversion = " << integral_parts["_Convs"] << " +/- " << integralErr_parts["_Convs"] << ")" << std::endl;
-          }
+          if (background_process == "TT") totTT += integral_parts[""];
+          if (background_process == "W")  totW += integral_parts[""];
+          if (background_process == "ST") totST += integral_parts[""];
+          if (background_process == "DY") totDY += integral_parts[""];
+          if (background_process == "data_fakes") totfake += integral_parts[""];
+          cat_yield.push_back(std::pair<std::string, std::pair<double,double>> (background_process, std::pair<double,double>(integral_parts[""],integralErr_parts[""])));
+          //myfile << background_process << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
+          //if ( integral_parts.size() > 1 ) {
+          //myfile << " (non-fake = " << integral_parts[""] << " +/- " << integralErr_parts[""] << ","
+          //       << " fake = " << integral_parts["_fake"] << " +/- " << integralErr_parts["_fake"] << ","
+          //       << " conversion = " << integral_parts["_Convs"] << " +/- " << integralErr_parts["_Convs"] << ")" << std::endl;
+          //}
         }
+    }  
+    cat_yield.push_back(std::pair<std::string, std::pair<double,double>> ("SingleH", std::pair<double,double>(integral_SingleHsum, TMath::Sqrt(integralErr2_SingleHsum))));
+    sort(cat_yield.begin(), cat_yield.end(), cmp);
+    //myfile << "SingleH: " <<  integral_SingleHsum << "+/- " << integralErr2_SingleHsum  << std::endl;
+    //myfile << "TW: " <<  integral_TWsum << "+/- " << integralErr2_TWsum  << std::endl;
+    for (auto& it : cat_yield) {
+      if (it.second.first !=0) {
+        myfile << it.first << " "
+               << it.second.first << " +/ " << it.second.second  << endl;
+      } 
     }
-    myfile << "TH: " <<  integral_THsum << "+/- " << integralErr2_THsum  << std::endl;
-    myfile << "WH: " <<  integral_WHsum << "+/- " << integralErr2_WHsum  << std::endl;
-    myfile << "ZH: " <<  integral_ZHsum << "+/- " << integralErr2_ZHsum  << std::endl;
-    myfile << "TW: " <<  integral_TWsum << "+/- " << integralErr2_TWsum  << std::endl;
-    myfile << "qqH: " <<  integral_qqHsum << "+/- " << integralErr2_qqHsum  << std::endl;
-    myfile << "ggH: " <<  integral_ggHsum << "+/- " << integralErr2_ggHsum  << std::endl;
     std::string histogramName = Form("%s/sel/datacard/%s/%s/%s/%s",
-               category.data(), MVAtype.data(), evtcat.data(), "data_obs", histogram.data());
+            category.data(), MVAtype.data(), evtcat.data(), "data_obs", histogram.data());
     TH1* histogram_ = loadHistogram(inputFile, histogramName);
+    double integral(0.);
     if ( histogram_ ) {
-      double integral = compIntegral(histogram_);
+      integral = compIntegral(histogram_);
+      totData += integral;
       myfile << "data_obs: " << integral << std::endl;
       std::cout << "data_obs: " << integral << std::endl;
     }
-    myfile << std::endl;
+    totSig += total_sig;
+    totBkg += total_bkg; 
     myfile << "sig: " << total_sig << std::endl;
-    myfile << "bkg: " << total_bkg << std::endl <<std::endl;
+    myfile << "bkg: " << total_bkg << "\t s/sqrt(B): " << total_sig/TMath::Sqrt(total_bkg) << std::endl <<std::endl;
+    myfile << "disagreement in data-mc: " << std::abs(integral-total_bkg)/integral << std::endl;
     std::cout << "evtcat: " << evtcat << std::endl;
-    std::cout << "sig: " << total_sig << std::endl;
+    std::cout << "sig: " << total_sig << "\t" << "sig conv: " << total_sig_conv << std::endl;
     std::cout << "bkg: " << total_bkg << std::endl <<std::endl;
   }
   delete inputFile;
   }
+  myfile << "totsig: " << totSig << "\t" << "totBkg: " << totBkg << std::endl;
+  myfile << "totTT: " << totTT << std::endl;
+  myfile << "totST: " << totST << std::endl;
+  myfile << "totDY: " << totDY << std::endl;
+  myfile << "totW: " << totW << std::endl;
+  myfile << "totSingleH: " << totSingleH << std::endl;
+  myfile << "totData: " << totData << std::endl;
+  myfile << "totfake: " << totfake << std::endl;
 }
     
