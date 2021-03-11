@@ -15,13 +15,11 @@ public:
   DYBgrWeightInterface_hh_bb2l(Era era, bool isMCClosure);
   ~DYBgrWeightInterface_hh_bb2l();
 
-  enum LeptonFlavor { kUndefined, kElecElec, kElecMu, kMuMu };
+  double
+  getWeight_resolved(double HT, int numBJets) const;
 
   double
-  getWeight_resolved(double HT, LeptonFlavor leptonFlavor, int numBJets) const;
-
-  double
-  getWeight_boosted(double msoftdrop, LeptonFlavor leptonFlavor) const;
+  getWeight_boosted(double msoftdrop) const;
 
 protected:
   Era era_;
@@ -29,13 +27,9 @@ protected:
 
   std::map<std::string, TFile *> inputFiles_;
 
-  lutWrapperBase * weight_ee_resolved_1b_;
-  lutWrapperBase * weight_ee_resolved_2b_;
-  lutWrapperBase * weight_ee_boosted_;
-
-  lutWrapperBase * weight_mm_resolved_1b_;
-  lutWrapperBase * weight_mm_resolved_2b_;
-  lutWrapperBase * weight_mm_boosted_;
+  lutWrapperBase * weight_resolved_1b_;
+  lutWrapperBase * weight_resolved_2b_;
+  lutWrapperBase * weight_boosted_;
 };
 
 #endif // hhAnalysis_bbww_DYBgrWeightInterface_hh_bb2l_h

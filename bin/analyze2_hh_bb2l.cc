@@ -1748,27 +1748,20 @@ int main(int argc, char* argv[])
 
     if ( dyBgr_option == kDYbgr_applyWeights )
     {
-      double dyBgrWeight = 0.;
-      DYBgrWeightInterface_hh_bb2l::LeptonFlavor leptonFlavor = DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kUndefined;
-      if      ( selLepton_lead->is_electron() && selLepton_sublead->is_electron() ) leptonFlavor = DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kElecElec;
-      else if ( selLepton_lead->is_muon()     && selLepton_sublead->is_muon()     ) leptonFlavor = DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kMuMu;
       int numBJets_loose_and_notMedium = numBJets_loose - numBJets_medium;
       // CV: divide event number by two to avoid that BDT/LBN trained on odd events is always evaluated for events with two b-jets
       //     and BDT/LBN trained on even events is always evaluated for events with one b-jet
       if ( (eventInfo.event / 2) % 2 == 1 ) numBJets_medium = 2;
       else                                  numBJets_medium = 1;
       numBJets_loose = numBJets_medium + numBJets_loose_and_notMedium;
-      // CV: data-driven Drell-Yan background estimation implemented for ee and mumu events only
-      if ( leptonFlavor == DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kElecElec || leptonFlavor == DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kMuMu )
+      double dyBgrWeight = 0.;
+      if ( selJetAK8_Hbb )
       {
-        if ( selJetAK8_Hbb )
-        {
-          dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop(), leptonFlavor);          
-        }
-        else
-        {
-          dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT, leptonFlavor, numBJets_medium);
-        }
+        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop(), leptonFlavor);          
+      }
+      else
+      {
+        dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT, leptonFlavor, numBJets_medium);
       }
       // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
       dyBgrWeight *= 2.;

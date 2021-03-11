@@ -7,15 +7,11 @@
 namespace
 {
   std::string
-  getFileName(Era era, DYBgrWeightInterface_hh_bb2l::LeptonFlavor leptonFlavor, bool isBoosted, bool isMCClosure)
+  getFileName(Era era, bool isBoosted, bool isMCClosure)
   {
     std::string fileName = "hhAnalysis/bbww/data/DrellYanWeights/weight";
     if ( isBoosted ) fileName.append("_fatjetsoftDropmass");
     else fileName.append("_HT");
-    if      ( leptonFlavor == DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kElecElec ) fileName.append("_ElEl");
-    else if ( leptonFlavor == DYBgrWeightInterface_hh_bb2l::LeptonFlavor::kMuMu     ) fileName.append("_MuMu");
-    else throw cmsException(__func__, __LINE__)
-      << "Invalid Configuration parameter 'leptonFlavor' = " << leptonFlavor << " !!\n";
     if ( isMCClosure ) fileName.append("_mc");
     else fileName.append("_data");
     fileName.append("_1D");
@@ -32,47 +28,25 @@ namespace
 DYBgrWeightInterface_hh_bb2l::DYBgrWeightInterface_hh_bb2l(Era era, bool isMCClosure)
   : era_(era)
   , isMCClosure_(isMCClosure)
-  , weight_ee_resolved_1b_(nullptr)
-  , weight_ee_resolved_2b_(nullptr)
-  , weight_ee_boosted_(nullptr)
-  , weight_mm_resolved_1b_(nullptr)
-  , weight_mm_resolved_2b_(nullptr)
-  , weight_mm_boosted_(nullptr)
+  , weight_resolved_1b_(nullptr)
+  , weight_resolved_2b_(nullptr)
+  , weight_boosted_(nullptr)
 {
-  weight_ee_resolved_1b_ = new lutWrapperTH1(
+  weight_resolved_1b_ = new lutWrapperTH1(
     inputFiles_,
-    getFileName(era_, kElecElec, false, isMCClosure_),
+    getFileName(era_, false, isMCClosure_),
     "Weight1B",
     lut::kXpt, 50., 1000., lut::kLimit
   );
-  weight_ee_resolved_2b_ = new lutWrapperTH1(
+  weight_resolved_2b_ = new lutWrapperTH1(
     inputFiles_,
-    getFileName(era_, kElecElec, false, isMCClosure_),
+    getFileName(era_, false, isMCClosure_),
     "Weight2B",
     lut::kXpt, 50., 1000., lut::kLimit
   );
-  weight_ee_boosted_ = new lutWrapperTH1(
+  weight_boosted_ = new lutWrapperTH1(
     inputFiles_,
-    getFileName(era_, kElecElec, true, isMCClosure_),
-    "Weight1B",
-    lut::kXpt, 30., 210., lut::kLimit
-  );
-
-  weight_mm_resolved_1b_ = new lutWrapperTH1(
-    inputFiles_,
-    getFileName(era_, kMuMu, false, isMCClosure_),
-    "Weight1B",
-    lut::kXpt, 50., 1000., lut::kLimit
-  );
-  weight_mm_resolved_2b_ = new lutWrapperTH1(
-    inputFiles_,
-    getFileName(era_, kMuMu, false, isMCClosure_),
-    "Weight2B",
-    lut::kXpt, 50., 1000., lut::kLimit
-  );
-  weight_mm_boosted_ = new lutWrapperTH1(
-    inputFiles_,
-    getFileName(era_, kMuMu, true, isMCClosure_),
+    getFileName(era_, true, isMCClosure_),
     "Weight1B",
     lut::kXpt, 30., 210., lut::kLimit
   );
@@ -80,13 +54,9 @@ DYBgrWeightInterface_hh_bb2l::DYBgrWeightInterface_hh_bb2l(Era era, bool isMCClo
 
 DYBgrWeightInterface_hh_bb2l::~DYBgrWeightInterface_hh_bb2l()
 {
-  delete weight_ee_resolved_1b_;
-  delete weight_ee_resolved_2b_;
-  delete weight_ee_boosted_;
-
-  delete weight_mm_resolved_1b_;
-  delete weight_mm_resolved_2b_;
-  delete weight_mm_boosted_;
+  delete weight_resolved_1b_;
+  delete weight_resolved_2b_;
+  delete weight_boosted_;
 
   for(auto & kv: inputFiles_)
   {
@@ -98,49 +68,16 @@ double
 DYBgrWeightInterface_hh_bb2l::getWeight_resolved(double HT, LeptonFlavor leptonFlavor, int numBJets) const
 {
   double weight = 1.;
-  if ( leptonFlavor == kElecElec ) 
-  {
-    if      ( numBJets == 1 ) weight = weight_ee_resolved_1b_->getSF(HT, -1.);
-    else if ( numBJets == 2 ) weight = weight_ee_resolved_2b_->getSF(HT, -1.);
-    else throw cmsException(this, __func__, __LINE__)
-      << "Invalid parameter 'numBJets' = " << numBJets << " !!\n";
-  }
-  else if ( leptonFlavor == kElecMu ) 
-  {
-    if      ( numBJets == 1 ) weight = std::sqrt(weight_ee_resolved_1b_->getSF(HT, -1.)*weight_mm_resolved_1b_->getSF(HT, -1.));
-    else if ( numBJets == 2 ) weight = std::sqrt(weight_ee_resolved_2b_->getSF(HT, -1.)*weight_mm_resolved_2b_->getSF(HT, -1.));
-    else throw cmsException(this, __func__, __LINE__)
-      << "Invalid parameter 'numBJets' = " << numBJets << " !!\n";
-  }
-  else if ( leptonFlavor == kMuMu ) 
-  {
-    if      ( numBJets == 1 ) weight = weight_mm_resolved_1b_->getSF(HT, -1.);
-    else if ( numBJets == 2 ) weight = weight_mm_resolved_2b_->getSF(HT, -1.);
-    else throw cmsException(this, __func__, __LINE__)
-      << "Invalid parameter 'numBJets' = " << numBJets << " !!\n";
-  }
+  if      ( numBJets == 1 ) weight = weight_resolved_1b_->getSF(HT, -1.);
+  else if ( numBJets == 2 ) weight = weight_resolved_2b_->getSF(HT, -1.);
   else throw cmsException(this, __func__, __LINE__)
-    << "Invalid parameter 'leptonFlavor' = " << leptonFlavor << " !!\n";
+    << "Invalid parameter 'numBJets' = " << numBJets << " !!\n";
   return weight;
 }
 
 double
 DYBgrWeightInterface_hh_bb2l::getWeight_boosted(double msoftdrop, LeptonFlavor leptonFlavor) const
 {
-  double weight = 1.;
-  if ( leptonFlavor == kElecElec ) 
-  {
-    weight = weight_ee_boosted_->getSF(msoftdrop, -1.);
-  }
-  else if ( leptonFlavor == kElecMu ) 
-  {
-    weight = std::sqrt(weight_ee_boosted_->getSF(msoftdrop, -1.)*weight_mm_boosted_->getSF(msoftdrop, -1.));
-  }
-  else if ( leptonFlavor == kMuMu ) 
-  {
-    weight = weight_mm_boosted_->getSF(msoftdrop, -1.);
-  }
-  else throw cmsException(this, __func__, __LINE__)
-    << "Invalid parameter 'leptonFlavor' = " << leptonFlavor << " !!\n";
+  double weight = weight_boosted_->getSF(msoftdrop, -1.);
   return weight;
 }
