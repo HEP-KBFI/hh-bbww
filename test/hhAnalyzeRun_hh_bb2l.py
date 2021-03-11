@@ -227,7 +227,7 @@ if 'nonres' in fill_spin:
         histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
     if fillHistograms_LBN:
       categories = [
-        "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b",
+        "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf", 
         "TT_boosted", "TT_resolved",
         "DY_boosted", "DY_resolved",
         "SingleTop_boosted", "SingleTop_resolved",

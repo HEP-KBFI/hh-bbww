@@ -189,8 +189,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.max_depth_recursion = max_depth_recursion
 
-    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = False, split_ST = True)
-
+    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = True, split_ST = True)
+    self.nonfake_backgrounds = list(set(self.nonfake_backgrounds) - set(["ggZZ", "qqZZ", "WZ", "WW", "ZZ"]))
+    self.nonfake_backgrounds.append('VV')
+    self.nonfake_backgrounds.append('VVV')
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
     self.inputFiles_hadd_stage1_6 = {}
     self.outputFile_hadd_stage1_6 = {}

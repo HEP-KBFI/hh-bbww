@@ -2600,7 +2600,7 @@ std::cout << "isBoosted = " << selJetAK8_Hbb << ", numBJets = " << numBJets_medi
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+            {{"HH", -1}}, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }
