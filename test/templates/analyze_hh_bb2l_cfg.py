@@ -47,6 +47,8 @@ process.analyze_hh_bb2l = cms.PSet(
     apply_leptonGenMatching = cms.bool(True),
     leptonChargeSelection = cms.string(''),
 
+    dyBgr_option = cms.string('disabled'),
+
     apply_pileupJetID = cms.string(''),
 
     applyFakeRateWeights = cms.string(""),
@@ -75,7 +77,7 @@ process.analyze_hh_bb2l = cms.PSet(
     cfgMEtFilter = cms.PSet(),
     triggerWhiteList = cms.PSet(),
     apply_genPhotonFilter = cms.string("disabled"),
-
+    
     fillGenEvtHistograms = cms.bool(False),
     cfgEvtYieldHistManager = cms.PSet(),
 
