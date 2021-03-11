@@ -9,9 +9,10 @@ namespace
   std::string
   getFileName(Era era, bool isBoosted, bool isMCClosure)
   {
-    std::string fileName = "hhAnalysis/bbww/data/DrellYanWeights/weight";
+    std::string fileName = "hhAnalysis/bbww/data/DYBgrWeights/weight";
     if ( isBoosted ) fileName.append("_fatjetsoftDropmass");
     else fileName.append("_HT");
+    fileName.append("_SF");
     if ( isMCClosure ) fileName.append("_mc");
     else fileName.append("_data");
     fileName.append("_1D");
@@ -65,7 +66,7 @@ DYBgrWeightInterface_hh_bb2l::~DYBgrWeightInterface_hh_bb2l()
 }
 
 double
-DYBgrWeightInterface_hh_bb2l::getWeight_resolved(double HT, LeptonFlavor leptonFlavor, int numBJets) const
+DYBgrWeightInterface_hh_bb2l::getWeight_resolved(double HT, int numBJets) const
 {
   double weight = 1.;
   if      ( numBJets == 1 ) weight = weight_resolved_1b_->getSF(HT, -1.);
@@ -76,7 +77,7 @@ DYBgrWeightInterface_hh_bb2l::getWeight_resolved(double HT, LeptonFlavor leptonF
 }
 
 double
-DYBgrWeightInterface_hh_bb2l::getWeight_boosted(double msoftdrop, LeptonFlavor leptonFlavor) const
+DYBgrWeightInterface_hh_bb2l::getWeight_boosted(double msoftdrop) const
 {
   double weight = weight_boosted_->getSF(msoftdrop, -1.);
   return weight;
