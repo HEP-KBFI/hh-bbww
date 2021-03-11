@@ -1757,14 +1757,15 @@ int main(int argc, char* argv[])
       double dyBgrWeight = 0.;
       if ( selJetAK8_Hbb )
       {
-        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop(), leptonFlavor);          
+        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop());          
       }
       else
       {
-        dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT, leptonFlavor, numBJets_medium);
+        dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT, numBJets_medium);
       }
       // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
       dyBgrWeight *= 2.;
+std::cout << "isBoosted = " << selJetAK8_Hbb << ", numBJets = " << numBJets_medium << ": dyBgrWeight = " << dyBgrWeight << std::endl;
       evtWeightRecorder.record_dyBgrWeight(dyBgrWeight);
     }
 
