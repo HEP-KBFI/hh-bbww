@@ -1765,7 +1765,6 @@ int main(int argc, char* argv[])
       }
       // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
       dyBgrWeight *= 2.;
-std::cout << "isBoosted = " << selJetAK8_Hbb << ", numBJets = " << numBJets_medium << ": dyBgrWeight = " << dyBgrWeight << std::endl;
       evtWeightRecorder.record_dyBgrWeight(dyBgrWeight);
     }
 
