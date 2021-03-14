@@ -22,8 +22,12 @@ def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_s
   histogramDir = category
   if dyBgr_option == "compWeights":
     histogramDir += "_DYBgrMR"
-  elif dyBgr_option == "applyWeights":
-    histogramDir += "_DYBgrAR"
+  elif dyBgr_option == "applyWeights_mc":
+    histogramDir += "_DYBgrAR_mc"
+  elif dyBgr_option == "applyWeights_data":
+    histogramDir += "_DYBgrAR_data"
+  elif dyBgr_option != "disabled":
+    raise ValueError("Internal logic error")
   if lepton_charge_selection != "disabled":
     histogramDir += "_%s" % lepton_charge_selection
   histogramDir += "_%s" % lepton_selection
@@ -826,7 +830,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Tight", "disabled"))
           self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
           self.outputFile_hadd_stage1_6[key_hadd_stage1_6_job] = os.path.join(self.dirs[key_hadd_stage1_6_dir][DKEY_HIST],
-                                                                              "hadd_stage1_6_%s_%s_%s_%s.root" % hadd_stage2_job_tuple)
+                                                                              "hadd_stage1_6_%s_%s_%s_%s.root" % hadd_stage1_6_job_tuple)
     #--------------------------------------------------------------------------
 
     logging.info("Creating configuration files to run 'addBackgroundDY'")
@@ -851,8 +855,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'cfgFile_modified' : os.path.join(self.dirs[key_addDYBgr_dir][DKEY_CFGS], "addBackgroundDY_%s_%s_cfg.py" % (category, dyBgr_option)),
             'outputFile' : os.path.join(self.dirs[key_addDYBgr_dir][DKEY_HIST], "addBackgroundDY_%s_%s.root" % (category, dyBgr_option)),
             'logFile' : os.path.join(self.dirs[key_addDYBgr_dir][DKEY_LOGS], "addBackgroundDY_%s_%s.log" % (category, dyBgr_option)),
-            'category_signal' : getHistogramDir(category, "Tight", "disabled", lepton_charge_selection, "disabled"),
-            'category_sideband' : getHistogramDir(category, "Tight", "disabled", lepton_charge_selection, dyBgr_option),
+            'category_signal' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, "disabled"),
+            'category_sideband' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, dyBgr_option),
             'process_output' : process_output
           }
           self.createCfg_addDYBgr(self.jobOptions_addDYBgr[key_addDYBgr_job])

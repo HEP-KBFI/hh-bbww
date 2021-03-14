@@ -287,7 +287,7 @@ if __name__ == '__main__':
     executable_addSysTT                   = "addSysTT2",
     executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes2",
-    executable_addDYBgr                   = "addBackgroundLeptonFlips", # CV: use addBackgroundLeptonFlips executable from ttH analysis !!
+    executable_addDYBgr                   = "addBackgroundLeptonFlips2", # CV: use addBackgroundLeptonFlips executable from ttH analysis !!
     histograms_to_fit                     = histograms_to_fit,
     max_depth_recursion                   = 5,
     select_rle_output                     = True,
