@@ -363,3 +363,31 @@ selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wr
   }
   return std::pair<const RecoJetBase*, const RecoJetBase*> (selJet1_Wjj, selJet2_Wjj);
 }
+
+std::vector<const RecoJet*>
+jetSelectorAK4_wpt50(const std::vector<const RecoJet*>& jet) 
+{
+  std::vector<const RecoJet*> jetwpt50;
+  for (auto jet_it = jet.begin(); jet_it < jet.end(); ++jet_it){
+    const RecoJet * jet_ = *jet_it;
+    if( jet_->pt() > 50 ) jetwpt50.push_back(jet_);
+  }
+  return jetwpt50;
+}
+double 
+mjj_closeToHiggs(const std::vector<const RecoJet*>& jet) 
+{
+  double diff_mjj_mH(999);
+  double mjj_clostToH(0.);
+  for (auto jet1_it = jet.begin(); jet1_it < jet.end(); ++jet1_it) {
+    const RecoJet * jet1 = *jet1_it;
+    for (auto jet2_it = jet1_it+1; jet2_it < jet.end(); ++jet2_it) {
+      const RecoJet * jet2 = *jet2_it;
+      double mjj = (jet1->p4() + jet2->p4()).mass();
+      if( fabs( mjj-125 ) < diff_mjj_mH  ){
+        mjj_clostToH = mjj;
+      }
+    }
+  }
+  return mjj_clostToH;
+}
