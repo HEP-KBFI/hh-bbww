@@ -1028,7 +1028,7 @@ int main(int argc, char* argv[])
       "massLT",  "max_Lep_eta",
       "cosThetaS_Hbb", "cosThetaS_Hbb_reg",
       "mostFwdJet_eta", "mostFwdJet_pt", "mostFwdJet_phi", "mostFwdJet_E",
-      "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E"
+      "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E", "mjj_highestpt", "mjj_closeToH"
     );
     bdt_filler->register_variable<int_type>(
       "lep1_charge", "lep2_charge", "numElectrons", 
@@ -1358,6 +1358,7 @@ int main(int argc, char* argv[])
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet*> selJetsAK4_pt50 = jetSelectorAK4_wpt50(selJetsAK4);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet *> selJetsForward = jetSelectorForward(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -1745,6 +1746,8 @@ int main(int argc, char* argv[])
     selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
     double HT = compHT(fakeableLeptons, {}, selJets_HT_and_STMET);
     double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
+    double mjj_highestpt = (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass();
+    double mjj_closeToH = mjj_closeToHiggs(selJetsAK4);
 
     if ( dyBgr_option == kDYbgr_applyWeights )
     {
@@ -1808,18 +1811,17 @@ int main(int argc, char* argv[])
       }
     }
     else
-    {
-      const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
-      if ( failsZbosonMassVeto ) {
-        if ( run_lumi_eventSelector ) {
-          std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
+      {
+        const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
+        if ( failsZbosonMassVeto ) {
+          if ( run_lumi_eventSelector ) {
+            std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
+          }
+          continue;
         }
-        continue;
       }
-    }
     cutFlowTable.update(ZbosonMass_cut, evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(ZbosonMass_cut, evtWeightRecorder.get(central_or_shift_main));
-
     if ( apply_met_filters ) {
       if ( !metFilterSelector(metFilters) ) {
         if ( run_lumi_eventSelector ) {
@@ -2272,7 +2274,9 @@ int main(int argc, char* argv[])
       {"lep1_e",                      selLepton_lead->p4().e()},
       {"eta_HHvis",                   eta_HHvis},
       {"dR_b1lep2",                   dR_b1lep2},
-      {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.}
+      {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
+      {"mjj_highestpt",          mjj_highestpt},
+      {"mjj_closeToH",           mjj_closeToH}
     };
 
     if ( bdt_filler )
@@ -2433,6 +2437,8 @@ int main(int argc, char* argv[])
           ("leadFwdJet_phi",              selJetsForward.size() >= 1 ? selJetsForward[0] -> phi() : -1000)
           ("leadFwdJet_E",                selJetsForward.size() >= 1 ? selJetsForward[0] -> p4().energy() : -1000)
           ("numJetsForward",              selJetsForward.size())
+          ("mjj_highestpt",               mjj_highestpt)
+          ("mjj_closeToH",                mjj_closeToH)
           ("lepPairType",                 fabs(selLepton_lead->pdgId()) == fabs(selLepton_sublead->pdgId()))
           (weightMapHH)
           .fill()
