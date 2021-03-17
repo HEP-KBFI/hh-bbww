@@ -917,7 +917,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-          selHistManager->dyBgr_ = 0;
+          selHistManager->dyBgr_ = nullptr;
         }
       }
 
@@ -1746,7 +1746,7 @@ int main(int argc, char* argv[])
     selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
     double HT = compHT(fakeableLeptons, {}, selJets_HT_and_STMET);
     double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
-    double mjj_highestpt = (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass();
+    double mjj_highestpt = ( selJetsAK4.size() >= 2 ) ? (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass() : -1.;
     double mjj_closeToH = mjj_closeToHiggs(selJetsAK4);
 
     if ( dyBgr_option == kDYbgr_applyWeights )
@@ -1802,7 +1802,7 @@ int main(int argc, char* argv[])
     if ( dyBgr_option == kDYbgr_compWeights )
     {
       const double mass = (selLeptonP4_lead + selLeptonP4_sublead).mass();
-      if ( std::fabs(mass - z_mass) < z_window )
+      if ( std::fabs(mass - z_mass) > z_window )
       {
         if ( run_lumi_eventSelector ) {
           std::cout << "event " << eventInfo.str() << " FAILS Z-boson selection." << std::endl;
@@ -1811,17 +1811,18 @@ int main(int argc, char* argv[])
       }
     }
     else
-      {
-        const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
-        if ( failsZbosonMassVeto ) {
-          if ( run_lumi_eventSelector ) {
-            std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
-          }
-          continue;
+    {
+      const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
+      if ( failsZbosonMassVeto ) {
+        if ( run_lumi_eventSelector ) {
+          std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
         }
+        continue;
       }
+    }
     cutFlowTable.update(ZbosonMass_cut, evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(ZbosonMass_cut, evtWeightRecorder.get(central_or_shift_main));
+
     if ( apply_met_filters ) {
       if ( !metFilterSelector(metFilters) ) {
         if ( run_lumi_eventSelector ) {
@@ -1981,7 +1982,6 @@ int main(int argc, char* argv[])
       tau21_Hbb = selJetAK8_Hbb->tau2()/selJetAK8_Hbb->tau1();
     }
     double dR_Hbb    = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
-    
     double dPhi_Hbb  = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
     double pT_Hbb    = HbbP4.pt();
     double eta_Hbb   = HbbP4.eta();
