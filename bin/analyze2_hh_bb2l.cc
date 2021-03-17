@@ -1681,6 +1681,9 @@ int main(int argc, char* argv[])
     // select jets from H->bb decay
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
+    const std::vector<const RecoJetAK8*> selJetsAK8 = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtselJetsAK8 = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, selJetsAK8);
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtselJetsAK8_wpt50 = jetSelectorAK4_wpt50(cleanedJetsAK4_wrtselJetsAK8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherCSV);
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
     //std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb({}, selJetsAK4_Hbb);
@@ -1744,10 +1747,12 @@ int main(int argc, char* argv[])
 //--- compute HT and STMET variables used for signal extraction in EXO analyses
     std::vector<const RecoJetBase*> selJets_HT_and_STMET;
     selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
-    double HT = compHT(fakeableLeptons, {}, selJets_HT_and_STMET);
+    double HT = ( selJetsAK8.size()==0 ) ? compHT({}, {}, selJetsAK4_pt50) :
+      compHT({}, {}, selJetsAK8, cleanedJetsAK4_wrtselJetsAK8_wpt50);
     double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
-    double mjj_highestpt = (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass();
-    double mjj_closeToH = mjj_closeToHiggs(selJetsAK4);
+    double mjj_highestpt = ( selJetsAK8.size()==0 ) ? (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass() :
+      (selJetsAK8[0]->subJet1()->p4()+selJetsAK8[0]->subJet2()->p4()).mass();
+    double mjj_closeToH = (selJetsAK8.size()) ? mjj_closeToHiggs(selJetsAK8) : mjj_closeToHiggs(selJetsAK4);
 
     if ( dyBgr_option == kDYbgr_applyWeights )
     {
