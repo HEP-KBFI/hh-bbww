@@ -114,6 +114,7 @@ process.analyze_hh_bb1l = cms.PSet(
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
+    usejpa = cms.bool(False),
 
     fillHistograms_BDT = cms.bool(True),
     BDT = cms.PSet(
