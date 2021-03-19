@@ -123,8 +123,17 @@ int main(int argc, char* argv[])
 
   bool isDEBUG = cfg_analyze.getParameter<bool>("isDEBUG");
 
-  std::string branchName_genHBosons = cfg_analyze.getParameter<std::string>("branchName_genHBosons");
-
+  //std::string branchName_genHBosons = cfg_analyze.getParameter<std::string>("branchName_genHBosons");
+  std::string branchName_genHBosons;
+  if (cfg_analyze.exists("branchName_genHBosons"))
+  {
+    branchName_genHBosons = cfg_analyze.getParameter<std::string>("branchName_genHBosons");
+  }
+  else if (cfg_analyze.exists("branchName_genHiggses"))
+  {
+    branchName_genHBosons = cfg_analyze.getParameter<std::string>("branchName_genHiggses");
+  }
+  
   fwlite::InputSource inputFiles(cfg);
   int maxEvents = inputFiles.maxEvents();
   std::cout << " maxEvents = " << maxEvents << std::endl;
@@ -163,6 +172,10 @@ int main(int argc, char* argv[])
   {
     HHWeight_calc_LOtoNLO = new HHWeightInterfaceLOtoNLO(era, apply_HH_coupling_fix_CMS, 10., isDEBUG);
   }
+  std::cout << "apply_HH_rwgt: " << apply_HH_rwgt
+	    << ", apply_HH_rwgt_LOtoNLO: " << apply_HH_rwgt_LOtoNLO
+	    << ", apply_HH_coupling_fix_CMS: " << apply_HH_coupling_fix_CMS
+	    << "\n";
 
   EventInfoReader eventInfoReader(&eventInfo);
   inputTree->registerReader(&eventInfoReader);
@@ -200,11 +213,12 @@ int main(int argc, char* argv[])
   lheInfoHistManager->bookHistograms(fs);
 
   TFileDirectory dir = fs.mkdir(histogramDir);
+  TFileDirectory dir1 = fs.mkdir(Form("%s/sel/evt/%s", histogramDir.data(),process_string.data()));
 
-  TH1* histogram_genHBoson_lead_pt = dir.make<TH1D>("genHBoson_lead_pt", "genHBoson_lead_pt", 50, 0., 500.);
-  TH1* histogram_genHBoson_lead_eta = dir.make<TH1D>("genHBoson_lead_eta", "genHBoson_lead_eta", 100, -5.0, +5.0);
-  TH1* histogram_genHBoson_sublead_pt = dir.make<TH1D>("genHBoson_sublead_pt", "genHBoson_sublead_pt", 50, 0., 500.);
-  TH1* histogram_genHBoson_sublead_eta = dir.make<TH1D>("genHBoson_sublead_eta", "genHBoson_sublead_eta", 100, -5.0, +5.0);
+  TH1* histogram_genHBoson_lead_pt = dir1.make<TH1D>("genHBoson_lead_pt", "genHBoson_lead_pt", 50, 0., 500.);
+  TH1* histogram_genHBoson_lead_eta = dir1.make<TH1D>("genHBoson_lead_eta", "genHBoson_lead_eta", 100, -5.0, +5.0);
+  TH1* histogram_genHBoson_sublead_pt = dir1.make<TH1D>("genHBoson_sublead_pt", "genHBoson_sublead_pt", 50, 0., 500.);
+  TH1* histogram_genHBoson_sublead_eta = dir1.make<TH1D>("genHBoson_sublead_eta", "genHBoson_sublead_eta", 100, -5.0, +5.0);
   int numBins_genHH_mass = 36;
   double binning_genHH_mass[] = {
      250,  270,  290,  310,  330,  350,  370, 390,  410,  430, 
@@ -212,15 +226,38 @@ int main(int argc, char* argv[])
      650,  670,  700,  750,  800,  850,  900, 950, 1000, 1100, 
     1200, 1300, 1400, 1500, 1750, 2000, 5000
   };
-  //TH1* histogram_genHH_mass = dir.make<TH1D>("genHH_mass", "genHH_mass", 500, 0., 5000.);
-  TH1* histogram_genHH_mass_unweighted = dir.make<TH1D>("genHH_mass_unweighted", "genHH_mass_unweighted", numBins_genHH_mass, binning_genHH_mass);
-  TH1* histogram_genHH_mass_reweighted_V1 = dir.make<TH1D>("genHH_mass_reweighted_V1", "genHH_mass_reweighted_V1", numBins_genHH_mass, binning_genHH_mass);
-  TH1* histogram_genHH_mass_reweighted_V2 = dir.make<TH1D>("genHH_mass_reweighted_V2", "genHH_mass_reweighted_V2", numBins_genHH_mass, binning_genHH_mass);
-  TH1* histogram_genHH_pt = dir.make<TH1D>("genHH_pt", "genHH_pt", 50, 0., 500.);
-  TH1* histogram_genHH_absCosThetaStar = dir.make<TH1D>("genHBoson_sublead_eta", "genHBoson_sublead_eta", 10, 0., +1.);  
-  TH2* histogram_HHReweight_V1_vs_genHH_mass = dir.make<TH2D>("HHReweight_V1_vs_genHH_mass", "HHReweight_V1_vs_genHH_mass", numBins_genHH_mass, binning_genHH_mass, 200, 0., 2.);
-  TH2* histogram_HHReweight_V2_vs_genHH_mass = dir.make<TH2D>("HHReweight_V2_vs_genHH_mass", "HHReweight_V2_vs_genHH_mass", numBins_genHH_mass, binning_genHH_mass, 200, 0., 2.);
+  //TH1* histogram_genHH_mass = dir1.make<TH1D>("genHH_mass", "genHH_mass", 500, 0., 5000.);
+  TH1* histogram_genHH_mass_unweighted = dir1.make<TH1D>("genHH_mass_unweighted", "genHH_mass_unweighted", numBins_genHH_mass, binning_genHH_mass);
+  TH1* histogram_genHH_mass_reweighted_V1 = dir1.make<TH1D>("genHH_mass_reweighted_V1", "genHH_mass_reweighted_V1", numBins_genHH_mass, binning_genHH_mass);
+  TH1* histogram_genHH_mass_reweighted_V2 = dir1.make<TH1D>("genHH_mass_reweighted_V2", "genHH_mass_reweighted_V2", numBins_genHH_mass, binning_genHH_mass);
+  TH1* histogram_genHH_pt = dir1.make<TH1D>("genHH_pt", "genHH_pt", 50, 0., 500.);
+  TH1* histogram_genHH_absCosThetaStar = dir1.make<TH1D>("genHBoson_sublead_eta", "genHBoson_sublead_eta", 10, 0., +1.);  
+  TH2* histogram_HHReweight_V1_vs_genHH_mass = dir1.make<TH2D>("HHReweight_V1_vs_genHH_mass", "HHReweight_V1_vs_genHH_mass", numBins_genHH_mass, binning_genHH_mass, 200, 0., 2.);
+  TH2* histogram_HHReweight_V2_vs_genHH_mass = dir1.make<TH2D>("HHReweight_V2_vs_genHH_mass", "HHReweight_V2_vs_genHH_mass", numBins_genHH_mass, binning_genHH_mass, 200, 0., 2.);
 
+
+  TFileDirectory subD1 = dir1;
+  TH1* hgen_mHH_0 = subD1.make<TH1D>("gen_mHH_0", "gen_mHH_0",  400, 0, 1200);
+  TH1* hgen_mHH_HHrwgt_0 = subD1.make<TH1D>("gen_mHH_HHrwgt_0", "gen_mHH_HHrwgt_0",  400, 0, 1200);
+  TH1* hgen_mHH_LOtoNLOrwgt_0 = subD1.make<TH1D>("gen_mHH_LOtoNLOrwgt_0", "gen_mHH_LOtoNLOrwgt_0",  400, 0, 1200);
+  TH1* hgen_mHH_HHrwgt_LOtoNLOrwgt_0 = subD1.make<TH1D>("gen_mHH_HHrwgt_LOtoNLOrwgt_0", "gen_mHH_HHrwgt_LOtoNLOrwgt_0",  400, 0, 1200);
+
+
+  TH1* hgen_mHH_1 = subD1.make<TH1D>("gen_mHH_1", "gen_mHH_1",  numBins_genHH_mass, binning_genHH_mass);
+  TH1* hgen_mHH_HHrwgt_1 = subD1.make<TH1D>("gen_mHH_HHrwgt_1", "gen_mHH_HHrwgt_1",  numBins_genHH_mass, binning_genHH_mass);
+  TH1* hgen_mHH_LOtoNLOrwgt_1 = subD1.make<TH1D>("gen_mHH_LOtoNLOrwgt_1", "gen_mHH_LOtoNLOrwgt_1",  numBins_genHH_mass, binning_genHH_mass);
+  TH1* hgen_mHH_HHrwgt_LOtoNLOrwgt_1 = subD1.make<TH1D>("gen_mHH_HHrwgt_LOtoNLOrwgt_1", "gen_mHH_HHrwgt_LOtoNLOrwgt_1",  numBins_genHH_mass, binning_genHH_mass);
+
+
+  TH1* hgen_mHH_2 = subD1.make<TH1D>("gen_mHH_2", "gen_mHH_2",  numBins_genHH_mass, binning_genHH_mass);
+  TH1* hgen_mHH_HHrwgt_2 = subD1.make<TH1D>("gen_mHH_HHrwgt_2", "gen_mHH_HHrwgt_2",  numBins_genHH_mass, binning_genHH_mass);
+  TH1* hgen_mHH_LOtoNLOrwgt_2 = subD1.make<TH1D>("gen_mHH_LOtoNLOrwgt_2", "gen_mHH_LOtoNLOrwgt_2",  numBins_genHH_mass, binning_genHH_mass);
+  TH1* hgen_mHH_HHrwgt_LOtoNLOrwgt_2 = subD1.make<TH1D>("gen_mHH_HHrwgt_LOtoNLOrwgt_2", "gen_mHH_HHrwgt_LOtoNLOrwgt_2",  numBins_genHH_mass, binning_genHH_mass);
+
+
+
+
+  
   int analyzedEntries = 0;
   double analyzedEntries_weighted = 0.;
   TH1* histogram_analyzedEntries = dir.make<TH1D>("analyzedEntries", "analyzedEntries", 1, -0.5, +0.5);
@@ -261,11 +298,15 @@ int main(int argc, char* argv[])
     double evtWeight = evtWeightRecorder.get(central_or_shift);
 
     double HHReweight = 1.;
-    //if ( apply_HH_rwgt )
-    //{
-    //  assert(HHWeight_calc);
-    //  HHReweight = HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    //}
+    double HHReweight_V1 = 1.;
+    double HHReweight_V2 = 1.;    
+    if ( apply_HH_rwgt )
+    {
+      assert(HHWeight_calc);
+      HHReweight = HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      HHReweight_V1 = HHReweight;
+      HHReweight_V2 = HHReweight;
+    }
     double HHReweight_LOtoNLO_V1 = 1.;
     double HHReweight_LOtoNLO_V2 = 1.;
     if ( apply_HH_rwgt_LOtoNLO )
@@ -276,6 +317,8 @@ int main(int argc, char* argv[])
     }
 
     HHReweight *= HHReweight_LOtoNLO_V2;
+    HHReweight_V1 *= HHReweight_LOtoNLO_V1;
+    HHReweight_V2 *= HHReweight_LOtoNLO_V2;
 
     if ( genHBosons.size() == 2 )
     {
@@ -292,12 +335,64 @@ int main(int argc, char* argv[])
       fillWithOverFlow(histogram_genHBoson_sublead_pt, genHBoson_sublead->pt(), evtWeight*HHReweight);
       fillWithOverFlow(histogram_genHBoson_sublead_eta, genHBoson_sublead->eta(), evtWeight*HHReweight);
       fillWithOverFlow(histogram_genHH_mass_unweighted, genHH_mass, evtWeight);
-      fillWithOverFlow(histogram_genHH_mass_reweighted_V1, genHH_mass, evtWeight*HHReweight_LOtoNLO_V1);
-      fillWithOverFlow(histogram_genHH_mass_reweighted_V2, genHH_mass, evtWeight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow(histogram_genHH_mass_reweighted_V1, genHH_mass, evtWeight*HHReweight_V1);
+      fillWithOverFlow(histogram_genHH_mass_reweighted_V2, genHH_mass, evtWeight*HHReweight_V2);
       fillWithOverFlow(histogram_genHH_pt, genHH_pt, evtWeight*HHReweight);
       fillWithOverFlow(histogram_genHH_absCosThetaStar, genHH_cosThetaStar, evtWeight*HHReweight);
       fillWithOverFlow2d(histogram_HHReweight_V1_vs_genHH_mass, genHH_mass, HHReweight_LOtoNLO_V1, evtWeight);
       fillWithOverFlow2d(histogram_HHReweight_V2_vs_genHH_mass, genHH_mass, HHReweight_LOtoNLO_V2, evtWeight);
+
+      fillWithOverFlow(hgen_mHH_0, genHH_mass, evtWeight);
+      if ( apply_HH_rwgt_LOtoNLO )
+	fillWithOverFlow(hgen_mHH_LOtoNLOrwgt_0, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+      if ( apply_HH_rwgt )
+	fillWithOverFlow(hgen_mHH_HHrwgt_0, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+      if ( apply_HH_rwgt && apply_HH_rwgt_LOtoNLO )
+	fillWithOverFlow(hgen_mHH_HHrwgt_LOtoNLOrwgt_0, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG) *
+		       HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+
+
+ 
+      fillWithOverFlow(hgen_mHH_1, genHH_mass, evtWeight);
+      if ( apply_HH_rwgt_LOtoNLO )
+	fillWithOverFlow(hgen_mHH_LOtoNLOrwgt_1, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+      if ( apply_HH_rwgt )
+	fillWithOverFlow(hgen_mHH_HHrwgt_1, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+      if ( apply_HH_rwgt && apply_HH_rwgt_LOtoNLO )
+	fillWithOverFlow(hgen_mHH_HHrwgt_LOtoNLOrwgt_1, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG) *
+		       HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+
+
+ 
+      fillWithOverFlow(hgen_mHH_2, genHH_mass, evtWeight);
+      if ( apply_HH_rwgt_LOtoNLO )
+	fillWithOverFlow(hgen_mHH_LOtoNLOrwgt_2, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+      if ( apply_HH_rwgt )
+	fillWithOverFlow(hgen_mHH_HHrwgt_2, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc->getReWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+      if ( apply_HH_rwgt && apply_HH_rwgt_LOtoNLO )
+	fillWithOverFlow(hgen_mHH_HHrwgt_LOtoNLOrwgt_2, genHH_mass,
+		       evtWeight *
+		       HHWeight_calc->getReWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG) *
+		       HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG));
+
+
+      
     }
     
     selHistManager->genKinematics_HH_->fillHistograms(evtWeight*HHReweight);
