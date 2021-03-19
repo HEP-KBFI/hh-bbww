@@ -105,4 +105,11 @@ selectJets_Wjj_forrestOfcat(const std::vector<const RecoJet*>& cleanedJetsAK4_wr
 			    const Particle::LorentzVector metP4,
 			    const RecoLepton* selLepton,
 			    const RecoJetBase* selJet1_Hbb, const RecoJetBase* selJet2_Hbb);
+std::vector<const RecoJet*>
+jetSelectorAK4_wpt50(const std::vector<const RecoJet*>& jet);
+
+double
+mjj_closeToHiggs(const std::vector<const RecoJet*>& jet);
+double
+mjj_closeToHiggs(const std::vector<const RecoJetAK8*>& jet);
 #endif // jetSelectionAuxFunctions_h

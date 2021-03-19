@@ -162,12 +162,10 @@ elif mode == "wMEM":
 elif mode == "forBDTtraining":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
-  samples = load_samples(era, suffix = "BDT")
-  samples = load_samples_stitched(samples, era, [ 'dy_nlo'])
   fillHistograms_BDT = False
   fillHistograms_LBN = False
-  #samples = load_samples(era)
-  #samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
+  samples = load_samples(era)
+  samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 elif mode == "forBDTtraining_wMEM":
   if use_preselected:
     raise ValueError("Producing Ntuples for BDT training from preselected Ntuples makes no sense!")
@@ -229,7 +227,7 @@ if 'nonres' in fill_spin:
         histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
     if fillHistograms_LBN:
       categories = [
-        "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b",
+        "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf", 
         "TT_boosted", "TT_resolved",
         "DY_boosted", "DY_resolved",
         "SingleTop_boosted", "SingleTop_resolved",
@@ -275,6 +273,8 @@ if __name__ == '__main__':
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     lep_mva_wp                            = lep_mva_wp,
+    dyBgr_options                         = [ "disabled", "applyWeights_data", "applyWeights_mc" ], # CV: use this to apply data-driven DY background estimation
+    ##dyBgr_options                         = [ "compWeights" ], # CV: use this to compute inputs for data-driven DY background estimation
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
     max_files_per_job                     = files_per_job,
@@ -287,6 +287,7 @@ if __name__ == '__main__':
     executable_addSysTT                   = "addSysTT2",
     executable_addBackgrounds             = "addBackgrounds2",
     executable_addFakes                   = "addBackgroundLeptonFakes2",
+    executable_addDYBgr                   = "addBackgroundLeptonFlips2", # CV: use addBackgroundLeptonFlips executable from ttH analysis !!
     histograms_to_fit                     = histograms_to_fit,
     max_depth_recursion                   = 5,
     select_rle_output                     = True,

@@ -47,6 +47,8 @@ process.analyze_hh_bb2l = cms.PSet(
     apply_leptonGenMatching = cms.bool(True),
     leptonChargeSelection = cms.string(''),
 
+    dyBgr_option = cms.string('disabled'),
+
     apply_pileupJetID = cms.string(''),
 
     applyFakeRateWeights = cms.string(""),
@@ -75,7 +77,7 @@ process.analyze_hh_bb2l = cms.PSet(
     cfgMEtFilter = cms.PSet(),
     triggerWhiteList = cms.PSet(),
     apply_genPhotonFilter = cms.string("disabled"),
-
+    
     fillGenEvtHistograms = cms.bool(False),
     cfgEvtYieldHistManager = cms.PSet(),
 
@@ -233,11 +235,10 @@ process.analyze_hh_bb2l = cms.PSet(
                 'bjet1', 'bjet2', 'lep1', 'lep2'
             ),
             hl_inputVariables = cms.vstring(
-                'm_Hbb_regCorr', 'm_ll', 'Smin_Hww', 'mbb_loose', 'm_HHvis', 
-                'dR_ll', 'logTopness_publishedChi2', 'mT2_top_2particle', 'mht', 
-                'logTopness_fixedChi2', 'mbb_medium', 'pT_HH', 'logHiggsness_fixedChi2',
-                'pT_Hbb', 'pT_Hww', 'lep2_pt', 'dR_Hbb', 'dPhi_Hbb', 'pT_ll', 
-                'met_pt_proj', 'leadFwdJet_pt'
+                'm_Hbb_regCorr', 'Smin_Hww', 'm_HHvis', 'dR_ll',\
+                'logTopness_publishedChi2', 'mT2_top_2particle',\
+                'mht', 'pT_HH', 'pT_Hbb', 'pT_Hww', 'lep2_pt',\
+                'dR_Hbb', 'pT_ll', 'met_pt_proj', 'mjj_highestpt', 'mjj_closeToH', 'HT'
             ),
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
         ),
@@ -248,11 +249,11 @@ process.analyze_hh_bb2l = cms.PSet(
                 'bjet1', 'bjet2', 'lep1', 'lep2'
             ),
             hl_inputVariables = cms.vstring(
-                'm_ll', 'm_Hbb', 'mbb_loose', 'dR_ll', 'mbb_medium', 
-                'Smin_Hww', 'mindr_lep1_jet', 'max_dPhi_lepMEt', 'dR_Hbb',
-                'tau21_Hbb', 'STMET', 'pT_HH', 'bjet2_pt', 'avg_dr_jet_central', 
-                'mht', 'm_HHvis', 'pT_ll', 'dPhi_HH', 'logHiggsness_fixedChi2', 
-                'dPhi_HHvis', 'lep2_pt', 'eta_HHvis', 'dR_b1lep2', 'logTopness_fixedChi2'
+                'dR_ll', 'Smin_Hww', 'mindr_lep1_jet', 'max_dPhi_lepMEt',\
+                'dR_Hbb', 'tau21_Hbb', 'STMET', 'pT_HH', 'bjet2_pt',\
+                'avg_dr_jet_central', 'mht', 'pT_ll', 'dPhi_HH', \
+                'logHiggsness_fixedChi2', 'dPhi_HHvis', 'lep2_pt',\
+                'eta_HHvis', 'dR_b1lep2', 'mjj_highestpt', 'HT'
             ),
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
         )

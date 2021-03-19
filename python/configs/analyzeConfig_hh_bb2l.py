@@ -18,8 +18,16 @@ def get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight):
   lepton_selection_and_frWeight = lepton_selection_and_frWeight.replace("|", "_")
   return lepton_selection_and_frWeight
 
-def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection):
+def getHistogramDir(category, lepton_selection, lepton_frWeight, lepton_charge_selection, dyBgr_option):
   histogramDir = category
+  if dyBgr_option == "compWeights":
+    histogramDir += "_DYBgrMR"
+  elif dyBgr_option == "applyWeights_mc":
+    histogramDir += "_DYBgrAR_mc"
+  elif dyBgr_option == "applyWeights_data":
+    histogramDir += "_DYBgrAR_data"
+  elif dyBgr_option != "disabled":
+    raise ValueError("Internal logic error")
   if lepton_charge_selection != "disabled":
     histogramDir += "_%s" % lepton_charge_selection
   histogramDir += "_%s" % lepton_selection
@@ -100,6 +108,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         applyFakeRateWeights,
         central_or_shifts,
         lep_mva_wp,
+        dyBgr_options,
         jet_cleaning_by_index,
         gen_matching_by_index,
         max_files_per_job,
@@ -112,6 +121,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         executable_addSysTT,
         executable_addBackgrounds,
         executable_addFakes,
+        executable_addDYBgr,
         histograms_to_fit,
         max_depth_recursion,
         select_rle_output = False,
@@ -167,6 +177,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.applyFakeRateWeights = applyFakeRateWeights
     self.lepton_charge_selections = lepton_charge_selections
 
+    self.dyBgr_options = dyBgr_options
+
     self.apply_leptonGenMatching = True
     if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
@@ -177,12 +189,19 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.executable_addSysTT = executable_addSysTT
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
+    self.executable_addDYBgr = executable_addDYBgr
 
     self.max_depth_recursion = max_depth_recursion
 
-    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = False, split_ST = True)
-
+    self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = True, split_ST = True)
+    self.nonfake_backgrounds = list(set(self.nonfake_backgrounds) - set(["ggZZ", "qqZZ", "WZ", "WW", "ZZ"]))
+    self.nonfake_backgrounds.append('VV')
+    self.nonfake_backgrounds.append('VVV')
     self.cfgFile_analyze = os.path.join(self.template_dir, cfgFile_analyze)
+    self.inputFiles_hadd_stage1_6 = {}
+    self.outputFile_hadd_stage1_6 = {}
+    self.cfgFile_addDYBgr = os.path.join(self.template_dir, "addBackgroundDY_cfg.py")
+    self.jobOptions_addDYBgr = {}
     self.prep_dcard_processesToCopy = [ "data_obs" ] + self.nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
     self.prep_dcard_signals = set()
     for sample_name, sample_info in self.samples.items():
@@ -276,7 +295,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     """
     lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
-    jobOptions['histogramDir'] = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, jobOptions['leptonChargeSelection'])
+    jobOptions['histogramDir'] = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, jobOptions['leptonChargeSelection'], jobOptions['dyBgr_option'])
     if 'mcClosure' in lepton_selection:
       self.mcClosure_dir[lepton_selection] = jobOptions['histogramDir']
 
@@ -292,13 +311,53 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     lines = super(analyzeConfig_hh_bb2l, self).createCfg_analyze(jobOptions, sample_info)
     create_cfg(self.cfgFile_analyze, jobOptions['cfgFile_modified'], lines)
 
-  def addToMakefile_backgrounds_from_data(self, lines_makefile, make_target = "phony_addFakes", make_dependency = "phony_copyHistograms"):
+  def createCfg_addDYBgr(self, jobOptions):
+    """Create python configuration file for the addBackgroundLeptonFlips executable (used for the data-driven estimation of Drell-Yan backgrounds)
+
+       Args:
+         inputFiles: input file (the ROOT file produced by hadd_stage1)
+         outputFile: output file of the job
+    """
+    lines = []
+    lines.append("process.fwliteInput.fileNames = cms.vstring('%s')" % jobOptions['inputFile'])
+    lines.append("process.fwliteOutput.fileName = cms.string('%s')" % os.path.basename(jobOptions['outputFile']))
+    lines.append("process.addBackgroundLeptonFlips.categories = cms.VPSet(")
+    lines.append("    cms.PSet(")
+    lines.append("        signal = cms.string('%s')," % jobOptions['category_signal'])
+    lines.append("        sideband = cms.string('%s')" % jobOptions['category_sideband'])
+    lines.append("    )")
+    lines.append(")")
+    lines.append("process.addBackgroundLeptonFlips.processLeptonFlips = cms.string('%s')" % jobOptions['process_output'])
+    processesToSubtract = [ "data_fakes" ]
+    for process in self.nonfake_backgrounds:
+      if process != "DY":
+        processesToSubtract.append(process)
+    lines.append("process.addBackgroundLeptonFlips.processesToSubtract = cms.vstring(%s)" % processesToSubtract)
+    lines.append("process.addBackgroundLeptonFlips.sysShifts = cms.vstring(%s)" % self.central_or_shifts)
+    create_cfg(self.cfgFile_addDYBgr, jobOptions['cfgFile_modified'], lines)
+
+  def addToMakefile_addDYBgr(self, lines_makefile, make_target, make_dependency):
+    if make_target not in self.phoniesToAdd:
+      self.phoniesToAdd.append(make_target)
+    lines_makefile.append("%s: %s" % (make_target, make_dependency))
+    if self.is_sbatch:
+      lines_makefile.append("\t%s %s" % ("python", self.sbatchFile_addDYBgr))
+    else:
+      for job in self.jobOptions_addDYBgr.values():
+        lines_makefile.append("\t%s %s &> %s" % (self.executable_addDYBgr, job['cfgFile_modified'], job['logFile']))
+    lines_makefile.append("")
+    for job in self.jobOptions_addDYBgr.values():
+      self.filesToClean.append(job['outputFile'])
+
+  def addToMakefile_backgrounds_from_data(self, lines_makefile, make_target = "phony_addDYBgr", make_dependency = "phony_copyHistograms"):
     self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds", make_dependency, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
     self.addToMakefile_hadd_stage1_5(lines_makefile, "phony_hadd_stage1_5", "phony_addBackgrounds", max_input_files_per_job = 10)
     self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds_sum", "phony_hadd_stage1_5", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
     self.addToMakefile_addFakes(lines_makefile, "phony_addFakes", "phony_hadd_stage1_5")
-    if make_target != "phony_addFakes":
-      lines_makefile.append("%s: %s" % (make_target, "phony_addFakes"))
+    self.addToMakefile_hadd_stage1_6(lines_makefile, "phony_hadd_stage1_6", "phony_addFakes", max_input_files_per_job = 10)
+    self.addToMakefile_addDYBgr(lines_makefile, "phony_addDYBgr", "phony_hadd_stage1_6")
+    if make_target != "phony_addDYBgr":
+      lines_makefile.append("%s: %s" % (make_target, "phony_addDYBgr"))
       lines_makefile.append("")
     self.make_dependency_hadd_stage2 = " ".join([ "phony_addBackgrounds_sum", make_target ])
 
@@ -315,44 +374,56 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
       logging.info("Building dictionaries for sample %s..." % process_name)
       for lepton_charge_selection in self.lepton_charge_selections:
-        for lepton_selection in self.lepton_selections:
-          for lepton_frWeight in self.lepton_frWeights:
-            if lepton_frWeight == "enabled" and not lepton_selection.startswith("Fakeable"):
-              continue
-            if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
-              continue
+        for dyBgr_option in self.dyBgr_options:
+          dyBgr_subdir = None
+          if dyBgr_option == "disabled":
+            dyBgr_subdir = "SR"
+          elif dyBgr_option == "compWeights":
+            dyBgr_subdir = "DYBgrMR"
+          elif dyBgr_option in [ "applyWeights_data", "applyWeights_mc" ]:
+            dyBgr_subdir = "DYBgrAR"
+          else:
+            raise ValueError("Internal logic error")
+          for lepton_selection in self.lepton_selections:
+            for lepton_frWeight in self.lepton_frWeights:
+              if lepton_frWeight == "enabled" and not lepton_selection.startswith("Fakeable"):
+                continue
+              if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
+                continue
 
-            lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-            central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSysTT", "addBackgrounds"]
-            central_or_shift_dedicated = self.central_or_shifts if self.runTHweights(sample_info) else self.central_or_shifts_external
-            central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
-            for central_or_shift_or_dummy in central_or_shifts_extended:
-              process_name_extended = [ process_name, "hadd" ]
-              for process_name_or_dummy in process_name_extended:
-                if process_name_or_dummy in [ "hadd" ] and central_or_shift_or_dummy != "":
-                  continue
-                evtcategories_extended = [""]
-                evtcategories_extended.extend(self.datacard_categories)
-                if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addSysTT", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
-                  continue
-
-                if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
-                    central_or_shift_or_dummy, is_mc, lepton_selection, lepton_charge_selection, sample_info
-                ):
-                  continue
-
-                key_dir = getKey(process_name_or_dummy, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift_or_dummy)
-                for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_RLES, DKEY_SYNC ]:
-                  if dir_type == DKEY_SYNC and not self.do_sync:
+              lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
+              central_or_shift_extensions = ["", "hadd", "copyHistograms", "addSysTT", "addBackgrounds"]
+              central_or_shift_dedicated = self.central_or_shifts if self.runTHweights(sample_info) else self.central_or_shifts_external
+              central_or_shifts_extended = central_or_shift_extensions + central_or_shift_dedicated
+              for central_or_shift_or_dummy in central_or_shifts_extended:
+                process_name_extended = [ process_name, "hadd" ]
+                for process_name_or_dummy in process_name_extended:
+                  if process_name_or_dummy in [ "hadd" ] and central_or_shift_or_dummy != "":
                     continue
-                  initDict(self.dirs, [ key_dir, dir_type ])
-                  if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
-                    self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,
-                                                                "_".join([ lepton_selection_and_frWeight, lepton_charge_selection ]), process_name_or_dummy, central_or_shift_or_dummy)
-                  else :
-                    self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
-                                                                "_".join([ lepton_selection_and_frWeight, lepton_charge_selection ]), process_name_or_dummy)
-    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
+                  evtcategories_extended = [""]
+                  evtcategories_extended.extend(self.datacard_categories)
+                  if central_or_shift_or_dummy in [ "hadd", "copyHistograms", "addSysTT", "addBackgrounds" ] and process_name_or_dummy in [ "hadd" ]:
+                    continue
+
+                  if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
+                      central_or_shift_or_dummy, is_mc, lepton_selection, lepton_charge_selection, sample_info
+                  ):
+                    continue
+
+                  key_dir = getKey(process_name_or_dummy, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, central_or_shift_or_dummy)
+                  for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_RLES, DKEY_SYNC ]:
+                    if dir_type == DKEY_SYNC and not self.do_sync:
+                      continue
+                    initDict(self.dirs, [ key_dir, dir_type ])
+                    if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
+                      self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,
+                                                                  "_".join([ lepton_selection_and_frWeight, lepton_charge_selection, dyBgr_subdir ]), 
+                                                                  process_name_or_dummy, central_or_shift_or_dummy)
+                    else :
+                      self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
+                                                                  "_".join([ lepton_selection_and_frWeight, lepton_charge_selection, dyBgr_subdir ]),
+                                                                  process_name_or_dummy)
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "addBackgroundDY", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
@@ -400,298 +471,300 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     mcClosure_regex = re.compile('Fakeable_mcClosure_(?P<type>m|e)_wFakeRateWeights')
     for lepton_charge_selection in self.lepton_charge_selections:
-      for lepton_selection in self.lepton_selections:
-        electron_selection = lepton_selection
-        muon_selection = lepton_selection
+      for dyBgr_option in self.dyBgr_options:
+        for lepton_selection in self.lepton_selections:
+          electron_selection = lepton_selection
+          muon_selection = lepton_selection
 
-        if lepton_selection == "Fakeable_mcClosure_e":
-          electron_selection = "Fakeable"
-          muon_selection = "Tight"
-        elif lepton_selection == "Fakeable_mcClosure_m":
-          electron_selection = "Tight"
-          muon_selection = "Fakeable"
+          if lepton_selection == "Fakeable_mcClosure_e":
+            electron_selection = "Fakeable"
+            muon_selection = "Tight"
+          elif lepton_selection == "Fakeable_mcClosure_m":
+            electron_selection = "Tight"
+            muon_selection = "Fakeable"
 
-        for lepton_frWeight in self.lepton_frWeights:
-          if lepton_frWeight == "enabled" and not lepton_selection.startswith("Fakeable"):
-            continue
-          if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
-            continue
-          lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
-          for sample_name, sample_info in self.samples.items():
-            if not sample_info["use_it"]:
+          for lepton_frWeight in self.lepton_frWeights:
+            if lepton_frWeight == "enabled" and not lepton_selection.startswith("Fakeable"):
               continue
-            process_name = sample_info["process_name_specific"]
-            logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
-            inputFileList = inputFileLists[sample_name]
-
-            sample_category = sample_info["sample_category"]
-            is_mc = (sample_info["type"] == "mc")
-            use_th_weights = self.runTHweights(sample_info)
-
-            central_or_shift_dedicated = self.central_or_shifts if use_th_weights else self.central_or_shifts_external
-            for central_or_shift in central_or_shift_dedicated:
-              if not self.accept_systematics(
-                  central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info
-              ):
+            if lepton_frWeight == "disabled" and not lepton_selection in [ "Tight", "forBDTtraining" ]:
+              continue
+            lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_selection, lepton_frWeight)
+            for sample_name, sample_info in self.samples.items():
+              if not sample_info["use_it"]:
                 continue
+              process_name = sample_info["process_name_specific"]
+              logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
+              inputFileList = inputFileLists[sample_name]
 
-              central_or_shifts_local = []
-              if central_or_shift == "central" and not use_th_weights:
-                for central_or_shift_local in self.central_or_shifts_internal:
-                  if self.accept_systematics(
-                      central_or_shift_local, is_mc, lepton_selection, lepton_charge_selection, sample_info
-                  ):
-                    central_or_shifts_local.append(central_or_shift_local)
+              sample_category = sample_info["sample_category"]
+              is_mc = (sample_info["type"] == "mc")
+              use_th_weights = self.runTHweights(sample_info)
 
-              logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
-              # build config files for executing analysis code
-              key_analyze_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift)
-
-              for jobId in inputFileList.keys():
-
-                analyze_job_tuple = (process_name, lepton_charge_selection, lepton_selection_and_frWeight, central_or_shift, jobId)
-                key_analyze_job = getKey(*analyze_job_tuple)
-                ntupleFiles = inputFileList[jobId]
-                if len(ntupleFiles) == 0:
-                  logging.warning("No input ntuples for %s --> skipping job !!" % (key_analyze_job))
+              central_or_shift_dedicated = self.central_or_shifts if use_th_weights else self.central_or_shifts_external
+              for central_or_shift in central_or_shift_dedicated:
+                if not self.accept_systematics(
+                    central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info
+                ):
                   continue
 
-                syncOutput = ''
-                syncTree = ''
-                if self.do_sync:
-                  if lepton_charge_selection != 'OS':
+                central_or_shifts_local = []
+                if central_or_shift == "central" and not use_th_weights:
+                  for central_or_shift_local in self.central_or_shifts_internal:
+                    if self.accept_systematics(
+                        central_or_shift_local, is_mc, lepton_selection, lepton_charge_selection, sample_info
+                    ):
+                      central_or_shifts_local.append(central_or_shift_local)
+
+                logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
+                # build config files for executing analysis code
+                key_analyze_dir = getKey(process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, central_or_shift)
+
+                for jobId in inputFileList.keys():
+
+                  analyze_job_tuple = (process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, central_or_shift, jobId)
+                  key_analyze_job = getKey(*analyze_job_tuple)
+                  ntupleFiles = inputFileList[jobId]
+                  if len(ntupleFiles) == 0:
+                    logging.warning("No input ntuples for %s --> skipping job !!" % (key_analyze_job))
                     continue
-                  mcClosure_match = mcClosure_regex.match(lepton_selection_and_frWeight)
-                  if lepton_selection_and_frWeight == 'Tight':
-                    syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_SR.root' % (self.channel, central_or_shift))
-                    syncTree = 'syncTree_%s_SR' % self.channel.replace('_', '')
-                  elif lepton_selection_and_frWeight == 'Fakeable_wFakeRateWeights':
-                    syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_Fake.root' % (self.channel, central_or_shift))
-                    syncTree = 'syncTree_%s_Fake' % self.channel.replace('_', '')
-                  elif mcClosure_match:
-                    mcClosure_type = mcClosure_match.group('type')
-                    syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_mcClosure_%s.root' % (self.channel, central_or_shift, mcClosure_type))
-                    syncTree = 'syncTree_%s_mcClosure_%s' % (self.channel.replace('_', ''), mcClosure_type)
+
+                  syncOutput = ''
+                  syncTree = ''
+                  if self.do_sync:
+                    if lepton_charge_selection != 'OS':
+                      continue
+                    mcClosure_match = mcClosure_regex.match(lepton_selection_and_frWeight)
+                    if lepton_selection_and_frWeight == 'Tight':
+                      syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_SR.root' % (self.channel, central_or_shift))
+                      syncTree = 'syncTree_%s_SR' % self.channel.replace('_', '')
+                    elif lepton_selection_and_frWeight == 'Fakeable_wFakeRateWeights':
+                      syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_Fake.root' % (self.channel, central_or_shift))
+                      syncTree = 'syncTree_%s_Fake' % self.channel.replace('_', '')
+                    elif mcClosure_match:
+                      mcClosure_type = mcClosure_match.group('type')
+                      syncOutput = os.path.join(self.dirs[key_analyze_dir][DKEY_SYNC], '%s_%s_mcClosure_%s.root' % (self.channel, central_or_shift, mcClosure_type))
+                      syncTree = 'syncTree_%s_mcClosure_%s' % (self.channel.replace('_', ''), mcClosure_type)
+                    else:
+                      continue
+                  if syncTree and central_or_shift != "central":
+                    syncTree = os.path.join(central_or_shift, syncTree)
+                  syncRLE = ''
+                  if self.do_sync and self.rle_select:
+                    syncRLE = self.rle_select % syncTree
+                    if not os.path.isfile(syncRLE):
+                      logging.warning("Input RLE file for the sync is missing: %s; skipping the job" % syncRLE)
+                      continue
+                  if syncOutput:
+                    self.inputFiles_sync['sync'].append(syncOutput)
+
+                  cfgFile_modified_path = os.path.join(self.dirs[key_analyze_dir][DKEY_CFGS], "analyze_%s_%s_%s_%s_%s_%i_cfg.py" % analyze_job_tuple)
+                  logFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_LOGS], "analyze_%s_%s_%s_%s_%s_%i.log" % analyze_job_tuple)
+                  rleOutputFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_RLES], "rle_%s_%s_%s_%s_%s_%i.txt" % analyze_job_tuple) \
+                                       if self.select_rle_output else ""
+                  histogramFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_HIST], "analyze_%s_%s_%s_%s_%s_%i.root" % analyze_job_tuple)
+                  applyFakeRateWeights = self.applyFakeRateWeights \
+                    if self.isBDTtraining or not lepton_selection == "Tight" \
+                    else "disabled"
+                  branchName_memOutput = '%s_%s' % (self.MEMbranch, self.get_addMEM_systematics(central_or_shift)) \
+                                           if self.MEMbranch else ''
+                  branchName_hmeOutput = '%s_%s' % (self.hmebranch, self.get_addMEM_systematics(central_or_shift)) \
+                                           if self.hmebranch else ''
+                  self.jobOptions_analyze[key_analyze_job] = {
+                    'ntupleFiles'                : ntupleFiles,
+                    'cfgFile_modified'           : cfgFile_modified_path,
+                    'histogramFile'              : histogramFile_path,
+                    'logFile'                    : logFile_path,
+                    'selEventsFileName_output'   : rleOutputFile_path,
+                    'leptonChargeSelection'      : lepton_charge_selection,
+                    'electronSelection'          : electron_selection,
+                    'muonSelection'              : muon_selection,
+                    'dyBgr_option'               : dyBgr_option,
+                    'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
+                    'applyFakeRateWeights'       : applyFakeRateWeights,
+                    'apply_pileupJetID'          : self.apply_pileupJetID,
+                    'central_or_shift'           : central_or_shift,
+                    'central_or_shifts_local'    : central_or_shifts_local,
+                    'evtCategories'              : [ self.evtCategory_inclusive ],
+                    'selectBDT'                  : self.isBDTtraining,
+                    'syncOutput'                 : syncOutput,
+                    'syncTree'                   : syncTree,
+                    'syncRLE'                    : syncRLE,
+                    'apply_hlt_filter'           : self.hlt_filter,
+                    'useNonNominal'              : self.use_nonnominal,
+                    'fillGenEvtHistograms'       : True,
+                    'useAssocJetBtag'            : self.do_sync,
+                    'branchName_memOutput'       : branchName_memOutput,
+                    'branchName_hmeOutput'       : branchName_hmeOutput,
+                    'fillHistograms_BDT'         : self.fillHistograms_BDT,
+                    'fillHistograms_LBN'         : self.fillHistograms_LBN,
+                    'fillHistograms_resonant'    : self.fillHistograms_resonant,
+                    'fillHistograms_spin0'       : self.fillHistograms_spin0,
+                    'fillHistograms_spin2'       : self.fillHistograms_spin2,
+                  }
+                  self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
+
+                  # initialize input and output file names for hadd_stage1
+                  key_hadd_stage1_dir = getKey(process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, "hadd")
+                  hadd_stage1_job_tuple = (process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                  key_hadd_stage1_job = getKey(*hadd_stage1_job_tuple)
+                  if not key_hadd_stage1_job in self.inputFiles_hadd_stage1:
+                    self.inputFiles_hadd_stage1[key_hadd_stage1_job] = []
+                  self.inputFiles_hadd_stage1[key_hadd_stage1_job].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
+                  self.outputFile_hadd_stage1[key_hadd_stage1_job] = os.path.join(self.dirs[key_hadd_stage1_dir][DKEY_HIST],
+                                                                                  "hadd_stage1_%s_%s_%s_%s.root" % hadd_stage1_job_tuple)
+
+              if self.isBDTtraining or self.do_sync:
+                continue
+
+              #----------------------------------------------------------------------------
+              # split hadd_stage1 files into separate files, one for each event category
+              for category in self.datacard_categories:
+                key_hadd_stage1_job = getKey(process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                key_copyHistograms_dir = getKey(process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, "copyHistograms")
+                copyHistograms_job_tuple = (category, process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                key_copyHistograms_job = getKey(*copyHistograms_job_tuple)
+                cfgFile_modified = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_CFGS], "copyHistograms_%s_%s_%s_%s_%s_cfg.py" % copyHistograms_job_tuple)
+                outputFile = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_HIST], "copyHistograms_%s_%s_%s_%s_%s.root" % copyHistograms_job_tuple)
+                histogramDir_part1 = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection, dyBgr_option)
+                key_copyHistogram_histogramDirs = category
+                if category == "makePlots":
+                  if is_mc:
+                    key_copyHistogram_histogramDirs += "_mc"
                   else:
-                    continue
-                if syncTree and central_or_shift != "central":
-                  syncTree = os.path.join(central_or_shift, syncTree)
-                syncRLE = ''
-                if self.do_sync and self.rle_select:
-                  syncRLE = self.rle_select % syncTree
-                  if not os.path.isfile(syncRLE):
-                    logging.warning("Input RLE file for the sync is missing: %s; skipping the job" % syncRLE)
-                    continue
-                if syncOutput:
-                  self.inputFiles_sync['sync'].append(syncOutput)
-
-                cfgFile_modified_path = os.path.join(self.dirs[key_analyze_dir][DKEY_CFGS], "analyze_%s_%s_%s_%s_%i_cfg.py" % analyze_job_tuple)
-                logFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_LOGS], "analyze_%s_%s_%s_%s_%i.log" % analyze_job_tuple)
-                rleOutputFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_RLES], "rle_%s_%s_%s_%s_%i.txt" % analyze_job_tuple) \
-                                     if self.select_rle_output else ""
-                histogramFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_HIST], "analyze_%s_%s_%s_%s_%i.root" % analyze_job_tuple)
-                applyFakeRateWeights = self.applyFakeRateWeights \
-                  if self.isBDTtraining or not lepton_selection == "Tight" \
-                  else "disabled"
-                branchName_memOutput = '%s_%s' % (self.MEMbranch, self.get_addMEM_systematics(central_or_shift)) \
-                                         if self.MEMbranch else ''
-                branchName_hmeOutput = '%s_%s' % (self.hmebranch, self.get_addMEM_systematics(central_or_shift)) \
-                                         if self.hmebranch else ''
-                self.jobOptions_analyze[key_analyze_job] = {
-                  'ntupleFiles'                : ntupleFiles,
-                  'cfgFile_modified'           : cfgFile_modified_path,
-                  'histogramFile'              : histogramFile_path,
-                  'logFile'                    : logFile_path,
-                  'selEventsFileName_output'   : rleOutputFile_path,
-                  'leptonChargeSelection'      : lepton_charge_selection,
-                  'electronSelection'          : electron_selection,
-                  'muonSelection'              : muon_selection,
-                  'apply_leptonGenMatching'    : self.apply_leptonGenMatching,
-                  'applyFakeRateWeights'       : applyFakeRateWeights,
-                  'apply_pileupJetID'          : self.apply_pileupJetID,
-                  'central_or_shift'           : central_or_shift,
-                  'central_or_shifts_local'    : central_or_shifts_local,
-                  'evtCategories'              : [ self.evtCategory_inclusive ],
-                  'selectBDT'                  : self.isBDTtraining,
-                  'syncOutput'                 : syncOutput,
-                  'syncTree'                   : syncTree,
-                  'syncRLE'                    : syncRLE,
-                  'apply_hlt_filter'           : self.hlt_filter,
-                  'useNonNominal'              : self.use_nonnominal,
-                  'fillGenEvtHistograms'       : True,
-                  'useAssocJetBtag'            : self.do_sync,
-                  'branchName_memOutput'       : branchName_memOutput,
-                  'branchName_hmeOutput'       : branchName_hmeOutput,
-                  'fillHistograms_BDT'         : self.fillHistograms_BDT,
-                  'fillHistograms_LBN'         : self.fillHistograms_LBN,
-                  'fillHistograms_resonant'    : self.fillHistograms_resonant,
-                  'fillHistograms_spin0'       : self.fillHistograms_spin0,
-                  'fillHistograms_spin2'       : self.fillHistograms_spin2,
+                    key_copyHistogram_histogramDirs += "_data"
+                self.jobOptions_copyHistograms[key_copyHistograms_job] = {
+                  'inputFile' : self.outputFile_hadd_stage1[key_hadd_stage1_job],
+                  'cfgFile_modified' : cfgFile_modified,
+                  'outputFile' : outputFile,
+                  'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
+                  'categories' : [ histogramDir_part1 + '/' + histogramDir_part2 for histogramDir_part2 in self.copyHistogram_histogramDirs[key_copyHistogram_histogramDirs] ]
                 }
-                self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
+                self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
+              #----------------------------------------------------------------------------
 
-                # initialize input and output file names for hadd_stage1
-                key_hadd_stage1_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, "hadd")
-                hadd_stage1_job_tuple = (process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-                key_hadd_stage1_job = getKey(*hadd_stage1_job_tuple)
-                if not key_hadd_stage1_job in self.inputFiles_hadd_stage1:
-                  self.inputFiles_hadd_stage1[key_hadd_stage1_job] = []
-                self.inputFiles_hadd_stage1[key_hadd_stage1_job].append(self.jobOptions_analyze[key_analyze_job]['histogramFile'])
-                self.outputFile_hadd_stage1[key_hadd_stage1_job] = os.path.join(self.dirs[key_hadd_stage1_dir][DKEY_HIST],
-                                                                                "hadd_stage1_%s_%s_%s.root" % hadd_stage1_job_tuple)
+              # add output files of copyHistograms jobs to list of input files for hadd_stage1_5
+              for category in self.datacard_categories:
+                key_copyHistograms_job = getKey(category, process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                key_hadd_stage1_5_dir = getKey("hadd", lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                hadd_stage1_5_job_tuple = (category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                key_hadd_stage1_5_job = getKey(*hadd_stage1_5_job_tuple)
+                if not key_hadd_stage1_5_job in self.inputFiles_hadd_stage1_5:
+                  self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job] = []
+                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job].append(self.jobOptions_copyHistograms[key_copyHistograms_job]['outputFile'])
+                self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job] = os.path.join(self.dirs[key_hadd_stage1_5_dir][DKEY_HIST],
+                                                                                    "hadd_stage1_5_%s_%s_%s_%s.root" % hadd_stage1_5_job_tuple)
 
             if self.isBDTtraining or self.do_sync:
               continue
 
-            #----------------------------------------------------------------------------
-            # split hadd_stage1 files into separate files, one for each event category
-            for category in self.datacard_categories:
-              key_hadd_stage1_job = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-              key_copyHistograms_dir = getKey(process_name, lepton_charge_selection, lepton_selection_and_frWeight, "copyHistograms")
-              copyHistograms_job_tuple = (category, process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-              key_copyHistograms_job = getKey(*copyHistograms_job_tuple)
-              cfgFile_modified = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_CFGS], "copyHistograms_%s_%s_%s_%s_cfg.py" % copyHistograms_job_tuple)
-              outputFile = os.path.join(self.dirs[key_copyHistograms_dir][DKEY_HIST], "copyHistograms_%s_%s_%s_%s.root" % copyHistograms_job_tuple)
-              histogramDir_part1 = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection)
-              key_copyHistogram_histogramDirs = category
-              if category == "makePlots":
-                if is_mc:
-                  key_copyHistogram_histogramDirs += "_mc"
-                else:
-                  key_copyHistogram_histogramDirs += "_data"
-              self.jobOptions_copyHistograms[key_copyHistograms_job] = {
-                'inputFile' : self.outputFile_hadd_stage1[key_hadd_stage1_job],
-                'cfgFile_modified' : cfgFile_modified,
-                'outputFile' : outputFile,
-                'logFile' : os.path.join(self.dirs[key_copyHistograms_dir][DKEY_LOGS], os.path.basename(cfgFile_modified).replace("_cfg.py", ".log")),
-                'categories' : [ histogramDir_part1 + '/' + histogramDir_part2 for histogramDir_part2 in self.copyHistogram_histogramDirs[key_copyHistogram_histogramDirs] ]
-              }
-              self.createCfg_copyHistograms(self.jobOptions_copyHistograms[key_copyHistograms_job])
-            #----------------------------------------------------------------------------
-
-            # add output files of copyHistograms jobs to list of input files for hadd_stage1_5
-            for category in self.datacard_categories:
-              key_copyHistograms_job = getKey(category, process_name, lepton_charge_selection, lepton_selection_and_frWeight)
-              key_hadd_stage1_5_dir = getKey("hadd", lepton_charge_selection, lepton_selection_and_frWeight)
-              hadd_stage1_5_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
-              key_hadd_stage1_5_job = getKey(*hadd_stage1_5_job_tuple)
-              if not key_hadd_stage1_5_job in self.inputFiles_hadd_stage1_5:
-                self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job] = []
-              self.inputFiles_hadd_stage1_5[key_hadd_stage1_5_job].append(self.jobOptions_copyHistograms[key_copyHistograms_job]['outputFile'])
-              self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job] = os.path.join(self.dirs[key_hadd_stage1_5_dir][DKEY_HIST],
-                                                                                  "hadd_stage1_5_%s_%s_%s.root" % hadd_stage1_5_job_tuple)
-
-          if self.isBDTtraining or self.do_sync:
-            continue
-
-          if self.ttbar_syst_enabled:
-            for category in self.datacard_categories:
-              addSysTT_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
-              key_addSysTT_job = getKey(*addSysTT_job_tuple)
-              key_addSysTT_dir = getKey("addSysTT")
-              self.jobOptions_addSysTT[key_addSysTT_job] = {
-                'inputFile' : self.outputFile_hadd_stage1_5[key_addSysTT_job],
-                'cfgFile_modified' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_CFGS], "addSysTT_%s_%s_%s_cfg.py" % addSysTT_job_tuple),
-                'outputFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_HIST], "addSysTT_%s_%s_%s.root" % addSysTT_job_tuple),
-                'logFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_LOGS], "addSysTT_%s_%s_%s.log" % addSysTT_job_tuple),
-                'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
-                'process_output' : "addSysTT"
-              }
-              self.createCfg_addSysTT(self.jobOptions_addSysTT[key_addSysTT_job])
-
-          for category in self.datacard_categories:
-            # sum fake background contributions for the total of all MC sample
-            # input processes: TT_fake, TTW_fake, TTWW_fake, ...
-            # output process: fakes_mc
-            key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
-            key_addBackgrounds_dir = getKey("addBackgrounds")
-            addBackgrounds_job_fakes_tuple = ("fakes_mc", category, lepton_charge_selection, lepton_selection_and_frWeight)
-            key_addBackgrounds_job_fakes = getKey(*addBackgrounds_job_fakes_tuple)
-            sample_categories = []
-            sample_categories.extend(self.nonfake_backgrounds)
-            processes_input = []
-            for sample_category in sample_categories:
-              processes_input.append("%s_fake" % sample_category)
-            self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes] = {
-              'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
-              'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_fakes_tuple),
-              'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s.root" % addBackgrounds_job_fakes_tuple),
-              'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s.log" % addBackgrounds_job_fakes_tuple),
-              'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
-              'processes_input' : processes_input,
-              'process_output' : "fakes_mc",
-              'max_depth_recursion' : self.max_depth_recursion
-            }
-            self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes])
-
-            # sum conversion background contributions for the total of all MC sample
-            # input processes: TT_Convs, TTW_Convs, TTWW_Convs, ...
-            # output process: Convs
-            addBackgrounds_job_Convs_tuple = ("Convs", category, lepton_charge_selection, lepton_selection)
-            key_addBackgrounds_job_Convs = getKey(*addBackgrounds_job_Convs_tuple)
-            sample_categories = []
-            sample_categories.extend(self.nonfake_backgrounds)
-            processes_input = []
-            for sample_category in self.convs_backgrounds:
-              processes_input.append("%s_Convs" % sample_category)
-            self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs] = {
-              'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
-              'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_Convs_tuple),
-              'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s.root" % addBackgrounds_job_Convs_tuple),
-              'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s.log" % addBackgrounds_job_Convs_tuple),
-              'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
-              'processes_input' : processes_input,
-              'process_output' : "Convs",
-              'max_depth_recursion' : self.max_depth_recursion
-            }
-            self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs])
-
-            # sum signal contributions from gluon fusion and VBF HH production,
-            # separately for "nonfake" and "fake" contributions
-            genMatch_categories = [ "nonfake", "fake" ]
-            for genMatch_category in genMatch_categories:
-              for signal_base, signal_input in self.signal_io.items():
-                addBackgrounds_job_signal_tuple = (category, lepton_charge_selection, lepton_selection, signal_base, genMatch_category)
-                key_addBackgrounds_job_signal = getKey(*addBackgrounds_job_signal_tuple)
-                if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
-                  continue
-                processes_input = signal_input
-                process_output = signal_base
-                if genMatch_category == "fake":
-                  processes_input = [ process_input + "_fake" for process_input in processes_input ]
-                  process_output += "_fake"
-                self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
-                  'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
-                  'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_signal_tuple),
-                  'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s_%s.root" % addBackgrounds_job_signal_tuple),
-                  'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s_%s.log" % addBackgrounds_job_signal_tuple),
-                  'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection) ],
-                  'processes_input' : processes_input,
-                  'process_output' : process_output,
-                  'max_depth_recursion' : self.max_depth_recursion
-                }
-                self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal])
-                key_hadd_stage2_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
-                if not key_hadd_stage2_job in self.inputFiles_hadd_stage2:
-                  self.inputFiles_hadd_stage2[key_hadd_stage2_job] = []
-                if lepton_selection == "Tight":
-                  self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
-
-            # initialize input and output file names for hadd_stage2
-            key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
-            key_hadd_stage2_dir = getKey("hadd", lepton_charge_selection, lepton_selection_and_frWeight)
-            hadd_stage2_job_tuple = (category, lepton_charge_selection, lepton_selection_and_frWeight)
-            key_hadd_stage2_job = getKey(*hadd_stage2_job_tuple)
-            if not key_hadd_stage2_job in self.inputFiles_hadd_stage2:
-              self.inputFiles_hadd_stage2[key_hadd_stage2_job] = []
-            if lepton_selection == "Tight":
-              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
-              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
-            self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
             if self.ttbar_syst_enabled:
-              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
-            self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
-                                                                            "hadd_stage2_%s_%s_%s.root" % hadd_stage2_job_tuple)
+              for category in self.datacard_categories:
+                addSysTT_job_tuple = (category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+                key_addSysTT_job = getKey(*addSysTT_job_tuple)
+                key_addSysTT_dir = getKey("addSysTT")
+                self.jobOptions_addSysTT[key_addSysTT_job] = {
+                  'inputFile' : self.outputFile_hadd_stage1_5[key_addSysTT_job],
+                  'cfgFile_modified' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_CFGS], "addSysTT_%s_%s_%s_%s_cfg.py" % addSysTT_job_tuple),
+                  'outputFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_HIST], "addSysTT_%s_%s_%s_%s.root" % addSysTT_job_tuple),
+                  'logFile' : os.path.join(self.dirs[key_addSysTT_dir][DKEY_LOGS], "addSysTT_%s_%s_%s_%s.log" % addSysTT_job_tuple),
+                  'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection, dyBgr_option) ],
+                  'process_output' : "addSysTT"
+                }
+                self.createCfg_addSysTT(self.jobOptions_addSysTT[key_addSysTT_job])
+
+            for category in self.datacard_categories:
+              # sum fake background contributions for the total of all MC sample
+              # input processes: TT_fake, TTW_fake, TTWW_fake, ...
+              # output process: fakes_mc
+              key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+              key_addBackgrounds_dir = getKey("addBackgrounds")
+              addBackgrounds_job_fakes_tuple = ("fakes_mc", category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+              key_addBackgrounds_job_fakes = getKey(*addBackgrounds_job_fakes_tuple)
+              sample_categories = []
+              sample_categories.extend(self.nonfake_backgrounds)
+              processes_input = []
+              for sample_category in sample_categories:
+                processes_input.append("%s_fake" % sample_category)
+              self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes] = {
+                'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+                'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_fakes_tuple),
+                'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s_%s.root" % addBackgrounds_job_fakes_tuple),
+                'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s_%s.log" % addBackgrounds_job_fakes_tuple),
+                'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection, dyBgr_option) ],
+                'processes_input' : processes_input,
+                'process_output' : "fakes_mc",
+                'max_depth_recursion' : self.max_depth_recursion
+              }
+              self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes])
+
+              # sum conversion background contributions for the total of all MC sample
+              # input processes: TT_Convs, TTW_Convs, TTWW_Convs, ...
+              # output process: Convs
+              addBackgrounds_job_Convs_tuple = ("Convs", category, lepton_charge_selection, dyBgr_option, lepton_selection)
+              key_addBackgrounds_job_Convs = getKey(*addBackgrounds_job_Convs_tuple)
+              sample_categories = []
+              sample_categories.extend(self.nonfake_backgrounds)
+              processes_input = []
+              for sample_category in self.convs_backgrounds:
+                processes_input.append("%s_Convs" % sample_category)
+              self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs] = {
+                'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+                'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_Convs_tuple),
+                'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s_%s.root" % addBackgrounds_job_Convs_tuple),
+                'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s_%s.log" % addBackgrounds_job_Convs_tuple),
+                'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection, dyBgr_option) ],
+                'processes_input' : processes_input,
+                'process_output' : "Convs",
+                'max_depth_recursion' : self.max_depth_recursion
+              }
+              self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs])
+
+              # sum signal contributions from gluon fusion and VBF HH production,
+              # separately for "nonfake" and "fake" contributions
+              genMatch_categories = [ "nonfake", "fake" ]
+              for genMatch_category in genMatch_categories:
+                for signal_base, signal_input in self.signal_io.items():
+                  addBackgrounds_job_signal_tuple = (category, lepton_charge_selection, dyBgr_option, lepton_selection, signal_base, genMatch_category)
+                  key_addBackgrounds_job_signal = getKey(*addBackgrounds_job_signal_tuple)
+                  if key_addBackgrounds_job_signal in self.jobOptions_addBackgrounds_sum.keys():
+                    continue
+                  processes_input = signal_input
+                  process_output = signal_base
+                  if genMatch_category == "fake":
+                    processes_input = [ process_input + "_fake" for process_input in processes_input ]
+                    process_output += "_fake"
+                  self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal] = {
+                    'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+                    'cfgFile_modified' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_CFGS], "addBackgrounds_%s_%s_%s_%s_%s_%s_cfg.py" % addBackgrounds_job_signal_tuple),
+                    'outputFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_HIST], "addBackgrounds_%s_%s_%s_%s_%s_%s.root" % addBackgrounds_job_signal_tuple),
+                    'logFile' : os.path.join(self.dirs[key_addBackgrounds_dir][DKEY_LOGS], "addBackgrounds_%s_%s_%s_%s_%s_%s.log" % addBackgrounds_job_signal_tuple),
+                    'categories' : [ getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, lepton_charge_selection, dyBgr_option) ],
+                    'processes_input' : processes_input,
+                    'process_output' : process_output,
+                    'max_depth_recursion' : self.max_depth_recursion
+                  }
+                  self.createCfg_addBackgrounds(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal])
+                  key_hadd_stage2_job = getKey(category, lepton_charge_selection, lepton_selection_and_frWeight)
+                  if not key_hadd_stage2_job in self.inputFiles_hadd_stage2:
+                    self.inputFiles_hadd_stage2[key_hadd_stage2_job] = []
+                  if lepton_selection == "Tight":
+                    self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
+
+              # initialize input and output file names for hadd_stage2
+              key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+              key_hadd_stage2_dir = getKey("hadd", lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+              hadd_stage2_job_tuple = (category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+              key_hadd_stage2_job = getKey(*hadd_stage2_job_tuple)
+              if not key_hadd_stage2_job in self.inputFiles_hadd_stage2:
+                self.inputFiles_hadd_stage2[key_hadd_stage2_job] = []
+              if lepton_selection == "Tight":
+                self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
+                self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
+              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
+              if self.ttbar_syst_enabled:
+                self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
+              self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
+                                                                              "hadd_stage2_%s_%s_%s_%s.root" % hadd_stage2_job_tuple)
 
     if self.isBDTtraining or self.do_sync:
       if self.is_sbatch:
@@ -721,167 +794,229 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for lepton_charge_selection in self.lepton_charge_selections:
+      for dyBgr_option in self.dyBgr_options:
+        for category in self.datacard_categories:
+          key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
+          key_addFakes_dir = getKey("addBackgroundLeptonFakes")
+          addFakes_job_tuple = (category, lepton_charge_selection, dyBgr_option)
+          key_addFakes_job = getKey("data_fakes", *addFakes_job_tuple)
+          self.jobOptions_addFakes[key_addFakes_job] = {
+            'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+            'cfgFile_modified' : os.path.join(self.dirs[key_addFakes_dir][DKEY_CFGS], "addBackgroundLeptonFakes_%s_%s_%s_cfg.py" % addFakes_job_tuple),
+            'outputFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_HIST], "addBackgroundLeptonFakes_%s_%s_%s.root" % addFakes_job_tuple),
+            'logFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_LOGS], "addBackgroundLeptonFakes_%s_%s_%s.log" % addFakes_job_tuple),
+            'category_signal' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, dyBgr_option),
+            'category_sideband' : getHistogramDir(self.evtCategory_inclusive, "Fakeable", "enabled", lepton_charge_selection, dyBgr_option),
+            'max_depth_recursion' : self.max_depth_recursion
+          }
+          self.createCfg_addFakes(self.jobOptions_addFakes[key_addFakes_job])
+          key_hadd_stage2_job = getKey(category, lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Tight", "disabled"))
+          self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
+
+    #--------------------------------------------------------------------------
+    # CV: add histograms in signal region and 0 b-jet application region for data-driven Drell-Yan background estimation,
+    #     so that "data_DY" histograms can be computed
+    if "OS" in self.lepton_charge_selections:
+      lepton_charge_selection = "OS"
       for category in self.datacard_categories:
-        key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
-        key_addFakes_dir = getKey("addBackgroundLeptonFakes")
-        addFakes_job_tuple = (category, lepton_charge_selection)
-        key_addFakes_job = getKey("data_fakes", *addFakes_job_tuple)
-        self.jobOptions_addFakes[key_addFakes_job] = {
-          'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
-          'cfgFile_modified' : os.path.join(self.dirs[key_addFakes_dir][DKEY_CFGS], "addBackgroundLeptonFakes_%s_%s_cfg.py" % addFakes_job_tuple),
-          'outputFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_HIST], "addBackgroundLeptonFakes_%s_%s.root" % addFakes_job_tuple),
-          'logFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_LOGS], "addBackgroundLeptonFakes_%s_%s.log" % addFakes_job_tuple),
-          'category_signal' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection),
-          'category_sideband' : getHistogramDir(self.evtCategory_inclusive, "Fakeable", "enabled", lepton_charge_selection),
-          'max_depth_recursion' : self.max_depth_recursion
-        }
-        self.createCfg_addFakes(self.jobOptions_addFakes[key_addFakes_job])
-        key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-        self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
+        key_hadd_stage1_6_dir = getKey("hadd", lepton_charge_selection, "disabled", get_lepton_selection_and_frWeight("Tight", "disabled"))
+        hadd_stage1_6_job_tuple = (category, lepton_charge_selection, "disabled", get_lepton_selection_and_frWeight("Tight", "disabled"))
+        key_hadd_stage1_6_job = getKey(*hadd_stage1_6_job_tuple)
+        if key_hadd_stage1_6_job not in self.inputFiles_hadd_stage1_6:
+          self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job] = []
+        for dyBgr_option in self.dyBgr_options:
+          key_addFakes_job = getKey("data_fakes", category, lepton_charge_selection, dyBgr_option)
+          self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
+          key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Tight", "disabled"))
+          self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
+          self.outputFile_hadd_stage1_6[key_hadd_stage1_6_job] = os.path.join(self.dirs[key_hadd_stage1_6_dir][DKEY_HIST],
+                                                                              "hadd_stage1_6_%s_%s_%s_%s.root" % hadd_stage1_6_job_tuple)
+    #--------------------------------------------------------------------------
+
+    logging.info("Creating configuration files to run 'addBackgroundDY'")
+    if "OS" in self.lepton_charge_selections:
+      lepton_charge_selection = "OS"
+      for dyBgr_option in self.dyBgr_options:
+        if not dyBgr_option in [ "applyWeights_data", "applyWeights_mc" ]:
+          continue
+        for category in self.datacard_categories:
+          key_hadd_stage1_6_job = getKey(category, lepton_charge_selection, "disabled", get_lepton_selection_and_frWeight("Tight", "disabled"))
+          key_addDYBgr_dir = getKey("addBackgroundDY")
+          key_addDYBgr_job = getKey(category, dyBgr_option)
+          process_output = None
+          if dyBgr_option == "applyWeights_data":
+            process_output = "data_DY"
+          elif dyBgr_option == "applyWeights_mc":
+            process_output = "DY_mcClosure"
+          else:
+            raise ValueError("Internal logic error")
+          self.jobOptions_addDYBgr[key_addDYBgr_job] = {
+            'inputFile' : self.outputFile_hadd_stage1_6[key_hadd_stage1_6_job],
+            'cfgFile_modified' : os.path.join(self.dirs[key_addDYBgr_dir][DKEY_CFGS], "addBackgroundDY_%s_%s_cfg.py" % (category, dyBgr_option)),
+            'outputFile' : os.path.join(self.dirs[key_addDYBgr_dir][DKEY_HIST], "addBackgroundDY_%s_%s.root" % (category, dyBgr_option)),
+            'logFile' : os.path.join(self.dirs[key_addDYBgr_dir][DKEY_LOGS], "addBackgroundDY_%s_%s.log" % (category, dyBgr_option)),
+            'category_signal' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, "disabled"),
+            'category_sideband' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, dyBgr_option),
+            'process_output' : process_output
+          }
+          self.createCfg_addDYBgr(self.jobOptions_addDYBgr[key_addDYBgr_job])
+          key_hadd_stage2_job = getKey(category, lepton_charge_selection, "disabled", get_lepton_selection_and_frWeight("Tight", "disabled"))
+          self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addDYBgr[key_addDYBgr_job]['outputFile'])    
 
     logging.info("Creating configuration files to run 'prepareDatacards'")
     histogramsToFit = self.histograms_to_fit.keys()
     for lepton_charge_selection in self.lepton_charge_selections:
-      for histogramToFit in histogramsToFit:
-        histogramOptions = self.histogramOptions[histogramToFit]
-        category = histogramOptions['category']
-        logging.info(" ...  for category %s, histogram %s" % (category, histogramToFit))
+      for dyBgr_option in self.dyBgr_options:
+        if not dyBgr_option == "disabled":
+          continue
+        for histogramToFit in histogramsToFit:
+          histogramOptions = self.histogramOptions[histogramToFit]
+          category = histogramOptions['category']
+          logging.info(" ...  for category %s, histogram %s" % (category, histogramToFit))
 
-        prep_dcard_HH = set()
-        for sample_name, sample_info in self.samples.items():
-          if not sample_info["use_it"]:
-            continue
-          sample_category = sample_info["sample_category"]
-          if sample_category.startswith("signal"):
-            sample_category = sample_info["sample_category_hh"]
-            doAdd = False
-            if "BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit:
-              if histogramOptions['type'] == "nonresonant" and 'nonresonant' in sample_category:
-                doAdd = True
-              if histogramOptions['type'] == "resonant":
-                if histogramOptions['spin'] == "spin0" and "spin0" in sample_category and "_%s_" % histogramOptions['masspoint'] in sample_category:
+          prep_dcard_HH = set()
+          for sample_name, sample_info in self.samples.items():
+            if not sample_info["use_it"]:
+              continue
+            sample_category = sample_info["sample_category"]
+            if sample_category.startswith("signal"):
+              sample_category = sample_info["sample_category_hh"]
+              doAdd = False
+              if "BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit:
+                if histogramOptions['type'] == "nonresonant" and 'nonresonant' in sample_category:
                   doAdd = True
-                if histogramOptions['spin'] == "spin2" and "spin2" in sample_category and "_%s_" % histogramOptions['masspoint'] in sample_category:
-                  doAdd = True
-            else:
-              doAdd = True
-            if doAdd:
-              if "_bbvv" in sample_category:
-                prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbzz").replace("_sl", ""))
-                prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbww").replace("_sl", ""))
-                if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
-                  prep_dcard_HH.add(sample_category.replace("_bbvv", "").replace("_sl", ""))
-              elif "_bbtt" in sample_category:
-                prep_dcard_HH.add(sample_category.replace("_sl", ""))
-                if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
-                  prep_dcard_HH.add(sample_category.replace("_bbtt", "").replace("_sl", ""))
+                if histogramOptions['type'] == "resonant":
+                  if histogramOptions['spin'] == "spin0" and "spin0" in sample_category and "_%s_" % histogramOptions['masspoint'] in sample_category:
+                    doAdd = True
+                  if histogramOptions['spin'] == "spin2" and "spin2" in sample_category and "_%s_" % histogramOptions['masspoint'] in sample_category:
+                    doAdd = True
               else:
-                raise ValueError("Failed to identify relevant HH decay mode(s) for 'sample_category' = %s !!" % sample_category)
-        prep_dcard_HH = list(prep_dcard_HH)
-        prep_dcard_H = []
-        prep_dcard_other_nonfake_backgrounds = []
-        for process in self.nonfake_backgrounds:
-          if process in [ "VH", "WH", "ZH", "TH", "tHq", "tHW", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
-            prep_dcard_H.append("%s_hww" % process)
-            prep_dcard_H.append("%s_hzz" % process)
-            prep_dcard_H.append("%s_htt" % process)
-            prep_dcard_H.append("%s_hbb" % process)
-          else:
-            prep_dcard_other_nonfake_backgrounds.append(process)
-        self.prep_dcard_processesToCopy = [ "data_obs" ] + prep_dcard_HH + prep_dcard_H + prep_dcard_other_nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
-
-        key_hadd_stage2_job = getKey(category, lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-        key_prep_dcard_dir = getKey("prepareDatacards")
-        key_prep_dcard_job = getKey(category, lepton_charge_selection, histogramToFit)        
-        # CV: Temporary workaround to implement event categories 
-        #     implemented in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc and hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
-        #     The datacard extraction for these event categories needs to be implemented more properly later !!
-        histogramDir_modified = None
-        histogramToFit_modified = None
-        if histogramToFit.find("/") != -1:
-          histogramDir_modified = getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection) + "/" + histogramOptions['histogramDir']
-          histogramToFit_modified = histogramOptions['histogramName']
-          # CV: propagate histogram (re)binning options
-          self.histograms_to_fit[histogramToFit_modified] = self.histograms_to_fit[histogramToFit]
-        else:
-          histogramDir_modified = getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection)
-          histogramToFit_modified = histogramToFit
-        prep_dcard_job_tuple = (self.channel, category, lepton_charge_selection, histogramToFit_modified)
-        self.jobOptions_prep_dcard[key_prep_dcard_job] = {
-          'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-          'cfgFile_modified' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_%s_%s_%s_cfg.py" % prep_dcard_job_tuple),
-          'datacardFile' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s_%s_%s_%s.root" % prep_dcard_job_tuple),
-          'histogramDir' : histogramDir_modified,
-          'histogramToFit' : histogramToFit_modified,
-          'category' : category
-        }
-        self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
-        # add shape templates for the following systematic uncertainties:
-        #  - 'CMS_ttHl_Clos_norm_e'
-        #  - 'CMS_ttHl_Clos_shape_e'
-        #  - 'CMS_ttHl_Clos_norm_m'
-        #  - 'CMS_ttHl_Clos_shape_m'
-        key_add_syst_fakerate_dir = getKey("addSystFakeRates")
-        add_syst_fakerate_job_tuple = (self.channel, category, lepton_charge_selection, histogramToFit_modified)
-        key_add_syst_fakerate_job = getKey(category, lepton_charge_selection, histogramToFit)
-        self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job] = {
-          'inputFile' : self.jobOptions_prep_dcard[key_prep_dcard_job]['datacardFile'],
-          'cfgFile_modified' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_CFGS], "addSystFakeRates_%s_%s_%s_%s_cfg.py" % add_syst_fakerate_job_tuple),
-          'outputFile' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_DCRD], "addSystFakeRates_%s_%s_%s_%s.root" % add_syst_fakerate_job_tuple),
-          'category' : category,
-          'histogramToFit' : histogramToFit_modified,
-          'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png"),
-          'max_depth_recursion' : self.max_depth_recursion
-        }
-        for lepton_type in [ 'e', 'm' ]:
-          lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type
-          if lepton_mcClosure not in self.lepton_selections:
-            continue
-          lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_mcClosure, "enabled")
-          key_addBackgrounds_job_fakes = getKey("fakes_mc", category, lepton_charge_selection, lepton_selection_and_frWeight)
-          histogramDir_nominal = histogramDir_modified
-          histogramDir_mcClosure = self.mcClosure_dir[lepton_mcClosure]
+                doAdd = True
+              if doAdd:
+                if "_bbvv" in sample_category:
+                  prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbzz").replace("_sl", ""))
+                  prep_dcard_HH.add(sample_category.replace("_bbvv", "_bbww").replace("_sl", ""))
+                  if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
+                    prep_dcard_HH.add(sample_category.replace("_bbvv", "").replace("_sl", ""))
+                elif "_bbtt" in sample_category:
+                  prep_dcard_HH.add(sample_category.replace("_sl", ""))
+                  if not ("BDTOutput" in histogramToFit or "MVAOutput" in histogramToFit):
+                    prep_dcard_HH.add(sample_category.replace("_bbtt", "").replace("_sl", ""))
+                else:
+                  raise ValueError("Failed to identify relevant HH decay mode(s) for 'sample_category' = %s !!" % sample_category)
+          prep_dcard_HH = list(prep_dcard_HH)
+          prep_dcard_H = []
+          prep_dcard_other_nonfake_backgrounds = []
+          for process in self.nonfake_backgrounds:
+            if process in [ "VH", "WH", "ZH", "TH", "tHq", "tHW", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
+              prep_dcard_H.append("%s_hww" % process)
+              prep_dcard_H.append("%s_hzz" % process)
+              prep_dcard_H.append("%s_htt" % process)
+              prep_dcard_H.append("%s_hbb" % process)
+            else:
+              prep_dcard_other_nonfake_backgrounds.append(process)
+          if lepton_charge_selection == "OS":
+            if "applyWeights_data" in self.dyBgr_options:
+              prep_dcard_other_nonfake_backgrounds.append("data_DY")
+            if "applyWeights_mc" in self.dyBgr_options:
+              prep_dcard_other_nonfake_backgrounds.append("DY_mcClosure")
+          self.prep_dcard_processesToCopy = [ "data_obs" ] + prep_dcard_HH + prep_dcard_H + prep_dcard_other_nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
+ 
+          key_hadd_stage2_job = getKey(category, lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Tight", "disabled"))
+          key_prep_dcard_dir = getKey("prepareDatacards")
+          key_prep_dcard_job = getKey(category, lepton_charge_selection, dyBgr_option, histogramToFit)        
+          # CV: Temporary workaround to implement event categories 
+          #     implemented in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc and hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+          #     The datacard extraction for these event categories needs to be implemented more properly later !!
+          histogramDir_modified = None
+          histogramToFit_modified = None
           if histogramToFit.find("/") != -1:
-            histogramDir_nominal = histogramDir_nominal + "/fakes_mc"
-            histogramDir_mcClosure = histogramDir_mcClosure + "/" + histogramToFit[:histogramToFit.rfind("/")]
-            histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/fakes_mc")
+            histogramDir_modified = getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, dyBgr_option) + "/" + histogramOptions['histogramDir']
+            histogramToFit_modified = histogramOptions['histogramName']
+            # CV: propagate histogram (re)binning options
+            self.histograms_to_fit[histogramToFit_modified] = self.histograms_to_fit[histogramToFit]
           else:
-            histogramDir_nominal = histogramDir_nominal + "/sel/evt/fakes_mc"
-            histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/fakes_mc"
-          self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
-            'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
-            'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-            'histogramName_nominal_%s' % lepton_type : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
-            'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
-            'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
-          })
-        self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
+            histogramDir_modified = getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, dyBgr_option)
+            histogramToFit_modified = histogramToFit
+          prep_dcard_job_tuple = (self.channel, category, lepton_charge_selection, dyBgr_option, histogramToFit_modified)
+          self.jobOptions_prep_dcard[key_prep_dcard_job] = {
+            'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+            'cfgFile_modified' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_CFGS], "prepareDatacards_%s_%s_%s_%s_%s_cfg.py" % prep_dcard_job_tuple),
+            'datacardFile' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s_%s_%s_%s_%s.root" % prep_dcard_job_tuple),
+            'histogramDir' : histogramDir_modified,
+            'histogramToFit' : histogramToFit_modified,
+            'category' : category
+          }
+          self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
+          # add shape templates for the following systematic uncertainties:
+          #  - 'CMS_ttHl_Clos_norm_e'
+          #  - 'CMS_ttHl_Clos_shape_e'
+          #  - 'CMS_ttHl_Clos_norm_m'
+          #  - 'CMS_ttHl_Clos_shape_m'
+          key_add_syst_fakerate_dir = getKey("addSystFakeRates")
+          add_syst_fakerate_job_tuple = (self.channel, category, lepton_charge_selection, dyBgr_option, histogramToFit_modified)
+          key_add_syst_fakerate_job = getKey(category, lepton_charge_selection, dyBgr_option, histogramToFit)
+          self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job] = {
+            'inputFile' : self.jobOptions_prep_dcard[key_prep_dcard_job]['datacardFile'],
+            'cfgFile_modified' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_CFGS], "addSystFakeRates_%s_%s_%s_%s_%s_cfg.py" % add_syst_fakerate_job_tuple),
+            'outputFile' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_DCRD], "addSystFakeRates_%s_%s_%s_%s_%s.root" % add_syst_fakerate_job_tuple),
+            'category' : category,
+            'histogramToFit' : histogramToFit_modified,
+            'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png"),
+            'max_depth_recursion' : self.max_depth_recursion
+          }
+          for lepton_type in [ 'e', 'm' ]:
+            lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type
+            if lepton_mcClosure not in self.lepton_selections:
+              continue
+            lepton_selection_and_frWeight = get_lepton_selection_and_frWeight(lepton_mcClosure, "enabled")
+            key_addBackgrounds_job_fakes = getKey("fakes_mc", category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
+            histogramDir_nominal = histogramDir_modified
+            histogramDir_mcClosure = self.mcClosure_dir[lepton_mcClosure]
+            if histogramToFit.find("/") != -1:
+              histogramDir_nominal = histogramDir_nominal + "/fakes_mc"
+              histogramDir_mcClosure = histogramDir_mcClosure + "/" + histogramToFit[:histogramToFit.rfind("/")]
+              histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/fakes_mc")
+            else:
+              histogramDir_nominal = histogramDir_nominal + "/sel/evt/fakes_mc"
+              histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/fakes_mc"
+            self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
+              'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
+              'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+              'histogramName_nominal_%s' % lepton_type : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
+              'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
+              'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
+            })
+          self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
 
     logging.info("Creating configuration files to run 'makePlots'")
     for lepton_charge_selection in self.lepton_charge_selections:
-      key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-      key_makePlots_dir = getKey("makePlots")
-      key_makePlots_job = getKey(lepton_charge_selection)
-      self.jobOptions_make_plots[key_makePlots_job] = {
-        'executable' : self.executable_make_plots,
-        'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-        'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_%s_%s_cfg.py" % (self.channel, lepton_charge_selection)),
-        'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_%s_%s.png" % (self.channel, lepton_charge_selection)),
-        'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection),
-        'label' : '2l',
-        'make_plots_backgrounds' : self.make_plots_backgrounds
-      }
-      self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
-      if "Fakeable_mcClosure" in self.lepton_selections: #TODO
-        key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
-        key_makePlots_job = getKey("Fakeable_mcClosure", lepton_charge_selection)
+      for dyBgr_option in self.dyBgr_options:
+        if not dyBgr_option == "disabled":
+          continue
+        key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Tight", "disabled"))
+        key_makePlots_dir = getKey("makePlots")
+        key_makePlots_job = getKey(lepton_charge_selection)
         self.jobOptions_make_plots[key_makePlots_job] = {
-          'executable' : self.executable_make_plots_mcClosure,
+          'executable' : self.executable_make_plots,
           'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-          'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_mcClosure_%s_%s_cfg.py" % (self.channel, lepton_charge_selection)),
-          'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_mcClosure_%s_%s.png" % (self.channel, lepton_charge_selection))
+          'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_%s_%s_%s_cfg.py" % (self.channel, lepton_charge_selection, dyBgr_option)),
+          'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_%s_%s_%s.png" % (self.channel, lepton_charge_selection, dyBgr_option)),
+          'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, "disabled"),
+          'label' : '2l',
+          'make_plots_backgrounds' : self.make_plots_backgrounds
         }
-        self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job])
+        self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
+        if "Fakeable_mcClosure" in self.lepton_selections: #TODO
+          key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+          key_makePlots_job = getKey("Fakeable_mcClosure", lepton_charge_selection)
+          self.jobOptions_make_plots[key_makePlots_job] = {
+            'executable' : self.executable_make_plots_mcClosure,
+            'inputFile' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+            'cfgFile_modified' : os.path.join(self.dirs[key_makePlots_dir][DKEY_CFGS], "makePlots_mcClosure_%s_%s_%s_cfg.py" % (self.channel, lepton_charge_selection, dyBgr_option)),
+            'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_mcClosure_%s_%s_%s.png" % (self.channel, lepton_charge_selection, dyBgr_option))
+          }
+          self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job])
 
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
@@ -902,6 +1037,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addFakes)
       self.sbatchFile_addFakes = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addFakes_%s.py" % self.channel)
       self.createScript_sbatch_addFakes(self.executable_addFakes, self.sbatchFile_addFakes, self.jobOptions_addFakes)
+      logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addDYBgr)
+      self.sbatchFile_addDYBgr = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addDYBgr_%s.py" % self.channel)
+      self.createScript_sbatch(self.executable_addDYBgr, self.sbatchFile_addDYBgr, self.jobOptions_addDYBgr)
 
     logging.info("Creating Makefile")
     lines_makefile = []

@@ -132,6 +132,8 @@
 #include "hhAnalysis/bbww/interface/EventCategory_hh_bb2l_LBN.h" // EventCategory_hh_bb2l_LBN
 #include "hhAnalysis/bbww/interface/analysisAuxFunctions_hh_bbWW.h" // makeTMVAInterface, makeTensorFlowInterfaceLBN
 #include "hhAnalysis/bbww/interface/dumpGenParticles.h" // dumpGenParticles
+#include "hhAnalysis/bbww/interface/DYBgrWeightInterface_hh_bb2l.h" // DYBgrWeightInterface_hh_bb2l
+#include "hhAnalysis/bbww/interface/DYBgrHistManager_hh_bb2l.h" // DYBgrHistManager_hh_bb2l
 
 #include <boost/algorithm/string/predicate.hpp> // boost::starts_with()
 
@@ -237,6 +239,32 @@ int main(int argc, char* argv[])
   ;
   const int electronSelection = get_selection(electronSelection_string);
   const int muonSelection     = get_selection(muonSelection_string);
+
+  enum { kDYbgr_disabled, kDYbgr_compWeights, kDYbgr_applyWeights };
+  std::string dyBgr_option_string = cfg_analyze.getParameter<std::string>("dyBgr_option");
+  int dyBgr_option = -1;
+  bool dyBgr_isMCClosure = false;
+  if ( dyBgr_option_string == "disabled" ) 
+  {
+    dyBgr_option = kDYbgr_disabled;
+  }
+  else if ( dyBgr_option_string == "compWeights" ) 
+  {
+    dyBgr_option = kDYbgr_compWeights;
+  }
+  else if ( dyBgr_option_string == "applyWeights_data" || dyBgr_option_string == "applyWeights_mc" ) 
+  {
+    dyBgr_option = kDYbgr_applyWeights;
+    if ( dyBgr_option_string == "applyWeights_mc" ) dyBgr_isMCClosure = true;
+    else dyBgr_isMCClosure = false;
+  }
+  else throw cms::Exception("analyze_hh_bb2l")
+    << "Invalid Configuration parameter 'dyBgr_option' = " << dyBgr_option_string << " !!\n";
+  DYBgrWeightInterface_hh_bb2l* dyBgrWeightInterface = nullptr;
+  if ( dyBgr_option == kDYbgr_applyWeights )
+  {
+    dyBgrWeightInterface = new DYBgrWeightInterface_hh_bb2l(era, dyBgr_isMCClosure);
+  }
 
   bool apply_leptonGenMatching = cfg_analyze.getParameter<bool>("apply_leptonGenMatching");
   std::vector<leptonGenMatchEntry> leptonGenMatch_definitions = getLeptonGenMatch_definitions_2lepton(true);
@@ -683,6 +711,11 @@ int main(int argc, char* argv[])
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
   RecoJetCollectionSelectorAK8_hh_bbWW_Hbb jetSelectorAK8_Hbb(era, -1, isDEBUG);
+  if ( dyBgr_option == kDYbgr_compWeights || dyBgr_option == kDYbgr_applyWeights )
+  {
+    jetSelectorAK8_Hbb.getSelector().set_min_numSubJetsBtag_loose(-1);
+    jetSelectorAK8_Hbb.getSelector().set_min_numSubJetsBtag_medium(-1);
+  }
 
   GenParticleReader* genBJetReader = nullptr;
   GenParticleReader* genWBosonReader = nullptr;
@@ -790,6 +823,7 @@ int main(int argc, char* argv[])
     EvtHistManager2_hh_bb2l* evt_;
     //MEMHistManager_hh_bb2l* mem_;
     HHGenKinematicsHistManager* genKinematics_HH_;
+    DYBgrHistManager_hh_bb2l* dyBgr_;
     DatacardHistManager_hh* datacard_BDT_;
     DatacardHistManager_hh_multiclass* datacard_LBN_;
     EvtYieldHistManager* evtYield_;
@@ -867,7 +901,7 @@ int main(int argc, char* argv[])
         selHistManager->metFilters_->bookHistograms(fs);
         selHistManager->evt_ = new EvtHistManager2_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->evt_->bookHistograms(fs);
+        selHistManager->evt_->bookHistograms(fs);        
         //selHistManager->mem_ = new MEMHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
         //  Form("%s/sel/mem", histogramDir.data()), era_string, central_or_shift));
         //selHistManager->mem_->bookHistograms(fs);
@@ -875,6 +909,16 @@ int main(int argc, char* argv[])
           Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeight_calc, HHWeight_calc_LOtoNLO);
         selHistManager->genKinematics_HH_->bookHistograms(fs);
+        if ( dyBgr_option == kDYbgr_compWeights )
+        {
+          selHistManager->dyBgr_ = new DYBgrHistManager_hh_bb2l(makeHistManager_cfg(process_and_genMatch,
+          Form("%s/sel/dyBgr", histogramDir.data()), era_string, central_or_shift));
+          selHistManager->dyBgr_->bookHistograms(fs);
+        }
+        else
+        {
+          selHistManager->dyBgr_ = nullptr;
+        }
       }
 
       //if ( fillHistograms_BDT )
@@ -984,7 +1028,7 @@ int main(int argc, char* argv[])
       "massLT",  "max_Lep_eta",
       "cosThetaS_Hbb", "cosThetaS_Hbb_reg",
       "mostFwdJet_eta", "mostFwdJet_pt", "mostFwdJet_phi", "mostFwdJet_E",
-      "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E"
+      "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E", "mjj_highestpt", "mjj_closeToH"
     );
     bdt_filler->register_variable<int_type>(
       "lep1_charge", "lep2_charge", "numElectrons", 
@@ -1008,6 +1052,24 @@ int main(int argc, char* argv[])
   const edm::ParameterSet cutFlowTableCfg = makeHistManager_cfg(
     process_string, Form("%s/sel/cutFlow", histogramDir.data()), era_string, central_or_shift_main
   );
+  std::string bjet_cut_option, ZbosonMass_cut_option;
+  if ( dyBgr_option == kDYbgr_disabled )
+  {
+    bjet_cut_option = "";
+    ZbosonMass_cut_option = "";
+  }
+  else if ( dyBgr_option == kDYbgr_compWeights )
+  {
+    bjet_cut_option = " (disabled)";
+    ZbosonMass_cut_option = " (inverted)";
+  }
+  else if ( dyBgr_option == kDYbgr_applyWeights )
+  {
+    bjet_cut_option = " (inverted)";
+    ZbosonMass_cut_option = "";
+  }
+  std::string bjet_cut = Form(">= 1 medium b-jet%s", bjet_cut_option.data());
+  std::string ZbosonMass_cut = Form("Z-boson mass veto%s", ZbosonMass_cut_option.data());
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
     "object multiplicity",
@@ -1021,10 +1083,9 @@ int main(int argc, char* argv[])
     "trigger & dataset matching",
     "HLT filter matching",
     ">= 2 jets from H->bb",
-    ">= 1 medium b-jet",
-    //"m(ll) < 76 GeV",
+    bjet_cut,
     "m(ll) > 12 GeV",
-    "Z-boson mass veto",
+    ZbosonMass_cut,
     "MEt filters",
     "signal region veto"
   };
@@ -1297,6 +1358,7 @@ int main(int argc, char* argv[])
       jetCleanerAK4_dR04   (jet_ptrs_ak4, fakeableLeptons)
     ;
     const std::vector<const RecoJet*> selJetsAK4 = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet*> selJetsAK4_pt50 = jetSelectorAK4_wpt50(selJetsAK4);
     const std::vector<const RecoJet*> selBJetsAK4_loose = jetSelectorAK4_bTagLoose(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet*> selBJetsAK4_medium = jetSelectorAK4_bTagMedium(cleanedJetsAK4_wrtLeptons, isHigherPt);
     const std::vector<const RecoJet *> selJetsForward = jetSelectorForward(cleanedJetsAK4_wrtLeptons, isHigherPt);
@@ -1619,6 +1681,9 @@ int main(int argc, char* argv[])
     // select jets from H->bb decay
     const std::vector<const RecoJetAK8*> cleanedJetsAK8_wrtLeptons = jetCleanerAK8_dR08(jet_ptrs_ak8, fakeableLeptons);
     const std::vector<const RecoJetAK8*> selJetsAK8_Hbb = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherCSV_ak8);
+    const std::vector<const RecoJetAK8*> selJetsAK8 = jetSelectorAK8_Hbb(cleanedJetsAK8_wrtLeptons, isHigherPt);
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtselJetsAK8 = jetCleanerAK4_dR12(cleanedJetsAK4_wrtLeptons, selJetsAK8);
+    const std::vector<const RecoJet*> cleanedJetsAK4_wrtselJetsAK8_wpt50 = jetSelectorAK4_wpt50(cleanedJetsAK4_wrtselJetsAK8);
     const std::vector<const RecoJet*> selJetsAK4_Hbb = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherCSV);
     std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb(selJetsAK8_Hbb, selJetsAK4_Hbb);
     //std::vector<selJetsType_Hbb> selJetsT_Hbb = selectJets_Hbb({}, selJetsAK4_Hbb);
@@ -1651,14 +1716,65 @@ int main(int argc, char* argv[])
 
     int numBJets_loose, numBJets_medium;
     countBJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose, numBJets_medium);
-    if ( !(numBJets_medium >= 1) ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection\n";
+    if ( dyBgr_option == kDYbgr_applyWeights )
+    {
+      if ( !(numBJets_medium == 0) ) {
+        if ( run_lumi_eventSelector ) {
+          std::cout << "event " << eventInfo.str() << " FAILS medium b-jet veto." << std::endl;
+        }
+        continue;
       }
-      continue;
     }
-    cutFlowTable.update(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
-    cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
+    else if ( dyBgr_option == kDYbgr_disabled )
+    {
+      if ( !(numBJets_medium >= 1) ) {
+        if ( run_lumi_eventSelector ) {
+          std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection." << std::endl;
+        }
+        continue;
+      }
+    }
+    cutFlowTable.update(bjet_cut, evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms(bjet_cut, evtWeightRecorder.get(central_or_shift_main));
+
+//--- compute MHT and linear MET discriminant (met_LD)
+    const RecoMEt met = metReader->read();
+    const Particle::LorentzVector& metP4 = met.p4();
+    const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
+    Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, {}, selJetsAK4_mht);
+    double met_LD = compMEt_LD(metP4, mhtP4);
+
+//--- compute HT and STMET variables used for signal extraction in EXO analyses
+    std::vector<const RecoJetBase*> selJets_HT_and_STMET;
+    selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
+    double HT = ( selJetsAK8.size()==0 ) ? compHT({}, {}, selJetsAK4_pt50) :
+      compHT({}, {}, selJetsAK8, cleanedJetsAK4_wrtselJetsAK8_wpt50);
+    double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
+    double mjj_highestpt = ( selJetsAK8.size() ) ? (selJetsAK8[0]->subJet1()->p4()+selJetsAK8[0]->subJet2()->p4()).mass() :
+      (( selJetsAK4.size() >= 2 ) ? (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass() : -1);
+    double mjj_closeToH = (selJetsAK8.size()) ? mjj_closeToHiggs(selJetsAK8) : mjj_closeToHiggs(selJetsAK4);
+
+    if ( dyBgr_option == kDYbgr_applyWeights )
+    {
+      int numBJets_loose_and_notMedium = numBJets_loose - numBJets_medium;
+      // CV: divide event number by two to avoid that BDT/LBN trained on odd events is always evaluated for events with two b-jets
+      //     and BDT/LBN trained on even events is always evaluated for events with one b-jet
+      if ( (eventInfo.event / 2) % 2 == 1 ) numBJets_medium = 2;
+      else                                  numBJets_medium = 1;
+      numBJets_loose = numBJets_medium + numBJets_loose_and_notMedium;
+      double dyBgrWeight = 0.;
+      if ( selJetAK8_Hbb )
+      {
+        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop());          
+      }
+      else
+      {
+        dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT, numBJets_medium);
+      }
+      // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
+      dyBgrWeight *= 2.;
+      evtWeightRecorder.record_dyBgrWeight(dyBgrWeight);
+    }
 
     // select VBF jet candidates
     const std::vector<const RecoJet*> selJetsAK4_vbf_beforeCleaning = jetSelectorAK4_vbf(jet_ptrs_ak4, isHigherPt);
@@ -1678,15 +1794,6 @@ int main(int argc, char* argv[])
       printCollection("selJetsAK4_vbf", selJetsAK4_vbf);
     }
 
-    //if ( !((selLeptonP4_lead + selLeptonP4_sublead).mass() < 76.) ) {
-    //  if ( run_lumi_eventSelector ) {
-    //    std::cout << "event " << eventInfo.str() << " FAILS m_ll < 76 GeV cut." << std::endl;
-    //  }
-    //  continue;
-    //}
-    //cutFlowTable.update("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
-    //cutFlowHistManager->fillHistograms("m(ll) < 76 GeV", evtWeightRecorder.get(central_or_shift_main));
-
     const bool failsLowMassVeto = isfailsLowMassVeto(preselLeptonsFullUncleaned);
     if ( failsLowMassVeto ) {
       if ( run_lumi_eventSelector ) {
@@ -1697,28 +1804,29 @@ int main(int argc, char* argv[])
     cutFlowTable.update("m(ll) > 12 GeV", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("m(ll) > 12 GeV", evtWeightRecorder.get(central_or_shift_main));
 
-    const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
-    if ( failsZbosonMassVeto ) {
-      if ( run_lumi_eventSelector ) {
-        std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
+    if ( dyBgr_option == kDYbgr_compWeights )
+    {
+      const double mass = (selLeptonP4_lead + selLeptonP4_sublead).mass();
+      if ( std::fabs(mass - z_mass) > z_window )
+      {
+        if ( run_lumi_eventSelector ) {
+          std::cout << "event " << eventInfo.str() << " FAILS Z-boson selection." << std::endl;
+        }
+        continue;
       }
-      continue;
     }
-    cutFlowTable.update("Z-boson mass veto", evtWeightRecorder.get(central_or_shift_main));
-    cutFlowHistManager->fillHistograms("Z-boson mass veto", evtWeightRecorder.get(central_or_shift_main));
-
-//--- compute MHT and linear MET discriminant (met_LD)
-    const RecoMEt met = metReader->read();
-    const Particle::LorentzVector& metP4 = met.p4();
-    const std::vector<const RecoJet*> selJetsAK4_mht = jetSelectorAK4_wPileupJetId(cleanedJetsAK4_wrtLeptons, isHigherPt);
-    Particle::LorentzVector mhtP4 = compMHT(fakeableLeptons, {}, selJetsAK4_mht);
-    double met_LD = compMEt_LD(metP4, mhtP4);
-
-    // compute HT and STMET variables used for signal extraction in EXO analyses
-    std::vector<const RecoJetBase*> selJets_HT_and_STMET;
-    selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
-    double HT = compHT(fakeableLeptons, {}, selJets_HT_and_STMET);
-    double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
+    else
+    {
+      const bool failsZbosonMassVeto = isfailsZbosonMassVeto(preselLeptonsFull);
+      if ( failsZbosonMassVeto ) {
+        if ( run_lumi_eventSelector ) {
+          std::cout << "event " << eventInfo.str() << " FAILS Z-boson veto." << std::endl;
+        }
+        continue;
+      }
+    }
+    cutFlowTable.update(ZbosonMass_cut, evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms(ZbosonMass_cut, evtWeightRecorder.get(central_or_shift_main));
 
     if ( apply_met_filters ) {
       if ( !metFilterSelector(metFilters) ) {
@@ -1879,7 +1987,6 @@ int main(int argc, char* argv[])
       tau21_Hbb = selJetAK8_Hbb->tau2()/selJetAK8_Hbb->tau1();
     }
     double dR_Hbb    = deltaR(selJetP4_Hbb_lead, selJetP4_Hbb_sublead);
-    
     double dPhi_Hbb  = TMath::Abs(deltaPhi(selJetP4_Hbb_lead.phi(), selJetP4_Hbb_sublead.phi())); // CV: map dPhi into interval [0..pi]
     double pT_Hbb    = HbbP4.pt();
     double eta_Hbb   = HbbP4.eta();
@@ -2172,7 +2279,9 @@ int main(int argc, char* argv[])
       {"lep1_e",                      selLepton_lead->p4().e()},
       {"eta_HHvis",                   eta_HHvis},
       {"dR_b1lep2",                   dR_b1lep2},
-      {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.}
+      {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
+      {"mjj_highestpt",          mjj_highestpt},
+      {"mjj_closeToH",           mjj_closeToH}
     };
 
     if ( bdt_filler )
@@ -2200,8 +2309,7 @@ int main(int argc, char* argv[])
                 if ( apply_HH_rwgt_LOtoNLO )
                   {
                     assert(HHWeight_calc_LOtoNLO);
-                    HHReweight *= HHWeight_calc_LOtoNLO->getReWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-                    //HHReweight *= HHWeight_calc_LOtoNLO->getReWeight_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+                    HHReweight *= HHWeight_calc_LOtoNLO->getReWeight_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
                   }
                 weightMapHH[HHWeightNames[i]] = HHReweight;
               }
@@ -2334,6 +2442,8 @@ int main(int argc, char* argv[])
           ("leadFwdJet_phi",              selJetsForward.size() >= 1 ? selJetsForward[0] -> phi() : -1000)
           ("leadFwdJet_E",                selJetsForward.size() >= 1 ? selJetsForward[0] -> p4().energy() : -1000)
           ("numJetsForward",              selJetsForward.size())
+          ("mjj_highestpt",               mjj_highestpt)
+          ("mjj_closeToH",                mjj_closeToH)
           ("lepPairType",                 fabs(selLepton_lead->pdgId()) == fabs(selLepton_sublead->pdgId()))
           (weightMapHH)
           .fill()
@@ -2465,11 +2575,26 @@ int main(int argc, char* argv[])
           {
             selHistManager->genKinematics_HH_->fillHistograms(evtWeight);
           }
+          if ( dyBgr_option == kDYbgr_compWeights )
+          {
+            bool isBoosted = false;
+            double selJetAK8_Hbb_msoftdrop = -1.;
+            if ( selJetAK8_Hbb )
+            {
+              isBoosted = true;
+              selJetAK8_Hbb_msoftdrop = selJetAK8_Hbb->msoftdrop();
+            }
+            // CV: number of b-jets gets overwritten in case data-driven Drell-Yan background estimation is used,
+            //     so better recompute number of jets passing loose and medium b-tagging criteria to exclude any "side-effects"
+            int numBJets_loose_tmp, numBJets_medium_tmp;
+            countBJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose_tmp, numBJets_medium_tmp);
+            selHistManager->dyBgr_->fillHistograms(HT, selJetAK8_Hbb_msoftdrop, isBoosted, numBJets_medium_tmp, evtWeight);
+          }
         }
 
         if ( fillHistograms_BDT )
         {
-          eventCategory_BDT.set(selJetAK8_Hbb != nullptr, selBJetsAK4_medium.size(), isVBF);
+          eventCategory_BDT.set(selJetAK8_Hbb != nullptr, numBJets_medium, isVBF);
           selHistManager->datacard_BDT_->fillHistograms(
             bdtOutputs_resonant_spin2,
             bdtOutputs_resonant_spin0,
@@ -2480,12 +2605,12 @@ int main(int argc, char* argv[])
         }
         if ( fillHistograms_LBN )
         {
-          eventCategory_LBN.set(selJetAK8_Hbb != nullptr, selBJetsAK4_medium.size(), isVBF);
+          eventCategory_LBN.set(selJetAK8_Hbb != nullptr, numBJets_medium, isVBF);
           selHistManager->datacard_LBN_->fillHistograms(
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+            {{"HH", -1}}, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
           );
         }

@@ -19,10 +19,9 @@
 #include <iomanip>
 #include <assert.h>
 
-//int colors[6] = { kBlack, kGreen - 6, kBlue - 7,  kMagenta - 7, kCyan - 6, kRed - 6 };
-int colors[6] = { kBlack, kRed, kBlue - 7,  kMagenta - 7, kCyan - 6, kRed - 6 };
-int markerStyles[6] = { 24, 25, 20, 21, 22, 23 };
-int markerSizes[6] = { 1, 1, 1, 1, 1, 1 };
+int colors[7] = { kBlack, kRed, kBlue - 7,  kMagenta - 7, kCyan - 6, kRed - 6, 3 };
+int markerStyles[7] = { 24, 25, 20, 21, 22, 23, 20 };
+int markerSizes[7] = { 1, 1, 1, 1, 1, 1, 1 };
 
 TH1* loadHistogram(TFile* inputFile, const std::string& histogramName)
 {
@@ -96,6 +95,7 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
 		           TH1* histogram4, const std::string& legendEntry4,
 		           TH1* histogram5, const std::string& legendEntry5,
 		           TH1* histogram6, const std::string& legendEntry6,
+                           TH1* histogram7, const std::string& legendEntry7,
 		           const std::string& xAxisTitle, double xAxisOffset,
 		           bool useLogScale, double yMin, double yMax, const std::string& yAxisTitle, double yAxisOffset,
 		           double legendX0, double legendY0, 
@@ -203,6 +203,16 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
     histogram6->SetMarkerSize(markerSizes[5]);
     histogram6->Draw("e1psame");
     legend->AddEntry(histogram6, legendEntry6.data(), "p");
+  }
+
+  if ( histogram7 ) {
+    histogram7->SetLineColor(colors[6]);
+    histogram7->SetLineWidth(2);
+    histogram7->SetMarkerColor(colors[6]);
+    histogram7->SetMarkerStyle(markerStyles[6]);
+    histogram7->SetMarkerSize(markerSizes[6]);
+    histogram7->Draw("e1psame");
+    legend->AddEntry(histogram7, legendEntry7.data(), "p");
   }
 
   legend->Draw();
@@ -314,6 +324,15 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
       histogram6_div_ref->Draw("e1psame");
     }
   }
+
+  TH1* histogram7_div_ref = 0;
+  if ( histogram7 ) {
+    std::string histogramName7_div_ref = std::string(histogram7->GetName()).append("_div_").append(histogram_ref->GetName());
+    histogram7_div_ref = compRatioHistogram(histogramName7_div_ref, histogram7, histogram_ref);
+    if ( histogram7_div_ref ) {
+      histogram7_div_ref->Draw("e1psame");
+    }
+  }
   
   canvas->Update();
   size_t idx = outputFileName.find_last_of('.');
@@ -331,6 +350,7 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
   delete histogram4_div_ref;
   delete histogram5_div_ref;
   delete histogram6_div_ref;
+  delete histogram7_div_ref;
   delete topPad;
   delete bottomPad;
   delete canvas;  
@@ -343,6 +363,7 @@ void showHistograms(double canvasSizeX, double canvasSizeY,
 		    TH1* histogram4, const std::string& legendEntry4,
 		    TH1* histogram5, const std::string& legendEntry5,
 		    TH1* histogram6, const std::string& legendEntry6,
+                    TH1* histogram7, const std::string& legendEntry7,
 		    const std::string& xAxisTitle, double xAxisOffset,
 		    bool useLogScale, double yMin, double yMax, const std::string& yAxisTitle, double yAxisOffset,
 		    double legendX0, double legendY0, 
@@ -435,6 +456,16 @@ void showHistograms(double canvasSizeX, double canvasSizeY,
     legend->AddEntry(histogram6, legendEntry6.data(), "p");
   }
 
+  if ( histogram7 ) {
+    histogram7->SetLineColor(colors[6]);
+    histogram7->SetLineWidth(2);
+    histogram7->SetMarkerColor(colors[6]);
+    histogram7->SetMarkerStyle(markerStyles[6]);
+    histogram7->SetMarkerSize(1);
+    histogram7->Draw("e1psame");
+    legend->AddEntry(histogram7, legendEntry7.data(), "p");
+  }
+
   legend->Draw();
 
   canvas->Update();
@@ -468,23 +499,41 @@ void compareGenKinematics_HH_forPetr()
     assert(0);
   }
   
-  std::string directoryName_LO  = "analyze_HHatLOvsNLO/LO";
-  std::string directoryName_NLO = "analyze_HHatLOvsNLO/NLO";
+  std::string directoryName_LO_woLOReweighting_woNLOReweighting = "analyze_HHatLOvsNLO/LO_woLOReweighting_woNLOReweighting";
+  std::string directoryName_LO_wLOReweighting_woNLOReweighting  = "analyze_HHatLOvsNLO/LO_wLOReweighting_woNLOReweighting";
+  std::string directoryName_LO_woLOReweighting_wNLOReweighting  = "analyze_HHatLOvsNLO/LO_woLOReweighting_wNLOReweighting";
+  std::string directoryName_LO_wLOReweighting_wNLOReweighting   = "analyze_HHatLOvsNLO/LO_wLOReweighting_wNLOReweighting";
+  std::string directoryName_NLO                                 = "analyze_HHatLOvsNLO/NLO";
 
-  std::string histogramName_gen_mHH_LO_unweighted = Form("%s/genHH_mass_unweighted", directoryName_LO.data());
-  TH1* histogram_gen_mHH_LO_unweighted = loadHistogram(inputFile, histogramName_gen_mHH_LO_unweighted);
-  histogram_gen_mHH_LO_unweighted->Scale(1./histogram_gen_mHH_LO_unweighted->Integral());
-  divideByBinWidth(histogram_gen_mHH_LO_unweighted);
+  std::string histogramName_gen_mHH_LO_woLOReweighting_woNLOReweight = Form("%s/genHH_mass_unweighted", directoryName_LO_woLOReweighting_woNLOReweighting.data());
+  TH1* histogram_gen_mHH_LO_woLOReweighting_woNLOReweight = loadHistogram(inputFile, histogramName_gen_mHH_LO_woLOReweighting_woNLOReweight);
+  histogram_gen_mHH_LO_woLOReweighting_woNLOReweight->Scale(1./histogram_gen_mHH_LO_woLOReweighting_woNLOReweight->Integral());
+  divideByBinWidth(histogram_gen_mHH_LO_woLOReweighting_woNLOReweight);
 
-  std::string histogramName_gen_mHH_LO_reweighted_V1 = Form("%s/genHH_mass_reweighted_V1", directoryName_LO.data());
-  TH1* histogram_gen_mHH_LO_reweighted_V1 = loadHistogram(inputFile, histogramName_gen_mHH_LO_reweighted_V1);
-  histogram_gen_mHH_LO_reweighted_V1->Scale(1./histogram_gen_mHH_LO_reweighted_V1->Integral());
-  divideByBinWidth(histogram_gen_mHH_LO_reweighted_V1);
+  std::string histogramName_gen_mHH_LO_wLOReweighting_woNLOReweight = Form("%s/genHH_mass_unweighted", directoryName_LO_wLOReweighting_woNLOReweighting.data());
+  TH1* histogram_gen_mHH_LO_wLOReweighting_woNLOReweight = loadHistogram(inputFile, histogramName_gen_mHH_LO_wLOReweighting_woNLOReweight);
+  histogram_gen_mHH_LO_wLOReweighting_woNLOReweight->Scale(1./histogram_gen_mHH_LO_wLOReweighting_woNLOReweight->Integral());
+  divideByBinWidth(histogram_gen_mHH_LO_wLOReweighting_woNLOReweight);
+  
+  std::string histogramName_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1 = Form("%s/genHH_mass_reweighted_V1", directoryName_LO_woLOReweighting_wNLOReweighting.data());
+  TH1* histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1 = loadHistogram(inputFile, histogramName_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1);
+  histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1->Scale(1./histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1->Integral());
+  divideByBinWidth(histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1);
 
-  std::string histogramName_gen_mHH_LO_reweighted_V2 = Form("%s/genHH_mass_reweighted_V2", directoryName_LO.data());
-  TH1* histogram_gen_mHH_LO_reweighted_V2 = loadHistogram(inputFile, histogramName_gen_mHH_LO_reweighted_V2);
-  histogram_gen_mHH_LO_reweighted_V2->Scale(1./histogram_gen_mHH_LO_reweighted_V2->Integral());
-  divideByBinWidth(histogram_gen_mHH_LO_reweighted_V2);
+  std::string histogramName_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2 = Form("%s/genHH_mass_reweighted_V2", directoryName_LO_woLOReweighting_wNLOReweighting.data());
+  TH1* histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2 = loadHistogram(inputFile, histogramName_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2);
+  histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2->Scale(1./histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2->Integral());
+  divideByBinWidth(histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2);
+
+  std::string histogramName_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1 = Form("%s/genHH_mass_reweighted_V1", directoryName_LO_wLOReweighting_wNLOReweighting.data());
+  TH1* histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1 = loadHistogram(inputFile, histogramName_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1);
+  histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1->Scale(1./histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1->Integral());
+  divideByBinWidth(histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1);
+
+  std::string histogramName_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2 = Form("%s/genHH_mass_reweighted_V2", directoryName_LO_wLOReweighting_wNLOReweighting.data());
+  TH1* histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2 = loadHistogram(inputFile, histogramName_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2);
+  histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2->Scale(1./histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2->Integral());
+  divideByBinWidth(histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2);
 
   std::string histogramName_gen_mHH_NLO = Form("%s/genHH_mass_unweighted", directoryName_NLO.data());
   TH1* histogram_gen_mHH_NLO = loadHistogram(inputFile, histogramName_gen_mHH_NLO);
@@ -494,21 +543,22 @@ void compareGenKinematics_HH_forPetr()
   std::string outputFileName_gen_mHH = Form("plots/compareGenKinematics_HH_forPetr_gen_mHH.png");
   showHistograms_wRatio(1050, 1050,
                         histogram_gen_mHH_NLO, "NLO", 
-                        histogram_gen_mHH_LO_unweighted, "LO (unweighted)",
-                        histogram_gen_mHH_LO_reweighted_V1, "LO (reweighted V1)",
-                        histogram_gen_mHH_LO_reweighted_V2, "LO (reweighted V2)",
-                        nullptr, "",
-                        nullptr, "",
+                        histogram_gen_mHH_LO_woLOReweighting_woNLOReweight, "LO SM (unweighted)",
+                        histogram_gen_mHH_LO_wLOReweighting_woNLOReweight, "LO #Sigma (unweighted)",
+                        histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V1, "LO SM (reweighted V1)",
+                        histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V1, "LO #Sigma (reweighted V1)",
+                        histogram_gen_mHH_LO_woLOReweighting_wNLOReweighting_V2, "LO SM (reweighted V2)",
+                        histogram_gen_mHH_LO_wLOReweighting_wNLOReweighting_V2, "LO #Sigma (reweighted V2)",
                         "gen. m_{HH} [GeV]", 1.2,
                         true, 1.e-7, 1.e-2, "dN/dm_{HH} [1/GeV]", 1.2,
                         0.51, 0.69,
                         outputFileName_gen_mHH);
 
-  std::string histogramName_weights_V1 = Form("%s/HHReweight_V1_vs_genHH_mass", directoryName_LO.data());
+  std::string histogramName_weights_V1 = Form("%s/HHReweight_V1_vs_genHH_mass", directoryName_LO_woLOReweighting_wNLOReweighting.data());
   TH2* histogram2d_weights_V1 = loadHistogram2d(inputFile, histogramName_weights_V1);
   TProfile* histogram_weights_V1 = histogram2d_weights_V1->ProfileX("avHHReweight_V1");
 
-  std::string histogramName_weights_V2 = Form("%s/HHReweight_V2_vs_genHH_mass", directoryName_LO.data());
+  std::string histogramName_weights_V2 = Form("%s/HHReweight_V2_vs_genHH_mass", directoryName_LO_woLOReweighting_wNLOReweighting.data());
   TH2* histogram2d_weights_V2 = loadHistogram2d(inputFile, histogramName_weights_V2);
   TProfile* histogram_weights_V2 = histogram2d_weights_V2->ProfileX("avHHReweight_V2");
 
@@ -516,6 +566,7 @@ void compareGenKinematics_HH_forPetr()
   showHistograms(1050, 1050,
                  histogram_weights_V1, "V1",
                  histogram_weights_V2, "V2",
+                 nullptr, "",
                  nullptr, "",
                  nullptr, "",
                  nullptr, "",
