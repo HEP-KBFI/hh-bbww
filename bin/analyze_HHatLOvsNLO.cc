@@ -24,19 +24,19 @@
 #include "tthAnalysis/HiggsToTauTau/interface/WeightHistManager.h" // WeightHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/LHEInfoHistManager.h" // LHEInfoHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/generalAuxFunctions.h" // format_vstring
-#include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_cosThetaStar
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow, fillWithOverFlow2d, divideByBinWidth
-#include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper
+#include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper#include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
-#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface2.h" // HHWeightInterface2
-#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLOtoNLO.h" // HHWeightInterfaceLOtoNLO
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLO.h" // HHWeightInterfaceLO
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceNLO.h" // HHWeightInterfaceNLO
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
 #include "hhAnalysis/multilepton/interface/AnalysisConfig_hh.h" // AnalysisConfig_hh
-#include "hhAnalysis/multilepton/interface/HHGenKinematicsHistManager.h"
+#include "hhAnalysis/multilepton/interface/HHGenKinematicsHistManager.h" // HHGenKinematicsHistManager
 
-#include "hhAnalysis/bbww/interface/BM_list.h" // BMS
+#include "hhAnalysis/bbww/interface/BM_list.h" // BMs
 #include "hhAnalysis/bbww/interface/dumpGenParticles.h" // dumpGenParticles
+#include "hhAnalysis/bbww/interface/HHatLOvsNLOHistManager.h" // HHatLOvsNLOHistManager
 
 #include <TBenchmark.h> // TBenchmark
 #include <TString.h> // TString, Form
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 
 //--- keep track of time it takes the macro to execute
   TBenchmark clock;
-  clock.Start("analyze_hh_bb1l");
+  clock.Start("analyze_HHatLOvsNLO");
 
 //--- read python configuration parameters
   if ( !edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process") )
@@ -149,19 +149,20 @@ int main(int argc, char* argv[])
   std::vector<std::string> HHBMNames;
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
   const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
-  const HHWeightInterface2* HHWeight_calc = nullptr;
+  const HHWeightInterfaceLO* HHWeightLO_calc = nullptr;
+  const HHWeightInterfaceNLO* HHWeightNLO_calc_woCouplingBugFix = nullptr;
+  const HHWeightInterfaceNLO* HHWeightNLO_calc_wCouplingBugFix = nullptr;
   if(apply_HH_rwgt)
   {
-    HHWeight_calc = new HHWeightInterface2(hhWeight_cfg);
-    HHWeightNames = HHWeight_calc->get_weight_names();
-    HHBMNames = HHWeight_calc->get_bm_names();
-  }
-  const bool apply_HH_rwgt_LOtoNLO = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_LOtoNLO");
-  const bool apply_HH_coupling_fix_CMS = hhWeight_cfg.getParameter<bool>("apply_coupling_fix_Run2");
-  const HHWeightInterfaceLOtoNLO* HHWeight_calc_LOtoNLO = nullptr;
-  if(apply_HH_rwgt_LOtoNLO)
-  {
-    HHWeight_calc_LOtoNLO = new HHWeightInterfaceLOtoNLO(era, apply_HH_coupling_fix_CMS, 10., isDEBUG);
+    HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_cfg);
+    HHWeightNames = HHWeightLO_calc->get_weight_names();
+    HHBMNames = HHWeightLO_calc->get_bm_names();
+    // CV: applying the NLO weight without applying the LO weight as well
+    //     does not make sense for the Run-2 LO HH MC samples,
+    //     as the LO weight needs to be applied in order to fix the coupling bug 
+    //     present in the LO HH MC samples for 2016, 2017, and 2018        
+    HHWeightNLO_calc_woCouplingBugFix = new HHWeightInterfaceNLO(era, false, 10., isDEBUG);
+    HHWeightNLO_calc_wCouplingBugFix = new HHWeightInterfaceNLO(era, true, 10., isDEBUG);
   }
 
   EventInfoReader eventInfoReader(&eventInfo);
@@ -180,46 +181,55 @@ int main(int argc, char* argv[])
   inputTree->registerReader(psWeightReader);
 
 //--- declare histograms
-  struct selHistManagerType
-  {  
-    HHGenKinematicsHistManager* genKinematics_HH_;
-    WeightHistManager* weights_;
-  };
-
-  selHistManagerType* selHistManager = new selHistManagerType();
-  selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_string,
+  HHGenKinematicsHistManager* genKinematicsHistManager_HH = new HHGenKinematicsHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
-    analysisConfig, eventInfo, HHWeight_calc, HHWeight_calc_LOtoNLO);
-  selHistManager->genKinematics_HH_->bookHistograms(fs);
-  selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_string,
+    analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc_woCouplingBugFix);
+  genKinematicsHistManager_HH->bookHistograms(fs);
+
+  WeightHistManager* weightHistManager = new WeightHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-  selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "HHReweight", "HHReweight_LOtoNLO_V1", "HHReweight_LOtoNLO_V2" });
+  weightHistManager->bookHistograms(fs, { "genWeight", "pileupWeight", "HHReweight", "HHReweight_LOtoNLO_V1", "HHReweight_LOtoNLO_V2" });
 
   LHEInfoHistManager* lheInfoHistManager = new LHEInfoHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/lheInfo", histogramDir.data()), era_string, central_or_shift));
   lheInfoHistManager->bookHistograms(fs);
 
-  TFileDirectory dir = fs.mkdir(histogramDir);
+  HHatLOvsNLOHistManager* hhHistManager_woLOWeights_woNLOWeights = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+    Form("%s/sel/hh_woLOWeights_woNLOWeights", histogramDir.data()), era_string, central_or_shift));
+  hhHistManager_woLOWeights_woNLOWeights->bookHistograms(fs);
 
-  TH1* histogram_genHBoson_lead_pt = dir.make<TH1D>("genHBoson_lead_pt", "genHBoson_lead_pt", 50, 0., 500.);
-  TH1* histogram_genHBoson_lead_eta = dir.make<TH1D>("genHBoson_lead_eta", "genHBoson_lead_eta", 100, -5.0, +5.0);
-  TH1* histogram_genHBoson_sublead_pt = dir.make<TH1D>("genHBoson_sublead_pt", "genHBoson_sublead_pt", 50, 0., 500.);
-  TH1* histogram_genHBoson_sublead_eta = dir.make<TH1D>("genHBoson_sublead_eta", "genHBoson_sublead_eta", 100, -5.0, +5.0);
-  int numBins_genHH_mass = 36;
-  double binning_genHH_mass[] = {
-     250,  270,  290,  310,  330,  350,  370, 390,  410,  430, 
-     450,  470,  490,  510,  530,  550,  570, 590,  610,  630, 
-     650,  670,  700,  750,  800,  850,  900, 950, 1000, 1100, 
-    1200, 1300, 1400, 1500, 1750, 2000, 5000
+  struct selHistManagerType
+  {  
+    HHatLOvsNLOHistManager* wLOWeights_woNLOWeights_;
+    HHatLOvsNLOHistManager* woLOWeights_wNLOWeights_V1_;
+    HHatLOvsNLOHistManager* woLOWeights_wNLOWeights_V2_;
+    HHatLOvsNLOHistManager* wLOWeights_wNLOWeights_V1_;
+    HHatLOvsNLOHistManager* wLOWeights_wNLOWeights_V2_;
   };
-  //TH1* histogram_genHH_mass = dir.make<TH1D>("genHH_mass", "genHH_mass", 500, 0., 5000.);
-  TH1* histogram_genHH_mass_unweighted = dir.make<TH1D>("genHH_mass_unweighted", "genHH_mass_unweighted", numBins_genHH_mass, binning_genHH_mass);
-  TH1* histogram_genHH_mass_reweighted_V1 = dir.make<TH1D>("genHH_mass_reweighted_V1", "genHH_mass_reweighted_V1", numBins_genHH_mass, binning_genHH_mass);
-  TH1* histogram_genHH_mass_reweighted_V2 = dir.make<TH1D>("genHH_mass_reweighted_V2", "genHH_mass_reweighted_V2", numBins_genHH_mass, binning_genHH_mass);
-  TH1* histogram_genHH_pt = dir.make<TH1D>("genHH_pt", "genHH_pt", 50, 0., 500.);
-  TH1* histogram_genHH_absCosThetaStar = dir.make<TH1D>("genHBoson_sublead_eta", "genHBoson_sublead_eta", 10, 0., +1.);  
-  TH2* histogram_HHReweight_V1_vs_genHH_mass = dir.make<TH2D>("HHReweight_V1_vs_genHH_mass", "HHReweight_V1_vs_genHH_mass", numBins_genHH_mass, binning_genHH_mass, 200, 0., 2.);
-  TH2* histogram_HHReweight_V2_vs_genHH_mass = dir.make<TH2D>("HHReweight_V2_vs_genHH_mass", "HHReweight_V2_vs_genHH_mass", numBins_genHH_mass, binning_genHH_mass, 200, 0., 2.);
+
+  std::map<std::string, selHistManagerType*> hhHistManagers_weighted; // key = bmName;
+  for ( std::vector<std::string>::const_iterator HHBMName = HHBMNames.begin(); HHBMName != HHBMNames.end(); ++HHBMName )
+  {
+    selHistManagerType* hhHistManager_weighted = new selHistManagerType();
+    hhHistManager_weighted->wLOWeights_woNLOWeights_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_wLOWeights_woNLOWeights", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->wLOWeights_woNLOWeights_->bookHistograms(fs);
+    hhHistManager_weighted->woLOWeights_wNLOWeights_V1_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_woLOWeights_wNLOWeights_V1", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->woLOWeights_wNLOWeights_V1_->bookHistograms(fs);
+    hhHistManager_weighted->woLOWeights_wNLOWeights_V2_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_woLOWeights_wNLOWeights_V2", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->woLOWeights_wNLOWeights_V2_->bookHistograms(fs);
+    hhHistManager_weighted->wLOWeights_wNLOWeights_V1_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_wLOWeights_wNLOWeights_V1", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->wLOWeights_wNLOWeights_V1_->bookHistograms(fs);
+    hhHistManager_weighted->wLOWeights_wNLOWeights_V2_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_wLOWeights_wNLOWeights_V2", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->wLOWeights_wNLOWeights_V2_->bookHistograms(fs);
+    hhHistManagers_weighted[*HHBMName] = hhHistManager_weighted;
+  }
+
+  TFileDirectory dir = fs.mkdir(histogramDir);
 
   int analyzedEntries = 0;
   double analyzedEntries_weighted = 0.;
@@ -260,57 +270,55 @@ int main(int argc, char* argv[])
 
     double evtWeight = evtWeightRecorder.get(central_or_shift);
 
-    double HHReweight = 1.;
-    //if ( apply_HH_rwgt )
-    //{
-    //  assert(HHWeight_calc);
-    //  HHReweight = HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    //}
-    double HHReweight_LOtoNLO_V1 = 1.;
-    double HHReweight_LOtoNLO_V2 = 1.;
-    if ( apply_HH_rwgt_LOtoNLO )
-    {
-      assert(HHWeight_calc_LOtoNLO);
-      HHReweight_LOtoNLO_V1 = HHWeight_calc_LOtoNLO->getReWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      HHReweight_LOtoNLO_V2 = HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    }
+    double hhWeight_lo = HHWeightLO_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+    double hhWeight_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+    double hhWeight_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);    
+    double hhWeight_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+    double hhWeight_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
 
-    HHReweight *= HHReweight_LOtoNLO_V2;
+    genKinematicsHistManager_HH->fillHistograms(evtWeight*hhWeight_lo*hhWeight_nlo_woCouplingBugFix_V2);
+
+    weightHistManager->fillHistograms("genWeight", eventInfo.genWeight);
+    weightHistManager->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
+    weightHistManager->fillHistograms("HHReweight_lo", hhWeight_lo);
+    weightHistManager->fillHistograms("HHReweight_nlo_V1", hhWeight_nlo_woCouplingBugFix_V1);
+    weightHistManager->fillHistograms("HHReweight_nlo_V2", hhWeight_nlo_woCouplingBugFix_V2);
+
+    lheInfoHistManager->fillHistograms(*lheInfoReader, evtWeight*hhWeight_lo*hhWeight_nlo_woCouplingBugFix_V2);
 
     if ( genHBosons.size() == 2 )
     {
       std::vector<const GenParticle*> genHBosons_sorted = convert_to_ptrs(genHBosons);
       std::sort(genHBosons_sorted.begin(), genHBosons_sorted.end(), isHigherPt);
       const GenParticle* genHBoson_lead = genHBosons_sorted[0];
+      const Particle::LorentzVector genHBosonP4_lead = genHBoson_lead->p4();
       const GenParticle* genHBoson_sublead = genHBosons_sorted[1];
-      Particle::LorentzVector genHHP4 = genHBoson_lead->p4() + genHBoson_sublead->p4();
-      double genHH_mass = genHHP4.mass();
-      double genHH_pt = genHHP4.pt();
-      double genHH_cosThetaStar = std::fabs(comp_cosThetaStar(genHBoson_lead->p4(), genHBoson_sublead->p4()));
-      fillWithOverFlow(histogram_genHBoson_lead_pt, genHBoson_lead->pt(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHBoson_lead_eta, genHBoson_lead->eta(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHBoson_sublead_pt, genHBoson_sublead->pt(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHBoson_sublead_eta, genHBoson_sublead->eta(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHH_mass_unweighted, genHH_mass, evtWeight);
-      fillWithOverFlow(histogram_genHH_mass_reweighted_V1, genHH_mass, evtWeight*HHReweight_LOtoNLO_V1);
-      fillWithOverFlow(histogram_genHH_mass_reweighted_V2, genHH_mass, evtWeight*HHReweight_LOtoNLO_V2);
-      fillWithOverFlow(histogram_genHH_pt, genHH_pt, evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHH_absCosThetaStar, genHH_cosThetaStar, evtWeight*HHReweight);
-      fillWithOverFlow2d(histogram_HHReweight_V1_vs_genHH_mass, genHH_mass, HHReweight_LOtoNLO_V1, evtWeight);
-      fillWithOverFlow2d(histogram_HHReweight_V2_vs_genHH_mass, genHH_mass, HHReweight_LOtoNLO_V2, evtWeight);
-    }
-    
-    selHistManager->genKinematics_HH_->fillHistograms(evtWeight*HHReweight);
+      const Particle::LorentzVector genHBosonP4_sublead = genHBoson_sublead->p4();
 
-    selHistManager->weights_->fillHistograms("genWeight", eventInfo.genWeight);
-    selHistManager->weights_->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
-    selHistManager->weights_->fillHistograms("HHReweight_LOtoNLO_V1", HHReweight_LOtoNLO_V1);
-    selHistManager->weights_->fillHistograms("HHReweight_LOtoNLO_V2", HHReweight_LOtoNLO_V2);
-
-    lheInfoHistManager->fillHistograms(*lheInfoReader, evtWeight*HHReweight);
+      for ( std::vector<std::string>::const_iterator HHBMName = HHBMNames.begin(); HHBMName != HHBMNames.end(); ++HHBMName )
+      {
+        double hhReWeight_lo = HHWeightLO_calc->getWeight(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+        double hhReWeight_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+        double hhReWeight_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+        double hhReWeight_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+        double hhReWeight_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      
+        selHistManagerType* hhHistManager_weighted = hhHistManagers_weighted[*HHBMName];
+        hhHistManager_weighted->wLOWeights_woNLOWeights_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
+          evtWeight, hhWeight_lo*hhReWeight_lo);
+        hhHistManager_weighted->woLOWeights_wNLOWeights_V1_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
+          evtWeight, hhWeight_nlo_wCouplingBugFix_V1*hhReWeight_nlo_wCouplingBugFix_V1);
+        hhHistManager_weighted->woLOWeights_wNLOWeights_V2_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
+          evtWeight, hhWeight_nlo_wCouplingBugFix_V2*hhReWeight_nlo_wCouplingBugFix_V2);
+        hhHistManager_weighted->wLOWeights_wNLOWeights_V1_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
+          evtWeight, hhWeight_lo*hhReWeight_lo*hhWeight_nlo_woCouplingBugFix_V1*hhReWeight_nlo_woCouplingBugFix_V1);
+        hhHistManager_weighted->wLOWeights_wNLOWeights_V2_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
+          evtWeight, hhWeight_lo*hhReWeight_lo*hhWeight_nlo_woCouplingBugFix_V2*hhReWeight_nlo_woCouplingBugFix_V2);
+      }
+    } 
 
     ++analyzedEntries;
-    analyzedEntries_weighted += evtWeight*HHReweight;
+    analyzedEntries_weighted += evtWeight*hhWeight_lo*hhWeight_nlo_woCouplingBugFix_V2;
     histogram_analyzedEntries->Fill(0.); 
   }
 
@@ -319,10 +327,6 @@ int main(int argc, char* argv[])
             << inputTree -> getProcessedFileCount() << " file(s) (out of "
             << inputTree -> getFileCount() << ")\n"
             << " analyzed = " << analyzedEntries << " (weighted = " << analyzedEntries_weighted << ")\n";
-
-  //divideByBinWidth(histogram_genHH_mass_unweighted);
-  //divideByBinWidth(histogram_genHH_mass_reweighted_V1);
-  //divideByBinWidth(histogram_genHH_mass_reweighted_V2);
 
 //--- manually write histograms to output file
   fs.file().cd();
@@ -335,8 +339,9 @@ int main(int argc, char* argv[])
 
   delete eventWeightManager;
 
-  delete HHWeight_calc;
-  delete HHWeight_calc_LOtoNLO;
+  delete HHWeightLO_calc;
+  delete HHWeightNLO_calc_woCouplingBugFix;
+  delete HHWeightNLO_calc_wCouplingBugFix;
 
   delete inputTree;
 
