@@ -2281,7 +2281,8 @@ int main(int argc, char* argv[])
       {"dR_b1lep2",                   dR_b1lep2},
       {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
       {"mjj_highestpt",          mjj_highestpt},
-      {"mjj_closeToH",           mjj_closeToH}
+      {"mjj_closeToH",           mjj_closeToH},
+      {"HT",                     HT}
     };
 
     if ( bdt_filler )
