@@ -157,7 +157,8 @@ int main(int argc, char* argv[])
     HHBMNames = HHWeight_calc->get_bm_names();
   }
   const bool apply_HH_rwgt_LOtoNLO = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_LOtoNLO");
-  const bool apply_HH_coupling_fix_CMS = hhWeight_cfg.getParameter<bool>("apply_coupling_fix_Run2");
+  //const bool apply_HH_coupling_fix_CMS = hhWeight_cfg.getParameter<bool>("apply_coupling_fix_Run2");
+  const bool apply_HH_coupling_fix_CMS = false;
   const HHWeightInterfaceLOtoNLO* HHWeight_calc_LOtoNLO = nullptr;
   if(apply_HH_rwgt_LOtoNLO)
   {
@@ -212,7 +213,6 @@ int main(int argc, char* argv[])
      650,  670,  700,  750,  800,  850,  900, 950, 1000, 1100, 
     1200, 1300, 1400, 1500, 1750, 2000, 5000
   };
-  //TH1* histogram_genHH_mass = dir.make<TH1D>("genHH_mass", "genHH_mass", 500, 0., 5000.);
   TH1* histogram_genHH_mass_unweighted = dir.make<TH1D>("genHH_mass_unweighted", "genHH_mass_unweighted", numBins_genHH_mass, binning_genHH_mass);
   TH1* histogram_genHH_mass_reweighted_V1 = dir.make<TH1D>("genHH_mass_reweighted_V1", "genHH_mass_reweighted_V1", numBins_genHH_mass, binning_genHH_mass);
   TH1* histogram_genHH_mass_reweighted_V2 = dir.make<TH1D>("genHH_mass_reweighted_V2", "genHH_mass_reweighted_V2", numBins_genHH_mass, binning_genHH_mass);
@@ -261,11 +261,12 @@ int main(int argc, char* argv[])
     double evtWeight = evtWeightRecorder.get(central_or_shift);
 
     double HHReweight = 1.;
-    //if ( apply_HH_rwgt )
-    //{
-    //  assert(HHWeight_calc);
-    //  HHReweight = HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    //}
+    if ( apply_HH_rwgt )
+    {
+      assert(HHWeight_calc);
+      //HHReweight = HHWeight_calc->getReWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      HHReweight = HHWeight_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+    }
     double HHReweight_LOtoNLO_V1 = 1.;
     double HHReweight_LOtoNLO_V2 = 1.;
     if ( apply_HH_rwgt_LOtoNLO )
@@ -275,7 +276,7 @@ int main(int argc, char* argv[])
       HHReweight_LOtoNLO_V2 = HHWeight_calc_LOtoNLO->getReWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
     }
 
-    HHReweight *= HHReweight_LOtoNLO_V2;
+    //HHReweight *= HHReweight_LOtoNLO_V2;
 
     if ( genHBosons.size() == 2 )
     {
@@ -287,17 +288,17 @@ int main(int argc, char* argv[])
       double genHH_mass = genHHP4.mass();
       double genHH_pt = genHHP4.pt();
       double genHH_cosThetaStar = std::fabs(comp_cosThetaStar(genHBoson_lead->p4(), genHBoson_sublead->p4()));
-      fillWithOverFlow(histogram_genHBoson_lead_pt, genHBoson_lead->pt(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHBoson_lead_eta, genHBoson_lead->eta(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHBoson_sublead_pt, genHBoson_sublead->pt(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHBoson_sublead_eta, genHBoson_sublead->eta(), evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHH_mass_unweighted, genHH_mass, evtWeight);
-      fillWithOverFlow(histogram_genHH_mass_reweighted_V1, genHH_mass, evtWeight*HHReweight_LOtoNLO_V1);
-      fillWithOverFlow(histogram_genHH_mass_reweighted_V2, genHH_mass, evtWeight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow(histogram_genHBoson_lead_pt, genHBoson_lead->pt(), evtWeight*HHReweight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow(histogram_genHBoson_lead_eta, genHBoson_lead->eta(), evtWeight*HHReweight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow(histogram_genHBoson_sublead_pt, genHBoson_sublead->pt(), evtWeight*HHReweight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow(histogram_genHBoson_sublead_eta, genHBoson_sublead->eta(), evtWeight*HHReweight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow(histogram_genHH_mass_unweighted, genHH_mass, evtWeight*HHReweight);
+      fillWithOverFlow(histogram_genHH_mass_reweighted_V1, genHH_mass, evtWeight*HHReweight*HHReweight_LOtoNLO_V1);
+      fillWithOverFlow(histogram_genHH_mass_reweighted_V2, genHH_mass, evtWeight*HHReweight*HHReweight_LOtoNLO_V2);
       fillWithOverFlow(histogram_genHH_pt, genHH_pt, evtWeight*HHReweight);
-      fillWithOverFlow(histogram_genHH_absCosThetaStar, genHH_cosThetaStar, evtWeight*HHReweight);
-      fillWithOverFlow2d(histogram_HHReweight_V1_vs_genHH_mass, genHH_mass, HHReweight_LOtoNLO_V1, evtWeight);
-      fillWithOverFlow2d(histogram_HHReweight_V2_vs_genHH_mass, genHH_mass, HHReweight_LOtoNLO_V2, evtWeight);
+      fillWithOverFlow(histogram_genHH_absCosThetaStar, genHH_cosThetaStar, evtWeight*HHReweight*HHReweight_LOtoNLO_V2);
+      fillWithOverFlow2d(histogram_HHReweight_V1_vs_genHH_mass, genHH_mass, HHReweight*HHReweight_LOtoNLO_V1, evtWeight);
+      fillWithOverFlow2d(histogram_HHReweight_V2_vs_genHH_mass, genHH_mass, HHReweight*HHReweight_LOtoNLO_V2, evtWeight);
     }
     
     selHistManager->genKinematics_HH_->fillHistograms(evtWeight*HHReweight);
