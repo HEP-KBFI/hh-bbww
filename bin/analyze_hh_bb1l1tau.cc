@@ -1067,16 +1067,14 @@ int main(int argc, char* argv[])
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
       if ( apply_HH_rwgt_lo )
       {
-        double hhWeight_lo = HHWeightLO_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-        evtWeightRecorder.record_hhWeight_lo(hhWeight_lo);
+        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
         // CV: applying the NLO weight without applying the LO weight as well
         //     does not make sense for the Run-2 LO HH MC samples,
-        //     as the LO weight needs to be applied in order to fix the coupling bug 
+        //     as the LO weight needs to be applied in order to fix the coupling bug
         //     present in the LO HH MC samples for 2016, 2017, and 2018
-        if ( apply_HH_rwgt_nlo ) 
+        if ( apply_HH_rwgt_nlo )
         {
-          double hhWeight_nlo = HHWeightNLO_calc->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-          evtWeightRecorder.record_hhWeight_nlo(hhWeight_nlo);
+          evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
         }
       }
       lheInfoReader->read();
