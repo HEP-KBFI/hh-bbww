@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
-  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_HHatLOvsNLO");
+  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_HHatLOvsNLO");
   AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_analyze);
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
@@ -148,11 +148,12 @@ int main(int argc, char* argv[])
   std::vector<std::string> HHWeightNames;
   std::vector<std::string> HHBMNames;
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
-  const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
+  const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_lo");
+
   const HHWeightInterfaceLO* HHWeightLO_calc = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_woCouplingBugFix = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_wCouplingBugFix = nullptr;
-  if(apply_HH_rwgt)
+  if ( apply_HH_rwgt )
   {
     HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_cfg);
     HHWeightNames = HHWeightLO_calc->get_weight_names();
@@ -188,7 +189,7 @@ int main(int argc, char* argv[])
 
   WeightHistManager* weightHistManager = new WeightHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-  weightHistManager->bookHistograms(fs, { "genWeight", "pileupWeight", "HHReweight", "HHReweight_LOtoNLO_V1", "HHReweight_LOtoNLO_V2" });
+  weightHistManager->bookHistograms(fs, { "genWeight", "pileupWeight", "HHReweight_lo", "HHReweight_nlo_V1", "HHReweight_nlo_V2" });
 
   LHEInfoHistManager* lheInfoHistManager = new LHEInfoHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/lheInfo", histogramDir.data()), era_string, central_or_shift));
@@ -270,11 +271,19 @@ int main(int argc, char* argv[])
 
     double evtWeight = evtWeightRecorder.get(central_or_shift);
 
-    double hhWeight_lo = HHWeightLO_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    double hhWeight_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    double hhWeight_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);    
-    double hhWeight_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-    double hhWeight_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+    double hhWeight_lo = 1.;
+    double hhWeight_nlo_woCouplingBugFix_V1 = 1.;
+    double hhWeight_nlo_woCouplingBugFix_V2 = 1.;
+    double hhWeight_nlo_wCouplingBugFix_V1 = 1.;
+    double hhWeight_nlo_wCouplingBugFix_V2 = 1.;
+    if ( apply_HH_rwgt )
+    {
+      hhWeight_lo = HHWeightLO_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      hhWeight_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      hhWeight_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);    
+      hhWeight_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+      hhWeight_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+    }
 
     genKinematicsHistManager_HH->fillHistograms(evtWeight*hhWeight_lo*hhWeight_nlo_woCouplingBugFix_V2);
 
@@ -295,14 +304,25 @@ int main(int argc, char* argv[])
       const GenParticle* genHBoson_sublead = genHBosons_sorted[1];
       const Particle::LorentzVector genHBosonP4_sublead = genHBoson_sublead->p4();
 
+      hhHistManager_woLOWeights_woNLOWeights->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
+        evtWeight, 1.);
+
       for ( std::vector<std::string>::const_iterator HHBMName = HHBMNames.begin(); HHBMName != HHBMNames.end(); ++HHBMName )
       {
-        double hhReWeight_lo = HHWeightLO_calc->getWeight(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-        double hhReWeight_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-        double hhReWeight_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-        double hhReWeight_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-        double hhReWeight_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      
+        double hhReWeight_lo = 1.;
+        double hhReWeight_nlo_woCouplingBugFix_V1 = 1.;
+        double hhReWeight_nlo_woCouplingBugFix_V2 = 1.;
+        double hhReWeight_nlo_wCouplingBugFix_V1 = 1.;
+        double hhReWeight_nlo_wCouplingBugFix_V2 = 1.;
+        if ( apply_HH_rwgt )
+        {
+          hhReWeight_lo = HHWeightLO_calc->getWeight(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+        }
+
         selHistManagerType* hhHistManager_weighted = hhHistManagers_weighted[*HHBMName];
         hhHistManager_weighted->wLOWeights_woNLOWeights_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
           evtWeight, hhWeight_lo*hhReWeight_lo);
