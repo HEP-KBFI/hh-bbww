@@ -1799,15 +1799,29 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
-
-    if ( !((selJetAK8_Hbb && cleanedJetsAK4_wrtHbb.size() >=1) || (!selJetAK8_Hbb && selJetsAK4.size() >=3)) ) 
+    if ( usejpa)
     {
-      if ( run_lumi_eventSelector ) 
+      if ( !((selJetAK8_Hbb && cleanedJetsAK4_wrtHbb.size() >=1) || (!selJetAK8_Hbb && selJetsAK4.size() >=3)) )
       {
-        std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+        if ( run_lumi_eventSelector )
+        {
+          std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+        }
+        continue;
       }
-      continue;
     }
+    else
+    {
+      if ( !(cleanedJetsAK4_wrtHbb.size() >=1) )
+      {
+        if ( run_lumi_eventSelector )
+          {
+            std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+          }
+        continue;
+      }
+    }
+
     cutFlowTable.update(">= 1 jets from W->jj", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(">= 1 jets from W->jj", evtWeightRecorder.get(central_or_shift_main));
 
