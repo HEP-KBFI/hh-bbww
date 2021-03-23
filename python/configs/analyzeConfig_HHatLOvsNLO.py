@@ -233,7 +233,7 @@ class analyzeConfig_HHatLOvsNLO(analyzeConfig_hh):
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_hadd_stage2(lines_makefile, make_dependency = "phony_hadd_stage1")
     self.targets.extend([ "phony_hadd_stage2", ])
-    self.addToMakefile_validate(lines_makefile)
+    ##self.addToMakefile_validate(lines_makefile)
     self.createMakefile(lines_makefile)
 
     logging.info("Done.")

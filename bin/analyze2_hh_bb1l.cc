@@ -2351,7 +2351,7 @@ int main(int argc, char* argv[])
             if ( apply_HH_rwgt_nlo )
             {
               assert(HHWeightNLO_calc);
-              HHReweight *= HHWeightNLO_calc->getReWeight_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+              HHReweight *= HHWeightNLO_calc->getReWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
             }
           }
           weightMapHH[HHWeightNames[i]] = HHReweight;         
