@@ -145,19 +145,20 @@ int main(int argc, char* argv[])
   }
 
 //--- HH coupling scan
-  std::vector<std::string> HHWeightNames;
-  std::vector<std::string> HHBMNames;
+  std::vector<std::string> HHBMNames = { "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" };
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
-  const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_lo");
+  const bool apply_HH_rwgt_lo  = isSignal && analysisConfig.isHH_rwgt_allowed(); // sample is LO HH MC sample
+  const bool apply_HH_rwgt_nlo = isSignal;                                       // sample is LO or NLO HH MC sample
 
   const HHWeightInterfaceLO* HHWeightLO_calc = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_woCouplingBugFix = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_wCouplingBugFix = nullptr;
-  if ( apply_HH_rwgt )
+  if ( apply_HH_rwgt_lo )
   {
     HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_cfg);
-    HHWeightNames = HHWeightLO_calc->get_weight_names();
-    HHBMNames = HHWeightLO_calc->get_bm_names();
+  }
+  if ( apply_HH_rwgt_nlo )
+  {
     // CV: applying the NLO weight without applying the LO weight as well
     //     does not make sense for the Run-2 LO HH MC samples,
     //     as the LO weight needs to be applied in order to fix the coupling bug 
@@ -293,10 +294,12 @@ int main(int argc, char* argv[])
 
     double hhWeight_lo_to_nlo_wCouplingBugFix_V1 = 1.;
     double hhWeight_lo_to_nlo_wCouplingBugFix_V2 = 1.;
-    if ( apply_HH_rwgt )
+    if ( apply_HH_rwgt_lo )
     {
       hhWeight_lo = HHWeightLO_calc->getWeight("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-
+    }
+    if ( apply_HH_rwgt_nlo )
+    {
       hhWeight_lo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_LOtoNLO_V1("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
       hhWeight_lo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_LOtoNLO_V2("SM", eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);    
 
@@ -338,10 +341,12 @@ int main(int argc, char* argv[])
 
         double hhWeight_nlo_to_nlo_woCouplingBugFix_V1 = 1.;
         double hhWeight_nlo_to_nlo_woCouplingBugFix_V2 = 1.;
-        if ( apply_HH_rwgt )
+        if ( apply_HH_rwgt_lo )
         {
           hhReWeight_lo = HHWeightLO_calc->getRelativeWeight(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-
+        }
+        if ( apply_HH_rwgt_nlo )
+        {
           hhReWeight_lo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           hhReWeight_lo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
 
