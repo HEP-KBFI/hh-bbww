@@ -1799,15 +1799,29 @@ int main(int argc, char* argv[])
     }
     cutFlowTable.update(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeightRecorder.get(central_or_shift_main));
-
-    if ( !((selJetAK8_Hbb && cleanedJetsAK4_wrtHbb.size() >=1) || (!selJetAK8_Hbb && selJetsAK4.size() >=3)) ) 
+    if ( usejpa)
     {
-      if ( run_lumi_eventSelector ) 
+      if ( !((selJetAK8_Hbb && cleanedJetsAK4_wrtHbb.size() >=1) || (!selJetAK8_Hbb && selJetsAK4.size() >=3)) )
       {
-        std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+        if ( run_lumi_eventSelector )
+        {
+          std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+        }
+        continue;
       }
-      continue;
     }
+    else
+    {
+      if ( !(cleanedJetsAK4_wrtHbb.size() >=1) )
+      {
+        if ( run_lumi_eventSelector )
+          {
+            std::cout << "event " << eventInfo.str() << " FAILS >= 1 jets from W->jj selection\n";
+          }
+        continue;
+      }
+    }
+
     cutFlowTable.update(">= 1 jets from W->jj", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(">= 1 jets from W->jj", evtWeightRecorder.get(central_or_shift_main));
 
@@ -2343,7 +2357,7 @@ int main(int argc, char* argv[])
           if ( apply_HH_rwgt_lo )
           {
             assert(HHWeightLO_calc);
-            HHReweight = HHWeightLO_calc->getReWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+            HHReweight = HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
             // CV: applying the NLO weight without applying the LO weight as well
             //     does not make sense for the Run-2 LO HH MC samples,
             //     as the LO weight needs to be applied in order to fix the coupling bug 
@@ -2351,7 +2365,7 @@ int main(int argc, char* argv[])
             if ( apply_HH_rwgt_nlo )
             {
               assert(HHWeightNLO_calc);
-              HHReweight *= HHWeightNLO_calc->getReWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+              HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
             }
           }
           weightMapHH[HHWeightNames[i]] = HHReweight;         

@@ -340,16 +340,16 @@ int main(int argc, char* argv[])
         double hhWeight_nlo_to_nlo_woCouplingBugFix_V2 = 1.;
         if ( apply_HH_rwgt )
         {
-          hhReWeight_lo = HHWeightLO_calc->getReWeight(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo = HHWeightLO_calc->getRelativeWeight(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
 
-          hhReWeight_lo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getReWeight_LOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-          hhReWeight_lo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getReWeight_LOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
 
-          hhReWeight_lo_to_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getReWeight_LOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-          hhReWeight_lo_to_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getReWeight_LOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo_to_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_LOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo_to_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_LOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
 
-          hhWeight_nlo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_NLOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-          hhWeight_nlo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_NLOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhWeight_nlo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_NLOtoNLO_V1(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          hhWeight_nlo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_NLOtoNLO_V2(*HHBMName, eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
         }
 
         selHistManagerType* hhHistManager_weighted = hhHistManagers_weighted[*HHBMName];

@@ -1909,7 +1909,7 @@ int main(int argc, char* argv[])
         if ( apply_HH_rwgt_lo )
         {
           assert(HHWeightLO_calc);
-          HHReweight = HHWeightLO_calc->getReWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          HHReweight = HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           // CV: applying the NLO weight without applying the LO weight as well
           //     does not make sense for the Run-2 LO HH MC samples,
           //     as the LO weight needs to be applied in order to fix the coupling bug 
@@ -1917,7 +1917,7 @@ int main(int argc, char* argv[])
           if ( apply_HH_rwgt_nlo )
           {
             assert(HHWeightNLO_calc);
-            HHReweight *= HHWeightNLO_calc->getReWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+            HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           }
         }
         weightMapHH[HHWeightNames[i]] = HHReweight;         
