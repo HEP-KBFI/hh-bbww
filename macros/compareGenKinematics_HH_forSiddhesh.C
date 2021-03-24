@@ -436,11 +436,11 @@ void compareGenKinematics_HH_forSiddhesh()
 
   std::vector<std::string> periods;
   periods.push_back("2016");
-  //periods.push_back("2017");
-  //periods.push_back("2018");
+  periods.push_back("2017");
+  periods.push_back("2018");
 
   std::map<std::string, std::string> inputFilePaths_analyze; // key = period
-  inputFilePaths_analyze["2016"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar23v3/histograms/hh_HHatLOvsNLO/hadd/";
+  inputFilePaths_analyze["2016"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar24/histograms/hh_HHatLOvsNLO/hadd/";
   inputFilePaths_analyze["2017"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar24/histograms/hh_HHatLOvsNLO/hadd/";
   inputFilePaths_analyze["2018"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar24/histograms/hh_HHatLOvsNLO/hadd/";
 
