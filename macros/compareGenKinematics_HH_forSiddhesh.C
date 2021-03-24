@@ -514,44 +514,38 @@ void compareGenKinematics_HH_forSiddhesh()
         std::string subdirName_sumLOtoNLO = Form("hh_%s_wLOWeights_wLOtoNLOWeights_%s/signal_ggf_nonresonant_hh", bmName.data(), weight_version->data());
         TH1* histogram_sumLOtoNLO = loadHistogram(inputFile_analyze, dirName, subdirName_sumLOtoNLO, histogramName);
 
-        TH1* histogram_dXsec_lo = nullptr;
-        TH1* histogram_dXsec_nlo = nullptr;
-        std::string legendEntry_dXsec_lo, legendEntry_dXsec_nlo;
-        bool addToRatioPlot_dXsec_lo = false;
-        bool addToRatioPlot_dXsec_nlo = false;
+        std::string outputFileName_gen_mHH = Form("plots/compareGenKinematics_HH_forSiddhesh_%s_%s_%s_%s.png", period->data(), histogramName.data(), bmName.data(), weight_version->data());
         if ( (*weight_version) == "V1" )
         {
-          histogram_dXsec_lo = dXsec_V1_lo[bmName];
-          histogram_dXsec_nlo = dXsec_V1_nlo[bmName];
-          legendEntry_dXsec_lo = "arXiv:1806.05162 LO";
-          legendEntry_dXsec_nlo = "arXiv:1806.05162 NLO";
-          addToRatioPlot_dXsec_lo = false;
-          addToRatioPlot_dXsec_nlo = false;
+          showHistograms_wRatio(1050, 1050,
+                                histogram_NLO, legendEntry_NLO.data(), 
+                                histogram_LO, "LO",
+                                histogram_sumLO, "#Sigma LO",
+                                histogram_LOtoNLO, "LO #Rightarrow NLO",
+                                histogram_sumLOtoNLO, "#Sigma LO #Rightarrow NLO",
+                                dXsec_V1_lo[bmName], "arXiv:1806.05162 LO (w. coupling bug)", false,
+                                dXsec_V1_nlo[bmName], "arXiv:1806.05162 NLO", false,
+                                "gen. m_{HH} [GeV]", 1.2,
+                                true, 1.e-7, 1.e-1, "dN/dm_{HH} [1/GeV]", 1.2,
+                                0.16, 0.09,
+                                outputFileName_gen_mHH);
         }
         else if ( (*weight_version) == "V2" )
         {
-          histogram_dXsec_lo = dXsec_V2_lo[bmName];
-          histogram_dXsec_nlo = dXsec_V2_nlo[bmName];
-          legendEntry_dXsec_lo = "Petr Mandrik LO";
-          legendEntry_dXsec_nlo = "Petr Mandrik NLO";
-          addToRatioPlot_dXsec_lo = true;
-          addToRatioPlot_dXsec_nlo = true;
+          showHistograms_wRatio(1050, 1050,
+                                dXsec_V2_nlo[bmName], "Petr Mandrik NLO",
+                                dXsec_V2_lo[bmName], "Petr Mandrik LO (w. coupling bug)",
+                                histogram_LO, "LO",
+                                histogram_sumLO, "#Sigma LO",
+                                histogram_LOtoNLO, "LO #Rightarrow NLO",
+                                histogram_sumLOtoNLO, "#Sigma LO #Rightarrow NLO", true,
+                                nullptr, "", false,
+                                "gen. m_{HH} [GeV]", 1.2,
+                                true, 1.e-7, 1.e-1, "dN/dm_{HH} [1/GeV]", 1.2,
+                                0.16, 0.09,
+                                outputFileName_gen_mHH);
         }
         else assert(0);
-
-        std::string outputFileName_gen_mHH = Form("plots/compareGenKinematics_HH_forSiddhesh_%s_%s_%s_%s.png", period->data(), histogramName.data(), bmName.data(), weight_version->data());
-        showHistograms_wRatio(1050, 1050,
-                              histogram_NLO, legendEntry_NLO.data(), 
-                              histogram_LO, "LO",
-                              histogram_sumLO, "#Sigma LO",
-                              histogram_LOtoNLO, "LO #Rightarrow NLO",
-                              histogram_sumLOtoNLO, "#Sigma LO #Rightarrow NLO",
-                              histogram_dXsec_lo, legendEntry_dXsec_lo, addToRatioPlot_dXsec_lo,
-                              histogram_dXsec_nlo, legendEntry_dXsec_nlo, addToRatioPlot_dXsec_nlo,
-                              "gen. m_{HH} [GeV]", 1.2,
-                              true, 1.e-7, 1.e-1, "dN/dm_{HH} [1/GeV]", 1.2,
-                              0.16, 0.09,
-                              outputFileName_gen_mHH);
       }
     }
 
