@@ -23,7 +23,20 @@ int colors[7] = { kBlack, kRed, kBlue - 7,  kMagenta - 7, kCyan - 6, kRed - 6, 3
 int markerStyles[7] = { 24, 25, 20, 21, 22, 23, 20 };
 int markerSizes[7] = { 1, 1, 1, 1, 1, 1, 1 };
 
-void divideByBinWidth(TH1* histogram)
+TFile* openFile(const std::string& inputFilePath, const std::string& inputFileName)
+{
+  TString inputFileName_full = inputFilePath.data();
+  if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
+  inputFileName_full.Append(inputFileName.data());
+  TFile* inputFile = new TFile(inputFileName_full.Data());
+  if ( !inputFile ) {
+    std::cerr << "Failed to open input file = " << inputFileName_full.Data() << " !!" << std::endl;
+    assert(0);
+  }
+  return inputFile;
+}
+
+void divideByBinWidth(TH1* histogram, bool invert = false)
 {
   if(! (histogram && histogram->GetDimension() == 1))
   {
@@ -36,27 +49,68 @@ void divideByBinWidth(TH1* histogram)
     const double binContent = histogram->GetBinContent(idxBin);
     const double binError = histogram->GetBinError(idxBin);
     const double binWidth = xAxis->GetBinWidth(idxBin);
-    histogram->SetBinContent(idxBin, binContent/binWidth);
-    histogram->SetBinError(idxBin, binError/binWidth);
+    if ( invert ) 
+    {
+      histogram->SetBinContent(idxBin, binContent*binWidth);
+      histogram->SetBinError(idxBin, binError*binWidth);
+    }
+    else
+    {
+      histogram->SetBinContent(idxBin, binContent/binWidth);
+      histogram->SetBinError(idxBin, binError/binWidth);
+    }
   }
 }
 
-TH1* loadHistogram(TFile* inputFile, const std::string& dirName, const std::string& subdirName, const std::string& histogramName)
+TH1* loadHistogram(TFile* inputFile, const std::string& dirName, const std::string& subdirName, const std::string& histogramName, bool doDivideByBinWidth = true)
 {
   TString histogramName_full = dirName.data();
   if ( !histogramName_full.EndsWith("/") ) histogramName_full.Append("/");
   histogramName_full.Append(subdirName.data());
   if ( !histogramName_full.EndsWith("/") ) histogramName_full.Append("/");
   histogramName_full.Append(histogramName.data());
+
   TH1* histogram = dynamic_cast<TH1*>(inputFile->Get(histogramName_full.Data()));
   if ( !histogram ) {
     std::cerr << "Failed to load histogram = " << histogramName_full.Data() << " from file = " << inputFile->GetName() << " !!" << std::endl;
     assert(0);
   }
   if ( !histogram->GetSumw2N() ) histogram->Sumw2();
+
+  if ( !doDivideByBinWidth )
+  {
+    divideByBinWidth(histogram, true);
+  }
   histogram->Scale(1./histogram->Integral());
   divideByBinWidth(histogram);
+
   return histogram;
+}
+
+TH1* loadHistogram2d_and_convertTo1d(TFile* inputFile, const std::string& dirName, const std::string& subdirName, const std::string& histogramName2d)
+{
+  TString histogramName2d_full = dirName.data();
+  if ( !histogramName2d_full.EndsWith("/") ) histogramName2d_full.Append("/");
+  histogramName2d_full.Append(subdirName.data());
+  if ( !histogramName2d_full.EndsWith("/") ) histogramName2d_full.Append("/");
+  histogramName2d_full.Append(histogramName2d.data());
+
+  TH2* histogram2d = dynamic_cast<TH2*>(inputFile->Get(histogramName2d_full.Data()));
+  if ( !histogram2d ) {
+    std::cerr << "Failed to load histogram = " << histogramName2d_full.Data() << " from file = " << inputFile->GetName() << " !!" << std::endl;
+    assert(0);
+  }
+  if ( !histogram2d->GetSumw2N() ) histogram2d->Sumw2();
+
+  std::string histogramName1d = Form("%s_projectionX", histogramName2d.data());
+  TH1* histogram1d = histogram2d->ProjectionX(histogramName1d.data());
+  if ( !histogram1d->GetSumw2N() ) histogram1d->Sumw2();
+
+  divideByBinWidth(histogram1d, true);
+  histogram1d->Scale(1./histogram1d->Integral());
+  divideByBinWidth(histogram1d);
+
+  return histogram1d;
 }
 
 TH1* compRatioHistogram(const std::string& ratioHistogramName, const TH1* numerator, const TH1* denominator)
@@ -90,8 +144,8 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
 		           TH1* histogram3, const std::string& legendEntry3,
 		           TH1* histogram4, const std::string& legendEntry4,
 		           TH1* histogram5, const std::string& legendEntry5,
-		           TH1* histogram6, const std::string& legendEntry6,
-                           TH1* histogram7, const std::string& legendEntry7,
+		           TH1* histogram6, const std::string& legendEntry6, bool addToRatioPlot6,
+                           TH1* histogram7, const std::string& legendEntry7, bool addToRatioPlot7,
 		           const std::string& xAxisTitle, double xAxisOffset,
 		           bool useLogScale, double yMin, double yMax, const std::string& yAxisTitle, double yAxisOffset,
 		           double legendX0, double legendY0, 
@@ -125,7 +179,7 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
   topPad->Draw();
   topPad->cd();
 
-  TLegend* legend = new TLegend(legendX0, legendY0, legendX0 + 0.38, legendY0 + 0.24, "", "brNDC"); 
+  TLegend* legend = new TLegend(legendX0, legendY0, legendX0 + 0.38, legendY0 + 0.28, "", "brNDC"); 
   legend->SetBorderSize(0);
   legend->SetFillColor(0);
 
@@ -146,6 +200,10 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
   xAxis_top->SetTitleOffset(xAxisOffset);
   xAxis_top->SetLabelColor(10);
   xAxis_top->SetTitleColor(10);
+
+  const double xMin =  250.;
+  const double xMax = 1100.;
+  xAxis_top->SetRangeUser(xMin, xMax);
 
   TAxis* yAxis_top = histogram_ref->GetYaxis();
   yAxis_top->SetTitle(yAxisTitle.data());
@@ -237,6 +295,8 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
       xAxis_bottom->SetLabelSize(0.08);
       xAxis_bottom->SetTickLength(0.055);
       
+      xAxis_bottom->SetRangeUser(xMin, xMax);
+
       TAxis* yAxis_bottom = histogram2_div_ref->GetYaxis();
       yAxis_bottom->SetTitle(Form("#frac{%s - %s}{%s}", legendEntry2.data(), legendEntry_ref.data(), legendEntry_ref.data()));
       yAxis_bottom->SetTitleOffset(0.85);
@@ -270,6 +330,8 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
       xAxis_bottom->SetLabelSize(0.08);
       xAxis_bottom->SetTickLength(0.055);
       
+      xAxis_bottom->SetRangeUser(xMin, xMax);
+
       TAxis* yAxis_bottom = histogram3_div_ref->GetYaxis();
       yAxis_bottom->SetTitle(Form("#frac{%s - %s}{%s}", legendEntry3.data(), legendEntry_ref.data(), legendEntry_ref.data()));
       yAxis_bottom->SetTitleOffset(0.85);
@@ -313,16 +375,16 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
   }
 
   TH1* histogram6_div_ref = 0;
-  if ( histogram6 ) {
+  if ( histogram6 && addToRatioPlot6 ) {
     std::string histogramName6_div_ref = std::string(histogram6->GetName()).append("_div_").append(histogram_ref->GetName());
     histogram6_div_ref = compRatioHistogram(histogramName6_div_ref, histogram6, histogram_ref);
     if ( histogram6_div_ref ) {
       histogram6_div_ref->Draw("e1psame");
     }
   }
-
+  
   TH1* histogram7_div_ref = 0;
-  if ( histogram7 ) {
+  if ( histogram7 && addToRatioPlot7 ) {
     std::string histogramName7_div_ref = std::string(histogram7->GetName()).append("_div_").append(histogram_ref->GetName());
     histogram7_div_ref = compRatioHistogram(histogramName7_div_ref, histogram7, histogram_ref);
     if ( histogram7_div_ref ) {
@@ -352,81 +414,151 @@ void showHistograms_wRatio(double canvasSizeX, double canvasSizeY,
   delete canvas;  
 }
 
+std::string get_bmName(const std::string& nodeName)
+{
+  std::string bmName;
+  if ( nodeName == "sm" )
+  {
+    bmName = "SM";
+  }
+  else
+  {
+    bmName = Form("BM%s", nodeName.data());
+  }
+  return bmName;
+}
+
 void compareGenKinematics_HH_forSiddhesh()
 {
   gROOT->SetBatch(true);
 
   TH1::AddDirectory(false);
 
-  std::string inputFilePath = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar23v3/histograms/hh_HHatLOvsNLO/hadd/";
-  std::string inputFileName = "hadd_stage2.root";
-  TString inputFileName_full = inputFilePath.data();
-  if ( !inputFileName_full.EndsWith("/") ) inputFileName_full.Append("/");
-  inputFileName_full.Append(inputFileName.data());
-  TFile* inputFile = new TFile(inputFileName_full.Data());
-  if ( !inputFile ) {
-    std::cerr << "Failed to open input file = " << inputFileName_full.Data() << " !!" << std::endl;
-    assert(0);
-  }
+  std::vector<std::string> periods;
+  periods.push_back("2016");
+  //periods.push_back("2017");
+  //periods.push_back("2018");
+
+  std::map<std::string, std::string> inputFilePaths_analyze; // key = period
+  inputFilePaths_analyze["2016"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar23v3/histograms/hh_HHatLOvsNLO/hadd/";
+  inputFilePaths_analyze["2017"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar24/histograms/hh_HHatLOvsNLO/hadd/";
+  inputFilePaths_analyze["2018"] = "/hdfs/local/veelken/hhAnalysis/2016/2021Mar24/histograms/hh_HHatLOvsNLO/hadd/";
+
+  std::string inputFileName_analyze = "hadd_stage2.root";
 
   std::string dirName = "analyze_HHatLOvsNLO/sel/";
 
   std::string histogramName = "genHH_mass";
 
   std::vector<std::string> nodeNames = { "sm", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }; 
+
+  std::vector<std::string> weight_versions;
+  weight_versions.push_back("V1");
+  weight_versions.push_back("V2");
+
+  std::string inputFilePath_dXsec = "/home/veelken/CMSSW_10_2_10_centOS/CMSSW_10_2_10/src/hhAnalysis/bbww/test/forKarl/";
+  std::string inputFileName_dXsec = "analyze_signal_ggf_nonresonant_cHHH1_hh_2b2v_singleBM_1.root";
+  TFile* inputFile_dXsec = openFile(inputFilePath_dXsec, inputFileName_dXsec);
+
+  std::map<std::string, TH1*> dXsec_V1_lo;  // key = bmName
+  std::map<std::string, TH1*> dXsec_V1_nlo; // key = bmName
+  std::map<std::string, TH1*> dXsec_V2_lo;  // key = bmName
+  std::map<std::string, TH1*> dXsec_V2_nlo; // key = bmName
   for ( std::vector<std::string>::const_iterator nodeName = nodeNames.begin();
         nodeName != nodeNames.end(); ++nodeName ) {
-    std::string bmName;
-    if ( (*nodeName) == "sm" )
-    {
-      bmName = "SM";
-    }
-    else
-    {
-      bmName = Form("BM%s", nodeName->data());
-    }
-
-    std::string subdirName_NLO, legendEntry_NLO;
-    if ( (*nodeName) == "sm" )
-    {
-      subdirName_NLO = "hh_woLOWeights_woLOtoNLOWeights/signal_ggf_nonresonant_cHHH1_hh";
-      legendEntry_NLO = "NLO SM";
-    }
-    else
-    {
-      subdirName_NLO = Form("hh_%s_wNLOtoNLOWeights_V2/signal_ggf_nonresonant_cHHH1_hh", bmName.data());
-      legendEntry_NLO = "NLO SM rew.";
-    }
-    TH1* histogram_NLO = loadHistogram(inputFile, dirName, subdirName_NLO, histogramName);
-
-    std::string subdirName_LO = Form("hh_woLOWeights_woLOtoNLOWeights/signal_ggf_nonresonant_hh_node_%s", nodeName->data());
-    TH1* histogram_LO = loadHistogram(inputFile, dirName, subdirName_LO, histogramName);
-
-    std::string subdirName_sumLO = Form("hh_%s_wLOWeights_woLOtoNLOWeights/signal_ggf_nonresonant_hh", bmName.data());
-    TH1* histogram_sumLO = loadHistogram(inputFile, dirName, subdirName_sumLO, histogramName);
-
-    std::string subdirName_LOtoNLO = Form("hh_%s_woLOWeights_wLOtoNLOWeights_V2/signal_ggf_nonresonant_hh_node_%s", bmName.data(), nodeName->data());
-    TH1* histogram_LOtoNLO = loadHistogram(inputFile, dirName, subdirName_LOtoNLO, histogramName);
-
-    std::string subdirName_sumLOtoNLO = Form("hh_%s_wLOWeights_wLOtoNLOWeights_V2/signal_ggf_nonresonant_hh", bmName.data());
-    TH1* histogram_sumLOtoNLO = loadHistogram(inputFile, dirName, subdirName_sumLOtoNLO, histogramName);
-
-    std::string outputFileName_gen_mHH = Form("plots/compareGenKinematics_HH_forSiddhesh_%s_%s.png", histogramName.data(), bmName.data());
-    showHistograms_wRatio(1050, 1050,
-                          histogram_NLO, legendEntry_NLO.data(), 
-                          histogram_LO, "LO",
-                          histogram_sumLO, "#Sigma LO",
-                          histogram_LOtoNLO, "LO #Rightarrow NLO",
-                          histogram_sumLOtoNLO, "#Sigma LO #Rightarrow NLO",
-                          nullptr, "",
-                          nullptr, "",
-                          "gen. m_{HH} [GeV]", 1.2,
-                          true, 1.e-7, 1.e-2, "dN/dm_{HH} [1/GeV]", 1.2,
-                          0.61, 0.69,
-                          outputFileName_gen_mHH);
+    std::string bmName = get_bmName(*nodeName);
+    std::vector<std::string> directory_wCouplingBugFix  = { "analyze_HHatLOvsNLO", "HHWeightInterfaceNLO_wCouplingBugFix"  };
+    std::vector<std::string> directory_woCouplingBugFix = { "analyze_HHatLOvsNLO", "HHWeightInterfaceNLO_woCouplingBugFix" };
+    std::string histogramName_V1_lo = Form("%s_V1_lo", bmName.data());
+    dXsec_V1_lo[bmName] = loadHistogram(inputFile_dXsec, directory_wCouplingBugFix[0], directory_wCouplingBugFix[1], histogramName_V1_lo, false);
+    std::string histogramName_V1_nlo = Form("%s_V1_nlo", bmName.data());
+    dXsec_V1_nlo[bmName] = loadHistogram(inputFile_dXsec, directory_woCouplingBugFix[0], directory_woCouplingBugFix[1], histogramName_V1_nlo, false);
+    std::string histogramName_V2_lo = Form("%s_V2_lo", bmName.data());
+    dXsec_V2_lo[bmName] = loadHistogram2d_and_convertTo1d(inputFile_dXsec, directory_wCouplingBugFix[0], directory_wCouplingBugFix[1], histogramName_V2_lo);
+    std::string histogramName_V2_nlo = Form("%s_V2_nlo", bmName.data());
+    dXsec_V2_nlo[bmName] = loadHistogram2d_and_convertTo1d(inputFile_dXsec, directory_woCouplingBugFix[0], directory_woCouplingBugFix[1], histogramName_V2_nlo);
   }
 
-  delete inputFile;
+  for ( std::vector<std::string>::const_iterator period = periods.begin();
+        period != periods.end(); ++period ) {
+    TFile* inputFile_analyze = openFile(inputFilePaths_analyze[*period], inputFileName_analyze);
+
+    for ( std::vector<std::string>::const_iterator weight_version = weight_versions.begin();
+          weight_version != weight_versions.end(); ++weight_version ) {
+      for ( std::vector<std::string>::const_iterator nodeName = nodeNames.begin();
+            nodeName != nodeNames.end(); ++nodeName ) {
+        std::string bmName = get_bmName(*nodeName);
+
+        std::string subdirName_NLO, legendEntry_NLO;
+        if ( (*nodeName) == "sm" )
+        {
+          subdirName_NLO = "hh_woLOWeights_woLOtoNLOWeights/signal_ggf_nonresonant_cHHH1_hh";
+          legendEntry_NLO = "NLO SM";
+        }
+        else
+        {
+          subdirName_NLO = Form("hh_%s_wNLOtoNLOWeights_%s/signal_ggf_nonresonant_cHHH1_hh", bmName.data(), weight_version->data());
+          legendEntry_NLO = "NLO SM rew.";
+        }
+        TH1* histogram_NLO = loadHistogram(inputFile_analyze, dirName, subdirName_NLO, histogramName);
+
+        std::string subdirName_LO = Form("hh_woLOWeights_woLOtoNLOWeights/signal_ggf_nonresonant_hh_node_%s", nodeName->data());
+        TH1* histogram_LO = loadHistogram(inputFile_analyze, dirName, subdirName_LO, histogramName);
+
+        std::string subdirName_sumLO = Form("hh_%s_wLOWeights_woLOtoNLOWeights/signal_ggf_nonresonant_hh", bmName.data());
+        TH1* histogram_sumLO = loadHistogram(inputFile_analyze, dirName, subdirName_sumLO, histogramName);
+
+        std::string subdirName_LOtoNLO = Form("hh_%s_woLOWeights_wLOtoNLOWeights_%s/signal_ggf_nonresonant_hh_node_%s", bmName.data(), weight_version->data(), nodeName->data());
+        TH1* histogram_LOtoNLO = loadHistogram(inputFile_analyze, dirName, subdirName_LOtoNLO, histogramName);
+
+        std::string subdirName_sumLOtoNLO = Form("hh_%s_wLOWeights_wLOtoNLOWeights_%s/signal_ggf_nonresonant_hh", bmName.data(), weight_version->data());
+        TH1* histogram_sumLOtoNLO = loadHistogram(inputFile_analyze, dirName, subdirName_sumLOtoNLO, histogramName);
+
+        TH1* histogram_dXsec_lo = nullptr;
+        TH1* histogram_dXsec_nlo = nullptr;
+        std::string legendEntry_dXsec_lo, legendEntry_dXsec_nlo;
+        bool addToRatioPlot_dXsec_lo = false;
+        bool addToRatioPlot_dXsec_nlo = false;
+        if ( (*weight_version) == "V1" )
+        {
+          histogram_dXsec_lo = dXsec_V1_lo[bmName];
+          histogram_dXsec_nlo = dXsec_V1_nlo[bmName];
+          legendEntry_dXsec_lo = "arXiv:1806.05162 LO";
+          legendEntry_dXsec_nlo = "arXiv:1806.05162 NLO";
+          addToRatioPlot_dXsec_lo = false;
+          addToRatioPlot_dXsec_nlo = false;
+        }
+        else if ( (*weight_version) == "V2" )
+        {
+          histogram_dXsec_lo = dXsec_V2_lo[bmName];
+          histogram_dXsec_nlo = dXsec_V2_nlo[bmName];
+          legendEntry_dXsec_lo = "Petr Mandrik LO";
+          legendEntry_dXsec_nlo = "Petr Mandrik NLO";
+          addToRatioPlot_dXsec_lo = true;
+          addToRatioPlot_dXsec_nlo = true;
+        }
+        else assert(0);
+
+        std::string outputFileName_gen_mHH = Form("plots/compareGenKinematics_HH_forSiddhesh_%s_%s_%s_%s.png", period->data(), histogramName.data(), bmName.data(), weight_version->data());
+        showHistograms_wRatio(1050, 1050,
+                              histogram_NLO, legendEntry_NLO.data(), 
+                              histogram_LO, "LO",
+                              histogram_sumLO, "#Sigma LO",
+                              histogram_LOtoNLO, "LO #Rightarrow NLO",
+                              histogram_sumLOtoNLO, "#Sigma LO #Rightarrow NLO",
+                              histogram_dXsec_lo, legendEntry_dXsec_lo, addToRatioPlot_dXsec_lo,
+                              histogram_dXsec_nlo, legendEntry_dXsec_nlo, addToRatioPlot_dXsec_nlo,
+                              "gen. m_{HH} [GeV]", 1.2,
+                              true, 1.e-7, 1.e-1, "dN/dm_{HH} [1/GeV]", 1.2,
+                              0.16, 0.09,
+                              outputFileName_gen_mHH);
+      }
+    }
+
+    delete inputFile_analyze;
+  }
+
+  delete inputFile_dXsec;
 }
 
 
