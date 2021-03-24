@@ -29,6 +29,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLO.h" // HHWeightInterfaceLO
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceNLO.h" // HHWeightInterfaceNLO
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceCouplings.h" // HHWeightInterfaceCouplings
 #include "tthAnalysis/HiggsToTauTau/interface/mvaInputVariables.h" // comp_cosThetaStar
 
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
@@ -167,8 +168,9 @@ int main(int argc, char* argv[])
   }
 
 //--- HH coupling scan
-  std::vector<std::string> HHBMNames = { "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12" };
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
+  const HHWeightInterfaceCouplings * couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
+  std::vector<std::string> HHBMNames = couplings->get_bm_names();
   const bool apply_HH_rwgt_lo  = isSignal && analysisConfig.isHH_rwgt_allowed(); // sample is LO HH MC sample
   const bool apply_HH_rwgt_nlo = isSignal;                                       // sample is LO or NLO HH MC sample
   std::cout << "apply_HH_rwgt: LO = " << apply_HH_rwgt_lo << ", NLO = " << apply_HH_rwgt_nlo << std::endl;
@@ -181,7 +183,7 @@ int main(int argc, char* argv[])
   const HHWeightInterfaceNLO* HHWeightNLO_calc_wCouplingBugFix = nullptr;
   if ( apply_HH_rwgt_lo )
   {
-    HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_cfg);
+    HHWeightLO_calc = new HHWeightInterfaceLO(couplings, hhWeight_cfg);
   }
   if ( apply_HH_rwgt_nlo )
   {
@@ -189,8 +191,8 @@ int main(int argc, char* argv[])
     //     does not make sense for the Run-2 LO HH MC samples,
     //     as the LO weight needs to be applied in order to fix the coupling bug 
     //     present in the LO HH MC samples for 2016, 2017, and 2018        
-    HHWeightNLO_calc_woCouplingBugFix = new HHWeightInterfaceNLO(era, false, 10., isDEBUG);
-    HHWeightNLO_calc_wCouplingBugFix = new HHWeightInterfaceNLO(era, true, 10., isDEBUG);
+    HHWeightNLO_calc_woCouplingBugFix = new HHWeightInterfaceNLO(couplings, era, false);
+    HHWeightNLO_calc_wCouplingBugFix = new HHWeightInterfaceNLO(couplings, era, true);
   }
 
   EventInfoReader eventInfoReader(&eventInfo);

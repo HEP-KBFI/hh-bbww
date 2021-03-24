@@ -96,6 +96,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/MVAInputVarHistManager.h" // MVAInputVarHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLO.h" // HHWeightInterfaceLO
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceNLO.h" // HHWeightInterfaceNLO
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceCouplings.h" // HHWeightInterfaceCouplings
 #include "tthAnalysis/HiggsToTauTau/interface/DYMCNormScaleFactors.h" // DYMCNormScaleFactors 
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
@@ -544,22 +545,29 @@ int main(int argc, char* argv[])
   }
 
 //--- HH coupling scan
-  std::vector<std::string> HHWeightNames;
-  std::vector<std::string> HHBMNames;
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
   const bool apply_HH_rwgt_lo = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_lo");
-  const HHWeightInterfaceLO* HHWeightLO_calc = nullptr;
-  if(apply_HH_rwgt_lo)
-  {
-    HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_cfg);
-    HHWeightNames = HHWeightLO_calc->get_weight_names();
-    HHBMNames = HHWeightLO_calc->get_bm_names();
-  }
   const bool apply_HH_rwgt_nlo = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_nlo");
-  const HHWeightInterfaceNLO* HHWeightNLO_calc = nullptr;
-  if(apply_HH_rwgt_nlo)
+  const HHWeightInterfaceCouplings * hhWeight_couplings = nullptr;
+  const HHWeightInterfaceLO * HHWeightLO_calc = nullptr;
+  const HHWeightInterfaceNLO * HHWeightNLO_calc = nullptr;
+  std::vector<std::string> HHWeightNames;
+  std::vector<std::string> HHBMNames;
+  if(apply_HH_rwgt_lo || apply_HH_rwgt_nlo)
   {
-    HHWeightNLO_calc = new HHWeightInterfaceNLO(era, false, 10., isDEBUG);
+    hhWeight_couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
+
+    if(apply_HH_rwgt_lo)
+    {
+      HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_couplings, hhWeight_cfg);
+      HHWeightNames = hhWeight_couplings->get_weight_names();
+      HHBMNames = hhWeight_couplings->get_bm_names();
+    }
+
+    if(apply_HH_rwgt_nlo)
+    {
+      HHWeightNLO_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era);
+    }
   }
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
