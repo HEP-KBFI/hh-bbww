@@ -192,14 +192,16 @@ class analyzeConfig_HHatLOvsNLO(analyzeConfig_hh):
           cfgFile_modified_path = os.path.join(self.dirs[key_analyze_dir][DKEY_CFGS], "analyze_%s_%s_%i_cfg.py" % analyze_job_tuple)
           logFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_LOGS], "analyze_%s_%s_%i.log" % analyze_job_tuple)
           histogramFile_path = os.path.join(self.dirs[key_analyze_dir][DKEY_HIST], "analyze_%s_%s_%i.root" % analyze_job_tuple)
+          save_dXsec_HHWeightInterfaceNLO = (sumHH_lo_option == "singleBM" and sample_info["sample_category"] == "signal_ggf_nonresonant_cHHH1_hh_bbvv" and jobId == 0)
           self.jobOptions_analyze[key_analyze_job] = {
-            'ntupleFiles'                : ntupleFiles,
-            'cfgFile_modified'           : cfgFile_modified_path,
-            'histogramFile'              : histogramFile_path,
-            'logFile'                    : logFile_path,
-            'process'                    : sample_info_tmp["sample_category"],
-            'process_hh'                 : sample_info['sample_category_hh'].replace(sample_info["sample_category"], sample_info_tmp["sample_category"]),
-            'hhWeight_cfg.apply_rwgt_lo' : sumHH_lo_option == "sumBMs",
+            'ntupleFiles'                     : ntupleFiles,
+            'cfgFile_modified'                : cfgFile_modified_path,
+            'histogramFile'                   : histogramFile_path,
+            'logFile'                         : logFile_path,
+            'process'                         : sample_info_tmp["sample_category"],
+            'process_hh'                      : sample_info['sample_category_hh'].replace(sample_info["sample_category"], sample_info_tmp["sample_category"]),
+            'hhWeight_cfg.apply_rwgt_lo'      : sumHH_lo_option == "sumBMs",
+            'save_dXsec_HHWeightInterfaceNLO' : save_dXsec_HHWeightInterfaceNLO,
           }
           self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info_tmp)
 

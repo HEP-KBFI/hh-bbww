@@ -152,6 +152,9 @@ int main(int argc, char* argv[])
   const bool apply_HH_rwgt_nlo = isSignal;                                       // sample is LO or NLO HH MC sample
   std::cout << "apply_HH_rwgt: LO = " << apply_HH_rwgt_lo << ", NLO = " << apply_HH_rwgt_nlo << std::endl;
 
+  bool save_dXsec_HHWeightInterfaceNLO = cfg_analyze.getParameter<bool>("save_dXsec_HHWeightInterfaceNLO");
+  std::cout << "save_dXsec_HHWeightInterfaceNLO = " << save_dXsec_HHWeightInterfaceNLO << std::endl;
+
   const HHWeightInterfaceLO* HHWeightLO_calc = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_woCouplingBugFix = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_wCouplingBugFix = nullptr;
@@ -413,6 +416,30 @@ int main(int argc, char* argv[])
             << inputTree -> getFileCount() << ")\n"
             << " analyzed = " << analyzedEntries << '\n'
             << " selected = " << selectedEntries << " (weighted = " << selectedEntries_weighted << ")\n";
+
+//--- save histograms of LO and NLO cross sections used for HH reweighting
+  if ( save_dXsec_HHWeightInterfaceNLO )
+  {
+    TFileDirectory subdir = dir.mkdir("HHWeightInterfaceNLO");
+
+    assert(HHWeightNLO_calc_woCouplingBugFix);
+    for ( std::vector<std::string>::const_iterator HHBMName = HHBMNames.begin(); HHBMName != HHBMNames.end(); ++HHBMName )
+    {
+      const TH1D* dXsec_V1_lo = dynamic_cast<const TH1D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V1_lo(*HHBMName));
+      assert(dXsec_V1_lo);
+      subdir.make<TH1D>(*dXsec_V1_lo);
+      const TH1D* dXsec_V1_nlo = dynamic_cast<const TH1D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V1_nlo(*HHBMName));
+      assert(dXsec_V1_nlo);
+      subdir.make<TH1D>(*dXsec_V1_nlo);
+
+      const TH2D* dXsec_V2_lo = dynamic_cast<const TH2D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V2_lo(*HHBMName));
+      assert(dXsec_V2_lo);
+      subdir.make<TH2D>(*dXsec_V2_lo);
+      const TH2D* dXsec_V2_nlo = dynamic_cast<const TH2D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V2_nlo(*HHBMName));
+      assert(dXsec_V2_nlo);
+      subdir.make<TH2D>(*dXsec_V2_nlo);
+    }
+  }
 
 //--- manually write histograms to output file
   fs.file().cd();
