@@ -60,6 +60,27 @@
 typedef std::vector<std::string> vstring;
 typedef std::vector<double> vdouble;
 
+void save_dXsec(TFileDirectory& subdir, const HHWeightInterfaceNLO* HHWeightNLO_calc, const std::vector<std::string>& bmNames)
+{
+  assert(HHWeightNLO_calc);
+  for ( std::vector<std::string>::const_iterator bmName = bmNames.begin(); bmName != bmNames.end(); ++bmName )
+  {
+    const TH1D* dXsec_V1_lo = dynamic_cast<const TH1D*>(HHWeightNLO_calc->get_dXsec_V1_lo(*bmName));
+    assert(dXsec_V1_lo);
+    subdir.make<TH1D>(*dXsec_V1_lo);
+    const TH1D* dXsec_V1_nlo = dynamic_cast<const TH1D*>(HHWeightNLO_calc->get_dXsec_V1_nlo(*bmName));
+    assert(dXsec_V1_nlo);
+    subdir.make<TH1D>(*dXsec_V1_nlo);
+
+    const TH2D* dXsec_V2_lo = dynamic_cast<const TH2D*>(HHWeightNLO_calc->get_dXsec_V2_lo(*bmName));
+    assert(dXsec_V2_lo);
+    subdir.make<TH2D>(*dXsec_V2_lo);
+    const TH2D* dXsec_V2_nlo = dynamic_cast<const TH2D*>(HHWeightNLO_calc->get_dXsec_V2_nlo(*bmName));
+    assert(dXsec_V2_nlo);
+    subdir.make<TH2D>(*dXsec_V2_nlo);
+  }
+}
+
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
  */
@@ -420,25 +441,10 @@ int main(int argc, char* argv[])
 //--- save histograms of LO and NLO cross sections used for HH reweighting
   if ( save_dXsec_HHWeightInterfaceNLO )
   {
-    TFileDirectory subdir = dir.mkdir("HHWeightInterfaceNLO");
-
-    assert(HHWeightNLO_calc_woCouplingBugFix);
-    for ( std::vector<std::string>::const_iterator HHBMName = HHBMNames.begin(); HHBMName != HHBMNames.end(); ++HHBMName )
-    {
-      const TH1D* dXsec_V1_lo = dynamic_cast<const TH1D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V1_lo(*HHBMName));
-      assert(dXsec_V1_lo);
-      subdir.make<TH1D>(*dXsec_V1_lo);
-      const TH1D* dXsec_V1_nlo = dynamic_cast<const TH1D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V1_nlo(*HHBMName));
-      assert(dXsec_V1_nlo);
-      subdir.make<TH1D>(*dXsec_V1_nlo);
-
-      const TH2D* dXsec_V2_lo = dynamic_cast<const TH2D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V2_lo(*HHBMName));
-      assert(dXsec_V2_lo);
-      subdir.make<TH2D>(*dXsec_V2_lo);
-      const TH2D* dXsec_V2_nlo = dynamic_cast<const TH2D*>(HHWeightNLO_calc_woCouplingBugFix->get_dXsec_V2_nlo(*HHBMName));
-      assert(dXsec_V2_nlo);
-      subdir.make<TH2D>(*dXsec_V2_nlo);
-    }
+    TFileDirectory subdir_woCouplingBugFix = dir.mkdir("HHWeightInterfaceNLO_woCouplingBugFix");
+    save_dXsec(subdir_woCouplingBugFix, HHWeightNLO_calc_woCouplingBugFix, HHBMNames);
+    TFileDirectory subdir_wCouplingBugFix = dir.mkdir("HHWeightInterfaceNLO_wCouplingBugFix");
+    save_dXsec(subdir_wCouplingBugFix, HHWeightNLO_calc_wCouplingBugFix, HHBMNames);
   }
 
 //--- manually write histograms to output file
