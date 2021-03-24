@@ -98,7 +98,9 @@
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_2particle.h" // mT2_2particle
 #include "tthAnalysis/HiggsToTauTau/interface/mT2_3particle.h" // mT2_3particle
-#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface.h" // HHWeightInterface
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLO.h" // HHWeightInterfaceLO
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceNLO.h" // HHWeightInterfaceNLO
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceCouplings.h" // HHWeightInterfaceCouplings
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
@@ -290,8 +292,6 @@ int main(int argc, char* argv[])
   std::cout << "evtCategories = " << format_vstring(evtCategoryNames) << std::endl;
 
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
-  bool isSignal = boost::starts_with(process_string, "signal_") && process_string.find("_hh_") != std::string::npos;
-  bool isHH_rwgt_allowed = boost::starts_with(process_string, "signal_ggf_nonresonant_") && process_string.find("cHHH") == std::string::npos;
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
   bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
   bool apply_LHE_nom = cfg_analyze.getParameter<bool>("apply_LHE_nom");
@@ -476,17 +476,31 @@ int main(int argc, char* argv[])
   const std::string default_cat_str = "default";
   std::vector<std::string> evt_cat_strs = { default_cat_str };
 
-//--- HH scan
+//--- HH coupling scan
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
-  const bool apply_HH_rwgt = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
-  const HHWeightInterface * HHWeight_calc = nullptr;
-  if(apply_HH_rwgt)
+  const bool apply_HH_rwgt_lo = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_lo");
+  const bool apply_HH_rwgt_nlo = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_nlo");
+  const HHWeightInterfaceCouplings * hhWeight_couplings = nullptr;
+  const HHWeightInterfaceLO * HHWeightLO_calc = nullptr;
+  const HHWeightInterfaceNLO * HHWeightNLO_calc = nullptr;
+  std::vector<std::string> HHWeightNames;
+  std::vector<std::string> HHBMNames;
+  if(apply_HH_rwgt_lo || apply_HH_rwgt_nlo)
   {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
-    evt_cat_strs = HHWeight_calc->get_scan_strs();
+    hhWeight_couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
+
+    if(apply_HH_rwgt_lo)
+    {
+      HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_couplings, hhWeight_cfg);
+      HHWeightNames = hhWeight_couplings->get_weight_names();
+      HHBMNames = hhWeight_couplings->get_bm_names();
+    }
+
+    if(apply_HH_rwgt_nlo)
+    {
+      HHWeightNLO_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era);
+    }
   }
-  const size_t Nscan = evt_cat_strs.size();
-  std::cout << "Number of points being scanned = " << Nscan << '\n';
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
   if((isMC_tH || isMC_ttH) && ! tHweights.empty())
@@ -1059,6 +1073,18 @@ int main(int argc, char* argv[])
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
+      if ( apply_HH_rwgt_lo )
+      {
+        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
+        // CV: applying the NLO weight without applying the LO weight as well
+        //     does not make sense for the Run-2 LO HH MC samples,
+        //     as the LO weight needs to be applied in order to fix the coupling bug
+        //     present in the LO HH MC samples for 2016, 2017, and 2018
+        if ( apply_HH_rwgt_nlo )
+        {
+          evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
+        }
+      }
       lheInfoReader->read();
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
@@ -1534,8 +1560,6 @@ int main(int argc, char* argv[])
         evtWeightRecorder.record_ewk_bjet(selBJetsAK4_medium);
       }
 
-      int selHadTau_genPdgId = getHadTau_genPdgId(selHadTau);
-
       dataToMCcorrectionInterface->setLeptons({ selLepton });
       dataToMCcorrectionInterface->setHadTaus({ selHadTau });
 
@@ -1765,33 +1789,6 @@ int main(int argc, char* argv[])
     cutFlowTable.update("signal region veto", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms("signal region veto", evtWeightRecorder.get(central_or_shift_main));
 
-    std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::map<std::string, double> Weight_ktScan; // weights to do histograms
-    double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
-
-    if(apply_HH_rwgt)
-    {
-      assert(HHWeight_calc);
-      WeightBM = HHWeight_calc->getJHEPWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      Weight_ktScan = HHWeight_calc->getScanWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      HHWeight = WeightBM[0];
-      evtWeightRecorder.record_bm(HHWeight); // SM by default
-
-      if(isDEBUG)
-      {
-        std::cout << "mhh = " << eventInfo.gen_mHH          << " : "
-          "cost "             << eventInfo.gen_cosThetaStar << " : "
-          "weight = "         << HHWeight                   << '\n'
-          ;
-        std::cout << "Calculated " << Weight_ktScan.size() << " scan weights\n";
-        for(std::size_t bm_list = 0; bm_list < Weight_ktScan.size(); ++bm_list)
-        {
-          std::cout << "line = " << bm_list << " " << evt_cat_strs[bm_list] << "; Weight = " <<  Weight_ktScan[evt_cat_strs[bm_list]] << '\n';
-        }
-        std::cout << '\n';
-      }
-    }
-
     // compute signal extraction observables
     Particle::LorentzVector HbbP4 = selJetP4_Hbb_lead + selJetP4_Hbb_sublead;
     double m_Hbb    = HbbP4.mass();
@@ -1911,6 +1908,30 @@ int main(int argc, char* argv[])
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons, selHadTaus);
 
+    std::map<std::string, double> weightMapHH;
+    if ( apply_HH_rwgt_lo || apply_HH_rwgt_nlo )
+    {
+      for ( unsigned int i = 0; i < HHWeightNames.size(); i++ )
+      {
+        double HHReweight = 1.;
+        if ( apply_HH_rwgt_lo )
+        {
+          assert(HHWeightLO_calc);
+          HHReweight = HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          // CV: applying the NLO weight without applying the LO weight as well
+          //     does not make sense for the Run-2 LO HH MC samples,
+          //     as the LO weight needs to be applied in order to fix the coupling bug 
+          //     present in the LO HH MC samples for 2016, 2017, and 2018           
+          if ( apply_HH_rwgt_nlo )
+          {
+            assert(HHWeightNLO_calc);
+            HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+          }
+        }
+        weightMapHH[HHWeightNames[i]] = HHReweight;         
+      }
+    }
+
 //--- fill histograms with events passing final selection
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
@@ -1923,9 +1944,9 @@ int main(int argc, char* argv[])
         {
           continue;
         }
-        if(apply_HH_rwgt)
+        if(apply_HH_rwgt_lo)
         {
-          rwgt_map[evt_cat_str] = evtWeight * Weight_ktScan[evt_cat_str] / HHWeight;
+          rwgt_map[evt_cat_str] = evtWeight * weightMapHH[evt_cat_str];
         }
         else
         {
