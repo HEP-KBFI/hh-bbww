@@ -13,7 +13,7 @@ import getpass
 # E.g.: ./test/tthAnalyzeRun_HHatLOvsNLO.py -v 2021Mar21 -m default -e 2017
 
 parser = tthAnalyzeParser()
-parser.add_preselect()
+parser.add_preselect(use_preselected = False)
 parser.add_files_per_job()
 parser.add_use_home()
 
