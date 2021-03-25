@@ -405,6 +405,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
     """
     for sample_name, sample_info in self.samples.items():
+      if self.isBDTtraining and sample_info["sample_category"] == 'data_obs' :
+        sample_info["use_it"] = False
       if not sample_info["use_it"]:
         continue
 

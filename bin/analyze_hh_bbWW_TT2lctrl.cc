@@ -83,7 +83,6 @@
 #include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper
 #include "tthAnalysis/HiggsToTauTau/interface/hltFilter.h" // hltFilter()
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
-#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterface.h" // HHWeightInterface
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
@@ -486,18 +485,6 @@ int main(int argc, char* argv[])
   }
   const std::string default_cat_str = "default";
   std::vector<std::string> evt_cat_strs = { default_cat_str };
-
-//--- HH scan
-  const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
-  const bool apply_HH_rwgt = analysisConfig.isMC_HH_nonresonant() && hhWeight_cfg.getParameter<bool>("apply_rwgt");
-  const HHWeightInterface * HHWeight_calc = nullptr;
-  if(apply_HH_rwgt)
-  {
-    HHWeight_calc = new HHWeightInterface(hhWeight_cfg);
-    evt_cat_strs = HHWeight_calc->get_scan_strs();
-  }
-  const size_t Nscan = evt_cat_strs.size();
-  std::cout << "Number of points being scanned = " << Nscan << '\n';
 
   const std::vector<edm::ParameterSet> tHweights = cfg_analyze.getParameterSetVector("tHweights");
   if((isMC_tH || isMC_ttH) && ! tHweights.empty())
@@ -1636,33 +1623,6 @@ int main(int argc, char* argv[])
       }
     }
 
-    std::vector<double> WeightBM; // weights to do histograms for BMs
-    std::map<std::string, double> Weight_ktScan; // weights to do histograms
-    double HHWeight = 1.0; // X: for the SM point -- the point explicited on this code
-
-    if(apply_HH_rwgt)
-    {
-      assert(HHWeight_calc);
-      WeightBM = HHWeight_calc->getJHEPWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      Weight_ktScan = HHWeight_calc->getScanWeight(eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-      HHWeight = WeightBM[0];
-      evtWeightRecorder.record_bm(HHWeight); // SM by default
-
-      if(isDEBUG)
-      {
-        std::cout << "mhh = " << eventInfo.gen_mHH          << " : "
-          "cost "             << eventInfo.gen_cosThetaStar << " : "
-          "weight = "         << HHWeight                   << '\n'
-          ;
-        std::cout << "Calculated " << Weight_ktScan.size() << " scan weights\n";
-        for(std::size_t bm_list = 0; bm_list < Weight_ktScan.size(); ++bm_list)
-        {
-          std::cout << "line = " << bm_list << " " << evt_cat_strs[bm_list] << "; Weight = " <<  Weight_ktScan[evt_cat_strs[bm_list]] << '\n';
-        }
-        std::cout << '\n';
-      }
-    }
-
     //---------------------------------------------------------------------------
     // CV: compute mass of HH system using "Heavy Mass Estimator" (HME) algorithm 
     //    (switch to switcht to HMEOutputReader_hh_bb2l in the future !!)
@@ -1742,14 +1702,7 @@ int main(int argc, char* argv[])
         {
           continue;
         }
-        if(apply_HH_rwgt)
-        {
-          rwgt_map[evt_cat_str] = evtWeight * Weight_ktScan[evt_cat_str] / HHWeight;
-        }
-        else
-        {
-          rwgt_map[evt_cat_str] = evtWeight;
-        }
+        rwgt_map[evt_cat_str] = evtWeight;
       }
       for (const GenMatchEntry* genMatch : genMatches)
       {
