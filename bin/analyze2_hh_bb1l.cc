@@ -551,6 +551,7 @@ int main(int argc, char* argv[])
   const HHWeightInterfaceCouplings * hhWeight_couplings = nullptr;
   const HHWeightInterfaceLO * HHWeightLO_calc = nullptr;
   const HHWeightInterfaceNLO * HHWeightNLO_calc = nullptr;
+  const HHWeightInterfaceNLO * HHWeightNLOonly_calc = nullptr;
   std::vector<std::string> HHWeightNames;
   std::vector<std::string> HHBMNames;
   if(apply_HH_rwgt_lo || apply_HH_rwgt_nlo)
@@ -567,6 +568,7 @@ int main(int argc, char* argv[])
     if(apply_HH_rwgt_nlo)
     {
       HHWeightNLO_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era);
+      HHWeightNLOonly_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era);
     }
   }
 
@@ -992,8 +994,8 @@ int main(int argc, char* argv[])
       );
       for ( const std::string & evt_cat_str: HHWeightNames )
       {
-        if (!apply_HH_rwgt_lo) continue;
-        bdt_filler->register_variable<float_type>(Form(evt_cat_str.c_str()));
+        if (apply_HH_rwgt_lo)  bdt_filler->register_variable<float_type>(Form(evt_cat_str.c_str()));
+        if (apply_HH_rwgt_nlo) bdt_filler->register_variable<float_type>(Form("%s_nloOnly", evt_cat_str.c_str()));
       }
       bdt_filler->register_variable<float_type>(
         "lep_pt", "lep_conePt", "lep_eta", "lep_phi", "lep_mass",
@@ -2357,11 +2359,13 @@ int main(int argc, char* argv[])
       double lep_frWeight = ( selLepton->genLepton() ) ? 1. : evtWeightRecorder.get_jetToLepton_FR_lead(central_or_shift_main);
 
       std::map<std::string, double> weightMapHH;
+      std::map<std::string, double> weightMapHH_nloOnly;
       if ( apply_HH_rwgt_lo || apply_HH_rwgt_nlo )
       {
         for ( unsigned int i = 0; i < HHWeightNames.size(); i++ )
         {
           double HHReweight = 1.;
+          double HHReweight_nloOnly = 1.;
           if ( apply_HH_rwgt_lo )
           {
             assert(HHWeightLO_calc);
@@ -2376,7 +2380,16 @@ int main(int argc, char* argv[])
               HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
             }
           }
-          weightMapHH[HHWeightNames[i]] = HHReweight;         
+          weightMapHH[HHWeightNames[i]] = HHReweight;
+          if ( apply_HH_rwgt_nlo )
+          {
+            assert(HHWeightNLOonly_calc);
+            HHReweight_nloOnly /= evtWeightRecorder.get_hhWeight();
+            HHReweight_nloOnly *= HHWeightNLOonly_calc->getWeight_LOtoNLO_V2(HHBMNames[i],
+               eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG
+            );
+            weightMapHH_nloOnly[HHWeightNames[i]+"_nloOnly"] = HHReweight_nloOnly;
+          }
         }
       }
 
@@ -2514,6 +2527,7 @@ int main(int argc, char* argv[])
         ("numJetsForward",       selJetsForward.size())
         ("mjj_highestpt",        mjj_highestpt)
         (weightMapHH)
+        (weightMapHH_nloOnly)
         .fill()
         ;
       continue;
@@ -2933,6 +2947,7 @@ int main(int argc, char* argv[])
 
   delete HHWeightLO_calc;
   delete HHWeightNLO_calc;
+  delete HHWeightNLOonly_calc;
 
   hltPaths_delete(triggers_1e);
   hltPaths_delete(triggers_1mu);
