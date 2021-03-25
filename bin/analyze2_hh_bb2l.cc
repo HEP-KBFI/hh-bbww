@@ -1754,6 +1754,10 @@ int main(int argc, char* argv[])
       (( selJetsAK4.size() >= 2 ) ? (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass() : -1);
     double mjj_closeToH = (selJetsAK8.size()) ? mjj_closeToHiggs(selJetsAK8) : mjj_closeToHiggs(selJetsAK4);
 
+    // CV: compute observable HT that is used to parametrize DY weights
+    //     in same way as Louvain group
+    double HT_forDY = compHT({}, {}, selJetsAK4);
+
     if ( dyBgr_option == kDYbgr_applyWeights )
     {
       int numBJets_loose_and_notMedium = numBJets_loose - numBJets_medium;
@@ -1769,7 +1773,7 @@ int main(int argc, char* argv[])
       }
       else
       {
-        dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT, numBJets_medium);
+        dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT_forDY, numBJets_medium);
       }
       // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
       dyBgrWeight *= 2.;
@@ -2589,7 +2593,7 @@ int main(int argc, char* argv[])
             //     so better recompute number of jets passing loose and medium b-tagging criteria to exclude any "side-effects"
             int numBJets_loose_tmp, numBJets_medium_tmp;
             countBJets_Hbb(*selJetT_Hbb, jetSelectorAK8_Hbb, jetSelectorAK4_bTagLoose, jetSelectorAK4_bTagMedium, numBJets_loose_tmp, numBJets_medium_tmp);
-            selHistManager->dyBgr_->fillHistograms(HT, selJetAK8_Hbb_msoftdrop, isBoosted, numBJets_medium_tmp, evtWeight);
+            selHistManager->dyBgr_->fillHistograms(HT_forDY, selJetAK8_Hbb_msoftdrop, isBoosted, numBJets_medium_tmp, evtWeight);
           }
         }
 
