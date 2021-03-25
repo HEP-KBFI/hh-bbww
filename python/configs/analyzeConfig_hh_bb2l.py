@@ -122,6 +122,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         executable_addBackgrounds,
         executable_addFakes,
         executable_addDYBgr,
+        executable_compDYBgrWeights,
         histograms_to_fit,
         max_depth_recursion,
         select_rle_output = False,
@@ -190,6 +191,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.executable_addBackgrounds = executable_addBackgrounds
     self.executable_addFakes = executable_addFakes
     self.executable_addDYBgr = executable_addDYBgr
+    self.executable_compDYBgrWeights = executable_compDYBgrWeights
 
     self.max_depth_recursion = max_depth_recursion
 
@@ -213,6 +215,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.make_plots_backgrounds = self.get_makeplots_backgrounds()
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
+
+    self.cfgFile_compDYBgrWeight = os.path.join(self.template_dir, "compDYBgrWeights_cfg.py")
+    self.jobOptions_compDYBgrWeights = {}
 
     self.select_rle_output = select_rle_output
     self.rle_select = rle_select
@@ -254,6 +259,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       'sel/weights',
       'sel/cutFlow'      
     ]
+    if "compWeights" in self.dyBgr_options:
+      self.copyHistogram_histogramDirs['makePlots_data'].extend([
+        'sel/dyBgr'
+      ])
     self.copyHistogram_histogramDirs['makePlots_mc'] = [
       'sel/genEvt',
       'sel/lheInfo',
@@ -336,6 +345,20 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     lines.append("process.addBackgroundLeptonFlips.sysShifts = cms.vstring(%s)" % self.central_or_shifts)
     create_cfg(self.cfgFile_addDYBgr, jobOptions['cfgFile_modified'], lines)
 
+  def createCfg_compDYBgrWeights(self, jobOptions):
+    """Create python configuration file for the compDYBgrWeights executable
+
+    Args:
+      inputFiles: input file (the ROOT file produced by hadd_stage2)
+    """
+    lines = []
+    lines.append("process.fwliteInput.fileNames = cms.vstring('%s')" % jobOptions['inputFile'])
+    lines.append("process.compDYBgrWeights.era = cms.string('%s')" % jobOptions['era'])
+    lines.append("process.compDYBgrWeights.processesToSubtract = cms.vstring(%s)" % jobOptions['processesToSubtract'])
+    lines.append("process.compDYBgrWeights.isMC = cms.bool(%s)" % jobOptions['isMC'])
+    lines.append("process.compDYBgrWeights.outputFilePath = cms.string('%s')" % jobOptions['outputFilePath'])
+    create_cfg(self.cfgFile_compDYBgrWeight, jobOptions['cfgFile_modified'], lines)
+
   def addToMakefile_addDYBgr(self, lines_makefile, make_target, make_dependency):
     if make_target not in self.phoniesToAdd:
       self.phoniesToAdd.append(make_target)
@@ -360,6 +383,23 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       lines_makefile.append("%s: %s" % (make_target, "phony_addDYBgr"))
       lines_makefile.append("")
     self.make_dependency_hadd_stage2 = " ".join([ "phony_addBackgrounds_sum", make_target ])
+
+  def addToMakefile_compDYBgrWeights(self, lines_makefile):
+    if self.is_sbatch:
+      lines_makefile.append("sbatch_compDYBgrWeights: %s" % " ".join([ jobOptions['inputFile'] for jobOptions in self.jobOptions_compDYBgrWeights.values() ]))
+      lines_makefile.append("\t%s %s" % ("python", self.sbatchFile_compDYBgrWeights))
+      lines_makefile.append("")
+    for key, jobOptions in self.jobOptions_compDYBgrWeights.items():
+      target = "phony_compDYBgrWeights_%s" % key
+      if self.is_makefile:
+        lines_makefile.append("%s: %s" % (target, jobOptions['inputFile']))
+        lines_makefile.append("\t%s %s" % (self.executable_compDYBgrWeights, jobOptions['cfgFile_modified']))
+        lines_makefile.append("")
+      elif self.is_sbatch:
+        lines_makefile.append("%s: %s" % (target, "sbatch_compDYBgrWeights"))
+        lines_makefile.append("\t%s" % ":") # CV: null command
+        lines_makefile.append("")
+      self.targets.append(target)
 
   def create(self):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
@@ -423,7 +463,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                       self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                                   "_".join([ lepton_selection_and_frWeight, lepton_charge_selection, dyBgr_subdir ]),
                                                                   process_name_or_dummy)
-    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "addBackgroundDY", "prepareDatacards", "addSystFakeRates", "makePlots" ]:
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "addBackgroundDY", "prepareDatacards", "addSystFakeRates", "makePlots", "compDYBgrWeights" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
@@ -825,6 +865,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         if key_hadd_stage1_6_job not in self.inputFiles_hadd_stage1_6:
           self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job] = []
         for dyBgr_option in self.dyBgr_options:
+          if not dyBgr_option in [ "applyWeights_data", "applyWeights_mc" ]:
+            continue
           key_addFakes_job = getKey("data_fakes", category, lepton_charge_selection, dyBgr_option)
           self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.jobOptions_addFakes[key_addFakes_job]['outputFile'])
           key_hadd_stage1_5_job = getKey(category, lepton_charge_selection, dyBgr_option, get_lepton_selection_and_frWeight("Tight", "disabled"))
@@ -1008,7 +1050,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         }
         self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
         if "Fakeable_mcClosure" in self.lepton_selections: #TODO
-          key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, get_lepton_selection_and_frWeight("Tight", "disabled"))
+          key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, "disabled", get_lepton_selection_and_frWeight("Tight", "disabled"))
           key_makePlots_job = getKey("Fakeable_mcClosure", lepton_charge_selection)
           self.jobOptions_make_plots[key_makePlots_job] = {
             'executable' : self.executable_make_plots_mcClosure,
@@ -1017,6 +1059,33 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_mcClosure_%s_%s_%s.png" % (self.channel, lepton_charge_selection, dyBgr_option))
           }
           self.createCfg_makePlots_mcClosure(self.jobOptions_make_plots[key_makePlots_job])
+
+    if "compWeights" in self.dyBgr_options:
+      logging.info("Creating configuration files for executing 'compDYBgrWeights'")
+      for lepton_charge_selection in self.lepton_charge_selections:
+        if not lepton_charge_selection == "OS":
+          continue
+        for isMC in [ True, False ]:       
+          key_hadd_stage2_job = getKey("makePlots", lepton_charge_selection, "compWeights", get_lepton_selection_and_frWeight("Tight", "disabled"))
+          key_compDYBgrWeights_dir = getKey("compDYBgrWeights")
+          compDYBgrWeights_job_tuple = (lepton_charge_selection, "isMCeq%s" % isMC)
+          key_compDYBgrWeights_job = getKey(*compDYBgrWeights_job_tuple)
+          processesToSubtract = []
+          for process in self.nonfake_backgrounds:
+            if process != "DY":
+              processesToSubtract.append(process)
+          processesToSubtract.extend([ "Convs", "data_fakes" ])
+          self.jobOptions_compDYBgrWeights[key_compDYBgrWeights_job] = {
+            'inputFile'           : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+            'cfgFile_modified'    : os.path.join(self.dirs[key_compDYBgrWeights_dir][DKEY_CFGS], "compDYBgrWeights_%s_%s_cfg.py" % compDYBgrWeights_job_tuple),
+            'logFile'             : os.path.join(self.dirs[key_compDYBgrWeights_dir][DKEY_LOGS], "compDYBgrWeights_%s_%s.log" % compDYBgrWeights_job_tuple),
+            'era'                 : self.era,
+            'processesToSubtract' : processesToSubtract,
+            'isMC'                : isMC,
+            'outputFilePath'      : self.dirs[key_compDYBgrWeights_dir][DKEY_DCRD],
+            'outputFile'          : ""
+          }
+          self.createCfg_compDYBgrWeights(self.jobOptions_compDYBgrWeights[key_compDYBgrWeights_job])
 
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
@@ -1040,6 +1109,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_addDYBgr)
       self.sbatchFile_addDYBgr = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_addDYBgr_%s.py" % self.channel)
       self.createScript_sbatch(self.executable_addDYBgr, self.sbatchFile_addDYBgr, self.jobOptions_addDYBgr)
+      if "compWeights" in self.dyBgr_options:
+        logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_compDYBgrWeights)
+        self.sbatchFile_compDYBgrWeights = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_compDYBgrWeights.py")
+        self.createScript_sbatch(self.executable_compDYBgrWeights, self.sbatchFile_compDYBgrWeights, self.jobOptions_compDYBgrWeights)
 
     logging.info("Creating Makefile")
     lines_makefile = []
@@ -1060,12 +1133,16 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     ##self.is_makefile = True
     ##self.addToMakefile_hadd_stage2(lines_makefile, max_input_files_per_job = 2)
     self.addToMakefile_hadd_stage2(lines_makefile)
+    if len(self.targets) == 0:
+      self.targets.append("phony_hadd_stage2")
     ##self.is_sbatch = is_sbatch_bak
     ##self.is_makefile = is_makefile_bak
     #----------------------------------------------------------------------------
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_make_plots(lines_makefile)
+    if "compWeights" in self.dyBgr_options:
+      self.addToMakefile_compDYBgrWeights(lines_makefile)
     self.addToMakefile_validate(lines_makefile)
     self.createMakefile(lines_makefile)
 

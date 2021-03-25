@@ -282,3 +282,18 @@
   <use   name="boost"/>
   <Flags CXXFLAGS="-g -Wshadow -Werror  -Wno-unused-but-set-variable"/>
 </bin>
+<bin file="compDYBgrWeights.cc" name="compDYBgrWeights">
+  <use   name="libpng"/>
+  <use   name="FWCore/FWLite"/>
+  <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/ParameterSetReader"/>
+  <use   name="FWCore/PythonParameterSet"/>
+  <use   name="FWCore/Utilities"/>
+  <use   name="DataFormats/Candidate"/>
+  <use   name="DataFormats/Math"/>
+  <use   name="PhysicsTools/FWLite"/>
+  <use   name="tthAnalysis/HiggsToTauTau"/>
+  <use   name="root"/>
+  <use   name="roottmva"/>
+  <Flags CXXFLAGS="-g -Wshadow -Werror"/>
+</bin>
