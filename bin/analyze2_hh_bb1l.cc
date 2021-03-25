@@ -568,7 +568,7 @@ int main(int argc, char* argv[])
     if(apply_HH_rwgt_nlo)
     {
       HHWeightNLO_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era);
-      HHWeightNLOonly_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era);
+      HHWeightNLOonly_calc = new HHWeightInterfaceNLO(hhWeight_couplings, era, true);
     }
   }
 
