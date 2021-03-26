@@ -9,7 +9,7 @@ namespace
   std::string
   getFileName(Era era, bool isBoosted, bool isMCClosure)
   {
-    std::string fileName = "hhAnalysis/bbww/data/DYBgrWeights/weight";
+    std::string fileName = "hhAnalysis/bbww/data/DYBgrWeights/Tallinn/weight";
     if ( isBoosted ) fileName.append("_fatjetsoftDropmass");
     else fileName.append("_HT");
     fileName.append("_SF");
