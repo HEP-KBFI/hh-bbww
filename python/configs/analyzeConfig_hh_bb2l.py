@@ -1229,6 +1229,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
     self.addToMakefile_add_syst_dybgr(lines_makefile)
+    self.targets.extend([ jobOptions['outputFile'] for jobOptions in self.jobOptions_add_syst_dybgr.values() ])
     self.addToMakefile_make_plots(lines_makefile)
     if "compWeights" in self.dyBgr_options:
       self.addToMakefile_compDYBgrWeights(lines_makefile)
