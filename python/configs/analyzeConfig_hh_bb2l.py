@@ -306,7 +306,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     lepton_frWeight = "disabled" if jobOptions['applyFakeRateWeights'] == "disabled" else "enabled"
 
     jobOptions['histogramDir'] = getHistogramDir(self.evtCategory_inclusive, lepton_selection, lepton_frWeight, jobOptions['leptonChargeSelection'], jobOptions['dyBgr_option'])
-    if 'mcClosure' in lepton_selection:
+    if 'mcClosure' in lepton_selection and jobOptions['dyBgr_option'] == 'disabled':
       self.mcClosure_dir[lepton_selection] = jobOptions['histogramDir']
 
     self.set_leptonFakeRateWeightHistogramNames(jobOptions['central_or_shift'], lepton_selection)
@@ -579,6 +579,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             for sample_name, sample_info in self.samples.items():
               if not sample_info["use_it"]:
                 continue
+              if dyBgr_option in ["applyWeights_data", "applyWeights_mc"]:
+                if 'signal' in sample_info["process_name_specific"]:
+                  continue
               process_name = sample_info["process_name_specific"]
               logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
               inputFileList = inputFileLists[sample_name]
