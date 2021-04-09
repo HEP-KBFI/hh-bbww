@@ -1215,18 +1215,8 @@ int main(int argc, char* argv[])
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
-      if ( apply_HH_rwgt_lo )
-      {
-        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
-        // CV: applying the NLO weight without applying the LO weight as well
-        //     does not make sense for the Run-2 LO HH MC samples,
-        //     as the LO weight needs to be applied in order to fix the coupling bug
-        //     present in the LO HH MC samples for 2016, 2017, and 2018
-        if ( apply_HH_rwgt_nlo )
-        {
-          evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
-        }
-      }
+      if(apply_HH_rwgt_lo)        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
+      if(apply_HH_rwgt_nlo)       evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
       lheInfoReader->read();
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
@@ -2369,27 +2359,18 @@ int main(int argc, char* argv[])
           if ( apply_HH_rwgt_lo )
           {
             assert(HHWeightLO_calc);
-            HHReweight = HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-            // CV: applying the NLO weight without applying the LO weight as well
-            //     does not make sense for the Run-2 LO HH MC samples,
-            //     as the LO weight needs to be applied in order to fix the coupling bug 
-            //     present in the LO HH MC samples for 2016, 2017, and 2018           
-            if ( apply_HH_rwgt_nlo )
-            {
-              assert(HHWeightNLO_calc);
-              HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-            }
+            HHReweight *= HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           }
-          weightMapHH[HHWeightNames[i]] = HHReweight;
           if ( apply_HH_rwgt_nlo )
           {
-            assert(HHWeightNLOonly_calc);
+            assert(HHWeightNLO_calc);
+            HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+
             HHReweight_nloOnly /= evtWeightRecorder.get_hhWeight();
-            HHReweight_nloOnly *= HHWeightNLOonly_calc->getWeight_LOtoNLO_V2(HHBMNames[i],
-               eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG
-            );
-            weightMapHH_nloOnly[HHWeightNames[i]+"_nloOnly"] = HHReweight_nloOnly;
+            HHReweight_nloOnly *= HHWeightNLOonly_calc->getWeight_LOtoNLO(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           }
+          weightMapHH[HHWeightNames[i]] = HHReweight;
+          weightMapHH_nloOnly[HHWeightNames[i]+"_nloOnly"] = HHReweight_nloOnly;
         }
       }
 
