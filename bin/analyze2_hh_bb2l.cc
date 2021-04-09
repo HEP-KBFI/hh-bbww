@@ -1790,14 +1790,19 @@ int main(int argc, char* argv[])
       double dyBgrWeight = 0.;
       if ( selJetAK8_Hbb )
       {
-        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop());          
+        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop());
+        //std::cout << "boosted: dyBgrWeight = " << dyBgrWeight << std::endl;
       }
       else
       {
         dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT_forDY, numBJets_medium);
+        // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
+        //    (Drell-Yan extrapolation factor for boosted events is not measured separately for 1 b-jet and 2 b-jet events
+        //     and thus the weight of boosted events does not need to be multiplied by a factor 2 !!)
+        dyBgrWeight *= 2.;
+        //std::cout << "resolved: dyBgrWeight = " << dyBgrWeight
+        //          << " (numBJets: loose = " << numBJets_loose << ", medium = " << numBJets_medium << ")" << std::endl;
       }
-      // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
-      dyBgrWeight *= 2.;
       evtWeightRecorder.record_dyBgrWeight(dyBgrWeight);
     }
 
