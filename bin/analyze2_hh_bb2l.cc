@@ -1229,18 +1229,8 @@ int main(int argc, char* argv[])
       if(eventWeightManager)      evtWeightRecorder.record_auxWeight(eventWeightManager);
       if(l1PreFiringWeightReader) evtWeightRecorder.record_l1PrefireWeight(l1PreFiringWeightReader);
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
-      if ( apply_HH_rwgt_lo )
-      {
-        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
-        // CV: applying the NLO weight without applying the LO weight as well
-        //     does not make sense for the Run-2 LO HH MC samples,
-        //     as the LO weight needs to be applied in order to fix the coupling bug 
-        //     present in the LO HH MC samples for 2016, 2017, and 2018
-        if ( apply_HH_rwgt_nlo ) 
-        {
-          evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
-        }
-      }        
+      if(apply_HH_rwgt_lo)        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
+      if(apply_HH_rwgt_nlo)       evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
       lheInfoReader->read();
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
@@ -1790,14 +1780,19 @@ int main(int argc, char* argv[])
       double dyBgrWeight = 0.;
       if ( selJetAK8_Hbb )
       {
-        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop());          
+        dyBgrWeight = dyBgrWeightInterface->getWeight_boosted(selJetAK8_Hbb->msoftdrop());
+        //std::cout << "boosted: dyBgrWeight = " << dyBgrWeight << std::endl;
       }
       else
       {
         dyBgrWeight = dyBgrWeightInterface->getWeight_resolved(HT_forDY, numBJets_medium);
+        // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
+        //    (Drell-Yan extrapolation factor for boosted events is not measured separately for 1 b-jet and 2 b-jet events
+        //     and thus the weight of boosted events does not need to be multiplied by a factor 2 !!)
+        dyBgrWeight *= 2.;
+        //std::cout << "resolved: dyBgrWeight = " << dyBgrWeight
+        //          << " (numBJets: loose = " << numBJets_loose << ", medium = " << numBJets_medium << ")" << std::endl;
       }
-      // CV: multiply weights by factor 2 to account for splitting of 0 b-jet events into 1 b-jet and 2 b-jet samples
-      dyBgrWeight *= 2.;
       evtWeightRecorder.record_dyBgrWeight(dyBgrWeight);
     }
 
@@ -2332,29 +2327,21 @@ int main(int argc, char* argv[])
           if ( apply_HH_rwgt_lo )
           {
             assert(HHWeightLO_calc);
-            HHReweight = HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-            // CV: applying the NLO weight without applying the LO weight as well
-            //     does not make sense for the Run-2 LO HH MC samples,
-            //     as the LO weight needs to be applied in order to fix the coupling bug 
-            //     present in the LO HH MC samples for 2016, 2017, and 2018           
-            if ( apply_HH_rwgt_nlo )
-            {
-              assert(HHWeightNLO_calc);
-              HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO_V2(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
-            }
+            HHReweight *= HHWeightLO_calc->getRelativeWeight(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           }
-          weightMapHH[HHWeightNames[i]] = HHReweight;
           if ( apply_HH_rwgt_nlo )
           {
-            assert(HHWeightNLOonly_calc);
+            assert(HHWeightNLO_calc);
+            HHReweight *= HHWeightNLO_calc->getRelativeWeight_LOtoNLO(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
+
             HHReweight_nloOnly /= evtWeightRecorder.get_hhWeight();
-            HHReweight_nloOnly *= HHWeightNLOonly_calc->getWeight_LOtoNLO_V2(HHBMNames[i],
-              eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG
-          );
-            weightMapHH_nloOnly[HHWeightNames[i]+"_nloOnly"] = HHReweight_nloOnly;
+            HHReweight_nloOnly *= HHWeightNLOonly_calc->getWeight_LOtoNLO(HHBMNames[i], eventInfo.gen_mHH, eventInfo.gen_cosThetaStar, isDEBUG);
           }
+          weightMapHH[HHWeightNames[i]] = HHReweight;
+          weightMapHH_nloOnly[HHWeightNames[i]+"_nloOnly"] = HHReweight_nloOnly;
         }
       }
+
       bdt_filler -> operator()({ eventInfo.run, eventInfo.lumi, eventInfo.event })
         ("bjet1_btagCSV",               bjet1_btagCSV)
         ("bjet2_btagCSV",               bjet2_btagCSV)

@@ -212,6 +212,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       sample_category = sample_info["sample_category"]
       if sample_category.startswith("signal"):
         self.prep_dcard_signals.add(sample_category)
+    self.jobOptions_add_syst_dybgr = {}
     self.make_plots_backgrounds = self.get_makeplots_backgrounds()
     self.cfgFile_make_plots = os.path.join(self.template_dir, "makePlots_hh_bb2l_cfg.py")
     self.cfgFile_make_plots_mcClosure = os.path.join(self.template_dir, "makePlots_mcClosure_hh_bb2l_cfg.py")
@@ -345,6 +346,40 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     lines.append("process.addBackgroundLeptonFlips.sysShifts = cms.vstring(%s)" % self.central_or_shifts)
     create_cfg(self.cfgFile_addDYBgr, jobOptions['cfgFile_modified'], lines)
 
+  def createCfg_add_syst_dybgr(self, jobOptions):
+        """Fills the template of python configuration file for adding the following shape systematics to the datacard:
+            - 'CMS_bbww_Clos_dy_norm'
+            - 'CMS_bbww_Clos_dy_shape'
+
+           Args:
+             histogramToFit: name of the histogram used for signal extraction
+        """
+        lines = []
+        lines.append("process.fwliteInput.fileNames = cms.vstring('%s')" % jobOptions['inputFile'])
+        lines.append("process.fwliteOutput.fileName = cms.string('%s')" % jobOptions['outputFile'])
+        lines.append("process.addSystFakeRates.process = cms.string('data_DY')")
+        lines.append("process.addSystFakeRates.category = cms.string('%s')" % jobOptions['category'])
+        lines.append("process.addSystFakeRates.histogramToFit = cms.string('%s')" % jobOptions['histogramToFit'])
+        xAxisTitle = ""
+        yAxisTitle = ""
+        lines.append("process.addSystFakeRates.xAxisTitle = cms.string('%s')" % xAxisTitle)
+        lines.append("process.addSystFakeRates.yAxisTitle = cms.string('%s')" % yAxisTitle)
+        lines.append("process.addSystFakeRates.addSyst = cms.VPSet(")
+        lines.append("    cms.PSet(")
+        lines.append("        name = cms.string('%s')," % jobOptions['nuisance_parameter_name'])
+        lines.append("        fakes_mc = cms.PSet(")
+        lines.append("            inputFileName = cms.string('%s')," % jobOptions['inputFile_nominal'])
+        lines.append("            histogramName = cms.string('%s')," % jobOptions['histogramName_nominal'])
+        lines.append("        ),")
+        lines.append("        mcClosure = cms.PSet(")
+        lines.append("            inputFileName = cms.string('%s')," % jobOptions['inputFile_mcClosure'])
+        lines.append("            histogramName = cms.string('%s')," % jobOptions['histogramName_mcClosure'])
+        lines.append("        ),")
+        lines.append("    ),")
+        lines.append(")")
+        lines.append("process.addSystFakeRates.outputFileName = cms.string('%s')" % jobOptions['plots_outputFileName'])
+        create_cfg(self.cfgFile_add_syst_fakerate, jobOptions['cfgFile_modified'], lines)
+
   def createCfg_compDYBgrWeights(self, jobOptions):
     """Create python configuration file for the compDYBgrWeights executable
 
@@ -383,6 +418,16 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       lines_makefile.append("%s: %s" % (make_target, "phony_addDYBgr"))
       lines_makefile.append("")
     self.make_dependency_hadd_stage2 = " ".join([ "phony_addBackgrounds_sum", make_target ])
+
+  def addToMakefile_add_syst_dybgr(self, lines_makefile):
+    """Adds the commands to Makefile that are necessary for including additional systematic uncertainties,
+       related to the non-closure of the data-driven Drell-Yan (DY) background estimation, into the datacards.
+    """
+    for job in self.jobOptions_add_syst_dybgr.values():
+      lines_makefile.append("%s: %s" % (job['outputFile'], job['inputFile']))
+      lines_makefile.append("\t%s %s" % (self.executable_add_syst_fakerate, job['cfgFile_modified']))
+      self.filesToClean.append(job['outputFile'])
+      lines_makefile.append("")
 
   def addToMakefile_compDYBgrWeights(self, lines_makefile):
     if self.is_sbatch:
@@ -465,7 +510,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                       self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                                   "_".join([ lepton_selection_and_frWeight, lepton_charge_selection, dyBgr_subdir ]),
                                                                   process_name_or_dummy)
-    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "addBackgroundDY", "prepareDatacards", "addSystFakeRates", "makePlots", "compDYBgrWeights" ]:
+    for subdirectory in [ "addSysTT", "addBackgrounds", "addBackgroundLeptonFakes", "addBackgroundDY", "prepareDatacards", "addSystFakeRates", "addSystDYBgr", "makePlots", "compDYBgrWeights" ]:
       key_dir = getKey(subdirectory)
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
@@ -1035,6 +1080,44 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
             })
           self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
+          # add shape templates for the following systematic uncertainties:
+          #  - 'CMS_bbww_Clos_dy_norm'
+          #  - 'CMS_bbww_Clos_dy_shape'
+          key_add_syst_dybgr_dir = getKey("addSystDYBgr")
+          add_syst_dybgr_job_tuple = (self.channel, category, lepton_charge_selection, dyBgr_option, histogramToFit_modified)
+          key_add_syst_dybgr_job = getKey(category, lepton_charge_selection, dyBgr_option, histogramToFit)
+          self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job] = {
+            'inputFile' : self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job]['outputFile'],
+            'cfgFile_modified' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_CFGS], "addSystDYBgr_%s_%s_%s_%s_%s_cfg.py" % add_syst_dybgr_job_tuple),
+            'outputFile' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_DCRD], "addSystDYBgr_%s_%s_%s_%s_%s.root" % add_syst_dybgr_job_tuple),
+            'category' : category,
+            'histogramToFit' : histogramToFit_modified,
+            'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_PLOT], "addSystDYBgr.png"),
+            'max_depth_recursion' : self.max_depth_recursion
+          }
+          histogramDir_nominal = histogramDir_modified
+          histogramDir_mcClosure = histogramDir_nominal.replace("hh_bb2l", "hh_bb2l_DYBgrAR_mc")
+          if histogramToFit.find("/") != -1:
+            histogramDir_nominal = histogramDir_nominal + "/DY"
+            histogramDir_mcClosure = histogramDir_mcClosure + "/" + histogramToFit[:histogramToFit.rfind("/")]
+            histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/DY")
+          else:
+            histogramDir_nominal = histogramDir_nominal + "/sel/evt/DY"
+            histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/DY"        
+          nuisance_parameter_name = None
+          if category in [ self.evtCategory_inclusive, "makePlots" ]:
+            nuisance_parameter_name = "CMS_bbwwdl_DY"  
+          else:
+            nuisance_parameter_name = "CMS_bbwwdl_DY_%s" % category
+          key_hadd_stage2_mcClosure_job = getKey(category, lepton_charge_selection, "applyWeights_mc", get_lepton_selection_and_frWeight("Tight", "disabled"))
+          self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job].update({
+            'nuisance_parameter_name' : nuisance_parameter_name,
+            'inputFile_nominal' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+            'histogramName_nominal' : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
+            'inputFile_mcClosure' : self.outputFile_hadd_stage2[key_hadd_stage2_mcClosure_job],
+            'histogramName_mcClosure' : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
+          })
+          self.createCfg_add_syst_dybgr(self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job])
 
     logging.info("Creating configuration files to run 'makePlots'")
     for lepton_charge_selection in self.lepton_charge_selections:
@@ -1145,6 +1228,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     #----------------------------------------------------------------------------
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_add_syst_fakerate(lines_makefile)
+    self.addToMakefile_add_syst_dybgr(lines_makefile)
+    self.targets.extend([ jobOptions['outputFile'] for jobOptions in self.jobOptions_add_syst_dybgr.values() ])
     self.addToMakefile_make_plots(lines_makefile)
     if "compWeights" in self.dyBgr_options:
       self.addToMakefile_compDYBgrWeights(lines_makefile)
