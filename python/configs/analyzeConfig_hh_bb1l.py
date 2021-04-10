@@ -416,6 +416,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         for sample_name, sample_info in self.samples.items():
           if not sample_info["use_it"]:
             continue
+          if  "Fakeable_mcClosure" in lepton_selection:
+            if 'signal' in sample_info["process_name_specific"]:
+              continue
           process_name = sample_info["process_name_specific"]
           logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
           inputFileList = inputFileLists[sample_name]
