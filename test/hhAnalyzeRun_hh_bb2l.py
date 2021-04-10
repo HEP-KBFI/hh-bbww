@@ -273,8 +273,8 @@ if __name__ == '__main__':
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     lep_mva_wp                            = lep_mva_wp,
-    ##dyBgr_options                         = [ "disabled", "applyWeights_data", "applyWeights_mc" ], # CV: use this to apply data-driven DY background estimation
-    dyBgr_options                         = [ "compWeights" ], # CV: use this to compute inputs for data-driven DY background estimation
+    dyBgr_options                         = [ "disabled", "applyWeights_data", "applyWeights_mc" ], # CV: use this to apply data-driven DY background estimation
+    #dyBgr_options                         = [ "compWeights" ], # CV: use this to compute inputs for data-driven DY background estimation
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
     max_files_per_job                     = files_per_job,
