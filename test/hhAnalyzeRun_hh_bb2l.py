@@ -13,6 +13,8 @@ import getpass
 
 # E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
 
+dyBgr_defaults   = [ "disabled", "applyWeights_data", "applyWeights_mc" ] # CV: use this to apply data-driven DY background estimation
+dyBgr_choices    = dyBgr_defaults + [ "compWeights" ] # CV: use 'compWeights' to compute inputs for data-driven DY background estimation
 training_choices = [ 'BDT', 'LBN' ]
 signal_choices   = [ 'nonres', 'spin0', 'spin2' ]
 mode_choices     = [
@@ -23,7 +25,7 @@ sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww + [ 'MEM
 systematics.full = systematics.an_full_hh_bbww
 systematics.internal = systematics.an_internal_hh_bbww
 
-parser = tthAnalyzeParser()
+parser = tthAnalyzeParser(max_help_position = 60)
 parser.add_modes(mode_choices)
 parser.add_sys(sys_choices)
 parser.add_preselect()
@@ -39,6 +41,10 @@ parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
+parser.add_argument('-dy', '--dy-background',
+  type = str, nargs = '+', dest = 'dy', metavar = 'method', choices = dyBgr_choices, default = dyBgr_defaults, required = False,
+  help = 'R|DY background estimation',
+)
 parser.add_argument('-hme', '--hmeBr',
   dest = 'add_hmeBr', action = 'store_true',
   help = 'R|add hme branch'
@@ -83,6 +89,7 @@ regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
 add_hmeBr         = args.add_hmeBr
 doDataMCPlots     = True
+dyBgr_options     = args.dy
 training_method   = args.training_method
 fill_spin         = args.fill_spin
 
@@ -245,6 +252,11 @@ elif sideband == 'only':
 else:
   raise ValueError("Invalid choice for the sideband: %s" % sideband)
 
+if not dyBgr_options:
+  raise RuntimeError("DY background option cannot be empty")
+if "compWeights" in dyBgr_options and len(dyBgr_options) > 1:
+  raise RuntimeError("Cannot use 'compWeights' with other options: %s" % ', '.join(dyBgr_options))
+
 if __name__ == '__main__':
   logging.info(
     "Running the jobs with the following systematic uncertainties enabled: %s" % \
@@ -273,8 +285,7 @@ if __name__ == '__main__':
     applyFakeRateWeights                  = "enabled",
     central_or_shifts                     = central_or_shifts,
     lep_mva_wp                            = lep_mva_wp,
-    dyBgr_options                         = [ "disabled", "applyWeights_data", "applyWeights_mc" ], # CV: use this to apply data-driven DY background estimation
-    #dyBgr_options                         = [ "compWeights" ], # CV: use this to compute inputs for data-driven DY background estimation
+    dyBgr_options                         = dyBgr_options,
     jet_cleaning_by_index                 = jet_cleaning_by_index,
     gen_matching_by_index                 = gen_matching_by_index,
     max_files_per_job                     = files_per_job,
