@@ -1084,7 +1084,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           # add shape templates for the following systematic uncertainties:
           #  - 'CMS_bbww_Clos_dy_norm'
           #  - 'CMS_bbww_Clos_dy_shape'
-          if self.run_mcClosure and "applyWeights_mc" in self.dyBgr_options:
+          if "applyWeights_mc" in self.dyBgr_options:
             key_add_syst_dybgr_dir = getKey("addSystDYBgr")
             add_syst_dybgr_job_tuple = (self.channel, category, lepton_charge_selection, dyBgr_option, histogramToFit_modified)
             key_add_syst_dybgr_job = getKey(category, lepton_charge_selection, dyBgr_option, histogramToFit)
