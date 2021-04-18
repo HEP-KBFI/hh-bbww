@@ -1096,19 +1096,19 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'max_depth_recursion' : self.max_depth_recursion
           }
           histogramDir_nominal = histogramDir_modified
-          histogramDir_mcClosure = histogramDir_nominal.replace("hh_bb2l", "hh_bb2l_DYBgrAR_mc")
+          histogramDir_mcClosure = histogramDir_nominal.split('/')[0].replace("hh_bb2l", "hh_bb2l_DYBgrAR_mc")
           if histogramToFit.find("/") != -1:
             histogramDir_nominal = histogramDir_nominal + "/DY"
-            histogramDir_mcClosure = histogramDir_mcClosure + "/" + histogramToFit[:histogramToFit.rfind("/")]
+            histogramDir_mcClosure += "/" + histogramToFit[:histogramToFit.rfind("/")]
             histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/DY")
           else:
             histogramDir_nominal = histogramDir_nominal + "/sel/evt/DY"
             histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/DY"        
           nuisance_parameter_name = None
           if category in [ self.evtCategory_inclusive, "makePlots" ]:
-            nuisance_parameter_name = "CMS_bbwwdl_DY"  
+            nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
           else:
-            nuisance_parameter_name = "CMS_bbwwdl_DY_%s" % category
+            nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
           key_hadd_stage2_mcClosure_job = getKey(category, lepton_charge_selection, "applyWeights_mc", get_lepton_selection_and_frWeight("Tight", "disabled"))
           self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job].update({
             'nuisance_parameter_name' : nuisance_parameter_name,
