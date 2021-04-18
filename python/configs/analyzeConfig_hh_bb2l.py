@@ -1080,44 +1080,46 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
             })
           self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
+
           # add shape templates for the following systematic uncertainties:
           #  - 'CMS_bbww_Clos_dy_norm'
           #  - 'CMS_bbww_Clos_dy_shape'
-          key_add_syst_dybgr_dir = getKey("addSystDYBgr")
-          add_syst_dybgr_job_tuple = (self.channel, category, lepton_charge_selection, dyBgr_option, histogramToFit_modified)
-          key_add_syst_dybgr_job = getKey(category, lepton_charge_selection, dyBgr_option, histogramToFit)
-          self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job] = {
-            'inputFile' : self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job]['outputFile'],
-            'cfgFile_modified' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_CFGS], "addSystDYBgr_%s_%s_%s_%s_%s_cfg.py" % add_syst_dybgr_job_tuple),
-            'outputFile' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_DCRD], "addSystDYBgr_%s_%s_%s_%s_%s.root" % add_syst_dybgr_job_tuple),
-            'category' : category,
-            'histogramToFit' : histogramToFit_modified,
-            'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_PLOT], "addSystDYBgr.png"),
-            'max_depth_recursion' : self.max_depth_recursion
-          }
-          histogramDir_nominal = histogramDir_modified
-          histogramDir_mcClosure = histogramDir_nominal.split('/')[0].replace("hh_bb2l", "hh_bb2l_DYBgrAR_mc")
-          if histogramToFit.find("/") != -1:
-            histogramDir_nominal = histogramDir_nominal + "/DY"
-            histogramDir_mcClosure += "/" + histogramToFit[:histogramToFit.rfind("/")]
-            histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/DY")
-          else:
-            histogramDir_nominal = histogramDir_nominal + "/sel/evt/DY"
-            histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/DY"        
-          nuisance_parameter_name = None
-          if category in [ self.evtCategory_inclusive, "makePlots" ]:
-            nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
-          else:
-            nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
-          key_hadd_stage2_mcClosure_job = getKey(category, lepton_charge_selection, "applyWeights_mc", get_lepton_selection_and_frWeight("Tight", "disabled"))
-          self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job].update({
-            'nuisance_parameter_name' : nuisance_parameter_name,
-            'inputFile_nominal' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-            'histogramName_nominal' : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
-            'inputFile_mcClosure' : self.outputFile_hadd_stage2[key_hadd_stage2_mcClosure_job],
-            'histogramName_mcClosure' : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
-          })
-          self.createCfg_add_syst_dybgr(self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job])
+          if "applyWeights_mc" in self.dyBgr_options:
+            key_add_syst_dybgr_dir = getKey("addSystDYBgr")
+            add_syst_dybgr_job_tuple = (self.channel, category, lepton_charge_selection, dyBgr_option, histogramToFit_modified)
+            key_add_syst_dybgr_job = getKey(category, lepton_charge_selection, dyBgr_option, histogramToFit)
+            self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job] = {
+              'inputFile' : self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job]['outputFile'],
+              'cfgFile_modified' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_CFGS], "addSystDYBgr_%s_%s_%s_%s_%s_cfg.py" % add_syst_dybgr_job_tuple),
+              'outputFile' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_DCRD], "addSystDYBgr_%s_%s_%s_%s_%s.root" % add_syst_dybgr_job_tuple),
+              'category' : category,
+              'histogramToFit' : histogramToFit_modified,
+              'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_dybgr_dir][DKEY_PLOT], "addSystDYBgr.png"),
+              'max_depth_recursion' : self.max_depth_recursion
+            }
+            histogramDir_nominal = histogramDir_modified
+            histogramDir_mcClosure = histogramDir_nominal.split('/')[0].replace("hh_bb2l", "hh_bb2l_DYBgrAR_mc")
+            if histogramToFit.find("/") != -1:
+              histogramDir_nominal = histogramDir_nominal + "/DY"
+              histogramDir_mcClosure += "/" + histogramToFit[:histogramToFit.rfind("/")]
+              histogramDir_mcClosure = histogramDir_mcClosure.replace("/$PROCESS", "/DY")
+            else:
+              histogramDir_nominal = histogramDir_nominal + "/sel/evt/DY"
+              histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/DY"
+            nuisance_parameter_name = None
+            if category in [ self.evtCategory_inclusive, "makePlots" ]:
+              nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
+            else:
+              nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
+            key_hadd_stage2_mcClosure_job = getKey(category, lepton_charge_selection, "applyWeights_mc", get_lepton_selection_and_frWeight("Tight", "disabled"))
+            self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job].update({
+              'nuisance_parameter_name' : nuisance_parameter_name,
+              'inputFile_nominal' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+              'histogramName_nominal' : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
+              'inputFile_mcClosure' : self.outputFile_hadd_stage2[key_hadd_stage2_mcClosure_job],
+              'histogramName_mcClosure' : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
+            })
+            self.createCfg_add_syst_dybgr(self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job])
 
     logging.info("Creating configuration files to run 'makePlots'")
     for lepton_charge_selection in self.lepton_charge_selections:
