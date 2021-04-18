@@ -85,7 +85,7 @@ bool cmp(pair<std::string, pair<double,double>>& a,
   return a.second.first > b.second.first;
 }
 
-void dumpEventYields_1(std::string era, std::string category, std::string inputfile)
+void dumpEventYields_1(std::string era, std::string category, std::string inputfile, std::string channel)
 {
   std::string MVAtype = find_MVAtype(inputfile); //hadd_stage1_5_BDT_resolved_2b_nonvbf_Tight.root
   std::vector<std::string> evtcats;
@@ -117,7 +117,7 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
   }
   
   //  std::cout << BDT_evtcat << std::endl;
-  ofstream myfile (Form("eventYield_%s.txt", era.c_str()));
+  ofstream myfile (Form("eventYield_%s_%s.txt", era.c_str(), channel.c_str()));
   if ( !myfile.is_open() ) {
     std::cerr << "output file couldn't be opened !!" << std::endl;
     assert(0);
@@ -132,7 +132,7 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
   histograms.push_back("MVAOutput_SM");
   vstring inclusive_signal_processes; // key = channel
   vstring signal_processes; 
-  inclusive_signal_processes.push_back("signal_ggf_nonresonant_cHHH1_hh");                                                                                                     
+  inclusive_signal_processes.push_back("signal_ggf_nonresonant_cHHH1_hh");                                
   inclusive_signal_processes.push_back("signal_ggf_nonresonant_cHHH5_hh");
   inclusive_signal_processes.push_back("signal_ggf_nonresonant_cHHH2p45_hh");
   inclusive_signal_processes.push_back("signal_ggf_nonresonant_cHHH0_hh");
@@ -148,7 +148,7 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
   signal_process_parts.push_back("");
   vstring hhbrs;
   hhbrs.push_back("bbww");
-  hhbrs.push_back("bbzz");
+  //hhbrs.push_back("bbzz");
   hhbrs.push_back("bbtt");
   for (auto inclusive_proc: inclusive_signal_processes) {
     //signal_processes.push_back(Form("%s_Convs", inclusive_proc.data()));
@@ -207,15 +207,48 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
   double totST(0.);
   double totW(0.);
   double totDY(0.);
+  double totWH_hbb(0);
+  double totZH_hbb(0);
+  double totZH_htt(0);
+  double tottHq_hbb(0);
+  double tottHW_hbb(0);
+  double totTTH_hbb(0);
   double totfake(0);
   double totSingleH(0.);
+  double totVV(0.);
+  double totVVV(0.);
+  double totggH_htt(0.);
+  double totggH_hbb(0.);
+  double totggH_hww(0.);
+  double totqqH_hbb(0.);
+  double totqqH_hww(0.);
+  double totqqH_htt(0.);
+  double totTTW(0.);
+  double totTTZ(0.);
   double totData(0.);
+  double totcHHH2p45_bbww(0);
+  double totcHHH2p45_bbtt(0);
+  double totcHHH5_bbww(0);
+  double totcHHH5_bbtt(0);
+  double totcHHH1_bbww(0);
+  double totcHHH1_bbtt(0);
+  double totcHHH0_bbww(0);
+  double totcHHH0_bbtt(0);
+  double tot112_bbww(0);
+  double tot112_bbtt(0);
+  double tot101_bbww(0);
+  double tot101_bbtt(0);
+  double tot121_bbww(0);
+  double tot121_bbtt(0);
+  double tot111_bbww(0);
+  double tot111_bbtt(0);
   for (auto evtcat: evtcats) {
     Double_t total_bkg(0);
     Double_t total_sig(0);
     Double_t total_sig_conv(0.);
     std::vector<std::pair<string, std::pair<double, double>> > cat_yield;
-    inputfile = inputfile.replace( inputfile.begin()+pos+MVAtype.length(), inputfile.end(), "_"+evtcat+"_OS_Tight.root");
+    inputfile = (channel == "sl") ? inputfile.replace( inputfile.begin()+pos+MVAtype.length(), inputfile.end(), "_"+evtcat+"_Tight.root"):
+      inputfile.replace( inputfile.begin()+pos+MVAtype.length(), inputfile.end(), "_"+evtcat+"_OS_disabled_Tight.root");
     myfile << "evtcat: " << evtcat  << std::endl;
     inputFile = new TFile(inputfile.data());
     if ( !inputFile ) {
@@ -234,6 +267,22 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
         TH1* histogram = loadHistogram(inputFile, histogramName);
         if ( histogram ) {
           double integral = compIntegral(histogram);
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH5_hh_bbww") != std::string::npos) ) totcHHH5_bbww += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH5_hh_bbtt") != std::string::npos) ) totcHHH5_bbtt += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH2p45_hh_bbww") != std::string::npos) ) totcHHH2p45_bbww += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH2p45_hh_bbtt") != std::string::npos) ) totcHHH2p45_bbtt += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH1_hh_bbww") != std::string::npos) ) totcHHH1_bbww += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH1_hh_bbtt") != std::string::npos) ) totcHHH1_bbtt += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH0_hh_bbww") != std::string::npos) ) totcHHH0_bbww += integral;
+          if ( (signal_process.find("signal_ggf_nonresonant_cHHH0_hh_bbtt") != std::string::npos) ) totcHHH0_bbtt += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_1_2_hh_bbww") != std::string::npos) ) tot112_bbww += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_1_2_hh_bbtt") != std::string::npos) ) tot112_bbtt += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_0_1_hh_bbww") != std::string::npos) ) tot101_bbww += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_0_1_hh_bbtt") != std::string::npos) ) tot101_bbtt += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_2_1_hh_bbww") != std::string::npos) ) tot121_bbww += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_2_1_hh_bbtt") != std::string::npos) ) tot121_bbtt += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_1_1_hh_bbww") != std::string::npos) ) tot111_bbww += integral;
+          if ( (signal_process.find("signal_vbf_nonresonant_1_1_1_hh_bbtt") != std::string::npos) ) tot111_bbtt += integral;
           integral_parts[signal_process_part] = integral;
           integral_sum += integral;
           double integralErr = compIntegralErr(histogram);
@@ -277,6 +326,18 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
                histogramName.find("tHW") != std::string::npos )
             {
             double integral = compIntegral(histogram);
+            if ( (background_process.find("tHq_hbb") != std::string::npos) ) tottHq_hbb += integral;
+            if ( (background_process.find("WH_hbb") != std::string::npos) ) totWH_hbb += integral;
+            if ( (background_process.find("ZH_hbb") != std::string::npos) ) totZH_hbb += integral;
+            if ( (background_process.find("ZH_htt") != std::string::npos) ) totZH_htt += integral;
+            if ( (background_process.find("tHW_hbb") != std::string::npos) ) tottHW_hbb += integral;
+            if ( (background_process.find("TTH_hbb") != std::string::npos) ) totTTH_hbb += integral;
+            if ( (background_process.find("ggH_htt") != std::string::npos) ) totggH_htt += integral;
+            if ( (background_process.find("ggH_hbb") != std::string::npos) ) totggH_hbb += integral;
+            if ( (background_process.find("ggH_hww") != std::string::npos) ) totggH_hww += integral;
+            if ( (background_process.find("qqH_hww") != std::string::npos) ) totqqH_hww += integral;
+            if ( (background_process.find("qqH_hbb") != std::string::npos) ) totqqH_hbb += integral;
+            if ( (background_process.find("qqH_htt") != std::string::npos) ) totqqH_htt += integral;
             integral_SingleHsum += integral;
             double integral_Err = compIntegralErr(histogram);
             integralErr2_SingleHsum += square(integral_Err);
@@ -304,6 +365,10 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
           if (background_process == "W")  totW += integral_parts[""];
           if (background_process == "ST") totST += integral_parts[""];
           if (background_process == "DY") totDY += integral_parts[""];
+          if (background_process == "VV") totVV += integral_parts[""];
+          if (background_process == "VVV") totVVV += integral_parts[""];
+          if (background_process == "TTW") totTTW += integral_parts[""];
+          if (background_process == "TTZ") totTTZ += integral_parts[""];
           if (background_process == "data_fakes") totfake += integral_parts[""];
           cat_yield.push_back(std::pair<std::string, std::pair<double,double>> (background_process, std::pair<double,double>(integral_parts[""],integralErr_parts[""])));
           //myfile << background_process << ": " << integral_sum << " +/- " << integralErr_sum << std::endl;
@@ -353,5 +418,38 @@ void dumpEventYields_1(std::string era, std::string category, std::string inputf
   myfile << "totSingleH: " << totSingleH << std::endl;
   myfile << "totData: " << totData << std::endl;
   myfile << "totfake: " << totfake << std::endl;
+  myfile << "tottHq_hbb: " << tottHq_hbb << std::endl;
+  myfile << "totWH_hbb: " << totWH_hbb << std::endl;
+  myfile << "totZH_hbb: " << totZH_hbb << std::endl;
+  myfile << "totZH_htt: " << totZH_htt << std::endl;
+  myfile << "tottHW_hbb: " << tottHW_hbb << std::endl;
+  myfile << "totTTH_hbb: " << totTTH_hbb << std::endl;
+  myfile << "totVV: " << totVV << std::endl;
+  myfile << "totVVV: " << totVVV << std::endl;
+  myfile << "totggH_htt: " << totggH_htt << std::endl;
+  myfile << "totggH_hbb: " << totggH_hbb << std::endl;
+  myfile << "totggH_hww: " << totggH_hww << std::endl;
+  myfile << "totqqH_hbb: " << totqqH_hbb << std::endl;
+  myfile << "totqqH_htt: " << totqqH_htt << std::endl;
+  myfile << "totqqH_hww: " << totqqH_hww << std::endl;
+  myfile << "totTTW: " << totTTW << std::endl;
+  myfile << "totTTZ: " << totTTZ << std::endl;
+  myfile << "totcHHH1_bbww: " << totcHHH1_bbww << std::endl;
+  myfile << "totcHHH1_bbtt: " << totcHHH1_bbtt << std::endl;
+  myfile << "totcHHH0_bbww: " << totcHHH0_bbww << std::endl;
+  myfile << "totcHHH0_bbtt: " << totcHHH0_bbtt << std::endl;
+  myfile << "totcHHH5_bbww: " << totcHHH5_bbww << std::endl;
+  myfile << "totcHHH5_bbtt: " << totcHHH5_bbtt << std::endl;
+  myfile << "totcHHH2p45_bbww: " << totcHHH2p45_bbww << std::endl;
+  myfile << "totcHHH2p45_bbtt: " << totcHHH2p45_bbtt << std::endl;
+  myfile << "tot112_bbww: " << tot112_bbww << std::endl;
+  myfile << "tot112_bbtt: " << tot112_bbtt << std::endl;
+  myfile << "tot101_bbww: " << tot101_bbww << std::endl;
+  myfile << "tot101_bbtt: " << tot101_bbtt << std::endl;
+  myfile << "tot121_bbww: " << tot121_bbww << std::endl;
+  myfile << "tot121_bbtt: " << tot121_bbtt << std::endl;
+  myfile << "tot111_bbww: " << tot111_bbww << std::endl;
+  myfile << "tot111_bbtt: " << tot111_bbtt << std::endl;
+  
 }
     
