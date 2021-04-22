@@ -8,8 +8,9 @@ EventCategory_hh_bb2l_LBN::EventCategory_hh_bb2l_LBN()
   , isVBF_(false)
 {
   categoryMap_ = {
-    { kUndefined,              "undefined"             },
-    { kHH_boosted,             "HH_boosted"            },
+    { kUndefined,              "undefined"         },
+    { kHH_boosted_vbf,         "HH_boosted_vbf"    },
+    { kHH_boosted_nonvbf,      "HH_boosted_nonvbf" },
     { kHH_resolved_2b_vbf,     "HH_resolved_2b_vbf"    },
     { kHH_resolved_2b_nonvbf,  "HH_resolved_2b_nonvbf" },
     { kHH_resolved_1b_vbf,     "HH_resolved_1b_vbf"    },
@@ -42,7 +43,8 @@ EventCategory_hh_bb2l_LBN::isSelected(int for_category, const std::string & for_
             << "EventCategory_hh_bb2l_LBN object has not been initialized." 
             << " You need to call the 'set' function before calling the 'isSelected' function !!\n";
   if      ( for_category == (int)kUndefined             ) return false;
-  else if ( for_category == (int)kHH_boosted            ) return for_class == "HH"    &&  isBoosted_;
+  else if ( for_category == (int)kHH_boosted_vbf        ) return for_class == "HH"    &&  isBoosted_ && isVBF_;
+  else if ( for_category == (int)kHH_boosted_nonvbf     ) return for_class == "HH"    &&  isBoosted_ && !isVBF_;
   else if ( for_category == (int)kHH_resolved_2b_vbf    ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 2 &&  isVBF_;
   else if ( for_category == (int)kHH_resolved_2b_nonvbf ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 2 && !isVBF_;
   else if ( for_category == (int)kHH_resolved_1b_vbf    ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 1 && isVBF_;
