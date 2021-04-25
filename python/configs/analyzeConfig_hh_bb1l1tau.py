@@ -95,6 +95,7 @@ class analyzeConfig_hh_bb1l1tau(analyzeConfig_hh):
       use_home              = use_home,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
+      apply_genPhotonFilter = True,
     )
 
     self.lepton_and_hadTau_selections = [ "Tight", "Fakeable" ]
