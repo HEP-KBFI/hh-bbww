@@ -2,12 +2,16 @@
 
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
-std::vector<TMVAInterface *>
-makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
+namespace
 {
-  std::vector<TMVAInterface *> retVals;
   std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
-  for ( auto BM: BMpoints) {
+}
+
+std::map<std::string, TMVAInterface *>
+makeTMVAInterfaceMap(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
+{
+  std::map<std::string, TMVAInterface *> retVals;
+  for ( const std::string & BM: BMpoints) {
     std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
     xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "era", era);
     xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "BM", BM);
@@ -29,17 +33,28 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
     //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
     //}
     retVal->enableBDTTransform();
-    retVals.push_back(retVal);
+    retVals[BM] = retVal;
   }
   return retVals;
 }
 
-std::vector<TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era)
+std::vector<TMVAInterface *>
+makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
 {
-  std::vector<TensorFlowInterfaceLBN *> retVals;
-  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
-  for ( auto BM: BMpoints) {
+  const std::map<std::string, TMVAInterface *> retValsMap = makeTMVAInterfaceMap(cfg, era, is_nonresonant);
+  std::vector<TMVAInterface *> retVals;
+  for(const auto & kv: retValsMap)
+  {
+    retVals.push_back(kv.second);
+  }
+  return retVals;
+}
+
+std::map<std::string, TensorFlowInterfaceLBN *>
+makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era)
+{
+  std::map<std::string, TensorFlowInterfaceLBN *> retVals;
+  for ( std::string & BM: BMpoints) {
     std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
     pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "era", era);
     pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "BM", BM);
@@ -51,7 +66,19 @@ makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & er
     std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
     assert(pbFileName_even != "" && pbFileName_odd != "" && ll_inputVariables.size() != 0 && hl_inputVariables.size() != 0 && classes.size() != 0);
     TensorFlowInterfaceLBN * retVal = new TensorFlowInterfaceLBN(pbFileName_odd, ll_inputVariables, hl_inputVariables, classes, pbFileName_even);
-    retVals.push_back(retVal);
+    retVals[BM] = retVal;
+  }
+  return retVals;
+}
+
+std::vector<TensorFlowInterfaceLBN *>
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era)
+{
+  const std::map<std::string, TensorFlowInterfaceLBN *> retValsMap = makeTensorFlowInterfaceLBNMap(cfg, era);
+  std::vector<TensorFlowInterfaceLBN *> retVals;
+  for(const auto & kv: retValsMap)
+  {
+    retVals.push_back(kv.second);
   }
   return retVals;
 }
