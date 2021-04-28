@@ -104,6 +104,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/BtagSFRatioFacility.h" // BtagSFRatioFacility
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertex.h" // RecoVertex
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 
 #include "hhAnalysis/multilepton/interface/RecoElectronCollectionSelectorFakeable_hh_multilepton.h" // RecoElectronCollectionSelectorFakeable_hh_multilepton
 #include "hhAnalysis/multilepton/interface/RecoMuonCollectionSelectorFakeable_hh_multilepton.h" // RecoMuonCollectionSelectorFakeable_hh_multilepton
@@ -312,6 +313,9 @@ int main(int argc, char* argv[])
   MEtFilterSelector metFilterSelector(cfgMEtFilter, isMC);
   const bool useNonNominal = cfg_analyze.getParameter<bool>("useNonNominal");
   const bool useNonNominal_jetmet = useNonNominal || ! isMC;
+  std::string apply_genPhotonFilter_string = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
+  GenPhotonFilter genPhotonFilter(apply_genPhotonFilter_string);
+  bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -422,6 +426,8 @@ int main(int argc, char* argv[])
   std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
   std::string branchName_genPhotons = cfg_analyze.getParameter<std::string>("branchName_genPhotons");
+  std::string branchName_genProxyPhotons = cfg_analyze.getParameter<std::string>("branchName_genProxyPhotons");
+  std::string branchName_genFromHardProcess = cfg_analyze.getParameter<std::string>("branchName_genFromHardProcess");
   std::string branchName_genJets = cfg_analyze.getParameter<std::string>("branchName_genJets");
 
   std::string branchName_muonGenMatch     = cfg_analyze.getParameter<std::string>("branchName_muonGenMatch");
@@ -631,6 +637,8 @@ int main(int argc, char* argv[])
   GenLeptonReader * genLeptonReader = nullptr;
   GenHadTauReader * genHadTauReader = nullptr;
   GenPhotonReader * genPhotonReader = nullptr;
+  GenPhotonReader * genProxyPhotonReader = nullptr;
+  GenParticleReader * genFromHardProcessReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
   PSWeightReader * psWeightReader = nullptr;
@@ -642,6 +650,7 @@ int main(int argc, char* argv[])
 
   if(isMC)
   {
+    bool readGenPhotons = apply_genPhotonFilter;
     if(! readGenObjects)
     {
       genLeptonReader = new GenLeptonReader(branchName_genLeptons);
@@ -671,10 +680,25 @@ int main(int argc, char* argv[])
       }
       else
       {
-        genPhotonReader = new GenPhotonReader(branchName_genPhotons);
-        inputTree -> registerReader(genPhotonReader);
+        readGenPhotons = true;
       }
     }
+
+    if(readGenPhotons)
+    {
+      genPhotonReader = new GenPhotonReader(branchName_genPhotons);
+      inputTree -> registerReader(genPhotonReader);
+    }
+
+    if(apply_genPhotonFilter)
+    {
+      genProxyPhotonReader = new GenPhotonReader(branchName_genProxyPhotons);
+      inputTree -> registerReader(genProxyPhotonReader);
+
+      genFromHardProcessReader = new GenParticleReader(branchName_genFromHardProcess);
+      inputTree -> registerReader(genFromHardProcessReader);
+    }
+
     lheInfoReader = new LHEInfoReader(hasLHE);
     inputTree->registerReader(lheInfoReader);
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
@@ -950,6 +974,7 @@ int main(int argc, char* argv[])
   const std::vector<std::string> cuts = {
     "run:ls:event selection",
     "object multiplicity",
+    "gen photon filter",
     "trigger",
     ">= 1 presel leptons",
     ">= 1 sel leptons",
@@ -1022,13 +1047,16 @@ int main(int argc, char* argv[])
     std::vector<GenLepton> genMuons;
     std::vector<GenHadTau> genHadTaus;
     std::vector<GenPhoton> genPhotons;
+    std::vector<GenPhoton> genPhotonsFinal;
+    std::vector<GenPhoton> genProxyPhotons;
+    std::vector<GenParticle> genFromHardProcess;
     std::vector<GenJet> genJets;
 
     std::vector<GenParticle> muonGenMatch;
     std::vector<GenParticle> electronGenMatch;
     std::vector<GenParticle> hadTauGenMatch;
     std::vector<GenParticle> jetGenMatch;
-    if(isMC && fillGenEvtHistograms)
+    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter))
     {
       if(genLeptonReader)
       {
@@ -1045,8 +1073,11 @@ int main(int argc, char* argv[])
         }
       }
       if(genHadTauReader) genHadTaus = genHadTauReader->read();
-      if(genPhotonReader) genPhotons = genPhotonReader->read();
+      if(genPhotonReader) genPhotons = genPhotonReader->read(apply_genPhotonFilter);
       if(genJetReader)    genJets = genJetReader->read();
+
+      if(genProxyPhotonReader)     genProxyPhotons = genProxyPhotonReader->read(apply_genPhotonFilter);
+      if(genFromHardProcessReader) genFromHardProcess = genFromHardProcessReader->read();
 
       if(genMatchToMuonReader)     muonGenMatch = genMatchToMuonReader->read();
       if(genMatchToElectronReader) electronGenMatch = genMatchToElectronReader->read();
@@ -1060,6 +1091,18 @@ int main(int argc, char* argv[])
         printCollection("genJets", genJets);
       }
     }
+    genPhotonsFinal = filterByStatus(genPhotons, 1);
+
+    if(!genPhotonFilter(genPhotons, genProxyPhotons, genFromHardProcess))
+    {
+      if(isDEBUG || run_lumi_eventSelector)
+      {
+        std::cout << "event " << eventInfo.str() << " FAILS gen photon filter\n";
+      }
+      continue;
+    }
+    cutFlowTable.update("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
+    cutFlowHistManager->fillHistograms("gen photon filter", evtWeightRecorder.get(central_or_shift_main));
 
     std::vector<GenParticle> genTauLeptons;
     if ( isMC && apply_DYMCReweighting ) {
@@ -1089,7 +1132,7 @@ int main(int argc, char* argv[])
           continue;
         }
         genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
-          genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
+          genElectrons, genMuons, genHadTaus, genPhotonsFinal, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
         );
         lheInfoHistManager_beforeCuts[central_or_shift]->fillHistograms(
           *lheInfoReader, evtWeightRecorder.get_inclusive(central_or_shift)
@@ -1336,7 +1379,7 @@ int main(int argc, char* argv[])
         }
       }
       if(genHadTauReader) genHadTaus = genHadTauReader->read();
-      if(genPhotonReader) genPhotons = genPhotonReader->read();
+      if(genPhotonReader) genPhotonsFinal = genPhotonReader->read();
       if(genJetReader)    genJets = genJetReader->read();
 
       if(genMatchToMuonReader)     muonGenMatch = genMatchToMuonReader->read();
@@ -1374,7 +1417,7 @@ int main(int argc, char* argv[])
         muonGenMatcher.addGenJetMatch   (preselMuons, genJets);
 
         electronGenMatcher.addGenLeptonMatch(preselElectrons, genElectrons);
-        electronGenMatcher.addGenPhotonMatch(preselElectrons, genPhotons);
+        electronGenMatcher.addGenPhotonMatch(preselElectrons, genPhotonsFinal);
         electronGenMatcher.addGenHadTauMatch(preselElectrons, genHadTaus);
         electronGenMatcher.addGenJetMatch   (preselElectrons, genJets);
 
@@ -1985,7 +2028,7 @@ int main(int argc, char* argv[])
         if(isMC && ! skipFilling)
         {
           selHistManager->genEvtHistManager_afterCuts_->fillHistograms(
-            genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
+            genElectrons, genMuons, genHadTaus, genPhotonsFinal, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
           );
           selHistManager->lheInfoHistManager_afterCuts_->fillHistograms(*lheInfoReader, evtWeight);
 
@@ -2181,6 +2224,8 @@ int main(int argc, char* argv[])
   delete genLeptonReader;
   delete genHadTauReader;
   delete genPhotonReader;
+  delete genProxyPhotonReader;
+  delete genFromHardProcessReader;
   delete genJetReader;
   delete genTauLeptonReader;
   delete lheInfoReader;

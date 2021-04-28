@@ -95,6 +95,8 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genHadTaus = cms.string('GenVisTau'),
     branchName_genPhotons = cms.string('GenPhoton'),
+    branchName_genProxyPhotons = cms.string('GenPhotonCandidate'),
+    branchName_genFromHardProcess = cms.string('GenIsHardProcess'),
     branchName_genJets = cms.string('GenJet'),
 
     redoGenMatching = cms.bool(False),
@@ -216,11 +218,13 @@ process.analyze_hh_bb1l = cms.PSet(
                 'bjet1', 'bjet2', 'wjet1', 'wjet2', 'lep'
             ),
             hl_inputVariables = cms.vstring(
-                'bjet2_btagCSV', 'bjet1_btagCSV', 'mT_W', 'mll_loose',
-                'jpaScore', 'mindr_lep1_jet', 'pT_HH', 'pT_Hbb', 'met',
-                'm_Wjj', 'dR_b1lep', 'leadFwdJet_pt', 'm_Hbb_regCorr',
-                'avg_dr_jet_central', 'mht', 'HT', 'm_HH', 'selLepton_type',
-                'dPhi_Hbb', 'pT_Hww'
+                'bjet1_btagCSV', 'mll_loose', 'numJets', 
+                'pT_Hbb', 'met', 'mindr_lep1_jet', 'mT_W', 
+                'bjet2_btagCSV', 'HT', 'selLepton_type', 
+                'dR_b2lep', 'dR_Hbb', 'mjj_highestpt', 
+                'mT_top_3particle', 'avg_dr_jet_central', 
+                'lep_pt', 'mht', 'dPhi_HHvis', 'mbb_medium',
+                'm_Hbb_regCorr', 'leadFwdJet_pt', 'numBJets_loose', 'mbb_loose'
             ),
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY')
         ),
@@ -231,17 +235,20 @@ process.analyze_hh_bb1l = cms.PSet(
                 'bjet1', 'bjet2', 'wjet1', 'wjet2', 'lep'
             ),
             hl_inputVariables = cms.vstring(
-                'jpaScore', 'tau21_Hbb', 'mbb_medium', 'bjet2_btagCSV',
-                'bjet1_btagCSV', 'mindr_lep1_jet', 'm_Hbb', 'met',
-                'mll_loose', 'mbb_loose', 'mht', 'leadFwdJet_pt',
-                'avg_dr_jet_central', 'pT_Hbb', 'pT_HH', 'dR_b1lep',
-                'dR_Hbb', 'dPhi_HH', 'Smin_HH', 'mT_W', 'selLepton_type', 'dPhi_HHvis'
+                'numJets', 'wjet1_btagCSV', 'tau21_Hbb', 'm_Hbb',
+                'mll_loose', 'numBJets_medium', 'mindr_lep1_jet',
+                'bjet1_btagCSV', 'bjet2_btagCSV', 'pT_Hbb',
+                'wjet2_btagCSV', 'met', 'HT', 'mT_W', 
+                'mbb_loose', 'lep_pt', 'dR_b1lep', 'dPhi_HHvis', 
+                'avg_dr_jet_central', 'dR_Hbb', 'mbb_medium', 'numBJets_loose',
+                'pT_HH', 'pT_Wjj', 'm_HHvis', 'selLepton_type', 'dR_Wjj', 
+                'pT_Hww', 'numJetsForward', 'Smin_Hww', 'mT_top_3particle', 'pT_HHvis'
             ),
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'W', 'DY')
         )
     ),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700),#750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
-    nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    nonRes_BMs = cms.vstring(),
 
     fillHistograms_nonresonant = cms.bool(True),
     fillHistograms_resonant_spin0 = cms.bool(False),
