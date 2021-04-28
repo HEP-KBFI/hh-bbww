@@ -905,7 +905,7 @@ int main(int argc, char* argv[])
         selHistManager->evt_->bookHistograms(fs);
         selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
-          analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc);
+	  analysisConfig, eventInfo, hhWeight_couplings, HHWeightLO_calc, HHWeightNLO_calc);
         selHistManager->genKinematics_HH_->bookHistograms(fs);
       }
 

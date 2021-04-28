@@ -27,6 +27,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h" // fillWithOverFlow, fillWithOverFlow2d, divideByBinWidth
 #include "tthAnalysis/HiggsToTauTau/interface/TTreeWrapper.h" // TTreeWrapper#include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
 #include "tthAnalysis/HiggsToTauTau/interface/EvtWeightManager.h" // EvtWeightManager
+#include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceCouplings.h" // HHWeightInterfaceCouplings
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceLO.h" // HHWeightInterfaceLO
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceNLO.h" // HHWeightInterfaceNLO
 #include "tthAnalysis/HiggsToTauTau/interface/HHWeightInterfaceCouplings.h" // HHWeightInterfaceCouplings
@@ -178,21 +179,29 @@ int main(int argc, char* argv[])
   bool save_dXsec_HHWeightInterfaceNLO = cfg_analyze.getParameter<bool>("save_dXsec_HHWeightInterfaceNLO");
   std::cout << "save_dXsec_HHWeightInterfaceNLO = " << save_dXsec_HHWeightInterfaceNLO << std::endl;
 
+  const HHWeightInterfaceCouplings * hhWeight_couplings = nullptr;
   const HHWeightInterfaceLO* HHWeightLO_calc = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_woCouplingBugFix = nullptr;
   const HHWeightInterfaceNLO* HHWeightNLO_calc_wCouplingBugFix = nullptr;
-  if ( apply_HH_rwgt_lo )
+  if(apply_HH_rwgt_lo || apply_HH_rwgt_nlo)
   {
-    HHWeightLO_calc = new HHWeightInterfaceLO(couplings, hhWeight_cfg);
-  }
-  if ( apply_HH_rwgt_nlo )
-  {
-    // CV: applying the NLO weight without applying the LO weight as well
-    //     does not make sense for the Run-2 LO HH MC samples,
-    //     as the LO weight needs to be applied in order to fix the coupling bug 
-    //     present in the LO HH MC samples for 2016, 2017, and 2018        
-    HHWeightNLO_calc_woCouplingBugFix = new HHWeightInterfaceNLO(couplings, era, false);
-    HHWeightNLO_calc_wCouplingBugFix = new HHWeightInterfaceNLO(couplings, era, true);
+    hhWeight_couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
+    //HHWeightNames = hhWeight_couplings->get_weight_names();
+    //HHBMNames = hhWeight_couplings->get_bm_names();
+    
+    if ( apply_HH_rwgt_lo )
+    {
+      HHWeightLO_calc = new HHWeightInterfaceLO(couplings, hhWeight_cfg);
+    }
+    if ( apply_HH_rwgt_nlo )
+    {
+      // CV: applying the NLO weight without applying the LO weight as well
+      //     does not make sense for the Run-2 LO HH MC samples,
+      //     as the LO weight needs to be applied in order to fix the coupling bug 
+      //     present in the LO HH MC samples for 2016, 2017, and 2018        
+      HHWeightNLO_calc_woCouplingBugFix = new HHWeightInterfaceNLO(couplings, era, false);
+      HHWeightNLO_calc_wCouplingBugFix = new HHWeightInterfaceNLO(couplings, era, true);
+    }
   }
 
   EventInfoReader eventInfoReader(&eventInfo);
@@ -213,7 +222,7 @@ int main(int argc, char* argv[])
 //--- declare histograms
   HHGenKinematicsHistManager* genKinematicsHistManager_HH = new HHGenKinematicsHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
-    analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc_woCouplingBugFix);
+    analysisConfig, eventInfo, hhWeight_couplings, HHWeightLO_calc, HHWeightNLO_calc_woCouplingBugFix);
   genKinematicsHistManager_HH->bookHistograms(fs);
 
   WeightHistManager* weightHistManager = new WeightHistManager(makeHistManager_cfg(process_string,
