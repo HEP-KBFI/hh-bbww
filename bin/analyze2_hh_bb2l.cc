@@ -480,19 +480,25 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
 
     edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
-    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted, era_string);
+    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted, era_string,
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
     edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
-    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved, era_string);
+    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved, era_string,
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
 
     edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
-    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted, era_string);
+    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted, era_string,
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
     edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
-    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved, era_string);
+    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved, era_string,
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
 
     edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
-    LBN_nonresonant_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_boosted, era_string);
+    LBN_nonresonant_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_boosted, era_string,
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
     edm::ParameterSet cfg_LBN_nonresonant_resolved = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved");
-    LBN_nonresonant_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_resolved, era_string);
+    LBN_nonresonant_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_resolved, era_string,
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
   }  
 
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
@@ -930,24 +936,24 @@ int main(int argc, char* argv[])
         }
       }
 
-      //if ( fillHistograms_BDT )
-      //{
+      if ( fillHistograms_BDT )
+      {
         selHistManager->datacard_BDT_ = new DatacardHistManager_hh(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/BDT", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc, &eventCategory_BDT,
           isDEBUG, 
           fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
         selHistManager->datacard_BDT_->bookHistograms(fs);
-      //}
-      //if ( fillHistograms_LBN )
-      //{
+      }
+      if ( fillHistograms_LBN )
+      {
         selHistManager->datacard_LBN_ = new DatacardHistManager_hh_multiclass(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/datacard/LBN", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc, &eventCategory_LBN,
           isDEBUG, 
           fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
         selHistManager->datacard_LBN_->bookHistograms(fs);
-      //}
+      }
 
       if(! skipBooking)
       {
@@ -2157,7 +2163,7 @@ int main(int argc, char* argv[])
           break;
         }
         if(! hmeOutput.is_initialized())
-	{
+        {
           std::cout << "Warning in " << eventInfo << '\n'
                     << "No HMEOutput_hh_bb2l object found for:\n"
                     << "\tselLepton_lead: pT = " << selLepton_lead->pt()
