@@ -19,7 +19,7 @@ std::vector<TMVAInterface *>
 makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant);
 
 std::vector<TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era);
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2);
 
 void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
 	      const std::vector<GenParticle>& genBJets);

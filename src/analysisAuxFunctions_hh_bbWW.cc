@@ -10,10 +10,10 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
   for ( auto BM: BMpoints) {
     std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
     xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "era", era);
-    xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "BM", BM);
+    xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "X", BM);
     std::string xmlFileName_even = cfg.getParameter<std::string>("xmlFileName_even");
     xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "era", era);
-    xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "BM", BM);
+    xmlFileName_even = boost::replace_all_copy(xmlFileName_even, "X", BM);
     std::vector<std::string> inputVariables = cfg.getParameter<std::vector<std::string>>("inputVariables");
     //inputVariables.push_back(BM);
     //if ( is_nonresonant )
@@ -35,17 +35,33 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
 }
 
 std::vector<TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era)
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
 {
   std::vector<TensorFlowInterfaceLBN *> retVals;
-  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
-  for ( auto BM: BMpoints) {
+  std::vector<std::string> points;
+  if ( !(spin0 || spin2) )
+  {
+    std::vector BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
+    points.insert(points.end(), BMpoints.begin(), BMpoints.end());
+  }
+  else
+  {
+    if ( spin0 )
+    {
+     points.push_back("spin0");
+    }
+    if ( spin2 )
+    {
+      points.push_back("spin2");
+    }
+  }
+  for ( auto point: points) {
     std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
     pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "era", era);
-    pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "BM", BM);
+    pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "X", point);
     std::string pbFileName_even = cfg.getParameter<std::string>("pbFileName_even");
     pbFileName_even = boost::replace_all_copy(pbFileName_even, "era", era);
-    pbFileName_even = boost::replace_all_copy(pbFileName_even, "BM", BM);
+    pbFileName_even = boost::replace_all_copy(pbFileName_even, "X", point);
     std::vector<std::string> ll_inputVariables = cfg.getParameter<std::vector<std::string>>("ll_inputVariables");
     std::vector<std::string> hl_inputVariables = cfg.getParameter<std::vector<std::string>>("hl_inputVariables");
     std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
