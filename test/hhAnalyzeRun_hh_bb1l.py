@@ -6,6 +6,7 @@ from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples, load_samples_stitched
+from hhAnalysis.multilepton.common import get_histograms_to_fit
 
 import os
 import sys
@@ -197,12 +198,12 @@ if fill_spin in ['spin0', 'spin2']:
       for category in categories:
         histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, fill_spin) : {} })
 if 'nonres' in fill_spin:
-  bmNames = [ "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "allBMs" ]
+  bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
     if fillHistograms_BDT:
       categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
       for category in categories:
-        histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
+        histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/%s" % (category, bmName) : {} })
     if fillHistograms_LBN:
       categories = [ 
         "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf", 
@@ -213,7 +214,7 @@ if 'nonres' in fill_spin:
         "Other" 
       ]
       for category in categories:
-        histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
+        histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
 
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',

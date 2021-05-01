@@ -95,6 +95,8 @@ process.analyze_hh_bb1l = cms.PSet(
     branchName_genLeptons = cms.string('GenLep'),
     branchName_genHadTaus = cms.string('GenVisTau'),
     branchName_genPhotons = cms.string('GenPhoton'),
+    branchName_genProxyPhotons = cms.string('GenPhotonCandidate'),
+    branchName_genFromHardProcess = cms.string('GenIsHardProcess'),
     branchName_genJets = cms.string('GenJet'),
 
     redoGenMatching = cms.bool(False),
@@ -247,8 +249,7 @@ process.analyze_hh_bb1l = cms.PSet(
         )
     ),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files
-    nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-
+    nonRes_BMs = cms.vstring(),
     fillHistograms_nonresonant = cms.bool(True),
     fillHistograms_resonant_spin0 = cms.bool(False),
     fillHistograms_resonant_spin2 = cms.bool(False),

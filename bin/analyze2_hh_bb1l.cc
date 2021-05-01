@@ -416,6 +416,8 @@ int main(int argc, char* argv[])
   std::string branchName_genLeptons = cfg_analyze.getParameter<std::string>("branchName_genLeptons");
   std::string branchName_genHadTaus = cfg_analyze.getParameter<std::string>("branchName_genHadTaus");
   std::string branchName_genPhotons = cfg_analyze.getParameter<std::string>("branchName_genPhotons");
+  std::string branchName_genProxyPhotons = cfg_analyze.getParameter<std::string>("branchName_genProxyPhotons");
+  std::string branchName_genFromHardProcess = cfg_analyze.getParameter<std::string>("branchName_genFromHardProcess");
   std::string branchName_genJets = cfg_analyze.getParameter<std::string>("branchName_genJets");
 
   std::string branchName_muonGenMatch     = cfg_analyze.getParameter<std::string>("branchName_muonGenMatch");
@@ -438,7 +440,7 @@ int main(int argc, char* argv[])
   bool second_bdt = ( cfg_analyze.exists("secondBDT") ) ? cfg_analyze.getParameter<bool>("secondBDT") : false;
 
   std::vector<double> gen_mHH = analysisConfig.get_HH_resonant_mass_points();
-  std::vector<double> nonRes_BMs = cfg_analyze.getParameter<std::vector<double>>("nonRes_BMs");
+  std::vector<std::string> nonRes_BMs = cfg_analyze.getParameter<std::vector<std::string>>("nonRes_BMs");
 
   bool fillHistograms_nonresonant = cfg_analyze.getParameter<bool>("fillHistograms_nonresonant");
   bool fillHistograms_resonant_spin0 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin0");
@@ -450,8 +452,8 @@ int main(int argc, char* argv[])
   std::vector<TMVAInterface *> BDT_resonant_spin2_resolved;// = nullptr;
   std::vector<TMVAInterface *> BDT_resonant_spin0_boosted;//  = nullptr;
   std::vector<TMVAInterface *> BDT_resonant_spin0_resolved;// = nullptr;
-  std::vector<TMVAInterface *> BDT_nonresonant_boosted;//     = nullptr;
-  std::vector<TMVAInterface *> BDT_nonresonant_resolved;//    = nullptr;
+  std::map<std::string, TMVAInterface *> BDT_nonresonant_boosted;//     = nullptr;
+  std::map<std::string, TMVAInterface *> BDT_nonresonant_resolved;//    = nullptr;
   if ( fillHistograms_BDT )
   {
     edm::ParameterSet cfg_BDT = cfg_analyze.getParameter<edm::ParameterSet>("BDT");
@@ -467,9 +469,9 @@ int main(int argc, char* argv[])
     BDT_resonant_spin0_resolved = makeTMVAInterface(cfg_BDT_resonant_spin0_resolved, era_string, false);
 
     edm::ParameterSet cfg_BDT_nonresonant_boosted = cfg_BDT.getParameter<edm::ParameterSet>("nonresonant_boosted");
-    BDT_nonresonant_boosted = makeTMVAInterface(cfg_BDT_nonresonant_boosted, era_string, true);
+    BDT_nonresonant_boosted = makeTMVAInterfaceMap(cfg_BDT_nonresonant_boosted, era_string, true);
     edm::ParameterSet cfg_BDT_nonresonant_resolved = cfg_BDT.getParameter<edm::ParameterSet>("nonresonant_resolved");
-    BDT_nonresonant_resolved = makeTMVAInterface(cfg_BDT_nonresonant_resolved, era_string, true);
+    BDT_nonresonant_resolved = makeTMVAInterfaceMap(cfg_BDT_nonresonant_resolved, era_string, true);
   }
 
   // initialize LBN-based signal extraction for resonant and non-resonant HH signal
@@ -478,31 +480,32 @@ int main(int argc, char* argv[])
   std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin2_resolved;
   std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin0_boosted;
   std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin0_resolved;
-  std::vector<TensorFlowInterfaceLBN *> LBN_nonresonant_boosted;
-  std::vector<TensorFlowInterfaceLBN *> LBN_nonresonant_resolved;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_boosted;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_resolved;
   if ( fillHistograms_LBN )
   {
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
 
     edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
-    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted, era_string,
+    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_boosted, era_string,
         false, fillHistograms_resonant_spin2);
     edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
-    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved, era_string,
+    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_resolved, era_string,
         false, fillHistograms_resonant_spin2);
 
     edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
-    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted, era_string,
+    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_boosted, era_string,
         fillHistograms_resonant_spin0, false);
     edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
-    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved, era_string,
+    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_resolved, era_string,
         fillHistograms_resonant_spin0, false);
 
     edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
-    LBN_nonresonant_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_boosted, era_string,
+
+    LBN_nonresonant_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_nonresonant_boosted, era_string,
         false, false);
     edm::ParameterSet cfg_LBN_nonresonant_resolved = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved");
-    LBN_nonresonant_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_nonresonant_resolved, era_string,
+    LBN_nonresonant_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_nonresonant_resolved, era_string,
         false, false);
     if ( !(fillHistograms_resonant_spin0 || fillHistograms_resonant_spin2) )
       assert( LBN_nonresonant_boosted.size() == 14 && LBN_nonresonant_resolved.size() == 14 );
@@ -560,7 +563,7 @@ int main(int argc, char* argv[])
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
   const bool apply_HH_rwgt_lo = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_lo");
   const bool apply_HH_rwgt_nlo = analysisConfig.isHH_rwgt_allowed() && hhWeight_cfg.getParameter<bool>("apply_rwgt_nlo");
-  const HHWeightInterfaceCouplings * hhWeight_couplings = nullptr;
+  const HHWeightInterfaceCouplings * const hhWeight_couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
   const HHWeightInterfaceLO * HHWeightLO_calc = nullptr;
   const HHWeightInterfaceNLO * HHWeightNLO_calc = nullptr;
   const HHWeightInterfaceNLO * HHWeightNLOonly_calc = nullptr;
@@ -568,8 +571,6 @@ int main(int argc, char* argv[])
   std::vector<std::string> HHBMNames;
   if(apply_HH_rwgt_lo || apply_HH_rwgt_nlo)
   {
-    hhWeight_couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
-
     if(apply_HH_rwgt_lo)
     {
       HHWeightLO_calc = new HHWeightInterfaceLO(hhWeight_couplings, hhWeight_cfg);
@@ -763,6 +764,8 @@ int main(int argc, char* argv[])
   GenLeptonReader * genLeptonReader = nullptr;
   GenHadTauReader * genHadTauReader = nullptr;
   GenPhotonReader * genPhotonReader = nullptr;
+  GenPhotonReader * genProxyPhotonReader = nullptr;
+  GenParticleReader * genFromHardProcessReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
   PSWeightReader * psWeightReader = nullptr;
@@ -812,6 +815,15 @@ int main(int argc, char* argv[])
     {
       genPhotonReader = new GenPhotonReader(branchName_genPhotons);
       inputTree -> registerReader(genPhotonReader);
+    }
+
+    if(apply_genPhotonFilter)
+    {
+      genProxyPhotonReader = new GenPhotonReader(branchName_genProxyPhotons);
+      inputTree -> registerReader(genProxyPhotonReader);
+
+      genFromHardProcessReader = new GenParticleReader(branchName_genFromHardProcess);
+      inputTree -> registerReader(genFromHardProcessReader);
     }
 
     lheInfoReader = new LHEInfoReader(hasLHE);
@@ -917,7 +929,7 @@ int main(int argc, char* argv[])
         selHistManager->evt_->bookHistograms(fs);
         selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
-          analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc);
+	  analysisConfig, eventInfo, hhWeight_couplings, HHWeightLO_calc, HHWeightNLO_calc);
         selHistManager->genKinematics_HH_->bookHistograms(fs);
       }
 
@@ -1142,6 +1154,9 @@ int main(int argc, char* argv[])
     std::vector<GenLepton> genMuons;
     std::vector<GenHadTau> genHadTaus;
     std::vector<GenPhoton> genPhotons;
+    std::vector<GenPhoton> genPhotonsFinal;
+    std::vector<GenPhoton> genProxyPhotons;
+    std::vector<GenParticle> genFromHardProcess;
     std::vector<GenJet> genJets;
 
     std::vector<GenParticle> muonGenMatch;
@@ -1165,8 +1180,11 @@ int main(int argc, char* argv[])
         }
       }
       if(genHadTauReader) genHadTaus = genHadTauReader->read();
-      if(genPhotonReader) genPhotons = genPhotonReader->read();
+      if(genPhotonReader) genPhotons = genPhotonReader->read(apply_genPhotonFilter);
       if(genJetReader)    genJets = genJetReader->read();
+
+      if(genProxyPhotonReader)     genProxyPhotons = genProxyPhotonReader->read(apply_genPhotonFilter);
+      if(genFromHardProcessReader) genFromHardProcess = genFromHardProcessReader->read();
 
       if(genMatchToMuonReader)     muonGenMatch = genMatchToMuonReader->read();
       if(genMatchToElectronReader) electronGenMatch = genMatchToElectronReader->read();
@@ -1181,8 +1199,9 @@ int main(int argc, char* argv[])
         printCollection("genJets", genJets);
       }
     }
+    genPhotonsFinal = filterByStatus(genPhotons, 1);
 
-    if(!genPhotonFilter(genPhotons))
+    if(!genPhotonFilter(genPhotons, genProxyPhotons, genFromHardProcess))
     {
       if(isDEBUG || run_lumi_eventSelector)
       {
@@ -1243,7 +1262,7 @@ int main(int argc, char* argv[])
           continue;
         }
         genEvtHistManager_beforeCuts[central_or_shift]->fillHistograms(
-          genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
+          genElectrons, genMuons, genHadTaus, genPhotonsFinal, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
         );
         if ( eventWeightManager )
         {
@@ -1428,7 +1447,7 @@ int main(int argc, char* argv[])
         }
       }
       if ( genHadTauReader ) genHadTaus = genHadTauReader->read();
-      if ( genPhotonReader ) genPhotons = genPhotonReader->read();
+      if ( genPhotonReader ) genPhotonsFinal = genPhotonReader->read();
       if ( genJetReader ) genJets = genJetReader->read();
 
       if ( genMatchToMuonReader ) muonGenMatch = genMatchToMuonReader->read();
@@ -1466,7 +1485,7 @@ int main(int argc, char* argv[])
         muonGenMatcher.addGenJetMatch(preselMuons, genJets);
 
         electronGenMatcher.addGenLeptonMatch(preselElectrons, genElectrons);
-        electronGenMatcher.addGenPhotonMatch(preselElectrons, genPhotons);
+        electronGenMatcher.addGenPhotonMatch(preselElectrons, genPhotonsFinal);
         electronGenMatcher.addGenHadTauMatch(preselElectrons, genHadTaus);
         electronGenMatcher.addGenJetMatch(preselElectrons, genJets);
 
@@ -2540,24 +2559,24 @@ int main(int argc, char* argv[])
       if ( selJetAK8_Hbb )
       {
         std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted[0]->mvaInputVariables(), true); // FIXME: set to false
-        bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
+        bdtOutputs_resonant_spin2 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, "_spin2");
         std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted[0]->mvaInputVariables(), true); // FIXME: set to false
-        bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
+        bdtOutputs_resonant_spin0 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, "_spin0");
 
-        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted[0]->mvaInputVariables());
-        bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, true, "");
-        bdtOutputs_nonresonant_all = (*BDT_nonresonant_boosted[BDT_nonresonant_boosted.size()-1])(bdtInputs_nonresonant, eventInfo.event);
+        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted["SM"]->mvaInputVariables());
+        bdtOutputs_nonresonant = CreateNonResonantBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, hhWeight_couplings);
+        bdtOutputs_nonresonant_all = (*BDT_nonresonant_boosted["all"])(bdtInputs_nonresonant, eventInfo.event);
       }
       else
       {
         std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved[0]->mvaInputVariables(), true); // FIXME: set to false
-        bdtOutputs_resonant_spin2 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, false, "_spin2");
+        bdtOutputs_resonant_spin2 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, "_spin2");
         std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved[0]->mvaInputVariables(), true); // FIXME: set to false
-        bdtOutputs_resonant_spin0 = CreateBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, false, "_spin0");
+        bdtOutputs_resonant_spin0 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, "_spin0");
 
-        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved[0]->mvaInputVariables());
-        bdtOutputs_nonresonant = CreateBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, true, "");
-        bdtOutputs_nonresonant_all = (*BDT_nonresonant_resolved[BDT_nonresonant_resolved.size()-1])(bdtInputs_nonresonant, eventInfo.event);
+        std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved["SM"]->mvaInputVariables());
+        bdtOutputs_nonresonant = CreateNonResonantBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, hhWeight_couplings);
+        bdtOutputs_nonresonant_all = (*BDT_nonresonant_resolved["all"])(bdtInputs_nonresonant, eventInfo.event);
         //assert(0);
       }
     }
@@ -2571,26 +2590,24 @@ int main(int argc, char* argv[])
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted[0]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted[0], ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted[0]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted[0], ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
-
-        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted[0]->hl_mvaInputVariables());
-        lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
-        lbnOutputs_nonresonant_all = (*LBN_nonresonant_boosted[LBN_nonresonant_boosted.size()-1])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted[0]->hl_mvaInputVariables(), false); 
+        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted[0]->hl_mvaInputVariables(), false); 
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
+        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted["SM"]->hl_mvaInputVariables());
+        lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
+        lbnOutputs_nonresonant_all = (*LBN_nonresonant_boosted["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
       }
       else
       {
         std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved[0]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin2 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved[0], ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, false, "_spin2");
+        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
         std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved[0]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin0 = CreateLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved[0], ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, false, "_spin0");
-
-        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved[0]->hl_mvaInputVariables());
-        lbnOutputs_nonresonant = CreateLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, true, "");
-        //lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved[LBN_nonresonant_resolved.size()-1])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
-        //assert(0);
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
+        std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved["SM"]->hl_mvaInputVariables());
+        lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
+        //lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
+        //        assert(0);
       }
     }
 
@@ -2697,7 +2714,7 @@ int main(int argc, char* argv[])
       if(isMC && ! skipFilling)
       {
         genEvtHistManager_afterCuts[central_or_shift]->fillHistograms(
-          genElectrons, genMuons, genHadTaus, genPhotons, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
+          genElectrons, genMuons, genHadTaus, genPhotonsFinal, genJets, evtWeightRecorder.get_inclusive(central_or_shift)
         );
         lheInfoHistManager[central_or_shift]->fillHistograms(*lheInfoReader, evtWeight);
         if(eventWeightManager)
@@ -2885,6 +2902,8 @@ int main(int argc, char* argv[])
   delete genLeptonReader;
   delete genHadTauReader;
   delete genPhotonReader;
+  delete genProxyPhotonReader;
+  delete genFromHardProcessReader;
   delete genJetReader;
   delete lheInfoReader;
   delete psWeightReader;
@@ -2912,7 +2931,7 @@ int main(int argc, char* argv[])
   }
   for(auto & bdt: BDT_nonresonant_boosted)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: BDT_resonant_spin2_resolved)
   {
@@ -2924,7 +2943,7 @@ int main(int argc, char* argv[])
   }
   for(auto & bdt: BDT_nonresonant_resolved)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: LBN_resonant_spin2_boosted)
   {
@@ -2936,7 +2955,7 @@ int main(int argc, char* argv[])
   }
   for(auto & bdt: LBN_nonresonant_boosted)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: LBN_resonant_spin2_resolved)
   {
@@ -2948,7 +2967,7 @@ int main(int argc, char* argv[])
   }
   for(auto & bdt: LBN_nonresonant_resolved)
   {
-    delete bdt;
+    delete bdt.second;
   }
  
   delete cutFlowHistManager;

@@ -2,12 +2,16 @@
 
 #include <boost/algorithm/string/replace.hpp> // boost::replace_all_copy()
 
-std::vector<TMVAInterface *>
-makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
+namespace
 {
-  std::vector<TMVAInterface *> retVals;
-  std::string BMpoints[] = {"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
-  for ( auto BM: BMpoints) {
+  std::vector BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
+}
+
+std::map<std::string, TMVAInterface *>
+makeTMVAInterfaceMap(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
+{
+  std::map<std::string, TMVAInterface *> retVals;
+  for ( const std::string & BM: BMpoints) {
     std::string xmlFileName_odd = cfg.getParameter<std::string>("xmlFileName_odd");
     xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "era", era);
     xmlFileName_odd = boost::replace_all_copy(xmlFileName_odd, "X", BM);
@@ -29,33 +33,45 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
     //  retVal = new TMVAInterface(xmlFileName_odd, xmlFileName_even, inputVariables, fitFileName);
     //}
     retVal->enableBDTTransform();
-    retVals.push_back(retVal);
+    retVals[BM] = retVal;
   }
   return retVals;
 }
 
-std::vector<TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
+std::vector<TMVAInterface *>
+makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant)
 {
-  std::vector<TensorFlowInterfaceLBN *> retVals;
+  const std::map<std::string, TMVAInterface *> retValsMap = makeTMVAInterfaceMap(cfg, era, is_nonresonant);
+  std::vector<TMVAInterface *> retVals;
+  for(const auto & kv: retValsMap)
+  {
+    retVals.push_back(kv.second);
+  }
+  return retVals;
+}
+
+std::map<std::string, TensorFlowInterfaceLBN *>
+makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin1, bool spin2)
+{
+  std::map<std::string, TensorFlowInterfaceLBN *> retVals;
   std::vector<std::string> points;
   if ( !(spin0 || spin2) )
   {
-    std::vector BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
     points.insert(points.end(), BMpoints.begin(), BMpoints.end());
   }
   else
   {
     if ( spin0 )
     {
-     points.push_back("spin0");
+      points.push_back("spin0");
     }
     if ( spin2 )
     {
       points.push_back("spin2");
     }
   }
-  for ( auto point: points) {
+  for ( std::string & point: points) 
+  {
     std::string pbFileName_odd = cfg.getParameter<std::string>("pbFileName_odd");
     pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "era", era);
     pbFileName_odd = boost::replace_all_copy(pbFileName_odd, "X", point);
@@ -67,7 +83,18 @@ makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & er
     std::vector<std::string> classes = cfg.getParameter<std::vector<std::string>>("classes");
     assert(pbFileName_even != "" && pbFileName_odd != "" && ll_inputVariables.size() != 0 && hl_inputVariables.size() != 0 && classes.size() != 0);
     TensorFlowInterfaceLBN * retVal = new TensorFlowInterfaceLBN(pbFileName_odd, ll_inputVariables, hl_inputVariables, classes, pbFileName_even);
-    retVals.push_back(retVal);
+    retVals[point] = retVal;
+  }
+  return retVals;
+}
+std::vector<TensorFlowInterfaceLBN *>
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
+{
+  const std::map<std::string, TensorFlowInterfaceLBN *> retValsMap = makeTensorFlowInterfaceLBNMap(cfg, era, spin1, spin2);
+  std::vector<TensorFlowInterfaceLBN *> retVals;
+  for(const auto & kv: retValsMap)
+  {
+    retVals.push_back(kv.second);
   }
   return retVals;
 }

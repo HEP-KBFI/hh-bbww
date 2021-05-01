@@ -6,6 +6,7 @@ from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples, load_samples_stitched
+from hhAnalysis.multilepton.common import get_histograms_to_fit
 
 import os
 import sys
@@ -195,11 +196,11 @@ else:
 for sample_name, sample_info in samples.items():
   if sample_name == 'sum_events':
     continue
-  if 'nonres' in fill_spin and 'spin' in sample_info['process_name_specific']:
+  if fillHistograms_resonant and 'spin' in sample_info['process_name_specific']:
     sample_info["use_it"] = False
-  if 'spin0' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+  if fillHistograms_spin0 and 'nonres' in sample_info['process_name_specific']:
     sample_info["use_it"] = False
-  if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+  if fillHistograms_spin2 and 'nonres' in sample_info['process_name_specific']:
     sample_info["use_it"] = False
 histograms_to_fit = {
   "EventCounter" : {}
@@ -225,13 +226,13 @@ if fill_spin in ['spin0', 'spin2']:
       ]
       for category in categories:
         histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, fill_spin) : {} })
-if 'nonres' in fill_spin:
-  bmNames = [ "SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "allBMs" ]
+if fillHistograms_resonant:
+  bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
     if fillHistograms_BDT:
       categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
       for category in categories:
-        histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
+        histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/%s" % (category, bmName) : {} })
     if fillHistograms_LBN:
       categories = [
         "HH_boosted_vbf", "HH_boosted_nonvbf", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf", 
@@ -241,7 +242,7 @@ if 'nonres' in fill_spin:
         "Other"
       ]
       for category in categories:
-        histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%s" % (category, bmName) : {} })
+        histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
 
 if sideband == 'disabled':
   chargeSumSelections = [ "OS" ]
