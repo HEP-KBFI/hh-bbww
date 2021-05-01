@@ -487,17 +487,17 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
 
     edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
-    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_boosted, era_string,
+    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted, era_string,
         false, fillHistograms_resonant_spin2);
     edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
-    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_resolved, era_string,
+    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved, era_string,
         false, fillHistograms_resonant_spin2);
 
     edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
-    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_boosted, era_string,
+    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted, era_string,
         fillHistograms_resonant_spin0, false);
     edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
-    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_resolved, era_string,
+    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved, era_string,
         fillHistograms_resonant_spin0, false);
 
     edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
