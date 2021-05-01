@@ -36,7 +36,7 @@ EventCategory_hh_bb2l_LBN::set(bool isBoosted, int numBJets, bool isVBF)
 }
 
 bool 
-EventCategory_hh_bb2l_LBN::isSelected(int for_category, const std::string & for_class) const
+EventCategory_hh_bb2l_LBN::isSelected(int for_category, const std::string & for_class, bool isNonRes) const
 {
   if ( !isInitialized_ )
     throw cmsException(this, __func__, __LINE__)

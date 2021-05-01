@@ -32,7 +32,7 @@ class EventCategory_hh_bb2l_LBN
 
   void set(bool isBoosted, int numBJets, bool isVBF);
 
-  bool isSelected(int for_category, const std::string & for_class) const;
+  bool isSelected(int for_category, const std::string & for_class, bool isNonRes) const;
 
  private:
   bool isBoosted_;
