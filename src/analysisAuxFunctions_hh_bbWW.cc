@@ -4,7 +4,7 @@
 
 namespace
 {
-  std::vector BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
+  std::vector<std::string> BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
 }
 
 std::map<std::string, TMVAInterface *>
@@ -51,7 +51,7 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
 }
 
 std::map<std::string, TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin1, bool spin2)
+makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
 {
   std::map<std::string, TensorFlowInterfaceLBN *> retVals;
   std::vector<std::string> points;
@@ -90,7 +90,7 @@ makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string &
 std::vector<TensorFlowInterfaceLBN *>
 makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
 {
-  const std::map<std::string, TensorFlowInterfaceLBN *> retValsMap = makeTensorFlowInterfaceLBNMap(cfg, era, spin1, spin2);
+  const std::map<std::string, TensorFlowInterfaceLBN *> retValsMap = makeTensorFlowInterfaceLBNMap(cfg, era, spin0, spin2);
   std::vector<TensorFlowInterfaceLBN *> retVals;
   for(const auto & kv: retValsMap)
   {
