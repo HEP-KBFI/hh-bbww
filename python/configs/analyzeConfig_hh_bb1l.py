@@ -89,9 +89,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         samples,
         fillHistograms_BDT,
         fillHistograms_LBN,
-        fillHistograms_resonant,
-        fillHistograms_spin0,
-        fillHistograms_spin2,
+        fillHistograms_nonresonant,
+        fillHistograms_resonant_spin0,
+        fillHistograms_resonant_spin2,
         apply_hadTauVeto,
         hadTau_mva_wp_veto,
         applyFakeRateWeights,
@@ -154,9 +154,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
     self.fillHistograms_BDT = fillHistograms_BDT
     self.fillHistograms_LBN = fillHistograms_LBN
-    self.fillHistograms_resonant = fillHistograms_resonant
-    self.fillHistograms_spin0 = fillHistograms_spin0
-    self.fillHistograms_spin2 = fillHistograms_spin2
+    self.fillHistograms_nonresonant = fillHistograms_nonresonant
+    self.fillHistograms_resonant_spin0 = fillHistograms_resonant_spin0
+    self.fillHistograms_resonant_spin2 = fillHistograms_resonant_spin2
 
     self.lepton_selections = [ "Tight", "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
@@ -492,35 +492,35 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 else "disabled"
 
               self.jobOptions_analyze[key_analyze_job] = {
-                'ntupleFiles'              : ntupleFiles,
-                'cfgFile_modified'         : cfgFile_modified_path,
-                'histogramFile'            : histogramFile_path,
-                'logFile'                  : logFile_path,
-                'selEventsFileName_output' : rleOutputFile_path,
-                'electronSelection'        : electron_selection,
-                'muonSelection'            : muon_selection,
-                'apply_leptonGenMatching'  : self.apply_leptonGenMatching,
-                'apply_hadTauVeto'         : self.apply_hadTauVeto,
-                'hadTauSelection_veto'     : self.hadTau_mva_wp_veto,
-                'applyFakeRateWeights'     : applyFakeRateWeights,
-                'apply_pileupJetID'        : self.apply_pileupJetID,
-                'central_or_shift'         : central_or_shift,
-                'central_or_shifts_local'  : central_or_shifts_local,
-                'evtCategories'            : [ self.evtCategory_inclusive ],
-                'selectBDT'                : self.isBDTtraining,
-                'secondBDT'                : self.second_bdt,
-                'syncOutput'               : syncOutput,
-                'syncTree'                 : syncTree,
-                'syncRLE'                  : syncRLE,
-                'apply_hlt_filter'         : self.hlt_filter,
-                'useNonNominal'            : self.use_nonnominal,
-                'fillGenEvtHistograms'     : True,
-                'useAssocJetBtag'          : self.do_sync,
-                'fillHistograms_BDT'       : self.fillHistograms_BDT,
-                'fillHistograms_LBN'       : self.fillHistograms_LBN,
-                'fillHistograms_resonant'  : self.fillHistograms_resonant,
-                'fillHistograms_spin0'     : self.fillHistograms_spin0,
-                'fillHistograms_spin2'     : self.fillHistograms_spin2,
+                'ntupleFiles'                       : ntupleFiles,
+                'cfgFile_modified'                  : cfgFile_modified_path,
+                'histogramFile'                     : histogramFile_path,
+                'logFile'                           : logFile_path,
+                'selEventsFileName_output'          : rleOutputFile_path,
+                'electronSelection'                 : electron_selection,
+                'muonSelection'                     : muon_selection,
+                'apply_leptonGenMatching'           : self.apply_leptonGenMatching,
+                'apply_hadTauVeto'                  : self.apply_hadTauVeto,
+                'hadTauSelection_veto'              : self.hadTau_mva_wp_veto,
+                'applyFakeRateWeights'              : applyFakeRateWeights,
+                'apply_pileupJetID'                 : self.apply_pileupJetID,
+                'central_or_shift'                  : central_or_shift,
+                'central_or_shifts_local'           : central_or_shifts_local,
+                'evtCategories'                     : [ self.evtCategory_inclusive ],
+                'selectBDT'                         : self.isBDTtraining,
+                'secondBDT'                         : self.second_bdt,
+                'syncOutput'                        : syncOutput,
+                'syncTree'                          : syncTree,
+                'syncRLE'                           : syncRLE,
+                'apply_hlt_filter'                  : self.hlt_filter,
+                'useNonNominal'                     : self.use_nonnominal,
+                'fillGenEvtHistograms'              : True,
+                'useAssocJetBtag'                   : self.do_sync,
+                'fillHistograms_BDT'                : self.fillHistograms_BDT,
+                'fillHistograms_LBN'                : self.fillHistograms_LBN,
+                'fillHistograms_nonresonant'        : self.fillHistograms_nonresonant,
+                'fillHistograms_resonant_spin0'     : self.fillHistograms_resonant_spin0,
+                'fillHistograms_resonant_spin2'     : self.fillHistograms_resonant_spin2,
               }
               self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 

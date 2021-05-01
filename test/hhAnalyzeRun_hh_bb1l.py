@@ -133,9 +133,9 @@ gen_matching_by_index = (gen_matching == 'by_index')
 fillHistograms_BDT = 'BDT' in training_method
 fillHistograms_LBN = 'LBN' in training_method
 
-fillHistograms_resonant = 'nonres' in fill_spin
-fillHistograms_spin0    = 'spin0' in fill_spin
-fillHistograms_spin2    = 'spin2' in fill_spin
+fillHistograms_nonresonant       = 'spin0' not in fill_spin and 'spin2' not in fill_spin
+fillHistograms_resonant_spin0    = 'spin0' in fill_spin
+fillHistograms_resonant_spin2    = 'spin2' in fill_spin
 
 if "sync" not in mode:
   samples_to_stitch = getattr(
@@ -253,9 +253,9 @@ if __name__ == '__main__':
     samples                               = samples,
     fillHistograms_BDT                    = fillHistograms_BDT,
     fillHistograms_LBN                    = fillHistograms_LBN,
-    fillHistograms_resonant               = fillHistograms_resonant,
-    fillHistograms_spin0                  = fillHistograms_spin0,
-    fillHistograms_spin2                  = fillHistograms_spin2,
+    fillHistograms_nonresonant            = fillHistograms_nonresonant,
+    fillHistograms_resonant_spin0         = fillHistograms_resonant_spin0,
+    fillHistograms_resonant_spin2         = fillHistograms_resonant_spin2,
     apply_hadTauVeto                      = True,
     hadTau_mva_wp_veto                    = hadTau_selection_veto,
     applyFakeRateWeights                  = "enabled",
