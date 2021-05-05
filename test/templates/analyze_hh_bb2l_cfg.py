@@ -231,8 +231,8 @@ process.analyze_hh_bb2l = cms.PSet(
             classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
         ),
         nonresonant_resolved = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_odd_data_nonres_BM_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_even_data_nonres_BM_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_odd_data_nonres_X_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_even_data_nonres_X_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
             ll_inputVariables = cms.vstring(
                 'bjet1', 'bjet2', 'lep1', 'lep2'
             ),
@@ -246,8 +246,8 @@ process.analyze_hh_bb2l = cms.PSet(
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
         ),
         nonresonant_boosted = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_boosted_odd_data_nonres_BM_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_boosted_even_data_nonres_BM_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_boosted_odd_data_nonres_X_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_boosted_even_data_nonres_X_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
             ll_inputVariables = cms.vstring(
                 'bjet1', 'bjet2', 'lep1', 'lep2'
             ),
