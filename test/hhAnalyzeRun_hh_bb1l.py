@@ -197,6 +197,8 @@ if 'spin0' in fill_spin or 'spin2' in fill_spin:
         ]
         for category in categories:
           histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
+          if masspoint in [400, 450]:
+            histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_overlap_%s" % (category, masspoint, spin) : {} })
 if 'nonres' in fill_spin:
   bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
