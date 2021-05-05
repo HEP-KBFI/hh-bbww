@@ -252,7 +252,7 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   fillWithOverFlow(histogram_bjet1_btagCSV_,         bjet1_btagCSV,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_bjet2_btagCSV_,      bjet2_btagCSV,       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_wjet1_btagCSV_,         wjet1_btagCSV,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_wjet2_btagCSV_,      bjet1_btagCSV,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_wjet2_btagCSV_,      wjet2_btagCSV,       evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_mindr_lep1_jet_,         mindr_lep1_jet,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_avg_dr_jet_central_,     avg_dr_jet_central,       evtWeight, evtWeightErr);
