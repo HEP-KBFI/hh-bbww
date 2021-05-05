@@ -176,27 +176,27 @@ histograms_to_fit = {
   "EventCounter" : {}
 }
 masspoints = [ 250., 260., 270., 280., 300., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
-if fill_spin in ['spin0', 'spin2']:
-  for masspoint in masspoints:
-    # CV: add histograms for BDT-based extraction of resonant HH signal,
-    #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
-    if fillHistograms_BDT:
-      categories = [ "boosted", "resolved_2b", "resolved_1b" ]
-      for category in categories:
-        histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, fill_spin) : {} })
-        # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
-        #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
-    if fillHistograms_LBN:
-      categories = [
-        "HH_boosted", "HH_resolved_2b", "HH_resolved_1b", 
-        "TT_boosted", "TT_resolved", 
-        "W_boosted", "W_resolved", 
-        "DY_boosted", "DY_resolved", 
-        "SingleTop_boosted", "SingleTop_resolved", 
-        "Other" 
-      ]
-      for category in categories:
-        histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, fill_spin) : {} })
+if 'spin0' in fill_spin or 'spin2' in fill_spin:
+  for spin in fill_spin:
+    for masspoint in masspoints:
+      # CV: add histograms for BDT-based extraction of resonant HH signal,
+      #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
+      if fillHistograms_BDT:
+        categories = [ "boosted", "resolved_2b", "resolved_1b" ]
+        for category in categories:
+          histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
+          # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
+          #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+      if fillHistograms_LBN:
+        categories = [
+          "HH_boosted", "HH_resolved_2b", "HH_resolved_1b",
+          "TT_boosted", "TT_resolved",
+          "W_boosted", "W_resolved",
+          "H_boosted", "H_resolved_2b", "H_resolved_1b",
+          "Other"
+        ]
+        for category in categories:
+          histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
 if 'nonres' in fill_spin:
   bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
@@ -221,7 +221,6 @@ hadTauWP_veto_map = {
   'deepVSj' : 'Medium',
 }
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
-
 for sample_name, sample_info in samples.items():
   if sample_name == 'sum_events': continue
   if sample_info["type"] == "data":
