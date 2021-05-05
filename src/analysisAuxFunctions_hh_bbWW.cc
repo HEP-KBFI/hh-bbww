@@ -5,6 +5,8 @@
 namespace
 {
   std::vector<std::string> BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
+  std::vector<std::string> spin0points {"spin0_low", "spin0_high"};
+  std::vector<std::string> spin2points {"spin2_low", "spin2_high"};
 }
 
 std::map<std::string, TMVAInterface *>
@@ -63,11 +65,11 @@ makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string &
   {
     if ( spin0 )
     {
-      points.push_back("spin0");
+      points.insert(points.end(), spin0points.begin(), spin0points.end());
     }
     if ( spin2 )
     {
-      points.push_back("spin2");
+      points.insert(points.end(), spin2points.begin(), spin2points.end());
     }
   }
   for ( std::string & point: points) 

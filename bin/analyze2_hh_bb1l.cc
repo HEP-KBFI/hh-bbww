@@ -476,10 +476,10 @@ int main(int argc, char* argv[])
 
   // initialize LBN-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_LBN = cfg_analyze.getParameter<bool>("fillHistograms_LBN");
-  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin2_boosted;
-  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin2_resolved;
-  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin0_boosted;
-  std::vector<TensorFlowInterfaceLBN *> LBN_resonant_spin0_resolved;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_resonant_spin2_boosted;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_resonant_spin2_resolved;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_resonant_spin0_boosted;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_resonant_spin0_resolved;
   std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_boosted;
   std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_resolved;
   if ( fillHistograms_LBN )
@@ -487,17 +487,17 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
 
     edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
-    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_boosted, era_string,
+    LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_boosted, era_string,
         false, fillHistograms_resonant_spin2);
     edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
-    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin2_resolved, era_string,
+    LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_resolved, era_string,
         false, fillHistograms_resonant_spin2);
 
     edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
-    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_boosted, era_string,
+    LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_boosted, era_string,
         fillHistograms_resonant_spin0, false);
     edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
-    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBN(cfg_LBN_resonant_spin0_resolved, era_string,
+    LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_resolved, era_string,
         fillHistograms_resonant_spin0, false);
 
     edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
@@ -507,12 +507,14 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_LBN_nonresonant_resolved = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved");
     LBN_nonresonant_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_nonresonant_resolved, era_string,
         false, false);
+    // For nonresonant case training is done separately for each BM points while for resonant case
+    // one single training is done using genmHH as parameter
     if ( !(fillHistograms_resonant_spin0 || fillHistograms_resonant_spin2) )
       assert( LBN_nonresonant_boosted.size() == 14 && LBN_nonresonant_resolved.size() == 14 );
     if ( fillHistograms_resonant_spin0 )
-      assert( LBN_resonant_spin0_boosted.size() == 1 && LBN_resonant_spin0_resolved.size() == 1 );
+      assert( LBN_resonant_spin0_boosted.size() == 2 && LBN_resonant_spin0_resolved.size() == 2 );
     if ( fillHistograms_resonant_spin2 )
-      assert( LBN_resonant_spin2_boosted.size() == 1 && LBN_resonant_spin2_resolved.size() == 1 );
+      assert( LBN_resonant_spin2_boosted.size() == 2 && LBN_resonant_spin2_resolved.size() == 2 );
   }  
 
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
@@ -2377,7 +2379,8 @@ int main(int argc, char* argv[])
       {"mjj_highestpt",           mjj_highestpt},
       {"numJetsForward",          selJetsForward.size()},
       {"lepPairCharge_loose",     preselLeptonsFull.size() >= 2 ? preselLeptonsFull[0]->charge() + preselLeptonsFull[1]->charge() : 999},
-      {"lepPairType_loose",       preselLeptonsFull.size() >= 2 ? fabs(preselLeptonsFull[0]->pdgId()) == fabs(preselLeptonsFull[1]->pdgId()) :999}
+      {"lepPairType_loose",       preselLeptonsFull.size() >= 2 ? fabs(preselLeptonsFull[0]->pdgId()) == fabs(preselLeptonsFull[1]->pdgId()) :999},
+      {"dPhi_Hww",                dPhi_Hww}
     };
 
     if ( bdt_filler ) {
@@ -2586,28 +2589,47 @@ int main(int argc, char* argv[])
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
     std::map<std::string, double> lbnOutputs_nonresonant_all;
+    std::map<std::string, double> lbnOutputs_resonant_spin0_400_overlap;
+    std::map<std::string, double> lbnOutputs_resonant_spin0_450_overlap;
+    std::map<std::string, double> lbnOutputs_resonant_spin2_400_overlap;
+    std::map<std::string, double> lbnOutputs_resonant_spin2_450_overlap;
     if ( fillHistograms_LBN )
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted[0]->hl_mvaInputVariables(), false); 
-        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted[0]->hl_mvaInputVariables(), false); 
-        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted["spin2_low"]->hl_mvaInputVariables(), false);
+        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "spin2");
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted["spin0_low"]->hl_mvaInputVariables(), false);
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
-        lbnOutputs_nonresonant_all = (*LBN_nonresonant_boosted["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
+        hl_inputs_resonant_spin0["gen_mHH"] = 400;
+        lbnOutputs_resonant_spin0["400_overlap_spin0"] = (*LBN_resonant_spin0_boosted["spin0_high"])(ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event);
+        hl_inputs_resonant_spin2["gen_mHH"] = 400;
+        lbnOutputs_resonant_spin2["400_overlap_spin2"] = (*LBN_resonant_spin2_boosted["spin2_high"])(ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event);
+        hl_inputs_resonant_spin0["gen_mHH"] = 450;
+        lbnOutputs_resonant_spin0["450_overlap_spin0"] = (*LBN_resonant_spin0_boosted["spin0_high"])(ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event);
+        hl_inputs_resonant_spin2["gen_mHH"] = 450;
+        lbnOutputs_resonant_spin2["450_overlap_spin2"] = (*LBN_resonant_spin2_boosted["spin2_high"])(ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event);
       }
       else
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved[0]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved[0]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved["spin2_low"]->hl_mvaInputVariables(), false);
+        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "spin2");
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved["spin0_low"]->hl_mvaInputVariables(), false);
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
         //lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
         //        assert(0);
+        hl_inputs_resonant_spin0["gen_mHH"] = 400;
+        lbnOutputs_resonant_spin0["400_overlap_spin0"] = (*LBN_resonant_spin0_resolved["spin0_high"])(ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event);
+        hl_inputs_resonant_spin2["gen_mHH"] = 400;
+        lbnOutputs_resonant_spin2["400_overlap_spin2"] = (*LBN_resonant_spin2_resolved["spin2_high"])(ll_inputs_ptr, hl_inputs_resonant_spin2,eventInfo.event);
+        hl_inputs_resonant_spin0["gen_mHH"] = 450;
+        lbnOutputs_resonant_spin0["450_overlap_spin0"] = (*LBN_resonant_spin0_resolved["spin0_high"])(ll_inputs_ptr, hl_inputs_resonant_spin0,eventInfo.event);
+        hl_inputs_resonant_spin2["gen_mHH"] = 450;
+        lbnOutputs_resonant_spin2["450_overlap_spin2"] = (*LBN_resonant_spin2_resolved["spin2_high"])(ll_inputs_ptr, hl_inputs_resonant_spin2,eventInfo.event);
       }
     }
 
@@ -2694,7 +2716,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+            lbnOutputs_nonresonant_all,
             evtWeight
           );
         }
@@ -2947,11 +2969,11 @@ int main(int argc, char* argv[])
   }
   for(auto & bdt: LBN_resonant_spin2_boosted)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: LBN_resonant_spin0_boosted)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: LBN_nonresonant_boosted)
   {
@@ -2959,11 +2981,11 @@ int main(int argc, char* argv[])
   }
   for(auto & bdt: LBN_resonant_spin2_resolved)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: LBN_resonant_spin0_resolved)
   {
-    delete bdt;
+    delete bdt.second;
   }
   for(auto & bdt: LBN_nonresonant_resolved)
   {
