@@ -19,7 +19,7 @@ process.makePlots = cms.PSet(
     divideByBinWidth = cms.bool(True),
     processData = cms.string("data_obs"),
     processesBackground = cms.vstring(),
-    processSignal = cms.string("signal_ggf_nonresonant_hh"),
+    processSignal = cms.string("signal_ggf_spin0_400_hh"),
     scaleSignal = cms.double(scaleSignal),
     legendEntrySignal = cms.string("%dx GGF#rightarrow HH#rightarrow bbWW" % scaleSignal),
     categories = cms.VPSet(),
@@ -39,16 +39,6 @@ process.makePlots = cms.PSet(
             xAxisTitle = cms.string("medium b-jet Multiplicity"),
             yAxisTitle = cms.string("Events")
         ),
-        cms.PSet(
-            histogramName = cms.string("sel/evt/$PROCESS/numElectrons"),
-            xAxisTitle = cms.string("electron Multiplicity"),
-            yAxisTitle = cms.string("Events")
-        ),
-       cms.PSet(
-            histogramName = cms.string("sel/evt/$PROCESS/numMuons"),
-            xAxisTitle = cms.string("muon Multiplicity"),
-            yAxisTitle = cms.string("Events")
-        ),        
         ##cms.PSet(
         ##    histogramName = cms.string('sel/evt/$PROCESS/HT'),
         ##    xAxisTitle = cms.string('H_{T} [GeV]'),

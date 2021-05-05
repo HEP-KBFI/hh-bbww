@@ -4,64 +4,39 @@ from hhAnalysis.bbww.configs.makePlots_cfi import process
 
 process.makePlots.distributions.extend([
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/m_Wjj"),
-        xAxisTitle = cms.string("m_{jj} [GeV]"),
-        yAxisTitle = cms.string("dN/dm_{jj} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/HT"),
+        xAxisTitle = cms.string("HT [GeV]"),
+        yAxisTitle = cms.string("dN/dHT [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/dR_Wjj"),
-        xAxisTitle = cms.string("#Delta R_{jj}"),
-        yAxisTitle = cms.string("dN/d#Delta R_{jj}")
+        histogramName = cms.string("sel/evt/$PROCESS/met"),
+        xAxisTitle = cms.string("met"),
+        yAxisTitle = cms.string("dN/dmet")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/pT_Wjj"),
-        xAxisTitle = cms.string("p_{T}^{jj} [GeV]"),
-        yAxisTitle = cms.string("dN/dp_{T}^{jj} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/lep_pt"),
+        xAxisTitle = cms.string("p_{T}^{lep} [GeV]"),
+        yAxisTitle = cms.string("dN/dp_{T}^{lep} [1/GeV]")
     ),    
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/dR_Hww"),
-        xAxisTitle = cms.string("#Delta R_{WW}"),
-        yAxisTitle = cms.string("dN/d#Delta R_{WW}")
-    ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/pT_Hww"),
-        xAxisTitle = cms.string("p_{T}^{WW} [GeV]"),
-        yAxisTitle = cms.string("dN/dp_{T}^{WW} [1/GeV]")
-    ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/Smin_Hww"),
-        xAxisTitle = cms.string("S_{min}^{WW} [GeV]"),
-        yAxisTitle = cms.string("dN/dS_{min}^{WW} [1/GeV]")
-    ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/m_Hbb"),
-        xAxisTitle = cms.string("m_{bb} [GeV]"),
-        yAxisTitle = cms.string("dN/dm_{bb} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/dR_Hbb"),
+        xAxisTitle = cms.string("#Delta R_{Hbb}"),
+        yAxisTitle = cms.string("dN/d#Delta R_{Hbb}")
     ),
     cms.PSet(
         histogramName = cms.string("sel/evt/$PROCESS/pT_Hbb"),
-        xAxisTitle = cms.string("p_{T}^{bb} [GeV]"),
-        yAxisTitle = cms.string("dN/dp_{T}^{bb} [1/GeV]")
+        xAxisTitle = cms.string("p_{T}^{Hbb} [GeV]"),
+        yAxisTitle = cms.string("dN/dp_{T}^{Hbb} [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/dR_Hbb"),
-        xAxisTitle = cms.string("#Delta R^{bb} [GeV]"),
-        yAxisTitle = cms.string("dN/d#Delta R^{bb} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/m_Hbb_regCorr"),
+        xAxisTitle = cms.string("m_{Hbb}^{regCorr} [GeV]"),
+        yAxisTitle = cms.string("dN/dm_{Hbb}^{regCorr} [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/m_HHvis"),
-        xAxisTitle = cms.string("m_{HH}^{vis} [GeV]"),
-        yAxisTitle = cms.string("dN/dm_{HH}^{vis} [1/GeV]")
-    ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/m_HH"),
-        xAxisTitle = cms.string("m_{HH} [GeV]"),
-        yAxisTitle = cms.string("dN/dm_{HH} [1/GeV]")
-    ),
-    cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/m_HH_B2G_18_008"),
-        xAxisTitle = cms.string("m_{HH} (B2G-18-008) [GeV]"),
-        yAxisTitle = cms.string("dN/dm_{HH} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/pT_Hww"),
+        xAxisTitle = cms.string("pT_{Hww} [GeV]"),
+        yAxisTitle = cms.string("dN/dpT_{Hww} [1/GeV]")
     ),
     cms.PSet(
         histogramName = cms.string("sel/evt/$PROCESS/pT_HH"),
@@ -69,14 +44,39 @@ process.makePlots.distributions.extend([
         yAxisTitle = cms.string("dN/dp_{T}^{HH} [1/GeV]")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/dR_HH"),
-        xAxisTitle = cms.string("#Delta R^{HH} [GeV]"),
-        yAxisTitle = cms.string("dN/d#Delta R^{HH} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/dR_b1lep"),
+        xAxisTitle = cms.string("#Delta R^{b1lep}"),
+        yAxisTitle = cms.string("dN/d#Delta R^{b1lep}")
     ),
     cms.PSet(
-        histogramName = cms.string("sel/evt/$PROCESS/Smin_HH"),
-        xAxisTitle = cms.string("S_{min}^{HH} [GeV]"),
-        yAxisTitle = cms.string("dN/dS_{min}^{HH} [1/GeV]")
+        histogramName = cms.string("sel/evt/$PROCESS/bjet1_btagCSV"),
+        xAxisTitle = cms.string("bjet1_btagCSV"),
+        yAxisTitle = cms.string("dN/dbjet1_btagCSV")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/selLepton_type"),
+        xAxisTitle = cms.string("selLepton_type"),
+        yAxisTitle = cms.string("dN/dselLepton_type")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/m_HH_B2G_18_008"),
+        xAxisTitle = cms.string("m_{HH} (B2G-18-008) [GeV]"),
+        yAxisTitle = cms.string("dN/dm_{HH} [1/GeV]")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/mjj_highestpt"),
+        xAxisTitle = cms.string("m_{jj}^{highestpt} [GeV]"),
+        yAxisTitle = cms.string("dN/dm_{jj}^{highestpt} [1/GeV]")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/Hbb_lead_px"),
+        xAxisTitle = cms.string("Hbb_lead_px"),
+        yAxisTitle = cms.string("dN/dHbb_lead_px")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/Hbb_lead_e"),
+        xAxisTitle = cms.string("Hbb_lead_e [GeV]"),
+        yAxisTitle = cms.string("dN/dHbb_lead_e [1/GeV]")
     ),
     cms.PSet(
         histogramName = cms.string("sel/evt/$PROCESS/mT_W"),
