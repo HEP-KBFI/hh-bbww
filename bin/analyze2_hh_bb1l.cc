@@ -2615,9 +2615,9 @@ int main(int argc, char* argv[])
       else
       {
         std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved["spin2_low"]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "spin2");
+        lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
         std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved["spin0_low"]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "spin0");
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
         //lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
