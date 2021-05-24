@@ -286,7 +286,8 @@ if __name__ == '__main__':
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
     submission_cmd                        = sys.argv,
-    second_bdt                            = second_bdt
+    second_bdt                            = second_bdt,
+    ttbar_based_mcClosure                 = True,
   )
 
   if mode.find("forBDTtraining") != -1:

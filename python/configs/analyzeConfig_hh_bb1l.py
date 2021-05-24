@@ -121,7 +121,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         hlt_filter        = False,
         use_home          = False,
         submission_cmd    = None,
-        second_bdt        = False
+        second_bdt        = False,
+        ttbar_based_mcClosure = True,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -165,6 +166,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.hadTau_mva_wp_veto = hadTau_mva_wp_veto
     self.applyFakeRateWeights = applyFakeRateWeights
 
+    self.ttbar_based_mcClosure = ttbar_based_mcClosure
     self.apply_leptonGenMatching = True
     if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
@@ -842,11 +844,33 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           histogramDir_mcClosure = histogramDir_mcClosure + "/sel/evt/fakes_mc"
         self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
           'add_Clos_%s' % lepton_type : ("Fakeable_mcClosure_%s" % lepton_type) in self.lepton_selections,
-          'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
-          'histogramName_nominal_%s' % lepton_type : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
-          'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
-          'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
         })
+        if self.ttbar_based_mcClosure:
+          histogramDir_nominal_ttbar = histogramDir_nominal.replace("/fakes_mc", "/TT_fake")
+          histogramDir_mcClosure_ttbar = histogramDir_mcClosure.replace("/fakes_mc", "/TT_fake")
+          inputFile_nominal_ttbar = [
+            self.outputFile_hadd_stage1[getKey(sample_info["process_name_specific"], "Tight")]
+            for sample_name, sample_info in self.samples.items()
+            if sample_name.startswith("/TTToHadronic") and sample_info["use_it"] and sample_info["sample_category"] == "TT"
+          ]
+          inputFile_mcClosure_ttbar = [
+            self.outputFile_hadd_stage1[getKey(sample_info["process_name_specific"], "Fakeable_mcClosure_%s_wFakeRateWeights" % lepton_type)]
+            for sample_name, sample_info in self.samples.items()
+            if sample_name.startswith("/TTToHadronic") and sample_info["use_it"] and sample_info["sample_category"] == "TT"
+          ]
+          self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
+            'inputFile_nominal_%s' % lepton_type : inputFile_nominal_ttbar,
+            'histogramName_nominal_%s' % lepton_type : "%s/%s" % (histogramDir_nominal_ttbar, histogramToFit_modified),
+            'inputFile_mcClosure_%s' % lepton_type : inputFile_mcClosure_ttbar,
+            'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure_ttbar, histogramToFit_modified)
+          })
+        else:
+          self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job].update({
+            'inputFile_nominal_%s' % lepton_type : self.outputFile_hadd_stage2[key_hadd_stage2_job],
+            'histogramName_nominal_%s' % lepton_type : "%s/%s" % (histogramDir_nominal, histogramToFit_modified),
+            'inputFile_mcClosure_%s' % lepton_type : self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'],
+            'histogramName_mcClosure_%s' % lepton_type : "%s/%s" % (histogramDir_mcClosure, histogramToFit_modified)
+          })
       self.createCfg_add_syst_fakerate(self.jobOptions_add_syst_fakerate[key_add_syst_fakerate_job])
 
     logging.info("Creating configuration files to run 'makePlots'")
