@@ -121,7 +121,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         hlt_filter        = False,
         use_home          = False,
         submission_cmd    = None,
-        second_bdt        = False
+        second_bdt        = False,
+        split_resonant_training = False,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -240,6 +241,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.copyHistogram_histogramDirs['makePlots_mc'].extend(self.copyHistogram_histogramDirs['makePlots_data'])
 
     self.second_bdt = second_bdt
+    self.split_resonant_training = split_resonant_training
 
   def set_BDT_training(self):
     """Run analysis for the purpose of preparing event list files for BDT training.
@@ -510,6 +512,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'evtCategories'                     : [ self.evtCategory_inclusive ],
                 'selectBDT'                         : self.isBDTtraining,
                 'secondBDT'                         : self.second_bdt,
+                'split_resonant_training'           : self.split_resonant_training,
                 'syncOutput'                        : syncOutput,
                 'syncTree'                          : syncTree,
                 'syncRLE'                           : syncRLE,
