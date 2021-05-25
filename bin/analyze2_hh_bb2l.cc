@@ -440,6 +440,7 @@ int main(int argc, char* argv[])
   bool fillHistograms_nonresonant = cfg_analyze.getParameter<bool>("fillHistograms_nonresonant");
   bool fillHistograms_resonant_spin0 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin0");
   bool fillHistograms_resonant_spin2 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin2");
+  bool split_resonant_training = ( cfg_analyze.exists("split_resonant_training") ) ? cfg_analyze.getParameter<bool>("split_resonant_training")   : false;
 
   // initialize BDT-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_BDT = cfg_analyze.getParameter<bool>("fillHistograms_BDT");
@@ -483,17 +484,17 @@ int main(int argc, char* argv[])
 
     edm::ParameterSet cfg_LBN_resonant_spin2_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_boosted");
     LBN_resonant_spin2_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_boosted, era_string,
-        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
     edm::ParameterSet cfg_LBN_resonant_spin2_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin2_resolved");
     LBN_resonant_spin2_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin2_resolved, era_string,
-        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
 
     edm::ParameterSet cfg_LBN_resonant_spin0_boosted = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_boosted");
     LBN_resonant_spin0_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_boosted, era_string,
-        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
     edm::ParameterSet cfg_LBN_resonant_spin0_resolved = cfg_LBN.getParameter<edm::ParameterSet>("resonant_spin0_resolved");
     LBN_resonant_spin0_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_resonant_spin0_resolved, era_string,
-        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
+        fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
 
     edm::ParameterSet cfg_LBN_nonresonant_boosted = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_boosted");
     LBN_nonresonant_boosted = makeTensorFlowInterfaceLBNMap(cfg_LBN_nonresonant_boosted, era_string,
@@ -962,7 +963,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/datacard/LBN", histogramDir.data()), era_string, central_or_shift),
           analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc, &eventCategory_LBN,
           isDEBUG, 
-          fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
+          fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
         selHistManager->datacard_LBN_->bookHistograms(fs);
       }
 
@@ -2513,9 +2514,9 @@ int main(int argc, char* argv[])
       if ( selJetAK8_Hbb )
       {
         std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_boosted[0]->mvaInputVariables(), true);
-        bdtOutputs_resonant_spin2 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, "_spin2");
+        bdtOutputs_resonant_spin2 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin2_boosted, bdtInputs_resonant_spin2, eventInfo.event, "_spin2", split_resonant_training);
         std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_boosted[0]->mvaInputVariables(), true);
-        bdtOutputs_resonant_spin0 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, "_spin0");
+        bdtOutputs_resonant_spin0 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin0_boosted, bdtInputs_resonant_spin0, eventInfo.event, "_spin0", split_resonant_training);
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_boosted["SM"]->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateNonResonantBDTOutputMap(nonRes_BMs, BDT_nonresonant_boosted, bdtInputs_nonresonant, eventInfo.event, hhWeight_couplings);
         bdtOutputs_nonresonant_all = (*BDT_nonresonant_boosted["all"])(bdtInputs_nonresonant, eventInfo.event);
@@ -2523,9 +2524,9 @@ int main(int argc, char* argv[])
       else
       {
         std::map<std::string, double> bdtInputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin2_resolved[0]->mvaInputVariables(), true);
-        bdtOutputs_resonant_spin2 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, "_spin2");
+        bdtOutputs_resonant_spin2 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin2_resolved, bdtInputs_resonant_spin2, eventInfo.event, "_spin2", split_resonant_training);
         std::map<std::string, double> bdtInputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, BDT_resonant_spin0_resolved[0]->mvaInputVariables(), true);
-        bdtOutputs_resonant_spin0 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, "_spin0");
+        bdtOutputs_resonant_spin0 = CreateResonantBDTOutputMap(gen_mHH, BDT_resonant_spin0_resolved, bdtInputs_resonant_spin0, eventInfo.event, "_spin0", split_resonant_training);
         std::map<std::string, double> bdtInputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, BDT_nonresonant_resolved["SM"]->mvaInputVariables(), true);
         bdtOutputs_nonresonant = CreateNonResonantBDTOutputMap(nonRes_BMs, BDT_nonresonant_resolved, bdtInputs_nonresonant, eventInfo.event, hhWeight_couplings);
         bdtOutputs_nonresonant_all = (*BDT_nonresonant_resolved["all"])(bdtInputs_nonresonant, eventInfo.event);
@@ -2541,9 +2542,9 @@ int main(int argc, char* argv[])
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted["spin2_low"]->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted["spin2"]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted["spin0_low"]->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted["spin0"]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
@@ -2551,9 +2552,9 @@ int main(int argc, char* argv[])
       }
       else
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved["spin2_low"]->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved["spin2"]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
-        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved["spin0_low"]->hl_mvaInputVariables(), false);
+        std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved["spin0"]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
