@@ -295,6 +295,7 @@ if __name__ == '__main__':
     submission_cmd                        = sys.argv,
     second_bdt                            = second_bdt,
     split_resonant_training               = split_resonant_training,
+    ttbar_based_mcClosure                 = True,
   )
 
   if mode.find("forBDTtraining") != -1:
