@@ -22,6 +22,7 @@ class EventCategory_hh_bb1l_LBN
   enum { 
     kUndefined = -1,
     kHH_boosted, kHH_resolved_2b_vbf, kHH_resolved_2b_nonvbf, kHH_resolved_1b_vbf, kHH_resolved_1b_nonvbf,
+    kHH_boosted_vbf, kHH_boosted_nonvbf,
     kHH_resolved_2b, kHH_resolved_1b,
     kTT_boosted, kTT_resolved,
     kW_boosted, kW_resolved,
