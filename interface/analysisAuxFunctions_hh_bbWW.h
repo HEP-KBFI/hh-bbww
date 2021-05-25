@@ -22,10 +22,10 @@ std::map<std::string, TMVAInterface *>
 makeTMVAInterfaceMap(const edm::ParameterSet & cfg, const std::string & era, bool is_nonresonant);
 
 std::vector<TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2);
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2, bool split_resonant_training=false);
 
 std::map<std::string, TensorFlowInterfaceLBN *>
-  makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2);
+  makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2, bool split_resonant_training=false);
 
 void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_bbWW_Hbb& jetSelectorAK8_Hbb,
 	      const std::vector<GenParticle>& genBJets);

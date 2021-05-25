@@ -5,8 +5,10 @@
 namespace
 {
   std::vector<std::string> BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
-  std::vector<std::string> spin0points {"spin0_low", "spin0_high"};
-  std::vector<std::string> spin2points {"spin2_low", "spin2_high"};
+  std::vector<std::string> split_spin0points {"low_spin0", "high_spin0"};
+  std::vector<std::string> split_spin2points {"low_spin2", "high_spin2"};
+  std::vector<std::string> spin0points {"spin0"};
+  std::vector<std::string> spin2points {"spin2"};
 }
 
 std::map<std::string, TMVAInterface *>
@@ -53,7 +55,7 @@ makeTMVAInterface(const edm::ParameterSet & cfg, const std::string & era, bool i
 }
 
 std::map<std::string, TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
+makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2, bool split_resonant_training)
 {
   std::map<std::string, TensorFlowInterfaceLBN *> retVals;
   std::vector<std::string> points;
@@ -65,11 +67,13 @@ makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string &
   {
     if ( spin0 )
     {
-      points.insert(points.end(), spin0points.begin(), spin0points.end());
+      (!split_resonant_training) ? points.insert(points.end(), spin0points.begin(), spin0points.end()) :
+        points.insert(points.end(), split_spin0points.begin(), split_spin0points.end());
     }
     if ( spin2 )
     {
-      points.insert(points.end(), spin2points.begin(), spin2points.end());
+      (!split_resonant_training) ? points.insert(points.end(), spin2points.begin(), spin2points.end()) :
+        points.insert(points.end(), split_spin2points.begin(), split_spin2points.end());
     }
   }
   for ( std::string & point: points) 
@@ -90,9 +94,9 @@ makeTensorFlowInterfaceLBNMap(const edm::ParameterSet & cfg, const std::string &
   return retVals;
 }
 std::vector<TensorFlowInterfaceLBN *>
-makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2)
+makeTensorFlowInterfaceLBN(const edm::ParameterSet & cfg, const std::string & era, bool spin0, bool spin2, bool split_resonant_training)
 {
-  const std::map<std::string, TensorFlowInterfaceLBN *> retValsMap = makeTensorFlowInterfaceLBNMap(cfg, era, spin0, spin2);
+  const std::map<std::string, TensorFlowInterfaceLBN *> retValsMap = makeTensorFlowInterfaceLBNMap(cfg, era, spin0, spin2, split_resonant_training);
   std::vector<TensorFlowInterfaceLBN *> retVals;
   for(const auto & kv: retValsMap)
   {
