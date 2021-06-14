@@ -38,6 +38,7 @@ parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
+parser.add_blacklist()
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
   help = 'R|doing second_bdt for jpa'
@@ -88,6 +89,7 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
+use_blacklist     = args.use_blacklist
 doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
 second_bdt         = args.second_bdt
@@ -142,6 +144,12 @@ fillHistograms_LBN = 'LBN' in training_method
 fillHistograms_nonresonant       = 'spin0' not in fill_spin and 'spin2' not in fill_spin
 fillHistograms_resonant_spin0    = 'spin0' in fill_spin
 fillHistograms_resonant_spin2    = 'spin2' in fill_spin
+
+blacklist = []
+if use_blacklist:
+  blacklist.append('postproc')
+  if use_preselected:
+    blacklist.append('skimmed_bbww_sl')
 
 if "sync" not in mode:
   samples_to_stitch = getattr(
@@ -292,6 +300,7 @@ if __name__ == '__main__':
     use_nonnominal                        = use_nonnominal,
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
+    blacklist                             = blacklist,
     submission_cmd                        = sys.argv,
     second_bdt                            = second_bdt,
     split_resonant_training               = split_resonant_training,
