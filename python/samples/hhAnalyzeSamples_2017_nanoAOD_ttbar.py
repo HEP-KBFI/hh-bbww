@@ -1362,7 +1362,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIFall17MiniAODv2
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201017_193829"),
         ("selection", "*"),
-        ("blacklist", [181, 196, 197, 217, 222, 299, 355, 358, 359, 360, 362, 368, 431, 451, 460, 513, 514, 516, 518, 520, 521, 522, 523, 524, 526, 527, 528, 529, 530, 531, 532, 599, 600, 603]),
+        ("blacklist", [181, 196, 197, 217, 222, 299, 355, 358, 359, 360, 362, 368, 431, 451, 460, 513, 514, 516, 517, 518, 520, 521, 522, 523, 524, 526, 527, 528, 529, 530, 531, 532, 599, 600, 603]),
       ]),
     ]
   ),
