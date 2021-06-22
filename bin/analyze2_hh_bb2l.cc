@@ -2279,7 +2279,6 @@ int main(int argc, char* argv[])
     int numMuons = 0;
     if ( selLepton_lead_type    == kMuon     ) ++numMuons;
     if ( selLepton_sublead_type == kMuon     ) ++numMuons;
-
     std::map<std::string, double> mvaInputVariables_list = {
       {"mT_lep1",                 comp_MT_met(selLepton_lead, met.pt(), met.phi())},
       {"mT_lep2",                 comp_MT_met(selLepton_sublead, met.pt(), met.phi())},
@@ -2542,26 +2541,25 @@ int main(int argc, char* argv[])
     {
       if ( selJetAK8_Hbb )
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted["spin2"]->hl_mvaInputVariables(), false);
+        /*std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_boosted["spin2"]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_boosted, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2", split_resonant_training);
         std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_boosted["spin0"]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0", split_resonant_training);
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_boosted, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0", split_resonant_training);*/
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_boosted["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_boosted, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
         lbnOutputs_nonresonant_all = (*LBN_nonresonant_boosted["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
       }
       else
       {
-        std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved["spin2"]->hl_mvaInputVariables(), false);
+        /*std::map<std::string, double> hl_inputs_resonant_spin2 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin2_resolved["spin2"]->hl_mvaInputVariables(), false);
         lbnOutputs_resonant_spin2 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin2_resolved, ll_inputs_ptr, hl_inputs_resonant_spin2, eventInfo.event, "_spin2");
         std::map<std::string, double> hl_inputs_resonant_spin0 = InitializeInputVarMap(mvaInputVariables_list, LBN_resonant_spin0_resolved["spin0"]->hl_mvaInputVariables(), false);
-        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");
+        lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");*/
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
         lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
       }
     }
-
 //--- retrieve gen-matching flags
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
@@ -2660,12 +2658,14 @@ int main(int argc, char* argv[])
         {
           eventCategory_LBN.set(selJetAK8_Hbb != nullptr, numBJets_medium, isVBF);
           selHistManager->datacard_LBN_->fillHistograms(
-            lbnOutputs_resonant_spin2,
-            lbnOutputs_resonant_spin0,
+                                                        //lbnOutputs_resonant_spin2,
+                                                        //lbnOutputs_resonant_spin0,
+                                                        {{"250", {{"HH", -1}}}},
+                                                        {{"250", {{"HH", -1}}}},
             lbnOutputs_nonresonant,
             lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
             evtWeight
-          );
+                                                        );
         }
 
         if(! skipFilling)
