@@ -134,6 +134,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         use_nonnominal    = False,
         hlt_filter        = False,
         use_home          = False,
+        blacklist         = None,
         submission_cmd    = None,
         ttbar_based_mcClosure = True,
       ):
@@ -165,6 +166,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       submission_cmd        = submission_cmd,
       apply_pileupJetID     = 'loose',
       apply_genPhotonFilter = True,
+      blacklist             = blacklist,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT
