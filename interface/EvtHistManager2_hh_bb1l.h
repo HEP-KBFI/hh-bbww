@@ -20,12 +20,12 @@ class EvtHistManager2_hh_bb1l
   : public HistManagerBase
 {
 public:
-  EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg);
+  EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation);
   ~EvtHistManager2_hh_bb1l() {}
 
   /// book and fill histograms
   void
-  bookHistograms(TFileDirectory & dir) override;
+    bookHistograms(TFileDirectory & dir) override;
 
   void
   fillHistograms(int numJets,
@@ -51,6 +51,8 @@ public:
                  double Hbb_sublead_px, double Hbb_sublead_py, double Hbb_sublead_pz, double Hbb_sublead_e,
                  double Wjj_lead_px, double Wjj_lead_py, double Wjj_lead_pz, double Wjj_lead_e,
                  double Wjj_sublead_px, double Wjj_sublead_py, double Wjj_sublead_pz, double Wjj_sublead_e,
+                 std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin0,
+                 std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin2,
                  double evtWeight);
 
   const TH1 *
@@ -139,8 +141,61 @@ public:
   TH1 * histogram_Wjj_sublead_e_;
 
   TH1 * histogram_evtCategory_; // event category on datacard level
-
+  
+  TH2* histogram_TT_resolved_270_300_spin2_;
+  TH2* histogram_TT_resolved_300_400_spin2_;
+  TH2* histogram_W_270_300_spin2_;
+  TH2* histogram_W_300_400_spin2_;
+  TH2* histogram_TT_boosted_270_300_spin2_;
+  TH2* histogram_TT_boosted_300_400_spin2_;
+  TH2* histogram_Other_270_300_spin2_;
+  TH2* histogram_Other_300_400_spin2_;
+  TH2* histogram_HH_resolved_2b_270_300_spin2_;
+  TH2* histogram_HH_resolved_2b_300_400_spin2_;
+  TH2* histogram_HH_resolved_1b_270_300_spin2_;
+  TH2* histogram_HH_resolved_1b_300_400_spin2_;
+  TH2* histogram_HH_boosted_270_300_spin2_;
+  TH2* histogram_HH_boosted_300_400_spin2_;
+  TH2* histogram_TT_resolved_270_300_spin0_;
+  TH2* histogram_TT_resolved_300_400_spin0_;
+  TH2* histogram_W_270_300_spin0_;
+  TH2* histogram_W_300_400_spin0_;
+  TH2* histogram_TT_boosted_270_300_spin0_;
+  TH2* histogram_TT_boosted_300_400_spin0_;
+  TH2* histogram_Other_270_300_spin0_;
+  TH2* histogram_Other_300_400_spin0_;
+  TH2* histogram_HH_resolved_2b_270_300_spin0_;
+  TH2* histogram_HH_resolved_2b_300_400_spin0_;
+  TH2* histogram_HH_resolved_1b_270_300_spin0_;
+  TH2* histogram_HH_resolved_1b_300_400_spin0_;
+  TH2* histogram_HH_boosted_270_300_spin0_;
+  TH2* histogram_HH_boosted_300_400_spin0_;
   TH1 * histogram_EventCounter_;
+  float TT_270_spin2;
+  float TT_300_spin2;
+  float TT_400_spin2;
+  float W_270_spin2;
+  float W_300_spin2;
+  float W_400_spin2;
+  float Other_270_spin2;
+  float Other_300_spin2;
+  float Other_400_spin2;
+  float HH_270_spin2;
+  float HH_300_spin2;
+  float HH_400_spin2;
+  float TT_270_spin0;
+  float TT_300_spin0;
+  float TT_400_spin0;
+  float W_270_spin0;
+  float W_300_spin0;
+  float W_400_spin0;
+  float Other_270_spin0;
+  float Other_300_spin0;
+  float Other_400_spin0;
+  float HH_270_spin0;
+  float HH_300_spin0;
+  float HH_400_spin0;
+  bool plot_DNN_correlation_;
 };
 
 #endif
