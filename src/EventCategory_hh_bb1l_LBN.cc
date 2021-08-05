@@ -72,8 +72,8 @@ EventCategory_hh_bb1l_LBN::isSelected(int for_category, const std::string & for_
     else if ( for_category == (int)kHH_resolved_2b_nonvbf ) return for_class == "HH" && !isBoosted_ && !isVBF_ && numBJets_ == 2;
     else if ( for_category == (int)kHH_resolved_1b_vbf    ) return for_class == "HH" && !isBoosted_ && isVBF_ && numBJets_ == 1;
     else if ( for_category == (int)kHH_resolved_1b_nonvbf ) return for_class == "HH" && !isBoosted_ && !isVBF_ && numBJets_ == 1;
-    else if ( for_category == (int)kTT_boosted            ) return for_class == "TT"    &&  isBoosted_;
-    else if ( for_category == (int)kTT_resolved           ) return for_class == "TT"    &&  !isBoosted_;
+    else if ( for_category == (int)kTT_boosted            ) return (for_class == "TT"  || for_class == "ST")   &&  isBoosted_;
+    else if ( for_category == (int)kTT_resolved           ) return (for_class == "TT"  || for_class == "ST")    &&  !isBoosted_;
     else if ( for_category == (int)kW_boosted             ) return for_class == "W"     &&  isBoosted_;
     else if ( for_category == (int)kW_resolved            ) return for_class == "W"     && !isBoosted_;
     else if ( for_category == (int)kH_boosted             ) return for_class == "H"     &&  isBoosted_;
