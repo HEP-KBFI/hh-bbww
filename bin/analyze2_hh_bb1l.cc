@@ -2714,6 +2714,7 @@ int main(int argc, char* argv[])
             selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.e(),
             selJetP4_Wjj_lead.px(), selJetP4_Wjj_lead.py(), selJetP4_Wjj_lead.pz(), selJetP4_Wjj_lead.e(),
             selJetP4_Wjj_sublead.px(), selJetP4_Wjj_sublead.py(), selJetP4_Wjj_sublead.pz(), selJetP4_Wjj_sublead.e(),
+            lbnOutputs_resonant_spin0, lbnOutputs_resonant_spin2,
             evtWeight
           );
           if ( isSignal )
@@ -2740,7 +2741,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all,
+            {{"HH", -1}},
             evtWeight
           );
         }
