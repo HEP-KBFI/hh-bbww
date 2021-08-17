@@ -103,24 +103,22 @@ getGenWQuarksFromHiggs(const std::vector<GenParticle>& genParticlesFromHiggs,
       findGenLepton_and_NeutrinoFromWBoson(genWBosons[0], genLeptons, genNeutrinos);
     if ( !(genLepton_and_Neutrino1.first && genLepton_and_Neutrino1.second) )
     {
-      std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson1 =
+      std::vector<const GenParticle*> genJetsFromWBoson1 =
         findGenJetsFromWBoson(genWBosons[0], genWJets);
-      if ( genJetsFromWBoson1.first && genJetsFromWBoson1.second )
-      {
-        genWQuarksFromHiggs.push_back(*genJetsFromWBoson1.first);
-        genWQuarksFromHiggs.push_back(*genJetsFromWBoson1.second);
+      for ( std::vector<const GenParticle*>::const_iterator genJetFromWBoson1 = genJetsFromWBoson1.begin();
+            genJetFromWBoson1 != genJetsFromWBoson1.end(); ++genJetFromWBoson1 ) {
+        genWQuarksFromHiggs.push_back(**genJetFromWBoson1);
       }
     }
     std::pair<const GenLepton*, const GenParticle*> genLepton_and_Neutrino2 =
       findGenLepton_and_NeutrinoFromWBoson(genWBosons[1], genLeptons, genNeutrinos);
     if ( !(genLepton_and_Neutrino2.first && genLepton_and_Neutrino2.second) )
     {
-      std::pair<const GenParticle*, const GenParticle*> genJetsFromWBoson2 =
+      std::vector<const GenParticle*> genJetsFromWBoson2 =
         findGenJetsFromWBoson(genWBosons[1], genWJets);
-      if ( genJetsFromWBoson2.first && genJetsFromWBoson2.second )
-      {
-        genWQuarksFromHiggs.push_back(*genJetsFromWBoson2.first);
-        genWQuarksFromHiggs.push_back(*genJetsFromWBoson2.second);
+      for ( std::vector<const GenParticle*>::const_iterator genJetFromWBoson2 = genJetsFromWBoson2.begin();
+            genJetFromWBoson2 != genJetsFromWBoson2.end(); ++genJetFromWBoson2 ) {
+        genWQuarksFromHiggs.push_back(**genJetFromWBoson2);
       }
     }
   }
