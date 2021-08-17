@@ -42,6 +42,7 @@ parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
+parser.add_blacklist()
 parser.add_argument('-dy', '--dy-background',
   type = str, nargs = '+', dest = 'dy', metavar = 'method', choices = dyBgr_choices, default = dyBgr_defaults, required = False,
   help = 'R|DY background estimation',
@@ -88,6 +89,7 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
+use_blacklist     = args.use_blacklist
 add_hmeBr         = args.add_hmeBr
 doDataMCPlots     = True
 dyBgr_options     = args.dy
@@ -151,6 +153,12 @@ fillHistograms_LBN = 'LBN' in training_method
 fillHistograms_resonant = 'nonres' in fill_spin
 fillHistograms_spin0    = 'spin0' in fill_spin
 fillHistograms_spin2    = 'spin2' in fill_spin
+
+blacklist = []
+if use_blacklist:
+  blacklist.append('postproc')
+  if use_preselected:
+    blacklist.append('skimmed_bbww')
 
 # the Ntuples that currently have the MEM scores are computed with fakebale lepton selection
 if add_hmeBr:
@@ -311,7 +319,9 @@ if __name__ == '__main__':
     use_nonnominal                        = use_nonnominal,
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
+    blacklist                             = blacklist,
     submission_cmd                        = sys.argv,
+    ttbar_based_mcClosure                 = True,
   )
 
   if mode.find("forBDTtraining") != -1:

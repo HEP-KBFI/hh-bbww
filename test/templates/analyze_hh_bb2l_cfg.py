@@ -291,6 +291,10 @@ process.analyze_hh_bb2l = cms.PSet(
     ),
     tHweights = cms.VPSet(),
     hhWeight_cfg = hhWeight,
+    blacklist = cms.PSet(
+        inputFileNames = cms.vstring(),
+        sampleName = cms.string(''),
+    ),
 )
 
 process.analyze_hh_bb2l.BDT.resonant_spin2_resolved = process.analyze_hh_bb2l.BDT.nonresonant_resolved

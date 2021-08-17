@@ -38,6 +38,7 @@ parser.add_jet_cleaning('by_dr')
 parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
+parser.add_blacklist()
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
   help = 'R|doing second_bdt for jpa'
@@ -53,6 +54,10 @@ parser.add_argument('-M', '--training-method',
 parser.add_argument('-F', '--fill-spin',
   type = str, nargs = '+', dest = 'fill_spin', metavar = 'spin', choices = signal_choices, required = False, default = [ 'nonres' ],
   help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
+)
+parser.add_argument('-spt', '--split-resonant-training',
+  dest = 'split_resonant_training', action = 'store_true', default=False,
+  help = 'whether want to split resonant training'
 )
 
 args = parser.parse_args()
@@ -84,11 +89,13 @@ jet_cleaning      = args.jet_cleaning
 gen_matching      = args.gen_matching
 regroup_jerc      = args.enable_regrouped_jerc
 split_trigger_sys = args.split_trigger_sys
+use_blacklist     = args.use_blacklist
 doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
 second_bdt         = args.second_bdt
 training_method    = args.training_method
 fill_spin          = args.fill_spin
+split_resonant_training = args.split_resonant_training
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -137,6 +144,12 @@ fillHistograms_LBN = 'LBN' in training_method
 fillHistograms_nonresonant       = 'spin0' not in fill_spin and 'spin2' not in fill_spin
 fillHistograms_resonant_spin0    = 'spin0' in fill_spin
 fillHistograms_resonant_spin2    = 'spin2' in fill_spin
+
+blacklist = []
+if use_blacklist:
+  blacklist.append('postproc')
+  if use_preselected:
+    blacklist.append('skimmed_bbww_sl')
 
 if "sync" not in mode:
   samples_to_stitch = getattr(
@@ -197,27 +210,29 @@ if 'spin0' in fill_spin or 'spin2' in fill_spin:
         ]
         for category in categories:
           histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
-          if masspoint in [400, 450]:
-            histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_overlap_%s" % (category, masspoint, spin) : {} })
+          if split_resonant_training:
+            if masspoint in [400, 450]:
+              histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_overlap_%s" % (category, masspoint, spin) : {} })
 if 'nonres' in fill_spin:
   bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
+    if 'spin' in bmName: continue
+    if 'EventCounter' in bmName: continue
     if fillHistograms_BDT:
       categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
       for category in categories:
         histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/%s" % (category, bmName) : {} })
     if fillHistograms_LBN:
       categories = [ 
-        "HH_boosted", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf", 
+        "HH_boosted_vbf", "HH_boosted_nonvbf",
+        "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf",
         "TT_boosted", "TT_resolved", 
         "W_boosted", "W_resolved", 
-        "DY_boosted", "DY_resolved", 
-        "SingleTop_boosted", "SingleTop_resolved", 
+        "H_boosted", "H_resolved_2b", "H_resolved_1b",
         "Other" 
       ]
       for category in categories:
         histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
-
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
   'deepVSj' : 'Medium',
@@ -285,8 +300,11 @@ if __name__ == '__main__':
     use_nonnominal                        = use_nonnominal,
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
+    blacklist                             = blacklist,
     submission_cmd                        = sys.argv,
-    second_bdt                            = second_bdt
+    second_bdt                            = second_bdt,
+    split_resonant_training               = split_resonant_training,
+    ttbar_based_mcClosure                 = True,
   )
 
   if mode.find("forBDTtraining") != -1:
