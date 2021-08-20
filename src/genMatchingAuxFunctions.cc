@@ -17,7 +17,7 @@ findGenLepton_and_NeutrinoFromWBoson(const GenParticle& genWBoson, const std::ve
       Particle::LorentzVector genLepton_and_NeutrinoP4 = genLepton->p4() + genNeutrino->p4();
       double deltaMass = TMath::Abs(genLepton_and_NeutrinoP4.mass() - genWBoson.mass());
       double dR = deltaR(genLepton_and_NeutrinoP4, genWBoson.p4());
-      if ( deltaMass < 5. && deltaMass < minDeltaMass && dR < 1. ) {
+      if ( deltaMass < 5. && deltaMass < minDeltaMass && dR < 1.e-1 ) {
 	genLeptonFromWBoson = &(*genLepton);
 	genNeutrinoFromWBoson = &(*genNeutrino);
 	minDeltaMass = deltaMass;
