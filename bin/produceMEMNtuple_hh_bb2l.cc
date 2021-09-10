@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
 
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
-  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("produceMEMNtuple_hh_bb2l");
+  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_hh_bbwwMEM_dilepton");
   AnalysisConfig_hh analysisConfig("HH->bbWW", cfg_analyze);
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
@@ -327,6 +327,7 @@ int main(int argc, char* argv[])
   int skippedEntries = 0;
   int selectedEntries = 0;
   double selectedEntries_weighted = 0.;
+  int memEvents_total = 0;
   TH1* histogram_analyzedEntries = fs.make<TH1D>("analyzedEntries", "analyzedEntries", 1, -0.5, +0.5);
   TH1* histogram_selectedEntries = fs.make<TH1D>("selectedEntries", "selectedEntries", 1, -0.5, +0.5);
   cutFlowTableType cutFlowTable;
@@ -342,7 +343,8 @@ int main(int argc, char* argv[])
     "m(ll) > 12 GeV",
     "generator-level selection (1)",
     "generator-level selection (2)",
-    "min_memEventCounter_update > 0"
+    ">= 1 memEvent (1)",
+    ">= 1 memEvent (2)"
   };
   CutFlowTableHistManager * cutFlowHistManager = new CutFlowTableHistManager(cutFlowTableCfg, cuts);
   cutFlowHistManager->bookHistograms(fs);
@@ -646,8 +648,35 @@ int main(int argc, char* argv[])
     memEvents.insert(memEvents.end(), memEvents_resolved.begin(), memEvents_resolved.end());
     memEvents.insert(memEvents.end(), memEvents_resolved_missingBJet.begin(), memEvents_resolved_missingBJet.end());
     addGenMatches(memEvents, genBJetsForMatching_ptrs, genLeptonsForMatching_ptrs, genMEtPx, genMEtPy);
+    //std::cout << "#memEvents:" << std::endl;
+    //std::cout << " boosted = " << memEvents_boosted.size() << std::endl;
+    //std::cout << " resolved = " << memEvents_resolved.size() << ", missingBJet = " << memEvents_resolved_missingBJet.size() << std::endl;
+    //std::cout << "total = " << memEvents.size() << std::endl;
+
+    if ( !(memEvents.size() > 0) ) {
+      if ( run_lumi_eventSelector ) {
+	std::cout << "event " << eventInfo.str() << " FAILS memEvent selection." << std::endl;
+      }
+      continue;
+    }
+    cutFlowTable.update(">= 1 memEvent (1)", evtWeight);
+    cutFlowHistManager->fillHistograms(">= 1 memEvent (1)", evtWeight);
 
     std::map<int, std::vector<const MEMEvent_dilepton*>> memEventMap = buildMEMEventMap(memEvents);
+
+    // CV: Define "physical" values of i that are to be checke.
+    //     Skip values of i corresponding to missing leptons or to missing first b-jet
+    //     and also values of i that have "reconstructed" as well as "missing" bit set for any lepton or b-jet.
+    std::set<int> i_values_to_check = {  
+      128+32+8+2, 128+32+8+1, 128+32+8+0,
+      128+32+4+2, 128+32+4+1, 128+32+4+0,
+      128+16+8+2, 128+16+8+1, 128+16+8+0,
+      128+16+4+2, 128+16+4+1, 128+16+4+0,
+       64+32+8+2,  64+32+8+1,  64+32+8+0,
+       64+32+4+2,  64+32+4+1,  64+32+4+0,
+       64+16+8+2,  64+16+8+1,  64+16+8+0,
+       64+16+4+2,  64+16+4+1,  64+16+4+0
+    };
 
     std::map<int, int> memEventCounter_update = memEventCounter;
     int min_memEventCounter_update = -1;
@@ -655,19 +684,15 @@ int main(int argc, char* argv[])
       if ( memEventMap.find(i) != memEventMap.end() ) {
         memEventCounter_update[i] += memEventMap[i].size();
       }
+      // CV: skip values of i corresponding to "unphysical" values of i
+      if ( i_values_to_check.find(i) == i_values_to_check.end() ) continue;
+      // CV: skip values of i that occur very unfrequently
+      if ( memEventCounter_update[i] == 0 ) continue;
       if ( min_memEventCounter_update == -1 || memEventCounter_update[i] < min_memEventCounter_update ) {
         min_memEventCounter_update = memEventCounter_update[i];
       }
     }
-    std::cout << "min_memEventCounter_update = " << min_memEventCounter_update << std::endl;
-    if ( !(min_memEventCounter_update > 0) ) {
-      if ( run_lumi_eventSelector ) {
-	std::cout << "event " << eventInfo.str() << " FAILS min_memEventCounter_update selection." << std::endl;
-      }
-      continue;
-    }
-    cutFlowTable.update("min_memEventCounter_update > 0", evtWeight);
-    cutFlowHistManager->fillHistograms("min_memEventCounter_update > 0", evtWeight);
+    //std::cout << "min_memEventCounter_update = " << min_memEventCounter_update << std::endl;    
 
     //---------------------------------------------------------------------------
     // CV: Skip running matrix element method (MEM) computation for the first 'skipSelEvents' events.
@@ -676,16 +701,18 @@ int main(int argc, char* argv[])
     if ( skippedEntries < skipSelEvents ) continue;
     //---------------------------------------------------------------------------
 
+    int memEvents_currentEvent = 0;
     for ( std::map<int, std::vector<const MEMEvent_dilepton*>>::const_iterator memEventMap_iter = memEventMap.begin();
           memEventMap_iter != memEventMap.end(); ++memEventMap_iter ) {
       for ( std::vector<const MEMEvent_dilepton*>::const_iterator memEvent = memEventMap_iter->second.begin();
             memEvent != memEventMap_iter->second.end(); ++memEvent ) {
-
         // CV: For a balanced BDT/LBN regression training, we aim to have an equal number of MEM events for each MEM event type i.
         //     This objective is achieved by adding MEM events to the Ntuple with a probability of min_memEventCounter_update/(double)memEventMap[i].size().
         //     To save computing time, only run MEM computation for those MEM events that are added to the Ntuple.
+        const int margin = 10;
+        const double p = (min_memEventCounter_update + margin)/(double)memEventCounter_update[memEventMap_iter->first];
         double u = rnd.Rndm();
-        if ( u > (min_memEventCounter_update/(double)memEventMap_iter->second.size()) ) continue;
+        if ( u > p ) continue;
 
         std::vector<mem::MeasuredParticle> memMeasuredParticles;
         if ( (*memEvent)->measuredBJet1_   ) memMeasuredParticles.push_back(*(*memEvent)->measuredBJet1_);
@@ -737,8 +764,20 @@ int main(int argc, char* argv[])
         mem_ntuple->fill();
 
         ++memEventCounter[memEventMap_iter->first];
+        ++memEvents_currentEvent;
       }
     }
+
+    memEvents_total += memEvents_currentEvent;
+
+    if ( !(memEvents_currentEvent > 0) ) {
+      if ( run_lumi_eventSelector ) {
+	std::cout << "event " << eventInfo.str() << " FAILS memEvent selection." << std::endl;
+      }
+      continue;
+    }
+    cutFlowTable.update(">= 1 memEvent (2)", evtWeight);
+    cutFlowHistManager->fillHistograms(">= 1 memEvent (2)", evtWeight);
 
     if ( selEventsFile ) {
       (*selEventsFile) << eventInfo.run << ':' << eventInfo.lumi << ':' << eventInfo.event << '\n';
@@ -757,6 +796,9 @@ int main(int argc, char* argv[])
             << " selected = " << selectedEntries << " (weighted = " << selectedEntries_weighted << ")\n\n"
             << "cut-flow table" << std::endl;
   cutFlowTable.print(std::cout);
+  std::cout << std::endl;
+
+  std::cout << "num. MEM events added to Ntuple = " << memEvents_total << std::endl;
   std::cout << std::endl;
 
   delete run_lumi_eventSelector;
