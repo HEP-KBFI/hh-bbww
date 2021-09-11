@@ -383,6 +383,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         lines.append("    ),")
         lines.append(")")
         lines.append("process.addSystFakeRates.outputFileName = cms.string('%s')" % jobOptions['plots_outputFileName'])
+        lines.append("process.addSystFakeRates.multiclass = cms.bool(True)")
         create_cfg(self.cfgFile_add_syst_fakerate, jobOptions['cfgFile_modified'], lines)
 
   def createCfg_compDYBgrWeights(self, jobOptions):
@@ -1060,7 +1061,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'category' : category,
             'histogramToFit' : histogramToFit_modified,
             'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png"),
-            'max_depth_recursion' : self.max_depth_recursion
+            'max_depth_recursion' : self.max_depth_recursion,
+            'multiclass' : True
           }
           for lepton_type in [ 'e', 'm' ]:
             lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type
@@ -1084,12 +1086,12 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               histogramDir_nominal_ttbar = histogramDir_nominal.replace("/fakes_mc", "/TT_fake")
               histogramDir_mcClosure_ttbar = histogramDir_mcClosure.replace("/fakes_mc", "/TT_fake")
               inputFile_nominal_ttbar = [
-                self.outputFile_hadd_stage1[getKey(sample_info["process_name_specific"], "Tight")]
+                self.outputFile_hadd_stage1[getKey(sample_info["process_name_specific"], "OS_disabled_Tight")]
                 for sample_name, sample_info in self.samples.items()
                 if sample_name.startswith("/TTToSemiLeptonic") and sample_info["use_it"] and sample_info["sample_category"] == "TT"
               ]
               inputFile_mcClosure_ttbar = [
-                self.outputFile_hadd_stage1[getKey(sample_info["process_name_specific"], "Fakeable_mcClosure_%s_wFakeRateWeights" % lepton_type)]
+                self.outputFile_hadd_stage1[getKey(sample_info["process_name_specific"], "OS_disabled_Fakeable_mcClosure_%s_wFakeRateWeights" % lepton_type)]
                 for sample_name, sample_info in self.samples.items()
                 if sample_name.startswith("/TTToSemiLeptonic") and sample_info["use_it"] and sample_info["sample_category"] == "TT"
               ]
