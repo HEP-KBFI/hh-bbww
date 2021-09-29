@@ -30,7 +30,7 @@ process.analyze_hh_bbwwMEM_singlelepton = cms.PSet(
     histogramDir = cms.string(''),
     era = cms.string('2017'),
 
-apply_pileupJetID = cms.string('disabled'),
+    apply_pileupJetID = cms.string('disabled'),
 
     apply_genWeight = cms.bool(True),
     hasLHE = cms.bool(True),

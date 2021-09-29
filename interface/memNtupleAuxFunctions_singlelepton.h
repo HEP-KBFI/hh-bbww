@@ -70,12 +70,13 @@ buildMEMEvents_singlelepton_boosted(const std::vector<const std::pair<mem::Measu
 
 std::vector<MEMEvent_singlelepton>
 buildMEMEvents_singlelepton_semiboosted(const std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*>& measuredJetsAK8_Hbb,
-                                        const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4, int numWJets,
+                                        const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4_Wjj, int numWJets,
                                         const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
                                         double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov);
 
 std::vector<MEMEvent_singlelepton>
-buildMEMEvents_singlelepton_resolved(const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4, int numBJets, int numWJets,
+buildMEMEvents_singlelepton_resolved(const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4_Hbb, int numBJets, 
+                                     const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4_Wjj, int numWJets,
                                      const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
                                      double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov);
 

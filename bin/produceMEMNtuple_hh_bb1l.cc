@@ -666,7 +666,7 @@ int main(int argc, char* argv[])
 	printCollection("genBQuarksFromTop", genBQuarksFromTop);	
         printCollection("genWJetsFromTop", genWJetsFromTop);
       }
-      if ( !(genLeptonsFromTop.size() == 2 && genNeutrinosFromTop.size() == 2 && genBQuarksFromTop.size() == 2 && genWJetsFromTop.size() == 2) ) {
+      if ( !(genLeptonsFromTop.size() == 1 && genNeutrinosFromTop.size() == 1 && genBQuarksFromTop.size() == 2 && genWJetsFromTop.size() == 2) ) {
 	if ( run_lumi_eventSelector ) {
 	  std::cout << "event " << eventInfo.str() << " FAILS generator-level selection." << std::endl;
 	  std::cout << "#genLeptonsFromTop = " << genLeptonsFromTop.size() << std::endl;
@@ -794,11 +794,13 @@ int main(int argc, char* argv[])
     std::vector<mem::MeasuredParticle> measuredLeptons = convert_to_MeasuredParticles(fakeableLeptons);
     std::vector<const mem::MeasuredParticle*> measuredLeptons_ptrs = convert_to_ptrs(measuredLeptons);
 
-    std::vector<mem::MeasuredParticle> measuredJets_AK4 = convert_to_MeasuredParticles(selJetsAK4, true);
-    std::vector<const mem::MeasuredParticle*> measuredJets_AK4_ptrs = convert_to_ptrs(measuredJets_AK4);
+    std::vector<mem::MeasuredParticle> measuredJets_AK4_Hbb = convert_to_MeasuredParticles(selJetsAK4, true);
+    std::vector<const mem::MeasuredParticle*> measuredJets_AK4_Hbb_ptrs = convert_to_ptrs(measuredJets_AK4_Hbb);
     std::vector<std::pair<mem::MeasuredParticle, mem::MeasuredParticle>> measuredJets_AK8_Hbb = convert_to_MeasuredParticles(selJetsAK8_Hbb, true);
     std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*> measuredJets_AK8_Hbb_ptrs = convert_to_ptrs(measuredJets_AK8_Hbb);
-    std::vector<std::pair<mem::MeasuredParticle, mem::MeasuredParticle>> measuredJets_AK8_Wjj = convert_to_MeasuredParticles(selJetsAK8_Wjj, true);
+    std::vector<mem::MeasuredParticle> measuredJets_AK4_Wjj = convert_to_MeasuredParticles(selJetsAK4, false);
+    std::vector<const mem::MeasuredParticle*> measuredJets_AK4_Wjj_ptrs = convert_to_ptrs(measuredJets_AK4_Wjj);
+    std::vector<std::pair<mem::MeasuredParticle, mem::MeasuredParticle>> measuredJets_AK8_Wjj = convert_to_MeasuredParticles(selJetsAK8_Wjj, false);
     std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*> measuredJets_AK8_Wjj_ptrs = convert_to_ptrs(measuredJets_AK8_Wjj);
 
     double measuredMEtPx = met.pt()*cos(met.phi());
@@ -810,23 +812,23 @@ int main(int argc, char* argv[])
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     std::vector<MEMEvent_singlelepton> memEvents_semiboosted = buildMEMEvents_singlelepton_semiboosted(
-      measuredJets_AK8_Hbb_ptrs, measuredJets_AK4_ptrs, 2, 
+      measuredJets_AK8_Hbb_ptrs, measuredJets_AK4_Wjj_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     std::vector<MEMEvent_singlelepton> memEvents_resolved = buildMEMEvents_singlelepton_resolved(
-      measuredJets_AK4_ptrs, 2, 2,
+      measuredJets_AK4_Hbb_ptrs, 2, measuredJets_AK4_Wjj_ptrs, 2,
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingBJet = buildMEMEvents_singlelepton_resolved(
-      measuredJets_AK4_ptrs, 1, 2, 
+      measuredJets_AK4_Hbb_ptrs, 1, measuredJets_AK4_Wjj_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingWJet = buildMEMEvents_singlelepton_resolved(
-      measuredJets_AK4_ptrs, 2, 1, 
+      measuredJets_AK4_Hbb_ptrs, 2, measuredJets_AK4_Wjj_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingBnWJet = buildMEMEvents_singlelepton_resolved(
-      measuredJets_AK4_ptrs, 1, 1, 
+      measuredJets_AK4_Hbb_ptrs, 1, measuredJets_AK4_Wjj_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     std::vector<MEMEvent_singlelepton> memEvents;
