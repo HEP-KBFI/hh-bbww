@@ -830,7 +830,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'category' : category,
         'histogramToFit' : histogramToFit_modified,
         'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png"),
-        'max_depth_recursion' : self.max_depth_recursion
+        'max_depth_recursion' : self.max_depth_recursion,
+        'multiclass' : True
       }
       for lepton_type in [ 'e', 'm' ]:
         lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type
@@ -889,7 +890,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_%s.png" % self.channel),
         'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled"),
         'label' : '1l',
-        'make_plots_backgrounds' : self.make_plots_backgrounds
+        'make_plots_backgrounds' : self.make_plots_backgrounds,
+        'processSignal' : "signal_ggf_nonresonant_hh" if self.fillHistograms_nonresonant else 'signal_ggf_spin0_300_hh'
       }
     self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
     if "Fakeable_mcClosure" in self.lepton_selections: #TODO

@@ -254,7 +254,7 @@ process.analyze_hh_bb1l = cms.PSet(
                 'lep_pt', 'mht', 'dPhi_HHvis', 'mbb_medium',
                 'm_Hbb_regCorr', 'leadFwdJet_pt', 'numBJets_loose', 'mbb_loose'
             ),
-            classes = cms.vstring('HH', 'TT', 'ST', 'W', 'H', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'W', 'DY', 'Other')
         ),
         nonresonant_boosted = cms.PSet(
             pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb1l/multiclass_DNN_wlbn_for_bb1l_boosted_odd_data_nonres_X_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
@@ -272,7 +272,7 @@ process.analyze_hh_bb1l = cms.PSet(
                 'pT_HH', 'pT_Wjj', 'm_HHvis', 'selLepton_type', 'dR_Wjj', 
                 'pT_Hww', 'numJetsForward', 'Smin_Hww', 'mT_top_3particle', 'pT_HHvis'
             ),
-            classes = cms.vstring('HH', 'TT', 'ST', 'W', 'H', 'Other')
+            classes = cms.vstring('HH', 'TT', 'ST', 'W', 'DY', 'Other')
         )
     ),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000), ## Set the signal mass range used in the BDT .pkl/.xml/.pb files

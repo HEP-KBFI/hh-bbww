@@ -228,7 +228,7 @@ if 'nonres' in fill_spin:
         "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf",
         "TT_boosted", "TT_resolved", 
         "W_boosted", "W_resolved", 
-        "H_boosted", "H_resolved_2b", "H_resolved_1b",
+        "DY_boosted", "DY_resolved",
         "Other" 
       ]
       for category in categories:

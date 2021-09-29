@@ -440,6 +440,7 @@ int main(int argc, char* argv[])
   bool selectBDT = ( cfg_analyze.exists("selectBDT") ) ? cfg_analyze.getParameter<bool>("selectBDT") : false;
   bool second_bdt = ( cfg_analyze.exists("secondBDT") ) ? cfg_analyze.getParameter<bool>("secondBDT") : false;
   bool split_resonant_training = ( cfg_analyze.exists("split_resonant_training") ) ? cfg_analyze.getParameter<bool>("split_resonant_training") : false;
+  bool plot_DNN_correlation = ( cfg_analyze.exists("plot_DNN_correlation") ) ? cfg_analyze.getParameter<bool>("plot_DNN_correlation") : false;
 
   std::vector<double> gen_mHH = analysisConfig.get_HH_resonant_mass_points();
   std::vector<std::string> nonRes_BMs = cfg_analyze.getParameter<std::vector<std::string>>("nonRes_BMs");
@@ -937,8 +938,8 @@ int main(int argc, char* argv[])
           Form("%s/sel/metFilters", histogramDir.data()), era_string, central_or_shift));
         selHistManager->metFilters_->bookHistograms(fs);
         selHistManager->evt_ = new EvtHistManager2_hh_bb1l(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->evt_->bookHistograms(fs);
+          Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift), plot_DNN_correlation);
+               selHistManager->evt_->bookHistograms(fs);
         selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
 	  analysisConfig, eventInfo, hhWeight_couplings, HHWeightLO_calc, HHWeightNLO_calc);
@@ -2714,6 +2715,7 @@ int main(int argc, char* argv[])
             selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.e(),
             selJetP4_Wjj_lead.px(), selJetP4_Wjj_lead.py(), selJetP4_Wjj_lead.pz(), selJetP4_Wjj_lead.e(),
             selJetP4_Wjj_sublead.px(), selJetP4_Wjj_sublead.py(), selJetP4_Wjj_sublead.pz(), selJetP4_Wjj_sublead.e(),
+            lbnOutputs_resonant_spin0, lbnOutputs_resonant_spin2,
             evtWeight
           );
           if ( isSignal )
@@ -2740,7 +2742,7 @@ int main(int argc, char* argv[])
             lbnOutputs_resonant_spin2,
             lbnOutputs_resonant_spin0,
             lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all,
+            {{"HH", -1}},
             evtWeight
           );
         }

@@ -7,8 +7,9 @@
 #include <TAxis.h> // TAxis
 #include <TMath.h> // TMath::Pi()
 
-EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg)
+EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation)
   : HistManagerBase(cfg)
+  , plot_DNN_correlation_(plot_DNN_correlation)
 {
   central_or_shiftOptions_["numJets"] = { "central" };
   central_or_shiftOptions_["numBJets_loose"] = { "central" };
@@ -70,6 +71,34 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["Wjj_sublead_pz"] = { "central" };
   central_or_shiftOptions_["Wjj_sublead_e"] = { "central" };
   central_or_shiftOptions_["evtCategory"] = { "central" };
+  central_or_shiftOptions_["TT_resolved_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["TT_resolved_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["TT_boosted_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["TT_boosted_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["W_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["W_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["Other_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["Other_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["HH_boosted_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["HH_boosted_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_2b_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_2b_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_1b_270_300_spin0"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_1b_300_400_spin0"] = { "central" };
+  central_or_shiftOptions_["TT_resolved_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["TT_resolved_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["TT_boosted_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["TT_boosted_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["W_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["W_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["Other_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["Other_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["HH_boosted_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["HH_boosted_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_2b_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_2b_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_1b_270_300_spin2"] = { "central" };
+  central_or_shiftOptions_["HH_resolved_1b_300_400_spin2"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -186,6 +215,37 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
     xAxis_evtCategory->SetBinLabel(4, "Boosted");
   }
   histogram_EventCounter_     = book1D(dir, "EventCounter",       1, -0.5,  +0.5);
+  if ( plot_DNN_correlation_ ) {
+    histogram_TT_resolved_270_300_spin2_ = book2D(dir, "TT_resolved_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_TT_resolved_300_400_spin2_ = book2D(dir, "TT_resolved_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_TT_boosted_270_300_spin2_ = book2D(dir, "TT_boosted_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_TT_boosted_300_400_spin2_ = book2D(dir, "TT_boosted_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_W_270_300_spin2_ = book2D(dir, "W_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_W_300_400_spin2_ = book2D(dir, "W_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_Other_270_300_spin2_ = book2D(dir, "Other_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_Other_300_400_spin2_ = book2D(dir, "Other_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_2b_270_300_spin2_ = book2D(dir, "HH_resolved_2b_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_2b_300_400_spin2_ = book2D(dir, "HH_resolved_2b_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_1b_270_300_spin2_ = book2D(dir, "HH_resolved_1b_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_1b_300_400_spin2_ = book2D(dir, "HH_resolved_1b_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_boosted_270_300_spin2_ = book2D(dir, "HH_boosted_270_300_spin2",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_boosted_300_400_spin2_ = book2D(dir, "HH_boosted_300_400_spin2",       10, 0,  1., 10, 0., 1.);
+    //spin0
+    histogram_TT_resolved_270_300_spin0_ = book2D(dir, "TT_resolved_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_TT_resolved_300_400_spin0_ = book2D(dir, "TT_resolved_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_TT_boosted_270_300_spin0_ = book2D(dir, "TT_boosted_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_TT_boosted_300_400_spin0_ = book2D(dir, "TT_boosted_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_W_270_300_spin0_ = book2D(dir, "W_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_W_300_400_spin0_ = book2D(dir, "W_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_Other_270_300_spin0_ = book2D(dir, "Other_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_Other_300_400_spin0_ = book2D(dir, "Other_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_2b_270_300_spin0_ = book2D(dir, "HH_resolved_2b_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_2b_300_400_spin0_ = book2D(dir, "HH_resolved_2b_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_1b_270_300_spin0_ = book2D(dir, "HH_resolved_1b_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_resolved_1b_300_400_spin0_ = book2D(dir, "HH_resolved_1b_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_boosted_270_300_spin0_ = book2D(dir, "HH_boosted_270_300_spin0",       10, 0,  1., 10, 0., 1.);
+    histogram_HH_boosted_300_400_spin0_ = book2D(dir, "HH_boosted_300_400_spin0",       10, 0,  1., 10, 0., 1.);
+  }
 }
 
 void
@@ -194,16 +254,16 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
 				        int numBJets_medium,
 				        double HT,
                         double met, double met_LD,
-                                        double lep_pt, double mll_loose,
-                                        double m_Hbb, double pT_Hbb, double dR_Hbb, double m_Hbb_regCorr,
+                        double lep_pt, double mll_loose,
+                        double m_Hbb, double pT_Hbb, double dR_Hbb, double m_Hbb_regCorr,
 				        double dPhi_Hww, double pT_Hww,
 				        double m_HH_B2G_18_008, double pT_HH, double dPhi_HHvis, double pT_HHvis,
 				        double mT_W, double mT_top_2particle, double mT_top_3particle,
                         double vbf_m_jj, double vbf_dEta_jj, double vbf_lhe_m_jj, double vbf_lhe_dEta_jj,
-                                        double bjet1_btagCSV, double bjet2_btagCSV, double wjet1_btagCSV,  double wjet2_btagCSV,
-                                        double mindr_lep1_jet, double avg_dr_jet_central,
-                                        double lepPairType_loose, double selLepton_type,
-                                        double mbb_medium,
+                        double bjet1_btagCSV, double bjet2_btagCSV, double wjet1_btagCSV,  double wjet2_btagCSV,
+                        double mindr_lep1_jet, double avg_dr_jet_central,
+                        double lepPairType_loose, double selLepton_type,
+                       double mbb_medium,
                                         double dR_b1lep, double dR_b2lep,
                                         double mjj_highestpt,
                                         double numJetsForward, double tau21_Hbb, const RecoJetAK8* selJetAK8_Hbb,
@@ -212,6 +272,8 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
                                         double Hbb_sublead_px, double Hbb_sublead_py, double Hbb_sublead_pz, double Hbb_sublead_e,
                                         double Wjj_lead_px, double Wjj_lead_py, double Wjj_lead_pz, double Wjj_lead_e,
                                         double Wjj_sublead_px, double Wjj_sublead_py, double Wjj_sublead_pz, double Wjj_sublead_e,
+                                        std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin0,
+                                        std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin2,
                                         double evtWeight)
 {
   const double evtWeightErr = 0.;
@@ -303,6 +365,127 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   else if ( numBJets_medium >= 2 ) evtCategory = 2;
   else if ( numBJets_medium >= 1 ) evtCategory = 1;
   fillWithOverFlow(histogram_evtCategory_,      evtCategory,       evtWeight, evtWeightErr);
-
   fillWithOverFlow(histogram_EventCounter_,     0.,                evtWeight, evtWeightErr);
+
+  if ( plot_DNN_correlation_ ) {
+    for ( std::map<std::string, std::map<std::string, double>>::const_iterator gen_mHH_or_bmName = lbnOutputs_resonant_spin2.begin();
+          gen_mHH_or_bmName != lbnOutputs_resonant_spin2.end(); ++gen_mHH_or_bmName ) {
+      if ( (gen_mHH_or_bmName->first == "270_spin2" || gen_mHH_or_bmName->first == "300_spin2" || gen_mHH_or_bmName->first == "400_spin2") ) {
+        for ( std::map<std::string, double>::const_iterator classIter = gen_mHH_or_bmName->second.begin();
+              classIter != gen_mHH_or_bmName->second.end(); ++classIter ) {
+          //std::cout << classIter->first << "\t" << classIter->second << std::endl;
+          if ( gen_mHH_or_bmName->first == "270_spin2" ) {
+            if ( classIter->first == "TT" || classIter->first == "ST" ) {
+              TT_270_spin2 = classIter->second;
+            }else if ( classIter->first == "W") {
+              W_270_spin2 = classIter->second;
+            }else if ( classIter->first == "Other" || classIter->first == "H" ) {
+              Other_270_spin2 = classIter->second;
+            }else if ( classIter->first == "HH" ) {
+              HH_270_spin2 = classIter->second;
+            }
+          }
+          else if ( gen_mHH_or_bmName->first == "300_spin2" ) {
+            if ( classIter->first == "TT" || classIter->first == "ST" ) {
+              TT_300_spin2 = classIter->second;
+            }else if ( classIter->first == "W") {
+              W_300_spin2 = classIter->second;
+            }else if ( classIter->first == "Other" || classIter->first == "H" ) {
+              Other_300_spin2 = classIter->second;
+            }else if ( classIter->first == "HH" ) {
+              HH_300_spin2 = classIter->second;
+            }
+          }
+          else if ( gen_mHH_or_bmName->first == "400_spin2" ) {
+            if ( classIter->first == "TT" || classIter->first == "ST" ) {
+              TT_400_spin2 = classIter->second;
+            }else if ( classIter->first == "W") {
+              W_400_spin2 = classIter->second;
+            }else if ( classIter->first == "Other" || classIter->first == "H" ) {
+              Other_400_spin2 = classIter->second;
+            }else if ( classIter->first == "HH" ) {
+              HH_400_spin2 = classIter->second;
+            }
+          }
+        }
+      }
+    }
+    for ( std::map<std::string, std::map<std::string, double>>::const_iterator gen_mHH_or_bmName = lbnOutputs_resonant_spin0.begin();
+          gen_mHH_or_bmName != lbnOutputs_resonant_spin0.end(); ++gen_mHH_or_bmName ) {
+      if ( (gen_mHH_or_bmName->first == "270_spin0" || gen_mHH_or_bmName->first == "300_spin0" || gen_mHH_or_bmName->first == "400_spin0") ) {
+        for ( std::map<std::string, double>::const_iterator classIter = gen_mHH_or_bmName->second.begin();
+              classIter != gen_mHH_or_bmName->second.end(); ++classIter ) {
+          if ( gen_mHH_or_bmName->first == "270_spin0" ) {
+            if ( classIter->first == "TT" || classIter->first == "ST" ) {
+              TT_270_spin0 = classIter->second;
+            }else if ( classIter->first == "W") {
+              W_270_spin0 = classIter->second;
+            }else if ( classIter->first == "Other" || classIter->first == "H" ) {
+              Other_270_spin0 = classIter->second;
+            }else if ( classIter->first == "HH" ) {
+              HH_270_spin0 = classIter->second;
+            }
+          }
+          else if ( gen_mHH_or_bmName->first == "300_spin0" ) {
+            if ( classIter->first == "TT" || classIter->first == "ST" ) {
+              TT_300_spin0 = classIter->second;
+            }else if ( classIter->first == "W") {
+              W_300_spin0 = classIter->second;
+            }else if ( classIter->first == "Other" || classIter->first == "H" ) {
+              Other_300_spin0 = classIter->second;
+            }else if ( classIter->first == "HH" ) {
+              HH_300_spin0 = classIter->second;
+            }
+          }
+          else if ( gen_mHH_or_bmName->first == "400_spin0" ) {
+            if ( classIter->first == "TT" || classIter->first == "ST" ) {
+              TT_400_spin0 = classIter->second;
+            }else if ( classIter->first == "W") {
+              W_400_spin0 = classIter->second;
+            }else if ( classIter->first == "Other" || classIter->first == "H" ) {
+              Other_400_spin0 = classIter->second;
+            }else if ( classIter->first == "HH" ) {
+              HH_400_spin0 = classIter->second;
+            }
+          }
+        }
+      }
+    }
+    if ( selJetAK8_Hbb ) {
+      fillWithOverFlow2d(histogram_TT_boosted_270_300_spin2_, TT_270_spin2, TT_300_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_TT_boosted_300_400_spin2_, TT_300_spin2, TT_400_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_HH_boosted_270_300_spin2_, HH_270_spin2, HH_300_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_HH_boosted_300_400_spin2_, HH_300_spin2, HH_400_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_TT_boosted_270_300_spin0_, TT_270_spin0, TT_300_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_TT_boosted_300_400_spin0_, TT_300_spin0, TT_400_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_HH_boosted_270_300_spin0_, HH_270_spin0, HH_300_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_HH_boosted_300_400_spin0_, HH_300_spin0, HH_400_spin0, evtWeight, evtWeightErr);
+    }
+    else {
+      fillWithOverFlow2d(histogram_TT_resolved_270_300_spin2_, TT_270_spin2, TT_300_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_TT_resolved_300_400_spin2_, TT_300_spin2, TT_400_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_W_270_300_spin2_, W_270_spin2, W_300_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_W_300_400_spin2_, W_300_spin2, W_400_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_Other_270_300_spin2_, Other_270_spin2, Other_300_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_Other_300_400_spin2_, Other_300_spin2, Other_400_spin2, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_TT_resolved_270_300_spin0_, TT_270_spin0, TT_300_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_TT_resolved_300_400_spin0_, TT_300_spin0, TT_400_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_W_270_300_spin0_, W_270_spin0, W_300_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_W_300_400_spin0_, W_300_spin0, W_400_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_Other_270_300_spin0_, Other_270_spin0, Other_300_spin0, evtWeight, evtWeightErr);
+      fillWithOverFlow2d(histogram_Other_300_400_spin0_, Other_300_spin0, Other_400_spin0, evtWeight, evtWeightErr);
+      if ( numBJets_medium == 2 ) {
+        fillWithOverFlow2d(histogram_HH_resolved_2b_270_300_spin2_, HH_270_spin2, HH_300_spin2, evtWeight, evtWeightErr);
+        fillWithOverFlow2d(histogram_HH_resolved_2b_300_400_spin2_, HH_300_spin2, HH_400_spin2, evtWeight, evtWeightErr);
+        fillWithOverFlow2d(histogram_HH_resolved_2b_270_300_spin0_, HH_270_spin0, HH_300_spin0, evtWeight, evtWeightErr);
+        fillWithOverFlow2d(histogram_HH_resolved_2b_300_400_spin0_, HH_300_spin0, HH_400_spin0, evtWeight, evtWeightErr);
+      }
+      else if ( numBJets_medium ==1) {
+        fillWithOverFlow2d(histogram_HH_resolved_1b_270_300_spin2_, HH_270_spin2, HH_300_spin2, evtWeight, evtWeightErr);
+        fillWithOverFlow2d(histogram_HH_resolved_1b_300_400_spin2_, HH_300_spin2, HH_400_spin2, evtWeight, evtWeightErr);
+        fillWithOverFlow2d(histogram_HH_resolved_1b_270_300_spin0_, HH_270_spin0, HH_300_spin0, evtWeight, evtWeightErr);
+        fillWithOverFlow2d(histogram_HH_resolved_1b_300_400_spin0_, HH_300_spin0, HH_400_spin0, evtWeight, evtWeightErr);
+      }
+    }
+  }
 }

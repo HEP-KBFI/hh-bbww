@@ -237,6 +237,8 @@ if fill_spin in ['spin0', 'spin2']:
 if fillHistograms_resonant:
   bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
+    if 'spin' in bmName: continue
+    if 'EventCounter' in bmName: continue
     if fillHistograms_BDT:
       categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
       for category in categories:
