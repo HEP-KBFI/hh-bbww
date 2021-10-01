@@ -796,12 +796,16 @@ int main(int argc, char* argv[])
 
     std::vector<mem::MeasuredParticle> measuredJets_AK4_Hbb = convert_to_MeasuredParticles(selJetsAK4, true);
     std::vector<const mem::MeasuredParticle*> measuredJets_AK4_Hbb_ptrs = convert_to_ptrs(measuredJets_AK4_Hbb);
+    //std::cout << "#measuredJets_AK4_Hbb = " << measuredJets_AK4_Hbb_ptrs.size() << std::endl;
     std::vector<std::pair<mem::MeasuredParticle, mem::MeasuredParticle>> measuredJets_AK8_Hbb = convert_to_MeasuredParticles(selJetsAK8_Hbb, true);
     std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*> measuredJets_AK8_Hbb_ptrs = convert_to_ptrs(measuredJets_AK8_Hbb);
+    //std::cout << "#measuredJets_AK8_Hbb = " << measuredJets_AK8_Hbb_ptrs.size() << std::endl;
     std::vector<mem::MeasuredParticle> measuredJets_AK4_Wjj = convert_to_MeasuredParticles(selJetsAK4, false);
     std::vector<const mem::MeasuredParticle*> measuredJets_AK4_Wjj_ptrs = convert_to_ptrs(measuredJets_AK4_Wjj);
+    //std::cout << "#measuredJets_AK4_Wjj = " << measuredJets_AK4_Wjj_ptrs.size() << std::endl;
     std::vector<std::pair<mem::MeasuredParticle, mem::MeasuredParticle>> measuredJets_AK8_Wjj = convert_to_MeasuredParticles(selJetsAK8_Wjj, false);
     std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*> measuredJets_AK8_Wjj_ptrs = convert_to_ptrs(measuredJets_AK8_Wjj);
+    //std::cout << "#measuredJets_AK8_Wjj = " << measuredJets_AK8_Wjj_ptrs.size() << std::endl;
 
     double measuredMEtPx = met.pt()*cos(met.phi());
     double measuredMEtPy = met.pt()*sin(met.phi());
@@ -811,26 +815,32 @@ int main(int argc, char* argv[])
       measuredJets_AK8_Hbb_ptrs, measuredJets_AK8_Wjj_ptrs, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_boosted = " << memEvents_boosted.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_semiboosted = buildMEMEvents_singlelepton_semiboosted(
       measuredJets_AK8_Hbb_ptrs, measuredJets_AK4_Wjj_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_semiboosted = " << memEvents_semiboosted.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved = buildMEMEvents_singlelepton_resolved(
       measuredJets_AK4_Hbb_ptrs, 2, measuredJets_AK4_Wjj_ptrs, 2,
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_resolved = " << memEvents_resolved.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingBJet = buildMEMEvents_singlelepton_resolved(
       measuredJets_AK4_Hbb_ptrs, 1, measuredJets_AK4_Wjj_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_resolved_missingBJet = " << memEvents_resolved_missingBJet.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingWJet = buildMEMEvents_singlelepton_resolved(
       measuredJets_AK4_Hbb_ptrs, 2, measuredJets_AK4_Wjj_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_resolved_missingWJet = " << memEvents_resolved_missingWJet.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingBnWJet = buildMEMEvents_singlelepton_resolved(
       measuredJets_AK4_Hbb_ptrs, 1, measuredJets_AK4_Wjj_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_resolved_missingB&WJet = " << memEvents_resolved_missingBnWJet.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents;
     memEvents.insert(memEvents.end(), memEvents_boosted.begin(), memEvents_boosted.end());
     memEvents.insert(memEvents.end(), memEvents_semiboosted.begin(), memEvents_semiboosted.end());
@@ -890,7 +900,8 @@ int main(int argc, char* argv[])
 
     std::map<int, int> memEventCounter_update = memEventCounter;
     int min_memEventCounter_update = -1;
-    for ( int i = 0; i < (1 << 8); ++i ) {
+    int min_memEventCounter_update_barcode = -1;
+    for ( int i = 0; i < (1 << 10); ++i ) {
       if ( memEventMap.find(i) != memEventMap.end() ) {
         memEventCounter_update[i] += memEventMap[i].size();
       }
@@ -900,9 +911,11 @@ int main(int argc, char* argv[])
       if ( memEventCounter_update[i] == 0 ) continue;
       if ( min_memEventCounter_update == -1 || memEventCounter_update[i] < min_memEventCounter_update ) {
         min_memEventCounter_update = memEventCounter_update[i];
+        min_memEventCounter_update_barcode = i;
       }
     }
-    //std::cout << "min_memEventCounter_update = " << min_memEventCounter_update << std::endl;    
+    //std::cout << "min_memEventCounter_update = " << min_memEventCounter_update 
+    //          << " (barcode = " << min_memEventCounter_update_barcode << ")" << std::endl;    
 
     //---------------------------------------------------------------------------
     // CV: Skip running matrix element method (MEM) computation for the first 'skipSelEvents' events.
@@ -921,7 +934,11 @@ int main(int argc, char* argv[])
         //     To save computing time, only run MEM computation for those MEM events that are added to the Ntuple.
         const int margin = 10;
         const double p = (min_memEventCounter_update + margin)/(double)memEventCounter_update[memEventMap_iter->first];
+        //std::cout << "barcode = " << memEventMap_iter->first << ":" 
+        //          << " memEventCounter_update = " << memEventCounter_update[memEventMap_iter->first] << "," 
+        //          << " p = " << p << std::endl;
         double u = rnd.Rndm();
+        //std::cout << "u = " << u << std::endl;
         if ( u > p ) continue;
 
         std::vector<mem::MeasuredParticle> memMeasuredParticles;
@@ -930,6 +947,7 @@ int main(int argc, char* argv[])
         if ( (*memEvent)->measuredLepton_ ) memMeasuredParticles.push_back(*(*memEvent)->measuredLepton_);
         if ( (*memEvent)->measuredWJet1_  ) memMeasuredParticles.push_back(*(*memEvent)->measuredWJet1_);
         if ( (*memEvent)->measuredWJet2_  ) memMeasuredParticles.push_back(*(*memEvent)->measuredWJet2_);
+        assert(memMeasuredParticles.size() >= 3 && memMeasuredParticles.size() <= 5);
 
         const double sqrtS = 13.e+3;
         const std::string pdfName = "MSTW2008lo68cl";
