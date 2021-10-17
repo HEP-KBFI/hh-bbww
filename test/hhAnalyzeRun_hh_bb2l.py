@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from hhAnalysis.bbww.configs.analyzeConfig_hh_bb2l import analyzeConfig_hh_bb2l
+from hhAnalysis.bbww.configs.analyzeConfig_hh_bb2l import analyzeConfig_hh_bb2l, DEFAULT_AK8_CORR
 from hhAnalysis.bbww.analysisSettings import systematics_bbww_dl as systematics
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import get_lumi
@@ -59,6 +59,9 @@ parser.add_argument('-F', '--fill-spin',
   type = str, nargs = '+', dest = 'fill_spin', metavar = 'spin', choices = signal_choices, required = False, default = [ 'nonres' ],
   help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
 )
+parser.add_argument('-iac', '--ignore-ak8-corrections',
+  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = DEFAULT_AK8_CORR,
+)
 
 args = parser.parse_args()
 
@@ -95,6 +98,7 @@ doDataMCPlots     = True
 dyBgr_options     = args.dy
 training_method   = args.training_method
 fill_spin         = args.fill_spin
+ignore_ak8_corrections = args.ignore_ak8_corrections
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -322,6 +326,7 @@ if __name__ == '__main__':
     hlt_filter                            = hlt_filter,
     use_home                              = use_home,
     blacklist                             = blacklist,
+    disable_ak8_corr                      = ignore_ak8_corrections,
     submission_cmd                        = sys.argv,
     ttbar_based_mcClosure                 = True,
   )
