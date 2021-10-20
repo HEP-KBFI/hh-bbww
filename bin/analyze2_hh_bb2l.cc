@@ -1499,10 +1499,10 @@ int main(int argc, char* argv[])
     cutFlowHistManager->fillHistograms(">= 2 sel leptons", evtWeightRecorder.get(central_or_shift_main));
 
     const RecoLepton* selLepton_lead = selLeptons[0];
-    const Particle::LorentzVector& selLeptonP4_lead = selLepton_lead->p4();
+    const Particle::LorentzVector& selLeptonP4_lead = selLepton_lead->cone_p4();
     int selLepton_lead_type = getLeptonType(selLepton_lead->pdgId());
     const RecoLepton* selLepton_sublead = selLeptons[1];
-    const Particle::LorentzVector& selLeptonP4_sublead = selLepton_sublead->p4();
+    const Particle::LorentzVector& selLeptonP4_sublead = selLepton_sublead->cone_p4();
     int selLepton_sublead_type = getLeptonType(selLepton_sublead->pdgId());
     const leptonGenMatchEntry& selLepton_genMatch = getLeptonGenMatch(leptonGenMatch_definitions, selLepton_lead, selLepton_sublead);
 
@@ -1805,12 +1805,14 @@ int main(int argc, char* argv[])
 
     if ( dyBgr_option == kDYbgr_applyWeights )
     {
+      std::cout << "before " << numBJets_medium << std::endl;
       int numBJets_loose_and_notMedium = numBJets_loose - numBJets_medium;
       // CV: divide event number by two to avoid that BDT/LBN trained on odd events is always evaluated for events with two b-jets
       //     and BDT/LBN trained on even events is always evaluated for events with one b-jet
       if ( (eventInfo.event / 2) % 2 == 1 ) numBJets_medium = 2;
       else                                  numBJets_medium = 1;
       numBJets_loose = numBJets_medium + numBJets_loose_and_notMedium;
+      std::cout << "after " << numBJets_medium << "\t" << eventInfo.event << std::endl;
       double dyBgrWeight = 0.;
       if ( selJetAK8_Hbb )
       {
@@ -2278,8 +2280,8 @@ int main(int argc, char* argv[])
     const std::map<std::string, Particle> ll_inputs = {
       { "bjet1",  Particle(selJetP4_Hbb_lead)       },
       { "bjet2",  Particle(selJetP4_Hbb_sublead)    },
-      { "lep1",   Particle(selLepton_lead->p4())    },
-      { "lep2",   Particle(selLepton_sublead->p4()) }
+      { "lep1",   Particle(selLepton_lead->cone_p4())    },
+      { "lep2",   Particle(selLepton_sublead->cone_p4()) }
     };
     std::map<std::string, const Particle *> ll_inputs_ptr;
     for( const auto & kv: ll_inputs )
@@ -2334,7 +2336,7 @@ int main(int argc, char* argv[])
       {"STMET",            STMET},
       {"bjet2_pt",                    selJetP4_Hbb_sublead.pt()},
       {"avg_dr_jet_central",          comp_avg_dr_jet(selJetsAK4)},
-      {"lep1_e",                      selLepton_lead->p4().e()},
+      {"lep1_e",                      selLepton_lead->cone_p4().e()},
       {"eta_HHvis",                   eta_HHvis},
       {"dR_b1lep2",                   dR_b1lep2},
       {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
@@ -2389,10 +2391,10 @@ int main(int argc, char* argv[])
         ("lep1_phi",                    selLepton_lead->phi())
         ("lep1_mass",                   selLepton_lead->mass())
         ("lep1_charge",                 selLepton_lead->charge())
-        ("lep1_e",                      selLepton_lead->p4().e())
-        ("lep1_px",                     selLepton_lead->p4().px())
-        ("lep1_py",                     selLepton_lead->p4().py())
-        ("lep1_pz",                     selLepton_lead->p4().pz())
+        ("lep1_e",                      selLepton_lead->cone_p4().e())
+        ("lep1_px",                     selLepton_lead->cone_p4().px())
+        ("lep1_py",                     selLepton_lead->cone_p4().py())
+        ("lep1_pz",                     selLepton_lead->cone_p4().pz())
         ("lep1_frWeight",               lep1_frWeight)
         ("lep2_pt",                     selLepton_sublead->pt())
         ("lep2_conePt",                 comp_lep_conePt(*selLepton_sublead))
@@ -2400,10 +2402,10 @@ int main(int argc, char* argv[])
         ("lep2_phi",                    selLepton_sublead->phi())
         ("lep2_mass",                   selLepton_sublead->mass())
         ("lep2_charge",                 selLepton_sublead->charge())
-        ("lep2_e",                      selLepton_sublead->p4().e())
-        ("lep2_px",                     selLepton_sublead->p4().px())
-        ("lep2_py",                     selLepton_sublead->p4().py())
-        ("lep2_pz",                     selLepton_sublead->p4().pz())
+        ("lep2_e",                      selLepton_sublead->cone_p4().e())
+        ("lep2_px",                     selLepton_sublead->cone_p4().px())
+        ("lep2_py",                     selLepton_sublead->cone_p4().py())
+        ("lep2_pz",                     selLepton_sublead->cone_p4().pz())
         ("lep2_frWeight",               lep2_frWeight)
         ("bjet1_pt",                    selJetP4_Hbb_lead.pt())
         ("bjet1_eta",                   selJetP4_Hbb_lead.eta())
