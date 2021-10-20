@@ -302,6 +302,7 @@ int main(int argc, char* argv[])
   std::string apply_genPhotonFilter_string = cfg_analyze.getParameter<std::string>("apply_genPhotonFilter");
   GenPhotonFilter genPhotonFilter(apply_genPhotonFilter_string);
   bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
+  const std::vector<std::string> disable_ak8_corr = cfg_analyze.getParameter<std::vector<std::string>>("disable_ak8_corr");
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -346,6 +347,7 @@ int main(int argc, char* argv[])
   const int jetPt_option    = useNonNominal_jetmet ? kJetMET_central_nonNominal : getJet_option(central_or_shift_main, isMC);
   const int fatJetPt_option = useNonNominal_jetmet ? kFatJet_central_nonNominal : getFatJet_option(central_or_shift_main, isMC);
   const int hadTauPt_option = useNonNominal_jetmet ? kHadTauPt_uncorrected      : getHadTauPt_option(central_or_shift_main);
+  const int ignore_ak8_sys = getCorrectionCode(disable_ak8_corr);
 
   const MEMsys mem_option_main = getMEMsys_option(central_or_shift_main);
   assert(mem_option_main == MEMsys::nominal);
@@ -732,6 +734,7 @@ int main(int argc, char* argv[])
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
   jetReaderAK8->set_central_or_shift(fatJetPt_option);
+  jetReaderAK8->ignoreSys(ignore_ak8_sys);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);

@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import os, logging, sys, getpass
 from collections import OrderedDict as OD
-from hhAnalysis.bbww.configs.prodNtupleConfig_hh_bbwwMEM_dilepton import prodNtupleConfig_hh_bbwwMEM_dilepton
+from hhAnalysis.bbww.configs.prodNtupleConfig_hh_bbwwMEM_singlelepton import prodNtupleConfig_hh_bbwwMEM_singlelepton
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 from tthAnalysis.HiggsToTauTau.analysisSettings import systematics, get_lumi
 from tthAnalysis.HiggsToTauTau.runConfig import tthAnalyzeParser, filter_samples
 from tthAnalysis.HiggsToTauTau.common import logging, load_samples_hh_bbww as load_samples, load_samples_stitched
 
-# E.g.: ./prodNtuple_hh_bbwwMEM_dilepton.py -v 2021Sep10 -e 2016
+# E.g.: ./prodNtuple_hh_bbwwMEM_singlelepton.py -v 2021Sep10 -e 2016
 
 parser = tthAnalyzeParser()
 parser.add_preselect()
@@ -38,16 +38,19 @@ samples = load_samples_stitched(samples, era, [ 'dy_nlo', 'wjets' ])
 for sample_name, sample_info in samples.items():
   if sample_name == 'sum_events':
     continue
-  if sample_info["process_name_specific"].find("signal_ggf_nonresonant_node_sm_hh_2b2v") != -1: # HH signal sample @ LO 
+  if sample_info["process_name_specific"].find("signal_ggf_nonresonant_node_sm_hh_2b2v_sl") != -1: # HH signal sample @ LO 
     sample_info["sample_category"] = "signal_lo"
     sample_info["use_it"] = True
-  elif sample_info["process_name_specific"].find("signal_ggf_nonresonant_cHHH1_hh_2b2v") != -1: # HH signal sample @ NLO
+  elif sample_info["process_name_specific"].find("signal_ggf_nonresonant_cHHH1_hh_2b2v_sl") != -1: # HH signal sample @ NLO
     sample_info["sample_category"] = "signal_nlo"
     sample_info["use_it"] = True
-  elif sample_info["process_name_specific"].find("TTJets_DiLept") != -1:                        # ttbar background sample @ LO
+  elif sample_info["process_name_specific"].find("TTJets_SingleLeptFromT")         != -1 or \
+       sample_info["process_name_specific"].find("TTJets_SingleLeptFromTbar")      != -1 or \
+       sample_info["process_name_specific"].find("TTJets_SingleLeptFromT_ext1")    != -1 or \
+       sample_info["process_name_specific"].find("TTJets_SingleLeptFromTbar_ext1") != -1:          # ttbar background sample @ LO
     sample_info["sample_category"] = "background_lo"
     sample_info["use_it"] = True
-  elif sample_info["process_name_specific"].find("TTTo2L2Nu") != -1:                            # ttbar background sample @ NLO
+  elif sample_info["process_name_specific"] == "TTToSemiLeptonic":                                 # ttbar background sample @ NLO
     sample_info["sample_category"] = "background_nlo"
     sample_info["use_it"] = True
   else:
@@ -63,11 +66,11 @@ if __name__ == '__main__':
   if sample_filter:
     samples = filter_samples(samples, sample_filter)
 
-  analysis = prodNtupleConfig_hh_bbwwMEM_dilepton(
+  analysis = prodNtupleConfig_hh_bbwwMEM_singlelepton(
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
-    executable_analyze                    = "produceMEMNtuple_hh_bb2l",
-    cfgFile_analyze                       = "produceMEMNtuple_hh_bb2l_cfg.py",
+    executable_analyze                    = "produceMEMNtuple_hh_bb1l",
+    cfgFile_analyze                       = "produceMEMNtuple_hh_bb1l_cfg.py",
     samples                               = samples,
     max_jobs_per_sample                   = 100, # CV: use for tests
     ##max_jobs_per_sample                   = 10000, # CV: use for full production

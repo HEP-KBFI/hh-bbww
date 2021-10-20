@@ -71,7 +71,7 @@
 #include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJets_Hbb
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson
 #include "hhAnalysis/bbww/interface/measuredParticleAuxFunctions.h" // convert_to_MeasuredParticles
-#include "hhAnalysis/bbww/interface/memNtupleAuxFunctions_dilepton.h" // MEMEvent_dilepton, buildMEMEvents_boosted, buildMEMEvents_resolved, addGenMatches, buildMEMEventMap
+#include "hhAnalysis/bbww/interface/memNtupleAuxFunctions_dilepton.h" // MEMEvent_dilepton, buildMEMEvents_dilepton_boosted, buildMEMEvents_dilepton_resolved, addGenMatches_dilepton, buildMEMEventMap_dilepton
 
 #include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoDilepton.h" // MEMbbwwAlgoDilepton
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 
 //--- read python configuration parameters
   if ( !edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process") )
-    throw cms::Exception("analyze_hh_bb2l")
+    throw cms::Exception("produceMEMNtuple_hh_bb2l")
       << "No ParameterSet 'process' found in configuration file = " << argv[1] << " !!\n";
 
   edm::ParameterSet cfg = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
@@ -340,6 +340,7 @@ int main(int argc, char* argv[])
     "lead lepton pT > 25 GeV && sublead lepton pT > 15 GeV",
     "fakeable lepton-pair OS charge",
     ">= 2 jets from H->bb",
+    ">= 1 medium b-jet",
     "m(ll) > 12 GeV",
     "generator-level selection (1)",
     "generator-level selection (2)",
@@ -485,6 +486,17 @@ int main(int argc, char* argv[])
     cutFlowTable.update(">= 2 jets from H->bb", evtWeight);
     cutFlowHistManager->fillHistograms(">= 2 jets from H->bb", evtWeight);
 
+    if ( !(selJetAK8_Hbb || selBJetsAK4_medium.size() >= 1) )
+    {
+      if ( run_lumi_eventSelector ) 
+      {
+        std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection\n";
+      }
+      continue;
+    }
+    cutFlowTable.update(">= 1 medium b-jet", evtWeight);
+    cutFlowHistManager->fillHistograms(">= 1 medium b-jet", evtWeight);
+
     const RecoMEt met = metReader->read();
 
     const bool failsLowMassVeto = isfailsLowMassVeto(preselLeptonsFullUncleaned);
@@ -624,33 +636,39 @@ int main(int argc, char* argv[])
 
     std::vector<mem::MeasuredParticle> measuredJets_AK4 = convert_to_MeasuredParticles(selJetsAK4, true);
     std::vector<const mem::MeasuredParticle*> measuredJets_AK4_ptrs = convert_to_ptrs(measuredJets_AK4);
+    //std::cout << "#measuredJets_AK4 = " << measuredJets_AK4_ptrs.size() << std::endl;
     std::vector<std::pair<mem::MeasuredParticle, mem::MeasuredParticle>> measuredJets_AK8 = convert_to_MeasuredParticles(selJetsAK8_Hbb, true);
     std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*> measuredJets_AK8_ptrs = convert_to_ptrs(measuredJets_AK8);
+    //std::cout << "#measuredJets_AK8 = " << measuredJets_AK8_ptrs.size() << std::endl;
 
     double measuredMEtPx = met.pt()*cos(met.phi());
     double measuredMEtPy = met.pt()*sin(met.phi());
     const TMatrixD& measuredMEtCov = met.cov();
 
-    std::vector<MEMEvent_dilepton> memEvents_boosted  = buildMEMEvents_boosted(
+    std::vector<MEMEvent_dilepton> memEvents_boosted = buildMEMEvents_dilepton_boosted(
       measuredJets_AK8_ptrs, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
-    std::vector<MEMEvent_dilepton> memEvents_resolved = buildMEMEvents_resolved(
+    //std::cout << "#memEvents_boosted = " << memEvents_boosted.size() << std::endl;
+    std::vector<MEMEvent_dilepton> memEvents_resolved = buildMEMEvents_dilepton_resolved(
       measuredJets_AK4_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
-    std::vector<MEMEvent_dilepton> memEvents_resolved_missingBJet = buildMEMEvents_resolved(
+    //std::cout << "#memEvents_resolved = " << memEvents_resolved.size() << std::endl;
+    std::vector<MEMEvent_dilepton> memEvents_resolved_missingBJet = buildMEMEvents_dilepton_resolved(
       measuredJets_AK4_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
+    //std::cout << "#memEvents_resolved_missingBJet = " << memEvents_resolved_missingBJet.size() << std::endl;
     std::vector<MEMEvent_dilepton> memEvents;
     memEvents.insert(memEvents.end(), memEvents_boosted.begin(), memEvents_boosted.end());
     memEvents.insert(memEvents.end(), memEvents_resolved.begin(), memEvents_resolved.end());
     memEvents.insert(memEvents.end(), memEvents_resolved_missingBJet.begin(), memEvents_resolved_missingBJet.end());
-    addGenMatches(memEvents, genBJetsForMatching_ptrs, genLeptonsForMatching_ptrs, genMEtPx, genMEtPy);
+    addGenMatches_dilepton(memEvents, genBJetsForMatching_ptrs, genLeptonsForMatching_ptrs, genMEtPx, genMEtPy);
     //std::cout << "#memEvents:" << std::endl;
     //std::cout << " boosted = " << memEvents_boosted.size() << std::endl;
-    //std::cout << " resolved = " << memEvents_resolved.size() << ", missingBJet = " << memEvents_resolved_missingBJet.size() << std::endl;
+    //std::cout << " resolved = " << memEvents_resolved.size() << "," 
+    //          << " missingBJet = " << memEvents_resolved_missingBJet.size() << std::endl;
     //std::cout << "total = " << memEvents.size() << std::endl;
 
     if ( !(memEvents.size() > 0) ) {
@@ -662,7 +680,7 @@ int main(int argc, char* argv[])
     cutFlowTable.update(">= 1 memEvent (1)", evtWeight);
     cutFlowHistManager->fillHistograms(">= 1 memEvent (1)", evtWeight);
 
-    std::map<int, std::vector<const MEMEvent_dilepton*>> memEventMap = buildMEMEventMap(memEvents);
+    std::map<int, std::vector<const MEMEvent_dilepton*>> memEventMap = buildMEMEventMap_dilepton(memEvents);
 
     // CV: Define "physical" values of i that are to be checke.
     //     Skip values of i corresponding to missing leptons or to missing first b-jet
@@ -680,6 +698,7 @@ int main(int argc, char* argv[])
 
     std::map<int, int> memEventCounter_update = memEventCounter;
     int min_memEventCounter_update = -1;
+    int min_memEventCounter_update_barcode = -1;
     for ( int i = 0; i < (1 << 8); ++i ) {
       if ( memEventMap.find(i) != memEventMap.end() ) {
         memEventCounter_update[i] += memEventMap[i].size();
@@ -690,9 +709,11 @@ int main(int argc, char* argv[])
       if ( memEventCounter_update[i] == 0 ) continue;
       if ( min_memEventCounter_update == -1 || memEventCounter_update[i] < min_memEventCounter_update ) {
         min_memEventCounter_update = memEventCounter_update[i];
+        min_memEventCounter_update_barcode = i;
       }
     }
-    //std::cout << "min_memEventCounter_update = " << min_memEventCounter_update << std::endl;    
+    //std::cout << "min_memEventCounter_update = " << min_memEventCounter_update 
+    //          << " (barcode = " << min_memEventCounter_update_barcode << ")" << std::endl; 
 
     //---------------------------------------------------------------------------
     // CV: Skip running matrix element method (MEM) computation for the first 'skipSelEvents' events.
@@ -711,7 +732,11 @@ int main(int argc, char* argv[])
         //     To save computing time, only run MEM computation for those MEM events that are added to the Ntuple.
         const int margin = 10;
         const double p = (min_memEventCounter_update + margin)/(double)memEventCounter_update[memEventMap_iter->first];
+        //std::cout << "barcode = " << memEventMap_iter->first << ":" 
+        //          << " memEventCounter_update = " << memEventCounter_update[memEventMap_iter->first] << "," 
+        //          << " p = " << p << std::endl;
         double u = rnd.Rndm();
+        //std::cout << "u = " << u << std::endl;
         if ( u > p ) continue;
 
         std::vector<mem::MeasuredParticle> memMeasuredParticles;
@@ -719,6 +744,7 @@ int main(int argc, char* argv[])
         if ( (*memEvent)->measuredBJet2_   ) memMeasuredParticles.push_back(*(*memEvent)->measuredBJet2_);
         if ( (*memEvent)->measuredLepton1_ ) memMeasuredParticles.push_back(*(*memEvent)->measuredLepton1_);
         if ( (*memEvent)->measuredLepton2_ ) memMeasuredParticles.push_back(*(*memEvent)->measuredLepton2_);
+        assert(memMeasuredParticles.size() >= 3 && memMeasuredParticles.size() <= 4);
 
         const double sqrtS = 13.e+3;
         const std::string pdfName = "MSTW2008lo68cl";
@@ -813,6 +839,10 @@ int main(int argc, char* argv[])
   delete genLeptonReader;
   delete genNeutrinoReader;
   delete genJetReader;
+  delete genParticleFromHiggsReader;
+  delete genLeptonFromTopReader;
+  delete genNeutrinoFromTopReader;
+  delete genBQuarksFromTopReader;
   delete lheInfoReader;
 
   delete mem_ntuple;

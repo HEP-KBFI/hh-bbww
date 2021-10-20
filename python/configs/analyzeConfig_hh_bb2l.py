@@ -125,6 +125,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         executable_compDYBgrWeights,
         histograms_to_fit,
         max_depth_recursion,
+        disable_ak8_corr,
         select_rle_output = False,
         verbose           = False,
         dry_run           = False,
@@ -167,6 +168,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       apply_pileupJetID     = 'loose',
       apply_genPhotonFilter = True,
       blacklist             = blacklist,
+      disable_ak8_corr      = disable_ak8_corr,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT

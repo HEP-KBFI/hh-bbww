@@ -18,7 +18,7 @@ convert_to_MeasuredParticle(const RecoLepton& lepton)
     type = mem::MeasuredParticle::kMuon;
   }
   else assert(0);
-  return mem::MeasuredParticle(type, lepton.pt(), lepton.eta(), lepton.phi(), mass, lepton.charge());
+  return mem::MeasuredParticle(type, lepton.cone_pt(), lepton.eta(), lepton.phi(), mass, lepton.charge());
 }
 
 std::vector<mem::MeasuredParticle>

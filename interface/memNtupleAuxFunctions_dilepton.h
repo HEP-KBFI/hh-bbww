@@ -56,22 +56,22 @@ struct MEMEvent_dilepton
 };
 
 std::vector<MEMEvent_dilepton>
-buildMEMEvents_boosted(const std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*>& measuredJetsAK8_Hbb,
-                       const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
-                       double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov);
+buildMEMEvents_dilepton_boosted(const std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*>& measuredJetsAK8_Hbb,
+                                const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
+                                double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov);
 
 std::vector<MEMEvent_dilepton>
-buildMEMEvents_resolved(const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4, int numBJets,
-                        const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
-                        double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov);
+buildMEMEvents_dilepton_resolved(const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4, int numBJets,
+                                 const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
+                                 double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov);
 
 void
-addGenMatches(std::vector<MEMEvent_dilepton>& memEvents,
-              const std::vector<const GenJet*>& genBJets,
-              const std::vector<const GenLepton*>& genLeptons,
-              double genMEtPx, double genMEtPy);
+addGenMatches_dilepton(std::vector<MEMEvent_dilepton>& memEvents,
+                       const std::vector<const GenJet*>& genBJets,
+                       const std::vector<const GenLepton*>& genLeptons,
+                       double genMEtPx, double genMEtPy);
 
 std::map<int, std::vector<const MEMEvent_dilepton*>>
-buildMEMEventMap(const std::vector<MEMEvent_dilepton>& memEvents);
+buildMEMEventMap_dilepton(const std::vector<MEMEvent_dilepton>& memEvents);
 
 #endif
