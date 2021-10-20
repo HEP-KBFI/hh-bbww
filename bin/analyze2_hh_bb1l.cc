@@ -1569,7 +1569,7 @@ int main(int argc, char* argv[])
     cutFlowTable.update(">= 1 sel leptons", evtWeightRecorder.get(central_or_shift_main));
     cutFlowHistManager->fillHistograms(">= 1 sel leptons", evtWeightRecorder.get(central_or_shift_main));
     const RecoLepton* selLepton = selLeptons[0];
-    const Particle::LorentzVector& selLeptonP4 = selLepton->p4();
+    const Particle::LorentzVector& selLeptonP4 = selLepton->cone_p4();
     int selLepton_type = getLeptonType(selLepton->pdgId());
     const leptonGenMatchEntry& selLepton_genMatch = getLeptonGenMatch(leptonGenMatch_definitions, selLepton);
 
@@ -1981,7 +1981,7 @@ int main(int argc, char* argv[])
         std::pair<JPAJet, JPAJet> ak8jet_subjet1_and_2_jpa = convert_to_JPAJets(selJetAK8_Hbb);
         jpa = jpaInterface(
            ak4Jets_jpa, ak8jet_subjet1_and_2_jpa.first, ak8jet_subjet1_and_2_jpa.second,
-           selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(),
+           selLepton->cone_p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(),
            eventInfo.event);
         //std::cout << "JPA (boosted):" << std::endl;
         //std::cout << jpa;
@@ -1996,7 +1996,7 @@ int main(int argc, char* argv[])
         //std::cout << "#ak4Jets_jpa (resolved) = " << ak4Jets_jpa.size() << std::endl;
         jpa = jpaInterface(
            ak4Jets_jpa,
-           selLepton->p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(),
+           selLepton->cone_p4(), preselLeptons.size(), selJetsAK4.size(), selBJetsAK4_loose.size(), selBJetsAK4_medium.size(), metP4.px(), metP4.py(),
            eventInfo.event);
         //std::cout << "JPA (resolved):" << std::endl;
         //std::cout << jpa;
@@ -2289,7 +2289,7 @@ int main(int argc, char* argv[])
       { "bjet2",  Particle(selJetP4_Hbb_sublead) },
       { "wjet1",  Particle(selJetP4_Wjj_lead)    },
       { "wjet2",  Particle(selJetP4_Wjj_sublead) },
-      { "lep",    Particle(selLepton->p4())      }
+      { "lep",    Particle(selLepton->cone_p4())      }
     };
     std::map<std::string, const Particle *> ll_inputs_ptr;
     for( const auto & kv: ll_inputs )
@@ -2316,7 +2316,7 @@ int main(int argc, char* argv[])
       {"lep_pt",                  selLepton->pt()},
       {"lep_conePt",              comp_lep_conePt(*selLepton)},
       {"lep_eta",                 selLepton->eta()},
-      {"lep_e",                 selLepton->p4().energy()},
+      {"lep_e",                 selLepton->cone_p4().energy()},
       {"lep_phi",                 selLepton->phi()},
       {"lep_mass",                selLepton->mass()},
       {"bjet1_e",                selJetP4_Hbb_lead.e()},
@@ -2383,7 +2383,7 @@ int main(int argc, char* argv[])
       {"HT",                      HT},
       {"eta_Hbb",                 eta_Hbb},
       {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
-      {"mll_loose",               preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->p4() + preselLeptonsFull[1]->p4()).mass() : 0.},
+      {"mll_loose",               preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0.},
       {"numLeptons",              preselLeptonsFull.size()},
       {"STMET",                   STMET},
       {"Smin_HH",                 Smin_HH},
@@ -2442,10 +2442,10 @@ int main(int argc, char* argv[])
         ("lep_phi",              selLepton->phi())
         ("lep_mass",             selLepton->mass())
         ("lep_charge",           selLepton->charge())
-        ("lep_e",                selLepton->p4().e())
-        ("lep_px",               selLepton->p4().px())
-        ("lep_py",               selLepton->p4().py())
-        ("lep_pz",               selLepton->p4().pz())
+        ("lep_e",                selLepton->cone_p4().e())
+        ("lep_px",               selLepton->cone_p4().px())
+        ("lep_py",               selLepton->cone_p4().py())
+        ("lep_pz",               selLepton->cone_p4().pz())
         ("lep_frWeight",         lep_frWeight)
         ("bjet1_pt",             selJetP4_Hbb_lead.pt())
         ("bjet1_eta",            selJetP4_Hbb_lead.eta())
@@ -2539,7 +2539,7 @@ int main(int argc, char* argv[])
         ("avg_dr_jet_central",   avg_dr_jet_central)
         ("mbb_loose",            selBJetsAK4_loose.size() >= 2 ? (selBJetsAK4_loose[0]->p4() + selBJetsAK4_loose[1]->p4()).mass() : 0)
         ("mbb_medium",           selBJetsAK4_medium.size() >= 2 ? (selBJetsAK4_medium[0]->p4() + selBJetsAK4_medium[1]->p4()).mass() : 0)
-        ("mll_loose",            preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->p4() + preselLeptonsFull[1]->p4()).mass() : 0)
+        ("mll_loose",            preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0)
         ("numLeptons_loose",     preselLeptonsFull.size())
         ("lepPairCharge_loose",  preselLeptonsFull.size() >= 2 ? preselLeptonsFull[0]->charge() + preselLeptonsFull[1]->charge() : 999)
         ("selLepton_charge",     preselLeptonsFull[0]->charge())
@@ -2695,7 +2695,7 @@ int main(int argc, char* argv[])
             (int)selBJetsAK4_medium.size(),
             HT,
             met.pt(), met_LD,
-            selLepton->pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->p4() + preselLeptonsFull[1]->p4()).mass() : 0,
+            selLepton->pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0,
             m_Hbb, pT_Hbb, dR_Hbb, m_Hbb_regCorr,
             dPhi_Hww, pT_Hww,
             m_HH_B2G_18_008, pT_HH, dPhi_HHvis, pT_HHvis,
@@ -2710,7 +2710,7 @@ int main(int argc, char* argv[])
             mjj_highestpt,
             (int)selJetsForward.size(), tau21_Hbb,
             selJetAK8_Hbb,
-            selLepton->p4().px(), selLepton->p4().py(), selLepton->p4().pz(), selLepton->p4().e(),
+            selLepton->cone_p4().px(), selLepton->cone_p4().py(), selLepton->cone_p4().pz(), selLepton->cone_p4().e(),
             selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.e(),
             selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.e(),
             selJetP4_Wjj_lead.px(), selJetP4_Wjj_lead.py(), selJetP4_Wjj_lead.pz(), selJetP4_Wjj_lead.e(),
