@@ -125,17 +125,17 @@ class prodNtupleConfig_hh_bbwwMEM_singlelepton(analyzeConfig_hh):
       inputFileList = inputFileLists[sample_name]
       numJobsPerFile = None
       if   sample_info["process_name_specific"].find("signal_ggf_nonresonant_node_sm_hh_2b2v_sl") != -1:
-        numJobsPerFile = 1000
+        numJobsPerFile = 5000
       elif sample_info["process_name_specific"].find("signal_ggf_nonresonant_cHHH1_hh_2b2v_sl") != -1:
-        numJobsPerFile = 400
+        numJobsPerFile = 2000
       elif sample_info["process_name_specific"].find("TTJets_SingleLeptFromT")    != -1 or \
            sample_info["process_name_specific"].find("TTJets_SingleLeptFromTbar") != -1:
-        numJobsPerFile = 100
+        numJobsPerFile = 500
       elif sample_info["process_name_specific"].find("TTJets_SingleLeptFromT_ext1")    != -1 or \
            sample_info["process_name_specific"].find("TTJets_SingleLeptFromTbar_ext1") != -1:
-        numJobsPerFile = 100
+        numJobsPerFile = 500
       elif sample_info["process_name_specific"].find("TTToSemiLeptonic") != -1: 
-        numJobsPerFile = 20
+        numJobsPerFile = 100
       else:
         raise ValueError("Invalid sample: %s" % sample_info["process_name_specific"])
       numJobs = numJobsPerFile*len(inputFileList.keys())
@@ -145,7 +145,7 @@ class prodNtupleConfig_hh_bbwwMEM_singlelepton(analyzeConfig_hh):
       for jobId in range(1, numJobs + 1):
             
         ntupleId = ((jobId - 1)/numJobsPerFile) + 1
-        maxSelEvents = 250
+        maxSelEvents = 50
         skipSelEvents = maxSelEvents*((jobId - 1) % numJobsPerFile)
 
         # build config files for executing analysis code
