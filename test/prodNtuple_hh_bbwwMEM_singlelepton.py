@@ -42,6 +42,13 @@ for sample_name, sample_info in samples.items():
     sample_info["sample_category"] = "signal_lo"
     sample_info["use_it"] = True
   elif sample_info["process_name_specific"].find("signal_ggf_nonresonant_cHHH1_hh_2b2v_sl") != -1: # HH signal sample @ NLO
+    vetoes = [
+      "duplicate",
+    ]
+    isVeto = False
+    for veto in vetoes:
+      if sample_info["process_name_specific"].find(veto) != -1:
+        isVeto = True
     sample_info["sample_category"] = "signal_nlo"
     sample_info["use_it"] = True
   elif sample_info["process_name_specific"].find("TTJets_SingleLeptFromT")         != -1 or \
