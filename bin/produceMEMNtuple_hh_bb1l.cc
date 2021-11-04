@@ -350,7 +350,8 @@ int main(int argc, char* argv[])
   std::cout << "selEventsFileName_output = " << selEventsFileName_output << std::endl;
 
 //--- declare MEM Ntuple
-  MEMbbwwNtupleManager_singlelepton* mem_ntuple = new MEMbbwwNtupleManager_singlelepton("mem");
+  std::string ntupleDir = Form("%s/ntuples/%s", histogramDir.data(), process_string.data());
+  MEMbbwwNtupleManager_singlelepton* mem_ntuple = new MEMbbwwNtupleManager_singlelepton(ntupleDir, "mem");
   mem_ntuple->makeTree(fs);
   mem_ntuple->initializeBranches();
 
