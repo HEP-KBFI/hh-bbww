@@ -12,7 +12,7 @@ import os
 import sys
 import getpass
 
-# E.g.: ./test/tthAnalyzeRun_hh_bb2l.py -v 2017Dec13 -m default -e 2017
+# E.g.: ./test/hhAnalyzeRun_hh_bb2l.py -v 2017Dec13 -M LBN -m default -e 2017
 
 dyBgr_defaults   = [ "disabled", "applyWeights_data", "applyWeights_mc" ] # CV: use this to apply data-driven DY background estimation
 dyBgr_choices    = dyBgr_defaults + [ "compWeights" ] # CV: use 'compWeights' to compute inputs for data-driven DY background estimation

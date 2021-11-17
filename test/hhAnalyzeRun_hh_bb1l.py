@@ -13,7 +13,7 @@ import sys
 import getpass
 import importlib
 
-# E.g.: ./test/tthAnalyzeRun_hh_bb1l.py -v 2017Dec13 -m default -e 2017
+# E.g.: ./test/hhAnalyzeRun_hh_bb1l.py -v 2017Dec13 -M LBN -m default -e 2017
 
 training_choices = [ 'BDT', 'LBN' ]
 signal_choices   = [ 'nonres', 'spin0', 'spin2' ]
