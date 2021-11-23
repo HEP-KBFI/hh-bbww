@@ -18,7 +18,7 @@ buildMEMEvents_dilepton_boosted(const EventInfo & eventInfo, bool isSignal,
       for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton2 = lepton1 + 1;
             lepton2 != measuredLeptons.end(); ++lepton2 ) {
         MEMEvent_dilepton memEvent(
-          eventInfo, isSignal,
+          { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
           &(*measuredJet)->first, &(*measuredJet)->second,
           *lepton1, *lepton2,
           measuredMEtPx, measuredMEtPy, measuredMEtCov);
@@ -54,7 +54,7 @@ buildMEMEvents_dilepton_resolved(const EventInfo & eventInfo, bool isSignal,
         for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton2 = lepton1 + 1;
               lepton2 != measuredLeptons.end(); ++lepton2 ) {
           MEMEvent_dilepton memEvent(
-            eventInfo, isSignal,
+            { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
             *bjet1, *bjet2,
             *lepton1, *lepton2,
             measuredMEtPx, measuredMEtPy, measuredMEtCov);

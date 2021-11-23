@@ -23,7 +23,7 @@ buildMEMEvents_singlelepton_boosted(const EventInfo & eventInfo, bool isSignal,
       for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton = measuredLeptons.begin();
             lepton != measuredLeptons.end(); ++lepton ) {
         MEMEvent_singlelepton memEvent(
-          eventInfo, isSignal,
+          { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
           &(*measuredJet_Hbb)->first, &(*measuredJet_Hbb)->second, 
           &(*measuredJet_Wjj)->first, &(*measuredJet_Wjj)->second, 
           *lepton, 
@@ -63,7 +63,7 @@ buildMEMEvents_singlelepton_semiboosted(const EventInfo & eventInfo, bool isSign
         for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton = measuredLeptons.begin();
               lepton != measuredLeptons.end(); ++lepton ) {
             MEMEvent_singlelepton memEvent(
-              eventInfo, isSignal,
+              { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
               &(*measuredJet_Hbb)->first, &(*measuredJet_Hbb)->second,
               *wjet1, *wjet2,
               *lepton,
@@ -117,7 +117,7 @@ buildMEMEvents_singlelepton_resolved(const EventInfo & eventInfo, bool isSignal,
           for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton = measuredLeptons.begin();
                 lepton != measuredLeptons.end(); ++lepton ) {
             MEMEvent_singlelepton memEvent(
-              eventInfo, isSignal,
+              { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
               *bjet1, *bjet2,
               *wjet1, *wjet2,
               *lepton,
