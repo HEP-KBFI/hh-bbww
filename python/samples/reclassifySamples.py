@@ -14,6 +14,17 @@ def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None,
 
     process_name = sample_info["process_name_specific"]
 
+    # scale 2016 resonant ggF LO signal depending on the decay mode
+    # https://indico.cern.ch/event/1071729/contributions/4629832/attachments/2352760/4014039/slides.pdf
+    if 'RunIISummer16MiniAODv3' in sample_name and \
+        process_name.startswith("signal_ggf") and  \
+        "2b2v" in process_name and                 \
+        "cHHH" not in process_name:
+      if "2b2v_sl" in process_name:
+        sample_info["xsection"] *= 2.3521 / 3
+      else:
+        sample_info["xsection"] *= 0.622253
+
     if process_name == "TTToHadronic" and "RunIIFall17MiniAODv2" in sample_name:
       # disable TTToHadronic 2017 sample because it does not have PS weights
       # see also https://gitlab.cern.ch/cms-hh-bbww/cms-hh-to-bbww/-/commit/fbeeb76bdf52256700d929f0ae123917957510fd
