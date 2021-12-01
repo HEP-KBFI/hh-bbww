@@ -91,10 +91,11 @@ if __name__ == '__main__':
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
     executable_analyze                    = "produceMEMNtuple_hh_bb2l",
+    ##executable_analyze                    = "debug_hh_bb2l", # CV: use only for debugging !!
     cfgFile_analyze                       = "produceMEMNtuple_hh_bb2l_cfg.py",
     samples                               = samples,
-    max_jobs_per_sample                   = 100, # CV: use for tests
-    ##max_jobs_per_sample                   = 10000, # CV: use for full production
+    ##max_jobs_per_sample                   = 100, # CV: use for tests
+    max_jobs_per_sample                   = 10000, # CV: use for full production
     max_files_per_job                     = files_per_job,
     era                                   = era,
     check_output_files                    = check_output_files,
