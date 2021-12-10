@@ -2683,6 +2683,7 @@ int main(int argc, char* argv[])
                                                         {{"250", {{"HH", -1}}}},
             lbnOutputs_nonresonant,
             lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+                                                        -1,
             evtWeight
                                                         );
         }
