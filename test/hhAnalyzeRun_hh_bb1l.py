@@ -43,6 +43,10 @@ parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
   help = 'R|doing second_bdt for jpa'
 )
+parser.add_argument('-use2d', '--use2d',
+  dest = 'use2d', action = 'store_true', default=False,
+  help = 'R|want to use 2d histogram for signal node'
+)
 parser.add_argument('-doDataMCPlot', '--doDataMCPlot',
   dest = 'doDataMCPlots', action = 'store_true',
   help = 'R| do controlPlots'
@@ -96,6 +100,7 @@ use_blacklist     = args.use_blacklist
 doDataMCPlots     = args.doDataMCPlots
 ignore_Wjj_boosted = True
 second_bdt         = args.second_bdt
+use2d              = args.use2d
 training_method    = args.training_method
 fill_spin          = args.fill_spin
 split_resonant_training = args.split_resonant_training
@@ -209,6 +214,7 @@ if 'spin0' in fill_spin or 'spin2' in fill_spin:
           "HH_boosted", "HH_resolved_2b", "HH_resolved_1b",
           "TT_boosted", "TT_resolved",
           "W_boosted", "W_resolved",
+          #"W",
           "H_boosted", "H_resolved_2b", "H_resolved_1b",
           "Other"
         ]
@@ -310,6 +316,7 @@ if __name__ == '__main__':
     second_bdt                            = second_bdt,
     split_resonant_training               = split_resonant_training,
     ttbar_based_mcClosure                 = True,
+    use2d                                 = use2d
   )
 
   if mode.find("forBDTtraining") != -1:

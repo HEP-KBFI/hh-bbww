@@ -126,6 +126,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         second_bdt        = False,
         split_resonant_training = False,
         ttbar_based_mcClosure = True,
+        use2d                 = False
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -185,6 +186,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.executable_addSysTT = executable_addSysTT
 
     self.max_depth_recursion = max_depth_recursion
+    self.use2d = use2d
 
     self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = True, split_ST = True)
     self.nonfake_backgrounds = list(set(self.nonfake_backgrounds) - set(["ggZZ", "qqZZ", "WZ", "WW", "ZZ"]))
@@ -531,6 +533,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'fillHistograms_nonresonant'        : self.fillHistograms_nonresonant,
                 'fillHistograms_resonant_spin0'     : self.fillHistograms_resonant_spin0,
                 'fillHistograms_resonant_spin2'     : self.fillHistograms_resonant_spin2,
+                'use2d'                             : self.use2d
               }
               self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
@@ -814,7 +817,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'datacardFile' : os.path.join(self.dirs[key_prep_dcard_dir][DKEY_DCRD], "prepareDatacards_%s_%s_%s.root" % prep_dcard_job_tuple),
         'histogramDir' : histogramDir_modified,
         'histogramToFit' : histogramToFit_modified,
-        'category' : category
+        'category' : category,
+        'is2d_histogram':  self.use2d and category in ['LBN_HH_resolved_2b', 'LBN_HH_resolved_1b', 'LBN_HH_boosted']
       }
       self.createCfg_prep_dcard(self.jobOptions_prep_dcard[key_prep_dcard_job])
       # add shape templates for the following systematic uncertainties:
@@ -833,7 +837,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'histogramToFit' : histogramToFit_modified,
         'plots_outputFileName' : os.path.join(self.dirs[key_add_syst_fakerate_dir][DKEY_PLOT], "addSystFakeRates.png"),
         'max_depth_recursion' : self.max_depth_recursion,
-        'multiclass' : True
+        'multiclass' : True,
+        'is2d_histogram':  self.use2d and category in ['LBN_HH_resolved_2b', 'LBN_HH_resolved_1b', 'LBN_HH_boosted']
       }
       for lepton_type in [ 'e', 'm' ]:
         lepton_mcClosure = "Fakeable_mcClosure_%s" % lepton_type
