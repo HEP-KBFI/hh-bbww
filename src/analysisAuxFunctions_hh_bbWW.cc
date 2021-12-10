@@ -188,3 +188,20 @@ void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
     if ( genWjjP4.pt() > 100. && !isMatched ) std::cout << "--> DEBUG (Wjj) !!" << std::endl;
   }
 }
+double square(double x) {
+  return x*x;
+}
+
+double comp_mHH_analytic(const Particle::LorentzVector &HHvisP4, const Particle::LorentzVector &metP4) {
+
+  double mvis2 = HHvisP4.mass() *HHvisP4.mass();
+  double E_v = HHvisP4.energy();
+  double p_vx = HHvisP4.px();
+  double p_vy = HHvisP4.py();
+  double p_vz = HHvisP4.pz();
+  double p_mx = metP4.px();
+  double p_my = metP4.py();
+  double p_mz = p_vz*TMath::Sqrt(square(p_mx)+square(p_my))/TMath::Sqrt(square(E_v)-square(p_vz));
+  double MH2 = mvis2 + 2*E_v*TMath::Sqrt(square(p_mx)+ square(p_my)+square(p_mz)) -2*p_vx*p_mx -2*p_vy*p_my -2*p_vz*p_mz;
+  return TMath::Sqrt(MH2);
+}

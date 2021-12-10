@@ -33,4 +33,5 @@ void printHbb(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetColle
 void printWjj(const std::vector<const RecoJetAK8*>& jets_ak8, const RecoJetCollectionSelectorAK8_hh_Wjj& jetSelectorAK8_Wjj,
 	      const std::vector<GenParticle>& genWBosons, const std::vector<GenParticle>& genWJets);
 
+double comp_mHH_analytic(const Particle::LorentzVector &HHvisP4, const Particle::LorentzVector &metP4);
 #endif
