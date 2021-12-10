@@ -26,6 +26,9 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, 
   central_or_shiftOptions_["dPhi_Hww"] = { "central" };
   central_or_shiftOptions_["pT_Hww"] = { "*" };
   central_or_shiftOptions_["m_HH_B2G_18_008"] = { "*" };
+  central_or_shiftOptions_["m_HH_analytic"] = { "*" };
+  central_or_shiftOptions_["m_HH"] = { "*" };
+  central_or_shiftOptions_["m_HH_vis"] = { "*" };
   central_or_shiftOptions_["pT_HH"] = { "*" };
   central_or_shiftOptions_["dPhi_HHvis"] = { "central" };
   central_or_shiftOptions_["pT_HHvis"] = { "*" };
@@ -131,6 +134,9 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_pT_Hww_           = book1D(dir, "pT_Hww",           100,  0.,  500.);
 
   histogram_m_HH_B2G_18_008_  = book1D(dir, "m_HH_B2G_18_008",  150,  0., 1500.);
+  histogram_m_HH_analytic_  = book1D(dir, "m_HH_analytic",  150,  0., 1500.);
+  histogram_m_HH_  = book1D(dir, "m_HH",  150,  0., 1500.);
+  histogram_m_HH_vis_  = book1D(dir, "m_HH_vis",  150,  0., 1500.);
   histogram_dPhi_HHvis_          = book1D(dir, "dPhi_HHvis",           36,  0., TMath::Pi());
   histogram_pT_HH_            = book1D(dir, "pT_HH",            100,  0.,  500.);
   histogram_pT_HHvis_          = book1D(dir, "pT_HHvis",          100,  0., 500.);
@@ -257,7 +263,7 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
                         double lep_pt, double mll_loose,
                         double m_Hbb, double pT_Hbb, double dR_Hbb, double m_Hbb_regCorr,
 				        double dPhi_Hww, double pT_Hww,
-				        double m_HH_B2G_18_008, double pT_HH, double dPhi_HHvis, double pT_HHvis,
+                                        double m_HH_B2G_18_008, double m_HH_analytic, double m_HH_vis, double m_HH, double pT_HH, double dPhi_HHvis, double pT_HHvis,
 				        double mT_W, double mT_top_2particle, double mT_top_3particle,
                         double vbf_m_jj, double vbf_dEta_jj, double vbf_lhe_m_jj, double vbf_lhe_dEta_jj,
                         double bjet1_btagCSV, double bjet2_btagCSV, double wjet1_btagCSV,  double wjet2_btagCSV,
@@ -298,6 +304,9 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   fillWithOverFlow(histogram_pT_Hww_,         pT_Hww,          evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_m_HH_B2G_18_008_,  m_HH_B2G_18_008,   evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HH_analytic_,  m_HH_analytic,   evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HH_vis_,  m_HH_vis,   evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HH_,  m_HH,   evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_pT_HH_,          pT_HH,           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dPhi_HHvis_,            dPhi_HHvis,             evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_pT_HHvis_,          pT_HHvis,           evtWeight, evtWeightErr);
