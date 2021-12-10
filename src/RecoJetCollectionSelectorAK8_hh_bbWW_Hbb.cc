@@ -24,6 +24,7 @@ RecoJetSelectorAK8_hh_bbWW_Hbb::RecoJetSelectorAK8_hh_bbWW_Hbb(Era era,
 {
   switch(era)
   {
+    case Era::kUndefined: throw cmsException(this) << "Undefined era!";
     case Era::k2016: min_jetId_ = 1; break; // 1 means loose
     case Era::k2018:
     case Era::k2017: min_jetId_ = 2; break; // 2 means tight (loose jet ID deprecated since 94x)

@@ -42,9 +42,33 @@ for sample_name, sample_info in samples.items():
     sample_info["sample_category"] = "signal_lo"
     sample_info["use_it"] = True
   elif sample_info["process_name_specific"].find("signal_ggf_nonresonant_cHHH1_hh_2b2v") != -1: # HH signal sample @ NLO
+    vetoes = [
+      "duplicate",
+    ]
+    isVeto = False
+    for veto in vetoes:
+      if sample_info["process_name_specific"].find(veto) != -1:
+        isVeto = True
     sample_info["sample_category"] = "signal_nlo"
     sample_info["use_it"] = True
   elif sample_info["process_name_specific"].find("TTJets_DiLept") != -1:                        # ttbar background sample @ LO
+    vetoes = [
+      "GluonMove",
+      "QCDbased",
+      "erdON",
+      "hdampUP",
+      "hdampDOWN",
+      "mtop169p5",
+      "mtop175p5",
+      "ueUp",
+      "ueDown"
+    ]
+    isVeto = False
+    for veto in vetoes:
+      if sample_info["process_name_specific"].find(veto) != -1:
+        isVeto = True
+    if isVeto:
+      continue
     sample_info["sample_category"] = "background_lo"
     sample_info["use_it"] = True
   elif sample_info["process_name_specific"].find("TTTo2L2Nu") != -1:                            # ttbar background sample @ NLO
@@ -67,10 +91,11 @@ if __name__ == '__main__':
     configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
     outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
     executable_analyze                    = "produceMEMNtuple_hh_bb2l",
+    ##executable_analyze                    = "debug_hh_bb2l", # CV: use only for debugging !!
     cfgFile_analyze                       = "produceMEMNtuple_hh_bb2l_cfg.py",
     samples                               = samples,
-    max_jobs_per_sample                   = 100, # CV: use for tests
-    ##max_jobs_per_sample                   = 10000, # CV: use for full production
+    ##max_jobs_per_sample                   = 100, # CV: use for tests
+    max_jobs_per_sample                   = 10000, # CV: use for full production
     max_files_per_job                     = files_per_job,
     era                                   = era,
     check_output_files                    = check_output_files,

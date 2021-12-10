@@ -71,12 +71,13 @@
 #include "hhAnalysis/bbww/interface/jetSelectionAuxFunctions.h" // selectJets_Hbb, countBJets_Hbb
 #include "hhAnalysis/bbww/interface/genMatchingAuxFunctions.h" // findGenLepton_and_NeutrinoFromWBoson
 #include "hhAnalysis/bbww/interface/measuredParticleAuxFunctions.h" // convert_to_MeasuredParticles
-#include "hhAnalysis/bbww/interface/memNtupleAuxFunctions_singlelepton.h" // MEMEvent_singlelepton, buildMEMEvents_singlelepton_boosted, buildMEMEvents_singlelepton_semiboosted, buildMEMEvents_singlelepton_resolved, addGenMatches_singlelepton, buildMEMEventMap_singlelepton
+#include "hhAnalysis/bbww/interface/memNtupleAuxFunctions_singlelepton.h" // buildMEMEvents_singlelepton_boosted, buildMEMEvents_singlelepton_semiboosted, buildMEMEvents_singlelepton_resolved, addGenMatches_singlelepton, buildMEMEventMap_singlelepton
 #include "hhAnalysis/bbww/interface/comp_metP4_B2G_18_008.h" // comp_metP4_B2G_18_008
 
 #include "hhAnalysis/bbwwMEM/interface/MeasuredParticle.h" // MeasuredParticle
 #include "hhAnalysis/bbwwMEM/interface/MEMbbwwAlgoSingleLepton.h" // MEMbbwwAlgoSingleLepton
 
+#include "hhAnalysis/bbwwMEMPerformanceStudies/interface/MEMEvent_singlelepton.h" // MEMEvent_singlelepton
 #include "hhAnalysis/bbwwMEMPerformanceStudies/interface/MEMbbwwNtupleManager_singlelepton.h" // MEMbbwwNtupleManager_singlelepton
 
 
@@ -349,7 +350,8 @@ int main(int argc, char* argv[])
   std::cout << "selEventsFileName_output = " << selEventsFileName_output << std::endl;
 
 //--- declare MEM Ntuple
-  MEMbbwwNtupleManager_singlelepton* mem_ntuple = new MEMbbwwNtupleManager_singlelepton("mem");
+  std::string ntupleDir = Form("%s/ntuples/%s", histogramDir.data(), process_string.data());
+  MEMbbwwNtupleManager_singlelepton* mem_ntuple = new MEMbbwwNtupleManager_singlelepton(ntupleDir, "mem");
   mem_ntuple->makeTree(fs);
   mem_ntuple->initializeBranches();
 
@@ -812,31 +814,37 @@ int main(int argc, char* argv[])
     const TMatrixD& measuredMEtCov = met.cov();
 
     std::vector<MEMEvent_singlelepton> memEvents_boosted = buildMEMEvents_singlelepton_boosted(
+      eventInfo, isSignal,
       measuredJets_AK8_Hbb_ptrs, measuredJets_AK8_Wjj_ptrs, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     //std::cout << "#memEvents_boosted = " << memEvents_boosted.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_semiboosted = buildMEMEvents_singlelepton_semiboosted(
+      eventInfo, isSignal,
       measuredJets_AK8_Hbb_ptrs, measuredJets_AK4_Wjj_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     //std::cout << "#memEvents_semiboosted = " << memEvents_semiboosted.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved = buildMEMEvents_singlelepton_resolved(
+      eventInfo, isSignal,
       measuredJets_AK4_Hbb_ptrs, 2, measuredJets_AK4_Wjj_ptrs, 2,
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     //std::cout << "#memEvents_resolved = " << memEvents_resolved.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingBJet = buildMEMEvents_singlelepton_resolved(
+      eventInfo, isSignal,
       measuredJets_AK4_Hbb_ptrs, 1, measuredJets_AK4_Wjj_ptrs, 2, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     //std::cout << "#memEvents_resolved_missingBJet = " << memEvents_resolved_missingBJet.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingWJet = buildMEMEvents_singlelepton_resolved(
+      eventInfo, isSignal,
       measuredJets_AK4_Hbb_ptrs, 2, measuredJets_AK4_Wjj_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
     //std::cout << "#memEvents_resolved_missingWJet = " << memEvents_resolved_missingWJet.size() << std::endl;
     std::vector<MEMEvent_singlelepton> memEvents_resolved_missingBnWJet = buildMEMEvents_singlelepton_resolved(
+      eventInfo, isSignal,
       measuredJets_AK4_Hbb_ptrs, 1, measuredJets_AK4_Wjj_ptrs, 1, 
       measuredLeptons_ptrs, 
       measuredMEtPx, measuredMEtPy, measuredMEtCov);
@@ -942,11 +950,11 @@ int main(int argc, char* argv[])
         if ( u > p ) continue;
 
         std::vector<mem::MeasuredParticle> memMeasuredParticles;
-        if ( (*memEvent)->measuredBJet1_  ) memMeasuredParticles.push_back(*(*memEvent)->measuredBJet1_);
-        if ( (*memEvent)->measuredBJet2_  ) memMeasuredParticles.push_back(*(*memEvent)->measuredBJet2_);
-        if ( (*memEvent)->measuredLepton_ ) memMeasuredParticles.push_back(*(*memEvent)->measuredLepton_);
-        if ( (*memEvent)->measuredWJet1_  ) memMeasuredParticles.push_back(*(*memEvent)->measuredWJet1_);
-        if ( (*memEvent)->measuredWJet2_  ) memMeasuredParticles.push_back(*(*memEvent)->measuredWJet2_);
+        if ( (*memEvent)->measuredBJet1()  ) memMeasuredParticles.push_back(*(*memEvent)->measuredBJet1());
+        if ( (*memEvent)->measuredBJet2()  ) memMeasuredParticles.push_back(*(*memEvent)->measuredBJet2());
+        if ( (*memEvent)->measuredLepton() ) memMeasuredParticles.push_back(*(*memEvent)->measuredLepton());
+        if ( (*memEvent)->measuredWJet1()  ) memMeasuredParticles.push_back(*(*memEvent)->measuredWJet1());
+        if ( (*memEvent)->measuredWJet2()  ) memMeasuredParticles.push_back(*(*memEvent)->measuredWJet2());
         assert(memMeasuredParticles.size() >= 3 && memMeasuredParticles.size() <= 5);
 
         const double sqrtS = 13.e+3;
@@ -967,7 +975,7 @@ int main(int argc, char* argv[])
         memAlgo.setIntMode(MEMbbwwAlgoSingleLepton::kVAMP);
         memAlgo.setMaxObjFunctionCalls_signal(maxObjFunctionCalls_signal);
         memAlgo.setMaxObjFunctionCalls_background(maxObjFunctionCalls_background);
-        memAlgo.integrate(memMeasuredParticles, (*memEvent)->measuredMEtPx_, (*memEvent)->measuredMEtPy_, (*memEvent)->measuredMEtCov_);
+        memAlgo.integrate(memMeasuredParticles, (*memEvent)->measuredMEtPx(), (*memEvent)->measuredMEtPy(), (*memEvent)->measuredMEtCov());
         MEMbbwwResultSingleLepton memResult = memAlgo.getResult();
         clock.Stop("memAlgo");
  
@@ -983,13 +991,10 @@ int main(int argc, char* argv[])
 	            << " (CPU time = " << memCpuTime << ")" << std::endl;
         }
 
-        (const_cast<MEMEvent_singlelepton*>(*memEvent))->memResult_ = memResult;
-        (const_cast<MEMEvent_singlelepton*>(*memEvent))->memCpuTime_ = memCpuTime;
+        (const_cast<MEMEvent_singlelepton*>(*memEvent))->set_memResult(memResult);
+        (const_cast<MEMEvent_singlelepton*>(*memEvent))->set_memCpuTime(memCpuTime);
 
-        mem_ntuple->read(eventInfo, (*memEvent)->key_);
-        mem_ntuple->read(memResult, memCpuTime);
-        mem_ntuple->read(memMeasuredParticles, (*memEvent)->measuredMEtPx_, (*memEvent)->measuredMEtPy_, (*memEvent)->measuredMEtCov_);
-        mem_ntuple->read(genBJetsForMatching_ptrs, genWJetsForMatching_ptrs, genLeptonsForMatching_ptrs[0], (*memEvent)->genMEtPx_, (*memEvent)->genMEtPy_);
+        mem_ntuple->read(**memEvent);
         mem_ntuple->fill();
 
         ++memEventCounter[memEventMap_iter->first];

@@ -1,11 +1,12 @@
 #include "hhAnalysis/bbww/interface/memNtupleAuxFunctions_dilepton.h"
 
-#include "DataFormats/Math/interface/deltaR.h"                         // deltaR
+#include "DataFormats/Math/interface/deltaR.h" // deltaR
 
-#include "hhAnalysis/bbwwMEM/interface/measuredParticleAuxFunctions.h" // findGenMatch
+#include "hhAnalysis/bbwwMEMPerformanceStudies/interface/memNtupleAuxFunctions_dilepton.h" // addGenMatches_dilepton
 
 std::vector<MEMEvent_dilepton>
-buildMEMEvents_dilepton_boosted(const std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*>& measuredJetsAK8_Hbb,
+buildMEMEvents_dilepton_boosted(const EventInfo & eventInfo, bool isSignal,
+                                const std::vector<const std::pair<mem::MeasuredParticle, mem::MeasuredParticle>*>& measuredJetsAK8_Hbb,
                                 const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
                                 double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov)
 {
@@ -17,10 +18,11 @@ buildMEMEvents_dilepton_boosted(const std::vector<const std::pair<mem::MeasuredP
       for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton2 = lepton1 + 1;
             lepton2 != measuredLeptons.end(); ++lepton2 ) {
         MEMEvent_dilepton memEvent(
+          { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
           &(*measuredJet)->first, &(*measuredJet)->second,
           *lepton1, *lepton2,
           measuredMEtPx, measuredMEtPy, measuredMEtCov);
-        memEvent.isBoosted_Hbb_ = true;
+        memEvent.set_isBoosted_Hbb(true);
         memEvents.push_back(memEvent);
       }
     }
@@ -29,7 +31,8 @@ buildMEMEvents_dilepton_boosted(const std::vector<const std::pair<mem::MeasuredP
 }
 
 std::vector<MEMEvent_dilepton>
-buildMEMEvents_dilepton_resolved(const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4, int numBJets,
+buildMEMEvents_dilepton_resolved(const EventInfo & eventInfo, bool isSignal,
+                                 const std::vector<const mem::MeasuredParticle*>& measuredJetsAK4, int numBJets,
                                  const std::vector<const mem::MeasuredParticle*>& measuredLeptons,
                                  double measuredMEtPx, double measuredMEtPy, const TMatrixD& measuredMEtCov)
 {
@@ -51,10 +54,11 @@ buildMEMEvents_dilepton_resolved(const std::vector<const mem::MeasuredParticle*>
         for ( std::vector<const mem::MeasuredParticle*>::const_iterator lepton2 = lepton1 + 1;
               lepton2 != measuredLeptons.end(); ++lepton2 ) {
           MEMEvent_dilepton memEvent(
+            { eventInfo.run, eventInfo.lumi, eventInfo.event, eventInfo.genWeight }, isSignal,
             *bjet1, *bjet2,
             *lepton1, *lepton2,
             measuredMEtPx, measuredMEtPy, measuredMEtCov);
-          memEvent.isBoosted_Hbb_ = false;
+          memEvent.set_isBoosted_Hbb(false);
           memEvents.push_back(memEvent);
         }
       }
@@ -71,10 +75,7 @@ addGenMatches_dilepton(std::vector<MEMEvent_dilepton>& memEvents,
 {
   for ( std::vector<MEMEvent_dilepton>::iterator memEvent = memEvents.begin();
         memEvent != memEvents.end(); ++memEvent ) {
-    memEvent->genBJet1_   = mem::findGenMatch(memEvent->measuredBJet1_,   genBJets);
-    memEvent->genBJet2_   = mem::findGenMatch(memEvent->measuredBJet2_,   genBJets);
-    memEvent->genLepton1_ = mem::findGenMatch(memEvent->measuredLepton1_, genLeptons);
-    memEvent->genLepton2_ = mem::findGenMatch(memEvent->measuredLepton2_, genLeptons);
+    addGenMatches_dilepton(*memEvent, genBJets, genLeptons, genMEtPx, genMEtPy);
   }
 }
 
@@ -85,15 +86,15 @@ buildMEMEventMap_dilepton(const std::vector<MEMEvent_dilepton>& memEvents)
   for ( std::vector<MEMEvent_dilepton>::const_iterator memEvent = memEvents.begin();
         memEvent != memEvents.end(); ++memEvent ) {
     int key = 0;
-    if      ( memEvent->measuredLepton1_ && memEvent->genLepton1_ ) key += (1 << 7); // 128
-    else if ( memEvent->measuredLepton1_                          ) key += (1 << 6); //  64
-    if      ( memEvent->measuredLepton2_ && memEvent->genLepton2_ ) key += (1 << 5); //  32
-    else if ( memEvent->measuredLepton2_                          ) key += (1 << 4); //  16
-    if      ( memEvent->measuredBJet1_   && memEvent->genBJet1_   ) key += (1 << 3); //   8
-    else if ( memEvent->measuredBJet1_                            ) key += (1 << 2); //   4
-    if      ( memEvent->measuredBJet2_   && memEvent->genBJet2_   ) key += (1 << 1); //   2
-    else if ( memEvent->measuredBJet2_                            ) key += (1 << 0); //   1
-    memEvent->key_ = key;
+    if      ( memEvent->measuredLepton1() && memEvent->genLepton1() ) key += (1 << 7); // 128
+    else if ( memEvent->measuredLepton1()                           ) key += (1 << 6); //  64
+    if      ( memEvent->measuredLepton2() && memEvent->genLepton2() ) key += (1 << 5); //  32
+    else if ( memEvent->measuredLepton2()                           ) key += (1 << 4); //  16
+    if      ( memEvent->measuredBJet1()   && memEvent->genBJet1()   ) key += (1 << 3); //   8
+    else if ( memEvent->measuredBJet1()                             ) key += (1 << 2); //   4
+    if      ( memEvent->measuredBJet2()   && memEvent->genBJet2()   ) key += (1 << 1); //   2
+    else if ( memEvent->measuredBJet2()                             ) key += (1 << 0); //   1
+    (const_cast<MEMEvent_dilepton*>(&(*memEvent)))->set_barcode(key);
     memEventMap[key].push_back(&(*memEvent));
   }
   return memEventMap;
