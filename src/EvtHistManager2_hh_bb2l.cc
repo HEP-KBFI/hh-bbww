@@ -26,6 +26,7 @@ EvtHistManager2_hh_bb2l::EvtHistManager2_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["m_HHvis"] = { "central" };
   central_or_shiftOptions_["m_HH"] = { "central" };
   central_or_shiftOptions_["m_HH_hme"] = { "central" };
+  central_or_shiftOptions_["m_HH_analytic"] = { "central" };
   central_or_shiftOptions_["hmeCpuTime"] = { "central" };
   central_or_shiftOptions_["vbf_jet1_pt"] = { "central" };
   central_or_shiftOptions_["vbf_jet1_eta"] = { "central" };
@@ -67,6 +68,7 @@ EvtHistManager2_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_m_HHvis_          = book1D(dir, "m_HHvis",          100,  0., 1000.);
   histogram_m_HH_             = book1D(dir, "m_HH",             150,  0., 1500.);
   histogram_m_HH_hme_         = book1D(dir, "m_HH_hme",         150,  0., 1500.);
+  histogram_m_HH_analytic_         = book1D(dir, "m_HH_analytic",         150,  0., 1500.);
   histogram_hmeCpuTime_       = book1D(dir, "hmeCpuTime",       200,  0.,   20.);
 
   histogram_vbf_jet1_pt_      = book1D(dir, "vbf_jet1_pt",       40,  0.,  200.);
@@ -89,7 +91,7 @@ EvtHistManager2_hh_bb2l::fillHistograms(int numElectrons,
 		                        double STMET,            
                                         double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb,
                                         double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
-                                        double m_HHvis, double m_HH, 
+                                        double m_HHvis, double m_HH, double m_HH_analytic,
                                         double m_HH_hme, double hmeCpuTime,
                                         double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
                                         double evtWeight)
@@ -118,6 +120,7 @@ EvtHistManager2_hh_bb2l::fillHistograms(int numElectrons,
   fillWithOverFlow(histogram_m_HHvis_,          m_HHvis,           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_HH_,             m_HH,              evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_HH_hme_,         m_HH_hme,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HH_analytic_,         m_HH_analytic,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_hmeCpuTime_,       hmeCpuTime,        evtWeight, evtWeightErr);
 
   if ( vbf_jet1_pt > 0. ) {
