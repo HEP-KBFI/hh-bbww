@@ -13858,9 +13858,9 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythi
   ("nof_db_files",                    731),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 192398),
+  ("nof_tree_events",                 292398),
   ("nof_db_events",                   292398),
-  ("fsize_local",                     366376601), # 366.38MB, avg file size 61.06MB
+  ("fsize_local",                     556228269), # 556.23MB, avg file size 92.70MB
   ("fsize_db",                        21631420649), # 21.63GB, avg file size 29.59MB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -13875,7 +13875,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythi
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8/2017v2_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2/211227_155903"),
         ("selection", "*"),
-        ("blacklist", [1, 3]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -13897,13 +13897,13 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythi
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_550_hh_bbvv"),
   ("process_name_specific",           "signal_ggf_spin0_550_hh_2b2v_private"),
-  ("nof_files",                       5),
+  ("nof_files",                       6),
   ("nof_db_files",                    738),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 250000),
+  ("nof_tree_events",                 295200),
   ("nof_db_events",                   295200),
-  ("fsize_local",                     569225402), # 569.23MB, avg file size 113.85MB
+  ("fsize_local",                     672464396), # 672.46MB, avg file size 112.08MB
   ("fsize_db",                        23948598355), # 23.95GB, avg file size 32.45MB
   ("use_it",                          True),
   ("xsection",                        0.027654),

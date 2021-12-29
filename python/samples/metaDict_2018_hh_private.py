@@ -22,7 +22,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_TuneCP5_PSWeights
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "83.33%; status: VALID; size: 23.55GB; nevents: 297.20k; release: 9_4_0; last modified: 2021-12-27 13:52:14"),
+  ("comment",               "100.0%; status: VALID; size: 23.55GB; nevents: 297.20k; release: 9_4_0; last modified: 2021-12-27 13:52:14"),
 ])
 
 

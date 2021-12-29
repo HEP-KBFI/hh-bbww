@@ -22,7 +22,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-py
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "66.66%; status: VALID; size: 21.63GB; nevents: 292.40k; release: 9_4_0; last modified: 2021-12-27 11:27:14"),
+  ("comment",               "100.0%; status: VALID; size: 21.63GB; nevents: 292.40k; release: 9_4_0; last modified: 2021-12-27 11:27:14"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2/USER"] =  OD([
@@ -35,7 +35,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-py
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "83.33%; status: VALID; size: 23.95GB; nevents: 295.20k; release: 9_4_0; last modified: 2021-12-27 11:37:03"),
+  ("comment",               "100.0%; status: VALID; size: 23.95GB; nevents: 295.20k; release: 9_4_0; last modified: 2021-12-27 11:37:03"),
 ])
 
 

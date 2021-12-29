@@ -9988,9 +9988,9 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythi
   ("nof_db_files",                    1000),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 300000),
+  ("nof_tree_events",                 400000),
   ("nof_db_events",                   400000),
-  ("fsize_local",                     570219016), # 570.22MB, avg file size 71.28MB
+  ("fsize_local",                     759876035), # 759.88MB, avg file size 94.98MB
   ("fsize_db",                        24361912366), # 24.36GB, avg file size 24.36MB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -10005,7 +10005,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythi
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160548"),
         ("selection", "*"),
-        ("blacklist", [3, 6]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -10070,13 +10070,13 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-pythi
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_700_hh_bbvv"),
   ("process_name_specific",           "signal_ggf_spin0_700_hh_2b2v_private"),
-  ("nof_files",                       3),
+  ("nof_files",                       4),
   ("nof_db_files",                    500),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 149999),
+  ("nof_tree_events",                 199999),
   ("nof_db_events",                   199999),
-  ("fsize_local",                     376166025), # 376.17MB, avg file size 125.39MB
+  ("fsize_local",                     501500356), # 501.50MB, avg file size 125.38MB
   ("fsize_db",                        14460371825), # 14.46GB, avg file size 28.92MB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -10160,9 +10160,9 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph
   ("nof_db_files",                    999),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 349599),
+  ("nof_tree_events",                 399599),
   ("nof_db_events",                   399599),
-  ("fsize_local",                     649108157), # 649.11MB, avg file size 81.14MB
+  ("fsize_local",                     742026495), # 742.03MB, avg file size 92.75MB
   ("fsize_db",                        24084244270), # 24.08GB, avg file size 24.11MB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -10177,7 +10177,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161340"),
         ("selection", "*"),
-        ("blacklist", [2]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -10375,9 +10375,9 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythi
   ("nof_db_files",                    1000),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 349997),
+  ("nof_tree_events",                 399997),
   ("nof_db_events",                   399997),
-  ("fsize_local",                     662155490), # 662.16MB, avg file size 82.77MB
+  ("fsize_local",                     756695888), # 756.70MB, avg file size 94.59MB
   ("fsize_db",                        24313782282), # 24.31GB, avg file size 24.31MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -10392,7 +10392,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythi
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162238"),
         ("selection", "*"),
-        ("blacklist", [2]),
+        ("blacklist", []),
       ]),
     ]
   ),
@@ -10414,13 +10414,13 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythi
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin0_320_hh_bbvv_sl"),
   ("process_name_specific",           "signal_ggf_spin0_320_hh_2b2v_sl_private"),
-  ("nof_files",                       5),
+  ("nof_files",                       6),
   ("nof_db_files",                    750),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 249998),
+  ("nof_tree_events",                 299997),
   ("nof_db_events",                   299997),
-  ("fsize_local",                     499150521), # 499.15MB, avg file size 99.83MB
+  ("fsize_local",                     598798818), # 598.80MB, avg file size 99.80MB
   ("fsize_db",                        18816653970), # 18.82GB, avg file size 25.09MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -10586,13 +10586,13 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin2_320_hh_bbvv_sl"),
   ("process_name_specific",           "signal_ggf_spin2_320_hh_2b2v_sl_private"),
-  ("nof_files",                       5),
+  ("nof_files",                       6),
   ("nof_db_files",                    749),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 249997),
+  ("nof_tree_events",                 299596),
   ("nof_db_events",                   299596),
-  ("fsize_local",                     515183127), # 515.18MB, avg file size 103.04MB
+  ("fsize_local",                     617586921), # 617.59MB, avg file size 102.93MB
   ("fsize_db",                        19195210917), # 19.20GB, avg file size 25.63MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -10629,13 +10629,13 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph
   ("type",                            "mc"),
   ("sample_category",                 "signal_ggf_spin2_750_hh_bbvv_sl"),
   ("process_name_specific",           "signal_ggf_spin2_750_hh_2b2v_sl_private"),
-  ("nof_files",                       3),
+  ("nof_files",                       4),
   ("nof_db_files",                    500),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 100000),
+  ("nof_tree_events",                 199999),
   ("nof_db_events",                   199999),
-  ("fsize_local",                     276321414), # 276.32MB, avg file size 92.11MB
+  ("fsize_local",                     552567406), # 552.57MB, avg file size 138.14MB
   ("fsize_db",                        15230840485), # 15.23GB, avg file size 30.46MB
   ("use_it",                          True),
   ("xsection",                        0.109352),
@@ -10650,7 +10650,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163328"),
         ("selection", "*"),
-        ("blacklist", [1]),
+        ("blacklist", []),
       ]),
     ]
   ),

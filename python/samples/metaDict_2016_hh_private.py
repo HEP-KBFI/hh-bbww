@@ -35,7 +35,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-py
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "75.00%; status: VALID; size: 24.36GB; nevents: 400.00k; release: 9_4_0; last modified: 2021-12-26 02:36:57"),
+  ("comment",               "100.0%; status: VALID; size: 24.36GB; nevents: 400.00k; release: 9_4_0; last modified: 2021-12-26 02:36:57"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -61,7 +61,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-py
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "75.00%; status: VALID; size: 14.46GB; nevents: 200.00k; release: 9_4_0; last modified: 2021-12-26 11:12:21"),
+  ("comment",               "100.0%; status: VALID; size: 14.46GB; nevents: 200.00k; release: 9_4_0; last modified: 2021-12-26 11:12:21"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -87,7 +87,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgr
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "87.50%; status: VALID; size: 24.08GB; nevents: 399.60k; release: 9_4_0; last modified: 2021-12-27 01:24:18"),
+  ("comment",               "100.0%; status: VALID; size: 24.08GB; nevents: 399.60k; release: 9_4_0; last modified: 2021-12-27 01:24:18"),
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -126,7 +126,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgr
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "66.66%; status: VALID; size: 14.93GB; nevents: 199.60k; release: 9_4_0; last modified: 2021-12-27 01:05:01"),
+  ("comment",               "100.0%; status: VALID; size: 14.93GB; nevents: 199.60k; release: 9_4_0; last modified: 2021-12-27 01:05:01"),
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -139,7 +139,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgr
   ("xsection",              0.027654),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "66.66%; status: VALID; size: 15.20GB; nevents: 200.00k; release: 9_4_0; last modified: 2021-12-27 09:02:00"),
+  ("comment",               "100.0%; status: VALID; size: 15.20GB; nevents: 200.00k; release: 9_4_0; last modified: 2021-12-27 09:02:00"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -152,7 +152,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-py
   ("xsection",              0.109352),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "87.50%; status: VALID; size: 24.31GB; nevents: 400.00k; release: 9_4_0; last modified: 2021-12-25 23:18:08"),
+  ("comment",               "100.0%; status: VALID; size: 24.31GB; nevents: 400.00k; release: 9_4_0; last modified: 2021-12-25 23:18:08"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -165,7 +165,7 @@ meta_dictionary["/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-py
   ("xsection",              0.109352),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "83.33%; status: VALID; size: 18.82GB; nevents: 300.00k; release: 9_4_0; last modified: 2021-12-26 09:07:32"),
+  ("comment",               "100.0%; status: VALID; size: 18.82GB; nevents: 300.00k; release: 9_4_0; last modified: 2021-12-26 09:07:32"),
 ])
 
 meta_dictionary["/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -217,7 +217,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgr
   ("xsection",              0.109352),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "83.33%; status: VALID; size: 19.20GB; nevents: 299.60k; release: 9_4_0; last modified: 2021-12-27 02:08:20"),
+  ("comment",               "100.0%; status: VALID; size: 19.20GB; nevents: 299.60k; release: 9_4_0; last modified: 2021-12-27 02:08:20"),
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([
@@ -230,7 +230,7 @@ meta_dictionary["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgr
   ("xsection",              0.109352),
   ("use_it",                True),
   ("genWeight",             True),
-  ("comment",               "50.00%; status: VALID; size: 15.23GB; nevents: 200.00k; release: 9_4_0; last modified: 2021-12-27 01:53:07"),
+  ("comment",               "100.0%; status: VALID; size: 15.23GB; nevents: 200.00k; release: 9_4_0; last modified: 2021-12-27 01:53:07"),
 ])
 
 meta_dictionary["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3/USER"] =  OD([

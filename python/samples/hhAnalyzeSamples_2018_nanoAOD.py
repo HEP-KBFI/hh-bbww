@@ -12796,9 +12796,9 @@ samples_2018["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_TuneCP5_PSWeights_13
   ("nof_db_files",                    743),
   ("nof_events",                      {
   }),
-  ("nof_tree_events",                 247199),
+  ("nof_tree_events",                 297199),
   ("nof_db_events",                   297199),
-  ("fsize_local",                     529494837), # 529.49MB, avg file size 88.25MB
+  ("fsize_local",                     636689844), # 636.69MB, avg file size 106.11MB
   ("fsize_db",                        23548779929), # 23.55GB, avg file size 31.69MB
   ("use_it",                          True),
   ("xsection",                        0.027654),
@@ -12813,7 +12813,7 @@ samples_2018["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_TuneCP5_PSWeights_13
       OD([
         ("path",      "/hdfs/cms/store/user/kaehatah/2018_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2018_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIAutumn18MiniAOD/211227_155702"),
         ("selection", "*"),
-        ("blacklist", [2]),
+        ("blacklist", []),
       ]),
     ]
   ),
