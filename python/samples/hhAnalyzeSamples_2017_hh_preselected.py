@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
-# file generated at 2021-03-07 12:12:34 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_hh.py -p python/samples/sampleLocations_2017_preselected.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_hh_preselected.py -M
+# file generated at 2021-12-29 23:35:07 with the following command:
+# create_dictionary.py -m python/samples/metaDict_2017.py -p python/samples/sampleLocations_2017_preselected.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_hh_preselected.py -M
 
 samples_2017 = OD()
 samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM"] = OD([
@@ -19173,6 +19173,122 @@ samples_2017["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pyth
     [
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2021Mar05_wPresel_nom_all_hh_multilepton/ntuples/signal_ggf_nonresonant_cHHH5_hh_2b2t"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2/USER"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_300_hh_bbvv"),
+  ("process_name_specific",           "signal_ggf_spin0_300_hh_2b2v_private"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    731),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 292398, ],
+    'CountWeighted'                                                                  : [ 2.92405469e+05, 2.92370000e+05, 2.92359969e+05, ],
+    'CountWeightedLHEWeightScale'                                                    : [ 3.00463219e+05, 2.92405469e+05, 2.83154938e+05, 3.00463219e+05, 2.92405469e+05, 2.83154938e+05, 3.00463219e+05, 2.92405469e+05, 2.83154938e+05, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 3.00463219e+05, 2.83154938e+05, ],
+    'CountWeightedFull'                                                              : [ 2.92405469e+05, 2.92370000e+05, 2.92359969e+05, ],
+    'CountWeightedFullLHEWeightScale'                                                : [ 3.00463219e+05, 2.92405469e+05, 2.83154938e+05, 3.00463219e+05, 2.92405469e+05, 2.83154938e+05, 3.00463219e+05, 2.92405469e+05, 2.83154938e+05, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 3.00463219e+05, 2.83154938e+05, ],
+    'CountWeightedL1PrefireNom'                                                      : [ 2.85947938e+05, 2.85912469e+05, 2.85926094e+05, ],
+    'CountWeightedL1Prefire'                                                         : [ 2.85947938e+05, 2.84322312e+05, 2.87517281e+05, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                                        : [ 2.93794812e+05, 2.85947938e+05, 2.76943250e+05, 2.93794812e+05, 2.85947938e+05, 2.76943250e+05, 2.93794812e+05, 2.85947938e+05, 2.76943250e+05, ],
+    'CountWeightedLHEEnvelopeL1PrefireNom'                                           : [ 2.93794812e+05, 2.76943250e+05, ],
+    'CountWeightedFullL1PrefireNom'                                                  : [ 2.85947938e+05, 2.85912469e+05, 2.85926094e+05, ],
+    'CountWeightedFullL1Prefire'                                                     : [ 2.85947938e+05, 2.84322312e+05, 2.87517281e+05, ],
+    'CountWeightedFullLHEWeightScaleL1PrefireNom'                                    : [ 2.93794812e+05, 2.85947938e+05, 2.76943250e+05, 2.93794812e+05, 2.85947938e+05, 2.76943250e+05, 2.93794812e+05, 2.85947938e+05, 2.76943250e+05, ],
+    'CountWeightedFullLHEEnvelopeL1PrefireNom'                                       : [ 2.93794812e+05, 2.76943250e+05, ],
+  }),
+  ("nof_tree_events",                 181645),
+  ("nof_db_events",                   292398),
+  ("fsize_local",                     1070326387), # 1.07GB, avg file size 1.07GB
+  ("fsize_db",                        21631420649), # 21.63GB, avg file size 29.59MB
+  ("use_it",                          True),
+  ("xsection",                        0.027654),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("nof_PSweights",                   1),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2021Dec29_wPresel_nom_hh_bbww_hh_multilepton/ntuples/signal_ggf_spin0_300_hh_2b2v_private"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2/USER"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "signal_ggf_spin0_550_hh_bbvv"),
+  ("process_name_specific",           "signal_ggf_spin0_550_hh_2b2v_private"),
+  ("nof_files",                       1),
+  ("nof_db_files",                    738),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 295200, ],
+    'CountWeighted'                                                                  : [ 2.95186906e+05, 2.95150406e+05, 2.95162438e+05, ],
+    'CountWeightedLHEWeightScale'                                                    : [ 3.16954844e+05, 2.95186906e+05, 2.75408156e+05, 3.16954844e+05, 2.95186906e+05, 2.75408156e+05, 3.16954844e+05, 2.95186906e+05, 2.75408156e+05, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 3.16954844e+05, 2.75408156e+05, ],
+    'CountWeightedFull'                                                              : [ 2.95186906e+05, 2.95150406e+05, 2.95162438e+05, ],
+    'CountWeightedFullLHEWeightScale'                                                : [ 3.16954844e+05, 2.95186906e+05, 2.75408156e+05, 3.16954844e+05, 2.95186906e+05, 2.75408156e+05, 3.16954844e+05, 2.95186906e+05, 2.75408156e+05, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 3.16954844e+05, 2.75408156e+05, ],
+    'CountWeightedL1PrefireNom'                                                      : [ 2.85224594e+05, 2.85211031e+05, 2.85205531e+05, ],
+    'CountWeightedL1Prefire'                                                         : [ 2.85224594e+05, 2.82904781e+05, 2.87511562e+05, ],
+    'CountWeightedLHEWeightScaleL1PrefireNom'                                        : [ 3.06200000e+05, 2.85224594e+05, 2.66171781e+05, 3.06200000e+05, 2.85224594e+05, 2.66171781e+05, 3.06200000e+05, 2.85224594e+05, 2.66171781e+05, ],
+    'CountWeightedLHEEnvelopeL1PrefireNom'                                           : [ 3.06200000e+05, 2.66171781e+05, ],
+    'CountWeightedFullL1PrefireNom'                                                  : [ 2.85224594e+05, 2.85211031e+05, 2.85205531e+05, ],
+    'CountWeightedFullL1Prefire'                                                     : [ 2.85224594e+05, 2.82904781e+05, 2.87511562e+05, ],
+    'CountWeightedFullLHEWeightScaleL1PrefireNom'                                    : [ 3.06200000e+05, 2.85224594e+05, 2.66171781e+05, 3.06200000e+05, 2.85224594e+05, 2.66171781e+05, 3.06200000e+05, 2.85224594e+05, 2.66171781e+05, ],
+    'CountWeightedFullLHEEnvelopeL1PrefireNom'                                       : [ 3.06200000e+05, 2.66171781e+05, ],
+  }),
+  ("nof_tree_events",                 205902),
+  ("nof_db_events",                   295200),
+  ("fsize_local",                     1497577094), # 1.50GB, avg file size 1.50GB
+  ("fsize_db",                        23948598355), # 23.95GB, avg file size 32.45MB
+  ("use_it",                          True),
+  ("xsection",                        0.027654),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("nof_PSweights",                   1),
+  ("LHE_set",                         "LHA IDs 306000 - 306102 -> NNPDF31_nnlo_hessian_pdfas PDF set, expecting 103 weights (counted 103 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2017/2021Dec29_wPresel_nom_hh_bbww_hh_multilepton/ntuples/signal_ggf_spin0_550_hh_2b2v_private"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
