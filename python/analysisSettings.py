@@ -16,7 +16,7 @@ class systematics_bbww(systematics):
                         systematics.triggerSF + systematics.PU + systematics.L1PreFiring + systematics.FRe_shape + \
                         systematics.FRm_shape + systematics.DYMCNormScaleFactors + systematics.topPtReweighting + \
                         systematics.partonShower + systematics.leptonIDSF_hh_recomp + systematics.pileupJetID + \
-                        systematics.pdf
+                        systematics.pdf + systematics.pdf_mem
 
 class systematics_bbww_dl(systematics_bbww):
   pass

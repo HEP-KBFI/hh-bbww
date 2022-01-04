@@ -853,6 +853,28 @@ int main(int argc, char* argv[])
     inputTree -> registerReader(psWeightReader);
   }
 
+  const auto central_or_shift_pdf_member = std::find_if(
+    central_or_shifts_local.cbegin(), central_or_shifts_local.cend(),
+    [](const std::string & central_or_shift) -> bool
+    {
+      return isPDFsys_member(central_or_shift);
+    }
+  );
+  std::map<std::string, int> pdf_map;
+  if(central_or_shift_pdf_member != central_or_shifts_local.cend())
+  {
+    assert(hasPDF);
+    assert(lheInfoReader);
+    const std::string central_or_shift_pdf_str = *central_or_shift_pdf_member;
+    central_or_shifts_local.erase(central_or_shift_pdf_member);
+    for(int member_idx = 0; member_idx < lheInfoReader->getPdfSize(); ++member_idx)
+    {
+      const std::string pdf_key = Form("%s%d", central_or_shift_pdf_str.data(), member_idx);
+      pdf_map[pdf_key] = member_idx;
+      central_or_shifts_local.push_back(pdf_key);
+    }
+  }
+
 //--- initialize BDT for ranking of W->jj decays
   TMVAInterface mva_Wjj = initialize_mva_Wjj();
   JPAInterface jpaInterface("hhAnalysis/bbww/data/BDT_hh_bb1l", era_string);
@@ -1277,7 +1299,8 @@ int main(int argc, char* argv[])
       lheInfoReader->read();
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
-      evtWeightRecorder.record_pdfeWeight(lheInfoReader);
+      evtWeightRecorder.record_pdfWeight(lheInfoReader);
+      evtWeightRecorder.record_pdfMembers(lheInfoReader, pdf_map);
       evtWeightRecorder.record_psWeight(psWeightReader);
       evtWeightRecorder.record_puWeight(&eventInfo);
       evtWeightRecorder.record_nom_tH_weight(&eventInfo);
