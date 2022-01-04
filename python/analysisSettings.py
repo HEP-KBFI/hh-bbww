@@ -4,7 +4,7 @@ class systematics_bbww(systematics):
   an_full_hh_bbww = systematics.central + systematics.JES + systematics.JER + systematics.leptonIDSF + \
                     systematics.UnclusteredEn + systematics.btag + systematics.FRe_shape + systematics.FRm_shape + \
                     systematics.lhe + systematics.triggerSF + systematics.PU + systematics.DYMCNormScaleFactors + \
-                    systematics.L1PreFiring + systematics.partonShower + systematics.AK8 + \
+                    systematics.L1PreFiring + systematics.partonShower + systematics.ttbar + systematics.AK8 + \
                     systematics.pileupJetID + systematics.topPtReweighting + systematics.leptonIDSF_hh_recomp + \
                     systematics.mcClosure
   an_opts_hh_bbww = [
