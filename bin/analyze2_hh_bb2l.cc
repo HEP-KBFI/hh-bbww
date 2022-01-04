@@ -825,6 +825,10 @@ int main(int argc, char* argv[])
     }
 
     lheInfoReader = new LHEInfoReader(hasLHE);
+    if(cfg_analyze.exists("hasPDF") && cfg_analyze.getParameter<bool>("hasPDF"))
+    {
+      lheInfoReader->set_pdfNorm(cfg_analyze.getParameter<edm::ParameterSet>("pdfSettings"));
+    }
     inputTree->registerReader(lheInfoReader);
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
     inputTree -> registerReader(psWeightReader);
