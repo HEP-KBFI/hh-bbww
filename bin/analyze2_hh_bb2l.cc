@@ -279,6 +279,7 @@ int main(int argc, char* argv[])
   const pileupJetID apply_pileupJetID = get_pileupJetID(apply_pileupJetID_string);
 
   bool hasLHE = cfg_analyze.getParameter<bool>("hasLHE");
+  bool hasPDF = cfg_analyze.exists("hasPDF") && cfg_analyze.getParameter<bool>("hasPDF");
   bool hasPS = cfg_analyze.getParameter<bool>("hasPS");
   bool useAssocJetBtag = cfg_analyze.getParameter<bool>("useAssocJetBtag");
   bool apply_LHE_nom = cfg_analyze.getParameter<bool>("apply_LHE_nom");
@@ -825,7 +826,7 @@ int main(int argc, char* argv[])
     }
 
     lheInfoReader = new LHEInfoReader(hasLHE);
-    if(cfg_analyze.exists("hasPDF") && cfg_analyze.getParameter<bool>("hasPDF"))
+    if(hasPDF)
     {
       lheInfoReader->set_pdfNorm(cfg_analyze.getParameter<edm::ParameterSet>("pdfSettings"));
     }
@@ -1272,6 +1273,7 @@ int main(int argc, char* argv[])
       lheInfoReader->read();
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
+      evtWeightRecorder.record_pdfeWeight(lheInfoReader);
       evtWeightRecorder.record_psWeight(psWeightReader);
       evtWeightRecorder.record_puWeight(&eventInfo);
       evtWeightRecorder.record_nom_tH_weight(&eventInfo);
