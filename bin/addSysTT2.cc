@@ -64,30 +64,7 @@ namespace
     return funcvalue_;
   }
 
-  void setHistName(TH1* hist) 
-  {
-    TString histName = hist->GetName();
-    TString histNameReplace;
-    if ( histName.Contains("mtop173p5") ) 
-    {
-      histNameReplace = histName.ReplaceAll("mtop173p5", "CMS_HHbbww_TT_mtopUp");
-    }
-    else if ( histName.Contains("mtop171p5") ) 
-    {
-      histNameReplace = histName.ReplaceAll("mtop171p5", "CMS_HHbbww_TT_mtopDown");
-    }
-    else if ( !histName.Contains("CMS") ) 
-    {
-      histNameReplace = histName.Insert(0,"CMS_HHbbww_TT_");
-    }
-    else if ( histName.Contains("CMS_ttHl") ) 
-    {
-      histNameReplace = histName.ReplaceAll("CMS_ttHl", "CMS_HHbbww");
-    }
-    hist->SetName(histNameReplace);
-  }
-
-  std::pair<TH1*, TH1*> add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn) 
+  void add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn, std::string syst)
   {
     std::string histname = hist_central->GetName();
     for ( int i = 0; i < hist_central->GetNbinsX(); ++i ) 
@@ -102,37 +79,37 @@ namespace
       float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
       hist_up->SetBinContent(i + 1,bincontnew);
       hist_up->SetBinError(i + 1,bincontnewErr);
+      hist_up->SetName(Form("%smodUp_%s", syst.data(), histname.data()));
       bincontnew = bincont - 0.5*(bincontup-bincontdn);
       bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
       hist_dn->SetBinContent(i + 1, bincontnew);
       hist_dn->SetBinError(i + 1, bincontnewErr);
+      hist_dn->SetName(Form("%smodDown_%s", syst.data(), histname.data()));
     }
-    setHistName(hist_up);
-    setHistName(hist_dn);
-    return std::make_pair(hist_up,hist_dn);
+    hist_up->Write();
+    hist_dn->Write();
   }
 
-  void add_sysCR(TH1* hist_central, const std::vector<std::string>& histNames, const TDirectory* dir, const std::string& process_input) 
+  void add_sysCR(TH1* hist_central, const std::vector<std::string>& histNames, const TDirectory* dir, const std::string& process_input, std::string syst)
   {
     std::vector<TH1*> hists_cr;
 
     for ( unsigned int ihistName = 0; ihistName < histNames.size(); ++ihistName ) 
     {
       TString histName = hist_central->GetName();
-      histName.Insert(0,histNames[ihistName]+"_");
+      histName.Insert(0,histNames[ihistName]);
       TH1* hist_cr = getHistogram(dir, process_input, histName.Data(), "", true);
       assert(hist_cr);
       hist_cr->Scale(hist_central->Integral()/hist_cr->Integral());
       hists_cr.push_back(hist_cr);
     }
 
-    std::string histNameUp = "CMS_HHbbww_TT_crUp_";
+    std::string histNameUp = syst + "Up_";
     histNameUp += hist_central->GetName();
-    std::string histNameDown = "CMS_HHbbww_TT_crDown_";
+    std::string histNameDown = syst + "Down_";
     histNameDown += hist_central->GetName();
     TH1* hist_up = (TH1*) hist_central->Clone(histNameUp.data());
     TH1* hist_dn = (TH1*) hist_central->Clone(histNameDown.data());
-
     float xmin = hist_central->GetBinLowEdge(1);
     float xmax = hist_central->GetBinLowEdge(hist_central->GetNbinsX()) + hist_central->GetBinWidth(hist_central->GetNbinsX());
 
@@ -198,45 +175,47 @@ namespace
 
       // get list of histograms to be added
       std::string the_process_input = "TT";
-      const TDirectory* the_subdir_input = dynamic_cast<TDirectory*>((const_cast<TDirectory*>(dir))->Get(the_process_input.data()));      
+      const TDirectory* the_subdir_input = dynamic_cast<TDirectory*>((const_cast<TDirectory*>(dir))->Get(the_process_input.data()));
       assert(the_subdir_input);
       //the_subdir_input->ls();
       
       TList* list = the_subdir_input->GetListOfKeys();
-      bool addedCR = false;
-      for ( auto central_or_shift: central_or_shifts ) 
+      for ( auto central_or_shift: central_or_shifts )
       {
-	std::string find_histogramUp; 
+        std::string find_histogramUp;
         std::string find_histogramDown;
-        if ( central_or_shift == "mtop" ) 
+        if ( central_or_shift == "mtop" )
         {
-          find_histogramUp = "mtop173p5_";
-          find_histogramDown = "mtop171p5_";
+          find_histogramUp = "mtop";
         }
-        else 
+        else if ( central_or_shift == "color" )
+        {
+          find_histogramUp = "QCDbased_";
+        }
+        else
         {
           find_histogramUp = central_or_shift + "Up_";
           find_histogramDown = central_or_shift + "Down_";
-	}
+        }
         std::set<std::string> histogramNames;
         TIter next(list);
         TKey* key = 0;
-	while ( (key = dynamic_cast<TKey*>(next())) ) 
+        while ( (key = dynamic_cast<TKey*>(next())) )
         {
           TObject* object = key->ReadObj();
           TH1* histogram = dynamic_cast<TH1*>(object);
           if ( !histogram ) continue;
           std::string histogramName = histogram->GetName();
-          if ( histogramName.find(find_histogramUp) != std::string::npos ) 
+
+          if ( histogramName.find(find_histogramUp) != std::string::npos )
           {
             histogramNames.insert(histogramName);
           }
-	} //while
-
-        std::pair<TH1*, TH1*> hists_updn;
+        } //while
 
         for ( auto process_input: processes_input )
         {
+          std::vector<std::string> processed_histogram;
           std::string subdirName_output = Form("%s/%s", dirName.data(), process_input.data());
           if ( isDEBUG )
           {
@@ -244,58 +223,91 @@ namespace
           }
           TDirectory* subdir_output = createSubdirectory_recursively(fs, subdirName_output);
           subdir_output->cd();
-
           for ( auto histogramName: histogramNames )
           {
             std::string histogramName_up = histogramName;
-            TH1* histogram_up = getHistogram(dir, process_input, histogramName_up, "", true);
-            assert(histogram_up);
-            std::string histogramName_dn = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), find_histogramDown.data()).Data();
-            TH1* histogram_dn = getHistogram(dir, process_input, histogramName_dn, "", true);
-            assert(histogram_dn);
-            std::string histogramName_central = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), "").Data();
-            TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
-            assert(histogram_central);
-            hists_updn = add_syshist(histogram_central, histogram_up, histogram_dn);
-            if ( !addedCR )
+            if ( central_or_shift == "hdamp" || central_or_shift == "ue" )
             {
-              add_sysCR(histogram_central, { "QCDbased", "GluonMove", "erdON" }, dir, process_input);
+              std::string histogramName_central = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), "").Data();
+              TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
+              assert(histogram_central);
+
+              TH1* histogram_up = getHistogram(dir, process_input, histogramName_up, "", true);
+              assert(histogram_up);
+              std::string histogramName_dn = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), find_histogramDown.data()).Data();
+              TH1* histogram_dn = getHistogram(dir, process_input, histogramName_dn, "", true);
+              assert(histogram_dn);
+              add_syshist(histogram_central, histogram_up, histogram_dn, central_or_shift);
             }
-            hists_updn.first->Write();
-            hists_updn.second->Write();
-          } //histogramName
-        } // process_input
-        addedCR = true;
-      } // central_or_shift
-    }
+            else if( central_or_shift == "color" ) {
+              std::string histogramName_central = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), "").Data();
+              TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
+              assert(histogram_central);
+              add_sysCR(histogram_central, { "QCDbased_", "GluonMove_", "erdON_" }, dir, process_input, central_or_shift);
+            }
+            else {
+              assert( central_or_shift == "mtop" );
+              std::size_t idx = histogramName_up.find("_"); 
+              std::string histogramName_central = histogramName_up.substr(idx+1);
+              if ( std::find(processed_histogram.begin(), processed_histogram.end(), histogramName_central) == processed_histogram.end() )
+              {
+                processed_histogram.push_back(histogramName_central);
+              }
+              else
+              {
+                continue;
+              }
+              TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
+              assert(histogram_central);
+              //std::string spin_mass = histogramName_up.substr(idx+10);
+              std::vector<std::string> mass_histogramNames;
+              for ( auto mass_histogramName: histogramNames )
+              {
+                if ( mass_histogramName.find(histogramName_central) != std::string::npos)
+                {
+                  std::string topmass =  mass_histogramName.substr(0, idx+1);
+                  if ( std::find(mass_histogramNames.begin(), mass_histogramNames.end(), topmass) == mass_histogramNames.end())
+                    mass_histogramNames.push_back(topmass);
+                  else { continue; }
+                }
+              }
+              add_sysCR(histogram_central, mass_histogramNames, dir, process_input, central_or_shift);
+              }
+            }
+        } //histogramName
+      } // process_input
+    } // central_or_shift
 
     // recursively process all subdirectories
-    std::vector<const TDirectory*> subdirs = getSubdirectories(dir);
-    bool stopRecursion = ( max_depth_recursion != -1 && depth_recursion >= max_depth_recursion ) ? true : false;
-    if ( !stopRecursion )
+    if ( !allProcessesExist )
     {
-      for ( std::vector<const TDirectory*>::iterator subdir = subdirs.begin();
-            subdir != subdirs.end(); ++subdir ) {
-        processSubdirectory_recursively(
-          fs, *subdir, dirName + "/" + (*subdir)->GetName(), 
-          processes_input, process_output, 
-          central_or_shifts, 
-          depth_recursion + 1, max_depth_recursion,
-          isDEBUG
-        );
-      }
-    }
-    else
-    {
-      if ( isDEBUG )
+      std::vector<const TDirectory*> subdirs = getSubdirectories(dir);
+      bool stopRecursion = ( max_depth_recursion != -1 && depth_recursion >= max_depth_recursion ) ? true : false;
+      if ( !stopRecursion )
       {
-        std::cout << "aborting recursion, because maximum-recursion-depth = " << max_depth_recursion << " has been reached." << std::endl;
+        for ( std::vector<const TDirectory*>::iterator subdir = subdirs.begin();
+            subdir != subdirs.end(); ++subdir ) {
+          processSubdirectory_recursively(
+            fs, *subdir, dirName + "/" + (*subdir)->GetName(),
+            processes_input, process_output,
+            central_or_shifts,
+            depth_recursion + 1, max_depth_recursion,
+            isDEBUG
+         );
+        }
       }
-    }
-    for ( const TDirectory* subdir: subdirs )
-    {
-      delete subdir;
-      subdir = nullptr;
+      else
+      {
+        if ( isDEBUG )
+        {
+          std::cout << "aborting recursion, because maximum-recursion-depth = " << max_depth_recursion << " has been reached." << std::endl;
+        }
+      }
+      for ( const TDirectory* subdir: subdirs )
+      {
+        delete subdir;
+        subdir = nullptr;
+      }
     }
   }
 }
@@ -347,7 +359,7 @@ int main(int argc, char* argv[])
   fwlite::OutputFiles outputFile(cfg);
   fwlite::TFileService fs = fwlite::TFileService(outputFile.file().data());
 
-  if ( categories.size() == 0 ) 
+  if ( categories.size() == 0 )
   {
     categories = getSubdirectoryNames(inputFile);
   }
@@ -358,11 +370,10 @@ int main(int argc, char* argv[])
 
     TDirectory* dir = getDirectory(inputFile, category, true);
     assert(dir);
-
     processSubdirectory_recursively(
-      fs, dir, category, 
-      processes_input, process_output, 
-      central_or_shifts, 
+      fs, dir, category,
+      processes_input, process_output,
+      central_or_shifts,
       1, max_depth_recursion,
       isDEBUG
     );

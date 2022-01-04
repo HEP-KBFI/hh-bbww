@@ -439,6 +439,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           use_th_weights = self.runTHweights(sample_info)
 
           central_or_shift_dedicated = self.central_or_shifts if use_th_weights else self.central_or_shifts_external
+          ttbar_sys_sample_withFake = False
           for central_or_shift in central_or_shift_dedicated:
             if not self.accept_systematics(
                 central_or_shift, is_mc, lepton_selection, sample_info
@@ -452,7 +453,12 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                     central_or_shift_local, is_mc, lepton_selection, sample_info
                 ):
                   central_or_shifts_local.append(central_or_shift_local)
-
+            if central_or_shift == "central" and 'Fakeable' in lepton_selection_and_frWeight and self.ttbar_syst_enabled:
+              for ttbar_sys in systematics.ttbar:
+                if "TT_{}".format(ttbar_sys) in sample_category:
+                  ttbar_sys_sample_withFake = True
+                  break
+              if ttbar_sys_sample_withFake: continue
             logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
 
             # build config files for executing analysis code
@@ -548,7 +554,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
           if self.isBDTtraining or self.do_sync:
             continue
-
+          if ttbar_sys_sample_withFake: continue
           #----------------------------------------------------------------------------
           # split hadd_stage1 files into separate files, one for each event category
           for category in self.datacard_categories:
@@ -898,7 +904,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled"),
         'label' : '1l',
         'make_plots_backgrounds' : self.make_plots_backgrounds,
-        'processSignal' : "signal_ggf_nonresonant_hh" if self.fillHistograms_nonresonant else 'signal_ggf_spin0_300_hh'
+        'processSignal' : "signal_ggf_nonresonant_hh" if self.fillHistograms_nonresonant else 'signal_ggf_spin0_400_hh'
       }
     self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
     if "Fakeable_mcClosure" in self.lepton_selections: #TODO

@@ -47,4 +47,4 @@ process.addSysTT = cms.PSet(
     )
 )
 
-process.addSysTT.sysShifts = cms.vstring(["hdamp","mtop"])
+process.addSysTT.sysShifts = cms.vstring(["hdamp","mtop", "ue", "color"])
