@@ -3,7 +3,6 @@
  *
  * Compute systematic uncertainty on TT background.
  *
- * \author Saswati Nandan, Tallinn
  *
  */
 
