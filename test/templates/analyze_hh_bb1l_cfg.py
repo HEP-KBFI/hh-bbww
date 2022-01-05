@@ -336,6 +336,12 @@ process.analyze_hh_bb1l = cms.PSet(
     apply_LHE_nom = cms.bool(False),
     useObjectMultiplicity = cms.bool(False),
 
+    hasPDF = cms.bool(False),
+    pdfSettings = cms.PSet(
+        lhaid = cms.uint32(0),
+        norm = cms.vdouble(),
+    ),
+
     evtWeight = cms.PSet(
         apply = cms.bool(False),
         histogramFile = cms.string(''),

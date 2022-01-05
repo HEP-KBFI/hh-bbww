@@ -18,7 +18,7 @@ import importlib
 training_choices = [ 'BDT', 'LBN' ]
 signal_choices   = [ 'nonres', 'spin0', 'spin2' ]
 mode_choices     = [ 'default', 'forBDTtraining', 'hh_sync', 'ttbar_sync' ]
-sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww
+sys_choices      = [ 'full', 'internal', 'pdf_mem' ] + systematics.an_opts_hh_bbww + systematics.pdf_mem
 systematics.full = systematics.an_full_hh_bbww
 systematics.internal = systematics.an_internal_hh_bbww
 

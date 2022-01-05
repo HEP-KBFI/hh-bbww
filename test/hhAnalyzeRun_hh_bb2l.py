@@ -22,7 +22,7 @@ mode_choices     = [
   'default', 'wMEM', 'forBDTtraining', 'forBDTtraining_wMEM', 'hh_sync', 'hh_sync_wMEM',
   'ttbar_sync', 'ttbar_sync_wMEM',
 ]
-sys_choices      = [ 'full', 'internal' ] + systematics.an_opts_hh_bbww + [ 'MEM_bb2l' ]
+sys_choices      = [ 'full', 'internal', 'pdf_mem' ] + systematics.an_opts_hh_bbww + [ 'MEM_bb2l' ]
 systematics.full = systematics.an_full_hh_bbww
 systematics.internal = systematics.an_internal_hh_bbww
 
