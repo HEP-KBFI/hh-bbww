@@ -197,7 +197,7 @@ else:
 histograms_to_fit = {
   "EventCounter" : {}
 }
-masspoints = [ 250., 260., 270., 280., 300., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
+masspoints = [ 250., 260., 270., 280., 300., 320., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
 if 'spin0' in fill_spin or 'spin2' in fill_spin:
   for spin in fill_spin:
     for masspoint in masspoints:
