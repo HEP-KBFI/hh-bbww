@@ -35,6 +35,7 @@ class prodNtupleConfig_hh_bbwwMEM_dilepton(analyzeConfig_hh):
         isDebug           = False,
         rle_select        = '',
         use_home          = True,
+        keep_logs         = False,
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -59,6 +60,7 @@ class prodNtupleConfig_hh_bbwwMEM_dilepton(analyzeConfig_hh):
       verbose               = verbose,
       isDebug               = isDebug,
       use_home              = use_home,
+      keep_logs             = keep_logs,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates')
     )
     self.max_jobs_per_sample = max_jobs_per_sample

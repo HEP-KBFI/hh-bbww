@@ -70,6 +70,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
         use_nonnominal    = False,
         hlt_filter        = False,
         use_home          = False,
+        keep_logs         = False,
         submission_cmd    = None,
       ):
     analyzeConfig_hh.__init__(self,
@@ -96,6 +97,7 @@ class analyzeConfig_hh_bbWW_TT2lctrl(analyzeConfig_hh):
       dry_run               = dry_run,
       isDebug               = isDebug,
       use_home              = use_home,
+      keep_logs             = keep_logs,
       template_dir          = os.path.join(os.getenv('CMSSW_BASE'), 'src', 'hhAnalysis', 'bbww', 'test', 'templates'),
       submission_cmd        = submission_cmd,
     )

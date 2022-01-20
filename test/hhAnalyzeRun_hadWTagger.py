@@ -37,6 +37,7 @@ debug              = args.debug
 sample_filter      = args.filter
 num_parallel_jobs  = args.num_parallel_jobs
 running_method     = args.running_method
+keep_logs          = args.keep_logs
 
 # Additional arguments
 mode              = args.mode
@@ -92,6 +93,7 @@ if __name__ == '__main__':
     num_parallel_jobs                     = num_parallel_jobs,
     isDebug                               = debug,
     use_home                              = use_home,
+    keep_logs                             = keep_logs,
     submission_cmd                        = sys.argv,
   )
 

@@ -43,6 +43,7 @@ check_output_files = not args.not_check_input_files
 debug              = args.debug
 sample_filter      = args.filter
 running_method     = args.running_method
+keep_logs          = args.keep_logs
 
 # Additional arguments
 mode              = args.mode
@@ -128,6 +129,7 @@ if __name__ == '__main__':
     gen_matching_by_index   = gen_matching_by_index,
     use_nonnominal          = use_nonnominal,
     use_home                = use_home,
+    keep_logs               = keep_logs,
     submission_cmd          = sys.argv,
   )
 

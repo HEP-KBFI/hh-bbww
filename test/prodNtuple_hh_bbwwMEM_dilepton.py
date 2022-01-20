@@ -26,6 +26,7 @@ debug              = args.debug
 sample_filter      = args.filter
 num_parallel_jobs  = args.num_parallel_jobs
 running_method     = args.running_method
+keep_logs          = args.keep_logs
 
 # Additional arguments
 use_preselected   = args.use_preselected
@@ -106,6 +107,7 @@ if __name__ == '__main__':
     isDebug                               = debug,
     rle_select                            = rle_select,
     use_home                              = use_home,
+    keep_logs                             = keep_logs,
   )
 
   job_statistics = analysis.create()
