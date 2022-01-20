@@ -41,6 +41,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
   """
   def __init__(self,
         configDir,
+        localDir,
         outputDir,
         executable_analyze,
         cfgFile_analyze,
@@ -72,6 +73,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
+      localDir              = localDir,
       outputDir             = outputDir,
       executable_analyze    = executable_analyze,
       channel               = "hh_bbWW_DYctrl",
@@ -304,7 +306,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
                     continue
                   initDict(self.dirs, [ key_dir, dir_type ])
                   if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
-                    self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel,
+                    self.dirs[key_dir][dir_type] = os.path.join(self.get_dir_type(dir_type), dir_type, self.channel,
                                                                 "_".join([ lepton_selection_and_frWeight, lepton_charge_selection ]), process_name_or_dummy, central_or_shift_or_dummy)
                   else:
                     self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
@@ -315,7 +317,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
         initDict(self.dirs, [ key_dir, dir_type ])
         if dir_type in [ DKEY_CFGS, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT ]:
-          self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel, subdirectory)
+          self.dirs[key_dir][dir_type] = os.path.join(self.get_dir_type(dir_type), dir_type, self.channel, subdirectory)
         else:
           self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel, subdirectory)
     for dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT, DKEY_HADD_RT, DKEY_SYNC ]:
@@ -323,7 +325,7 @@ class analyzeConfig_hh_bbWW_DYctrl(analyzeConfig_hh):
         continue
       initDict(self.dirs, [ dir_type ])
       if dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT, DKEY_HADD_RT ]:
-        self.dirs[dir_type] = os.path.join(self.configDir, dir_type, self.channel)
+        self.dirs[dir_type] = os.path.join(self.get_dir_type(dir_type), dir_type, self.channel)
       else:
         self.dirs[dir_type] = os.path.join(self.outputDir, dir_type, self.channel)
 

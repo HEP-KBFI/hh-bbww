@@ -19,6 +19,7 @@ class prodNtupleConfig_hh_bbwwMEM_dilepton(analyzeConfig_hh):
   """
   def __init__(self,
         configDir,
+        localDir,
         outputDir,
         executable_analyze,
         cfgFile_analyze,
@@ -37,6 +38,7 @@ class prodNtupleConfig_hh_bbwwMEM_dilepton(analyzeConfig_hh):
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
+      localDir              = localDir,
       outputDir             = outputDir,
       executable_analyze    = executable_analyze,
       channel               = "hh_bbwwMEM_dilepton",
@@ -91,13 +93,13 @@ class prodNtupleConfig_hh_bbwwMEM_dilepton(analyzeConfig_hh):
       for dir_type in [ DKEY_CFGS, DKEY_HIST, DKEY_LOGS, DKEY_RLES, DKEY_SYNC ]:
         initDict(self.dirs, [ key_dir, dir_type ])
         if dir_type in [ DKEY_CFGS, DKEY_LOGS ]:
-          self.dirs[key_dir][dir_type] = os.path.join(self.configDir, dir_type, self.channel, process_name)
+          self.dirs[key_dir][dir_type] = os.path.join(self.get_dir_type(dir_type), dir_type, self.channel, process_name)
         else:
           self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel, process_name)
     for dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_HIST, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT, DKEY_HADD_RT, DKEY_SYNC ]:
       initDict(self.dirs, [ dir_type ])
       if dir_type in [ DKEY_CFGS, DKEY_SCRIPTS, DKEY_LOGS, DKEY_DCRD, DKEY_PLOT, DKEY_HADD_RT ]:
-        self.dirs[dir_type] = os.path.join(self.configDir, dir_type, self.channel)
+        self.dirs[dir_type] = os.path.join(self.get_dir_type(dir_type), dir_type, self.channel)
       else:
         self.dirs[dir_type] = os.path.join(self.outputDir, dir_type, self.channel)
     for key in self.dirs.keys():

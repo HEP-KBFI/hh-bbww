@@ -123,8 +123,9 @@ if __name__ == '__main__':
     samples = filter_samples(samples, sample_filter)
 
   analysis = analyzeConfig_hh_bbWW_TT2lctrl(
-    configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version),
-    outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version),
+    configDir = os.path.join("/scratch-persistent", getpass.getuser(), "hhAnalysis", era, version),
+    localDir  = os.path.join("/home",               getpass.getuser(), "hhAnalysis", era, version),
+    outputDir = os.path.join("/hdfs/local",         getpass.getuser(), "hhAnalysis", era, version),
     executable_analyze                    = "analyze_hh_bbWW_TT2lctrl",
     cfgFile_analyze                       = "analyze_hh_bbWW_TT2lctrl_cfg.py",
     samples                               = samples,

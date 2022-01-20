@@ -104,11 +104,13 @@ if __name__ == '__main__':
     ', '.join(central_or_shifts)
   )
 
-  configDir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", era, version)
-  outputDir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", era, version)
+  configDir = os.path.join("/scratch-persistent", getpass.getuser(), "hhAnalysis", era, version),
+  localDir  = os.path.join("/home",               getpass.getuser(), "hhAnalysis", era, version)
+  outputDir = os.path.join("/hdfs/local",         getpass.getuser(), "hhAnalysis", era, version)
 
   analysis = analyzeConfig_hh_bbww_inclusive(
     configDir               = configDir,
+    localDir                = localDir,
     outputDir               = outputDir,
     executable_analyze      = "analyze_hh_bbww_inclusive",
     cfgFile_analyze         = "analyze_hh_bbww_inclusive_cfg.py",
