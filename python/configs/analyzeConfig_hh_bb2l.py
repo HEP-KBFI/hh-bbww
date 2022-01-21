@@ -416,8 +416,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       for job in self.jobOptions_addDYBgr.values():
         lines_makefile.append("\t%s %s &> %s" % (self.executable_addDYBgr, job['cfgFile_modified'], job['logFile']))
     lines_makefile.append("")
-    for job in self.jobOptions_addDYBgr.values():
-      self.filesToClean.append(job['outputFile'])
 
   def addToMakefile_backgrounds_from_data(self, lines_makefile, make_target = "phony_addDYBgr", make_dependency = "phony_copyHistograms"):
     self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds", make_dependency, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
@@ -438,7 +436,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     for job in self.jobOptions_add_syst_dybgr.values():
       lines_makefile.append("%s: %s" % (job['outputFile'], job['inputFile']))
       lines_makefile.append("\t%s %s" % (self.executable_add_syst_fakerate, job['cfgFile_modified']))
-      self.filesToClean.append(job['outputFile'])
       lines_makefile.append("")
 
   def addToMakefile_compDYBgrWeights(self, lines_makefile):
