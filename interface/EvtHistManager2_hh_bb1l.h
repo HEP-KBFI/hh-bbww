@@ -46,11 +46,16 @@ public:
                  double dR_b1lep, double dR_b2lep,
                  double mjj_highestpt,
                  double numJetsForward, double tau21_Hbb, const RecoJetAK8* selJetAK8_Hbb,
-                 double lep_px, double lep_py, double lep_pz, double lep_e,
-                 double Hbb_lead_px, double Hbb_lead_py, double Hbb_lead_pz, double Hbb_lead_e,
-                 double Hbb_sublead_px, double Hbb_sublead_py, double Hbb_sublead_pz, double Hbb_sublead_e,
-                 double Wjj_lead_px, double Wjj_lead_py, double Wjj_lead_pz, double Wjj_lead_e,
-                 double Wjj_sublead_px, double Wjj_sublead_py, double Wjj_sublead_pz, double Wjj_sublead_e,
+                 double lep_eta, double lep_phi, double lep_e,
+                 double Hbb_lead_pt, double Hbb_lead_eta, double Hbb_lead_phi, double Hbb_lead_m,
+                 double Hbb_sublead_pt, double Hbb_sublead_eta, double Hbb_sublead_phi, double Hbb_sublead_m,
+                 double Wjj_lead_pt, double Wjj_lead_eta, double Wjj_lead_phi, double Wjj_lead_m,
+                 double Wjj_sublead_pt, double Wjj_sublead_eta, double Wjj_sublead_phi, double Wjj_sublead_m,
+                 double jet1_pt, double jet1_eta, double jet1_phi,
+                 double jet2_pt, double jet2_eta, double jet2_phi,
+                 double m_Hww, double m_HH_bbregCorr, double dPhi_met_lep, double dR_lep_Wjj,
+                 double dR_lep_Hbb, double pT_wlep, double dPhi_met_Hbb, double dPhi_met_Wjj,
+                 double met_phi, double lepPairCharge_loose, double m_wlep,
                  std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin0,
                  std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin2,
                  double evtWeight);
@@ -68,6 +73,8 @@ public:
 
   TH1 * histogram_HT_;
   TH1 * histogram_met_;
+  TH1 * histogram_met_phi_;
+  TH1* histogram_m_wlep_;
   TH1 * histogram_met_LD_;
 
   TH1 * histogram_lep_pt_;
@@ -118,33 +125,49 @@ public:
   TH1 * histogram_numJetsForward_;
   TH1 * histogram_tau21_Hbb_;
 
-  TH1 * histogram_lep_px_;
-  TH1 * histogram_lep_py_;
-  TH1 * histogram_lep_pz_;
+  TH1 * histogram_lep_eta_;
+  TH1 * histogram_lep_phi_;
   TH1 * histogram_lep_e_;
 
-  TH1 * histogram_Hbb_lead_px_;
-  TH1 * histogram_Hbb_lead_py_;
-  TH1 * histogram_Hbb_lead_pz_;
-  TH1 * histogram_Hbb_lead_e_;
+  TH1 * histogram_Hbb_lead_pt_;
+  TH1 * histogram_Hbb_lead_eta_;
+  TH1 * histogram_Hbb_lead_phi_;
+  TH1 * histogram_Hbb_lead_m_;
 
-  TH1 * histogram_Hbb_sublead_px_;
-  TH1 * histogram_Hbb_sublead_py_;
-  TH1 * histogram_Hbb_sublead_pz_;
-  TH1 * histogram_Hbb_sublead_e_;
+  TH1 * histogram_Hbb_sublead_pt_;
+  TH1 * histogram_Hbb_sublead_eta_;
+  TH1 * histogram_Hbb_sublead_phi_;
+  TH1 * histogram_Hbb_sublead_m_;
 
-  TH1 * histogram_Wjj_lead_px_;
-  TH1 * histogram_Wjj_lead_py_;
-  TH1 * histogram_Wjj_lead_pz_;
-  TH1 * histogram_Wjj_lead_e_;
+  TH1 * histogram_Wjj_lead_pt_;
+  TH1 * histogram_Wjj_lead_eta_;
+  TH1 * histogram_Wjj_lead_phi_;
+  TH1 * histogram_Wjj_lead_m_;
 
-  TH1 * histogram_Wjj_sublead_px_;
-  TH1 * histogram_Wjj_sublead_py_;
-  TH1 * histogram_Wjj_sublead_pz_;
-  TH1 * histogram_Wjj_sublead_e_;
+  TH1 * histogram_Wjj_sublead_pt_;
+  TH1 * histogram_Wjj_sublead_eta_;
+  TH1 * histogram_Wjj_sublead_phi_;
+  TH1 * histogram_Wjj_sublead_m_;
+
+  TH1 * histogram_jet1_pt_;
+  TH1 * histogram_jet1_eta_;
+  TH1 * histogram_jet1_phi_;
+
+  TH1 * histogram_jet2_pt_;
+  TH1 * histogram_jet2_eta_;
+  TH1 * histogram_jet2_phi_;
 
   TH1 * histogram_evtCategory_; // event category on datacard level
   
+  TH1* histogram_m_Hww_;
+  TH1* histogram_m_HH_bbregCorr_;
+  TH1* histogram_dPhi_met_lep_;
+  TH1* histogram_dR_lep_Wjj_;
+  TH1* histogram_dR_lep_Hbb_;
+  TH1* histogram_pT_wlep_;
+  TH1* histogram_dPhi_met_Hbb_;
+  TH1* histogram_dPhi_met_Wjj_;
+  TH1* histogram_lepPairCharge_loose_;
   TH2* histogram_TT_resolved_270_300_spin2_;
   TH2* histogram_TT_resolved_300_400_spin2_;
   TH2* histogram_W_270_300_spin2_;

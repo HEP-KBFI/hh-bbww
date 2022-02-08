@@ -15,7 +15,7 @@ process.makePlots = cms.PSet(
     apply_fixed_rebinning = cms.int32(2),
     apply_automatic_rebinning = cms.bool(True),
     minEvents_automatic_rebinning = cms.double(0.5),
-    applyAutoBlinding = cms.bool(True),
+    applyAutoBlinding = cms.bool(False),
     divideByBinWidth = cms.bool(True),
     processData = cms.string("data_obs"),
     processesBackground = cms.vstring(),
@@ -37,6 +37,11 @@ process.makePlots = cms.PSet(
         cms.PSet(
             histogramName = cms.string("sel/evt/$PROCESS/numBJets_medium"),
             xAxisTitle = cms.string("medium b-jet Multiplicity"),
+            yAxisTitle = cms.string("Events")
+        ),
+        cms.PSet(
+            histogramName = cms.string("sel/evt/$PROCESS/numJetsForward"),
+            xAxisTitle = cms.string("numJetsForward"),
             yAxisTitle = cms.string("Events")
         ),
         ##cms.PSet(

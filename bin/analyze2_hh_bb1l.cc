@@ -452,6 +452,7 @@ int main(int argc, char* argv[])
   bool fillHistograms_resonant_spin0 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin0");
   bool fillHistograms_resonant_spin2 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin2");
   bool use2d = cfg_analyze.getParameter<bool>("use2d");
+  bool fill_resolved_2b = cfg_analyze.getParameter<bool>("fill_resolved_2b");
 
   // initialize BDT-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_BDT = cfg_analyze.getParameter<bool>("fillHistograms_BDT");
@@ -2818,35 +2819,45 @@ int main(int argc, char* argv[])
           selHistManager->BJetsAK4_medium_->fillHistograms(selBJetsAK4_medium, evtWeight);
           selHistManager->met_->fillHistograms(met, mhtP4, met_LD, evtWeight);
           selHistManager->metFilters_->fillHistograms(metFilters, evtWeight);
-          selHistManager->evt_->fillHistograms(
-            (int)selJetsAK4.size(),
-            (int)selBJetsAK4_loose.size(),
-            (int)selBJetsAK4_medium.size(),
-            HT,
-            met.pt(), met_LD,
-            selLepton->pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0,
-            m_Hbb, pT_Hbb, dR_Hbb, m_Hbb_regCorr,
-            dPhi_Hww, pT_Hww,
-            m_HH_B2G_18_008, m_HH_analytic, m_HHvis, m_HH, pT_HH, dPhi_HHvis, pT_HHvis,
-            mT_W, mT_top_2particle, mT_top_3particle,
-            vbf_m_jj, vbf_dEta_jj, vbf_lhe_m_jj, vbf_lhe_dEta_jj,
-            bjet1_btagCSV, bjet2_btagCSV, wjet1_btagCSV,  wjet2_btagCSV,
-            mindr_lep1_jet, avg_dr_jet_central,
-            preselLeptonsFull.size() >= 2 ? fabs(preselLeptonsFull[0]->pdgId()) == fabs(preselLeptonsFull[1]->pdgId()) :999,
-            selLepton_type,
-            selBJetsAK4_medium.size() >= 2 ? (selBJetsAK4_medium[0]->p4() + selBJetsAK4_medium[1]->p4()).mass() : 0.,
-            dR_b1lep, dR_b2lep,
-            mjj_highestpt,
-            (int)selJetsForward.size(), tau21_Hbb,
-            selJetAK8_Hbb,
-            selLepton->cone_p4().px(), selLepton->cone_p4().py(), selLepton->cone_p4().pz(), selLepton->cone_p4().e(),
-            selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.e(),
-            selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.e(),
-            selJetP4_Wjj_lead.px(), selJetP4_Wjj_lead.py(), selJetP4_Wjj_lead.pz(), selJetP4_Wjj_lead.e(),
-            selJetP4_Wjj_sublead.px(), selJetP4_Wjj_sublead.py(), selJetP4_Wjj_sublead.pz(), selJetP4_Wjj_sublead.e(),
-            lbnOutputs_resonant_spin0, lbnOutputs_resonant_spin2,
-            evtWeight
-          );
+          bool fill = (fill_resolved_2b) ? selBJetsAK4_medium.size()==2 : true;
+          if (fill)
+          {
+            selHistManager->evt_->fillHistograms(
+               (int)selJetsAK4.size(),
+               (int)selBJetsAK4_loose.size(),
+               (int)selBJetsAK4_medium.size(),
+               HT,
+               met.pt(), met_LD,
+               selLepton->pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0,
+               m_Hbb, pT_Hbb, dR_Hbb, m_Hbb_regCorr,
+               std::abs(dPhi_Hww), pT_Hww,
+               m_HH_B2G_18_008, m_HH_analytic, m_HHvis, m_HH, pT_HH, std::abs(dPhi_HHvis), pT_HHvis,
+               mT_W, mT_top_2particle, mT_top_3particle,
+               vbf_m_jj, vbf_dEta_jj, vbf_lhe_m_jj, vbf_lhe_dEta_jj,
+               bjet1_btagCSV, bjet2_btagCSV, wjet1_btagCSV,  wjet2_btagCSV,
+               mindr_lep1_jet, avg_dr_jet_central,
+               preselLeptonsFull.size() >= 2 ? fabs(preselLeptonsFull[0]->pdgId()) == fabs(preselLeptonsFull[1]->pdgId()) :999,
+               selLepton_type,
+               selBJetsAK4_medium.size() >= 2 ? (selBJetsAK4_medium[0]->p4() + selBJetsAK4_medium[1]->p4()).mass() : 0.,
+               dR_b1lep, dR_b2lep,
+               mjj_highestpt,
+               (int)selJetsForward.size(), tau21_Hbb,
+               selJetAK8_Hbb,
+               std::abs(selLepton->cone_p4().eta()), std::abs(selLepton->cone_p4().phi()), selLepton->cone_p4().e(),
+               selJetP4_Hbb_lead.pt(), std::abs(selJetP4_Hbb_lead.eta()), std::abs(selJetP4_Hbb_lead.phi()), selJetP4_Hbb_lead.mass(),
+               selJetP4_Hbb_sublead.pt(), std::abs(selJetP4_Hbb_sublead.eta()), std::abs(selJetP4_Hbb_sublead.phi()), selJetP4_Hbb_sublead.mass(),
+               selJetP4_Wjj_lead.pt(), std::abs(selJetP4_Wjj_lead.eta()), std::abs(selJetP4_Wjj_lead.phi()), selJetP4_Wjj_lead.mass(),
+               selJetP4_Wjj_sublead.pt(), std::abs(selJetP4_Wjj_sublead.eta()), std::abs(selJetP4_Wjj_sublead.phi()), selJetP4_Wjj_sublead.mass(),
+               selJetP4_jj_lead.pt(), std::abs(selJetP4_jj_lead.eta()), std::abs(selJetP4_jj_lead.phi()),
+               selJetP4_jj_sublead.pt(), std::abs(selJetP4_jj_sublead.eta()), std::abs(selJetP4_jj_sublead.phi()),
+               m_Hww, m_HH_bbregCorr, std::abs(dPhi_met_lep), dR_lep_Wjj,
+               dR_lep_Hbb, pT_wlep, std::abs(dPhi_met_Hbb), std::abs(dPhi_met_Wjj),
+               std::abs(met.phi()), preselLeptonsFull.size() >= 2 ? preselLeptonsFull[0]->charge() + preselLeptonsFull[1]->charge() : 999,
+               m_wlep,
+               lbnOutputs_resonant_spin0, lbnOutputs_resonant_spin2,
+               evtWeight
+           );
+          }
           if ( isSignal )
           {
             selHistManager->genKinematics_HH_->fillHistograms(evtWeight);

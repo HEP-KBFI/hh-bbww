@@ -16,6 +16,9 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, 
   central_or_shiftOptions_["numBJets_medium"] = { "central" };
   central_or_shiftOptions_["HT"] = { "*" };
   central_or_shiftOptions_["met"] = { "*" };
+  central_or_shiftOptions_["met_phi"] = { "central" };
+  central_or_shiftOptions_["lepPairCharge_loose"] = { "central" };
+  central_or_shiftOptions_["m_wlep"] = { "central" };
   central_or_shiftOptions_["met_LD"] = { "*" };
   central_or_shiftOptions_["lep_pt"] = { "central" };
   central_or_shiftOptions_["mll_loose"] = { "central" };
@@ -53,26 +56,31 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, 
   central_or_shiftOptions_["mjj_highestpt"] = { "*" };
   central_or_shiftOptions_["numJetsForward"] = { "central" };
   central_or_shiftOptions_["tau21_Hbb"] = { "central" };
-  central_or_shiftOptions_["lep_px"] = { "central" };
-  central_or_shiftOptions_["lep_py"] = { "central" };
-  central_or_shiftOptions_["lep_pz"] = { "central" };
+  central_or_shiftOptions_["lep_eta"] = { "central" };
+  central_or_shiftOptions_["lep_phi"] = { "central" };
   central_or_shiftOptions_["lep_e"] = { "central" };
-  central_or_shiftOptions_["Hbb_lead_px"] = { "central" };
-  central_or_shiftOptions_["Hbb_lead_py"] = { "central" };
-  central_or_shiftOptions_["Hbb_lead_pz"] = { "central" };
-  central_or_shiftOptions_["Hbb_lead_e"] = { "central" };
-  central_or_shiftOptions_["Hbb_sublead_px"] = { "central" };
-  central_or_shiftOptions_["Hbb_sublead_py"] = { "central" };
-  central_or_shiftOptions_["Hbb_sublead_pz"] = { "central" };
-  central_or_shiftOptions_["Hbb_sublead_e"] = { "central" };
-  central_or_shiftOptions_["Wjj_lead_px"] = { "central" };
-  central_or_shiftOptions_["Wjj_lead_py"] = { "central" };
-  central_or_shiftOptions_["Wjj_lead_pz"] = { "central" };
-  central_or_shiftOptions_["Wjj_lead_e"] = { "central" };
-  central_or_shiftOptions_["Wjj_sublead_px"] = { "central" };
-  central_or_shiftOptions_["Wjj_sublead_py"] = { "central" };
-  central_or_shiftOptions_["Wjj_sublead_pz"] = { "central" };
-  central_or_shiftOptions_["Wjj_sublead_e"] = { "central" };
+  central_or_shiftOptions_["Hbb_lead_pt"] = { "central" };
+  central_or_shiftOptions_["Hbb_lead_eta"] = { "central" };
+  central_or_shiftOptions_["Hbb_lead_phi"] = { "central" };
+  central_or_shiftOptions_["Hbb_lead_m"] = { "central" };
+  central_or_shiftOptions_["Hbb_sublead_pt"] = { "central" };
+  central_or_shiftOptions_["Hbb_sublead_eta"] = { "central" };
+  central_or_shiftOptions_["Hbb_sublead_phi"] = { "central" };
+  central_or_shiftOptions_["Hbb_sublead_m"] = { "central" };
+  central_or_shiftOptions_["Wjj_lead_pt"] = { "central" };
+  central_or_shiftOptions_["Wjj_lead_eta"] = { "central" };
+  central_or_shiftOptions_["Wjj_lead_phi"] = { "central" };
+  central_or_shiftOptions_["Wjj_lead_m"] = { "central" };
+  central_or_shiftOptions_["Wjj_sublead_pt"] = { "central" };
+  central_or_shiftOptions_["Wjj_sublead_eta"] = { "central" };
+  central_or_shiftOptions_["Wjj_sublead_phi"] = { "central" };
+  central_or_shiftOptions_["Wjj_sublead_m"] = { "central" };
+  central_or_shiftOptions_["jet1_pt"] = { "central" };
+  central_or_shiftOptions_["jet1_eta"] = { "central" };
+  central_or_shiftOptions_["jet1_phi"] = { "central" };
+  central_or_shiftOptions_["jet2_pt"] = { "central" };
+  central_or_shiftOptions_["jet2_eta"] = { "central" };
+  central_or_shiftOptions_["jet2_phi"] = { "central" };
   central_or_shiftOptions_["evtCategory"] = { "central" };
   central_or_shiftOptions_["TT_resolved_270_300_spin0"] = { "central" };
   central_or_shiftOptions_["TT_resolved_300_400_spin0"] = { "central" };
@@ -102,6 +110,14 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, 
   central_or_shiftOptions_["HH_resolved_2b_300_400_spin2"] = { "central" };
   central_or_shiftOptions_["HH_resolved_1b_270_300_spin2"] = { "central" };
   central_or_shiftOptions_["HH_resolved_1b_300_400_spin2"] = { "central" };
+  central_or_shiftOptions_["m_Hww"] = { "central" };
+  central_or_shiftOptions_["m_HH_bbregCorr"] = { "central" };
+  central_or_shiftOptions_["dPhi_met_lep"] = { "central" };
+  central_or_shiftOptions_["dR_lep_Wjj"] = { "central" };
+  central_or_shiftOptions_["dR_lep_Hbb"] = { "central" };
+  central_or_shiftOptions_["pT_wlep"] = { "central" };
+  central_or_shiftOptions_["dPhi_met_Hbb"] = { "central" };
+  central_or_shiftOptions_["dPhi_met_Wjj"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
 }
 
@@ -119,14 +135,24 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_numBJets_medium_  = book1D(dir, "numBJets_medium",   10, -0.5,  +9.5);
 
   histogram_HT_               = book1D(dir, "HT",               150,  0., 1500.);
-  histogram_met_            = book1D(dir, "met",              100,  0., 1000.);
+  histogram_met_              = book1D(dir, "met",              100,  0., 1000.);
+  histogram_met_phi_          = book1D(dir, "met_phi",          36,  0., TMath::Pi());
+  histogram_lepPairCharge_loose_        = book1D(dir, "lepPairCharge_loose",          5,  -2.5, 2.5);
+  histogram_m_wlep_           = book1D(dir, "m_wlep",             50,  0.,  200.);
   histogram_met_LD_            = book1D(dir, "met_LD",              100,  0., 1000.);
 
-  histogram_lep_pt_            = book1D(dir, "lep_pt",             100,  20.,  400.);
   histogram_mll_loose_           = book1D(dir, "mll_loose",          10,  0.,    50.);
 
   histogram_m_Hbb_            = book1D(dir, "m_Hbb",             40,  0.,  200.);
   histogram_dR_Hbb_           = book1D(dir, "dR_Hbb",           100,  0.,    5.);
+  histogram_m_Hww_            = book1D(dir, "m_Hww",             100,  0.,  400.);
+  histogram_m_HH_bbregCorr_   = book1D(dir, "m_HH_bbregCorr",    120,  0.,  1200.);
+  histogram_dPhi_met_lep_     = book1D(dir, "dPhi_met_lep",      36,  0.,  TMath::Pi());
+  histogram_dR_lep_Wjj_       = book1D(dir, "dR_lep_Wjj",        100,  0.,  5.);
+  histogram_dR_lep_Hbb_       = book1D(dir, "dR_lep_Hbb",        100,  0.,  5.);
+  histogram_pT_wlep_          = book1D(dir, "pT_wlep",           100,  0.,  500.);
+  histogram_dPhi_met_Hbb_     = book1D(dir, "dPhi_met_Hbb",      36,  0.,  TMath::Pi());
+  histogram_dPhi_met_Wjj_     = book1D(dir, "dPhi_met_Wjj",      36,  0.,  TMath::Pi());
   histogram_pT_Hbb_           = book1D(dir, "pT_Hbb",           100,  0.,  500.);
   histogram_m_Hbb_regCorr_            = book1D(dir, "m_Hbb_regCorr",    40,  0.,  200.);
 
@@ -141,9 +167,9 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_pT_HH_            = book1D(dir, "pT_HH",            100,  0.,  500.);
   histogram_pT_HHvis_          = book1D(dir, "pT_HHvis",          100,  0., 500.);
 
-  histogram_mT_W_             = book1D(dir, "mT_W",              50,  100.,  50000.);
-  histogram_mT_top_2particle_ = book1D(dir, "mT_top_2particle", 100,  100.,  100000.);
-  histogram_mT_top_3particle_ = book1D(dir, "mT_top_3particle", 100,  100.,  20000.);
+  histogram_mT_W_             = book1D(dir, "mT_W",              40,  0.,  200.);
+  histogram_mT_top_2particle_ = book1D(dir, "mT_top_2particle", 100,  0.,  400.);
+  histogram_mT_top_3particle_ = book1D(dir, "mT_top_3particle", 100,  0.,  400.);
 
   histogram_vbf_m_jj_         = book1D(dir, "vbf_m_jj",         150,  0., 1500.);
   histogram_vbf_dEta_jj_      = book1D(dir, "vbf_dEta_jj",      100,  0.,   10.);
@@ -169,32 +195,40 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_mjj_highestpt_         = book1D(dir, "mjj_highestpt",         100,  0., 1000.);
 
   histogram_numJetsForward_         = book1D(dir, "numJetsForward",         10,  -0.5, 10.5);
-  histogram_tau21_Hbb_         = book1D(dir, "tau21_Hbb",         10,  0., 1.);
+  histogram_tau21_Hbb_         = book1D(dir, "tau21_Hbb",         50,  0., 1.);
 
-  histogram_lep_px_         = book1D(dir, "lep_px",         40,  -200., 200.);
-  histogram_lep_py_         = book1D(dir, "lep_py",         40,  -200., 200.);
-  histogram_lep_pz_         = book1D(dir, "lep_pz",         100,  -500., 500.);
+  histogram_lep_pt_         = book1D(dir, "lep_pt",         40,  0., 200.);
+  histogram_lep_eta_         = book1D(dir, "lep_eta",         40,  0., 2.5);
+  histogram_lep_phi_         = book1D(dir, "lep_phi",         36,  0., TMath::Pi());
   histogram_lep_e_         = book1D(dir, "lep_e",         50,  0., 500.);
 
-  histogram_Hbb_lead_px_         = book1D(dir, "Hbb_lead_px",         100,  -500., 500.);
-  histogram_Hbb_lead_py_     = book1D(dir, "Hbb_lead_py",         100,  -500., 500.);
-  histogram_Hbb_lead_pz_         = book1D(dir, "Hbb_lead_pz",      200   ,  -1000, 1000);
-  histogram_Hbb_lead_e_         = book1D(dir, "Hbb_lead_e",         150,  0, 1500);
+  histogram_Hbb_lead_pt_         = book1D(dir, "Hbb_lead_pt",         100,  0., 500.);
+  histogram_Hbb_lead_eta_     = book1D(dir, "Hbb_lead_eta",         40,  0., 2.5);
+  histogram_Hbb_lead_phi_         = book1D(dir, "Hbb_lead_phi",      36,  0, TMath::Pi());
+  histogram_Hbb_lead_m_         = book1D(dir, "Hbb_lead_m",         50,  0, 20.);
 
-  histogram_Hbb_sublead_px_         = book1D(dir, "Hbb_sublead_px",         100,  -500., 500.);
-  histogram_Hbb_sublead_py_     = book1D(dir, "Hbb_sublead_py",         100,  -500., 500.);
-  histogram_Hbb_sublead_pz_         = book1D(dir, "Hbb_sublead_pz",         200,  -1000, 1000);
-  histogram_Hbb_sublead_e_         = book1D(dir, "Hbb_sublead_e",         150,  0., 1500);
+  histogram_Hbb_sublead_pt_         = book1D(dir, "Hbb_sublead_pt",         100,  0., 500.);
+  histogram_Hbb_sublead_eta_     = book1D(dir, "Hbb_sublead_eta",         40,  0., 2.5);
+  histogram_Hbb_sublead_phi_         = book1D(dir, "Hbb_sublead_phi",         36,  0, TMath::Pi());
+  histogram_Hbb_sublead_m_         = book1D(dir, "Hbb_sublead_m",         50,  0., 20);
 
-  histogram_Wjj_lead_px_         = book1D(dir, "Wjj_lead_px",         100,  -500., 500.);
-  histogram_Wjj_lead_py_     = book1D(dir, "Wjj_lead_py",         100,  -500., 500.);
-  histogram_Wjj_lead_pz_         = book1D(dir, "Wjj_lead_pz",         200,  -1000., 1000.);
-  histogram_Wjj_lead_e_         = book1D(dir, "Wjj_lead_e",         150,  0, 1500);
+  histogram_Wjj_lead_pt_         = book1D(dir, "Wjj_lead_pt",         100,  0., 500.);
+  histogram_Wjj_lead_eta_     = book1D(dir, "Wjj_lead_eta",         40,  0., 2.5);
+  histogram_Wjj_lead_phi_         = book1D(dir, "Wjj_lead_phi",         36,  0., TMath::Pi());
+  histogram_Wjj_lead_m_         = book1D(dir, "Wjj_lead_m",         50,  0, 20);
 
-  histogram_Wjj_sublead_px_         = book1D(dir, "Wjj_sublead_px",         100,  -500., 500.);
-  histogram_Wjj_sublead_py_     = book1D(dir, "Wjj_sublead_py",         100,  -500., 500.);
-  histogram_Wjj_sublead_pz_         = book1D(dir, "Wjj_sublead_pz",         200,  -1000., 1000.);
-  histogram_Wjj_sublead_e_         = book1D(dir, "Wjj_sublead_e",         150,  0., 1500.);
+  histogram_Wjj_sublead_pt_         = book1D(dir, "Wjj_sublead_pt",         100,  0., 500.);
+  histogram_Wjj_sublead_eta_     = book1D(dir, "Wjj_sublead_eta",         40,  0., 2.5);
+  histogram_Wjj_sublead_phi_         = book1D(dir, "Wjj_sublead_phi",         36,  0., TMath::Pi());
+  histogram_Wjj_sublead_m_         = book1D(dir, "Wjj_sublead_m",         50,  0., 20.);
+  
+  histogram_jet1_pt_         = book1D(dir, "jet1_pt",         100,  0., 500.);
+  histogram_jet1_eta_     = book1D(dir, "jet1_eta",         40,  0., 2.5);
+  histogram_jet1_phi_         = book1D(dir, "jet1_phi",         36,  0., TMath::Pi());
+
+  histogram_jet2_pt_         = book1D(dir, "jet2_pt",         100,  0., 500.);
+  histogram_jet2_eta_     = book1D(dir, "jet2_eta",         40,  0., 2.5);
+  histogram_jet2_phi_         = book1D(dir, "jet2_phi",         36,  0., TMath::Pi());
 
   /*  histogram_jpaCategory_      = book1D(dir, "jpaCategory",       15, -0.5, +14.5);
   if ( histogram_jpaCategory_ ) {
@@ -273,11 +307,16 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
                                         double dR_b1lep, double dR_b2lep,
                                         double mjj_highestpt,
                                         double numJetsForward, double tau21_Hbb, const RecoJetAK8* selJetAK8_Hbb,
-                                        double lep_px, double lep_py, double lep_pz, double lep_e,
-                                        double Hbb_lead_px, double Hbb_lead_py, double Hbb_lead_pz, double Hbb_lead_e,
-                                        double Hbb_sublead_px, double Hbb_sublead_py, double Hbb_sublead_pz, double Hbb_sublead_e,
-                                        double Wjj_lead_px, double Wjj_lead_py, double Wjj_lead_pz, double Wjj_lead_e,
-                                        double Wjj_sublead_px, double Wjj_sublead_py, double Wjj_sublead_pz, double Wjj_sublead_e,
+                                        double lep_eta, double lep_phi, double lep_e,
+                                        double Hbb_lead_pt, double Hbb_lead_eta, double Hbb_lead_phi, double Hbb_lead_m,
+                                        double Hbb_sublead_pt, double Hbb_sublead_eta, double Hbb_sublead_phi, double Hbb_sublead_m,
+                                        double Wjj_lead_pt, double Wjj_lead_eta, double Wjj_lead_phi, double Wjj_lead_m,
+                                        double Wjj_sublead_pt, double Wjj_sublead_eta, double Wjj_sublead_phi, double Wjj_sublead_m,
+                                        double jet1_pt, double jet1_eta, double jet1_phi,
+                                        double jet2_pt, double jet2_eta, double jet2_phi,
+                                        double m_Hww, double m_HH_bbregCorr, double dPhi_met_lep, double dR_lep_Wjj,
+                                        double dR_lep_Hbb, double pT_wlep, double dPhi_met_Hbb, double dPhi_met_Wjj,
+                                        double met_phi, double lepPairCharge_loose, double m_wlep,
                                         std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin0,
                                         std::map<std::string, std::map<std::string, double>>& lbnOutputs_resonant_spin2,
                                         double evtWeight)
@@ -290,11 +329,21 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
 
   fillWithOverFlow(histogram_HT_,               HT,                evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_met_,              met,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_met_phi_,              met_phi,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_lepPairCharge_loose_,              lepPairCharge_loose,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_wlep_,              m_wlep,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_met_LD_,              met_LD,               evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_lep_pt_,              lep_pt,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_mll_loose_,            mll_loose,               evtWeight, evtWeightErr);
-
+  fillWithOverFlow(histogram_m_Hww_,            m_Hww,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_m_HH_bbregCorr_,   m_HH_bbregCorr,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dPhi_met_lep_,   dPhi_met_lep,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dR_lep_Wjj_,   dR_lep_Wjj,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dR_lep_Hbb_,   dR_lep_Hbb,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_pT_wlep_,   pT_wlep,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dPhi_met_Hbb_,   dPhi_met_Hbb,               evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_dPhi_met_Wjj_,   dPhi_met_Wjj,               evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_m_Hbb_,            m_Hbb,             evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_pT_Hbb_,           pT_Hbb,            evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_dR_Hbb_,         dR_Hbb,          evtWeight, evtWeightErr);
@@ -311,9 +360,9 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   fillWithOverFlow(histogram_dPhi_HHvis_,            dPhi_HHvis,             evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_pT_HHvis_,          pT_HHvis,           evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_mT_W_,             mT_W,              evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_mT_top_2particle_, mT_top_2particle,  evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_mT_top_3particle_, mT_top_3particle,  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_mT_W_,             std::sqrt(mT_W),              evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_mT_top_2particle_, std::sqrt(mT_top_2particle),  evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_mT_top_3particle_, std::sqrt(mT_top_3particle),  evtWeight, evtWeightErr);
 
   fillWithOverFlow(histogram_vbf_m_jj_,         vbf_m_jj,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_vbf_dEta_jj_,      vbf_dEta_jj,       evtWeight, evtWeightErr);
@@ -341,30 +390,37 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   fillWithOverFlow(histogram_numJetsForward_,      numJetsForward,       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_tau21_Hbb_,      tau21_Hbb,       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_lep_px_,     lep_px,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_lep_py_,         lep_py,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_lep_pz_,      lep_pz,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_lep_eta_,         lep_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_lep_phi_,      lep_phi,       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_lep_e_,      lep_e,       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Hbb_lead_px_,     Hbb_lead_px,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_lead_py_,         Hbb_lead_py,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_lead_pz_,      Hbb_lead_pz,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_lead_e_,      Hbb_lead_e,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_pt_,     Hbb_lead_pt,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_eta_,         Hbb_lead_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_phi_,      Hbb_lead_phi,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_m_,      Hbb_lead_m,       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Hbb_sublead_px_,     Hbb_sublead_px,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_sublead_py_,         Hbb_sublead_py,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_sublead_pz_,      Hbb_sublead_pz,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_sublead_e_,      Hbb_sublead_e,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_pt_,     Hbb_sublead_pt,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_eta_,         Hbb_sublead_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_phi_,      Hbb_sublead_phi,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_m_,      Hbb_sublead_m,       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Wjj_lead_px_,     Wjj_lead_px,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_lead_py_,         Wjj_lead_py,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_lead_pz_,      Wjj_lead_pz,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_lead_e_,      Wjj_lead_e,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_pt_,     Wjj_lead_pt,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_eta_,         Wjj_lead_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_phi_,      Wjj_lead_phi,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_m_,      Wjj_lead_m,       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Wjj_sublead_px_,     Wjj_sublead_px,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_sublead_py_,         Wjj_sublead_py,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_sublead_pz_,      Wjj_sublead_pz,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_sublead_e_,      Wjj_sublead_e,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_pt_,     Wjj_sublead_pt,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_eta_,         Wjj_sublead_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_phi_,      Wjj_sublead_phi,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_m_,      Wjj_sublead_m,       evtWeight, evtWeightErr);
+
+  fillWithOverFlow(histogram_jet1_pt_,     jet1_pt,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet1_eta_,         jet1_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet1_phi_,      jet1_phi,       evtWeight, evtWeightErr);
+
+  fillWithOverFlow(histogram_jet2_pt_,     jet2_pt,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet2_eta_,      jet2_eta,          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet2_phi_,      jet2_phi,       evtWeight, evtWeightErr);
 
 
   //  fillWithOverFlow(histogram_jpaCategory_,      jpa.jpaCategory(), evtWeight, evtWeightErr);
