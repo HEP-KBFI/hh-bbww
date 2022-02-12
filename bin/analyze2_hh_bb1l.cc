@@ -453,6 +453,7 @@ int main(int argc, char* argv[])
   bool fillHistograms_resonant_spin2 = cfg_analyze.getParameter<bool>("fillHistograms_resonant_spin2");
   bool use2d = cfg_analyze.getParameter<bool>("use2d");
   bool fill_resolved_2b = cfg_analyze.getParameter<bool>("fill_resolved_2b");
+  bool inputvar_correlation = cfg_analyze.getParameter<bool>("inputvar_correlation");
 
   // initialize BDT-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_BDT = cfg_analyze.getParameter<bool>("fillHistograms_BDT");
@@ -969,7 +970,7 @@ int main(int argc, char* argv[])
           Form("%s/sel/metFilters", histogramDir.data()), era_string, central_or_shift));
         selHistManager->metFilters_->bookHistograms(fs);
         selHistManager->evt_ = new EvtHistManager2_hh_bb1l(makeHistManager_cfg(process_and_genMatch,
-          Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift), plot_DNN_correlation);
+         Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift), plot_DNN_correlation, inputvar_correlation);
                selHistManager->evt_->bookHistograms(fs);
         selHistManager->genKinematics_HH_ = new HHGenKinematicsHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/genKinematics_HH", histogramDir.data()), era_string, central_or_shift),
@@ -993,7 +994,7 @@ int main(int argc, char* argv[])
           analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc, &eventCategory_LBN,
           isDEBUG,
           fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2,
-         split_resonant_training, use2d);
+          split_resonant_training, use2d);
         selHistManager->datacard_LBN_->bookHistograms(fs);
       }
 
@@ -2145,7 +2146,6 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet_jj_sublead = ( selJets_jj.size() >= 2 ) ? selJets_jj[1] : nullptr;
     Particle::LorentzVector selJetP4_jj_sublead;
     if ( selJet_jj_sublead ) selJetP4_jj_sublead = selJet_jj_sublead->p4();
-
     // select VBF jet candidates
     std::vector<const RecoJet*> selJetsAK4_vbf;
     if ( selJetAK8_Hbb ) {
@@ -2420,7 +2420,7 @@ int main(int argc, char* argv[])
       {"met_pz",                  metP4.pz()},
       {"met_e",                  metP4.energy()},
       {"numBJets_jpa_medium",     numBJets_jpa_medium},
-      {"lep_pt",                  selLepton->pt()},
+      {"lep_pt",                  selLeptonP4.pt()},
       {"lep_conePt",              comp_lep_conePt(*selLepton)},
       {"lep_eta",                 selLepton->eta()},
       {"lep_e",                 selLepton->cone_p4().energy()},
@@ -2546,7 +2546,7 @@ int main(int argc, char* argv[])
         ("bjet2_btagCSV",        bjet2_btagCSV)
         ("wjet1_btagCSV",        wjet1_btagCSV)
         ("wjet2_btagCSV",        wjet2_btagCSV)
-        ("lep_pt",               selLepton->pt())
+        ("lep_pt",               selLeptonP4.pt())
         ("lep_conePt",           comp_lep_conePt(*selLepton))
         ("lep_eta",              selLepton->eta())
         ("lep_phi",              selLepton->phi())
@@ -2819,7 +2819,7 @@ int main(int argc, char* argv[])
           selHistManager->BJetsAK4_medium_->fillHistograms(selBJetsAK4_medium, evtWeight);
           selHistManager->met_->fillHistograms(met, mhtP4, met_LD, evtWeight);
           selHistManager->metFilters_->fillHistograms(metFilters, evtWeight);
-          bool fill = (fill_resolved_2b) ? selBJetsAK4_medium.size()==2 : true;
+          bool fill = (fill_resolved_2b) ? (!selJetAK8_Hbb && selBJetsAK4_medium.size()>=2) : true;
           if (fill)
           {
             selHistManager->evt_->fillHistograms(
@@ -2828,7 +2828,7 @@ int main(int argc, char* argv[])
                (int)selBJetsAK4_medium.size(),
                HT,
                met.pt(), met_LD,
-               selLepton->pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0,
+               selLeptonP4.pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0,
                m_Hbb, pT_Hbb, dR_Hbb, m_Hbb_regCorr,
                std::abs(dPhi_Hww), pT_Hww,
                m_HH_B2G_18_008, m_HH_analytic, m_HHvis, m_HH, pT_HH, std::abs(dPhi_HHvis), pT_HHvis,
@@ -2843,13 +2843,10 @@ int main(int argc, char* argv[])
                mjj_highestpt,
                (int)selJetsForward.size(), tau21_Hbb,
                selJetAK8_Hbb,
-               std::abs(selLepton->cone_p4().eta()), std::abs(selLepton->cone_p4().phi()), selLepton->cone_p4().e(),
-               selJetP4_Hbb_lead.pt(), std::abs(selJetP4_Hbb_lead.eta()), std::abs(selJetP4_Hbb_lead.phi()), selJetP4_Hbb_lead.mass(),
-               selJetP4_Hbb_sublead.pt(), std::abs(selJetP4_Hbb_sublead.eta()), std::abs(selJetP4_Hbb_sublead.phi()), selJetP4_Hbb_sublead.mass(),
-               selJetP4_Wjj_lead.pt(), std::abs(selJetP4_Wjj_lead.eta()), std::abs(selJetP4_Wjj_lead.phi()), selJetP4_Wjj_lead.mass(),
-               selJetP4_Wjj_sublead.pt(), std::abs(selJetP4_Wjj_sublead.eta()), std::abs(selJetP4_Wjj_sublead.phi()), selJetP4_Wjj_sublead.mass(),
-               selJetP4_jj_lead.pt(), std::abs(selJetP4_jj_lead.eta()), std::abs(selJetP4_jj_lead.phi()),
-               selJetP4_jj_sublead.pt(), std::abs(selJetP4_jj_sublead.eta()), std::abs(selJetP4_jj_sublead.phi()),
+               selLepton->cone_p4(),
+               selJetP4_Hbb_lead, selJetP4_Hbb_sublead,
+               selJetP4_Wjj_lead, selJetP4_Wjj_sublead,
+               selJetP4_jj_lead, selJetP4_jj_sublead,
                m_Hww, m_HH_bbregCorr, std::abs(dPhi_met_lep), dR_lep_Wjj,
                dR_lep_Hbb, pT_wlep, std::abs(dPhi_met_Hbb), std::abs(dPhi_met_Wjj),
                std::abs(met.phi()), preselLeptonsFull.size() >= 2 ? preselLeptonsFull[0]->charge() + preselLeptonsFull[1]->charge() : 999,

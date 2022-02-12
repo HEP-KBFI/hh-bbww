@@ -20,7 +20,8 @@ class EvtHistManager2_hh_bb1l
   : public HistManagerBase
 {
 public:
-  EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation);
+  EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation,
+                          const bool plot_DNN_inputvar_correlation=0);
   ~EvtHistManager2_hh_bb1l() {}
 
   /// book and fill histograms
@@ -46,13 +47,10 @@ public:
                  double dR_b1lep, double dR_b2lep,
                  double mjj_highestpt,
                  double numJetsForward, double tau21_Hbb, const RecoJetAK8* selJetAK8_Hbb,
-                 double lep_eta, double lep_phi, double lep_e,
-                 double Hbb_lead_pt, double Hbb_lead_eta, double Hbb_lead_phi, double Hbb_lead_m,
-                 double Hbb_sublead_pt, double Hbb_sublead_eta, double Hbb_sublead_phi, double Hbb_sublead_m,
-                 double Wjj_lead_pt, double Wjj_lead_eta, double Wjj_lead_phi, double Wjj_lead_m,
-                 double Wjj_sublead_pt, double Wjj_sublead_eta, double Wjj_sublead_phi, double Wjj_sublead_m,
-                 double jet1_pt, double jet1_eta, double jet1_phi,
-                 double jet2_pt, double jet2_eta, double jet2_phi,
+                 const Particle::LorentzVector& lep,
+                 const Particle::LorentzVector& Hbb_lead, const Particle::LorentzVector& Hbb_sublead,
+                 const Particle::LorentzVector& Wjj_lead, const Particle::LorentzVector& Wjj_sublead,
+                 const Particle::LorentzVector& jet1, const Particle::LorentzVector& jet2,
                  double m_Hww, double m_HH_bbregCorr, double dPhi_met_lep, double dR_lep_Wjj,
                  double dR_lep_Hbb, double pT_wlep, double dPhi_met_Hbb, double dPhi_met_Wjj,
                  double met_phi, double lepPairCharge_loose, double m_wlep,
@@ -168,6 +166,10 @@ public:
   TH1* histogram_dPhi_met_Hbb_;
   TH1* histogram_dPhi_met_Wjj_;
   TH1* histogram_lepPairCharge_loose_;
+  TH1* histogram_sumX_;
+  TH1* histogram_sumweight_;
+  TH1* histogram_sumX2_;
+  TH2* histogram_sumXY_;
   TH2* histogram_TT_resolved_270_300_spin2_;
   TH2* histogram_TT_resolved_300_400_spin2_;
   TH2* histogram_W_270_300_spin2_;
@@ -222,6 +224,7 @@ public:
   float HH_300_spin0;
   float HH_400_spin0;
   bool plot_DNN_correlation_;
+  bool plot_DNN_inputvar_correlation_;
 };
 
 #endif
