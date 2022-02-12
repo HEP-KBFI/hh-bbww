@@ -20,8 +20,11 @@ process.makePlots = cms.PSet(
     processData = cms.string("data_obs"),
     processesBackground = cms.vstring(),
     processSignal = cms.string("signal_ggf_spin0_400_hh"),
+    processesSignal = cms.vstring("signal_ggf_spin0_400_hh", "signal_ggf_spin0_800_hh"),
     scaleSignal = cms.double(scaleSignal),
-    legendEntrySignal = cms.string("%dx GGF#rightarrow HH#rightarrow bbWW" % scaleSignal),
+    legendEntrySignal = cms.string("%dx GGF#rightarrow HH(400)#rightarrow bbWW" % scaleSignal),
+    legendEntriesSignal = cms.vstring("%dx GGF#rightarrow HH(400)#rightarrow bbWW" % scaleSignal,
+                                      "%dx GGF#rightarrow HH(800)#rightarrow bbWW" % scaleSignal),
     categories = cms.VPSet(),
     distributions = cms.VPSet(
         cms.PSet(
@@ -85,6 +88,7 @@ process.makePlots = cms.PSet(
             data_flips = cms.string("1.0 +/- 0.20"),
             Convs = cms.string("1.0 +/- 0.20"),
             signal_ggf_spin0_400_hh = cms.string("1.0 +/- 0.20"),
+            signal_ggf_spin0_800_hh = cms.string("1.0 +/- 0.20"),
             signal_ggf_nonresonant_hh = cms.string("1.0 +/- 0.20"),
         ),
         shape = cms.PSet(
@@ -102,7 +106,7 @@ process.makePlots = cms.PSet(
     showUncertainty = cms.bool(False),
 
     legendTextSize = cms.double(0.050),
-    legendPosX = cms.double(0.570),
+    legendPosX = cms.double(0.470),
     legendPosY = cms.double(0.510),
     legendSizeX = cms.double(0.360),
     legendSizeY = cms.double(0.420),
