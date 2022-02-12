@@ -7,9 +7,11 @@
 #include <TAxis.h> // TAxis
 #include <TMath.h> // TMath::Pi()
 
-EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation)
+EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation,
+                                                 const bool plot_DNN_inputvar_correlation)
   : HistManagerBase(cfg)
   , plot_DNN_correlation_(plot_DNN_correlation)
+  , plot_DNN_inputvar_correlation_(plot_DNN_inputvar_correlation)
 {
   central_or_shiftOptions_["numJets"] = { "central" };
   central_or_shiftOptions_["numBJets_loose"] = { "central" };
@@ -119,6 +121,10 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, 
   central_or_shiftOptions_["dPhi_met_Hbb"] = { "central" };
   central_or_shiftOptions_["dPhi_met_Wjj"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
+  central_or_shiftOptions_["sumXY"] = { "central" };
+  central_or_shiftOptions_["sumX"] = { "central" };
+  central_or_shiftOptions_["sumX2"] = { "central" };
+  central_or_shiftOptions_["sumweight"] = { "central" };
 }
 
 const TH1 *
@@ -194,7 +200,7 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   
   histogram_mjj_highestpt_         = book1D(dir, "mjj_highestpt",         100,  0., 1000.);
 
-  histogram_numJetsForward_         = book1D(dir, "numJetsForward",         10,  -0.5, 10.5);
+  histogram_numJetsForward_         = book1D(dir, "numJetsForward",         10,  -0.5, 9.5);
   histogram_tau21_Hbb_         = book1D(dir, "tau21_Hbb",         50,  0., 1.);
 
   histogram_lep_pt_         = book1D(dir, "lep_pt",         40,  0., 200.);
@@ -255,6 +261,64 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
     xAxis_evtCategory->SetBinLabel(4, "Boosted");
   }
   histogram_EventCounter_     = book1D(dir, "EventCounter",       1, -0.5,  +0.5);
+  if ( plot_DNN_inputvar_correlation_ ) {
+    histogram_sumXY_ = book2D(dir, "sumXY", 68, -0.5,  67.5, 68, -0.5, 67.5);
+    histogram_sumX2_ = book1D(dir, "sumX2", 68, -0.5, 67.5);
+    histogram_sumX_ = book1D(dir, "sumX", 68, -0.5, 67.5);
+    histogram_sumweight_ = book1D(dir, "sumweight", 1, 0.5, 1.5);
+    std::vector<std::string> var;
+    std::vector<std::string> var_{"pt", "eta", "phi", "mass"};
+    std::vector<std::string> part{"bjet1", "bjet2", "wjet1", "wjet2", "jet1", "jet2", "lep"};
+    for (unsigned int ipart=0; ipart<part.size(); ipart++) {
+      for (unsigned int ivar=0; ivar<var_.size(); ivar++){
+        var.push_back(Form("%s_%s", part[ipart].data(), var_[ivar].data()));
+      }
+    }
+    var.push_back("numJets");
+    var.push_back("bjet1_btagCSV");
+    var.push_back("bjet2_btagCSV");
+    var.push_back("mindr_lep1_jet");
+    var.push_back("pT_Hbb");
+    var.push_back("m_Hbb_regCorr");
+    var.push_back("dR_Hbb");
+    var.push_back("mT_W");
+    var.push_back("HT");
+    var.push_back("lepPairType_loose");
+    var.push_back("pT_HH");
+    var.push_back("mll_loose");
+    var.push_back("avg_dr_jet_central");
+    var.push_back("wjet2_btagCSV");
+    var.push_back("numBJets_loose");
+    var.push_back("mbb_medium");
+    var.push_back("dR_b1lep");
+    var.push_back("mT_top_2particle");
+    var.push_back("mjj_highestpt");
+    var.push_back("numJetsForward");
+    var.push_back("wjet1_btagCSV");
+    var.push_back("dR_b2lep");
+    var.push_back("pT_HHvis");
+    var.push_back("m_Hww");
+    var.push_back("m_HH_bbregCorr");
+    var.push_back("dPhi_met_lep");
+    var.push_back("dR_lep_Wjj");
+    var.push_back("dR_lep_Hbb");
+    var.push_back("pT_wlep");
+    var.push_back("dPhi_met_Hbb");
+    var.push_back("dPhi_met_Wjj");
+    var.push_back("met_pt");
+    var.push_back("met_phi");
+    var.push_back("numBJets_medium");
+    var.push_back("tau21_Hbb");
+    var.push_back("m_Hbb");
+    var.push_back("lepPairCharge_loose");
+    var.push_back("dPhi_HHvis");
+    var.push_back("m_HH_B2G_18_008");
+    var.push_back("mT_top_3particle");
+    for (int ibin=1; ibin<=histogram_sumXY_->GetNbinsX(); ibin++){
+      histogram_sumXY_->GetXaxis()->SetBinLabel(ibin, var[ibin-1].data());
+      histogram_sumXY_->GetYaxis()->SetBinLabel(ibin, var[ibin-1].data());
+    }
+  }
   if ( plot_DNN_correlation_ ) {
     histogram_TT_resolved_270_300_spin2_ = book2D(dir, "TT_resolved_270_300_spin2",       10, 0,  1., 10, 0., 1.);
     histogram_TT_resolved_300_400_spin2_ = book2D(dir, "TT_resolved_300_400_spin2",       10, 0,  1., 10, 0., 1.);
@@ -307,13 +371,10 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
                                         double dR_b1lep, double dR_b2lep,
                                         double mjj_highestpt,
                                         double numJetsForward, double tau21_Hbb, const RecoJetAK8* selJetAK8_Hbb,
-                                        double lep_eta, double lep_phi, double lep_e,
-                                        double Hbb_lead_pt, double Hbb_lead_eta, double Hbb_lead_phi, double Hbb_lead_m,
-                                        double Hbb_sublead_pt, double Hbb_sublead_eta, double Hbb_sublead_phi, double Hbb_sublead_m,
-                                        double Wjj_lead_pt, double Wjj_lead_eta, double Wjj_lead_phi, double Wjj_lead_m,
-                                        double Wjj_sublead_pt, double Wjj_sublead_eta, double Wjj_sublead_phi, double Wjj_sublead_m,
-                                        double jet1_pt, double jet1_eta, double jet1_phi,
-                                        double jet2_pt, double jet2_eta, double jet2_phi,
+                                        const Particle::LorentzVector& lep,
+                                        const Particle::LorentzVector& Hbb_lead, const Particle::LorentzVector& Hbb_sublead,
+                                        const Particle::LorentzVector& Wjj_lead, const Particle::LorentzVector& Wjj_sublead,
+                                        const Particle::LorentzVector& jet1, const Particle::LorentzVector& jet2,
                                         double m_Hww, double m_HH_bbregCorr, double dPhi_met_lep, double dR_lep_Wjj,
                                         double dR_lep_Hbb, double pT_wlep, double dPhi_met_Hbb, double dPhi_met_Wjj,
                                         double met_phi, double lepPairCharge_loose, double m_wlep,
@@ -390,37 +451,37 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   fillWithOverFlow(histogram_numJetsForward_,      numJetsForward,       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_tau21_Hbb_,      tau21_Hbb,       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_lep_eta_,         lep_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_lep_phi_,      lep_phi,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_lep_e_,      lep_e,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_lep_eta_,         std::abs(lep.eta()),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_lep_phi_,      std::abs(lep.phi()),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_lep_e_,      lep.e(),       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Hbb_lead_pt_,     Hbb_lead_pt,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_lead_eta_,         Hbb_lead_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_lead_phi_,      Hbb_lead_phi,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_lead_m_,      Hbb_lead_m,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_pt_,     Hbb_lead.pt(),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_eta_,         std::abs(Hbb_lead.eta()), evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_phi_,      std::abs(Hbb_lead.phi()),   evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_lead_m_,      Hbb_lead.mass(),       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Hbb_sublead_pt_,     Hbb_sublead_pt,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_sublead_eta_,         Hbb_sublead_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_sublead_phi_,      Hbb_sublead_phi,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Hbb_sublead_m_,      Hbb_sublead_m,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_pt_,     Hbb_sublead.pt(),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_eta_,         std::abs(Hbb_sublead.eta()),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_phi_,      std::abs(Hbb_sublead.phi()),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Hbb_sublead_m_,      Hbb_sublead.mass(),       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Wjj_lead_pt_,     Wjj_lead_pt,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_lead_eta_,         Wjj_lead_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_lead_phi_,      Wjj_lead_phi,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_lead_m_,      Wjj_lead_m,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_pt_,     Wjj_lead.pt(),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_eta_,         std::abs(Wjj_lead.eta()),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_phi_,      std::abs(Wjj_lead.phi()),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_lead_m_,      Wjj_lead.mass(),       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_Wjj_sublead_pt_,     Wjj_sublead_pt,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_sublead_eta_,         Wjj_sublead_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_sublead_phi_,      Wjj_sublead_phi,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_Wjj_sublead_m_,      Wjj_sublead_m,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_pt_,     Wjj_sublead.pt(),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_eta_,         std::abs(Wjj_sublead.eta()),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_phi_,      std::abs(Wjj_sublead.phi()),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_Wjj_sublead_m_,      Wjj_sublead.mass(),       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_jet1_pt_,     jet1_pt,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_jet1_eta_,         jet1_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_jet1_phi_,      jet1_phi,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet1_pt_,     jet1.pt(),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet1_eta_,         std::abs(jet1.eta()),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet1_phi_,      std::abs(jet1.phi()),       evtWeight, evtWeightErr);
 
-  fillWithOverFlow(histogram_jet2_pt_,     jet2_pt,       evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_jet2_eta_,      jet2_eta,          evtWeight, evtWeightErr);
-  fillWithOverFlow(histogram_jet2_phi_,      jet2_phi,       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet2_pt_,     jet2.pt(),       evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet2_eta_,      std::abs(jet2.eta()),          evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_jet2_phi_,      std::abs(jet2.phi()),       evtWeight, evtWeightErr);
 
 
   //  fillWithOverFlow(histogram_jpaCategory_,      jpa.jpaCategory(), evtWeight, evtWeightErr);
@@ -431,7 +492,33 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   else if ( numBJets_medium >= 1 ) evtCategory = 1;
   fillWithOverFlow(histogram_evtCategory_,      evtCategory,       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_EventCounter_,     0.,                evtWeight, evtWeightErr);
-
+  if ( plot_DNN_inputvar_correlation_ ) {
+    std::vector<double> input_var
+    {
+      Hbb_lead.pt(), Hbb_lead.eta(), Hbb_lead.phi(), Hbb_lead.mass(),
+      Hbb_sublead.pt(), Hbb_sublead.eta(), Hbb_sublead.phi(), Hbb_sublead.mass(),
+      Wjj_lead.pt(), Wjj_lead.eta(), Wjj_lead.phi(), Wjj_lead.mass(),
+      Wjj_sublead.pt(), Wjj_sublead.eta(), Wjj_sublead.phi(), Wjj_sublead.mass(),
+      jet1.pt(), jet1.eta(), jet1.phi(), jet1.mass(),
+      jet2.pt(), jet2.eta(), jet2.phi(), jet2.mass(),
+        lep.pt(), lep.eta(), lep.phi(), lep.mass(),
+        double(numJets), bjet1_btagCSV, bjet2_btagCSV, mindr_lep1_jet, pT_Hbb,
+        m_Hbb_regCorr, dR_Hbb, sqrt(mT_W), HT, lepPairType_loose, pT_HH, mll_loose,
+        avg_dr_jet_central, wjet2_btagCSV, double(numBJets_loose), mbb_medium, dR_b1lep,
+        sqrt(mT_top_2particle), mjj_highestpt, double(numJetsForward), wjet1_btagCSV, dR_b2lep,
+        pT_HHvis, m_Hww, m_HH_bbregCorr, dPhi_met_lep, dR_lep_Wjj, dR_lep_Hbb, pT_wlep,
+        dPhi_met_Hbb, dPhi_met_Wjj, met, met_phi, double(numBJets_medium), tau21_Hbb, m_Hbb,
+        lepPairCharge_loose, dPhi_HHvis, m_HH_B2G_18_008, mT_top_3particle
+     };
+    histogram_sumweight_->SetBinContent(1, histogram_sumweight_->GetBinContent(1)+evtWeight);
+    for (int xbin=1; xbin<= histogram_sumXY_->GetNbinsX(); xbin++){
+      histogram_sumX_->SetBinContent(xbin, histogram_sumX_->GetBinContent(xbin)+(input_var[xbin-1]));
+      histogram_sumX2_->SetBinContent(xbin, histogram_sumX2_->GetBinContent(xbin)+(input_var[xbin-1]*input_var[xbin-1]));
+      for (int ybin=1; ybin<= histogram_sumXY_->GetYaxis()->GetNbins(); ybin++){
+        histogram_sumXY_->SetBinContent(xbin, ybin, histogram_sumXY_->GetBinContent(xbin, ybin)+(input_var[xbin-1]*input_var[ybin-1]));
+      }
+    }
+  }
   if ( plot_DNN_correlation_ ) {
     for ( std::map<std::string, std::map<std::string, double>>::const_iterator gen_mHH_or_bmName = lbnOutputs_resonant_spin2.begin();
           gen_mHH_or_bmName != lbnOutputs_resonant_spin2.end(); ++gen_mHH_or_bmName ) {
