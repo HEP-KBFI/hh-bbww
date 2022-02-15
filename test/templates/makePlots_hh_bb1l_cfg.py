@@ -129,6 +129,11 @@ process.makePlots.distributions.extend([
         yAxisTitle = cms.string("dN/d#Delta R^{b1lep}")
     ),
     cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/dR_b2lep"),
+        xAxisTitle = cms.string("#Delta R^{b2lep}"),
+        yAxisTitle = cms.string("dN/d#Delta R^{b2lep}")
+    ),
+    cms.PSet(
         histogramName = cms.string("sel/evt/$PROCESS/dR_lep_Wjj"),
         xAxisTitle = cms.string("#DeltaR(lep,Wjj)"),
         yAxisTitle = cms.string("dN/d#DeltaR(lep,Wjj)")
@@ -147,6 +152,21 @@ process.makePlots.distributions.extend([
         histogramName = cms.string("sel/evt/$PROCESS/bjet1_btagCSV"),
         xAxisTitle = cms.string("bjet1_btagCSV"),
         yAxisTitle = cms.string("dN/dbjet1_btagCSV")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/bjet2_btagCSV"),
+        xAxisTitle = cms.string("bjet2_btagCSV"),
+        yAxisTitle = cms.string("dN/dbjet2_btagCSV")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/wjet1_btagCSV"),
+        xAxisTitle = cms.string("wjet1_btagCSV"),
+        yAxisTitle = cms.string("dN/dwjet1_btagCSV")
+    ),
+    cms.PSet(
+        histogramName = cms.string("sel/evt/$PROCESS/wjet2_btagCSV"),
+        xAxisTitle = cms.string("wjet2_btagCSV"),
+        yAxisTitle = cms.string("dN/dwjet2_btagCSV")
     ),
     cms.PSet(
         histogramName = cms.string("sel/evt/$PROCESS/selLepton_type"),
