@@ -7,11 +7,9 @@
 #include <TAxis.h> // TAxis
 #include <TMath.h> // TMath::Pi()
 
-EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation,
-                                                 const bool plot_DNN_inputvar_correlation)
+EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation)
   : HistManagerBase(cfg)
   , plot_DNN_correlation_(plot_DNN_correlation)
-  , plot_DNN_inputvar_correlation_(plot_DNN_inputvar_correlation)
 {
   central_or_shiftOptions_["numJets"] = { "central" };
   central_or_shiftOptions_["numBJets_loose"] = { "central" };
@@ -121,10 +119,6 @@ EvtHistManager2_hh_bb1l::EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, 
   central_or_shiftOptions_["dPhi_met_Hbb"] = { "central" };
   central_or_shiftOptions_["dPhi_met_Wjj"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
-  central_or_shiftOptions_["sumXY"] = { "central" };
-  central_or_shiftOptions_["sumX"] = { "central" };
-  central_or_shiftOptions_["sumX2"] = { "central" };
-  central_or_shiftOptions_["sumweight"] = { "central" };
 }
 
 const TH1 *
@@ -143,7 +137,7 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_HT_               = book1D(dir, "HT",               150,  0., 1500.);
   histogram_met_              = book1D(dir, "met",              100,  0., 1000.);
   histogram_met_phi_          = book1D(dir, "met_phi",          36,  0., TMath::Pi());
-  histogram_lepPairCharge_loose_        = book1D(dir, "lepPairCharge_loose",          5,  -2.5, 2.5);
+  histogram_lepPairCharge_loose_        = book1D(dir, "lepPairCharge_loose",          6,  -2.5, 3.5);
   histogram_m_wlep_           = book1D(dir, "m_wlep",             50,  0.,  200.);
   histogram_met_LD_            = book1D(dir, "met_LD",              100,  0., 1000.);
 
@@ -190,7 +184,7 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
   histogram_mindr_lep1_jet_         = book1D(dir, "mindr_lep1_jet",         50,  0., 5.);
   histogram_avg_dr_jet_central_     = book1D(dir, "avg_dr_jet_central",         50,  0., 5.);
 
-  histogram_lepPairType_loose_         = book1D(dir, "lepPairType_loose",         2,  0.5, 999.5);
+  histogram_lepPairType_loose_         = book1D(dir, "lepPairType_loose",         3,  -1.5, 1.5);
   histogram_selLepton_type_         = book1D(dir, "selLepton_type",         2,  -0.5, 1.5);
 
   histogram_mbb_medium_         = book1D(dir, "mbb_medium",         40,  0., 200.);
@@ -261,64 +255,6 @@ EvtHistManager2_hh_bb1l::bookHistograms(TFileDirectory & dir)
     xAxis_evtCategory->SetBinLabel(4, "Boosted");
   }
   histogram_EventCounter_     = book1D(dir, "EventCounter",       1, -0.5,  +0.5);
-  if ( plot_DNN_inputvar_correlation_ ) {
-    histogram_sumXY_ = book2D(dir, "sumXY", 68, -0.5,  67.5, 68, -0.5, 67.5);
-    histogram_sumX2_ = book1D(dir, "sumX2", 68, -0.5, 67.5);
-    histogram_sumX_ = book1D(dir, "sumX", 68, -0.5, 67.5);
-    histogram_sumweight_ = book1D(dir, "sumweight", 1, 0.5, 1.5);
-    std::vector<std::string> var;
-    std::vector<std::string> var_{"pt", "eta", "phi", "mass"};
-    std::vector<std::string> part{"bjet1", "bjet2", "wjet1", "wjet2", "jet1", "jet2", "lep"};
-    for (unsigned int ipart=0; ipart<part.size(); ipart++) {
-      for (unsigned int ivar=0; ivar<var_.size(); ivar++){
-        var.push_back(Form("%s_%s", part[ipart].data(), var_[ivar].data()));
-      }
-    }
-    var.push_back("numJets");
-    var.push_back("bjet1_btagCSV");
-    var.push_back("bjet2_btagCSV");
-    var.push_back("mindr_lep1_jet");
-    var.push_back("pT_Hbb");
-    var.push_back("m_Hbb_regCorr");
-    var.push_back("dR_Hbb");
-    var.push_back("mT_W");
-    var.push_back("HT");
-    var.push_back("lepPairType_loose");
-    var.push_back("pT_HH");
-    var.push_back("mll_loose");
-    var.push_back("avg_dr_jet_central");
-    var.push_back("wjet2_btagCSV");
-    var.push_back("numBJets_loose");
-    var.push_back("mbb_medium");
-    var.push_back("dR_b1lep");
-    var.push_back("mT_top_2particle");
-    var.push_back("mjj_highestpt");
-    var.push_back("numJetsForward");
-    var.push_back("wjet1_btagCSV");
-    var.push_back("dR_b2lep");
-    var.push_back("pT_HHvis");
-    var.push_back("m_Hww");
-    var.push_back("m_HH_bbregCorr");
-    var.push_back("dPhi_met_lep");
-    var.push_back("dR_lep_Wjj");
-    var.push_back("dR_lep_Hbb");
-    var.push_back("pT_wlep");
-    var.push_back("dPhi_met_Hbb");
-    var.push_back("dPhi_met_Wjj");
-    var.push_back("met_pt");
-    var.push_back("met_phi");
-    var.push_back("numBJets_medium");
-    var.push_back("tau21_Hbb");
-    var.push_back("m_Hbb");
-    var.push_back("lepPairCharge_loose");
-    var.push_back("dPhi_HHvis");
-    var.push_back("m_HH_B2G_18_008");
-    var.push_back("mT_top_3particle");
-    for (int ibin=1; ibin<=histogram_sumXY_->GetNbinsX(); ibin++){
-      histogram_sumXY_->GetXaxis()->SetBinLabel(ibin, var[ibin-1].data());
-      histogram_sumXY_->GetYaxis()->SetBinLabel(ibin, var[ibin-1].data());
-    }
-  }
   if ( plot_DNN_correlation_ ) {
     histogram_TT_resolved_270_300_spin2_ = book2D(dir, "TT_resolved_270_300_spin2",       10, 0,  1., 10, 0., 1.);
     histogram_TT_resolved_300_400_spin2_ = book2D(dir, "TT_resolved_300_400_spin2",       10, 0,  1., 10, 0., 1.);
@@ -492,33 +428,6 @@ EvtHistManager2_hh_bb1l::fillHistograms(int numJets,
   else if ( numBJets_medium >= 1 ) evtCategory = 1;
   fillWithOverFlow(histogram_evtCategory_,      evtCategory,       evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_EventCounter_,     0.,                evtWeight, evtWeightErr);
-  if ( plot_DNN_inputvar_correlation_ ) {
-    std::vector<double> input_var
-    {
-      Hbb_lead.pt(), Hbb_lead.eta(), Hbb_lead.phi(), Hbb_lead.mass(),
-      Hbb_sublead.pt(), Hbb_sublead.eta(), Hbb_sublead.phi(), Hbb_sublead.mass(),
-      Wjj_lead.pt(), Wjj_lead.eta(), Wjj_lead.phi(), Wjj_lead.mass(),
-      Wjj_sublead.pt(), Wjj_sublead.eta(), Wjj_sublead.phi(), Wjj_sublead.mass(),
-      jet1.pt(), jet1.eta(), jet1.phi(), jet1.mass(),
-      jet2.pt(), jet2.eta(), jet2.phi(), jet2.mass(),
-        lep.pt(), lep.eta(), lep.phi(), lep.mass(),
-        double(numJets), bjet1_btagCSV, bjet2_btagCSV, mindr_lep1_jet, pT_Hbb,
-        m_Hbb_regCorr, dR_Hbb, sqrt(mT_W), HT, lepPairType_loose, pT_HH, mll_loose,
-        avg_dr_jet_central, wjet2_btagCSV, double(numBJets_loose), mbb_medium, dR_b1lep,
-        sqrt(mT_top_2particle), mjj_highestpt, double(numJetsForward), wjet1_btagCSV, dR_b2lep,
-        pT_HHvis, m_Hww, m_HH_bbregCorr, dPhi_met_lep, dR_lep_Wjj, dR_lep_Hbb, pT_wlep,
-        dPhi_met_Hbb, dPhi_met_Wjj, met, met_phi, double(numBJets_medium), tau21_Hbb, m_Hbb,
-        lepPairCharge_loose, dPhi_HHvis, m_HH_B2G_18_008, mT_top_3particle
-     };
-    histogram_sumweight_->SetBinContent(1, histogram_sumweight_->GetBinContent(1)+evtWeight);
-    for (int xbin=1; xbin<= histogram_sumXY_->GetNbinsX(); xbin++){
-      histogram_sumX_->SetBinContent(xbin, histogram_sumX_->GetBinContent(xbin)+(input_var[xbin-1]));
-      histogram_sumX2_->SetBinContent(xbin, histogram_sumX2_->GetBinContent(xbin)+(input_var[xbin-1]*input_var[xbin-1]));
-      for (int ybin=1; ybin<= histogram_sumXY_->GetYaxis()->GetNbins(); ybin++){
-        histogram_sumXY_->SetBinContent(xbin, ybin, histogram_sumXY_->GetBinContent(xbin, ybin)+(input_var[xbin-1]*input_var[ybin-1]));
-      }
-    }
-  }
   if ( plot_DNN_correlation_ ) {
     for ( std::map<std::string, std::map<std::string, double>>::const_iterator gen_mHH_or_bmName = lbnOutputs_resonant_spin2.begin();
           gen_mHH_or_bmName != lbnOutputs_resonant_spin2.end(); ++gen_mHH_or_bmName ) {

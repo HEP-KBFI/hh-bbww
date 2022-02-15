@@ -67,10 +67,6 @@ parser.add_argument('-f2b', '--fill_resolved_2b',
   dest = 'fill_resolved_2b', action = 'store_true', default=False,
   help = 'whether want to fill histogram only for 2b category'
 )
-parser.add_argument('-c', '--inputvar_correlation',
-  dest = 'inputvar_correlation', action = 'store_true', default=False,
-  help = 'whether want to fill histogram for inputvar correlation'
-)
 parser.add_argument('-iac', '--ignore-ak8-corrections',
   type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = DEFAULT_AK8_CORR,
 )
@@ -115,7 +111,6 @@ fill_spin          = args.fill_spin
 split_resonant_training = args.split_resonant_training
 ignore_ak8_corrections = args.ignore_ak8_corrections
 fill_resolved_2b = args.fill_resolved_2b
-inputvar_correlation = args.inputvar_correlation
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -330,8 +325,7 @@ if __name__ == '__main__':
     split_resonant_training               = split_resonant_training,
     ttbar_based_mcClosure                 = True,
     use2d                                 = use2d,
-    fill_resolved_2b                      = fill_resolved_2b,
-    inputvar_correlation                  = inputvar_correlation
+    fill_resolved_2b                      = fill_resolved_2b
   )
 
   if mode.find("forBDTtraining") != -1:

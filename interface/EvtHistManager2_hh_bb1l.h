@@ -20,8 +20,7 @@ class EvtHistManager2_hh_bb1l
   : public HistManagerBase
 {
 public:
-  EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation,
-                          const bool plot_DNN_inputvar_correlation=0);
+  EvtHistManager2_hh_bb1l(const edm::ParameterSet & cfg, const bool plot_DNN_correlation);
   ~EvtHistManager2_hh_bb1l() {}
 
   /// book and fill histograms
@@ -166,10 +165,6 @@ public:
   TH1* histogram_dPhi_met_Hbb_;
   TH1* histogram_dPhi_met_Wjj_;
   TH1* histogram_lepPairCharge_loose_;
-  TH1* histogram_sumX_;
-  TH1* histogram_sumweight_;
-  TH1* histogram_sumX2_;
-  TH2* histogram_sumXY_;
   TH2* histogram_TT_resolved_270_300_spin2_;
   TH2* histogram_TT_resolved_300_400_spin2_;
   TH2* histogram_W_270_300_spin2_;
@@ -224,7 +219,6 @@ public:
   float HH_300_spin0;
   float HH_400_spin0;
   bool plot_DNN_correlation_;
-  bool plot_DNN_inputvar_correlation_;
 };
 
 #endif

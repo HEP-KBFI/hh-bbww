@@ -129,8 +129,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
         split_resonant_training = False,
         ttbar_based_mcClosure = True,
         use2d                 = False,
-        fill_resolved_2b      = False,
-        inputvar_correlation = False
+        fill_resolved_2b      = False
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -194,7 +193,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.max_depth_recursion = max_depth_recursion
     self.use2d = use2d
     self.fill_resolved_2b = fill_resolved_2b
-    self.inputvar_correlation = inputvar_correlation
 
     self.nonfake_backgrounds = self.get_nonfake_backgrounds(split_th = True, split_ST = True)
     self.nonfake_backgrounds = list(set(self.nonfake_backgrounds) - set(["ggZZ", "qqZZ", "WZ", "WW", "ZZ"]))
@@ -547,8 +545,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                 'fillHistograms_resonant_spin0'     : self.fillHistograms_resonant_spin0,
                 'fillHistograms_resonant_spin2'     : self.fillHistograms_resonant_spin2,
                 'use2d'                             : self.use2d,
-                'fill_resolved_2b'                  : self.fill_resolved_2b,
-                'inputvar_correlation'              : self.inputvar_correlation
+                'fill_resolved_2b'                  : self.fill_resolved_2b
               }
               self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
