@@ -104,6 +104,7 @@ process.makePlots = cms.PSet(
         )
     ),
     showUncertainty = cms.bool(False),
+    sort = cms.bool(True),
 
     legendTextSize = cms.double(0.050),
     legendPosX = cms.double(0.470),
