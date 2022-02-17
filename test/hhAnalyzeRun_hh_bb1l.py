@@ -254,16 +254,17 @@ hadTauWP_veto_map = {
   'deepVSj' : 'Medium',
 }
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
-for sample_name, sample_info in samples.items():
-  if sample_name == 'sum_events': continue
-  if sample_info["type"] == "data":
-    sample_info["use_it"] = sample_name.startswith(("/SingleElectron/", "/SingleMuon/", "/EGamma/"))
-  if 'nonres' in fill_spin and 'spin' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
-  if 'spin0' in fill_spin and 'nonres' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
-  if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
+if not do_sync:
+  for sample_name, sample_info in samples.items():
+    if sample_name == 'sum_events': continue
+    if sample_info["type"] == "data":
+      sample_info["use_it"] = sample_name.startswith(("/SingleElectron/", "/SingleMuon/", "/EGamma/"))
+    if 'nonres' in fill_spin and 'spin' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
+    if 'spin0' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
+    if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
 
 if __name__ == '__main__':
   logging.info(
