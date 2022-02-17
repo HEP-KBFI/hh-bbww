@@ -589,9 +589,11 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               if not sample_info["use_it"]:
                 continue
               if dyBgr_option in ["applyWeights_data", "applyWeights_mc"] or "Fakeable_mcClosure" in lepton_selection:
-                if 'signal' in sample_info["process_name_specific"]:
+                if 'signal' in sample_info["process_name_specific"] and not self.do_sync:
                   continue
               process_name = sample_info["process_name_specific"]
+              if "Fakeable_mcClosure" in lepton_selection and not process_name.startswith('TTToSemiLeptonic') and not self.do_sync:
+                continue
               logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
               inputFileList = inputFileLists[sample_name]
 
@@ -614,7 +616,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     ):
                       central_or_shifts_local.append(central_or_shift_local)
 
-                logging.info(" ... for '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, central_or_shift))
+                logging.info(" ... for '%s', DY background option '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, dyBgr_option, central_or_shift))
                 # build config files for executing analysis code
                 key_analyze_dir = getKey(process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, central_or_shift)
 

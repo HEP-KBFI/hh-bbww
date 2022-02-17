@@ -271,6 +271,9 @@ else:
 
 if not dyBgr_options:
   raise RuntimeError("DY background option cannot be empty")
+if do_sync:
+  logging.warning("Disabling DY background option")
+  dyBgr_options = [ 'disabled' ]
 if "compWeights" in dyBgr_options and len(dyBgr_options) > 1:
   raise RuntimeError("Cannot use 'compWeights' with other options: %s" % ', '.join(dyBgr_options))
 
