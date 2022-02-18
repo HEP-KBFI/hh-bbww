@@ -68,7 +68,7 @@ parser.add_argument('-f2b', '--fill_resolved_2b',
   help = 'whether want to fill histogram only for 2b category'
 )
 parser.add_argument('-iac', '--ignore-ak8-corrections',
-  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = DEFAULT_AK8_CORR,
+  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = [ 'PUPPI' ],
 )
 
 args = parser.parse_args()

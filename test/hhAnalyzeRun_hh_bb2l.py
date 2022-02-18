@@ -60,7 +60,7 @@ parser.add_argument('-F', '--fill-spin',
   help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
 )
 parser.add_argument('-iac', '--ignore-ak8-corrections',
-  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = DEFAULT_AK8_CORR,
+  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = [ 'PUPPI' ],
 )
 
 args = parser.parse_args()
