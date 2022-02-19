@@ -301,6 +301,8 @@ process.analyze_hh_bb2l = cms.PSet(
         inputFileNames = cms.vstring(),
         sampleName = cms.string(''),
     ),
+
+    apply_LHEVpt_rwgt = cms.bool(False),
 )
 
 process.analyze_hh_bb2l.BDT.resonant_spin2_resolved = process.analyze_hh_bb2l.BDT.nonresonant_resolved

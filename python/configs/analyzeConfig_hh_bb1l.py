@@ -163,6 +163,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       apply_genPhotonFilter = True,
       blacklist             = blacklist,
       disable_ak8_corr      = disable_ak8_corr,
+      apply_LHEVpt_rwgt     = True,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT

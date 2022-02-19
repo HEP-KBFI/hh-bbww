@@ -103,6 +103,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoVertexReader.h" // RecoVertexReader
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventRejector.h" // RunLumiEventRejector
+#include "tthAnalysis/HiggsToTauTau/interface/LHEVpt_LOtoNLO.h" // LHEVpt_LOtoNLO
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8
@@ -306,6 +307,7 @@ int main(int argc, char* argv[])
   GenPhotonFilter genPhotonFilter(apply_genPhotonFilter_string);
   bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
   const std::vector<std::string> disable_ak8_corr = cfg_analyze.getParameter<std::vector<std::string>>("disable_ak8_corr");
+  const bool apply_LHEVpt_rwgt = cfg_analyze.getParameter<bool>("apply_LHEVpt_rwgt");
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -645,6 +647,13 @@ int main(int argc, char* argv[])
   {
     const edm::ParameterSet btagSFRatio = cfg_analyze.getParameterSet("btagSFRatio");
     btagSFRatioFacility = new BtagSFRatioFacility(btagSFRatio);
+  }
+
+  LHEVpt_LOtoNLO * lhe_vpt = nullptr;
+  if(apply_LHEVpt_rwgt)
+  {
+    lhe_vpt = new LHEVpt_LOtoNLO(analysisConfig, isDEBUG);
+    inputTree->registerReader(lhe_vpt);
   }
 
 //--- declare particle collections
@@ -1311,6 +1320,7 @@ int main(int argc, char* argv[])
       if(apply_topPtReweighting)  evtWeightRecorder.record_toppt_rwgt(eventInfo.topPtRwgtSF);
       if(apply_HH_rwgt_lo)        evtWeightRecorder.record_hhWeight_lo(HHWeightLO_calc, eventInfo, isDEBUG);
       if(apply_HH_rwgt_nlo)       evtWeightRecorder.record_hhWeight_nlo(HHWeightNLO_calc, eventInfo, isDEBUG);
+      if(apply_LHEVpt_rwgt)       evtWeightRecorder.record_LHEVpt(lhe_vpt);
       lheInfoReader->read();
       psWeightReader->read();
       evtWeightRecorder.record_lheScaleWeight(lheInfoReader);
