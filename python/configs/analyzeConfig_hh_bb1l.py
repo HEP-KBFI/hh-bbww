@@ -245,7 +245,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       'sel/evt',
       'sel/evtYield',
       'sel/weights',
-      'sel/cutFlow'
+      'sel/cutFlow',
+      'sel/mvaInputVarCorrelation'
     ]
     self.copyHistogram_histogramDirs['makePlots_mc'] = [
       'sel/genEvt',
