@@ -174,6 +174,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       blacklist             = blacklist,
       disable_ak8_corr      = disable_ak8_corr,
       apply_LHEVpt_rwgt     = True,
+      apply_subjet_btag     = True,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT

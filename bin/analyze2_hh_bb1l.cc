@@ -104,6 +104,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventRejector.h" // RunLumiEventRejector
 #include "tthAnalysis/HiggsToTauTau/interface/LHEVpt_LOtoNLO.h" // LHEVpt_LOtoNLO
+#include "tthAnalysis/HiggsToTauTau/interface/SubjetBtagSF.h" // SubjetBtagSF
 
 #include "hhAnalysis/multilepton/interface/RecoJetCollectionSelectorAK8_hh_Wjj.h" // RecoJetSelectorAK8_hh_Wjj
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorAK8.h" // RecoJetSelectorAK8
@@ -308,6 +309,8 @@ int main(int argc, char* argv[])
   bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
   const std::vector<std::string> disable_ak8_corr = cfg_analyze.getParameter<std::vector<std::string>>("disable_ak8_corr");
   const bool apply_LHEVpt_rwgt = cfg_analyze.getParameter<bool>("apply_LHEVpt_rwgt");
+  const bool apply_subjet_btag = cfg_analyze.getParameter<bool>("apply_subjet_btag");
+  const std::string subjet_btag_procName = cfg_analyze.getParameter<std::string>("subjet_btag_procName");
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -654,6 +657,12 @@ int main(int argc, char* argv[])
   {
     lhe_vpt = new LHEVpt_LOtoNLO(analysisConfig, isDEBUG);
     inputTree->registerReader(lhe_vpt);
+  }
+
+  SubjetBtagSF * subjetBtagSF = nullptr;
+  if(isMC && apply_subjet_btag)
+  {
+    subjetBtagSF = new SubjetBtagSF(era, subjet_btag_procName);
   }
 
 //--- declare particle collections
@@ -1030,7 +1039,7 @@ int main(int argc, char* argv[])
         selHistManager->evtYield_->bookHistograms(fs);
         selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
+        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate", "subjetBtagSF" });
       }
       selHistManagers[central_or_shift][idxLepton] = selHistManager;
     }
@@ -1574,10 +1583,12 @@ int main(int argc, char* argv[])
       }
     }
     GenParticleMatcherBase* genParticleMatcher = nullptr;
+    std::vector<GenParticle> genParticlesFromHiggs;
+    std::vector<GenParticle> genWJetsFromTop;
     if ( isSignal )
     {
       std::vector<GenParticle> genNeutrinos;
-      std::vector<GenParticle> genParticlesFromHiggs = genParticleFromHiggsReader->read();
+      genParticlesFromHiggs = genParticleFromHiggsReader->read();
       genWJets = genWJetReader->read();
       genParticleMatcherFromHiggs.setGenParticles(genParticlesFromHiggs, genLeptons, genNeutrinos, genWJets);
       genParticleMatcher = &genParticleMatcherFromHiggs;
@@ -1587,7 +1598,7 @@ int main(int argc, char* argv[])
       std::vector<GenLepton> genLeptonsFromTop;
       std::vector<GenParticle> genNeutrinosFromTop;
       std::vector<GenParticle> genBJetsFromTop = genBJetFromTopReader->read();
-      std::vector<GenParticle> genWJetsFromTop = genWJetFromTopReader->read();
+      genWJetsFromTop = genWJetFromTopReader->read();
       genParticleMatcherFromTop.setGenParticles(genLeptonsFromTop, genNeutrinosFromTop, genWJetsFromTop, genBJetsFromTop);
       genParticleMatcher = &genParticleMatcherFromTop;
     }
@@ -1972,6 +1983,19 @@ int main(int argc, char* argv[])
     if(blacklist && (*blacklist)(eventInfo))
     {
       continue;
+    }
+
+    if(isMC && apply_subjet_btag)
+    {
+      subjetBtagSF
+        ->reset()
+        ->addSubjets(selJetAK8_Hbb)
+        ->addGenParticles(genBJets)
+        ->addGenParticles(genWJets)
+        ->addGenParticles(genWJetsFromTop)
+        ->addGenParticles(genParticlesFromHiggs)
+      ;
+      evtWeightRecorder.record_subjetBtagSF(subjetBtagSF);
     }
 
     std::vector<const RecoJetAK8*> selJetsAK8_Wjj;
@@ -2917,6 +2941,7 @@ int main(int argc, char* argv[])
           selHistManager->weights_->fillHistograms("btagWeight", evtWeightRecorder.get_btag(central_or_shift)*evtWeightRecorder.get_btagSFRatio(central_or_shift));
           selHistManager->weights_->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
           selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
+          selHistManager->weights_->fillHistograms("subjetBtagSF", evtWeightRecorder.get_subjetBtagSF(central_or_shift));
         }
       }
 

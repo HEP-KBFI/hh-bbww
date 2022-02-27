@@ -109,6 +109,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/GenPhotonFilter.h" // GenPhotonFilter
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventRejector.h" // RunLumiEventRejector
 #include "tthAnalysis/HiggsToTauTau/interface/LHEVpt_LOtoNLO.h" // LHEVpt_LOtoNLO
+#include "tthAnalysis/HiggsToTauTau/interface/SubjetBtagSF.h" // SubjetBtagSF
 
 #include "hhAnalysis/Heavymassestimator/interface/heavyMassEstimator.h" // heavyMassEstimator (HME) algorithm for computation of HH mass
 #include "hhAnalysis/multilepton/interface/EvtWeightRecorderHH.h" // EvtWeightRecorderHH
@@ -305,6 +306,8 @@ int main(int argc, char* argv[])
   bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
   const std::vector<std::string> disable_ak8_corr = cfg_analyze.getParameter<std::vector<std::string>>("disable_ak8_corr");
   const bool apply_LHEVpt_rwgt = cfg_analyze.getParameter<bool>("apply_LHEVpt_rwgt");
+  const bool apply_subjet_btag = cfg_analyze.getParameter<bool>("apply_subjet_btag");
+  const std::string subjet_btag_procName = cfg_analyze.getParameter<std::string>("subjet_btag_procName");
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -436,6 +439,9 @@ int main(int argc, char* argv[])
 
   std::string branchName_genBJets = cfg_analyze.getParameter<std::string>("branchName_genBJets");
   std::string branchName_genWBosons = cfg_analyze.getParameter<std::string>("branchName_genWBosons");
+  std::string branchName_genWJets = cfg_analyze.getParameter<std::string>("branchName_genWJets");
+  std::string branchName_genWJetsFromTop = cfg_analyze.getParameter<std::string>("branchName_genWJetsFromTop");
+  std::string branchName_genParticlesFromHiggs = cfg_analyze.getParameter<std::string>("branchName_genParticlesFromHiggs");
 
   bool selectBDT = ( cfg_analyze.exists("selectBDT") ) ? cfg_analyze.getParameter<bool>("selectBDT") : false;
 
@@ -636,6 +642,12 @@ int main(int argc, char* argv[])
     inputTree->registerReader(lhe_vpt);
   }
 
+  SubjetBtagSF * subjetBtagSF = nullptr;
+  if(isMC && apply_subjet_btag)
+  {
+    subjetBtagSF = new SubjetBtagSF(era, subjet_btag_procName);
+  }
+
   std::map<std::string, MEMOutputReader_hh_bb2l *> memReader;
   for(auto BMlocal : memReader) BMlocal.second = nullptr;
   std::map<std::string, MEMOutputReader_hh_bb2l *> memReader_missingBjet;
@@ -754,12 +766,21 @@ int main(int argc, char* argv[])
 
   GenParticleReader* genBJetReader = nullptr;
   GenParticleReader* genWBosonReader = nullptr;
+  GenParticleReader* genWJetReader = nullptr;
+  GenParticleReader* genWJetFromTopReader = nullptr;
+  GenParticleReader* genParticleFromHiggsReader = nullptr;
 
   if ( isMC ) {
     genBJetReader = new GenParticleReader(branchName_genBJets);
     inputTree->registerReader(genBJetReader);
     genWBosonReader = new GenParticleReader(branchName_genWBosons);
     inputTree->registerReader(genWBosonReader);
+    genWJetReader = new GenParticleReader(branchName_genWJets);
+    inputTree->registerReader(genWJetReader);
+    genWJetFromTopReader = new GenParticleReader(branchName_genWJetsFromTop);
+    inputTree->registerReader(genWJetFromTopReader);
+    genParticleFromHiggsReader = new GenParticleReader(branchName_genParticlesFromHiggs);
+    inputTree->registerReader(genParticleFromHiggsReader);
   }
 
 //--- declare missing transverse energy
@@ -1269,9 +1290,15 @@ int main(int argc, char* argv[])
 
     std::vector<GenParticle> genBJets;
     std::vector<GenParticle> genWBosons;
+    std::vector<GenParticle> genWJets;
+    std::vector<GenParticle> genWJetsFromTop;
+    std::vector<GenParticle> genParticlesFromHiggs;
     if ( isMC ) {
       genBJets = genBJetReader->read();
       genWBosons = genWBosonReader->read();
+      genWJets = genWJetReader->read();
+      genWJetsFromTop = genWJetFromTopReader->read();
+      genParticlesFromHiggs = genParticleFromHiggsReader->read();
     }
     if ( isDEBUG ) {
       dumpGenParticles("genBJet", genBJets);
@@ -1958,6 +1985,19 @@ int main(int argc, char* argv[])
     if(blacklist && (*blacklist)(eventInfo))
     {
       continue;
+    }
+
+    if(isMC && apply_subjet_btag)
+    {
+      subjetBtagSF
+        ->reset()
+        ->addSubjets(selJetAK8_Hbb)
+        ->addGenParticles(genBJets)
+        ->addGenParticles(genWJets)
+        ->addGenParticles(genWJetsFromTop)
+        ->addGenParticles(genParticlesFromHiggs)
+      ;
+      evtWeightRecorder.record_subjetBtagSF(subjetBtagSF);
     }
 
     MEMOutput_hh_bb2l memOutput_hh_bb2l_matched;
@@ -2757,6 +2797,7 @@ int main(int argc, char* argv[])
           selHistManager->weights_->fillHistograms("btagWeight", evtWeightRecorder.get_btag(central_or_shift)*evtWeightRecorder.get_btagSFRatio(central_or_shift));
           selHistManager->weights_->fillHistograms("data_to_MC_correction", evtWeightRecorder.get_data_to_MC_correction(central_or_shift));
           selHistManager->weights_->fillHistograms("fakeRate", evtWeightRecorder.get_FR(central_or_shift));
+          selHistManager->weights_->fillHistograms("subjetBtagSF", evtWeightRecorder.get_subjetBtagSF(central_or_shift));
         }
       }
 

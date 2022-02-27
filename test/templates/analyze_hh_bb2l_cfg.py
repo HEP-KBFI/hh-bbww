@@ -96,6 +96,10 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_genJets = cms.string('GenJet'),
     branchName_genHiggses = cms.string('GenHiggs'),
 
+    branchName_genWJets = cms.string('GenWZQuark'),
+    branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
+    branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
+
     branchName_muonGenMatch = cms.string('MuonGenMatch'),
     branchName_electronGenMatch = cms.string('ElectronGenMatch'),
     branchName_hadTauGenMatch = cms.string('TauGenMatch'),
