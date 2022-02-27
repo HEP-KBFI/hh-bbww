@@ -163,6 +163,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       apply_genPhotonFilter = True,
       blacklist             = blacklist,
       disable_ak8_corr      = disable_ak8_corr,
+      apply_LHEVpt_rwgt     = True,
+      apply_subjet_btag     = True,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT
@@ -435,7 +437,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           if not sample_info["use_it"]:
             continue
           process_name = sample_info["process_name_specific"]
-          if  "Fakeable_mcClosure" in lepton_selection and not process_name.startswith('TTToHadronic'):
+          if  "Fakeable_mcClosure" in lepton_selection and not process_name.startswith('TTToHadronic') and not self.do_sync:
             continue
           logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
           inputFileList = inputFileLists[sample_name]

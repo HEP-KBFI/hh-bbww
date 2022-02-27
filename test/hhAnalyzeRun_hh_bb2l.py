@@ -60,7 +60,7 @@ parser.add_argument('-F', '--fill-spin',
   help = 'R|Fill histograms for any of the following methods: %s' % tthAnalyzeParser.cat(signal_choices),
 )
 parser.add_argument('-iac', '--ignore-ak8-corrections',
-  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = DEFAULT_AK8_CORR,
+  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = [ 'PUPPI' ],
 )
 
 args = parser.parse_args()
@@ -206,15 +206,16 @@ elif mode == "ttbar_sync":
 else:
   raise ValueError("Internal logic error")
 
-for sample_name, sample_info in samples.items():
-  if sample_name == 'sum_events':
-    continue
-  if fillHistograms_resonant and 'spin' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
-  if fillHistograms_spin0 and 'nonres' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
-  if fillHistograms_spin2 and 'nonres' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
+if not do_sync:
+  for sample_name, sample_info in samples.items():
+    if sample_name == 'sum_events':
+      continue
+    if fillHistograms_resonant and 'spin' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
+    if fillHistograms_spin0 and 'nonres' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
+    if fillHistograms_spin2 and 'nonres' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
 histograms_to_fit = {
   "EventCounter" : {}
 }
@@ -270,6 +271,9 @@ else:
 
 if not dyBgr_options:
   raise RuntimeError("DY background option cannot be empty")
+if do_sync:
+  logging.warning("Disabling DY background option")
+  dyBgr_options = [ 'disabled' ]
 if "compWeights" in dyBgr_options and len(dyBgr_options) > 1:
   raise RuntimeError("Cannot use 'compWeights' with other options: %s" % ', '.join(dyBgr_options))
 

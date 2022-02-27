@@ -42,10 +42,8 @@ public:
   double get_max_msoftdrop() const;
   double get_max_tau2_div_tau1() const;
   double get_min_subJet1_pt() const;
-  double get_min_subJet1_pt_forBtag() const;
   double get_max_subJet1_absEta() const;
   double get_min_subJet2_pt() const;
-  double get_min_subJet2_pt_forBtag() const;
   double get_max_subJet2_absEta() const;
   double get_min_BtagCSV_loose() const;
   double get_min_BtagCSV_medium() const;
@@ -68,10 +66,8 @@ protected:
   Double_t max_msoftdrop_;          ///< upper cut threshold on mass of the two subjets
   Double_t max_tau2_div_tau1_;      ///< upper cut threshold on value of N-subjettiness ratio tau2/tau1
   Double_t min_subJet1_pt_;         ///< lower cut threshold on pT of first subjet
-  Double_t min_subJet1_pt_forBtag_; ///< threshold on pT that first subjet needs to pass in order to be considered for b-tag
   Double_t max_subJet1_absEta_;     ///< upper cut threshold on absolute value of eta of first subjet
   Double_t min_subJet2_pt_;         ///< lower cut threshold on pT of second subjet
-  Double_t min_subJet2_pt_forBtag_; ///< threshold on pT that second subjet needs to pass in order to be considered for b-tag
   Double_t max_subJet2_absEta_;     ///< upper cut threshold on absolute value of eta of second subjet
   Double_t min_BtagCSV_loose_;      ///< lower cut threshold on CSV b-tagging discriminator value (loose WP)
   Double_t min_BtagCSV_medium_;     ///< lower cut threshold on CSV b-tagging discriminator value (medium WP)

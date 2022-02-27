@@ -96,6 +96,10 @@ process.analyze_hh_bb2l = cms.PSet(
     branchName_genJets = cms.string('GenJet'),
     branchName_genHiggses = cms.string('GenHiggs'),
 
+    branchName_genWJets = cms.string('GenWZQuark'),
+    branchName_genWJetsFromTop = cms.string('GenQuarkFromTop'),
+    branchName_genParticlesFromHiggs = cms.string('GenHiggsDaughters'),
+
     branchName_muonGenMatch = cms.string('MuonGenMatch'),
     branchName_electronGenMatch = cms.string('ElectronGenMatch'),
     branchName_hadTauGenMatch = cms.string('TauGenMatch'),
@@ -301,6 +305,8 @@ process.analyze_hh_bb2l = cms.PSet(
         inputFileNames = cms.vstring(),
         sampleName = cms.string(''),
     ),
+
+    apply_LHEVpt_rwgt = cms.bool(False),
 )
 
 process.analyze_hh_bb2l.BDT.resonant_spin2_resolved = process.analyze_hh_bb2l.BDT.nonresonant_resolved

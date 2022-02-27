@@ -78,5 +78,5 @@ process.analyze_hh_bbww_inclusive = cms.PSet(
     ),
     tHweights = cms.VPSet(),
     gen_mHH = cms.vdouble(250,260,270,280,300,350,400,450,500,550,600,650,700,750,800,850,900,1000),
-    nonRes_BMs = cms.vdouble(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    nonRes_BMs = cms.vstring(),
 )

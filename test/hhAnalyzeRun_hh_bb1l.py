@@ -68,7 +68,7 @@ parser.add_argument('-f2b', '--fill_resolved_2b',
   help = 'whether want to fill histogram only for 2b category'
 )
 parser.add_argument('-iac', '--ignore-ak8-corrections',
-  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = DEFAULT_AK8_CORR,
+  type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = [ 'PUPPI' ],
 )
 
 args = parser.parse_args()
@@ -254,16 +254,17 @@ hadTauWP_veto_map = {
   'deepVSj' : 'Medium',
 }
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
-for sample_name, sample_info in samples.items():
-  if sample_name == 'sum_events': continue
-  if sample_info["type"] == "data":
-    sample_info["use_it"] = sample_name.startswith(("/SingleElectron/", "/SingleMuon/", "/EGamma/"))
-  if 'nonres' in fill_spin and 'spin' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
-  if 'spin0' in fill_spin and 'nonres' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
-  if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
-    sample_info["use_it"] = False
+if not do_sync:
+  for sample_name, sample_info in samples.items():
+    if sample_name == 'sum_events': continue
+    if sample_info["type"] == "data":
+      sample_info["use_it"] = sample_name.startswith(("/SingleElectron/", "/SingleMuon/", "/EGamma/"))
+    if 'nonres' in fill_spin and 'spin' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
+    if 'spin0' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
+    if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
+      sample_info["use_it"] = False
 
 if __name__ == '__main__':
   logging.info(

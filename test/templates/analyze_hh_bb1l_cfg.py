@@ -357,5 +357,7 @@ process.analyze_hh_bb1l = cms.PSet(
         inputFileNames = cms.vstring(),
         sampleName = cms.string(''),
     ),
+
+    apply_LHEVpt_rwgt = cms.bool(False),
 )
 
