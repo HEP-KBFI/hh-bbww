@@ -1001,6 +1001,7 @@ int main(int argc, char* argv[])
         std::vector<std::string> part{"bjet1", "bjet2", "wjet1", "wjet2", "jet1", "jet2", "lep", "met"};
         for (unsigned int ipart=0; ipart<part.size(); ipart++) {
           for (unsigned int ivar=0; ivar<var_.size(); ivar++){
+            if (part[ipart] == "met" && var_[ivar] == "pz" ) continue;
             var.push_back(Form("%s_%s", part[ipart].data(), var_[ivar].data()));
           }
         }
