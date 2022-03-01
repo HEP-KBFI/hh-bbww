@@ -360,7 +360,8 @@ int main(int argc, char* argv[])
     << "central_or_shift = "    << central_or_shift_main << "\n"
        " -> hadTauPt_option = " << hadTauPt_option       << "\n"
        " -> jetPt_option    = " << jetPt_option          << "\n"
-       "--> fatJetPt_option = " << fatJetPt_option       << '\n'
+       "--> fatJetPt_option = " << fatJetPt_option       << "\n"
+       "--> ignore_ak8_sys  = " << ignore_ak8_sys        << '\n'
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
@@ -738,13 +739,13 @@ int main(int argc, char* argv[])
   jetSelectorForward.getSelector().set_pileupJetId(apply_pileupJetID);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
-  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   jetReaderAK8->ignoreSys(ignore_ak8_sys);
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   RecoJetReaderAK8* jetReaderAK8LS = nullptr;
   if ( branchName_jets_ak8LS != branchName_jets_ak8 ) {
     jetReaderAK8LS = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8LS, branchName_subjets_ak8LS);
-    jetReaderAK8LS->set_central_or_shift(fatJetPt_option);
     jetReaderAK8LS->ignoreSys(ignore_ak8_sys);
+    jetReaderAK8LS->set_central_or_shift(fatJetPt_option);
   } else {
     jetReaderAK8LS = jetReaderAK8;
   }

@@ -363,7 +363,8 @@ int main(int argc, char* argv[])
        " -> met_option      = " << met_option            << "\n"
        " -> jetPt_option    = " << jetPt_option          << "\n"
        "--> fatJetPt_option = " << fatJetPt_option       << "\n"
-       " -> MEMsys option   = " << as_integer(mem_option_main) << '\n'
+       " -> MEMsys option   = " << as_integer(mem_option_main) << "\n"
+       "--> ignore_ak8_sys  = " << ignore_ak8_sys        << '\n'
   ;
 
   DYMCReweighting* dyReweighting = nullptr;
@@ -752,8 +753,8 @@ int main(int argc, char* argv[])
   jetSelectorForward.getSelector().set_pileupJetId(apply_pileupJetID);
 
   RecoJetReaderAK8* jetReaderAK8 = new RecoJetReaderAK8(era, isMC, branchName_jets_ak8, branchName_subjets_ak8);
-  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   jetReaderAK8->ignoreSys(ignore_ak8_sys);
+  jetReaderAK8->set_central_or_shift(fatJetPt_option);
   inputTree->registerReader(jetReaderAK8);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR08(0.8, isDEBUG);
   RecoJetCollectionCleanerAK8 jetCleanerAK8_dR12(1.2, isDEBUG);
