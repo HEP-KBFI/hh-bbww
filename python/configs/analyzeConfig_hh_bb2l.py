@@ -173,7 +173,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       apply_genPhotonFilter = True,
       blacklist             = blacklist,
       disable_ak8_corr      = disable_ak8_corr,
-      apply_LHEVpt_rwgt     = True,
+      apply_LHEVpt_rwgt     = False,
       apply_subjet_btag     = True,
     )
 
