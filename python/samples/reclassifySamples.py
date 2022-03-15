@@ -25,11 +25,6 @@ def reclassifySamples(samples_era_hh, samples_era_bkg, samples_era_ttbar = None,
       else:
         sample_info["xsection"] *= 0.622253
 
-    if process_name == "TTToHadronic" and "RunIIFall17MiniAODv2" in sample_name:
-      # disable TTToHadronic 2017 sample because it does not have PS weights
-      # see also https://gitlab.cern.ch/cms-hh-bbww/cms-hh-to-bbww/-/commit/fbeeb76bdf52256700d929f0ae123917957510fd
-      sample_info["use_it"] = False
-
     if process_name.startswith((
           "TTZToQQ", "TTWJetsToQQ", "HZJ_HToWW", "WminusH_HToBB_WToLNu", "WplusH_HToBB_WToLNu",
           "DYToLL_0J", "DYToLL_1J", "DYToLL_2J", "ttHJetTo", "ZZTo2L2Q", "WWToLNuQQ",
