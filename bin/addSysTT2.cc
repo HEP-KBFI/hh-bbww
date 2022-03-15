@@ -63,33 +63,68 @@ namespace
     return funcvalue_;
   }
 
-  void add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn, std::string syst)
+
+  void add_sysmass(TH1* hist_central, TH1* hist_up, TH1* hist_dn, std::string syst, std::string era)
   {
     std::string histname = hist_central->GetName();
-    for ( int i = 0; i < hist_central->GetNbinsX(); ++i ) 
+    for ( int i = 0; i < hist_central->GetNbinsX(); ++i )
+      {
+        float bincont = hist_central->GetBinContent(i + 1);
+        float bincontErr = hist_central->GetBinError(i + 1);
+        float bincontup = hist_up->GetBinContent(i + 1);
+        float bincontdn = hist_dn->GetBinContent(i + 1);
+        float delta = ( era == "2016" ) ? (bincont - bincontup)/3. : 0;
+        float bincontnew = bincont + delta;
+        float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(delta));
+        hist_up->SetBinContent(i + 1, bincontnew);
+        hist_up->SetBinError(i + 1, bincontnewErr);
+        hist_up->SetName(Form("%smodUp_%s", syst.data(), histname.data()));
+        delta = ( era == "2016" ) ? (bincont - bincontdn)/3. : 0;
+        bincontnew = bincont + delta;
+        bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(delta));
+        hist_dn->SetBinContent(i + 1, bincontnew);
+        hist_dn->SetBinError(i + 1, bincontnewErr);
+        hist_dn->SetName(Form("%smodDown_%s", syst.data(), histname.data()));
+      }
+    hist_up->Write();
+    hist_dn->Write();
+  }
+
+  void add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn, std::string syst, bool modify)
+  {
+    std::string histname = hist_central->GetName();
+    if ( modify )
     {
-      float bincont = hist_central->GetBinContent(i + 1);
-      float bincontErr = hist_central->GetBinError(i + 1);
-      float bincontup = hist_up->GetBinContent(i + 1);
-      float bincontupErr = hist_up->GetBinError(i + 1);
-      float bincontdn = hist_dn->GetBinContent(i + 1);
-      float bincontdnErr = hist_dn->GetBinError(i + 1);
-      float bincontnew = bincont + 0.5*(bincontup - bincontdn);
-      float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
-      hist_up->SetBinContent(i + 1,bincontnew);
-      hist_up->SetBinError(i + 1,bincontnewErr);
-      hist_up->SetName(Form("%smodUp_%s", syst.data(), histname.data()));
-      bincontnew = bincont - 0.5*(bincontup-bincontdn);
-      bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
-      hist_dn->SetBinContent(i + 1, bincontnew);
-      hist_dn->SetBinError(i + 1, bincontnewErr);
-      hist_dn->SetName(Form("%smodDown_%s", syst.data(), histname.data()));
+      for ( int i = 0; i < hist_central->GetNbinsX(); ++i )
+      {
+        float bincont = hist_central->GetBinContent(i + 1);
+        float bincontErr = hist_central->GetBinError(i + 1);
+        float bincontup = hist_up->GetBinContent(i + 1);
+        float bincontupErr = hist_up->GetBinError(i + 1);
+        float bincontdn = hist_dn->GetBinContent(i + 1);
+        float bincontdnErr = hist_dn->GetBinError(i + 1);
+        float bincontnew = bincont + 0.5*(bincontup - bincontdn);
+        float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
+        hist_up->SetBinContent(i + 1, bincontnew );
+        hist_up->SetBinError(i + 1, bincontnewErr );
+        hist_up->SetName(Form("%smodUp_%s", syst.data(), histname.data()));
+        bincontnew = bincont - 0.5*(bincontup-bincontdn);
+        bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(0.5) * ( sqr(bincontupErr) + sqr(bincontdnErr)));
+        hist_dn->SetBinContent(i + 1, bincontnew );
+        hist_dn->SetBinError(i + 1, bincontnewErr );
+        hist_dn->SetName(Form("%smodDown_%s", syst.data(), histname.data()));
+      }
+    }
+    else
+    {
+      hist_up->SetName( Form("%smodUp_%s", syst.data(), histname.data()) );
+      hist_dn->SetName( Form("%smodDown_%s", syst.data(), histname.data()) );
     }
     hist_up->Write();
     hist_dn->Write();
   }
 
-  void add_sysCR(TH1* hist_central, const std::vector<std::string>& histNames, const TDirectory* dir, const std::string& process_input, std::string syst)
+  void add_sysCR(TH1* hist_central, const std::vector<std::string>& histNames, const TDirectory* dir, const std::string& process_input, std::string syst, bool modify)
   {
     std::vector<TH1*> hists_cr;
 
@@ -99,7 +134,6 @@ namespace
       histName.Insert(0,histNames[ihistName]);
       TH1* hist_cr = getHistogram(dir, process_input, histName.Data(), "", true);
       assert(hist_cr);
-      hist_cr->Scale(hist_central->Integral()/hist_cr->Integral());
       hists_cr.push_back(hist_cr);
     }
 
@@ -109,6 +143,8 @@ namespace
     histNameDown += hist_central->GetName();
     TH1* hist_up = (TH1*) hist_central->Clone(histNameUp.data());
     TH1* hist_dn = (TH1*) hist_central->Clone(histNameDown.data());
+    hist_up->Reset();
+    hist_dn->Reset();
     float xmin = hist_central->GetBinLowEdge(1);
     float xmax = hist_central->GetBinLowEdge(hist_central->GetNbinsX()) + hist_central->GetBinWidth(hist_central->GetNbinsX());
 
@@ -128,7 +164,7 @@ namespace
       }
       sort(hist_diff.begin(), hist_diff.end(), sortbyfirstmax);
       float bincenter = hist_central->GetXaxis()->GetBinCenter(i+1);
-      float funcvalue_ = funcvalue(bincenter, xmin, xmax);
+      float funcvalue_ = (modify) ? funcvalue(bincenter, xmin, xmax) : 1;
       float maxdiff = hist_diff[0].first;
       float maxdiffErr = hist_diff[0].second;
       float bincontnew = bincont + maxdiff*funcvalue_;
@@ -147,7 +183,9 @@ namespace
                                        const vstring& processes_input, const std::string& process_output, 
                                        const vstring& central_or_shifts,
                                        int depth_recursion, int max_depth_recursion,
-                                       bool isDEBUG = false)
+                                       std::string era,
+                                       bool isDEBUG = false,
+                                       bool modify = false)
   {
     if ( isDEBUG )
     {
@@ -185,7 +223,8 @@ namespace
         std::string find_histogramDown;
         if ( central_or_shift == "mtop" )
         {
-          find_histogramUp = "mtop";
+          find_histogramUp = ( era == "2016" ) ? "mtop175p5" : "mtop173p5";
+          find_histogramDown = ( era == "2016" ) ? "mtop169p5" : "mtop171p5";
         }
         else if ( central_or_shift == "color" )
         {
@@ -236,41 +275,26 @@ namespace
               std::string histogramName_dn = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), find_histogramDown.data()).Data();
               TH1* histogram_dn = getHistogram(dir, process_input, histogramName_dn, "", true);
               assert(histogram_dn);
-              add_syshist(histogram_central, histogram_up, histogram_dn, central_or_shift);
+              add_syshist(histogram_central, histogram_up, histogram_dn, central_or_shift, modify);
             }
             else if( central_or_shift == "color" ) {
               std::string histogramName_central = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), "").Data();
               TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
               assert(histogram_central);
-              add_sysCR(histogram_central, { "QCDbased_", "GluonMove_", "erdON_" }, dir, process_input, central_or_shift);
+              add_sysCR(histogram_central, { "QCDbased_", "GluonMove_", "erdON_" }, dir, process_input, central_or_shift, modify);
             }
             else {
               assert( central_or_shift == "mtop" );
               std::size_t idx = histogramName_up.find("_"); 
               std::string histogramName_central = histogramName_up.substr(idx+1);
-              if ( std::find(processed_histogram.begin(), processed_histogram.end(), histogramName_central) == processed_histogram.end() )
-              {
-                processed_histogram.push_back(histogramName_central);
-              }
-              else
-              {
-                continue;
-              }
               TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
               assert(histogram_central);
-              //std::string spin_mass = histogramName_up.substr(idx+10);
-              std::vector<std::string> mass_histogramNames;
-              for ( auto mass_histogramName: histogramNames )
-              {
-                if ( mass_histogramName.find(histogramName_central) != std::string::npos)
-                {
-                  std::string topmass =  mass_histogramName.substr(0, idx+1);
-                  if ( std::find(mass_histogramNames.begin(), mass_histogramNames.end(), topmass) == mass_histogramNames.end())
-                    mass_histogramNames.push_back(topmass);
-                  else { continue; }
-                }
-              }
-              add_sysCR(histogram_central, mass_histogramNames, dir, process_input, central_or_shift);
+              TH1* histogram_up = getHistogram(dir, process_input, histogramName_up, "", true);
+              assert(histogram_up);
+              std::string histogramName_dn = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), find_histogramDown.data()).Data();
+              TH1* histogram_dn = getHistogram(dir, process_input, histogramName_dn, "", true);
+              assert(histogram_dn);
+              add_sysmass(histogram_central, histogram_up, histogram_dn, central_or_shift, era);
               }
             }
         } //histogramName
@@ -291,6 +315,7 @@ namespace
             processes_input, process_output,
             central_or_shifts,
             depth_recursion + 1, max_depth_recursion,
+            era,
             isDEBUG
          );
         }
@@ -348,6 +373,9 @@ int main(int argc, char* argv[])
   //int max_depth_recursion = cfg_addSysTT.getParameter<int>("max_depth_recursion");
 
   bool isDEBUG = cfg_addSysTT.exists("isDEBUG") ? cfg_addSysTT.getParameter<bool>("isDEBUG") : false;
+  bool modify = cfg_addSysTT.exists("modify") ? cfg_addSysTT.getParameter<bool>("modify") : false;
+  std::string era = cfg_addSysTT.getParameter<std::string>("era");
+
   //bool isDEBUG = cfg_addSysTT.getParameter<bool>("isDEBUG");
 
   fwlite::InputSource inputFiles(cfg);
@@ -374,7 +402,8 @@ int main(int argc, char* argv[])
       processes_input, process_output,
       central_or_shifts,
       1, max_depth_recursion,
-      isDEBUG
+      era,
+      isDEBUG, modify
     );
   } // categories
 
