@@ -999,7 +999,7 @@ int main(int argc, char* argv[])
            Form("%s/sel/mvaInputVarCorrelation", histogramDir.data()), era_string, central_or_shift));
         std::vector<std::string> var;
         std::vector<std::string> var_{"e", "px", "py", "pz"};
-        std::vector<std::string> part{"bjet1", "bjet2", "wjet1", "wjet2", "jet1", "jet2", "lep", "met"};
+        std::vector<std::string> part{"bjet1", "bjet2", "wjet1", "wjet2", "lep"};
         for (unsigned int ipart=0; ipart<part.size(); ipart++) {
           for (unsigned int ivar=0; ivar<var_.size(); ivar++){
             if (part[ipart] == "met" && var_[ivar] == "pz" ) continue;
@@ -1008,7 +1008,7 @@ int main(int argc, char* argv[])
         }
         var.insert(var.end(), {"numJets", "bjet1_btagCSV", "bjet2_btagCSV", "mindr_lep1_jet", "pT_Hbb",
               "m_Hbb_regCorr", "dR_Hbb", "mT_W", "HT", "lepPairType_loose", "pT_HH", "mll_loose",
-              "avg_dr_jet_central", "wjet2_btagCSV", "numBJets_loose", "mbb_medium", "dR_b1lep", "mT_top_2particle", "mjj_highestpt", "numJetsForward", "wjet1_btagCSV", "dR_b2lep", "pT_HHvis", "m_HH_bbregCorr", "dPhi_met_lep", "dR_lep_Wjj", "dR_lep_Hbb", "pT_wlep", "dPhi_met_Hbb", "dPhi_met_Wjj", "numBJets_medium", "tau21_Hbb", "m_Hbb", "lepPairCharge_loose", "mbb_loose", "dPhi_HHvis", "m_HH_B2G_18_008", "m_Hww", "m_wlep", "pT_Hww",   });
+              "avg_dr_jet_central", "wjet2_btagCSV", "numBJets_loose", "mbb_medium", "dR_b1lep", "mT_top_2particle", "mjj_highestpt", "numJetsForward", "wjet1_btagCSV", "dR_b2lep", "pT_HHvis", "numBJets_medium", "tau21_Hbb", "m_Hbb", "lepPairCharge_loose", "mbb_loose", "dPhi_HHvis", "m_HH_B2G_18_008"});
         selHistManager->mvaInputVarCorrelation_->bookHistograms(fs, var);
       }
       if ( fillHistograms_BDT )
@@ -2171,16 +2171,6 @@ int main(int argc, char* argv[])
     const RecoJetBase* selJet_Wjj_sublead = ( selJets_Wjj.size() >= 2 ) ? selJets_Wjj[1] : nullptr;
     Particle::LorentzVector selJetP4_Wjj_sublead;
     if ( selJet_Wjj_sublead ) selJetP4_Wjj_sublead = selJet_Wjj_sublead->p4();
-    /*<<<<<<< HEAD
-    const RecoJetBase* selJet_jj_lead = ( selJets_jj.size() >= 1 ) ? selJets_jj[0] : nullptr;
-    Particle::LorentzVector selJetP4_jj_lead;
-    if ( selJet_jj_lead ) selJetP4_jj_lead = selJet_jj_lead->p4();
-    const RecoJetBase* selJet_jj_sublead = ( selJets_jj.size() >= 2 ) ? selJets_jj[1] : nullptr;
-    Particle::LorentzVector selJetP4_jj_sublead;
-    if ( selJet_jj_sublead ) selJetP4_jj_sublead = selJet_jj_sublead->p4();
-=======
-
->>>>>>> parent of 15e90b6... add extra jets and m_HH_analytic variable and add 2d options*/
     // select VBF jet candidates
     std::vector<const RecoJet*> selJetsAK4_vbf;
     if ( selJetAK8_Hbb ) {
@@ -2809,39 +2799,8 @@ int main(int argc, char* argv[])
                lbnOutputs_resonant_spin0, lbnOutputs_resonant_spin2,
                evtWeight
            );
-            selHistManager->mvaInputVarCorrelation_->fillHistograms(mvaInputVariables_list, evtWeight);
+            //selHistManager->mvaInputVarCorrelation_->fillHistograms(mvaInputVariables_list, evtWeight);
           }
-/*=======
-          selHistManager->evt_->fillHistograms(
-            (int)selJetsAK4.size(),
-            (int)selBJetsAK4_loose.size(),
-            (int)selBJetsAK4_medium.size(),
-            HT,
-            met.pt(), met_LD,
-            selLepton->pt(), preselLeptonsFull.size() >= 2 ? (preselLeptonsFull[0]->cone_p4() + preselLeptonsFull[1]->cone_p4()).mass() : 0,
-            m_Hbb, pT_Hbb, dR_Hbb, m_Hbb_regCorr,
-            dPhi_Hww, pT_Hww,
-            m_HH_B2G_18_008, pT_HH, dPhi_HHvis, pT_HHvis,
-            mT_W, mT_top_2particle, mT_top_3particle,
-            vbf_m_jj, vbf_dEta_jj, vbf_lhe_m_jj, vbf_lhe_dEta_jj,
-            bjet1_btagCSV, bjet2_btagCSV, wjet1_btagCSV,  wjet2_btagCSV,
-            mindr_lep1_jet, avg_dr_jet_central,
-            preselLeptonsFull.size() >= 2 ? fabs(preselLeptonsFull[0]->pdgId()) == fabs(preselLeptonsFull[1]->pdgId()) :999,
-            selLepton_type,
-            selBJetsAK4_medium.size() >= 2 ? (selBJetsAK4_medium[0]->p4() + selBJetsAK4_medium[1]->p4()).mass() : 0.,
-            dR_b1lep, dR_b2lep,
-            mjj_highestpt,
-            (int)selJetsForward.size(), tau21_Hbb,
-            selJetAK8_Hbb,
-            selLepton->cone_p4().px(), selLepton->cone_p4().py(), selLepton->cone_p4().pz(), selLepton->cone_p4().e(),
-            selJetP4_Hbb_lead.px(), selJetP4_Hbb_lead.py(), selJetP4_Hbb_lead.pz(), selJetP4_Hbb_lead.e(),
-            selJetP4_Hbb_sublead.px(), selJetP4_Hbb_sublead.py(), selJetP4_Hbb_sublead.pz(), selJetP4_Hbb_sublead.e(),
-            selJetP4_Wjj_lead.px(), selJetP4_Wjj_lead.py(), selJetP4_Wjj_lead.pz(), selJetP4_Wjj_lead.e(),
-            selJetP4_Wjj_sublead.px(), selJetP4_Wjj_sublead.py(), selJetP4_Wjj_sublead.pz(), selJetP4_Wjj_sublead.e(),
-            lbnOutputs_resonant_spin0, lbnOutputs_resonant_spin2,
-            evtWeight
-          );
->>>>>>> parent of 15e90b6... add extra jets and m_HH_analytic variable and add 2d options*/
           if ( isSignal )
           {
             selHistManager->genKinematics_HH_->fillHistograms(evtWeight);
