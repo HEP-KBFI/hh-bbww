@@ -67,27 +67,34 @@ namespace
   void add_sysmass(TH1* hist_central, TH1* hist_up, TH1* hist_dn, std::string syst, std::string era)
   {
     std::string histname = hist_central->GetName();
-    for ( int i = 0; i < hist_central->GetNbinsX(); ++i )
+    if ( era == "2016" )
+    {
+      for ( int i = 0; i < hist_central->GetNbinsX(); ++i )
       {
         float bincont = hist_central->GetBinContent(i + 1);
         float bincontErr = hist_central->GetBinError(i + 1);
         float bincontup = hist_up->GetBinContent(i + 1);
         float bincontdn = hist_dn->GetBinContent(i + 1);
-        float delta = ( era == "2016" ) ? (bincont - bincontup)/3. : 0;
+        float delta = ( bincont - bincontup ) / 3.;
         float bincontnew = bincont + delta;
         float bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(delta));
         hist_up->SetBinContent(i + 1, bincontnew);
         hist_up->SetBinError(i + 1, bincontnewErr);
         hist_up->SetName(Form("%smodUp_%s", syst.data(), histname.data()));
-        delta = ( era == "2016" ) ? (bincont - bincontdn)/3. : 0;
+        delta = ( bincont - bincontdn ) / 3.;
         bincontnew = bincont + delta;
         bincontnewErr = std::sqrt(sqr(bincontErr) + sqr(delta));
         hist_dn->SetBinContent(i + 1, bincontnew);
         hist_dn->SetBinError(i + 1, bincontnewErr);
         hist_dn->SetName(Form("%smodDown_%s", syst.data(), histname.data()));
       }
-    hist_up->Write();
-    hist_dn->Write();
+    }
+    else {
+      hist_up->SetName(Form("%smodUp_%s", syst.data(), histname.data()));
+      hist_dn->SetName(Form("%smodDown_%s", syst.data(), histname.data()));
+      hist_up->Write();
+      hist_dn->Write();
+    }
   }
 
   void add_syshist(TH1* hist_central, TH1* hist_up, TH1* hist_dn, std::string syst, bool modify)
