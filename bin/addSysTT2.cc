@@ -138,10 +138,36 @@ namespace
     for ( unsigned int ihistName = 0; ihistName < histNames.size(); ++ihistName ) 
     {
       TString histName = hist_central->GetName();
-      histName.Insert(0,histNames[ihistName]);
+      histName.Insert(0,histNames[ihistName]+"_");
       TH1* hist_cr = getHistogram(dir, process_input, histName.Data(), "", true);
       assert(hist_cr);
       hists_cr.push_back(hist_cr);
+    }
+
+    for (unsigned int icr=0; icr<histNames.size(); icr++)
+    {
+      TString histName = hist_central->GetName();
+      TString histNameUp = Form("%sUp_%s" , histNames[icr].data(), histName.Data());
+      TString histNameDown = Form("%sDown_%s" , histNames[icr].data(), histName.Data());
+      TH1* hist_up = (TH1*) hist_central->Clone(histNameUp.Data());
+      TH1* hist_dn = (TH1*) hist_central->Clone(histNameDown.Data());
+      hist_up->Reset();
+      hist_dn->Reset();
+      histName.Insert(0, histNames[icr]+"_");
+      TH1* hist_cr = getHistogram(dir, process_input, histName.Data(), "", true);
+      assert(hist_cr);
+      for ( int i = 0; i < hist_central->GetNbinsX(); ++i )
+      {
+        float bincont = hist_central->GetBinContent(i + 1);
+        float bincontErr = hist_central->GetBinError(i + 1);
+        float bincont_cr = hist_cr->GetBinContent(i + 1);
+        float bincontErr_cr = hist_cr->GetBinError(i + 1);
+        float diff = fabs( bincont - bincont_cr );
+        hist_up->SetBinContent(i+1, bincont + diff);
+        hist_up->SetBinError(i+1, std::sqrt( sqr(bincontErr) + sqr(bincontErr_cr)));
+        hist_dn->SetBinContent(i+1, bincont - diff);
+        hist_dn->SetBinError(i+1, std::sqrt( sqr(bincontErr) + sqr(bincontErr_cr)));
+      }
     }
 
     std::string histNameUp = syst + "Up_";
@@ -288,7 +314,7 @@ namespace
               std::string histogramName_central = TString(histogramName_up.data()).ReplaceAll(find_histogramUp.data(), "").Data();
               TH1* histogram_central = getHistogram(dir, process_input, histogramName_central, "", true);
               assert(histogram_central);
-              add_sysCR(histogram_central, { "QCDbased_", "GluonMove_", "erdON_" }, dir, process_input, central_or_shift, modify);
+              add_sysCR(histogram_central, { "QCDbased", "GluonMove", "erdON" }, dir, process_input, central_or_shift, modify);
             }
             else {
               assert( central_or_shift == "mtop" );
