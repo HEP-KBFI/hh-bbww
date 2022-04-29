@@ -19,8 +19,6 @@ EventCategory_hh_bb2l_LBN::EventCategory_hh_bb2l_LBN()
     { kTT_resolved,            "TT_resolved"           },
     { kDY_boosted,             "DY_boosted"            },
     { kDY_resolved,            "DY_resolved"           },
-    { kSingleTop_boosted,      "SingleTop_boosted"     },
-    { kSingleTop_resolved,     "SingleTop_resolved"    },
     { kOther,                  "Other"                 }
   };
   initialize();
@@ -45,16 +43,14 @@ EventCategory_hh_bb2l_LBN::isSelected(int for_category, const std::string & for_
   if      ( for_category == (int)kUndefined             ) return false;
   else if ( for_category == (int)kHH_boosted_vbf        ) return for_class == "HH"    &&  isBoosted_ && isVBF_;
   else if ( for_category == (int)kHH_boosted_nonvbf     ) return for_class == "HH"    &&  isBoosted_ && !isVBF_;
-  else if ( for_category == (int)kHH_resolved_2b_vbf    ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 2 &&  isVBF_;
-  else if ( for_category == (int)kHH_resolved_2b_nonvbf ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 2 && !isVBF_;
+  else if ( for_category == (int)kHH_resolved_2b_vbf    ) return for_class == "HH"    && !isBoosted_ && numBJets_ >= 2 &&  isVBF_;
+  else if ( for_category == (int)kHH_resolved_2b_nonvbf ) return for_class == "HH"    && !isBoosted_ && numBJets_ >= 2 && !isVBF_;
   else if ( for_category == (int)kHH_resolved_1b_vbf    ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 1 && isVBF_;
   else if ( for_category == (int)kHH_resolved_1b_nonvbf ) return for_class == "HH"    && !isBoosted_ && numBJets_ == 1 && !isVBF_;
-  else if ( for_category == (int)kTT_boosted            ) return for_class == "TT"    &&  isBoosted_;
-  else if ( for_category == (int)kTT_resolved           ) return for_class == "TT"    && !isBoosted_;
+  else if ( for_category == (int)kTT_boosted            ) return (for_class == "TT" || for_class == "ST")    &&  isBoosted_;
+  else if ( for_category == (int)kTT_resolved           ) return (for_class == "TT" || for_class == "ST")    && !isBoosted_;
   else if ( for_category == (int)kDY_boosted            ) return for_class == "DY"    &&  isBoosted_;
   else if ( for_category == (int)kDY_resolved           ) return for_class == "DY"    && !isBoosted_;
-  else if ( for_category == (int)kSingleTop_boosted     ) return for_class == "ST"    &&  isBoosted_;
-  else if ( for_category == (int)kSingleTop_resolved    ) return for_class == "ST"    && !isBoosted_;
   else if ( for_category == (int)kOther                 ) return for_class == "Other";
   else throw cmsException(this, __func__, __LINE__)
                << "Invalid parameter 'category' = " << for_category << " !!\n";
