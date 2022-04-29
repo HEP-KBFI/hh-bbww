@@ -50,7 +50,7 @@ def parseHistogramNames(histograms_to_fit):
     if histogramToFit.find("/") != -1:
       items = histogramToFit.split("/")
       for idx, item in enumerate(items):
-        if item == "BDT" or item == "LBN":
+        if item == "BDT" or item == "LBN" or item == "wmem_LBN":
           category = "%s_%s" % (items[idx], items[idx + 1])
       if histogramToFit.find("spin0") == -1 and histogramToFit.find("spin2") == -1:
         type = "nonresonant"
@@ -174,7 +174,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       blacklist             = blacklist,
       disable_ak8_corr      = disable_ak8_corr,
       apply_LHEVpt_rwgt     = False,
-      apply_subjet_btag     = True,
+      apply_subjet_btag     = False,#True,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT
@@ -292,7 +292,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.lepton_charge_selections = [ "OS" ]
     self.isBDTtraining = True
 
-  def accept_systematics(self, central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info):
+  def accept_systematics(self, central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info, dyBgr_option):
     if central_or_shift != "central":
       isFR_shape_shift = (central_or_shift in self.central_or_shifts_fr)
       if not ((lepton_selection == "Fakeable" and isFR_shape_shift) or lepton_selection == "Tight"):
@@ -300,6 +300,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       if isFR_shape_shift and lepton_selection == "Tight":
         return False
       if not is_mc and not isFR_shape_shift and central_or_shift not in systematics.MEM_bb2l :
+        return False
+      if dyBgr_option in ["applyWeights_data", "applyWeights_mc"]:
         return False
       if not self.accept_central_or_shift(central_or_shift, sample_info):
         return False
@@ -381,11 +383,11 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         lines.append("    cms.PSet(")
         lines.append("        name = cms.string('%s')," % jobOptions['nuisance_parameter_name'])
         lines.append("        fakes_mc = cms.PSet(")
-        lines.append("            inputFileName = cms.string('%s')," % jobOptions['inputFile_nominal'])
+        lines.append("            inputFileName = cms.vstring(['%s'])," % jobOptions['inputFile_nominal'])
         lines.append("            histogramName = cms.string('%s')," % jobOptions['histogramName_nominal'])
         lines.append("        ),")
         lines.append("        mcClosure = cms.PSet(")
-        lines.append("            inputFileName = cms.string('%s')," % jobOptions['inputFile_mcClosure'])
+        lines.append("            inputFileName = cms.vstring(['%s'])," % jobOptions['inputFile_mcClosure'])
         lines.append("            histogramName = cms.string('%s')," % jobOptions['histogramName_mcClosure'])
         lines.append("        ),")
         lines.append("    ),")
@@ -504,7 +506,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     continue
 
                   if central_or_shift_or_dummy not in central_or_shift_extensions and not self.accept_systematics(
-                      central_or_shift_or_dummy, is_mc, lepton_selection, lepton_charge_selection, sample_info
+                      central_or_shift_or_dummy, is_mc, lepton_selection, lepton_charge_selection, sample_info, dyBgr_option
                   ):
                     continue
 
@@ -574,6 +576,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           electron_selection = lepton_selection
           muon_selection = lepton_selection
 
+          if dyBgr_option in ["applyWeights_data", "applyWeights_mc"] and "Fakeable_mcClosure" in lepton_selection:
+            continue
+
           if lepton_selection == "Fakeable_mcClosure_e":
             electron_selection = "Fakeable"
             muon_selection = "Tight"
@@ -594,6 +599,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 if 'signal' in sample_info["process_name_specific"] and not self.do_sync:
                   continue
               process_name = sample_info["process_name_specific"]
+              if dyBgr_option in ["applyWeights_mc"] and not process_name.startswith('DY'):
+                continue
               if "Fakeable_mcClosure" in lepton_selection and not process_name.startswith('TTToSemiLeptonic') and not self.do_sync:
                 continue
               logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
@@ -604,9 +611,10 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
               use_th_weights = self.runTHweights(sample_info)
 
               central_or_shift_dedicated = self.central_or_shifts if use_th_weights else self.central_or_shifts_external
+              ttbar_sys_sample_withFake = False
               for central_or_shift in central_or_shift_dedicated:
                 if not self.accept_systematics(
-                    central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info
+                    central_or_shift, is_mc, lepton_selection, lepton_charge_selection, sample_info, dyBgr_option
                 ):
                   continue
 
@@ -614,10 +622,15 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 if central_or_shift == "central" and not use_th_weights:
                   for central_or_shift_local in self.central_or_shifts_internal:
                     if self.accept_systematics(
-                        central_or_shift_local, is_mc, lepton_selection, lepton_charge_selection, sample_info
+                        central_or_shift_local, is_mc, lepton_selection, lepton_charge_selection, sample_info, dyBgr_option
                     ):
                       central_or_shifts_local.append(central_or_shift_local)
-
+                if central_or_shift == "central" and 'Fakeable' in lepton_selection_and_frWeight and self.ttbar_syst_enabled:
+                  for ttbar_sys in systematics.ttbar:
+                    if "TT_{}".format(ttbar_sys) in sample_category:
+                      ttbar_sys_sample_withFake = True
+                      break
+                  if ttbar_sys_sample_withFake: continue
                 logging.info(" ... for '%s', DY background option '%s' and systematic uncertainty option '%s'" % (lepton_selection_and_frWeight, dyBgr_option, central_or_shift))
                 # build config files for executing analysis code
                 key_analyze_dir = getKey(process_name, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight, central_or_shift)
@@ -718,7 +731,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
               if self.isBDTtraining or self.do_sync:
                 continue
-
+              if ttbar_sys_sample_withFake: continue
               #----------------------------------------------------------------------------
               # split hadd_stage1 files into separate files, one for each event category
               for category in self.datacard_categories:
@@ -759,7 +772,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
             if self.isBDTtraining or self.do_sync:
               continue
-
             if self.ttbar_syst_enabled:
               for category in self.datacard_categories:
                 addSysTT_job_tuple = (category, lepton_charge_selection, dyBgr_option, lepton_selection_and_frWeight)
@@ -1148,6 +1160,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             else:
               nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
             key_hadd_stage2_mcClosure_job = getKey(category, lepton_charge_selection, "applyWeights_mc", get_lepton_selection_and_frWeight("Tight", "disabled"))
+            print '**********', self.outputFile_hadd_stage2[key_hadd_stage2_job]
             self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job].update({
               'nuisance_parameter_name' : nuisance_parameter_name,
               'inputFile_nominal' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
