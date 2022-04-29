@@ -4,7 +4,7 @@
 
 namespace
 {
-  std::vector<std::string> BMpoints{"SM", "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
+  std::vector<std::string> BMpoints{"SM"};//, "BM1", "BM2", "BM3", "BM4", "BM5", "BM6", "BM7", "BM8", "BM9", "BM10", "BM11", "BM12", "all"};
   std::vector<std::string> split_spin0points {"low_spin0", "high_spin0"};
   std::vector<std::string> split_spin2points {"low_spin2", "high_spin2"};
   std::vector<std::string> spin0points {"spin0"};

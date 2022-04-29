@@ -235,17 +235,47 @@ process.analyze_hh_bb2l = cms.PSet(
             classes = cms.vstring('HH', 'TT', 'W', 'DY', 'ST', 'Other')
         ),
         nonresonant_resolved = cms.PSet(
-            pbFileName_even = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_odd_data_nonres_X_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
-            pbFileName_odd = cms.string('hhAnalysis/bbww/data/BDT_hh_bb2l/multiclass_DNN_wlbn_for_bb2l_resolved_even_data_nonres_X_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/Resnet_bb2l_resolved_2b_womem_v2/multiclass_DNN_wlbn_for_bb2l_resolved_odd_data_nonres_X_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/Resnet_bb2l_resolved_2b_womem_v2/multiclass_DNN_wlbn_for_bb2l_resolved_even_data_nonres_X_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
             ll_inputVariables = cms.vstring(
-                'bjet1', 'bjet2', 'lep1', 'lep2'
+                'bjet1', 'bjet2', 'jet1', 'jet2', 'lep1', 'lep2', 'met'
             ),
             hl_inputVariables = cms.vstring(
-                'm_Hbb_regCorr', 'Smin_Hww', 'm_HHvis', 'dR_ll',\
-                'logTopness_publishedChi2', 'mT2_top_2particle',\
-                'mht', 'logTopness_fixedChi2', 'pT_HH', 'logHiggsness_fixedChi2',\
-                'pT_Hbb', 'pT_Hww', 'lep2_pt', 'dR_Hbb', 'pT_ll',\
-                'met_pt_proj', 'mjj_highestpt', 'mjj_closeToH', 'HT'
+                'bjet1_e', 'bjet1_px', 'bjet1_py', 'bjet1_pz',
+                'bjet2_e', 'bjet2_px', 'bjet2_py', 'bjet2_pz',
+                'jet1_e', 'jet1_px', 'jet1_py', 'jet1_pz',
+                'jet2_e', 'jet2_px', 'jet2_py', 'jet2_pz',
+                'lep1_e', 'lep1_px', 'lep1_py', 'lep1_pz',
+                'lep2_e', 'lep2_px', 'lep2_py', 'lep2_pz',
+                'met_e', 'met_px', 'met_py', 'met_pz',
+                'm_Hbb_regCorr', 'Smin_Hww', 'm_HHvis', 'dR_ll',
+                'logTopness_publishedChi2', 'mT2_top_2particle',
+                'mht', 'logTopness_fixedChi2', 'pT_HH',
+                'logHiggsness_fixedChi2', 'pT_Hbb', 'pT_Hww', 'lep2_pt',\
+                'dR_Hbb', 'pT_ll', 'met_pt_proj', 'mjj_highestpt', 'mjj_closeToH', 'HT'
+            ),
+            classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
+        ),
+        nonresonant_resolved_wmem = cms.PSet(
+            pbFileName_even = cms.string('hhAnalysis/bbww/data/Resnet_bb2l_resolved_2b_wmem_v2/multiclass_DNN_wlbn_for_bb2l_resolved_odd_data_nonres_X_era.pb'), ## "LBN .pb -> Odd train:Even test" to be used for even evt no.
+            pbFileName_odd = cms.string('hhAnalysis/bbww/data/Resnet_bb2l_resolved_2b_wmem_v2/multiclass_DNN_wlbn_for_bb2l_resolved_even_data_nonres_X_era.pb'), ## "LBN .pb -> Even train:Odd test" to be used for odd evt no.
+            ll_inputVariables = cms.vstring(
+                'bjet1', 'bjet2', 'jet1', 'jet2', 'lep1', 'lep2', 'met'
+            ),
+            hl_inputVariables = cms.vstring(
+                'bjet1_e', 'bjet1_px', 'bjet1_py', 'bjet1_pz',
+                'bjet2_e', 'bjet2_px', 'bjet2_py', 'bjet2_pz',
+                'jet1_e', 'jet1_px', 'jet1_py', 'jet1_pz',
+                'jet2_e', 'jet2_px', 'jet2_py', 'jet2_pz',
+                'lep1_e', 'lep1_px', 'lep1_py', 'lep1_pz',
+                'lep2_e', 'lep2_px', 'lep2_py', 'lep2_pz',
+                'met_e', 'met_px', 'met_py', 'met_pz',
+                'm_Hbb_regCorr', 'Smin_Hww', 'm_HHvis', 'dR_ll',
+                'logTopness_publishedChi2', 'mT2_top_2particle',
+                'mht', 'logTopness_fixedChi2', 'pT_HH',
+                'logHiggsness_fixedChi2', 'pT_Hbb', 'pT_Hww',
+                'lep2_pt', 'dR_Hbb', 'pT_ll', 'met_pt_proj',
+                'mjj_highestpt', 'mjj_closeToH', 'HT', 'mems', 'memb', 'mems_divide_memsb'
             ),
             classes = cms.vstring('HH', 'TT', 'ST', 'Other', 'DY')
         ),

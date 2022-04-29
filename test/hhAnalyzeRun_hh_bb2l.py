@@ -233,9 +233,8 @@ if fill_spin in ['spin0', 'spin2']:
     if fillHistograms_LBN:
       categories = [
         "HH_boosted", "HH_resolved_2b", "HH_resolved_1b",
-        "TT_boosted", "TT_resolved",
-        "DY_boosted", "DY_resolved",
-        "SingleTop_boosted", "SingleTop_resolved",
+        "TT_resolved",
+        "DY_resolved",
         "Other"
       ]
       for category in categories:
@@ -244,6 +243,7 @@ if fillHistograms_resonant:
   bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
     if 'spin' in bmName: continue
+    if 'SM' not in bmName: continue
     if 'EventCounter' in bmName: continue
     if fillHistograms_BDT:
       categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
@@ -251,14 +251,14 @@ if fillHistograms_resonant:
         histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/%s" % (category, bmName) : {} })
     if fillHistograms_LBN:
       categories = [
-        "HH_boosted_vbf", "HH_boosted_nonvbf", "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf", 
-        "TT_boosted", "TT_resolved",
-        "DY_boosted", "DY_resolved",
-        "SingleTop_boosted", "SingleTop_resolved",
+        "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf",
+        "TT_resolved",
+        "DY_resolved",
         "Other"
       ]
       for category in categories:
         histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
+        histograms_to_fit.update({ "sel/datacard/wmem_LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
 
 if sideband == 'disabled':
   chargeSumSelections = [ "OS" ]

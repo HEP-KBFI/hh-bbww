@@ -306,8 +306,8 @@ int main(int argc, char* argv[])
   bool apply_genPhotonFilter = apply_genPhotonFilter_string != "disabled";
   const std::vector<std::string> disable_ak8_corr = cfg_analyze.getParameter<std::vector<std::string>>("disable_ak8_corr");
   const bool apply_LHEVpt_rwgt = cfg_analyze.getParameter<bool>("apply_LHEVpt_rwgt");
-  const bool apply_subjet_btag = cfg_analyze.getParameter<bool>("apply_subjet_btag");
-  const std::string subjet_btag_procName = cfg_analyze.getParameter<std::string>("subjet_btag_procName");
+  const bool apply_subjet_btag = cfg_analyze.exists("apply_subjet_btag") ? cfg_analyze.getParameter<bool>("apply_subjet_btag") : false;
+  const std::string subjet_btag_procName = apply_subjet_btag ? cfg_analyze.getParameter<std::string>("subjet_btag_procName") : "";
 
   const double lep_mva_cut_mu = cfg_analyze.getParameter<double>("lep_mva_cut_mu");
   const double lep_mva_cut_e  = cfg_analyze.getParameter<double>("lep_mva_cut_e");
@@ -482,6 +482,23 @@ int main(int argc, char* argv[])
     BDT_nonresonant_resolved = makeTMVAInterfaceMap(cfg_BDT_nonresonant_resolved, era_string, true);
   }
 
+  std::string xgb_regression_even_memS = "hhAnalysis/bbww/data/BDT_hh_bb1l/odd_data_train_on_memProbS.xml";
+  std::string xgb_regression_odd_memS = "hhAnalysis/bbww/data/BDT_hh_bb1l/even_data_train_on_memProbS.xml";
+  std::string xgb_regression_even_memB = "hhAnalysis/bbww/data/BDT_hh_bb1l/odd_data_train_on_memProbB.xml";
+  std::string xgb_regression_odd_memB = "hhAnalysis/bbww/data/BDT_hh_bb1l/even_data_train_on_memProbB.xml";
+
+  std::vector<std::string> regression_variables
+  {"bjet1_pt", "bjet1_eta", "bjet1_phi", "bjet1_mass",
+      "bjet2_eta", "bjet2_pt", "bjet2_phi", "bjet2_mass",
+      "lepton1_pt", "lepton1_eta", "lepton1_phi",
+      "lepton2_pt", "lepton2_eta", "lepton2_phi",
+      "met_px", "met_py", "mww", "mll", "ptww",
+      "ptll", "ptbb", "drbb", "mbb"
+      };
+
+  TMVAInterface* xgb_regression_memS = new TMVAInterface(xgb_regression_odd_memS, xgb_regression_even_memS, regression_variables);
+  TMVAInterface* xgb_regression_memB = new TMVAInterface(xgb_regression_odd_memB, xgb_regression_even_memB, regression_variables);
+
   // initialize LBN-based signal extraction for resonant and non-resonant HH signal
   bool fillHistograms_LBN = cfg_analyze.getParameter<bool>("fillHistograms_LBN");
   std::map<std::string, TensorFlowInterfaceLBN *> LBN_resonant_spin2_boosted;
@@ -490,6 +507,7 @@ int main(int argc, char* argv[])
   std::map<std::string, TensorFlowInterfaceLBN *> LBN_resonant_spin0_resolved;
   std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_boosted;
   std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_resolved;
+  std::map<std::string, TensorFlowInterfaceLBN *> LBN_nonresonant_resolved_wmem;
   if ( fillHistograms_LBN )
   {
     edm::ParameterSet cfg_LBN = cfg_analyze.getParameter<edm::ParameterSet>("LBN");
@@ -514,6 +532,9 @@ int main(int argc, char* argv[])
     edm::ParameterSet cfg_LBN_nonresonant_resolved = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved");
     LBN_nonresonant_resolved = makeTensorFlowInterfaceLBNMap(cfg_LBN_nonresonant_resolved, era_string,
         fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
+    edm::ParameterSet cfg_LBN_nonresonant_resolved_wmem = cfg_LBN.getParameter<edm::ParameterSet>("nonresonant_resolved_wmem");
+    LBN_nonresonant_resolved_wmem = makeTensorFlowInterfaceLBNMap(cfg_LBN_nonresonant_resolved_wmem,
+        era_string, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2);
   }  
 
   std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
@@ -920,6 +941,7 @@ int main(int argc, char* argv[])
     DYBgrHistManager_hh_bb2l* dyBgr_;
     DatacardHistManager_hh* datacard_BDT_;
     DatacardHistManager_hh_multiclass* datacard_LBN_;
+    DatacardHistManager_hh_multiclass* datacard_LBN_wmem_;
     EvtYieldHistManager* evtYield_;
     WeightHistManager* weights_;
   };
@@ -1032,6 +1054,12 @@ int main(int argc, char* argv[])
           isDEBUG, 
           fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
         selHistManager->datacard_LBN_->bookHistograms(fs);
+        selHistManager->datacard_LBN_wmem_ = new DatacardHistManager_hh_multiclass(makeHistManager_cfg(process_and_genMatch,
+        Form("%s/sel/datacard/wmem_LBN", histogramDir.data()), era_string, central_or_shift),
+        analysisConfig, eventInfo, HHWeightLO_calc, HHWeightNLO_calc, &eventCategory_LBN,
+        isDEBUG,
+        fillHistograms_nonresonant, fillHistograms_resonant_spin0, fillHistograms_resonant_spin2, split_resonant_training);
+        selHistManager->datacard_LBN_wmem_->bookHistograms(fs);
       }
 
       if(! skipBooking)
@@ -1044,7 +1072,7 @@ int main(int argc, char* argv[])
         selHistManager->evtYield_->bookHistograms(fs);
         selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
+        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate", "subjetBtagSF" });
       }
       selHistManagers[central_or_shift][idxLepton] = selHistManager;
     }
@@ -1121,7 +1149,11 @@ int main(int argc, char* argv[])
       "massLT",  "max_Lep_eta",
       "cosThetaS_Hbb", "cosThetaS_Hbb_reg",
       "mostFwdJet_eta", "mostFwdJet_pt", "mostFwdJet_phi", "mostFwdJet_E",
-      "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E", "mjj_highestpt", "mjj_closeToH"
+      "leadFwdJet_eta", "leadFwdJet_pt", "leadFwdJet_phi", "leadFwdJet_E", "mjj_highestpt", "mjj_closeToH",
+      "jet1_e", "jet1_px", "jet1_py", "jet1_pz",
+      "jet2_e", "jet2_px", "jet2_py", "jet2_pz",
+      "met_px", "met_py", "met_pz", "met_e",
+      "mems", "memb", "mems_divide_memsb"
     );
     bdt_filler->register_variable<int_type>(
       "lep1_charge", "lep2_charge", "numElectrons", 
@@ -1809,6 +1841,7 @@ int main(int argc, char* argv[])
       selJet1_Hbb = selJetT_Hbb->jet_or_subjet1_;
       selJet2_Hbb = selJetT_Hbb->jet_or_subjet2_;
     }
+    if ( selJetAK8_Hbb ) continue;
     if ( !(selJet1_Hbb && selJet2_Hbb) ) {
       if ( run_lumi_eventSelector ) {
         std::cout << "event " << eventInfo.str() << " FAILS >= 2 jets from H->bb selection\n";
@@ -1838,9 +1871,9 @@ int main(int argc, char* argv[])
     }
     else if ( dyBgr_option == kDYbgr_disabled )
     {
-      if ( !(numBJets_medium >= 1) ) {
+      if ( !(numBJets_medium == 2) ) {
         if ( run_lumi_eventSelector ) {
-          std::cout << "event " << eventInfo.str() << " FAILS >= 1 medium b-jet selection." << std::endl;
+          std::cout << "event " << eventInfo.str() << " FAILS == 2 medium b-jet selection." << std::endl;
         }
         continue;
       }
@@ -2394,6 +2427,7 @@ int main(int argc, char* argv[])
     int numMuons = 0;
     if ( selLepton_lead_type    == kMuon     ) ++numMuons;
     if ( selLepton_sublead_type == kMuon     ) ++numMuons;
+    
     std::map<std::string, double> mvaInputVariables_list = {
       {"mT_lep1",                 comp_MT_met(selLepton_lead, met.pt(), met.phi())},
       {"mT_lep2",                 comp_MT_met(selLepton_sublead, met.pt(), met.phi())},
@@ -2416,8 +2450,8 @@ int main(int argc, char* argv[])
       {"mT2_top_2particle",       mT2_top_2particle},
       {"met_LD",                  met_LD > 0},
       {"min_dR_blep",             std::min({dR_b1lep1, dR_b1lep2, dR_b2lep1, dR_b2lep2})},
-      {"logTopness_fixedChi2",    logTopness_fixedChi2 < 50 ? -0.01 : logTopness_fixedChi2  },
-      {"logHiggsness_fixedChi2",  logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2},
+      {"logTopness_fixedChi2",    logTopness_fixedChi2  },
+      {"logHiggsness_fixedChi2",  logHiggsness_fixedChi2},
       {"logTopness_publishedChi2", logTopness_publishedChi2},
       {"m_Hbb_regCorr",           m_Hbb_regCorr},
       {"Smin_Hww",                Smin_Hww},
@@ -2436,13 +2470,70 @@ int main(int argc, char* argv[])
       {"bjet2_pt",                    selJetP4_Hbb_sublead.pt()},
       {"avg_dr_jet_central",          comp_avg_dr_jet(selJetsAK4)},
       {"lep1_e",                      selLepton_lead->cone_p4().e()},
+      {"lep1_px",                      selLepton_lead->cone_p4().px()},
+      {"lep1_py",                      selLepton_lead->cone_p4().py()},
+      {"lep1_pz",                      selLepton_lead->cone_p4().pz()},
+      {"lep2_e",                      selLepton_sublead->cone_p4().e()},
+      {"lep2_px",                      selLepton_sublead->cone_p4().px()},
+      {"lep2_py",                      selLepton_sublead->cone_p4().py()},
+      {"lep2_pz",                      selLepton_sublead->cone_p4().pz()},
       {"eta_HHvis",                   eta_HHvis},
       {"dR_b1lep2",                   dR_b1lep2},
       {"leadFwdJet_pt",           selJetsForward.size() >= 1 ? selJetsForward[0]->pt() : -1000.},
       {"mjj_highestpt",          mjj_highestpt},
       {"mjj_closeToH",           mjj_closeToH},
-      {"HT",                     HT}
+      {"HT",                     HT},
+      {"bjet1_pt",                selJetP4_Hbb_lead.pt()},
+      {"bjet1_eta",                selJetP4_Hbb_lead.eta()},
+      {"bjet1_phi",                selJetP4_Hbb_lead.phi()},
+      {"bjet1_mass",               selJetP4_Hbb_lead.mass()},
+      {"bjet2_eta",                selJetP4_Hbb_sublead.eta()},
+      {"bjet2_phi",                selJetP4_Hbb_sublead.phi()},
+      {"bjet2_mass",               selJetP4_Hbb_sublead.mass()},
+      {"bjet1_e",                selJetP4_Hbb_lead.e()},
+      {"bjet1_px",                selJetP4_Hbb_lead.px()},
+      {"bjet1_py",                selJetP4_Hbb_lead.py()},
+      {"bjet1_pz",               selJetP4_Hbb_lead.pz()},
+      {"bjet2_e",                selJetP4_Hbb_sublead.e()},
+      {"bjet2_px",                selJetP4_Hbb_sublead.px()},
+      {"bjet2_py",               selJetP4_Hbb_sublead.py()},
+      {"bjet2_pz",               selJetP4_Hbb_sublead.pz()},
+      {"jet1_e",                selJetP4_jj_lead.e()},
+      {"jet1_px",                selJetP4_jj_lead.px()},
+      {"jet1_py",                selJetP4_jj_lead.py()},
+      {"jet1_pz",               selJetP4_jj_lead.pz()},
+      {"jet2_e",                selJetP4_jj_sublead.e()},
+      {"jet2_px",                selJetP4_jj_sublead.px()},
+      {"jet2_py",               selJetP4_jj_sublead.py()},
+      {"jet2_pz",               selJetP4_jj_sublead.pz()},
+      {"mll",                     m_ll},
+      {"ptll",                    pT_ll},
+      {"ptbb",                    pT_Hbb},
+      {"ptww",                     pT_Hww},
+      {"drbb",                    dR_Hbb},
+      {"lepton1_pt",                      selLepton_lead->cone_p4().pt()},
+      {"lepton1_eta",                      selLepton_lead->cone_p4().eta()},
+      {"lepton1_phi",                      selLepton_lead->cone_p4().phi()},
+      {"lepton2_pt",                      selLepton_sublead->cone_p4().pt()},
+      {"lepton2_eta",                      selLepton_sublead->cone_p4().eta()},
+      {"lepton2_phi",                      selLepton_sublead->cone_p4().phi()},
+      {"met_e",                        metP4.e()},
+      {"met_pz",                        metP4.pz()},
+      {"met_px",                        metP4.px()},
+      {"met_py",                        metP4.py()},
+      {"mbb",                           HbbP4.mass()},
+      {"mww",                           HwwP4.mass()},
     };
+
+    double log_mems = (*xgb_regression_memS)(mvaInputVariables_list, eventInfo.event, false, true);
+    double log_memb = (*xgb_regression_memB)(mvaInputVariables_list, eventInfo.event, false, true);
+    double mems = TMath::Exp(-pow(log_mems,2));
+    double memb = TMath::Exp(-pow(log_memb,2));
+    double mems_divide_memsb = mems/(mems+memb);
+
+    mvaInputVariables_list.insert(mvaInputVariables_list.end(), {"mems", mems});
+    mvaInputVariables_list.insert(mvaInputVariables_list.end(), {"memb", memb});
+    mvaInputVariables_list.insert(mvaInputVariables_list.end(), {"mems_divide_memsb", mems_divide_memsb});
 
     if ( bdt_filler )
     {
@@ -2617,12 +2708,14 @@ int main(int argc, char* argv[])
         ("mjj_highestpt",               mjj_highestpt)
         ("mjj_closeToH",                mjj_closeToH)
         ("lepPairType",                 fabs(selLepton_lead->pdgId()) == fabs(selLepton_sublead->pdgId()))
+        ("mems",                        mems)
+        ("memb",                        memb)
+        ("mems_divide_memsb",           mems_divide_memsb)
         (weightMapHH)
         .fill()
         ;
       continue;
     }
-
 //--- compute event-level BDT outputs
     std::map<std::string, double> bdtOutputs_resonant_spin2;
     std::map<std::string, double> bdtOutputs_resonant_spin0;
@@ -2656,6 +2749,7 @@ int main(int argc, char* argv[])
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin2;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_resonant_spin0;
     std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant;
+    std::map<std::string, std::map<std::string, double>> lbnOutputs_nonresonant_wmem;
     std::map<std::string, double> lbnOutputs_nonresonant_all;
     if ( fillHistograms_LBN )
     {
@@ -2677,7 +2771,9 @@ int main(int argc, char* argv[])
         lbnOutputs_resonant_spin0 = CreateResonantLBNOutputMap(gen_mHH, LBN_resonant_spin0_resolved, ll_inputs_ptr, hl_inputs_resonant_spin0, eventInfo.event, "_spin0");*/
         std::map<std::string, double> hl_inputs_nonresonant = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved["SM"]->hl_mvaInputVariables());
         lbnOutputs_nonresonant = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved, ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event, hhWeight_couplings);
-        lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
+        //lbnOutputs_nonresonant_all = (*LBN_nonresonant_resolved["all"])(ll_inputs_ptr, hl_inputs_nonresonant, eventInfo.event);
+        std::map<std::string, double> hl_inputs_nonresonant_wmem = InitializeInputVarMap(mvaInputVariables_list, LBN_nonresonant_resolved_wmem["SM"]->hl_mvaInputVariables());
+        lbnOutputs_nonresonant_wmem = CreateNonResonantLBNOutputMap(nonRes_BMs, LBN_nonresonant_resolved_wmem, ll_inputs_ptr, hl_inputs_nonresonant_wmem, eventInfo.event, hhWeight_couplings);
       }
     }
 //--- retrieve gen-matching flags
@@ -2733,6 +2829,7 @@ int main(int argc, char* argv[])
             m_HHvis, m_HH, m_HH_analytic,
             m_HH_hme, hmeCpuTime,
             vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+            mems,  memb, mems_divide_memsb,
             evtWeight
           );
           //if(memReader.size() > 0)
@@ -2778,15 +2875,25 @@ int main(int argc, char* argv[])
         {
           eventCategory_LBN.set(selJetAK8_Hbb != nullptr, numBJets_medium, isVBF);
           selHistManager->datacard_LBN_->fillHistograms(
-                                                        //lbnOutputs_resonant_spin2,
-                                                        //lbnOutputs_resonant_spin0,
-                                                        {{"250", {{"HH", -1}}}},
-                                                        {{"250", {{"HH", -1}}}},
-            lbnOutputs_nonresonant,
-            lbnOutputs_nonresonant_all, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
-                                                        -1,
-            evtWeight
-                                                        );
+           //lbnOutputs_resonant_spin2,
+           //lbnOutputs_resonant_spin0,
+           {{"250", {{"HH", -1}}}},
+           {{"250", {{"HH", -1}}}},
+           lbnOutputs_nonresonant,
+           {{"HH", -1}}, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+           -1,
+           evtWeight
+          );
+          selHistManager->datacard_LBN_wmem_->fillHistograms(
+            //lbnOutputs_resonant_spin2,
+           //lbnOutputs_resonant_spin0,
+           {{"250", {{"HH", -1}}}},
+           {{"250", {{"HH", -1}}}},
+           lbnOutputs_nonresonant_wmem,
+           {{"HH", -1}}, // CV: lbnOutput for nonresonant_allBMs case not implemented yet !!
+           -1,
+           evtWeight
+         );
         }
 
         if(! skipFilling)
@@ -3043,6 +3150,11 @@ int main(int argc, char* argv[])
   {
     delete bdt.second;
   }
+
+  for(auto & bdt: LBN_nonresonant_resolved_wmem)
+    {
+      delete bdt.second;
+    }
 
   delete eventWeightManager;
 

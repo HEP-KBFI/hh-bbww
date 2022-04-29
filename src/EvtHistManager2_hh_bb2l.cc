@@ -8,6 +8,9 @@
 EvtHistManager2_hh_bb2l::EvtHistManager2_hh_bb2l(const edm::ParameterSet & cfg)
   : HistManagerBase(cfg)
 {
+  central_or_shiftOptions_["mems"] = { "central" };
+  central_or_shiftOptions_["memb"] = { "central" };
+  central_or_shiftOptions_["mems_divide_memsb"] = { "central" };
   central_or_shiftOptions_["numElectrons"] = { "central" };
   central_or_shiftOptions_["numMuons"] = { "central" };
   central_or_shiftOptions_["numJets"] = { "central" };
@@ -46,6 +49,9 @@ EvtHistManager2_hh_bb2l::getHistogram_EventCounter() const
 void
 EvtHistManager2_hh_bb2l::bookHistograms(TFileDirectory & dir)
 {
+  histogram_mems_divide_memsb_     = book1D(dir, "mems_divide_memsb",       50, 0.,  1.);
+  histogram_mems_     = book1D(dir, "mems",       50, 0.,  1.);
+  histogram_memb_     = book1D(dir, "memb",       50, 0.,  1.);
   histogram_numElectrons_     = book1D(dir, "numElectrons",       5, -0.5,  +4.5);
   histogram_numMuons_         = book1D(dir, "numMuons",           5, -0.5,  +4.5);
   histogram_numJets_          = book1D(dir, "numJets",           20, -0.5, +19.5);
@@ -93,11 +99,14 @@ EvtHistManager2_hh_bb2l::fillHistograms(int numElectrons,
                                         double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
                                         double m_HHvis, double m_HH, double m_HH_analytic,
                                         double m_HH_hme, double hmeCpuTime,
-                                        double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
+                                        double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj, double mems, double memb, double mems_divide_memsb,
                                         double evtWeight)
 {
   const double evtWeightErr = 0.;
 
+  fillWithOverFlow(histogram_mems_,     mems,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_memb_,     memb,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_mems_divide_memsb_,     mems_divide_memsb,      evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numElectrons_,     numElectrons,      evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numMuons_,         numMuons,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numJets_,          numJets,           evtWeight, evtWeightErr);
