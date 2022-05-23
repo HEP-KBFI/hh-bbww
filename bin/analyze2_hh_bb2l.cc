@@ -1858,8 +1858,8 @@ int main(int argc, char* argv[])
 //--- compute HT and STMET variables used for signal extraction in EXO analyses
     std::vector<const RecoJetBase*> selJets_HT_and_STMET;
     selJets_HT_and_STMET.insert(selJets_HT_and_STMET.end(), selJets_Hbb.begin(), selJets_Hbb.end());
-    double HT = ( selJetsAK8.size()==0 ) ? compHT({}, {}, selJetsAK4) :
-      compHT({}, {}, selJetsAK8, cleanedJetsAK4_wrtselJetsAK8);
+    double HT = ( selJetsAK8.size()==0 ) ? compHT({}, {}, selJetsAK4_pt50) :
+      compHT({}, {}, selJetsAK8, cleanedJetsAK4_wrtselJetsAK8_wpt50);
     double STMET = compSTMEt(fakeableLeptons, {}, selJets_HT_and_STMET, met.p4());
     double mjj_highestpt = ( selJetsAK8.size() ) ? (selJetsAK8[0]->subJet1()->p4()+selJetsAK8[0]->subJet2()->p4()).mass() :
       (( selJetsAK4.size() >= 2 ) ? (selJetsAK4[0]->p4() + selJetsAK4[1]->p4()).mass() : -1);
@@ -1905,14 +1905,11 @@ int main(int argc, char* argv[])
       jetCleanerAK4_dR04   (selJetsAK4_vbf_beforeCleaning, fakeableLeptons)
     ;
     std::vector<const RecoJet*> selJetsAK4_vbf;
-    std::vector<const RecoJet*> cleanedJetsAK4_wrtHbb;
     if ( selJetAK8_Hbb ) {
       const std::vector<const RecoJetAK8*> overlaps = { selJetAK8_Hbb };
       selJetsAK4_vbf = jetCleanerAK4_dR12(selJetsAK4_vbf_postLeptonCleaning, overlaps);
-      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR12(selJetsAK4, std::vector<const RecoJetBase*>({ selJetAK8_Hbb }));
     } else {
       selJetsAK4_vbf = jetCleanerAK4_dR08(selJetsAK4_vbf_postLeptonCleaning, selJets_Hbb);
-      cleanedJetsAK4_wrtHbb = jetCleanerAK4_dR04(selJetsAK4, selJets_Hbb);
     }
     if(isDEBUG)
     {
@@ -2162,7 +2159,6 @@ int main(int argc, char* argv[])
     double dPhi_HHvis = TMath::Abs(deltaPhi(HbbP4.phi(), (selLeptonP4_lead + selLeptonP4_sublead).phi()));
     Particle::LorentzVector HHP4 = HbbP4 + HwwP4;
     double m_HH = HHP4.mass();
-    double m_HH_analytic = comp_mHH_analytic(HHvisP4, metP4);
     double pT_HH = HHP4.pt();
     double Smin_HH = comp_Smin(HHvisP4, metP4.px(), metP4.py());
     double dR_HH = deltaR(HbbP4, HwwP4);
@@ -2358,29 +2354,13 @@ int main(int argc, char* argv[])
     }
 
     // take the highest eta selJetsForward
-    Particle::LorentzVector mostFwdJet = HighestEtaFwdJet(selJetsForward);
-    const RecoJetBase* selJet1_jj = nullptr;
-    const RecoJetBase* selJet2_jj = nullptr;
-    if ( cleanedJetsAK4_wrtHbb.size() >0 )
-    {
-      selJet1_jj = cleanedJetsAK4_wrtHbb[0];
-    }
-    if ( cleanedJetsAK4_wrtHbb.size() >1 )
-    {
-       selJet2_jj = cleanedJetsAK4_wrtHbb[1];
-    }
-    Particle::LorentzVector selJetP4_jj_lead;
-    if ( selJet1_jj ) selJetP4_jj_lead = selJet1_jj->p4();
-    Particle::LorentzVector selJetP4_jj_sublead;
-    if ( selJet2_jj ) selJetP4_jj_sublead = selJet2_jj->p4();
+    Particle::LorentzVector mostFwdJet = HighestEtaFwdJet(selJetsForward); 
+
     const std::map<std::string, Particle> ll_inputs = {
       { "bjet1",  Particle(selJetP4_Hbb_lead)       },
       { "bjet2",  Particle(selJetP4_Hbb_sublead)    },
-      { "jet1",  Particle(selJetP4_jj_lead)    },
-      { "jet2",  Particle(selJetP4_jj_sublead) },
       { "lep1",   Particle(selLepton_lead->cone_p4())    },
-      { "lep2",   Particle(selLepton_sublead->cone_p4()) },
-      { "met",    Particle(metP4)     }
+      { "lep2",   Particle(selLepton_sublead->cone_p4()) }
     };
     std::map<std::string, const Particle *> ll_inputs_ptr;
     for( const auto & kv: ll_inputs )
@@ -2508,10 +2488,6 @@ int main(int argc, char* argv[])
         ("bjet1_px",                    selJetP4_Hbb_lead.px())
         ("bjet1_py",                    selJetP4_Hbb_lead.py())
         ("bjet1_pz",                    selJetP4_Hbb_lead.pz())
-        ("jet1_e",                      selJetP4_jj_lead.energy())
-        ("jet1_px",                     selJetP4_jj_lead.px())
-        ("jet1_py",                     selJetP4_jj_lead.py())
-        ("jet1_pz",                     selJetP4_jj_lead.pz())
         ("bjet2_pt",                    selJetP4_Hbb_sublead.pt())
         ("bjet2_eta",                   selJetP4_Hbb_sublead.eta())
         ("bjet2_phi",                   selJetP4_Hbb_sublead.phi())
@@ -2520,10 +2496,6 @@ int main(int argc, char* argv[])
         ("bjet2_px",                    selJetP4_Hbb_sublead.px())
         ("bjet2_py",                    selJetP4_Hbb_sublead.py())
         ("bjet2_pz",                    selJetP4_Hbb_sublead.pz())
-        ("jet2_e",                      selJetP4_jj_sublead.energy())
-        ("jet2_px",                     selJetP4_jj_sublead.px())
-        ("jet2_py",                     selJetP4_jj_sublead.py())
-        ("jet2_pz",                     selJetP4_jj_sublead.pz())
         ("mindr_lep1_jet",              mindr_lep1_jet)
         ("mindr_lep2_jet",              mindr_lep2_jet)
         ("avg_dr_jet_central",          comp_avg_dr_jet(selJetsAK4))
@@ -2535,10 +2507,6 @@ int main(int argc, char* argv[])
         ("max_Lep_eta",                 TMath::Max(std::abs(selLepton_lead -> eta()), std::abs(selLepton_sublead -> eta())))
         ("dR_HH",                       dR_HH)
         ("met",                         metP4.pt())
-        ("met_px",                      metP4.px())
-        ("met_py",                      metP4.py())
-        ("met_pz",                      metP4.pz())
-        ("met_e",                       metP4.energy())
         ("mht",                         mhtP4.pt())
         ("met_LD",                      met_LD)
         ("HT",                          HT)
@@ -2730,7 +2698,7 @@ int main(int argc, char* argv[])
             STMET,
             m_Hbb, dR_Hbb, dPhi_Hbb, pT_Hbb,
             m_ll, dR_ll, dPhi_ll, pT_ll,
-            m_HHvis, m_HH, m_HH_analytic,
+            m_HHvis, m_HH,
             m_HH_hme, hmeCpuTime,
             vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
             evtWeight
