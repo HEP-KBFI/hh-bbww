@@ -174,7 +174,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       blacklist             = blacklist,
       disable_ak8_corr      = disable_ak8_corr,
       apply_LHEVpt_rwgt     = False,
-      apply_subjet_btag     = False,#True,
+      apply_subjet_btag     = True,
     )
 
     self.fillHistograms_BDT = fillHistograms_BDT
@@ -1160,7 +1160,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             else:
               nuisance_parameter_name = "CMS_bbwwdl_DY_Clos"
             key_hadd_stage2_mcClosure_job = getKey(category, lepton_charge_selection, "applyWeights_mc", get_lepton_selection_and_frWeight("Tight", "disabled"))
-            print '**********', self.outputFile_hadd_stage2[key_hadd_stage2_job]
             self.jobOptions_add_syst_dybgr[key_add_syst_dybgr_job].update({
               'nuisance_parameter_name' : nuisance_parameter_name,
               'inputFile_nominal' : self.outputFile_hadd_stage2[key_hadd_stage2_job],
