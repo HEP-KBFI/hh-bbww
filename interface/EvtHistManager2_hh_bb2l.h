@@ -37,7 +37,7 @@ public:
 		 double STMET,            
                  double m_Hbb, double dR_Hbb, double dPhi_Hbb, double pT_Hbb,
                  double m_ll, double dR_ll, double dPhi_ll, double pT_ll,
-                 double m_HHvis, double m_HH, double m_HH_analytic,
+                 double m_HHvis, double m_HH, 
                  double m_HH_hme, double hmeCpuTime,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
                  double evtWeight);
@@ -67,7 +67,6 @@ public:
   TH1 * histogram_pT_ll_;
 
   TH1 * histogram_m_HH_hme_;
-  TH1* histogram_m_HH_analytic_;
   TH1 * histogram_hmeCpuTime_;
   TH1 * histogram_m_HH_;
   TH1 * histogram_m_HHvis_;
