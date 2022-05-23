@@ -1044,7 +1044,7 @@ int main(int argc, char* argv[])
         selHistManager->evtYield_->bookHistograms(fs);
         selHistManager->weights_ = new WeightHistManager(makeHistManager_cfg(process_and_genMatch,
           Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate" });
+        selHistManager->weights_->bookHistograms(fs, { "genWeight", "pileupWeight", "triggerWeight", "btagWeight", "data_to_MC_correction", "fakeRate", "subjetBtagSF" });
       }
       selHistManagers[central_or_shift][idxLepton] = selHistManager;
     }
@@ -2414,10 +2414,10 @@ int main(int argc, char* argv[])
       {"mT2_W",                   mT2_W},
       {"mT2_top_3particle",       mT2_top_3particle},
       {"mT2_top_2particle",       mT2_top_2particle},
-      {"met_LD",                  met_LD > 0},
+      {"met_LD",                  met_LD},
       {"min_dR_blep",             std::min({dR_b1lep1, dR_b1lep2, dR_b2lep1, dR_b2lep2})},
-      {"logTopness_fixedChi2",    logTopness_fixedChi2 < 50 ? -0.01 : logTopness_fixedChi2  },
-      {"logHiggsness_fixedChi2",  logHiggsness_fixedChi2 < 50 ? -0.01 : logHiggsness_fixedChi2},
+      {"logTopness_fixedChi2",    logTopness_fixedChi2},
+      {"logHiggsness_fixedChi2",  logHiggsness_fixedChi2},
       {"logTopness_publishedChi2", logTopness_publishedChi2},
       {"m_Hbb_regCorr",           m_Hbb_regCorr},
       {"Smin_Hww",                Smin_Hww},
