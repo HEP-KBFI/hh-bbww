@@ -9,3 +9,4 @@
 *.includes
 *.pyc
 __init__.py
+.qtc_clangd/

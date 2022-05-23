@@ -60,7 +60,7 @@ class analyzeConfig_HHatLOvsNLO(analyzeConfig_hh):
       check_output_files    = check_output_files,
       running_method        = running_method,
       num_parallel_jobs     = num_parallel_jobs,
-      histograms_to_fit     = None,
+      histograms_to_fit     = [],
       triggers              = [],
       verbose               = verbose,
       dry_run               = dry_run,

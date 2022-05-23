@@ -227,7 +227,7 @@ int main(int argc, char* argv[])
 
   WeightHistManager* weightHistManager = new WeightHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/weights", histogramDir.data()), era_string, central_or_shift));
-  weightHistManager->bookHistograms(fs, { "genWeight", "pileupWeight", "HHReweight_lo", "HHReweight_nlo_V1", "HHReweight_nlo_V2" });
+  weightHistManager->bookHistograms(fs, { "genWeight", "pileupWeight", "HHReweight_lo", "HHReweight_nlo_V1", "HHReweight_nlo_V2", "HHReweight_nlo_V3" });
 
   LHEInfoHistManager* lheInfoHistManager = new LHEInfoHistManager(makeHistManager_cfg(process_string,
     Form("%s/sel/lheInfo", histogramDir.data()), era_string, central_or_shift));
@@ -243,9 +243,11 @@ int main(int argc, char* argv[])
 
     HHatLOvsNLOHistManager* woLOWeights_wLOtoNLOWeights_V1_;
     HHatLOvsNLOHistManager* woLOWeights_wLOtoNLOWeights_V2_;
+    HHatLOvsNLOHistManager* woLOWeights_wLOtoNLOWeights_V3_;
 
     HHatLOvsNLOHistManager* wLOWeights_wLOtoNLOWeights_V1_;
     HHatLOvsNLOHistManager* wLOWeights_wLOtoNLOWeights_V2_;
+    HHatLOvsNLOHistManager* wLOWeights_wLOtoNLOWeights_V3_;
 
     HHatLOvsNLOHistManager* wNLOtoNLOWeights_V1_;
     HHatLOvsNLOHistManager* wNLOtoNLOWeights_V2_;
@@ -266,6 +268,9 @@ int main(int argc, char* argv[])
     hhHistManager_weighted->woLOWeights_wLOtoNLOWeights_V2_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
       Form("%s/sel/hh_%s_woLOWeights_wLOtoNLOWeights_V2", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
     hhHistManager_weighted->woLOWeights_wLOtoNLOWeights_V2_->bookHistograms(fs);
+    hhHistManager_weighted->woLOWeights_wLOtoNLOWeights_V3_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_woLOWeights_wLOtoNLOWeights_V3", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->woLOWeights_wLOtoNLOWeights_V3_->bookHistograms(fs);
 
     hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V1_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
       Form("%s/sel/hh_%s_wLOWeights_wLOtoNLOWeights_V1", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
@@ -273,6 +278,9 @@ int main(int argc, char* argv[])
     hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V2_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
       Form("%s/sel/hh_%s_wLOWeights_wLOtoNLOWeights_V2", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
     hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V2_->bookHistograms(fs);
+    hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V3_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
+      Form("%s/sel/hh_%s_wLOWeights_wLOtoNLOWeights_V3", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
+    hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V3_->bookHistograms(fs);
 
     hhHistManager_weighted->wNLOtoNLOWeights_V1_ = new HHatLOvsNLOHistManager(makeHistManager_cfg(process_string,
       Form("%s/sel/hh_%s_wNLOtoNLOWeights_V1", histogramDir.data(), HHBMName->data()), era_string, central_or_shift));
@@ -358,9 +366,11 @@ int main(int argc, char* argv[])
 
       double hhWeight_lo_to_nlo_woCouplingBugFix_V1 = 1.;
       double hhWeight_lo_to_nlo_woCouplingBugFix_V2 = 1.;
+      double hhWeight_lo_to_nlo_woCouplingBugFix_V3 = 1.;
 
       double hhWeight_lo_to_nlo_wCouplingBugFix_V1 = 1.;
       double hhWeight_lo_to_nlo_wCouplingBugFix_V2 = 1.;
+      double hhWeight_lo_to_nlo_wCouplingBugFix_V3 = 1.;
       if ( apply_HH_rwgt_lo )
       {
         hhWeight_lo = HHWeightLO_calc->getWeight("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
@@ -369,20 +379,23 @@ int main(int argc, char* argv[])
       {
         hhWeight_lo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getWeight_LOtoNLO_V1("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
         hhWeight_lo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getWeight_LOtoNLO_V2("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
+        hhWeight_lo_to_nlo_woCouplingBugFix_V3 = HHWeightNLO_calc_woCouplingBugFix->getWeight_LOtoNLO_V3("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
 
         hhWeight_lo_to_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getWeight_LOtoNLO_V1("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
         hhWeight_lo_to_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getWeight_LOtoNLO_V2("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
+        hhWeight_lo_to_nlo_wCouplingBugFix_V3 = HHWeightNLO_calc_wCouplingBugFix->getWeight_LOtoNLO_V3("SM", gen_mHH, gen_cosThetaStar, isDEBUG);
       }
 
-      genKinematicsHistManager_HH->fillHistograms(evtWeight*hhWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V2);
+      genKinematicsHistManager_HH->fillHistograms(evtWeight*hhWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V3);
 
       weightHistManager->fillHistograms("genWeight", eventInfo.genWeight);
       weightHistManager->fillHistograms("pileupWeight", evtWeightRecorder.get_puWeight(central_or_shift));
       weightHistManager->fillHistograms("HHReweight_lo", hhWeight_lo);
       weightHistManager->fillHistograms("HHReweight_nlo_V1", hhWeight_lo_to_nlo_woCouplingBugFix_V1);
       weightHistManager->fillHistograms("HHReweight_nlo_V2", hhWeight_lo_to_nlo_woCouplingBugFix_V2);
+      weightHistManager->fillHistograms("HHReweight_nlo_V3", hhWeight_lo_to_nlo_woCouplingBugFix_V3);
 
-      lheInfoHistManager->fillHistograms(*lheInfoReader, evtWeight*hhWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V2);
+      lheInfoHistManager->fillHistograms(*lheInfoReader, evtWeight*hhWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V3);
     
       hhHistManager_woLOWeights_woLOtoNLOWeights->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
         evtWeight, 1.);
@@ -393,9 +406,11 @@ int main(int argc, char* argv[])
 
         double hhReWeight_lo_to_nlo_woCouplingBugFix_V1 = 1.;
         double hhReWeight_lo_to_nlo_woCouplingBugFix_V2 = 1.;
+        double hhReWeight_lo_to_nlo_woCouplingBugFix_V3 = 1.;
 
         double hhReWeight_lo_to_nlo_wCouplingBugFix_V1 = 1.;
         double hhReWeight_lo_to_nlo_wCouplingBugFix_V2 = 1.;
+        double hhReWeight_lo_to_nlo_wCouplingBugFix_V3 = 1.;
 
         double hhWeight_nlo_to_nlo_woCouplingBugFix_V1 = 1.;
         double hhWeight_nlo_to_nlo_woCouplingBugFix_V2 = 1.;
@@ -407,9 +422,11 @@ int main(int argc, char* argv[])
         {
           hhReWeight_lo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V1(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
           hhReWeight_lo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V2(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo_to_nlo_woCouplingBugFix_V3 = HHWeightNLO_calc_woCouplingBugFix->getRelativeWeight_LOtoNLO_V3(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
 
           hhReWeight_lo_to_nlo_wCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_LOtoNLO_V1(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
           hhReWeight_lo_to_nlo_wCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_LOtoNLO_V2(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
+          hhReWeight_lo_to_nlo_wCouplingBugFix_V3 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_LOtoNLO_V3(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
 
           hhWeight_nlo_to_nlo_woCouplingBugFix_V1 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_NLOtoNLO_V1(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
           hhWeight_nlo_to_nlo_woCouplingBugFix_V2 = HHWeightNLO_calc_wCouplingBugFix->getRelativeWeight_NLOtoNLO_V2(*HHBMName, gen_mHH, gen_cosThetaStar, isDEBUG);
@@ -424,11 +441,15 @@ int main(int argc, char* argv[])
           evtWeight, hhWeight_lo_to_nlo_wCouplingBugFix_V1*hhReWeight_lo_to_nlo_wCouplingBugFix_V1);
         hhHistManager_weighted->woLOWeights_wLOtoNLOWeights_V2_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
           evtWeight, hhWeight_lo_to_nlo_wCouplingBugFix_V2*hhReWeight_lo_to_nlo_wCouplingBugFix_V2);
+        hhHistManager_weighted->woLOWeights_wLOtoNLOWeights_V3_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead,
+          evtWeight, hhWeight_lo_to_nlo_wCouplingBugFix_V3*hhReWeight_lo_to_nlo_wCouplingBugFix_V3);
 
         hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V1_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
           evtWeight, hhWeight_lo*hhReWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V1*hhReWeight_lo_to_nlo_woCouplingBugFix_V1);
         hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V2_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
           evtWeight, hhWeight_lo*hhReWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V2*hhReWeight_lo_to_nlo_woCouplingBugFix_V2);
+        hhHistManager_weighted->wLOWeights_wLOtoNLOWeights_V3_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead,
+          evtWeight, hhWeight_lo*hhReWeight_lo*hhWeight_lo_to_nlo_woCouplingBugFix_V3*hhReWeight_lo_to_nlo_woCouplingBugFix_V3);
 
         hhHistManager_weighted->wNLOtoNLOWeights_V1_->fillHistograms(genHBosonP4_lead, genHBosonP4_sublead, 
           evtWeight, hhWeight_nlo_to_nlo_woCouplingBugFix_V1);
