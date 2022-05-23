@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
   const edm::ParameterSet hhWeight_cfg = cfg_analyze.getParameterSet("hhWeight_cfg");
   const HHWeightInterfaceCouplings * couplings = new HHWeightInterfaceCouplings(hhWeight_cfg);
   std::vector<std::string> HHBMNames = couplings->get_bm_names();
-  const bool apply_HH_rwgt_lo  = false;//isSignal && analysisConfig.isHH_rwgt_allowed(); // sample is LO HH MC sample
+  const bool apply_HH_rwgt_lo  = isSignal && analysisConfig.isHH_rwgt_allowed(); // sample is LO HH MC sample
   const bool apply_HH_rwgt_nlo = isSignal;                                       // sample is LO or NLO HH MC sample
   std::cout << "apply_HH_rwgt: LO = " << apply_HH_rwgt_lo << ", NLO = " << apply_HH_rwgt_nlo << std::endl;
 
