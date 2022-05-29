@@ -155,7 +155,7 @@ MEMsample_base = "addMEM_hh_bb2l"
 fillHistograms_BDT = 'BDT' in training_method
 fillHistograms_LBN = 'LBN' in training_method
 
-fillHistograms_resonant = 'nonres' in fill_spin
+fillHistograms_nonresonant = 'nonres' in fill_spin
 fillHistograms_spin0    = 'spin0' in fill_spin
 fillHistograms_spin2    = 'spin2' in fill_spin
 
@@ -210,7 +210,7 @@ if not do_sync:
   for sample_name, sample_info in samples.items():
     if sample_name == 'sum_events':
       continue
-    if fillHistograms_resonant and 'spin' in sample_info['process_name_specific']:
+    if fillHistograms_nonresonant and 'spin' in sample_info['process_name_specific']:
       sample_info["use_it"] = False
     if fillHistograms_spin0 and 'nonres' in sample_info['process_name_specific']:
       sample_info["use_it"] = False
@@ -239,7 +239,7 @@ if fill_spin in ['spin0', 'spin2']:
       ]
       for category in categories:
         histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, fill_spin) : {} })
-if fillHistograms_resonant:
+if fillHistograms_nonresonant:
   bmNames = get_histograms_to_fit().keys()
   for bmName in bmNames:
     if 'spin' in bmName: continue
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     samples                               = samples,
     fillHistograms_BDT                    = fillHistograms_BDT,
     fillHistograms_LBN                    = fillHistograms_LBN,
-    fillHistograms_resonant               = fillHistograms_resonant,
+    fillHistograms_nonresonant            = fillHistograms_nonresonant,
     fillHistograms_spin0                  = fillHistograms_spin0,
     fillHistograms_spin2                  = fillHistograms_spin2,
     MEMbranch                             = MEMbranch,

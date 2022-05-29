@@ -100,7 +100,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         samples,
         fillHistograms_BDT,
         fillHistograms_LBN,
-        fillHistograms_resonant,
+        fillHistograms_nonresonant,
         fillHistograms_spin0,
         fillHistograms_spin2,
         MEMbranch,
@@ -179,7 +179,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.fillHistograms_BDT = fillHistograms_BDT
     self.fillHistograms_LBN = fillHistograms_LBN
-    self.fillHistograms_resonant = fillHistograms_resonant
+    self.fillHistograms_nonresonant = fillHistograms_nonresonant
     self.fillHistograms_spin0 = fillHistograms_spin0
     self.fillHistograms_spin2 = fillHistograms_spin2
     self.MEMbranch = MEMbranch
@@ -599,8 +599,6 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                 if 'signal' in sample_info["process_name_specific"] and not self.do_sync:
                   continue
               process_name = sample_info["process_name_specific"]
-              if dyBgr_option in ["applyWeights_mc"] and not process_name.startswith('DY'):
-                continue
               if "Fakeable_mcClosure" in lepton_selection and not process_name.startswith('TTToSemiLeptonic') and not self.do_sync:
                 continue
               logging.info("Creating configuration files to run '%s' for sample %s" % (self.executable_analyze, process_name))
@@ -713,7 +711,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     'branchName_hmeOutput'       : branchName_hmeOutput,
                     'fillHistograms_BDT'         : self.fillHistograms_BDT,
                     'fillHistograms_LBN'         : self.fillHistograms_LBN,
-                    'fillHistograms_resonant'    : self.fillHistograms_resonant,
+                    'fillHistograms_nonresonant'    : self.fillHistograms_nonresonant,
                     'fillHistograms_spin0'       : self.fillHistograms_spin0,
                     'fillHistograms_spin2'       : self.fillHistograms_spin2,
                   }
@@ -1184,7 +1182,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
           'outputFile' : os.path.join(self.dirs[key_makePlots_dir][DKEY_PLOT], "makePlots_%s_%s_%s.png" % (self.channel, lepton_charge_selection, dyBgr_option)),
           'histogramDir' : getHistogramDir(self.evtCategory_inclusive, "Tight", "disabled", lepton_charge_selection, "disabled"),
           'label' : '2l',
-          'make_plots_backgrounds' : self.make_plots_backgrounds
+          'make_plots_backgrounds' : self.make_plots_backgrounds,
+          'processSignal' : "signal_ggf_nonresonant_hh" if self.fillHistograms_nonresonant else 'signal_ggf_spin0_400_hh'
         }
         self.createCfg_makePlots(self.jobOptions_make_plots[key_makePlots_job])
         if "Fakeable_mcClosure" in self.lepton_selections: #TODO
