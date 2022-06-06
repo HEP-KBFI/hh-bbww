@@ -162,11 +162,11 @@ namespace
         float bincontErr = hist_central->GetBinError(i + 1);
         float bincont_cr = hist_cr->GetBinContent(i + 1);
         float bincontErr_cr = hist_cr->GetBinError(i + 1);
-        float diff = fabs( bincont - bincont_cr );
-        hist_up->SetBinContent(i+1, bincont + diff);
-        hist_up->SetBinError(i+1, std::sqrt( sqr(bincontErr) + sqr(bincontErr_cr)));
+        float diff = bincont_cr - bincont;
+        hist_up->SetBinContent(i+1, bincont_cr);
+        hist_up->SetBinError(i+1, bincontErr_cr);
         hist_dn->SetBinContent(i+1, bincont - diff);
-        hist_dn->SetBinError(i+1, std::sqrt( sqr(bincontErr) + sqr(bincontErr_cr)));
+        hist_dn->SetBinError(i+1, std::sqrt( sqr(bincontErr) + sqr(diff)));
       }
     }
 
