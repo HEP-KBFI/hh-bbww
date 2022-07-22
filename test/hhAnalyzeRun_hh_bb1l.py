@@ -39,6 +39,10 @@ parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_blacklist()
+parser.add_argument('-fr', '--use_bbww_FR_shape_syst',
+  dest = 'use_bbww_FR_shape_syst', action = 'store_true',
+  default = False)
+
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
   help = 'R|doing second_bdt for jpa'
@@ -111,6 +115,7 @@ fill_spin          = args.fill_spin
 split_resonant_training = args.split_resonant_training
 ignore_ak8_corrections = args.ignore_ak8_corrections
 fill_resolved_2b = args.fill_resolved_2b
+use_bbww_FR_shape_syst = args.use_bbww_FR_shape_syst
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -140,6 +145,12 @@ if split_trigger_sys in [ 'yes', 'both' ]:
   systematics.internal.extend(systematics.triggerSF_1l)
   systematics.full.extend(systematics.triggerSF_1l)
 
+if use_bbww_FR_shape_syst:
+  for FR_sys in systematics.tth_FR_shape:
+    del systematics.internal[systematics.internal.index(FR_sys)]
+    del systematics.full[systematics.full.index(FR_sys)]
+  systematics.internal.extend(systematics.bbww_FR_shape)
+  systematics.full.extend(systematics.bbww_FR_shape)
 # Use the arguments
 central_or_shifts = []
 
