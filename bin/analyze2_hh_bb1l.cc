@@ -429,6 +429,7 @@ int main(int argc, char* argv[])
   std::string branchName_genPhotons = cfg_analyze.getParameter<std::string>("branchName_genPhotons");
   std::string branchName_genProxyPhotons = cfg_analyze.getParameter<std::string>("branchName_genProxyPhotons");
   std::string branchName_genFromHardProcess = cfg_analyze.getParameter<std::string>("branchName_genFromHardProcess");
+  std::string branchName_genTauFromV = cfg_analyze.getParameter<std::string>("branchName_genTauFromV");
   std::string branchName_genJets = cfg_analyze.getParameter<std::string>("branchName_genJets");
 
   std::string branchName_muonGenMatch     = cfg_analyze.getParameter<std::string>("branchName_muonGenMatch");
@@ -439,6 +440,9 @@ int main(int argc, char* argv[])
   bool redoGenMatching = cfg_analyze.getParameter<bool>("redoGenMatching");
   bool jetCleaningByIndex = cfg_analyze.getParameter<bool>("jetCleaningByIndex");
   bool genMatchingByIndex = cfg_analyze.getParameter<bool>("genMatchingByIndex");
+
+  double hhSignalScaleFactor = cfg_analyze.getParameter<double>("hhSignalScaleFactor");
+  bool rescaleSignal = analysisConfig.isMC_HH_resonant() && era == Era::k2016 && hhSignalScaleFactor > 0.;
 
   std::string branchName_genBJets = cfg_analyze.getParameter<std::string>("branchName_genBJets");
   std::string branchName_genParticlesFromHiggs = cfg_analyze.getParameter<std::string>("branchName_genParticlesFromHiggs");
@@ -803,6 +807,7 @@ int main(int argc, char* argv[])
   GenPhotonReader * genPhotonReader = nullptr;
   GenPhotonReader * genProxyPhotonReader = nullptr;
   GenParticleReader * genFromHardProcessReader = nullptr;
+  GenParticleReader * genTauFromVReader = nullptr;
   GenJetReader * genJetReader = nullptr;
   LHEInfoReader * lheInfoReader = nullptr;
   PSWeightReader * psWeightReader = nullptr;
@@ -871,6 +876,11 @@ int main(int argc, char* argv[])
     inputTree->registerReader(lheInfoReader);
     psWeightReader = new PSWeightReader(hasPS, apply_LHE_nom);
     inputTree -> registerReader(psWeightReader);
+  }
+
+  if(rescaleSignal)
+  {
+    genTauFromVReader = new GenParticleReader(branchName_genTauFromV);
   }
 
   const auto central_or_shift_pdf_member = std::find_if(
@@ -1235,6 +1245,7 @@ int main(int argc, char* argv[])
     std::vector<GenPhoton> genPhotonsFinal;
     std::vector<GenPhoton> genProxyPhotons;
     std::vector<GenParticle> genFromHardProcess;
+    std::vector<GenParticle> genTausFromV;
     std::vector<GenJet> genJets;
 
     std::vector<GenParticle> muonGenMatch;
@@ -1263,6 +1274,7 @@ int main(int argc, char* argv[])
 
       if(genProxyPhotonReader)     genProxyPhotons = genProxyPhotonReader->read(apply_genPhotonFilter);
       if(genFromHardProcessReader) genFromHardProcess = genFromHardProcessReader->read();
+      if(genTauFromVReader)        genTausFromV = genTauFromVReader->read();
 
       if(genMatchToMuonReader)     muonGenMatch = genMatchToMuonReader->read();
       if(genMatchToElectronReader) electronGenMatch = genMatchToElectronReader->read();
@@ -1336,6 +1348,15 @@ int main(int argc, char* argv[])
       evtWeightRecorder.record_puWeight(&eventInfo);
       evtWeightRecorder.record_nom_tH_weight(&eventInfo);
       evtWeightRecorder.record_lumiScale(lumiScale);
+
+      if(rescaleSignal)
+      {
+        assert(genTausFromV.size() < 3);
+        // Misuse evtWeightRecorder iface because it has a simple setter for doubles
+        // For more context, visit https://github.com/HEP-KBFI/hh-bbww/issues/41
+        evtWeightRecorder.record_prescale(std::pow(0.3521, genTausFromV.size()) / hhSignalScaleFactor);
+      }
+
       for ( const std::string & central_or_shift: central_or_shifts_local )
       {
         if ( central_or_shift != central_or_shift_main )
