@@ -863,6 +863,7 @@ int main(int argc, char* argv[])
     if(rescaleSignal)
     {
       genTauFromVReader = new GenParticleReader(branchName_genTauFromV);
+      inputTree -> registerReader(genTauFromVReader);
     }
 
     lheInfoReader = new LHEInfoReader(hasLHE);
@@ -1252,7 +1253,7 @@ int main(int argc, char* argv[])
     std::vector<GenParticle> muonGenMatch;
     std::vector<GenParticle> electronGenMatch;
     std::vector<GenParticle> jetGenMatch;
-    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter))
+    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter || rescaleSignal))
     {
       if(genLeptonReader)
       {

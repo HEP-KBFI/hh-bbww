@@ -881,6 +881,7 @@ int main(int argc, char* argv[])
   if(rescaleSignal)
   {
     genTauFromVReader = new GenParticleReader(branchName_genTauFromV);
+    inputTree -> registerReader(genTauFromVReader);
   }
 
   const auto central_or_shift_pdf_member = std::find_if(
@@ -1252,7 +1253,7 @@ int main(int argc, char* argv[])
     std::vector<GenParticle> electronGenMatch;
     std::vector<GenParticle> hadTauGenMatch;
     std::vector<GenParticle> jetGenMatch;
-    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter))
+    if(isMC && (fillGenEvtHistograms || apply_genPhotonFilter || rescaleSignal))
     {
       if ( genLeptonReader )
       {
