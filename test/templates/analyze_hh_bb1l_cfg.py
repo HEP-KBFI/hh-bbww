@@ -118,6 +118,7 @@ process.analyze_hh_bb1l = cms.PSet(
     selEventsFileName_output = cms.string(''),
     selectBDT = cms.bool(False),
     usejpa = cms.bool(False),
+    hhSignalScaleFactor = cms.double(0.),
 
     fillHistograms_BDT = cms.bool(True),
     BDT = cms.PSet(
