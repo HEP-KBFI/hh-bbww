@@ -41,7 +41,7 @@ parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-depen
 parser.add_blacklist()
 parser.add_argument('-fr', '--use_bbww_FR_shape_syst',
   dest = 'use_bbww_FR_shape_syst', action = 'store_true',
-  default = False)
+  default = True)
 
 parser.add_argument('-secondBDT', '--secondBDT',
   dest = 'second_bdt', action = 'store_true',
