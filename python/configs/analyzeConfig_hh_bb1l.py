@@ -183,7 +183,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
     self.apply_leptonGenMatching = True
     if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
-    self.central_or_shifts_fr = systematics.FRe_shape + systematics.FRm_shape
+    self.central_or_shifts_fr = systematics.bbww_FR_e_shape + systematics.bbww_FR_m_shape#FRe_shape + systematics.FRm_shape
     self.pruneSystematics()
     self.internalizeSystematics()
 
@@ -270,9 +270,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
   def accept_systematics(self, central_or_shift, is_mc, lepton_selection, sample_info):
     if central_or_shift != "central":
       isFR_shape_shift = (central_or_shift in self.central_or_shifts_fr)
-      if not (lepton_selection == "Fakeable" or lepton_selection == "Tight"):
-        return False
       if isFR_shape_shift and lepton_selection == "Tight":
+        return False
+      if not (lepton_selection == "Fakeable" or lepton_selection == "Tight"):
         return False
       if not is_mc and not isFR_shape_shift:
         return False
@@ -318,7 +318,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
   def create(self):
     """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
     """
-
     for sample_name, sample_info in self.samples.items():
       if self.isBDTtraining and sample_info["sample_category"] == 'data_obs' :
         sample_info["use_it"] = False
@@ -445,7 +444,6 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           sample_category = sample_info["sample_category"]
           is_mc = (sample_info["type"] == "mc")
           use_th_weights = self.runTHweights(sample_info)
-
           central_or_shift_dedicated = self.central_or_shifts if use_th_weights else self.central_or_shifts_external
           ttbar_sys_sample_withFake = False
           for central_or_shift in central_or_shift_dedicated:

@@ -146,11 +146,8 @@ if split_trigger_sys in [ 'yes', 'both' ]:
   systematics.full.extend(systematics.triggerSF_1l)
 
 if use_bbww_FR_shape_syst:
-  for FR_sys in systematics.tth_FR_shape:
-    del systematics.internal[systematics.internal.index(FR_sys)]
-    del systematics.full[systematics.full.index(FR_sys)]
-  systematics.internal.extend(systematics.bbww_FR_shape)
-  systematics.full.extend(systematics.bbww_FR_shape)
+  systematics.FRe_shape = systematics.bbww_FR_e_shape
+  systematics.FRm_shape = systematics.bbww_FR_m_shape
 # Use the arguments
 central_or_shifts = []
 
