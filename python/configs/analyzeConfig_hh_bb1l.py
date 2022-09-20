@@ -459,7 +459,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
                     central_or_shift_local, is_mc, lepton_selection, sample_info
                 ):
                   central_or_shifts_local.append(central_or_shift_local)
-            if central_or_shift == "central" and 'Fakeable' in lepton_selection_and_frWeight and self.ttbar_syst_enabled:
+            if central_or_shift == "central" and 'Fakeable_mcClosure' in lepton_selection_and_frWeight and self.ttbar_syst_enabled:
               for ttbar_sys in systematics.ttbar:
                 if "TT_{}".format(ttbar_sys) in sample_category:
                   ttbar_sys_sample_withFake = True
