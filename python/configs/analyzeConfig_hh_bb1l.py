@@ -219,6 +219,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
     self.evtCategory_inclusive = "hh_bb1l"
 
+    self.inputFiles_hadd_stage1_6 = {}
+    self.outputFile_hadd_stage1_6 = {}
+
     self.histogramOptions = parseHistogramNames(self.histograms_to_fit.keys())
     self.datacard_categories = set()
     for histogramOption in self.histogramOptions.values():
@@ -308,8 +311,9 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
   def addToMakefile_backgrounds_from_data(self, lines_makefile, make_target = "phony_addFakes", make_dependency = "phony_copyHistograms"):
     self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds", make_dependency, self.sbatchFile_addBackgrounds, self.jobOptions_addBackgrounds)
     self.addToMakefile_hadd_stage1_5(lines_makefile, "phony_hadd_stage1_5", "phony_addBackgrounds", max_input_files_per_job = 10)
+    self.addToMakefile_hadd_stage1_6(lines_makefile, "phony_hadd_stage1_6", "phony_addSysTT", max_input_files_per_job = 10)
     self.addToMakefile_addBackgrounds(lines_makefile, "phony_addBackgrounds_sum", "phony_hadd_stage1_5", self.sbatchFile_addBackgrounds_sum, self.jobOptions_addBackgrounds_sum)
-    self.addToMakefile_addFakes(lines_makefile, "phony_addFakes", "phony_hadd_stage1_5")
+    self.addToMakefile_addFakes(lines_makefile, "phony_addFakes", "phony_hadd_stage1_6")
     if make_target != "phony_addFakes":
       lines_makefile.append("%s: %s" % (make_target, "phony_addFakes"))
       lines_makefile.append("")
@@ -696,6 +700,15 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
               if lepton_selection == "Tight":
                 self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_signal]['outputFile'])
 
+          key_hadd_stage1_6_dir = getKey("hadd", lepton_selection_and_frWeight)
+          hadd_stage1_6_job_tuple = (category, lepton_selection_and_frWeight)
+          key_hadd_stage1_6_job = getKey(*hadd_stage1_6_job_tuple)
+          if not key_hadd_stage1_6_job in self.inputFiles_hadd_stage1_6:
+            self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job] = []
+          self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
+          self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
+          self.outputFile_hadd_stage1_6[key_hadd_stage1_6_job] = os.path.join(self.dirs[key_hadd_stage1_6_dir][DKEY_HIST], "hadd_stage1_6_%s_%s.root" % hadd_stage1_6_job_tuple)
+
           # initialize input and output file names for hadd_stage2
           key_hadd_stage1_5_job = getKey(category, lepton_selection_and_frWeight)
           key_hadd_stage2_dir = getKey("hadd", lepton_selection_and_frWeight)
@@ -706,9 +719,7 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           if lepton_selection == "Tight":
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_fakes]['outputFile'])
             self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addBackgrounds_sum[key_addBackgrounds_job_Convs]['outputFile'])
-          self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
-          if self.ttbar_syst_enabled:
-              self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
+          self.inputFiles_hadd_stage2[key_hadd_stage2_job].append(self.outputFile_hadd_stage1_6[key_hadd_stage1_5_job])
           self.outputFile_hadd_stage2[key_hadd_stage2_job] = os.path.join(self.dirs[key_hadd_stage2_dir][DKEY_HIST],
                                                                           "hadd_stage2_%s_%s.root" % hadd_stage2_job_tuple)
 
@@ -740,12 +751,12 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
 
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for category in self.datacard_categories:
-      key_hadd_stage1_5_job = getKey(category, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
+      key_hadd_stage1_6_job = getKey(category, get_lepton_selection_and_frWeight("Fakeable", "enabled"))
       key_addFakes_dir = getKey("addBackgroundLeptonFakes")
       addFakes_job_tuple = (category)
       key_addFakes_job = getKey("data_fakes", *addFakes_job_tuple)
       self.jobOptions_addFakes[key_addFakes_job] = {
-        'inputFile' : self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job],
+        'inputFile' : self.outputFile_hadd_stage1_6[key_hadd_stage1_6_job],
         'cfgFile_modified' : os.path.join(self.dirs[key_addFakes_dir][DKEY_CFGS], "addBackgroundLeptonFakes_%s_cfg.py" % addFakes_job_tuple),
           'outputFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_HIST], "addBackgroundLeptonFakes_%s.root" % addFakes_job_tuple),
           'logFile' : os.path.join(self.dirs[key_addFakes_dir][DKEY_LOGS], "addBackgroundLeptonFakes_%s.log" % addFakes_job_tuple),
