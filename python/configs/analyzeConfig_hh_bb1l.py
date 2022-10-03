@@ -706,7 +706,8 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
           if not key_hadd_stage1_6_job in self.inputFiles_hadd_stage1_6:
             self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job] = []
           self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.outputFile_hadd_stage1_5[key_hadd_stage1_5_job])
-          self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
+          if self.ttbar_syst_enabled:
+            self.inputFiles_hadd_stage1_6[key_hadd_stage1_6_job].append(self.jobOptions_addSysTT[key_hadd_stage1_5_job]['outputFile'])
           self.outputFile_hadd_stage1_6[key_hadd_stage1_6_job] = os.path.join(self.dirs[key_hadd_stage1_6_dir][DKEY_HIST], "hadd_stage1_6_%s_%s.root" % hadd_stage1_6_job_tuple)
 
           # initialize input and output file names for hadd_stage2
