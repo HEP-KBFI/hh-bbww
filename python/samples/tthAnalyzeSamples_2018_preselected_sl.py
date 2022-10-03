@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-# file generated at 2021-04-25 14:24:45 with the following command:
+# file generated at 2022-10-03 16:05:43 with the following command:
 # create_dictionary.py -m ../../tthAnalysis/HiggsToTauTau/python/samples/metaDict_2018.py -p python/samples/sampleLocations_2018_preselected_sl.txt -N samples_2018 -E 2018 -o python/samples -g tthAnalyzeSamples_2018_preselected_sl.py -M
 
 samples_2018 = OD()
@@ -24638,6 +24638,234 @@ samples_2018["/DYBBJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18
     [
       OD([
         ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2021Apr24_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/DYBBJetsToLL_M-50"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+    "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+    "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+    "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "EWK"),
+  ("process_name_specific",           "WJetsToLNu"),
+  ("nof_files",                       12),
+  ("nof_db_files",                    431),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 29235243, ],
+    'CountWeighted'                                                                  : [ 2.00584552e+07, 2.00587598e+07, 2.00579655e+07, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 2.00584552e+07, 2.00584552e+07, ],
+    'CountWeightedPSWeight'                                                          : [ 2.01031014e+07, 2.00644202e+07, 2.55801838e+07, 2.00008489e+07, 2.00474832e+07, 1.49821298e+07, ],
+    'CountWeightedPSWeightOriginalXWGTUP'                                            : [ 2.92362518e+08, 2.92362668e+08, 2.92362668e+08, 2.92362520e+08, 2.92362668e+08, 2.92362518e+08, ],
+    'CountWeightedFull'                                                              : [ 5.03742376e+12, 5.03802482e+12, 5.03774780e+12, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 5.03742376e+12, 5.03742376e+12, ],
+    'CountWeightedFullPSWeight'                                                      : [ 5.04893256e+12, 5.03917134e+12, 6.42444424e+12, 5.02324308e+12, 5.03491815e+12, 3.76280233e+12, ],
+    'CountWeightedFullPSWeightOriginalXWGTUP'                                        : [ 7.34187891e+13, 7.34187891e+13, 7.34187891e+13, 7.34187891e+13, 7.34187891e+13, 7.34187891e+13, ],
+  }),
+  ("nof_tree_events",                 7019939),
+  ("nof_db_events",                   29235243),
+  ("fsize_local",                     19373532101), # 19.37GB, avg file size 1.61GB
+  ("fsize_db",                        1165203251619), # 1.17TB, avg file size 2.70GB
+  ("use_it",                          False),
+  ("xsection",                        61526.7),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         False),
+  ("nof_PSweights",                   4),
+  ("LHE_set",                         "LHEPdfWeight[nLHEPdfWeight]/F"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2022Sep29_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/WJetsToLNu"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+    "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+    "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+    "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/WJetsToLNu_0J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "EWK"),
+  ("process_name_specific",           "WJetsToLNu_0J"),
+  ("nof_files",                       77),
+  ("nof_db_files",                    2732),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 189655821, ],
+    'CountWeighted'                                                                  : [ 1.52074851e+08, 1.52093581e+08, 1.52093341e+08, ],
+    'CountWeightedLHEWeightScale'                                                    : [ 1.46248745e+08, 1.52336861e+08, 1.55591512e+08, 1.44501698e+08, 1.52074851e+08, 1.56736032e+08, 1.43089900e+08, 1.51889786e+08, 1.57718581e+08, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 1.73581255e+08, 1.28706299e+08, ],
+    'CountWeightedPSWeight'                                                          : [ 1.52395726e+08, 1.52049410e+08, 1.91684918e+08, 1.51667320e+08, 1.52117353e+08, 1.15600350e+08, ],
+    'CountWeightedPSWeightOriginalXWGTUP'                                            : [ 1.89647537e+09, 1.89647598e+09, 1.89647598e+09, 1.89647537e+09, 1.89647598e+09, 1.89647536e+09, ],
+    'CountWeightedFull'                                                              : [ 1.15515515e+13, 1.15510470e+13, 1.15504981e+13, ],
+    'CountWeightedFullLHEWeightScale'                                                : [ 1.11075838e+13, 1.15699627e+13, 1.18171565e+13, 1.09749038e+13, 1.15515515e+13, 1.19040899e+13, 1.08676822e+13, 1.15360325e+13, 1.19787265e+13, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 1.31834989e+13, 9.77521862e+12, ],
+    'CountWeightedFullPSWeight'                                                      : [ 1.15744369e+13, 1.15481886e+13, 1.45584402e+13, 1.15190915e+13, 1.15533455e+13, 8.77984059e+12, ],
+    'CountWeightedFullPSWeightOriginalXWGTUP'                                        : [ 1.44061257e+14, 1.44061257e+14, 1.44061257e+14, 1.44061257e+14, 1.44061257e+14, 1.44061257e+14, ],
+  }),
+  ("nof_tree_events",                 39434127),
+  ("nof_db_events",                   192288265),
+  ("fsize_local",                     88492841979), # 88.49GB, avg file size 1.15GB
+  ("fsize_db",                        7342799838453), # 7.34TB, avg file size 2.69GB
+  ("use_it",                          False),
+  ("xsection",                        50062.0),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("nof_PSweights",                   4),
+  ("LHE_set",                         "LHA IDs 91400 - 91432 -> PDF4LHC15_nnlo_30_pdfas PDF set, expecting 33 weights (counted 33 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2022Sep29_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/WJetsToLNu_0J"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+    "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+    "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+    "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/WJetsToLNu_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "EWK"),
+  ("process_name_specific",           "WJetsToLNu_1J"),
+  ("nof_files",                       70),
+  ("nof_db_files",                    2499),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 171517208, ],
+    'CountWeighted'                                                                  : [ 7.93714421e+07, 7.93714488e+07, 7.93804680e+07, ],
+    'CountWeightedLHEWeightScale'                                                    : [ 8.38182923e+07, 8.61854504e+07, 8.84869102e+07, 7.64644301e+07, 7.93714421e+07, 8.18684559e+07, 7.05340657e+07, 7.37307083e+07, 7.63411678e+07, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 9.73651384e+07, 6.38979496e+07, ],
+    'CountWeightedPSWeight'                                                          : [ 7.97172218e+07, 7.95202596e+07, 1.05058840e+08, 7.89537353e+07, 7.91449145e+07, 5.58833578e+07, ],
+    'CountWeightedPSWeightOriginalXWGTUP'                                            : [ 1.71549060e+09, 1.71549127e+09, 1.71549127e+09, 1.71549060e+09, 1.71549127e+09, 1.71549059e+09, ],
+    'CountWeightedFull'                                                              : [ 7.83334656e+12, 7.83321733e+12, 7.83340902e+12, ],
+    'CountWeightedFullLHEWeightScale'                                                : [ 8.27149023e+12, 8.50508902e+12, 8.73220372e+12, 7.54577563e+12, 7.83334656e+12, 8.07906442e+12, 6.96054112e+12, 7.27599741e+12, 7.53360793e+12, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 9.60834735e+12, 6.30566163e+12, ],
+    'CountWeightedFullPSWeight'                                                      : [ 7.86674093e+12, 7.84733611e+12, 1.03675563e+13, 7.79139030e+12, 7.81029503e+12, 5.51474813e+12, ],
+    'CountWeightedFullPSWeightOriginalXWGTUP'                                        : [ 1.69261548e+14, 1.69261548e+14, 1.69261548e+14, 1.69261548e+14, 1.69261548e+14, 1.69261548e+14, ],
+  }),
+  ("nof_tree_events",                 52231110),
+  ("nof_db_events",                   171715343),
+  ("fsize_local",                     166066290214), # 166.07GB, avg file size 2.37GB
+  ("fsize_db",                        7108800444044), # 7.11TB, avg file size 2.84GB
+  ("use_it",                          False),
+  ("xsection",                        8331.0),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         True),
+  ("nof_PSweights",                   4),
+  ("LHE_set",                         "LHA IDs 91400 - 91432 -> PDF4LHC15_nnlo_30_pdfas PDF set, expecting 33 weights (counted 33 weights)"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2022Sep29_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/WJetsToLNu_1J"),
+        ("selection", "*"),
+        ("blacklist", []),
+      ]),
+    ]
+  ),
+  ("missing_completely",           [
+    # not computed
+  ]),
+  ("missing_from_superset",        [
+    # not computed
+  ]),
+  ("missing_hlt_paths",            [
+    "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+    "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+    "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+    "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  ]),
+  ("hlt_paths",                    [
+    # not computed
+  ]),
+])
+
+samples_2018["/WJetsToLNu_2J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
+  ("type",                            "mc"),
+  ("sample_category",                 "EWK"),
+  ("process_name_specific",           "WJetsToLNu_2J"),
+  ("nof_files",                       39),
+  ("nof_db_files",                    1478),
+  ("nof_events",                      {
+    'Count'                                                                          : [ 94822734, ],
+    'CountWeighted'                                                                  : [ 2.92345047e+07, 2.92327701e+07, 2.92342373e+07, ],
+    'CountWeightedLHEEnvelope'                                                       : [ 2.92345047e+07, 2.92345047e+07, ],
+    'CountWeightedPSWeight'                                                          : [ 2.92001156e+07, 2.94104370e+07, 4.03962958e+07, 2.92829933e+07, 2.89524999e+07, 1.90417146e+07, ],
+    'CountWeightedPSWeightOriginalXWGTUP'                                            : [ 9.48159426e+08, 9.48160022e+08, 9.48160022e+08, 9.48159436e+08, 9.48160022e+08, 9.48159424e+08, ],
+    'CountWeightedFull'                                                              : [ 2.37231196e+12, 2.37217353e+12, 2.37226507e+12, ],
+    'CountWeightedFullLHEEnvelope'                                                   : [ 2.37231196e+12, 2.37231196e+12, ],
+    'CountWeightedFullPSWeight'                                                      : [ 2.36949876e+12, 2.38658715e+12, 3.27805353e+12, 2.37621872e+12, 2.34942007e+12, 1.54517897e+12, ],
+    'CountWeightedFullPSWeightOriginalXWGTUP'                                        : [ 7.69479338e+13, 7.69479338e+13, 7.69479338e+13, 7.69479338e+13, 7.69479338e+13, 7.69479338e+13, ],
+  }),
+  ("nof_tree_events",                 30871422),
+  ("nof_db_events",                   98362049),
+  ("fsize_local",                     132644979319), # 132.64GB, avg file size 3.40GB
+  ("fsize_db",                        4086775772796), # 4.09TB, avg file size 2.77GB
+  ("use_it",                          False),
+  ("xsection",                        3133.0),
+  ("genWeight",                       True),
+  ("triggers",                        ['1e', '1mu', '2e', '2mu', '1e1mu', '3e', '3mu', '2e1mu', '1e2mu', '1e1tau', '1mu1tau', '2tau']),
+  ("has_LHE",                         False),
+  ("nof_PSweights",                   4),
+  ("LHE_set",                         "LHEPdfWeight[nLHEPdfWeight]/F"),
+  ("nof_reweighting",                 0),
+  ("local_paths",
+    [
+      OD([
+        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2022Sep29_wPresel_nom_hh_bbww_sl_hh_multilepton/ntuples/WJetsToLNu_2J"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

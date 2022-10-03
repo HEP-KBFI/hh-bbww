@@ -12,6 +12,7 @@ import os
 import sys
 import getpass
 import importlib
+import re
 
 # E.g.: ./test/hhAnalyzeRun_hh_bb1l.py -v 2017Dec13 -M LBN -m default -e 2017
 
@@ -74,6 +75,10 @@ parser.add_argument('-f2b', '--fill_resolved_2b',
 parser.add_argument('-iac', '--ignore-ak8-corrections',
   type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = [ 'PUPPI' ],
 )
+parser.add_argument('-W', '--wjets',
+  type = str, dest = 'wjets', metavar = 'order', choices = [ 'lo', 'nlo' ], required = True,
+  help = 'R|QCD order of the W+jets simulation',
+)
 
 args = parser.parse_args()
 
@@ -116,6 +121,7 @@ split_resonant_training = args.split_resonant_training
 ignore_ak8_corrections = args.ignore_ak8_corrections
 fill_resolved_2b = args.fill_resolved_2b
 use_bbww_FR_shape_syst = args.use_bbww_FR_shape_syst
+wjets_choice       = args.wjets
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -261,7 +267,12 @@ hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
   'deepVSj' : 'Medium',
 }
+
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
+
+is_w_nlo = lambda sample_info: bool(re.match('^WJetsToLNu_[012]{1}J.*$', sample_info['process_name_specific']))
+is_w_lo = lambda sample_info: bool(re.match('(^WJetsToLNu_madgraphMLM.*$|^W[1234]+JetsToLNu.*$|^WJetsToLNu_HT.*$)', sample_info['process_name_specific']))
+
 if not do_sync:
   for sample_name, sample_info in samples.items():
     if sample_name == 'sum_events': continue
@@ -273,6 +284,12 @@ if not do_sync:
       sample_info["use_it"] = False
     if 'spin2' in fill_spin and 'nonres' in sample_info['process_name_specific']:
       sample_info["use_it"] = False
+
+    is_sample_w_lo = is_w_lo(sample_info)
+    is_sample_w_nlo = is_w_nlo(sample_info)
+    assert(not (is_sample_w_lo and is_sample_w_nlo))
+    if is_sample_w_lo or is_sample_w_nlo:
+      sample_info["use_it"] = (wjets_choice == 'lo' and is_sample_w_lo) or (wjets_choice == 'nlo' and is_sample_w_nlo)
 
 if __name__ == '__main__':
   logging.info(
