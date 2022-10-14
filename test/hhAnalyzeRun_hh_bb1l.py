@@ -270,7 +270,12 @@ hadTauWP_veto_map = {
 
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
 
-is_w_nlo = lambda sample_info: bool(re.match('^WJetsToLNu_[012]{1}J.*$', sample_info['process_name_specific']))
+def is_w_nlo(sample_info):
+  # use Njet-binned samples in 2017, 2018; inclusive in 2016
+  if era != '2016':
+    return bool(re.match('^WJetsToLNu_[012]{1}J.*$', sample_info['process_name_specific']))
+  return bool(re.match('^WJetsToLNu(_ext.*)?$', sample_info['process_name_specific']))
+
 is_w_lo = lambda sample_info: bool(re.match('(^WJetsToLNu_madgraphMLM.*$|^W[1234]+JetsToLNu.*$|^WJetsToLNu_HT.*$)', sample_info['process_name_specific']))
 
 if not do_sync:
