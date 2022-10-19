@@ -59,7 +59,7 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     isDEBUG = cms.bool(False)
 )
 
-#inputFilePath = "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec13_mc_woPresel_nom_all/ntuples/TTToSemiLeptonic/0000"
+#inputFilePath = "/local/karl/ttHNtupleProduction/2017/2019Dec13_mc_woPresel_nom_all/ntuples/TTToSemiLeptonic/0000"
 #maxInputFiles = 5
 #zombie_files = []
 #import os
@@ -79,8 +79,8 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
 #inputFiles = getInputFiles(inputFilePath)
 #process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
 inputFiles = [
-  "/hdfs/local/veelken/addMEM/2017/2020Feb27sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic/0000/TTToSemiLeptonic_final.root",
-  "/hdfs/local/veelken/addMEM/2017/2020Feb27sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic_PSweights/0000/TTToSemiLeptonic_PSweights_final.root"
+  "/local/veelken/addMEM/2017/2020Feb27sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic/0000/TTToSemiLeptonic_final.root",
+  "/local/veelken/addMEM/2017/2020Feb27sl_default_nom/final_ntuples/hh_bb1l/TTToSemiLeptonic_PSweights/0000/TTToSemiLeptonic_PSweights_final.root"
 ]
 process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

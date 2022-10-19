@@ -27,7 +27,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010127"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010127"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -70,7 +70,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010505"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010505"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -113,7 +113,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010646"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010646"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -156,7 +156,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010829"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_010829"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -199,7 +199,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011034"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011034"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -242,7 +242,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011255"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011255"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -285,7 +285,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011504"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011504"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -328,7 +328,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011711"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011711"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -371,7 +371,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011847"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_011847"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -414,7 +414,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012021"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012021"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -457,7 +457,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012226"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012226"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -500,7 +500,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012605"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012605"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -543,7 +543,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012740"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_012740"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -586,7 +586,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013018"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013018"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -629,7 +629,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013157"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013157"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -672,7 +672,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013334"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013334"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -715,7 +715,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013511"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013511"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -758,7 +758,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013652"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013652"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -801,7 +801,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013904"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_013904"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -844,7 +844,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014118"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014118"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -887,7 +887,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014258"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014258"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -930,7 +930,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014437"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014437"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -973,7 +973,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014618"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014618"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1016,7 +1016,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014859"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_014859"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1059,7 +1059,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015244"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015244"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1102,7 +1102,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015422"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015422"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1145,7 +1145,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015604"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015604"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1188,7 +1188,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015811"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_015811"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1231,7 +1231,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_161753"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_161753"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1274,7 +1274,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct19/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct19_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201019_123329"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct19/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct19_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201019_123329"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1317,7 +1317,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_161936"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_161936"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1360,7 +1360,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_162116"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_162116"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1403,7 +1403,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201011_162222"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201011_162222"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1446,7 +1446,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201011_162359"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201011_162359"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1489,7 +1489,7 @@ samples_2016["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_162509"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_162509"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1532,7 +1532,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021019"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021019"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1575,7 +1575,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021230"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_box_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021230"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1618,7 +1618,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021438"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_1_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021438"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1661,7 +1661,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v3/191005_021653"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v3/191005_021653"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1704,7 +1704,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021857"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_021857"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1747,7 +1747,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022104"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_4_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022104"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1790,7 +1790,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022310"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_5_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022310"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1833,7 +1833,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022444"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_6_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022444"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1876,7 +1876,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022650"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022650"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1919,7 +1919,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022855"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_8_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_022855"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1962,7 +1962,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2/RunIISummer16Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_023102"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_023102"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2005,7 +2005,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_023314"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_10_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_023314"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2048,7 +2048,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_023527"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2/2016v3_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_11_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_023527"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2091,7 +2091,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/RunIISummer16Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct07/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/2016v3_2019Oct07_GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191007_041416"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct07/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2/2016v3_2019Oct07_GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph-v2__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191007_041416"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2134,7 +2134,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptoti/201031_121646"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptoti/201031_121646"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2177,7 +2177,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct17/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct17_GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptoti/201017_201555"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct17/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct17_GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptoti/201017_201555"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2220,7 +2220,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asympt/201011_162617"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asympt/201011_162617"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2263,7 +2263,7 @@ samples_2016["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptoti/201011_162729"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptoti/201011_162729"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2306,7 +2306,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201011_162910"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201011_162910"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2349,7 +2349,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163021"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163021"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2392,7 +2392,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163132"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_2_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163132"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2435,7 +2435,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201031_121752"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2WToLNu2J_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201031_121752"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2478,7 +2478,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163244"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163244"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2521,7 +2521,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163353"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163353"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2564,7 +2564,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163504"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163504"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2607,7 +2607,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163646"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163646"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2650,7 +2650,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163827"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163827"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2693,7 +2693,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163937"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_9_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_163937"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2736,7 +2736,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct19/GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct19_GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201019_123443"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct19/GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct19_GluGluToHHTo2B2WToLNu2J_node_10_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201019_123443"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2779,7 +2779,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201011_164050"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_11_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201011_164050"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2822,7 +2822,7 @@ samples_2016["/GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201011_164201"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_12_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic/201011_164201"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2865,7 +2865,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201031_121425"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201031_121425"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2908,7 +2908,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_164312"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201011_164312"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2951,7 +2951,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct17/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct17_GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptot/201017_201705"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct17/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct17_GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptot/201017_201705"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2994,7 +2994,7 @@ samples_2016["/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201031_121533"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201031_121533"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3037,7 +3037,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181616"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181616"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3080,7 +3080,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181848"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_181848"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3123,7 +3123,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182049"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182049"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3166,7 +3166,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182251"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182251"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3209,7 +3209,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182525"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182525"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3252,7 +3252,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182725"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182725"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3295,7 +3295,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182929"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_182929"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3338,7 +3338,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183129"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183129"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3381,7 +3381,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183401"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183401"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3424,7 +3424,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183632"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183632"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3467,7 +3467,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph/2016v3_2020Oct11_GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/201011_164454"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph/2016v3_2020Oct11_GluGluToRadionToHHTo2B2VToLNu2J_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/201011_164454"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3510,7 +3510,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183832"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_183832"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3553,7 +3553,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184103"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184103"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3596,7 +3596,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184336"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184336"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3639,7 +3639,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184607"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184607"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3682,7 +3682,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184838"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_184838"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3725,7 +3725,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185041"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185041"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3768,7 +3768,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185311"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185311"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3811,7 +3811,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185542"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_185542"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3854,7 +3854,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/191211_185812"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/191211_185812"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3897,7 +3897,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190044"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190044"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3940,7 +3940,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190315"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190315"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3983,7 +3983,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190517"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190517"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4026,7 +4026,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190759"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_190759"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4069,7 +4069,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191031"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191031"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4112,7 +4112,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191302"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191302"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4155,7 +4155,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191533"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191533"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4198,7 +4198,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191733"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_191733"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4241,7 +4241,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_192005"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_192005"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4284,7 +4284,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_192238"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph/2016v3_2019Dec11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191211_192238"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4327,7 +4327,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_164637"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_164637"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4370,7 +4370,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_164802"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_164802"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4413,7 +4413,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_164940"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_164940"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4456,7 +4456,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_165050"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_165050"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4499,7 +4499,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201011_165159"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201011_165159"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4542,7 +4542,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct31_VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201031_123527"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct31_VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_/201031_123527"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4585,7 +4585,7 @@ samples_2016["/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_165339"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94/201011_165339"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4628,7 +4628,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165520"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165520"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4671,7 +4671,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165631"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165631"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4714,7 +4714,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165741"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165741"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4757,7 +4757,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165850"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_165850"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4800,7 +4800,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170034"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170034"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4843,7 +4843,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170215"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170215"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4886,7 +4886,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170326"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170326"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4929,7 +4929,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170439"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170439"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4972,7 +4972,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170550"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170550"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5015,7 +5015,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170732"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170732"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5058,7 +5058,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170917"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-550_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_170917"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5101,7 +5101,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171029"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171029"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5144,7 +5144,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171140"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171140"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5187,7 +5187,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171253"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171253"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5230,7 +5230,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct19/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct19_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201019_123558"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct19/VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct19_VBFToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201019_123558"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5273,7 +5273,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171549"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-800_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171549"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5316,7 +5316,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171731"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171731"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5359,7 +5359,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171842"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymp/201011_171842"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5402,7 +5402,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_171953"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_171953"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5445,7 +5445,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172103"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172103"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5488,7 +5488,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172214"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172214"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5531,7 +5531,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172356"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172356"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5574,7 +5574,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172537"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172537"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5617,7 +5617,7 @@ samples_2016["/VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13Te
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172649"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asym/201011_172649"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5660,7 +5660,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_172801"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_172801"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5703,7 +5703,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_172912"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_172912"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5746,7 +5746,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173054"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173054"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5789,7 +5789,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173238"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173238"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5832,7 +5832,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173348"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173348"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5875,7 +5875,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173459"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173459"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5918,7 +5918,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173610"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173610"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5961,7 +5961,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173752"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173752"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6004,7 +6004,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173933"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_173933"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6047,7 +6047,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174048"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174048"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6090,7 +6090,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174159"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174159"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6133,7 +6133,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174309"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174309"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6176,7 +6176,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174419"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174419"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6219,7 +6219,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct17/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct17_VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201017_201955"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct17/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct17_VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201017_201955"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6262,7 +6262,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174710"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174710"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6305,7 +6305,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174821"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2/201011_174821"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6348,7 +6348,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_174932"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_174932"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6391,7 +6391,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_175042"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_175042"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6434,7 +6434,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_175152"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_175152"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6477,7 +6477,7 @@ samples_2016["/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeight
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_175339"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun/201011_175339"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6520,7 +6520,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025026"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025026"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6563,7 +6563,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025204"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025204"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6606,7 +6606,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025348"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025348"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6649,7 +6649,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025525"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025525"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6692,7 +6692,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_025733"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_025733"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6735,7 +6735,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025945"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_025945"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6778,7 +6778,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_030126"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-340_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_030126"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6821,7 +6821,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_030301"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_030301"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6864,7 +6864,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_030555"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_030555"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6907,7 +6907,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_030842"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_030842"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6950,7 +6950,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031050"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031050"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6993,7 +6993,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031234"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031234"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7036,7 +7036,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031447"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031447"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7079,7 +7079,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031700"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031700"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7122,7 +7122,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175522"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175522"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7165,7 +7165,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175638"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175638"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7208,7 +7208,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031906"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_031906"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7251,7 +7251,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175748"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175748"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7294,7 +7294,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032111"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032111"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7337,7 +7337,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175859"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_as/201011_175859"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7380,7 +7380,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180015"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180015"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7423,7 +7423,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180125"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180125"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7466,7 +7466,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180307"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180307"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7509,7 +7509,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180417"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180417"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7552,7 +7552,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180534"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180534"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7595,7 +7595,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180644"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180644"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7638,7 +7638,7 @@ samples_2016["/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180755"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_a/201011_180755"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7681,7 +7681,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032248"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032248"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7724,7 +7724,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032454"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032454"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7767,7 +7767,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032729"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032729"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7810,7 +7810,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032936"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_032936"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7853,7 +7853,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_033117"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_033117"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7896,7 +7896,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_033258"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_033258"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7939,7 +7939,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_033507"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_033507"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7982,7 +7982,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_033722"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_033722"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8025,7 +8025,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_033927"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/191005_033927"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8068,7 +8068,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034146"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034146"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8111,7 +8111,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034319"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034319"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8154,7 +8154,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034458"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034458"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8197,7 +8197,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034607"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034607"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8240,7 +8240,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034742"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034742"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8283,7 +8283,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_180905"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_180905"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8326,7 +8326,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034947"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_034947"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8369,7 +8369,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_035124"),
+        ("path",      "/store/user/snandan/2016v3_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2016v3_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191005_035124"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8412,7 +8412,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_181017"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_181017"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8455,7 +8455,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_181126"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_181126"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8498,7 +8498,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181237"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181237"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8541,7 +8541,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181417"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181417"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8584,7 +8584,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181528"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181528"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8627,7 +8627,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181639"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181639"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8670,7 +8670,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181749"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181749"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8713,7 +8713,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181900"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_181900"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8756,7 +8756,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_182012"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mc/201011_182012"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8799,7 +8799,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182154"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182154"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8842,7 +8842,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182334"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182334"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8885,7 +8885,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182451"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182451"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8928,7 +8928,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182602"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182602"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8971,7 +8971,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_m/201011_182724"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_m/201011_182724"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9014,7 +9014,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_m/201011_182836"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_m/201011_182836"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9057,7 +9057,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182949"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_182949"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9100,7 +9100,7 @@ samples_2016["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_183101"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8/2016v3_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCUETP8M1_PSweights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcR/201011_183101"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9143,7 +9143,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_152609"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_152609"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9186,7 +9186,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_box_13TeV-madgraph/RunIISummer16MiniAODv3
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_box_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_box_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_152812"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_box_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_box_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_152812"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9229,7 +9229,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183213"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_1_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183213"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9272,7 +9272,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph/RunIISummer16MiniAODv3-P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_2_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153046"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_2_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153046"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9315,7 +9315,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183326"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_3_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183326"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9358,7 +9358,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183441"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_4_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183441"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9401,7 +9401,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183552"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_5_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183552"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9444,7 +9444,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201031_121248"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct31_GluGluToHHTo2B2Tau_node_6_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201031_121248"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9487,7 +9487,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183701"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_7_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183701"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9530,7 +9530,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183840"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_8_TuneCUETP8M1_PSWeights_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201011_183840"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9573,7 +9573,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph/RunIISummer16MiniAODv3-P
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_9_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153316"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_9_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153316"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9616,7 +9616,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_10_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153607"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_10_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_10_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153607"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9659,7 +9659,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_11_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153808"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_11_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_11_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_153808"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9702,7 +9702,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_12_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_154008"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_12_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/191204_154008"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9745,7 +9745,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/RunIISummer16MiniAODv3-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_13_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/191204_154239"),
+        ("path",      "/store/user/kaehatah/2016v3_2019Dec04/GluGluToHHTo2B2Tau_node_13_13TeV-madgraph/2016v3_2019Dec04_GluGluToHHTo2B2Tau_node_13_13TeV-madgraph__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/191204_154239"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9788,7 +9788,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-/201011_183950"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-/201011_183950"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9831,7 +9831,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-/201011_184100"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct11_GluGluToHHTo2B2Tau_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-/201011_184100"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9874,7 +9874,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct19/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct19_GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201019_123711"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct19/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct19_GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_/201019_123711"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9917,7 +9917,7 @@ samples_2016["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct17/GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct17_GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-/201017_202214"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct17/GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8/2016v3_2020Oct17_GluGluToHHTo2B2Tau_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-/201017_202214"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9960,7 +9960,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160321"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160321"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10003,7 +10003,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160548"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160548"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10046,7 +10046,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160718"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160718"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10089,7 +10089,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160946"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_160946"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10132,7 +10132,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161142"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161142"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10175,7 +10175,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161340"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161340"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10218,7 +10218,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161539"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161539"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10261,7 +10261,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161736"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161736"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10304,7 +10304,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161902"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_161902"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10347,7 +10347,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162113"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162113"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10390,7 +10390,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162238"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162238"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10433,7 +10433,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162405"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162405"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10476,7 +10476,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162532"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162532"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10519,7 +10519,7 @@ samples_2016["/GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162731"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_162731"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10562,7 +10562,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163002"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163002"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10605,7 +10605,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163203"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163203"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10648,7 +10648,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163328"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163328"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10691,7 +10691,7 @@ samples_2016["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163536"),
+        ("path",      "/store/user/kaehatah/2016v3_2021Dec27/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8/2016v3_2021Dec27_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_13TeV-madgraph-pythia8__RunIISummer16MiniAODv3/211227_163536"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

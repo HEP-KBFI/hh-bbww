@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
 # file generated at 2020-03-03 10:45:15 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_hh_sync.py -p /hdfs/local/karl/sync_ntuples/2016/nanoAODproduction/2019Dec06 -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_sync.py -M
+# create_dictionary.py -m python/samples/metaDict_2016_hh_sync.py -p /local/karl/sync_ntuples/2016/nanoAODproduction/2019Dec06 -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_sync.py -M
 
 samples_2016 = OD()
 samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM"] = OD([
@@ -27,7 +27,7 @@ samples_2016["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph-v2/Ru
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/sync_ntuples/2016/nanoAODproduction/2019Dec06/signal_ggf_spin0_750_hh_2b2v"),
+        ("path",      "/local/karl/sync_ntuples/2016/nanoAODproduction/2019Dec06/signal_ggf_spin0_750_hh_2b2v"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

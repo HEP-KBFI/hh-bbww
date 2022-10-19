@@ -27,7 +27,7 @@ samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_065749"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_065749"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -70,7 +70,7 @@ samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_065956"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_065956"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -113,7 +113,7 @@ samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_070211"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_070211"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -156,7 +156,7 @@ samples_2017["/VBFToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_070353"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_070353"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -199,7 +199,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_070541"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_070541"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -242,7 +242,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_070717"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_070717"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -285,7 +285,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_070928"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_070928"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -328,7 +328,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071109"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071109"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -371,7 +371,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071350"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071350"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -414,7 +414,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071634"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071634"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -457,7 +457,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071814"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071814"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -500,7 +500,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071951"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_071951"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -543,7 +543,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072157"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072157"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -586,7 +586,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072411"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072411"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -629,7 +629,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072553"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072553"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -672,7 +672,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072736"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072736"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -715,7 +715,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072914"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_072914"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -758,7 +758,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_073056"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_073056"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -801,7 +801,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_073240"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_073240"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -844,7 +844,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_corre
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_073445"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/191005_073445"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -887,7 +887,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_073651"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_073651"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -930,7 +930,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_073903"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_073903"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -973,7 +973,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074042"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074042"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1016,7 +1016,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074218"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074218"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1059,7 +1059,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074425"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074425"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1102,7 +1102,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074640"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074640"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1145,7 +1145,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074822"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_074822"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1188,7 +1188,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_075005"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_075005"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1231,7 +1231,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_075643"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_075643"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1274,7 +1274,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_075819"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_075819"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1317,7 +1317,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080029"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080029"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1360,7 +1360,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080239"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080239"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1403,7 +1403,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080452"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080452"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1446,7 +1446,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080628"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080628"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1489,7 +1489,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080804"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080804"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1532,7 +1532,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080946"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_080946"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1575,7 +1575,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081153"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081153"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1618,7 +1618,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081331"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081331"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1661,7 +1661,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081517"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081517"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1704,7 +1704,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081726"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_081726"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1747,7 +1747,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082037"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082037"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1790,7 +1790,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082212"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082212"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1833,7 +1833,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082347"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082347"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1876,7 +1876,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082554"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082554"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1919,7 +1919,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082807"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/191005_082807"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1962,7 +1962,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083013"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083013"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2005,7 +2005,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083224"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083224"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2048,7 +2048,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083432"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083432"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2091,7 +2091,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083640"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083640"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2134,7 +2134,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083848"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_083848"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2177,7 +2177,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_084027"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_084027"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2220,7 +2220,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgrap
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_084207"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2VTo2L2Nu_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realis/191005_084207"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2263,7 +2263,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct31/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct31_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201031_114935"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct31/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct31_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201031_114935"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2306,7 +2306,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweigh
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085554"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085554"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2349,7 +2349,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct17_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201017_192758"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct17_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201017_192758"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2392,7 +2392,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_221846"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_221846"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2435,7 +2435,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweigh
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085739"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085739"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2478,7 +2478,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_222029"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_222029"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2521,7 +2521,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_222143"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_222143"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2564,7 +2564,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_222254"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_222254"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2607,7 +2607,7 @@ samples_2017["/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_222409"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2VTo2L2Nu_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_222409"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2650,7 +2650,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph_correctedcfg/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_084526"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_084526"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2693,7 +2693,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_1_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_222522"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_222522"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2736,7 +2736,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph_correctedcfg/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_084704"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_2_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_084704"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2779,7 +2779,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph_correctedcfg/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_084910"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_3_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_084910"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2822,7 +2822,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_4_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_222634"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_222634"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2865,7 +2865,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_5_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_222822"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_222822"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2908,7 +2908,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_6_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_223003"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_223003"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2951,7 +2951,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph_correctedcfg/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085121"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_7_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085121"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2994,7 +2994,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_8_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_223114"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201011_223114"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3037,7 +3037,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph_correctedcfg/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085327"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_9_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085327"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3080,7 +3080,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_10_TuneCP5_PSWeights_13TeV-madgraph-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_223224"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_223224"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3123,7 +3123,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_11_TuneCP5_PSWeights_13TeV-madgraph-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_223336"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2VTo2L2Nu_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg/2017v2_2020Oct11_GluGluToHHTo2B2VTo2L2Nu_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_223336"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3166,7 +3166,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085534"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2VTo2L2Nu_node_12_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085534"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3209,7 +3209,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v/200505_131227"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v/200505_131227"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3252,7 +3252,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v/200505_131415"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v/200505_131415"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3295,7 +3295,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCP5_PSWeights_13TeV-pow
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realisti/200505_131529"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realisti/200505_131529"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3338,7 +3338,7 @@ samples_2017["/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v/200505_131719"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VTo2L2Nu_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v/200505_131719"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3381,7 +3381,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Dec11/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg/2017v2_2019Dec11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191211_173107"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Dec11/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg/2017v2_2019Dec11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191211_173107"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3424,7 +3424,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_PSWeights_13TeV-madgraph-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201011_223452"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_SM_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201011_223452"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3467,7 +3467,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_1_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223606"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223606"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3510,7 +3510,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_2_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_2_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_2_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223719"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_2_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_2_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223719"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3553,7 +3553,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_3_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_3_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_3_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223833"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_3_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_3_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223833"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3596,7 +3596,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_4_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223947"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_4_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_223947"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3639,7 +3639,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_5_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224130"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_5_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224130"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3682,7 +3682,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_6_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224313"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_6_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224313"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3725,7 +3725,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_7_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_7_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_7_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224424"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_7_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_7_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224424"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3768,7 +3768,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_8_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/GluGluToHHTo2B2WToLNu2J_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToHHTo2B2WToLNu2J_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201017_192908"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/GluGluToHHTo2B2WToLNu2J_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToHHTo2B2WToLNu2J_node_8_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201017_192908"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3811,7 +3811,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgraph-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224535"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_9_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/201011_224535"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3854,7 +3854,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct19/GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct19_GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201019_121250"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct19/GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct19_GluGluToHHTo2B2WToLNu2J_node_10_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201019_121250"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3897,7 +3897,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201011_224829"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_11_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201011_224829"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3940,7 +3940,7 @@ samples_2017["/GluGluToHHTo2B2WToLNu2J_node_12_TuneCP5_PSWeights_13TeV-madgraph-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_12_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_12_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201011_224943"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToHHTo2B2WToLNu2J_node_12_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToHHTo2B2WToLNu2J_node_12_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/201011_224943"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3983,7 +3983,7 @@ samples_2017["/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_130601"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_130601"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4026,7 +4026,7 @@ samples_2017["/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_130815"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_130815"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4069,7 +4069,7 @@ samples_2017["/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powhe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_/200505_130929"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_/200505_130929"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4112,7 +4112,7 @@ samples_2017["/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_131112"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2VLNu2J_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_131112"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4155,7 +4155,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-250_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_134804"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_134804"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4198,7 +4198,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225055"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225055"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4241,7 +4241,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-260_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_134919"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_134919"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4284,7 +4284,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225206"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225206"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4327,7 +4327,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-270_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135104"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135104"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4370,7 +4370,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225323"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225323"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4413,7 +4413,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-280_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135219"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135219"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4456,7 +4456,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225436"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225436"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4499,7 +4499,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-300_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135554"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135554"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4542,7 +4542,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225548"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225548"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4585,7 +4585,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-320_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135809"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135809"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4628,7 +4628,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225701"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225701"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4671,7 +4671,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-350_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135925"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_135925"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4714,7 +4714,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225814"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225814"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4757,7 +4757,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-400_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140111"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140111"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4800,7 +4800,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225928"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_225928"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4843,7 +4843,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-450_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140257"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140257"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4886,7 +4886,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230048"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230048"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4929,7 +4929,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-500_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140515"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140515"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4972,7 +4972,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230200"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230200"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5015,7 +5015,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-550_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140657"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140657"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5058,7 +5058,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230312"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230312"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5101,7 +5101,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-600_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140844"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140844"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5144,7 +5144,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201017_193131"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToRadionToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201017_193131"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5187,7 +5187,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-650_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140957"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_140957"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5230,7 +5230,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230424"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230424"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5273,7 +5273,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-700_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141145"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141145"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5316,7 +5316,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230607"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230607"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5359,7 +5359,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-750_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141303"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141303"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5402,7 +5402,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230752"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230752"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5445,7 +5445,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-800_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141449"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141449"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5488,7 +5488,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230905"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_230905"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5531,7 +5531,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-850_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141604"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141604"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5574,7 +5574,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_231023"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_231023"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5617,7 +5617,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-900_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141748"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_141748"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5660,7 +5660,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_231135"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201011_231135"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5703,7 +5703,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_133808"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_133808"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5746,7 +5746,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231249"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231249"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5789,7 +5789,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_133953"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_133953"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5832,7 +5832,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231359"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231359"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5875,7 +5875,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134109"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134109"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5918,7 +5918,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231511"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231511"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5961,7 +5961,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134252"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134252"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6004,7 +6004,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231625"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231625"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6047,7 +6047,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134436"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134436"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6090,7 +6090,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231737"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231737"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6133,7 +6133,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134550"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_134550"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6176,7 +6176,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231848"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_231848"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6219,7 +6219,7 @@ samples_2017["/GluGluToRadionToHHTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correcte
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_135404"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToRadionToHHTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToRadionToHHTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v/200505_135404"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6262,7 +6262,7 @@ samples_2017["/GluGluToRadionToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_232001"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201011_232001"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6305,7 +6305,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-250_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122508"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122508"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6348,7 +6348,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232144"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232144"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6391,7 +6391,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-260_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122620"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122620"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6434,7 +6434,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232326"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-260_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232326"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6477,7 +6477,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-270_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122840"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122840"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6520,7 +6520,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232441"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-270_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232441"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6563,7 +6563,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-280_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122956"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_122956"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6606,7 +6606,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232554"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-280_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232554"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6649,7 +6649,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-300_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_123254"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_123254"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6692,7 +6692,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232707"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232707"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6735,7 +6735,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-320_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_123437"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_123437"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6778,7 +6778,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232819"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232819"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6821,7 +6821,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-350_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_123620"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_123620"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6864,7 +6864,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232932"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-350_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_232932"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6907,7 +6907,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-400_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200506_102357"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200506_102357"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6950,7 +6950,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233046"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-400_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233046"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6993,7 +6993,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-450_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200506_102544"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200506_102544"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7036,7 +7036,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233229"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-450_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233229"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7079,7 +7079,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-500_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_124101"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_124101"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7122,7 +7122,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233409"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233409"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7165,7 +7165,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-550_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_124245"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_124245"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7208,7 +7208,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201017_193245"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-550_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201017_193245"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7251,7 +7251,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-600_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_124430"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_124430"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7294,7 +7294,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233629"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-600_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233629"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7337,7 +7337,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-650_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125019"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125019"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7380,7 +7380,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233743"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-650_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233743"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7423,7 +7423,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-700_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125134"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125134"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7466,7 +7466,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233857"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_233857"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7509,7 +7509,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-750_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125319"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125319"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7552,7 +7552,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234009"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234009"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7595,7 +7595,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-800_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125437"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125437"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7638,7 +7638,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234149"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-800_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234149"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7681,7 +7681,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-850_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125623"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125623"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7724,7 +7724,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234259"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234259"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7767,7 +7767,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-900_narrow_13TeV-madgra
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125736"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/200505_125736"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7810,7 +7810,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234410"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_234410"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7853,7 +7853,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1000_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_121542"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_121542"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7896,7 +7896,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234524"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234524"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7939,7 +7939,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1250_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_121656"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_121656"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7982,7 +7982,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234637"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234637"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8025,7 +8025,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1500_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_121840"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_121840"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8068,7 +8068,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234750"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234750"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8111,7 +8111,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1750_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_122024"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_122024"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8154,7 +8154,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234934"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_234934"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8197,7 +8197,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2000_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_122139"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_122139"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8240,7 +8240,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_235118"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_235118"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8283,7 +8283,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2500_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_122322"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_122322"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8326,7 +8326,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_235231"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201011_235231"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8369,7 +8369,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-3000_narrow_13TeV-madgr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_123140"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2020May05_GluGluToBulkGravitonToHHTo2B2VTo2BLNu2J_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_rea/200505_123140"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8412,7 +8412,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWei
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201017_193426"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct17_GluGluToBulkGravitonToHHTo2B2WToLNu2J_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X/201017_193426"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8455,7 +8455,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235343"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235343"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8498,7 +8498,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235455"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235455"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8541,7 +8541,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweigh
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085854"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085854"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8584,7 +8584,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235608"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235608"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8627,7 +8627,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235720"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201011_235720"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8670,7 +8670,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweigh
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085959"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2WToLNu2J_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_m/201118_085959"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8713,7 +8713,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_235833"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_235833"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8756,7 +8756,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSwe
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_235947"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94/201011_235947"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8799,7 +8799,7 @@ samples_2017["/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweig
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201012_000130"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2WToLNu2J_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_/201012_000130"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8842,7 +8842,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085742"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085742"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8885,7 +8885,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085959"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_085959"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8928,7 +8928,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090154"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090154"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8971,7 +8971,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_090401"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_090401"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9014,7 +9014,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090616"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090616"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9057,7 +9057,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madg
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/201012_000313"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFToRadionToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realist/201012_000313"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9100,7 +9100,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090750"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090750"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9143,7 +9143,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090927"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_090927"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9186,7 +9186,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Dec20/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2020Dec20_VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/201219_201613"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Dec20/VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2020Dec20_VBFToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/201219_201613"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9229,7 +9229,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_091220"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_091220"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9272,7 +9272,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194020"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194020"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9315,7 +9315,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Dec20/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2020Dec20_VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/201219_201720"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Dec20/VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2020Dec20_VBFToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/201219_201720"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9358,7 +9358,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194456"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194456"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9401,7 +9401,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194728"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_194728"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9444,7 +9444,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_092245"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/191005_092245"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9487,7 +9487,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195234"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195234"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9530,7 +9530,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195000"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195000"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9573,7 +9573,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_092845"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_092845"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9616,7 +9616,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195436"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195436"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9659,7 +9659,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195708"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_195708"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9702,7 +9702,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_193617"),
+        ("path",      "/store/user/kaehatah/2017v2_2019Nov24/VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph/2017v2_2019Nov24_VBFToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191124_193617"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9745,7 +9745,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_093624"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_093624"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9788,7 +9788,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_093804"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_093804"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9831,7 +9831,7 @@ samples_2017["/VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_093946"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_093946"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9874,7 +9874,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094200"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094200"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9917,7 +9917,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094409"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094409"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9960,7 +9960,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094617"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094617"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10003,7 +10003,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094823"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_094823"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10046,7 +10046,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095036"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-300_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095036"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10089,7 +10089,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095216"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-320_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095216"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10132,7 +10132,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095416"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095416"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10175,7 +10175,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095553"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095553"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10218,7 +10218,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095728"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095728"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10261,7 +10261,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095934"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_095934"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10304,7 +10304,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100336"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100336"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10347,7 +10347,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100447"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100447"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10390,7 +10390,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100625"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-700_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100625"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10433,7 +10433,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100837"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_100837"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10476,7 +10476,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101051"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-850_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101051"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10519,7 +10519,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101257"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-900_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101257"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10562,7 +10562,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101502"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101502"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10605,7 +10605,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCP5_PSWeights_13T
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201012_000427"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFToBulkGravitonToHHTo2B2Tau_M-1200_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_/201012_000427"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10648,7 +10648,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101709"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101709"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10691,7 +10691,7 @@ samples_2017["/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101920"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph/2017v2_2019Oct05_VBFToBulkGravitonToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_101920"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10734,7 +10734,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102130"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102130"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10777,7 +10777,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102312"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102312"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10820,7 +10820,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102449"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102449"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10863,7 +10863,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102655"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102655"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10906,7 +10906,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102835"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-300_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_102835"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10949,7 +10949,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103047"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-320_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103047"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -10992,7 +10992,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-m
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/201012_000540"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToRadionToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToRadionToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_real/201012_000540"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11035,7 +11035,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103253"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103253"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11078,7 +11078,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103500"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103500"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11121,7 +11121,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103727"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103727"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11164,7 +11164,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103908"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_103908"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11207,7 +11207,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104048"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104048"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11250,7 +11250,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104257"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104257"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11293,7 +11293,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104508"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104508"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11336,7 +11336,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104645"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-700_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104645"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11379,7 +11379,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104823"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_104823"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11422,7 +11422,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105002"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105002"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11465,7 +11465,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105143"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-850_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105143"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11508,7 +11508,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correctedc
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105320"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-900_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105320"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11551,7 +11551,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105506"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105506"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11594,7 +11594,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105642"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105642"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11637,7 +11637,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105823"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_105823"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11680,7 +11680,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110033"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-1750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110033"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11723,7 +11723,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110240"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-2000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110240"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11766,7 +11766,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110453"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-2500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-2500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110453"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11809,7 +11809,7 @@ samples_2017["/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph_corrected
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110706"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToRadionToHHTo2B2Tau_M-3000_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_110706"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11852,7 +11852,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_110948"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-250_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_110948"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11895,7 +11895,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_111154"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-260_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_111154"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11938,7 +11938,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_111425"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-270_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_111425"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -11981,7 +11981,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_111705"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-280_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_111705"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12024,7 +12024,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_000653"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-300_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_000653"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12067,7 +12067,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_000806"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-320_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_000806"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12110,7 +12110,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_000918"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-340_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_000918"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12153,7 +12153,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112126"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-350_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112126"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12196,7 +12196,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112304"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-400_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112304"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12239,7 +12239,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112439"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-450_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112439"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12282,7 +12282,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112722"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-500_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112722"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12325,7 +12325,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112901"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-550_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_112901"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12368,7 +12368,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_113113"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-600_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_113113"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12411,7 +12411,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_113421"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-650_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_113421"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12454,7 +12454,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_001030"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-700_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_001030"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12497,7 +12497,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_113730"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-750_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_113730"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12540,7 +12540,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_corr
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_114006"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToBulkGravitonToHHTo2B2Tau_M-800_narrow_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v1/191005_114006"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12583,7 +12583,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_001141"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-850_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_001141"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12626,7 +12626,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_001324"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-900_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_001324"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12669,7 +12669,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001438"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001438"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12712,7 +12712,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001550"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1250_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001550"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12755,7 +12755,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001700"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001700"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12798,7 +12798,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001813"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-1750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001813"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12841,7 +12841,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001926"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_001926"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12884,7 +12884,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_002039"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-2500_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_002039"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12927,7 +12927,7 @@ samples_2017["/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCP5_PSWeights_
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_002152"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/2017v2_2020Oct11_GluGluToBulkGravitonToHHTo2B2Tau_M-3000_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc20/201012_002152"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -12970,7 +12970,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002305"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_0_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002305"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13013,7 +13013,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002415"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002415"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13056,7 +13056,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201118_090104"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2Tau_CV_1_C2V_1_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201118_090104"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13099,7 +13099,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002557"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_1_C3_2_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002557"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13142,7 +13142,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002742"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_002742"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13185,7 +13185,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201118_090208"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov18/VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Nov18_VBFHHTo2B2Tau_CV_1_C2V_2_C3_1_dipoleRecoilOn-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017/201118_090208"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13228,7 +13228,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct17_VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2/201017_193608"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct17_VBFHHTo2B2Tau_CV_1_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2/201017_193608"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13271,7 +13271,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2/201012_002959"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_0_5_C2V_1_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2/201012_002959"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13314,7 +13314,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_003107"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_003107"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13357,7 +13357,7 @@ samples_2017["/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_003252"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct11/VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8/2017v2_2020Oct11_VBFHHTo2B2Tau_CV_1_C2V_0_C3_1_dipoleRecoilOff-TuneCP5_PSweights_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc201/201012_003252"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13400,7 +13400,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg/RunIIFall1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120308"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_SM_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120308"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13443,7 +13443,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg/RunIIFall17
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120551"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_2_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120551"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13486,7 +13486,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg/RunIIFall17
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120731"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_3_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120731"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13529,7 +13529,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg/RunIIFall17
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120936"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_4_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_120936"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13572,7 +13572,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg/RunIIFall17
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_121216"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_7_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_121216"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13615,7 +13615,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg/RunIIFall17
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_121522"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_9_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_121522"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13658,7 +13658,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg/RunIIFall1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_121729"),
+        ("path",      "/store/user/snandan/2017v2_2019Oct05/GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg/2017v2_2019Oct05_GluGluToHHTo2B2Tau_node_12_13TeV-madgraph_correctedcfg__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/191005_121729"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13701,7 +13701,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_125922"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_125922"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13744,7 +13744,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_130111"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_130111"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13787,7 +13787,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-p
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_130228"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14/200505_130228"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13830,7 +13830,7 @@ samples_2017["/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_130414"),
+        ("path",      "/store/user/kaehatah/2017v2_2020May05/GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8/2017v2_2020May05_GluGluToHHTo2B2Tau_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200505_130414"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13873,7 +13873,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8/2017v2_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2/211227_155903"),
+        ("path",      "/store/user/kaehatah/2017v2_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8/2017v2_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-300_narrow_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2/211227_155903"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -13916,7 +13916,7 @@ samples_2017["/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythia8/2017v2_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2/211227_160106"),
+        ("path",      "/store/user/kaehatah/2017v2_2021Dec27/GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythia8/2017v2_2021Dec27_GluGluToRadionToHHTo2B2VTo2L2Nu_M-550_narrow_13TeV-madgraph-pythia8__RunIIFall17MiniAODv2/211227_160106"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

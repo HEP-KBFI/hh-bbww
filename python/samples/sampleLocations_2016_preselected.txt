@@ -1,4 +1,4 @@
-/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples
-/hdfs/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_all_hh_multilepton/ntuples
-/hdfs/local/karl/ttHNtupleProduction/2016/2021Dec29_wPresel_nom_hh_bbww_hh_multilepton/ntuples
-/hdfs/local/karl/ttHNtupleProduction/2016/2022Aug30_wPresel_nom_all_hh_multilepton/ntuples
+/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples
+/local/karl/ttHNtupleProduction/2016/2021Mar05_wPresel_nom_all_hh_multilepton/ntuples
+/local/karl/ttHNtupleProduction/2016/2021Dec29_wPresel_nom_hh_bbww_hh_multilepton/ntuples
+/local/karl/ttHNtupleProduction/2016/2022Aug30_wPresel_nom_all_hh_multilepton/ntuples

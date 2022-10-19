@@ -2,13 +2,13 @@
 
 from tthAnalysis.HiggsToTauTau.safe_root import ROOT
 from tthAnalysis.HiggsToTauTau.common import logging, SmartFormatter
-from tthAnalysis.HiggsToTauTau.hdfs import hdfs
 
 import argparse
 import enum
 import math
 import collections
 import prettytable
+import os
 
 class Hbb(enum.Enum):
   undefined = 0
@@ -212,7 +212,7 @@ if __name__ == '__main__':
   logging.getLogger().setLevel(logging.DEBUG if args.verbose else logging.INFO)
   input_file_name = args.input
 
-  if not hdfs.isfile(input_file_name):
+  if not os.path.isfile(input_file_name):
     raise ValueError("No such file: %s" % input_file_name)
 
   categories = []

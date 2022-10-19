@@ -226,7 +226,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampDOWN"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampDOWN"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -468,7 +468,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampDOWN_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampDOWN_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -710,7 +710,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampDOWN_ext2"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampDOWN_ext2"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -952,7 +952,7 @@ samples_2016["/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_hdampDOWN"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_hdampDOWN"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1194,7 +1194,7 @@ samples_2016["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_hdampDOWN"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_hdampDOWN"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1436,7 +1436,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampUP"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampUP"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1678,7 +1678,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampUP_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampUP_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1920,7 +1920,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampUP_ext2"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_hdampUP_ext2"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2162,7 +2162,7 @@ samples_2016["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_hdampUP"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_hdampUP"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2404,7 +2404,7 @@ samples_2016["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_hdampUP"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_hdampUP"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2646,7 +2646,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueDown"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueDown"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2888,7 +2888,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueDown_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueDown_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3130,7 +3130,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueDown_ext2"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueDown_ext2"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3372,7 +3372,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_ueDown"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_ueDown"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3614,7 +3614,7 @@ samples_2016["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISumm
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_ueDown"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_ueDown"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3856,7 +3856,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueUp"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueUp"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4098,7 +4098,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueUp_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueUp_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4340,7 +4340,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueUp_ext2"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_ueUp_ext2"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4582,7 +4582,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_ueUp"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_ueUp"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -4824,7 +4824,7 @@ samples_2016["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_ueUp"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_ueUp"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5066,7 +5066,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_QCDbased"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_QCDbased"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5308,7 +5308,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_QCDbased_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_QCDbased_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5550,7 +5550,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_QCDbased"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_QCDbased"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -5792,7 +5792,7 @@ samples_2016["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_QCDbased"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_QCDbased"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6034,7 +6034,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_GluonMove"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_GluonMove"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6276,7 +6276,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_GluonMove_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_GluonMove_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6518,7 +6518,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_GluonMove"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_GluonMove"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -6760,7 +6760,7 @@ samples_2016["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_GluonMove"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_GluonMove"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7002,7 +7002,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_erdON"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_erdON"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7244,7 +7244,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_erdON_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_erdON_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7486,7 +7486,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_erdON_ext2"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_erdON_ext2"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7728,7 +7728,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_erdON"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_erdON"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -7970,7 +7970,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_erdON"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_erdON"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8212,7 +8212,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop169p5_PSweights_backup"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop169p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8454,7 +8454,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop169p5_PSweights_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop169p5_PSweights_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8696,7 +8696,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_mtop169p5_PSweights_backup"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_mtop169p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -8938,7 +8938,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_mtop169p5"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_mtop169p5"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9180,7 +9180,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop175p5_PSweights_backup"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop175p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9422,7 +9422,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop175p5_PSweights_backup_ext1"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTTo2L2Nu_mtop175p5_PSweights_backup_ext1"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9664,7 +9664,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_mtop175p5_PSweights_backup"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToSemiLeptonic_mtop175p5_PSweights_backup"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -9906,7 +9906,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_mtop175p5"),
+        ("path",      "/local/karl/ttHNtupleProduction/2016/2021Apr24_wPresel_nom_all_hh_multilepton/ntuples/TTToHadronic_mtop175p5"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

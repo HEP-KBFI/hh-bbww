@@ -91,7 +91,7 @@ if __name__ == '__main__':
   analysis = prodNtupleConfig_hh_bbwwMEM_dilepton(
     configDir = os.path.join("/scratch-persistent", getpass.getuser(), "hhAnalysis", era, version),
     localDir  = os.path.join("/home",               getpass.getuser(), "hhAnalysis", era, version),
-    outputDir = os.path.join("/hdfs/local",         getpass.getuser(), "hhAnalysis", era, version),
+    outputDir = os.path.join("/local",              getpass.getuser(), "hhAnalysis", era, version),
     executable_analyze                    = "produceMEMNtuple_hh_bb2l",
     ##executable_analyze                    = "debug_hh_bb2l", # CV: use only for debugging !!
     cfgFile_analyze                       = "produceMEMNtuple_hh_bb2l_cfg.py",

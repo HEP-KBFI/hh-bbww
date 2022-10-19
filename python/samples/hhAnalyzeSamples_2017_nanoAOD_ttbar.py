@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
 # file generated at 2020-12-19 22:20:12 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_nanoAOD_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_ttbar.py -M -l /hdfs/local/karl/lost_ntuples.txt
+# create_dictionary.py -m python/samples/metaDict_2017_ttbar.py -p python/samples/sampleLocations_2017_nanoAOD_ttbar.txt -N samples_2017 -E 2017 -o python/samples -g hhAnalyzeSamples_2017_nanoAOD_ttbar.py -M -l /local/karl/lost_ntuples.txt
 
 samples_2017 = OD()
 samples_2017["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM"] = OD([
@@ -27,7 +27,7 @@ samples_2017["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_151841"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_151841"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -70,7 +70,7 @@ samples_2017["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_152018"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_152018"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -113,7 +113,7 @@ samples_2017["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201017_193718"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201017_193718"),
         ("selection", "*"),
         ("blacklist", [72, 240, 243, 267, 268, 271, 272, 290, 358, 366, 377, 383, 388, 420, 421, 422, 423, 435, 468, 479, 532, 533, 534, 584]),
       ]),
@@ -156,7 +156,7 @@ samples_2017["/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_152200"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_152200"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -199,7 +199,7 @@ samples_2017["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200331_152308"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200331_152308"),
         ("selection", "*"),
         ("blacklist", [1, 187, 190, 208, 210, 233, 239]),
       ]),
@@ -242,7 +242,7 @@ samples_2017["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200422_130616"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200422_130616"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -285,7 +285,7 @@ samples_2017["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_152621"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_152621"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -328,7 +328,7 @@ samples_2017["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov09/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Nov09_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201109_081503"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov09/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Nov09_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201109_081503"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -371,7 +371,7 @@ samples_2017["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14/200331_152807"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14/200331_152807"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -414,7 +414,7 @@ samples_2017["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_152916"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_152916"),
         ("selection", "*"),
         ("blacklist", [2, 5, 70, 135, 160, 196, 198, 259, 260, 263, 266, 269, 273]),
       ]),
@@ -457,7 +457,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_153055"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_153055"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -500,7 +500,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_153232"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_153232"),
         ("selection", "*"),
         ("blacklist", [4, 71, 87, 92, 94]),
       ]),
@@ -543,7 +543,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIIFall17M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov09/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Nov09_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201109_081616"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov09/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Nov09_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201109_081616"),
         ("selection", "*"),
         ("blacklist", [8, 46, 336, 339, 436, 437, 475, 545]),
       ]),
@@ -586,7 +586,7 @@ samples_2017["/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_153409"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_153409"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -629,7 +629,7 @@ samples_2017["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIIFall
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_153545"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_153545"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -672,7 +672,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200422_130729"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200422_130729"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -715,7 +715,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_153857"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_153857"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -758,7 +758,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct13/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct13_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201013_102548"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct13/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct13_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201013_102548"),
         ("selection", "*"),
         ("blacklist", [121, 124, 125, 131, 134, 137, 138, 181, 184, 189, 196, 197, 200, 215, 231, 236, 275, 277, 306, 320, 352, 354, 355, 356, 368, 369, 370, 384, 389, 390, 391, 392, 393, 394, 398, 400, 401, 406, 407, 408, 409, 410, 411, 412, 414, 415, 421, 436, 523, 527]),
       ]),
@@ -801,7 +801,7 @@ samples_2017["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFa
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_154005"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_154005"),
         ("selection", "*"),
         ("blacklist", [20, 145, 166, 190, 193, 197, 200]),
       ]),
@@ -844,7 +844,7 @@ samples_2017["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIIFall17
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_154140"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_154140"),
         ("selection", "*"),
         ("blacklist", [92]),
       ]),
@@ -887,7 +887,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154318"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154318"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -930,7 +930,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_154455"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_154455"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -973,7 +973,7 @@ samples_2017["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154634"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154634"),
         ("selection", "*"),
         ("blacklist", [107]),
       ]),
@@ -1016,7 +1016,7 @@ samples_2017["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154811"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154811"),
         ("selection", "*"),
         ("blacklist", [268]),
       ]),
@@ -1059,7 +1059,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154946"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_154946"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1102,7 +1102,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_155123"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_155123"),
         ("selection", "*"),
         ("blacklist", [70]),
       ]),
@@ -1145,7 +1145,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Nov09/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Nov09_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201109_081728"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Nov09/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Nov09_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201109_081728"),
         ("selection", "*"),
         ("blacklist", [260, 261, 273, 274]),
       ]),
@@ -1188,7 +1188,7 @@ samples_2017["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_155259"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_155259"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1231,7 +1231,7 @@ samples_2017["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_155437"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_155437"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1274,7 +1274,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIFall17MiniAODv2
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_155544"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200331_155544"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1317,7 +1317,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIFall17MiniAODv2
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_155722"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_155722"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1360,7 +1360,7 @@ samples_2017["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIFall17MiniAODv2
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201017_193829"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201017_193829"),
         ("selection", "*"),
         ("blacklist", [181, 196, 197, 217, 222, 299, 355, 358, 359, 360, 362, 368, 431, 451, 460, 513, 514, 516, 517, 518, 520, 521, 522, 523, 524, 526, 527, 528, 529, 530, 531, 532, 599, 600, 603]),
       ]),
@@ -1403,7 +1403,7 @@ samples_2017["/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200422_130910"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200422_130910"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1446,7 +1446,7 @@ samples_2017["/TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIFall17MiniAO
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200331_160039"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200331_160039"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1489,7 +1489,7 @@ samples_2017["/TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_160144"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_160144"),
         ("selection", "*"),
         ("blacklist", [22]),
       ]),
@@ -1532,7 +1532,7 @@ samples_2017["/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_160322"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_160322"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1575,7 +1575,7 @@ samples_2017["/TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/RunIIFall
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_160459"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_160459"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1618,7 +1618,7 @@ samples_2017["/TTToSemiLeptonic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_160636"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_160636"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1661,7 +1661,7 @@ samples_2017["/TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/RunIIFall17Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_160816"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_160816"),
         ("selection", "*"),
         ("blacklist", [72, 97]),
       ]),
@@ -1704,7 +1704,7 @@ samples_2017["/TTToHadronic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200331_160953"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200331_160953"),
         ("selection", "*"),
         ("blacklist", [2, 3]),
       ]),
@@ -1747,7 +1747,7 @@ samples_2017["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_161132"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_161132"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1790,7 +1790,7 @@ samples_2017["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_161239"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_161239"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1833,7 +1833,7 @@ samples_2017["/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct21/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct21_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201021_103258"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct21/TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct21_TTTo2L2Nu_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201021_103258"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1876,7 +1876,7 @@ samples_2017["/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_161414"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_161414"),
         ("selection", "*"),
         ("blacklist", [131, 139, 143, 149, 151, 153, 162, 168, 169, 171, 176, 177, 179, 180, 185]),
       ]),
@@ -1919,7 +1919,7 @@ samples_2017["/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-/200331_161551"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-/200331_161551"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1962,7 +1962,7 @@ samples_2017["/TTToHadronic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200331_161729"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop169p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200331_161729"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2005,7 +2005,7 @@ samples_2017["/TTTo2L2Nu_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_161907"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_161907"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2048,7 +2048,7 @@ samples_2017["/TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200422_131022"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200422_131022"),
         ("selection", "*"),
         ("blacklist", [131, 311]),
       ]),
@@ -2091,7 +2091,7 @@ samples_2017["/TTToHadronic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200331_162223"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop171p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200331_162223"),
         ("selection", "*"),
         ("blacklist", [36, 152, 203, 213, 216, 218, 239]),
       ]),
@@ -2134,7 +2134,7 @@ samples_2017["/TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_162405"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_162405"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2177,7 +2177,7 @@ samples_2017["/TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/201017_193946"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct17/TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct17_TTTo2L2Nu_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/201017_193946"),
         ("selection", "*"),
         ("blacklist", [32, 128, 129, 131, 132, 133, 134, 199, 214, 215]),
       ]),
@@ -2220,7 +2220,7 @@ samples_2017["/TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200422_131207"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200422_131207"),
         ("selection", "*"),
         ("blacklist", [71]),
       ]),
@@ -2263,7 +2263,7 @@ samples_2017["/TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200422_131322"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToHadronic_mtop173p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/200422_131322"),
         ("selection", "*"),
         ("blacklist", [140]),
       ]),
@@ -2306,7 +2306,7 @@ samples_2017["/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_162902"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_162902"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2349,7 +2349,7 @@ samples_2017["/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_163014"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/200331_163014"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2392,7 +2392,7 @@ samples_2017["/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Oct31/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct31_TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201031_114819"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Oct31/TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Oct31_TTTo2L2Nu_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext2-v2/201031_114819"),
         ("selection", "*"),
         ("blacklist", [90, 243, 267]),
       ]),
@@ -2435,7 +2435,7 @@ samples_2017["/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_163224"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_163224"),
         ("selection", "*"),
         ("blacklist", [132, 135, 166, 171, 173, 174, 176]),
       ]),
@@ -2478,7 +2478,7 @@ samples_2017["/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-/200331_163332"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-/200331_163332"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2521,7 +2521,7 @@ samples_2017["/TTToHadronic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToHadronic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToHadronic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200422_131507"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToHadronic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToHadronic_mtop175p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v/200422_131507"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2564,7 +2564,7 @@ samples_2017["/TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_163652"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_163652"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2607,7 +2607,7 @@ samples_2017["/TTTo2L2Nu_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIF
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTTo2L2Nu_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTTo2L2Nu_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200422_130250"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTTo2L2Nu_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Apr22_TTTo2L2Nu_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200422_130250"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2650,7 +2650,7 @@ samples_2017["/TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/RunIIFall
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_164013"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/200331_164013"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2693,7 +2693,7 @@ samples_2017["/TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_164154"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v/200331_164154"),
         ("selection", "*"),
         ("blacklist", [69]),
       ]),
@@ -2736,7 +2736,7 @@ samples_2017["/TTToHadronic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_164305"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToHadronic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToHadronic_mtop178p5_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200331_164305"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2779,7 +2779,7 @@ samples_2017["/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_164444"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_164444"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2822,7 +2822,7 @@ samples_2017["/TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8/RunIIFall
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_164621"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_164621"),
         ("selection", "*"),
         ("blacklist", [31, 46, 58, 67, 74, 82, 141, 152, 175, 178, 186, 187]),
       ]),
@@ -2865,7 +2865,7 @@ samples_2017["/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/RunIIFall17Mini
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_164756"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_164756"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2908,7 +2908,7 @@ samples_2017["/TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200422_131619"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200422_131619"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2951,7 +2951,7 @@ samples_2017["/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/RunIIFall17Mini
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_165110"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_165110"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2994,7 +2994,7 @@ samples_2017["/TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8/RunIIFal
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200422_130433"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Apr22/TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Apr22_TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200422_130433"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3037,7 +3037,7 @@ samples_2017["/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_165421"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_165421"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -3080,7 +3080,7 @@ samples_2017["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIFall
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_165628"),
+        ("path",      "/store/user/kaehatah/2017v2_2020Mar31/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2017v2_2020Mar31_TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/200331_165628"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

@@ -126,7 +126,7 @@ if __name__ == '__main__':
   analysis = analyzeConfig_hh_bbWW_DYctrl(
     configDir = os.path.join("/scratch-persistent", getpass.getuser(), "hhAnalysis", era, version),
     localDir  = os.path.join("/home",               getpass.getuser(), "hhAnalysis", era, version),
-    outputDir = os.path.join("/hdfs/local",         getpass.getuser(), "hhAnalysis", era, version),
+    outputDir = os.path.join("/local",              getpass.getuser(), "hhAnalysis", era, version),
     executable_analyze                    = "analyze_hh_bbWW_DYctrl",
     cfgFile_analyze                       = "analyze_hh_bbWW_DYctrl_cfg.py",
     samples                               = samples,

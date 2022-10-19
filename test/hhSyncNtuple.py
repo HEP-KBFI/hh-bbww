@@ -90,8 +90,8 @@ if __name__ == '__main__':
   )
 
   analysis = syncNtupleConfig(
-    config_dir = os.path.join("/home",       getpass.getuser(), "hhAnalysis", args.era, args.version),
-    output_dir = os.path.join("/hdfs/local", getpass.getuser(), "hhAnalysis", args.era, args.version),
+    config_dir = os.path.join("/home",  getpass.getuser(), "hhAnalysis", args.era, args.version),
+    output_dir = os.path.join("/local", getpass.getuser(), "hhAnalysis", args.era, args.version),
     output_filename    = output,
     version            = version,
     era                = era,

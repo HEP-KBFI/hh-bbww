@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
 # file generated at 2020-12-19 22:19:41 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2018_ttbar.py -p python/samples/sampleLocations_2018_nanoAOD_ttbar.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_nanoAOD_ttbar.py -M -l /hdfs/local/karl/lost_ntuples.txt
+# create_dictionary.py -m python/samples/metaDict_2018_ttbar.py -p python/samples/sampleLocations_2018_nanoAOD_ttbar.txt -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_nanoAOD_ttbar.py -M -l /local/karl/lost_ntuples.txt
 
 samples_2018 = OD()
 samples_2018["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
@@ -27,7 +27,7 @@ samples_2018["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134128"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134128"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -74,7 +74,7 @@ samples_2018["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_173607"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_173607"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -121,7 +121,7 @@ samples_2018["/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct21/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct21_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201021_103955"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct21/TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct21_TTTo2L2Nu_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201021_103955"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -168,7 +168,7 @@ samples_2018["/TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134241"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134241"),
         ("selection", "*"),
         ("blacklist", [68]),
       ]),
@@ -215,7 +215,7 @@ samples_2018["/TTToHadronic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToHadronic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134423"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToHadronic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_hdampDOWN_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134423"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -262,7 +262,7 @@ samples_2018["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174124"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174124"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -309,7 +309,7 @@ samples_2018["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_174259"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_174259"),
         ("selection", "*"),
         ("blacklist", [31]),
       ]),
@@ -356,7 +356,7 @@ samples_2018["/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct31/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201031_114511"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct31/TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct31_TTTo2L2Nu_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201031_114511"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -403,7 +403,7 @@ samples_2018["/TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174441"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174441"),
         ("selection", "*"),
         ("blacklist", [85, 134]),
       ]),
@@ -450,7 +450,7 @@ samples_2018["/TTToHadronic_hdampUP_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174622"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_hdampUP_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_hdampUP_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174622"),
         ("selection", "*"),
         ("blacklist", [32, 33, 37, 47, 51, 55, 57, 71, 72, 75, 82, 85, 100, 106, 115, 118, 122, 126, 134, 145, 175, 203, 211, 214, 216, 236]),
       ]),
@@ -497,7 +497,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174727"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_174727"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -544,7 +544,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_174908"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_174908"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -591,7 +591,7 @@ samples_2018["/TTToSemiLeptonic_TuneCP5down_13TeV-powheg-pythia8/RunIIAutumn18Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5down_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134534"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5down_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134534"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -638,7 +638,7 @@ samples_2018["/TTToHadronic_TuneCP5down_13TeV-powheg-pythia8/RunIIAutumn18MiniAO
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToHadronic_TuneCP5down_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134717"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToHadronic_TuneCP5down_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_TuneCP5down_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134717"),
         ("selection", "*"),
         ("blacklist", [14]),
       ]),
@@ -685,7 +685,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_175402"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_175402"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -732,7 +732,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_175510"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_175510"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -779,7 +779,7 @@ samples_2018["/TTToSemiLeptonic_TuneCP5up_13TeV-powheg-pythia8/RunIIAutumn18Mini
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5up_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134830"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5up_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_134830"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -826,7 +826,7 @@ samples_2018["/TTToHadronic_TuneCP5up_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToHadronic_TuneCP5up_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135011"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToHadronic_TuneCP5up_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_TuneCP5up_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135011"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -873,7 +873,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAutumn18M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180009"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180009"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -920,7 +920,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAutumn18M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct17/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Oct17_TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/201017_191130"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct17/TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Oct17_TTTo2L2Nu_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/201017_191130"),
         ("selection", "*"),
         ("blacklist", [10, 18, 225, 264, 313, 351, 432, 449, 461, 462, 494]),
       ]),
@@ -967,7 +967,7 @@ samples_2018["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135154"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135154"),
         ("selection", "*"),
         ("blacklist", [19]),
       ]),
@@ -1014,7 +1014,7 @@ samples_2018["/TTToHadronic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/RunIIAutumn
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180331"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180331"),
         ("selection", "*"),
         ("blacklist", [134, 149, 154, 156, 159, 166, 170, 173, 188, 194, 201, 203, 211, 224, 226, 239, 252, 260, 267, 268, 271, 274]),
       ]),
@@ -1061,7 +1061,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180435"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180435"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1108,7 +1108,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct17/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Oct17_TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/201017_191309"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct17/TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Oct17_TTTo2L2Nu_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/201017_191309"),
         ("selection", "*"),
         ("blacklist", [114, 131, 142, 219, 232, 337, 338, 347, 366, 392, 397, 421, 432]),
       ]),
@@ -1155,7 +1155,7 @@ samples_2018["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIA
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135306"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135306"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1202,7 +1202,7 @@ samples_2018["/TTToHadronic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/RunIIAutum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180748"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_TuneCP5CR2_GluonMove_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180748"),
         ("selection", "*"),
         ("blacklist", [65]),
       ]),
@@ -1249,7 +1249,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180925"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_180925"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1296,7 +1296,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_181103"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_181103"),
         ("selection", "*"),
         ("blacklist", [2, 5, 19]),
       ]),
@@ -1343,7 +1343,7 @@ samples_2018["/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct21/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Oct21_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201021_104101"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct21/TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Oct21_TTTo2L2Nu_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201021_104101"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1390,7 +1390,7 @@ samples_2018["/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135448"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135448"),
         ("selection", "*"),
         ("blacklist", [71, 82, 242, 274, 326, 503]),
       ]),
@@ -1437,7 +1437,7 @@ samples_2018["/TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8/RunIIAutumn18Mini
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181417"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_TuneCP5_erdON_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181417"),
         ("selection", "*"),
         ("blacklist", [2, 17, 22, 66, 67, 71]),
       ]),
@@ -1484,7 +1484,7 @@ samples_2018["/TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181556"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181556"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1531,7 +1531,7 @@ samples_2018["/TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181708"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181708"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1578,7 +1578,7 @@ samples_2018["/TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181844"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop166p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_181844"),
         ("selection", "*"),
         ("blacklist", [34, 35]),
       ]),
@@ -1625,7 +1625,7 @@ samples_2018["/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182019"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182019"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1672,7 +1672,7 @@ samples_2018["/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200422_135632"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200422_135632"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1719,7 +1719,7 @@ samples_2018["/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct13/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct13_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201013_103003"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct13/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct13_TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201013_103003"),
         ("selection", "*"),
         ("blacklist", [7, 8, 11, 15, 16, 19, 24, 26, 32, 123, 130, 178, 193, 194, 195, 219, 221, 323, 336, 351, 384, 389, 420, 497, 535, 537, 538, 539, 541, 543, 544, 545]),
       ]),
@@ -1766,7 +1766,7 @@ samples_2018["/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182334"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182334"),
         ("selection", "*"),
         ("blacklist", [66]),
       ]),
@@ -1813,7 +1813,7 @@ samples_2018["/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_182517"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_182517"),
         ("selection", "*"),
         ("blacklist", [6, 7, 12, 15, 25, 28, 29, 38]),
       ]),
@@ -1860,7 +1860,7 @@ samples_2018["/TTToHadronic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182627"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop169p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182627"),
         ("selection", "*"),
         ("blacklist", [8, 86]),
       ]),
@@ -1907,7 +1907,7 @@ samples_2018["/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182804"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_182804"),
         ("selection", "*"),
         ("blacklist", [3, 6, 27, 38]),
       ]),
@@ -1954,7 +1954,7 @@ samples_2018["/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct17/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct17_TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/201017_191418"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct17/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct17_TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/201017_191418"),
         ("selection", "*"),
         ("blacklist", [121, 125, 296]),
       ]),
@@ -2001,7 +2001,7 @@ samples_2018["/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135742"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135742"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2048,7 +2048,7 @@ samples_2018["/TTToHadronic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_183118"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop171p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_183118"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2095,7 +2095,7 @@ samples_2018["/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_183254"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_183254"),
         ("selection", "*"),
         ("blacklist", [1, 3, 31, 41, 45]),
       ]),
@@ -2142,7 +2142,7 @@ samples_2018["/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135925"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_135925"),
         ("selection", "*"),
         ("blacklist", [320]),
       ]),
@@ -2189,7 +2189,7 @@ samples_2018["/TTToHadronic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToHadronic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_mtop173p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140036"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToHadronic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToHadronic_mtop173p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140036"),
         ("selection", "*"),
         ("blacklist", [257]),
       ]),
@@ -2236,7 +2236,7 @@ samples_2018["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_183747"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_183747"),
         ("selection", "*"),
         ("blacklist", [15, 28, 32, 44]),
       ]),
@@ -2283,7 +2283,7 @@ samples_2018["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_183926"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200331_183926"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2330,7 +2330,7 @@ samples_2018["/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Oct21/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct21_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201021_104238"),
+        ("path",      "/store/user/kaehatah/2018_2020Oct21/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Oct21_TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext2-v2/201021_104238"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2377,7 +2377,7 @@ samples_2018["/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_184102"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_184102"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2424,7 +2424,7 @@ samples_2018["/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200422_140220"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/200422_140220"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2471,7 +2471,7 @@ samples_2018["/TTToHadronic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_184551"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop175p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_184551"),
         ("selection", "*"),
         ("blacklist", [1, 182]),
       ]),
@@ -2518,7 +2518,7 @@ samples_2018["/TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140333"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140333"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2565,7 +2565,7 @@ samples_2018["/TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_184912"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_184912"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2612,7 +2612,7 @@ samples_2018["/TTToHadronic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_185050"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToHadronic_mtop178p5_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToHadronic_mtop178p5_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_185050"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2659,7 +2659,7 @@ samples_2018["/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_133944"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_133944"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2706,7 +2706,7 @@ samples_2018["/TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140521"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_widthx0p7_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140521"),
         ("selection", "*"),
         ("blacklist", [118, 162, 251, 259, 264, 320, 369, 370, 384]),
       ]),
@@ -2753,7 +2753,7 @@ samples_2018["/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_185542"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_185542"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2800,7 +2800,7 @@ samples_2018["/TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8/RunIIAut
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140704"),
+        ("path",      "/store/user/kaehatah/2018_2020Apr22/TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8/2018_2020Apr22_TTToSemiLeptonic_widthx0p85_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200422_140704"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2847,7 +2847,7 @@ samples_2018["/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Mi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_185833"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_185833"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2894,7 +2894,7 @@ samples_2018["/TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8/RunIIAut
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_190010"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_widthx1p15_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_190010"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2941,7 +2941,7 @@ samples_2018["/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18Min
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_190147"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_190147"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -2988,7 +2988,7 @@ samples_2018["/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIIAutu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_190326"),
+        ("path",      "/store/user/kaehatah/2018_2020Mar31/TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8/2018_2020Mar31_TTToSemiLeptonic_widthx1p3_TuneCP5_13TeV-powheg-pythia8__RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/200331_190326"),
         ("selection", "*"),
         ("blacklist", []),
       ]),

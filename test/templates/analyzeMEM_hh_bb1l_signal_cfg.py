@@ -60,7 +60,7 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
     isDEBUG = cms.bool(False)
 )
 
-#inputFilePath = "/hdfs/local/karl/ttHNtupleProduction/2017/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000"
+#inputFilePath = "/local/karl/ttHNtupleProduction/2017/2019Dec16_woPresel_nom_hh_bbww/ntuples/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000"
 #maxInputFiles = 50
 #zombie_files = []
 #import os
@@ -80,7 +80,7 @@ process.analyzeMEM_hh_bb1l = cms.PSet(
 #inputFiles = getInputFiles(inputFilePath)
 #process.fwliteInput.fileNames = cms.vstring(inputFiles[0:maxInputFiles])
 inputFiles = [ 
-  "/hdfs/local/veelken/addMEM/2017/2020Feb27sl_default_nom/final_ntuples/hh_bb1l/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000/signal_ggf_nonresonant_node_sm_hh_2b2v_sl_final.root"
+  "/local/veelken/addMEM/2017/2020Feb27sl_default_nom/final_ntuples/hh_bb1l/signal_ggf_nonresonant_node_sm_hh_2b2v_sl/0000/signal_ggf_nonresonant_node_sm_hh_2b2v_sl_final.root"
 ]
 process.fwliteInput.fileNames = cms.vstring(inputFiles)
 print "inputFiles = ", process.fwliteInput.fileNames

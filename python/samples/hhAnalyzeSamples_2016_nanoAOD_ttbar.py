@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
 # file generated at 2020-12-19 22:10:46 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p python/samples/sampleLocations_2016_nanoAOD_ttbar.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_ttbar.py -M -l /hdfs/local/karl/lost_ntuples.txt
+# create_dictionary.py -m python/samples/metaDict_2016_ttbar.py -p python/samples/sampleLocations_2016_nanoAOD_ttbar.txt -N samples_2016 -E 2016 -o python/samples -g hhAnalyzeSamples_2016_nanoAOD_ttbar.py -M -l /local/karl/lost_ntuples.txt
 
 samples_2016 = OD()
 samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM"] = OD([
@@ -27,7 +27,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_130304"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_130304"),
         ("selection", "*"),
         ("blacklist", [46, 82]),
       ]),
@@ -70,7 +70,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_131019"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_131019"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -113,7 +113,7 @@ samples_2016["/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIS
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201109_084456"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201109_084456"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -156,7 +156,7 @@ samples_2016["/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_132134"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_132134"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -199,7 +199,7 @@ samples_2016["/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/200331_133751"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_hdampDOWN_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/200331_133751"),
         ("selection", "*"),
         ("blacklist", [278]),
       ]),
@@ -242,7 +242,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_134230"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_134230"),
         ("selection", "*"),
         ("blacklist", [49]),
       ]),
@@ -285,7 +285,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_135847"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_135847"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -328,7 +328,7 @@ samples_2016["/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISum
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201031_123418"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201031_123418"),
         ("selection", "*"),
         ("blacklist", [488]),
       ]),
@@ -371,7 +371,7 @@ samples_2016["/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_140232"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_140232"),
         ("selection", "*"),
         ("blacklist", [22, 56, 59, 97, 106, 129, 131, 133, 136, 147, 156, 168, 170, 171, 174, 179, 188, 190, 193, 194, 195, 205, 206, 210, 219, 246, 277, 281, 282]),
       ]),
@@ -414,7 +414,7 @@ samples_2016["/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_140410"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_hdampUP_TuneCP5_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_140410"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -457,7 +457,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141023"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141023"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -500,7 +500,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_141158"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_141158"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -543,7 +543,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISummer1
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201109_084725"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201109_084725"),
         ("selection", "*"),
         ("blacklist", [17, 75, 511]),
       ]),
@@ -586,7 +586,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunII
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141334"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141334"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -629,7 +629,7 @@ samples_2016["/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/RunIISumm
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141512"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5down_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141512"),
         ("selection", "*"),
         ("blacklist", [88]),
       ]),
@@ -672,7 +672,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141648"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_141648"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -715,7 +715,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_141928"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_141928"),
         ("selection", "*"),
         ("blacklist", [49]),
       ]),
@@ -758,7 +758,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer16M
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201031_123309"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201031_123309"),
         ("selection", "*"),
         ("blacklist", [295, 507, 566]),
       ]),
@@ -801,7 +801,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142106"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142106"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -844,7 +844,7 @@ samples_2016["/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/RunIISummer
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142213"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5up_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142213"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -887,7 +887,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142421"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142421"),
         ("selection", "*"),
         ("blacklist", [79, 82, 83, 104]),
       ]),
@@ -930,7 +930,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/201031_123049"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/201031_123049"),
         ("selection", "*"),
         ("blacklist", [306, 307, 308, 309, 310]),
       ]),
@@ -973,7 +973,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythi
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142527"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142527"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1016,7 +1016,7 @@ samples_2016["/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/R
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142733"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5CR1_QCDbased_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_142733"),
         ("selection", "*"),
         ("blacklist", [13]),
       ]),
@@ -1059,7 +1059,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct13/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct13_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201013_103259"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct13/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Oct13_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/201013_103259"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1102,7 +1102,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/201109_085009"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/201109_085009"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1145,7 +1145,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pyth
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143044"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143044"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1188,7 +1188,7 @@ samples_2016["/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143221"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5CR2_GluonMove_PSweights_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143221"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1231,7 +1231,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143356"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143356"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1274,7 +1274,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_143536"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200331_143536"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1317,7 +1317,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISumme
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201109_085227"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/201109_085227"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1360,7 +1360,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/Run
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143712"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_143712"),
         ("selection", "*"),
         ("blacklist", [31, 165, 168, 212, 214, 215, 216, 263, 278, 282]),
       ]),
@@ -1403,7 +1403,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_144020"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToHadronic_TuneCP5_PSweights_erdON_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/200331_144020"),
         ("selection", "*"),
         ("blacklist", [24]),
       ]),
@@ -1446,7 +1446,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct13/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Oct13_TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201013_103440"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct13/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Oct13_TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201013_103440"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1489,7 +1489,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3_ext1-v1/201031_123158"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct31/TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Oct31_TTTo2L2Nu_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3_ext1-v1/201031_123158"),
         ("selection", "*"),
         ("blacklist", [172]),
       ]),
@@ -1532,7 +1532,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/200331_144435"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Mar31/TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Mar31_TTToSemiLeptonic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/200331_144435"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1575,7 +1575,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Oct11_TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201011_124032"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8/2016v3_2020Oct11_TTToHadronic_TuneCP5_PSweights_mtop1695_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201011_124032"),
         ("selection", "*"),
         ("blacklist", [35, 48, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87]),
       ]),
@@ -1618,7 +1618,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct13/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Oct13_TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201013_103655"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct13/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Oct13_TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201013_103655"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1661,7 +1661,7 @@ samples_2016["/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunIISu
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3_ext1-v1/201109_085519"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Nov09/TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Nov09_TTTo2L2Nu_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3_ext1-v1/201109_085519"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1704,7 +1704,7 @@ samples_2016["/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct13/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Oct13_TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201013_103803"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct13/TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Oct13_TTToSemiLeptonic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201013_103803"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
@@ -1747,7 +1747,7 @@ samples_2016["/TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/RunI
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/cms/store/user/kaehatah/2016v3_2020Oct11/TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Oct11_TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201011_124141"),
+        ("path",      "/store/user/kaehatah/2016v3_2020Oct11/TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8/2016v3_2020Oct11_TTToHadronic_TuneCP5_PSweights_mtop1755_13TeV-powheg-pythia8__RunIISummer16MiniAODv3-PUMoriond17_backup_94X_mcRun2_asymptotic_v3-v1/201011_124141"),
         ("selection", "*"),
         ("blacklist", [22, 26, 27]),
       ]),

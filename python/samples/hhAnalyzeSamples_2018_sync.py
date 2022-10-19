@@ -1,7 +1,7 @@
 from collections import OrderedDict as OD
 
 # file generated at 2020-12-26 17:39:39 with the following command:
-# create_dictionary.py -m python/samples/metaDict_2018_hh_sync.py -p /hdfs/local/karl/ttHNtupleProduction/2018/2020Dec25_woPresel_nonNom_hh_bbww_sync_hh_multilepton/ntuples -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_sync.py -M
+# create_dictionary.py -m python/samples/metaDict_2018_hh_sync.py -p /local/karl/ttHNtupleProduction/2018/2020Dec25_woPresel_nonNom_hh_bbww_sync_hh_multilepton/ntuples -N samples_2018 -E 2018 -o python/samples -g hhAnalyzeSamples_2018_sync.py -M
 
 samples_2018 = OD()
 samples_2018["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM"] = OD([
@@ -32,7 +32,7 @@ samples_2018["/GluGluToRadionToHHTo2B2Tau_M-750_narrow_TuneCP5_PSWeights_13TeV-m
   ("local_paths",
     [
       OD([
-        ("path",      "/hdfs/local/karl/ttHNtupleProduction/2018/2020Dec25_woPresel_nonNom_hh_bbww_sync_hh_multilepton/ntuples/signal_ggf_spin0_750_hh_2b2t"),
+        ("path",      "/local/karl/ttHNtupleProduction/2018/2020Dec25_woPresel_nonNom_hh_bbww_sync_hh_multilepton/ntuples/signal_ggf_spin0_750_hh_2b2t"),
         ("selection", "*"),
         ("blacklist", []),
       ]),
