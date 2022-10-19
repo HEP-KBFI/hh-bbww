@@ -312,7 +312,7 @@ if __name__ == '__main__':
   analysis = analyzeConfig_hh_bb1l(
     configDir = os.path.join("/scratch-persistent", getpass.getuser(), "hhAnalysis", era, version),
     localDir  = os.path.join("/home",               getpass.getuser(), "hhAnalysis", era, version),
-    outputDir = os.path.join("/hdfs/local",         getpass.getuser(), "hhAnalysis", era, version),
+    outputDir = os.path.join("/local",         getpass.getuser(), "hhAnalysis", era, version),
     executable_analyze                    = "analyze2_hh_bb1l",
     cfgFile_analyze                       = "analyze_hh_bb1l_cfg.py",
     samples                               = samples,
