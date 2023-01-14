@@ -40,6 +40,11 @@ parser.add_gen_matching()
 parser.enable_regrouped_jerc(default = 'jes_all', include_ak8 = True)
 parser.add_split_trigger_sys(default = 'yes') # yes = keep only the flavor-dependent variations of the SF
 parser.add_blacklist()
+
+parser.add_argument('-vs', '--evtvar_with_fullsys',
+  dest = 'evtvar_with_fullsys', action = 'store_true',
+  default = False)
+
 parser.add_argument('-fr', '--use_bbww_FR_shape_syst',
   dest = 'use_bbww_FR_shape_syst', action = 'store_true',
   default = True)
@@ -122,6 +127,7 @@ ignore_ak8_corrections = args.ignore_ak8_corrections
 fill_resolved_2b = args.fill_resolved_2b
 use_bbww_FR_shape_syst = args.use_bbww_FR_shape_syst
 wjets_choice       = args.wjets
+evtvar_with_fullsys = args.evtvar_with_fullsys
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -167,12 +173,12 @@ lumi = get_lumi(era)
 jet_cleaning_by_index = (jet_cleaning == 'by_index')
 gen_matching_by_index = (gen_matching == 'by_index')
 
-fillHistograms_BDT = 'BDT' in training_method
-fillHistograms_LBN = 'LBN' in training_method
+fillHistograms_BDT = 'BDT' in training_method and not evtvar_with_fullsys
+fillHistograms_LBN = 'LBN' in training_method and not evtvar_with_fullsys
 
 fillHistograms_nonresonant       = 'spin0' not in fill_spin and 'spin2' not in fill_spin
-fillHistograms_resonant_spin0    = 'spin0' in fill_spin
-fillHistograms_resonant_spin2    = 'spin2' in fill_spin
+fillHistograms_resonant_spin0    = 'spin0' in fill_spin and not evtvar_with_fullsys
+fillHistograms_resonant_spin2    = 'spin2' in fill_spin and not evtvar_with_fullsys
 
 blacklist = []
 if use_blacklist:
@@ -217,57 +223,75 @@ else:
 histograms_to_fit = {
   "EventCounter" : {}
 }
-masspoints = [ 250., 260., 270., 280., 300., 320., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
-if 'spin0' in fill_spin or 'spin2' in fill_spin:
-  for spin in fill_spin:
-    for masspoint in masspoints:
-      # CV: add histograms for BDT-based extraction of resonant HH signal,
-      #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
+if evtvar_with_fullsys:
+  others_to_fit = {
+    "numJets" : {},
+    "numBJets_medium" : {},
+    "HT" : {},
+    "met" : {},
+    "lep_pt" : {},
+    "pT_Hbb" : {},
+    "m_Hbb_regCorr" : {},
+    "pT_HH" : {},
+    "mT_W" : {},
+    "bjet1_btagCSV" : {},
+    "mindr_lep1_jet" : {},
+    "dR_b1lep" : {},
+  }
+  histograms_to_fit.update(others_to_fit)
+
+if not evtvar_with_fullsys:
+  masspoints = [ 250., 260., 270., 280., 300., 320., 350., 400., 450., 500., 550., 600., 650., 700., 750., 800., 850., 900., 1000. ]
+  if 'spin0' in fill_spin or 'spin2' in fill_spin:
+    for spin in fill_spin:
+      for masspoint in masspoints:
+        # CV: add histograms for BDT-based extraction of resonant HH signal,
+        #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_BDT.cc
+        if fillHistograms_BDT:
+          categories = [ "boosted", "resolved_2b", "resolved_1b" ]
+          for category in categories:
+            histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
+            # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
+            #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+        if fillHistograms_LBN:
+          categories = [
+            "HH_boosted", "HH_resolved_2b", "HH_resolved_1b",
+            "TT_boosted", "TT_resolved",
+            "W_boosted", "W_resolved",
+            #"W",
+            "H_boosted", "H_resolved_2b", "H_resolved_1b",
+            "Other"
+          ]
+          for category in categories:
+            histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
+            if split_resonant_training:
+              if masspoint in [400, 450]:
+                histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_overlap_%s" % (category, masspoint, spin) : {} })
+  if 'nonres' in fill_spin:
+    bmNames = get_histograms_to_fit().keys()
+    for bmName in bmNames:
+      if 'spin' in bmName: continue
+      if 'EventCounter' in bmName: continue
       if fillHistograms_BDT:
-        categories = [ "boosted", "resolved_2b", "resolved_1b" ]
+        categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
         for category in categories:
-          histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
-          # CV: add histograms for extraction of resonant HH signal based on Lorentz-Boost-Network (LBN),
-          #     using the categories defined in hhAnalysis/bbww/src/EventCategory_hh_bb2l_LBN.cc
+          histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/%s" % (category, bmName) : {} })
       if fillHistograms_LBN:
         categories = [
-          "HH_boosted", "HH_resolved_2b", "HH_resolved_1b",
+          "HH_boosted_vbf", "HH_boosted_nonvbf",
+          "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf",
           "TT_boosted", "TT_resolved",
           "W_boosted", "W_resolved",
-          #"W",
-          "H_boosted", "H_resolved_2b", "H_resolved_1b",
+          "DY_boosted", "DY_resolved",
           "Other"
         ]
         for category in categories:
-          histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_%s" % (category, masspoint, spin) : {} })
-          if split_resonant_training:
-            if masspoint in [400, 450]:
-              histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/MVAOutput_%0.0f_overlap_%s" % (category, masspoint, spin) : {} })
-if 'nonres' in fill_spin:
-  bmNames = get_histograms_to_fit().keys()
-  for bmName in bmNames:
-    if 'spin' in bmName: continue
-    if 'EventCounter' in bmName: continue
-    if fillHistograms_BDT:
-      categories = [ "boosted", "resolved_2b_vbf", "resolved_2b_nonvbf", "resolved_1b" ]
-      for category in categories:
-        histograms_to_fit.update({ "sel/datacard/BDT/%s/$PROCESS/%s" % (category, bmName) : {} })
-    if fillHistograms_LBN:
-      categories = [ 
-        "HH_boosted_vbf", "HH_boosted_nonvbf",
-        "HH_resolved_2b_vbf", "HH_resolved_2b_nonvbf", "HH_resolved_1b_vbf", "HH_resolved_1b_nonvbf",
-        "TT_boosted", "TT_resolved", 
-        "W_boosted", "W_resolved", 
-        "DY_boosted", "DY_resolved",
-        "Other" 
-      ]
-      for category in categories:
-        histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
+          histograms_to_fit.update({ "sel/datacard/LBN/%s/$PROCESS/%s" % (category, bmName) : {} })
+
 hadTauWP_veto_map = {
   'dR03mva' : 'Medium',
   'deepVSj' : 'Medium',
 }
-
 hadTau_selection_veto = tau_id + hadTauWP_veto_map[tau_id]
 
 def is_w_nlo(sample_info):
@@ -356,7 +380,7 @@ if __name__ == '__main__':
     split_resonant_training               = split_resonant_training,
     ttbar_based_mcClosure                 = True,
     use2d                                 = use2d,
-    fill_resolved_2b                      = fill_resolved_2b
+    evtvar_with_fullsys                   = evtvar_with_fullsys
   )
 
   if mode.find("forBDTtraining") != -1:
