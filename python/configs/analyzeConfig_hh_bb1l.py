@@ -811,10 +811,13 @@ class analyzeConfig_hh_bb1l(analyzeConfig_hh):
       prep_dcard_other_nonfake_backgrounds = []
       for process in self.nonfake_backgrounds:
         if process in [ "VH", "WH", "ZH", "TH", "tHq", "tHW", "TTH", "TTWH", "TTZH", "ggH", "qqH" ]:
-          prep_dcard_H.append("%s_hww" % process)
-          prep_dcard_H.append("%s_hzz" % process)
-          prep_dcard_H.append("%s_htt" % process)
-          prep_dcard_H.append("%s_hbb" % process)
+          if not self.evtvar_with_fullsys:
+            prep_dcard_H.append("%s_hww" % process)
+            prep_dcard_H.append("%s_hzz" % process)
+            prep_dcard_H.append("%s_htt" % process)
+            prep_dcard_H.append("%s_hbb" % process)
+          else:
+            prep_dcard_H.append(process)
         else:
           prep_dcard_other_nonfake_backgrounds.append(process)
       self.prep_dcard_processesToCopy = [ "data_obs" ] + prep_dcard_HH + prep_dcard_H + prep_dcard_other_nonfake_backgrounds + [ "Convs", "data_fakes", "fakes_mc" ]
