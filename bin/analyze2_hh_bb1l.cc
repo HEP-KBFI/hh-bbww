@@ -959,7 +959,7 @@ int main(int argc, char* argv[])
 
       selHistManagerType* selHistManager = new selHistManagerType();
 
-      bool book = (evtvar_with_fullsys) ? true : skipBooking;
+      bool book = (evtvar_with_fullsys) ? true : !skipBooking;
       if ( book ) {
         selHistManager->evt_ = new EvtHistManager2_hh_bb1l(makeHistManager_cfg(process_and_genMatch, 
          Form("%s/sel/evt", histogramDir.data()), era_string, central_or_shift), plot_DNN_correlation);
@@ -2796,7 +2796,7 @@ int main(int argc, char* argv[])
           }
         }
 
-        bool fill = (evtvar_with_fullsys) ? true : skipFilling;
+        bool fill = (evtvar_with_fullsys) ? true : !skipFilling;
         if (fill)
         {
           selHistManager->evt_->fillHistograms(
