@@ -46,9 +46,23 @@ def constrainValue(value,
 def effi(ditrig_lead_eff, ditrig_sublead__eff, sltrig_sublead__eff, sltrig_lead__eff):
     return ditrig_lead_eff * ditrig_sublead__eff + (( 1 - ditrig_lead_eff ) * sltrig_sublead__eff) + (( 1 - ditrig_sublead__eff ) * sltrig_lead__eff)
 
-def effi_v2(ditrig_lead_eff, ditrig_sublead__eff, sltrig_sublead__eff, sltrig_lead__eff):
-    PS = sltrig_lead__eff + sltrig_sublead__eff - (sltrig_lead__eff * sltrig_sublead__eff)
-    PD = ditrig_lead_eff * ditrig_sublead__eff - 
+def effi_v2(ditrig_lead_leg1_eff, ditrig_sublead_leg2_eff, 
+            ditrig_lead_leg2_eff, ditrig_sublead_leg1_eff,
+            sltrig_lead_leg1_eff, sltrig_lead_leg2_eff,
+            sltrig_sublead_leg1_eff, sltrig_sublead_leg2_eff
+        ):
+    PS = sltrig_lead_leg1_eff + sltrig_sublead_leg2_eff - (sltrig_lead_leg1_eff * sltrig_sublead_leg1_eff)
+    PD = ditrig_lead_leg1_eff * ditrig_sublead_leg2_eff +\
+         ditrig_lead_leg2_eff * ditrig_sublead_leg1_eff -\
+         ditrig_lead_leg1_eff * ditrig_sublead_leg1_eff
+
+    third_term = ditrig_sublead_leg2_eff * sltrig_lead_leg1_eff
+    fourth_term = ditrig_lead_leg2_eff * sltrig_sublead_leg1_eff
+    fifth_term = third_term * fourth_term / PD
+    PT = PS + PD - third_term - fourth_term + fifth_term
+    if(PT <0) : print('less 0 ', PT)
+    #assert(PT >=0)
+    return PT
 def GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, x):
     return ditrig_graph_lead_MC.Eval(x), ditrig_graph_lead_Data.Eval(x)
 
@@ -57,25 +71,43 @@ def fill_2d_from_pogvalue(ditrig_graph_lead_MC, ditrig_graph_sublead_MC,
                           leadleg_sltrig_graph_MC,subleadleg_sltrig_graph_MC,
                           ditrig_graph_lead_Data, ditrig_graph_sublead_Data, 
                           leadleg_sltrig_graph_Data, subleadleg_sltrig_graph_Data,
-                          hist):
+                          hist, v2=True):
     xaxis = ditrig_graph_sublead_MC.GetXaxis()
     xaxis_sl = leadleg_sltrig_graph_MC.GetXaxis()
     for ybin in range(1,hist.GetYaxis().GetNbins()+1):
         sublead_bincenter = hist.GetYaxis().GetBinCenter(ybin)
-        x = constrainValue(sublead_bincenter, xaxis.GetXmin(), xaxis.GetXmax());
-        x_sl = constrainValue(sublead_bincenter, xaxis_sl.GetXmin(), xaxis_sl.GetXmax())
-        ditrig_sublead__eff_MC, ditrig_sublead__eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, x)
-        sltrig_sublead__eff_MC, sltrig_sublead__eff_Data = GetgraphValue(subleadleg_sltrig_graph_MC, subleadleg_sltrig_graph_Data, x_sl)
+        sublead_x = constrainValue(sublead_bincenter, xaxis.GetXmin(), xaxis.GetXmax());
+        sublead_x_sl = constrainValue(sublead_bincenter, xaxis_sl.GetXmin(), xaxis_sl.GetXmax())
+        ditrig_sublead__leg2_eff_MC, ditrig_sublead__leg2_eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, sublead_x)
+        sltrig_sublead__leg2_eff_MC, sltrig_sublead__leg2_eff_Data = GetgraphValue(subleadleg_sltrig_graph_MC, subleadleg_sltrig_graph_Data, sublead_x_sl)
         for xbin in range(1,hist.GetXaxis().GetNbins()+1):
             lead_bincenter = hist.GetXaxis().GetBinCenter(xbin)
-            x = constrainValue(lead_bincenter, xaxis.GetXmin(), xaxis.GetXmax());
-            x_sl = constrainValue(lead_bincenter, xaxis_sl.GetXmin(), xaxis_sl.GetXmax());
-            ditrig_lead_eff_MC, ditrig_lead_eff_Data = GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, x)
-            sltrig_lead__eff_MC, sltrig_lead__eff_Data = GetgraphValue(leadleg_sltrig_graph_MC, leadleg_sltrig_graph_Data, x_sl)
-            eff_MC = effi(ditrig_lead_eff_MC, ditrig_sublead__eff_MC, sltrig_sublead__eff_MC, sltrig_lead__eff_MC)
+            lead_x = constrainValue(lead_bincenter, xaxis.GetXmin(), xaxis.GetXmax());
+            lead_x_sl = constrainValue(lead_bincenter, xaxis_sl.GetXmin(), xaxis_sl.GetXmax());
+            ditrig_lead_leg1_eff_MC, ditrig_lead_leg1_eff_Data = GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, lead_x)
+            sltrig_lead__leg1_eff_MC, sltrig_lead__leg1_eff_Data = GetgraphValue(leadleg_sltrig_graph_MC, leadleg_sltrig_graph_Data, lead_x_sl)
+            ditrig_lead_leg2_eff_MC, ditrig_lead_leg2_eff_Data = GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, sublead_x)
+            sltrig_lead__leg2_eff_MC, sltrig_lead__leg2_eff_Data = GetgraphValue(leadleg_sltrig_graph_MC, leadleg_sltrig_graph_Data, sublead_x_sl)
+            ditrig_sublead__leg1_eff_MC, ditrig_sublead__leg1_eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, lead_x)
+            sltrig_sublead__leg1_eff_MC, sltrig_sublead__leg1_eff_Data = GetgraphValue(subleadleg_sltrig_graph_MC, subleadleg_sltrig_graph_Data, lead_x_sl)
+            eff_MC = effi(ditrig_lead_leg1_eff_MC, ditrig_sublead__leg2_eff_MC, sltrig_sublead__leg2_eff_MC, sltrig_lead__leg1_eff_MC)
             assert(eff_MC <1)
-            eff_Data = effi(ditrig_lead_eff_Data, ditrig_sublead__eff_Data, sltrig_sublead__eff_Data, sltrig_lead__eff_Data)
-            assert(eff_Data <1)
+            eff_Data = effi(ditrig_lead_leg1_eff_Data, ditrig_sublead__leg2_eff_Data, sltrig_sublead__leg2_eff_Data, sltrig_lead__leg1_eff_Data)
+            if v2:
+                eff_MC = effi_v2(ditrig_lead_leg1_eff_MC, ditrig_sublead__leg2_eff_MC, 
+                              ditrig_lead_leg2_eff_MC, ditrig_sublead__leg1_eff_MC,
+                              sltrig_lead__leg1_eff_MC, sltrig_lead__leg2_eff_MC,
+                              sltrig_sublead__leg1_eff_MC, sltrig_sublead__leg2_eff_MC
+                )
+                if(eff_MC >1):print('******* ', eff_MC)
+                #assert(eff_MC <1)
+                eff_Data = effi_v2(ditrig_lead_leg1_eff_MC, ditrig_sublead__leg2_eff_Data,
+                              ditrig_lead_leg2_eff_MC, ditrig_sublead__leg1_eff_Data,
+                              sltrig_lead__leg1_eff_MC, sltrig_lead__leg2_eff_Data,
+                              sltrig_sublead__leg1_eff_MC, sltrig_sublead__leg2_eff_Data
+                )
+                if(eff_Data > 1): print('*8data ', eff_Data)
+                #assert(eff_Data <1)
             hist.SetBinContent(xbin, ybin, eff_Data/eff_MC)
 
 eta_bins = collections.OrderedDict([
