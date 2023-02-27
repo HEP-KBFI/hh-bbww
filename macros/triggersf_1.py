@@ -51,7 +51,7 @@ def effi_v2(ditrig_lead_leg1_eff, ditrig_sublead_leg2_eff,
             sltrig_lead_leg1_eff, sltrig_lead_leg2_eff,
             sltrig_sublead_leg1_eff, sltrig_sublead_leg2_eff
         ):
-    PS = sltrig_lead_leg1_eff + sltrig_sublead_leg2_eff - (sltrig_lead_leg1_eff * sltrig_sublead_leg1_eff)
+    PS = sltrig_lead_leg1_eff + sltrig_sublead_leg2_eff + sltrig_lead_leg2_eff + sltrig_sublead_leg1_eff - (sltrig_lead_leg1_eff * sltrig_sublead_leg2_eff)
     PD = ditrig_lead_leg1_eff * ditrig_sublead_leg2_eff +\
          ditrig_lead_leg2_eff * ditrig_sublead_leg1_eff -\
          ditrig_lead_leg1_eff * ditrig_sublead_leg1_eff
@@ -101,10 +101,10 @@ def fill_2d_from_pogvalue(ditrig_graph_lead_MC, ditrig_graph_sublead_MC,
                 )
                 if(eff_MC >1):print('******* ', eff_MC)
                 #assert(eff_MC <1)
-                eff_Data = effi_v2(ditrig_lead_leg1_eff_MC, ditrig_sublead__leg2_eff_Data,
-                              ditrig_lead_leg2_eff_MC, ditrig_sublead__leg1_eff_Data,
-                              sltrig_lead__leg1_eff_MC, sltrig_lead__leg2_eff_Data,
-                              sltrig_sublead__leg1_eff_MC, sltrig_sublead__leg2_eff_Data
+                eff_Data = effi_v2(ditrig_lead_leg1_eff_Data, ditrig_sublead__leg2_eff_Data,
+                              ditrig_lead_leg2_eff_Data, ditrig_sublead__leg1_eff_Data,
+                              sltrig_lead__leg1_eff_Data, sltrig_lead__leg2_eff_Data,
+                              sltrig_sublead__leg1_eff_Data, sltrig_sublead__leg2_eff_Data
                 )
                 if(eff_Data > 1): print('*8data ', eff_Data)
                 #assert(eff_Data <1)
@@ -157,8 +157,8 @@ for obj in ['Muon', 'Electron']:
             histratio = hist.Clone('ratio_%s' %hist.GetName())
             histratio.Divide(hist_an[obj])
             histratio.Draw('text')
-            c.SaveAs('%s.png' %histratio.GetName())
-            c.SaveAs('%s.pdf' %histratio.GetName())
+            c.SaveAs('../%s.png' %histratio.GetName())
+            c.SaveAs('../%s.pdf' %histratio.GetName())
             c.Clear()
             histratio.Write()
 fsf.Close()
