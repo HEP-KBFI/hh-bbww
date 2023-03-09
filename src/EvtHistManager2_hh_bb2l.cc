@@ -34,6 +34,8 @@ EvtHistManager2_hh_bb2l::EvtHistManager2_hh_bb2l(const edm::ParameterSet & cfg)
   central_or_shiftOptions_["vbf_m_jj"] = { "central" };
   central_or_shiftOptions_["vbf_dEta_jj"] = { "central" };
   central_or_shiftOptions_["EventCounter"] = { "*" };
+  central_or_shiftOptions_["leadlepton_cone_pt"] = { "central" };
+  central_or_shiftOptions_["subleadlepton_cone_pt"] = { "central" };
 }
 
 const TH1 *
@@ -77,6 +79,8 @@ EvtHistManager2_hh_bb2l::bookHistograms(TFileDirectory & dir)
   histogram_vbf_dEta_jj_      = book1D(dir, "vbf_dEta_jj",      100,  0.,   10.);
 
   histogram_EventCounter_     = book1D(dir, "EventCounter",       1, -0.5,  +0.5);
+  histogram_leadconept_     = book1D(dir, "leadlepton_cone_pt",       100, 25.,  200.);
+  histogram_subleadconept_     = book1D(dir, "subleadlepton_cone_pt",   100, 15., 200.);
 }
 
 void
@@ -92,11 +96,14 @@ EvtHistManager2_hh_bb2l::fillHistograms(int numElectrons,
                                         double m_HHvis, double m_HH, 
                                         double m_HH_hme, double hmeCpuTime,
                                         double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
+                                        double lead_conept, double sublead_conept,
                                         double evtWeight)
 {
   const double evtWeightErr = 0.;
 
   fillWithOverFlow(histogram_numElectrons_,     numElectrons,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_leadconept_,     lead_conept,      evtWeight, evtWeightErr);
+  fillWithOverFlow(histogram_subleadconept_,     sublead_conept,      evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numMuons_,         numMuons,          evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numJets_,          numJets,           evtWeight, evtWeightErr);
   fillWithOverFlow(histogram_numBJets_loose_,   numBJets_loose,    evtWeight, evtWeightErr);

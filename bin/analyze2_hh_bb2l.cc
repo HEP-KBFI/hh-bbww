@@ -6,7 +6,8 @@
 #include "DataFormats/Math/interface/LorentzVector.h" // math::PtEtaPhiMLorentzVector
 #include "DataFormats/Math/interface/deltaR.h" // deltaR
 #include "DataFormats/Math/interface/deltaPhi.h" // deltaPhi
-
+#include "tthAnalysis/HiggsToTauTau/interface/data_to_MC_corrections_auxFunctions.h" 
+#include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h"
 #if __has_include (<FWCore/ParameterSetReader/interface/ParameterSetReader.h>)
 #  include <FWCore/ParameterSetReader/interface/ParameterSetReader.h> // edm::readPSetsFrom()
 #else
@@ -157,6 +158,84 @@ enum { kFR_disabled, kFR_enabled };
 /**
  * @brief Produce datacard and control plots for dilepton category of the HH->bbWW analysis.
  */
+double xbin[] = {0, 0.9, 1.2, 2.1, 2.4};
+double x_ele[] = {0, 1.0, 1.48, 1.65, 2.1, 2.3};
+
+TH2F* h_ee_eta = new TH2F("ee_eta_no_weight", "", 5, x_ele, 5, x_ele);
+TH2F* h_mm_eta = new TH2F("mm_eta_no_weight", "", 4, xbin, 4, xbin);
+TH2F* h_ee_pt = new TH2F("ee_pt_no_weight", "", 10, 25, 45, 10, 15, 35);
+TH2F* h_mm_pt = new TH2F("mm_pt_no_weight", "", 10, 25, 45, 10, 15, 35);
+TH2F* h_ee_eta_wweight = new TH2F("ee_eta_with_weight", "", 5, x_ele, 5, x_ele);
+TH2F* h_mm_eta_wweight = new TH2F("mm_eta_with_weight", "", 4, xbin, 4, xbin);
+TH2F* h_ee_pt_wweight = new TH2F("ee_pt_with_weight", "", 10, 25, 45, 10, 15, 35);
+TH2F* h_mm_pt_wweight = new TH2F("mm_pt_with_weight", "", 10, 25, 45, 10, 15, 35.);
+
+std::string
+find_leptonleg(float eta, std::string type)
+{
+  if(type == "Muon")
+  {
+    if(fabs(eta) < 0.9) return "Lt0p9";
+    else if (fabs(eta) >=0.9 && fabs(eta) <1.2) return "0p9to1p2";
+    else if ( fabs(eta) >= 1.2 && fabs(eta) <2.1) return "1p2to2p1";
+    else return "Gt2p1";
+  }
+  else if(type == "Electron")
+  {
+    if(fabs(eta) < 1.0) return "Lt1p0";
+    else if (fabs(eta) >=1.0 && fabs(eta) <1.48) return "1p0to1p48";
+    else if ( fabs(eta) >= 1.48 && fabs(eta) <1.65) return "1p48to1p65";
+    else if ( fabs(eta) >= 1.65 && fabs(eta) <2.1) return "1p65to2p1";
+    else return "Gt2p1";
+  }
+  return "";
+}
+
+float
+constrainValue(float value,
+               float lowerBound,
+               float upperBound)
+{
+  assert(lowerBound <= upperBound);
+  value = std::max(value, lowerBound);
+  value = std::min(value, upperBound);
+  return value;
+}
+
+double
+getSF_from_TH2(TH2 * lut,
+               double x,
+               double y
+               )
+{
+  const TAxis * const xAxis = lut->GetXaxis();
+  const TAxis * const yAxis = lut->GetYaxis();
+  const int idxBin_x = constrainValue(xAxis->FindBin(x), 1, xAxis->GetNbins());
+  const int idxBin_y = constrainValue(yAxis->FindBin(y), 1, yAxis->GetNbins());
+  const double sf = lut->GetBinContent(idxBin_x, idxBin_y);
+  return sf;
+}
+
+TH2D* loadHistogram(std::string name)
+{
+  TFile f("/home/snandan/hh_Analysis/CMSSW_11_1_2/src/hhAnalysis/bbww/sf_1.root");
+  TH2D* h = dynamic_cast<TH2D*>(f.Get(Form("%s", name.data())));
+  return h;
+}
+
+float
+getSF(float pt1, float pt2, float eta1, float eta2, std::string type)
+{
+  std::string leadleptonLeg = find_leptonleg(eta1, type);
+  std::string subleadleptonLeg = find_leptonleg(eta2, type);
+  std::string prefix("");
+  if (type == "Muon") prefix = "Muon";
+  else if (type == "Electron") prefix = "Electron";
+  std::string histname = Form("%s_leadleg_%s_subleadleg_%s", prefix.data(), leadleptonLeg.data(), subleadleptonLeg.data());
+  TH2D* hist = loadHistogram(histname);
+  return getSF_from_TH2(hist, pt1, pt2);
+}
+
 int main(int argc, char* argv[])
 {
 //--- throw an exception in case ROOT encounters an error
@@ -192,6 +271,8 @@ int main(int argc, char* argv[])
   std::string process_string = cfg_analyze.getParameter<std::string>("process");
   std::string process_string_hh = ( process_string.find("signal_") != std::string::npos ) ? cfg_analyze.getParameter<std::string>("process_hh") : "";
   bool isMC = cfg_analyze.getParameter<bool>("isMC");
+  bool usemytriggersf = cfg_analyze.getParameter<bool>("tsf");
+  bool use_ee = cfg_analyze.getParameter<bool>("use_ee");
   bool isSignal = analysisConfig.isMC_HH();
   bool isMC_tH  = analysisConfig.isMC_tH();
   bool isMC_ttH = analysisConfig.isMC_ttH();
@@ -2674,10 +2755,32 @@ int main(int argc, char* argv[])
     std::vector<const GenMatchEntry*> genMatches = genMatchInterface.getGenMatch(selLeptons);
 
 //--- fill histograms with events passing final selection
+    const bool is_ee = selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron;
+    const bool is_mm = selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon;
+    const bool is_em = ! (is_ee || is_mm);
+    //std::cout << "is_ee: " << is_ee << "\t" << "is_mm: " << is_mm << "\t" << "is_em: " << is_em << "\tuse_ee: " << use_ee << "\t" << (use_ee && !is_ee) << std::endl;
+    bool selected = (use_ee)  ? is_ee : is_mm;
+    if ( !selected ) continue;
+    float triggersf = getSF(selLepton_lead->pt(), selLepton_sublead->pt(), selLepton_lead->eta(), selLepton_sublead->eta(), is_ee ? "Electron" : "Muon");
     for(const std::string & central_or_shift: central_or_shifts_local)
     {
-      const double evtWeight = evtWeightRecorder.get(central_or_shift);
+      const double evtWeight = (!usemytriggersf) ? evtWeightRecorder.get(central_or_shift)
+        : (evtWeightRecorder.get(central_or_shift)* triggersf) / evtWeightRecorder.get_sf_triggerEff(central_or_shift);
       const bool skipFilling = central_or_shift != central_or_shift_main;
+      if(is_ee)
+      {
+        fillWithOverFlow2d(h_ee_eta, abs(selLepton_lead->eta()), abs(selLepton_sublead->eta()), 1);
+        fillWithOverFlow2d(h_ee_pt, selLepton_lead->pt(), selLepton_sublead->pt(), 1);
+        fillWithOverFlow2d(h_ee_eta_wweight, abs(selLepton_lead->eta()), abs(selLepton_sublead->eta()), evtWeight);
+        fillWithOverFlow2d(h_ee_pt_wweight, selLepton_lead->pt(), selLepton_sublead->pt(), evtWeight);
+      }
+      else if(is_mm)
+      {
+        fillWithOverFlow2d(h_mm_eta, abs(selLepton_lead->eta()), abs(selLepton_sublead->eta()), 1);
+        fillWithOverFlow2d(h_mm_pt, selLepton_lead->pt(), selLepton_sublead->pt(), 1);
+        fillWithOverFlow2d(h_mm_eta_wweight, abs(selLepton_lead->eta()), abs(selLepton_sublead->eta()), evtWeight);
+        fillWithOverFlow2d(h_mm_pt_wweight, selLepton_lead->pt(), selLepton_sublead->pt(), evtWeight);
+      }
       for (const GenMatchEntry* genMatch : genMatches)
       {
         selHistManagerType* selHistManager = selHistManagers[central_or_shift][genMatch->getIdx()];
@@ -2723,6 +2826,7 @@ int main(int argc, char* argv[])
             m_HHvis, m_HH,
             m_HH_hme, hmeCpuTime,
             vbf_jet1_pt, vbf_jet1_eta, vbf_jet2_pt, vbf_jet2_eta, vbf_m_jj, vbf_dEta_jj,
+            selLepton_lead->cone_pt(), selLepton_sublead->cone_pt(),
             evtWeight
           );
           //if(memReader.size() > 0)
@@ -2854,9 +2958,6 @@ int main(int argc, char* argv[])
     
       bool isHbb_boosted = ( selJetAK8_Hbb ) ? true : false;
       snm->read(isHbb_boosted, false, !isHbb_boosted);
-      const bool is_ee = selLepton_lead_type == kElectron && selLepton_sublead_type == kElectron;
-      const bool is_mm = selLepton_lead_type == kMuon     && selLepton_sublead_type == kMuon;
-      const bool is_em = ! (is_ee || is_mm);
       snm->read(is_ee, is_mm, is_em, static_cast<int>(isLeptonCharge_SS));
 
       const double leptonSF = evtWeightRecorder.get_leptonIDSF("central");
@@ -2947,6 +3048,14 @@ int main(int argc, char* argv[])
 
 //--- manually write histograms to output file
   fs.file().cd();
+  h_mm_pt_wweight->Write();
+  h_mm_eta_wweight->Write();
+  h_ee_pt_wweight->Write();
+  h_ee_eta_wweight->Write();
+  h_mm_pt->Write();
+  h_mm_eta->Write();
+  h_ee_pt->Write();
+  h_ee_eta->Write();
   //histogram_analyzedEntries->Write();
   //histogram_selectedEntries->Write();
   HistManagerBase::writeHistograms();

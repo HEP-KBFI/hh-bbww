@@ -140,6 +140,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
         blacklist         = None,
         submission_cmd    = None,
         ttbar_based_mcClosure = True,
+        tsf               = False,
+        use_ee            = False
       ):
     analyzeConfig_hh.__init__(self,
       configDir             = configDir,
@@ -185,7 +187,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.MEMbranch = MEMbranch
     self.hmebranch = hmebranch
 
-    self.lepton_selections = [ "Tight", "Fakeable" ]
+    self.lepton_selections = [ "Tight"]#, "Fakeable" ]
     self.lepton_frWeights = [ "enabled", "disabled" ]
     self.applyFakeRateWeights = applyFakeRateWeights
     self.lepton_charge_selections = lepton_charge_selections
@@ -194,6 +196,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
 
     self.ttbar_based_mcClosure = ttbar_based_mcClosure
     self.apply_leptonGenMatching = True
+    self.run_mcClosure = False
     if self.run_mcClosure:
       self.lepton_selections.extend([ "Fakeable_mcClosure_e", "Fakeable_mcClosure_m" ])
     self.central_or_shifts_fr = systematics.FRe_shape + systematics.FRm_shape
@@ -237,6 +240,9 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
     self.rle_select = rle_select
     self.use_nonnominal = use_nonnominal
     self.hlt_filter = hlt_filter
+
+    self.tsf = tsf
+    self.use_ee = use_ee
 
     self.evtCategory_inclusive = "hh_bb2l"
 
@@ -714,6 +720,8 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
                     'fillHistograms_nonresonant'    : self.fillHistograms_nonresonant,
                     'fillHistograms_spin0'       : self.fillHistograms_spin0,
                     'fillHistograms_spin2'       : self.fillHistograms_spin2,
+                    'tsf'                        : self.tsf,
+                    'use_ee'                     : self.use_ee
                   }
                   self.createCfg_analyze(self.jobOptions_analyze[key_analyze_job], sample_info, lepton_selection)
 
@@ -904,7 +912,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
       self.createMakefile(lines_makefile)
       logging.info("Done.")
       return self.num_jobs
-
+    '''
     logging.info("Creating configuration files to run 'addBackgroundFakes'")
     for lepton_charge_selection in self.lepton_charge_selections:
       for dyBgr_option in self.dyBgr_options:
@@ -1223,7 +1231,7 @@ class analyzeConfig_hh_bb2l(analyzeConfig_hh):
             'outputFile'          : ""
           }
           self.createCfg_compDYBgrWeights(self.jobOptions_compDYBgrWeights[key_compDYBgrWeights_job])
-
+    '''
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
       self.sbatchFile_analyze = os.path.join(self.dirs[DKEY_SCRIPTS], "sbatch_analyze_%s.py" % self.channel)

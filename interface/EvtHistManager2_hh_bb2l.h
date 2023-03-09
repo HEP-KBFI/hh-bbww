@@ -40,6 +40,7 @@ public:
                  double m_HHvis, double m_HH, 
                  double m_HH_hme, double hmeCpuTime,
                  double vbf_jet1_pt, double vbf_jet1_eta, double vbf_jet2_pt, double vbf_jet2_eta, double vbf_m_jj, double vbf_dEta_jj,
+                 double leadconept, double subleadconept,
                  double evtWeight);
 
   const TH1 *
@@ -77,6 +78,9 @@ public:
   TH1 * histogram_vbf_jet2_eta_;
   TH1 * histogram_vbf_m_jj_;
   TH1 * histogram_vbf_dEta_jj_;
+
+  TH1* histogram_leadconept_;
+  TH1* histogram_subleadconept_;
 
   TH1 * histogram_EventCounter_;
 

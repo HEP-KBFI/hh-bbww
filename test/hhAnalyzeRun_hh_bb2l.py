@@ -62,6 +62,13 @@ parser.add_argument('-F', '--fill-spin',
 parser.add_argument('-iac', '--ignore-ak8-corrections',
   type = str, dest = 'ignore_ak8_corrections', metavar = 'correction', nargs = '+', choices = DEFAULT_AK8_CORR, default = [ 'PUPPI' ],
 )
+parser.add_argument('-tsf', '--usemytriggersf',
+                    dest = 'usemytriggersf',
+            required = False, default = False, action = 'store_true'
+)
+parser.add_argument('-use_ee', '--use_ee',
+    dest = 'use_ee', required = False, default=False, action = 'store_true'
+)
 
 args = parser.parse_args()
 
@@ -100,6 +107,8 @@ dyBgr_options     = args.dy
 training_method   = args.training_method
 fill_spin         = args.fill_spin
 ignore_ak8_corrections = args.ignore_ak8_corrections
+tsf = args.usemytriggersf
+use_ee = args.use_ee
 
 if lep_mva_wp != "hh_multilepton" and use_preselected:
   raise RuntimeError("Cannot use skimmed samples while tightening the prompt lepton MVA cut")
@@ -334,6 +343,8 @@ if __name__ == '__main__':
     disable_ak8_corr                      = ignore_ak8_corrections,
     submission_cmd                        = sys.argv,
     ttbar_based_mcClosure                 = True,
+    tsf                                   = tsf,
+    use_ee                                = use_ee
   )
 
   if mode.find("forBDTtraining") != -1:
