@@ -43,26 +43,33 @@ def constrainValue(value,
     value = min(value, upperBound);
     return value;
 
-def effi(ditrig_lead_eff, ditrig_sublead__eff, sltrig_sublead__eff, sltrig_lead__eff):
-    return ditrig_lead_eff * ditrig_sublead__eff + (( 1 - ditrig_lead_eff ) * sltrig_sublead__eff) + (( 1 - ditrig_sublead__eff ) * sltrig_lead__eff)
+def effi(ditrig_lead_eff, ditrig_sublead_eff, sltrig_sublead_eff, sltrig_lead_eff):
+    return ditrig_lead_eff * ditrig_sublead_eff + (( 1 - ditrig_lead_eff ) * sltrig_sublead_eff) + (( 1 - ditrig_sublead_eff ) * sltrig_lead_eff)
 
 def effi_v2(ditrig_lead_leg1_eff, ditrig_sublead_leg2_eff, 
             ditrig_lead_leg2_eff, ditrig_sublead_leg1_eff,
-            sltrig_lead_leg1_eff, sltrig_lead_leg2_eff,
-            sltrig_sublead_leg1_eff, sltrig_sublead_leg2_eff
+            sltrig_lead_eff, sltrig_sublead_eff,
         ):
-    PS = sltrig_lead_leg1_eff + sltrig_sublead_leg2_eff + sltrig_lead_leg2_eff + sltrig_sublead_leg1_eff - (sltrig_lead_leg1_eff * sltrig_sublead_leg2_eff)
+    PS = sltrig_lead_eff + sltrig_sublead_eff - (sltrig_lead_eff * sltrig_sublead_eff)
     PD = ditrig_lead_leg1_eff * ditrig_sublead_leg2_eff +\
          ditrig_lead_leg2_eff * ditrig_sublead_leg1_eff -\
          ditrig_lead_leg1_eff * ditrig_sublead_leg1_eff
 
-    third_term = ditrig_sublead_leg2_eff * sltrig_lead_leg1_eff
-    fourth_term = ditrig_lead_leg2_eff * sltrig_sublead_leg1_eff
+    third_term = ditrig_sublead_leg2_eff * sltrig_lead_eff
+    fourth_term = ditrig_lead_leg2_eff * sltrig_sublead_eff
     fifth_term = third_term * fourth_term / PD
     PT = PS + PD - third_term - fourth_term + fifth_term
-    if(PT <0) : print('less 0 ', PT)
-    #assert(PT >=0)
+    print('sltrig_lead_eff: ', sltrig_lead_eff)
+    print('sltrig_sublead_eff: ', sltrig_sublead_eff)
+    print('sltrig_lead_eff * sltrig_sublead_eff: ', sltrig_lead_eff * sltrig_sublead_eff)
+    print('ditrig_lead_leg1_eff * ditrig_sublead_leg2_eff: ', ditrig_lead_leg1_eff * ditrig_sublead_leg2_eff)
+    print('ditrig_lead_leg2_eff * ditrig_sublead_leg1_eff: ', ditrig_lead_leg2_eff * ditrig_sublead_leg1_eff)
+    print('ditrig_lead_leg1_eff * ditrig_sublead_leg1_eff: ', ditrig_lead_leg1_eff * ditrig_sublead_leg1_eff)
+    print('PD: ', PD)
+    print('PS: ', PS)
+    assert(PT >=0)
     return PT
+
 def GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, x):
     return ditrig_graph_lead_MC.Eval(x), ditrig_graph_lead_Data.Eval(x)
 
@@ -78,36 +85,36 @@ def fill_2d_from_pogvalue(ditrig_graph_lead_MC, ditrig_graph_sublead_MC,
         sublead_bincenter = hist.GetYaxis().GetBinCenter(ybin)
         sublead_x = constrainValue(sublead_bincenter, xaxis.GetXmin(), xaxis.GetXmax());
         sublead_x_sl = constrainValue(sublead_bincenter, xaxis_sl.GetXmin(), xaxis_sl.GetXmax())
-        ditrig_sublead__leg2_eff_MC, ditrig_sublead__leg2_eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, sublead_x)
-        sltrig_sublead__leg2_eff_MC, sltrig_sublead__leg2_eff_Data = GetgraphValue(subleadleg_sltrig_graph_MC, subleadleg_sltrig_graph_Data, sublead_x_sl)
+        ditrig_sublead_leg2_eff_MC, ditrig_sublead_leg2_eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, sublead_x)
+        sltrig_sublead_eff_MC, sltrig_sublead_eff_Data = GetgraphValue(subleadleg_sltrig_graph_MC, subleadleg_sltrig_graph_Data, sublead_x_sl)
         for xbin in range(1,hist.GetXaxis().GetNbins()+1):
+            #if xbin !=2: continue
             lead_bincenter = hist.GetXaxis().GetBinCenter(xbin)
             lead_x = constrainValue(lead_bincenter, xaxis.GetXmin(), xaxis.GetXmax());
             lead_x_sl = constrainValue(lead_bincenter, xaxis_sl.GetXmin(), xaxis_sl.GetXmax());
             ditrig_lead_leg1_eff_MC, ditrig_lead_leg1_eff_Data = GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, lead_x)
-            sltrig_lead__leg1_eff_MC, sltrig_lead__leg1_eff_Data = GetgraphValue(leadleg_sltrig_graph_MC, leadleg_sltrig_graph_Data, lead_x_sl)
-            ditrig_lead_leg2_eff_MC, ditrig_lead_leg2_eff_Data = GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, sublead_x)
-            sltrig_lead__leg2_eff_MC, sltrig_lead__leg2_eff_Data = GetgraphValue(leadleg_sltrig_graph_MC, leadleg_sltrig_graph_Data, sublead_x_sl)
-            ditrig_sublead__leg1_eff_MC, ditrig_sublead__leg1_eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, lead_x)
-            sltrig_sublead__leg1_eff_MC, sltrig_sublead__leg1_eff_Data = GetgraphValue(subleadleg_sltrig_graph_MC, subleadleg_sltrig_graph_Data, lead_x_sl)
-            eff_MC = effi(ditrig_lead_leg1_eff_MC, ditrig_sublead__leg2_eff_MC, sltrig_sublead__leg2_eff_MC, sltrig_lead__leg1_eff_MC)
-            assert(eff_MC <1)
-            eff_Data = effi(ditrig_lead_leg1_eff_Data, ditrig_sublead__leg2_eff_Data, sltrig_sublead__leg2_eff_Data, sltrig_lead__leg1_eff_Data)
-            if v2:
-                eff_MC = effi_v2(ditrig_lead_leg1_eff_MC, ditrig_sublead__leg2_eff_MC, 
-                              ditrig_lead_leg2_eff_MC, ditrig_sublead__leg1_eff_MC,
-                              sltrig_lead__leg1_eff_MC, sltrig_lead__leg2_eff_MC,
-                              sltrig_sublead__leg1_eff_MC, sltrig_sublead__leg2_eff_MC
+            sltrig_lead_eff_MC, sltrig_lead_eff_Data = GetgraphValue(leadleg_sltrig_graph_MC, leadleg_sltrig_graph_Data, lead_x_sl)
+            print('******lead_x_sl ', lead_x_sl, '\t', sublead_x_sl)
+            ditrig_lead_leg2_eff_MC, ditrig_lead_leg2_eff_Data = GetgraphValue(ditrig_graph_sublead_MC, ditrig_graph_sublead_Data, lead_x)
+            ditrig_sublead_leg1_eff_MC, ditrig_sublead_leg1_eff_Data = GetgraphValue(ditrig_graph_lead_MC, ditrig_graph_lead_Data, sublead_x)
+            if not v2:
+                eff_MC = effi(ditrig_lead_leg1_eff_MC, ditrig_sublead_leg2_eff_MC, sltrig_sublead_eff_MC, sltrig_lead_eff_MC)
+                assert(eff_MC <1)
+                eff_Data = effi(ditrig_lead_leg1_eff_Data, ditrig_sublead_leg2_eff_Data, sltrig_sublead_eff_Data, sltrig_lead_eff_Data)
+            else:
+                eff_MC = effi_v2(ditrig_lead_leg1_eff_MC, ditrig_sublead_leg2_eff_MC, 
+                              ditrig_lead_leg2_eff_MC, ditrig_sublead_leg1_eff_MC,
+                              sltrig_lead_eff_MC, sltrig_sublead_eff_MC
                 )
-                if(eff_MC >1):print('******* ', eff_MC)
-                #assert(eff_MC <1)
-                eff_Data = effi_v2(ditrig_lead_leg1_eff_Data, ditrig_sublead__leg2_eff_Data,
-                              ditrig_lead_leg2_eff_Data, ditrig_sublead__leg1_eff_Data,
-                              sltrig_lead__leg1_eff_Data, sltrig_lead__leg2_eff_Data,
-                              sltrig_sublead__leg1_eff_Data, sltrig_sublead__leg2_eff_Data
+                print('MC effi: ', eff_MC)
+                assert(eff_MC <1)
+                eff_Data = effi_v2(ditrig_lead_leg1_eff_Data, ditrig_sublead_leg2_eff_Data,
+                              ditrig_lead_leg2_eff_Data, ditrig_sublead_leg1_eff_Data,
+                              sltrig_lead_eff_Data, sltrig_sublead_eff_Data
                 )
-                if(eff_Data > 1): print('*8data ', eff_Data)
-                #assert(eff_Data <1)
+                print('Data effi: ', eff_Data)
+                assert(eff_Data <1)
+            print('SF: ', eff_Data/eff_MC)
             hist.SetBinContent(xbin, ybin, eff_Data/eff_MC)
 
 eta_bins = collections.OrderedDict([
@@ -122,9 +129,13 @@ def Getgraph(graphname_mc, file):
     return graph_mc, graph_data
 
 for obj in ['Muon', 'Electron']:
+    #if obj == 'Muon': continue
     for leadleg_eta_bin in eta_bins[obj]:
+        #if 'Gt2p1' not in leadleg_eta_bin: continue
         for subleadleg_eta_bin in eta_bins[obj]:
+            #if 'Gt2p1' not in subleadleg_eta_bin: continue
             hist  = r.TH2D('%s_leadleg_%s_subleadleg_%s'%(obj, leadleg_eta_bin, subleadleg_eta_bin), '%s_leadingleg_Eta_%s_subleadingleg_Eta_%s'%(obj, leadleg_eta_bin, subleadleg_eta_bin), 10, 25, 45, 10, 15, 35)
+            print('hist ', hist.GetName())
             hist.GetXaxis().SetTitle('Leading lepton pT')
             hist.GetYaxis().SetTitle('Subleading lepton pT')
             hist.SetStats(0)
